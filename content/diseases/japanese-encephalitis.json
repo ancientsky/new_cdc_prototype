@@ -152,5 +152,291 @@
   "professional": {
     "specimen": "急性期與恢復期血清（間隔 2 週以上）檢測 IgM／IgG；有神經症狀者加採腦脊髓液。",
     "notifyNote": "第三類法定傳染病，應於一週內通報；病例周邊由衛生局進行病媒蚊調查。"
+  },
+  "i18n": {
+    "en": {
+      "title": "Japanese encephalitis",
+      "summary": "Japanese encephalitis is spread by vector mosquitoes (such as Culex tritaeniorhynchus). It occurs from May to October each year, peaking in June–July. Most infected people have no symptoms and a few develop encephalitis; two doses of vaccine given on schedule to young children prevent it effectively.",
+      "keyFacts": {
+        "incubation": "5–15 days",
+        "symptoms": "Most have no symptoms; a few have headache, fever, vomiting, altered consciousness, seizures",
+        "transmission": "Bite of vector mosquitoes (Culex tritaeniorhynchus, Culex annulus, Culex fuscocephala)",
+        "prevention": "Vaccinate young children; avoid mosquito bites at dusk and dawn",
+        "notify": "Within one week"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "have fever, headache and vomiting together with drowsiness or seizures between May and October",
+              "title": "See a doctor immediately",
+              "text": "These may be signs of encephalitis. See a doctor immediately and say whether there are pig farms or rice paddies near your home."
+            },
+            {
+              "if": "have a child who has turned 15 months old",
+              "title": "Give the first dose of Japanese encephalitis vaccine",
+              "text": "Give the first dose at 15 months of age and the second dose 12 months later, at a local health centre or contracted clinic."
+            },
+            {
+              "if": "live or work near pig farms or rice paddies",
+              "title": "Take extra care against mosquitoes at dusk and dawn",
+              "text": "Vector mosquitoes are mostly active at dusk and dawn. When outside, wear light-coloured long sleeves and use repellent; install window screens at home."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "The great majority of infected people have **no symptoms** or only a mild fever and headache. Fewer than 1% of infected people develop **encephalitis**: high fever, severe headache, vomiting, stiff neck, impaired consciousness, seizures and limb paralysis.\n\nThe fatality rate of encephalitis cases is about 20–30%, and 30–50% of survivors may be left with neurological or psychiatric after-effects.",
+          "warning": "Altered consciousness, seizures, limb weakness, stiff neck or persistent vomiting: see a doctor immediately."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "The Japanese encephalitis virus spreads through the **bite of vector mosquitoes**. In Taiwan the main vector is Culex tritaeniorhynchus, followed by Culex annulus and Culex fuscocephala, which breed mostly in rice paddies, ponds and irrigation ditches.\n\nPigs are the main amplifying hosts: a mosquito bites an infected pig and then bites a person, spreading the virus. **It does not spread from person to person**."
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "- **Vaccination** is the most effective method: give young children the first dose at 15 months of age and the second dose 12 months later.\n- During the season (May–October), reduce activity near pig farms and rice paddies at dusk and dawn.\n- Wear light-coloured long-sleeved shirts and trousers, and use a repellent approved by the Ministry of Health and Welfare on exposed skin.\n- Install window and door screens at home."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "There is no specific drug for Japanese encephalitis. Treatment is mainly supportive, including control of brain pressure and seizures and respiratory care; severe cases need intensive care. Seeing a doctor early lowers the risk of complications and death."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "Taiwan uses a **live attenuated chimeric Japanese encephalitis vaccine**. The publicly funded schedule is the first dose at 15 months of age and the second dose 12 months later. Schoolchildren who previously received the inactivated vaccine should catch up following Taiwan CDC's bridging recommendations. Adults who will stay long-term in affected areas or work outdoors can see a travel medicine clinic to assess self-paid vaccination."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Taiwan has about 20–40 confirmed cases a year, mostly in June–July."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "title": "日本脳炎",
+      "summary": "日本脳炎は、媒介蚊（コガタアカイエカなど）によってうつり、毎年 5 月から 10 月に流行し、6～7 月がピークです。感染者の多くは無症状で、一部が脳炎を発症します。幼児が予定どおり 2 回ワクチンを接種すれば、効果的に予防できます。",
+      "keyFacts": {
+        "incubation": "5～15 日",
+        "symptoms": "多くは無症状。一部に頭痛、発熱、嘔吐、意識の変化、けいれん",
+        "transmission": "媒介蚊（コガタアカイエカ、Culex annulus、Culex fuscocephala）に刺される",
+        "prevention": "幼児のワクチン接種、夕方と明け方に蚊に刺されない",
+        "notify": "1 週間以内"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "どうすればよいか",
+          "cards": [
+            {
+              "if": "5～10 月に発熱、頭痛、嘔吐があり、眠気やけいれんを伴う",
+              "title": "すぐに受診する",
+              "text": "脳炎のサインかもしれません。すぐに受診し、自宅の近くに豚舎や水田があるかどうかを伝えてください。"
+            },
+            {
+              "if": "お子さんが 15 か月になった",
+              "title": "日本脳炎ワクチンの 1 回目を接種する",
+              "text": "生後 15 か月で 1 回目、12 か月あけて 2 回目を接種します。各地の衛生所または契約医療機関で受けられます。"
+            },
+            {
+              "if": "自宅や職場が豚舎や水田の近くにある",
+              "title": "夕方と明け方は蚊の対策を強める",
+              "text": "媒介蚊は夕方と明け方に活動することが多いです。外出時は淡い色の長袖を着て虫よけを使い、自宅には網戸を付けてください。"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "症状と警告サイン",
+          "markdown": "感染者のほとんどは**無症状**か、軽い発熱や頭痛だけです。感染者の 1% 未満に**脳炎**が起こります。高熱、激しい頭痛、嘔吐、首のこわばり、意識障害、けいれん、手足のまひなどです。\n\n脳炎を発症した人の致死率は約 20～30% で、生存者の 30～50% に神経や精神の後遺症が残ることがあります。",
+          "warning": "意識の変化、けいれん、手足の力が入らない、首のこわばり、嘔吐が続くときは、すぐに受診してください。"
+        },
+        {
+          "key": "transmission",
+          "heading": "どのようにうつるか",
+          "markdown": "日本脳炎ウイルスは**媒介蚊に刺される**ことでうつります。台湾の主な媒介蚊はコガタアカイエカで、次いで Culex annulus と Culex fuscocephalaです。水田、池、用水路で多く発生します。\n\nブタはウイルスの主な増幅動物で、蚊がウイルスをもつブタを刺したあとに人を刺すことでうつります。**人から人にはうつりません**。"
+        },
+        {
+          "key": "prevention",
+          "heading": "予防の方法",
+          "markdown": "- **ワクチン接種**が最も効果的な方法です。幼児は生後 15 か月で 1 回目、12 か月あけて 2 回目を接種します。\n- 流行期（5～10 月）の夕方と明け方は、豚舎や水田の近くでの活動を減らす。\n- 淡い色の長袖・長ズボンを着て、肌が出ている部分には衛生福利部（Ministry of Health and Welfare）が認可した虫よけを使う。\n- 自宅の窓と戸に網戸を付ける。"
+        },
+        {
+          "key": "treatment",
+          "heading": "診断と治療",
+          "markdown": "日本脳炎に特効薬はなく、頭蓋内圧やけいれんの管理、呼吸の管理などの支持療法が中心です。重症の場合は集中治療室での治療が必要です。早めに受診すると、合併症や死亡のリスクを下げられます。"
+        },
+        {
+          "key": "vaccine",
+          "heading": "ワクチン",
+          "markdown": "台湾では**弱毒生キメラ日本脳炎ワクチン**を使います。公費の接種スケジュールは、生後 15 か月で 1 回目、12 か月あけて 2 回目です。以前に不活化ワクチンを接種した学童は、台湾 CDC の切り替え（移行）に関する推奨に従って追加接種を受けます。流行地域に長期滞在する成人や屋外で働く成人は、渡航医学外来で自費接種が必要か相談できます。"
+        },
+        {
+          "key": "situation",
+          "heading": "現在の発生状況と統計",
+          "markdown": "台湾国内の確定症例は年間約 20～40 例で、多くは 6～7 月に集中しています。"
+        },
+        {
+          "key": "faq",
+          "heading": "よくある質問"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Viêm não Nhật Bản",
+      "summary": "Viêm não Nhật Bản do muỗi truyền bệnh (như muỗi Culex tritaeniorhynchus) lây truyền, lưu hành từ tháng 5 đến tháng 10 hằng năm, cao điểm vào tháng 6–7. Phần lớn người nhiễm không có triệu chứng, một số ít tiến triển thành viêm não; trẻ nhỏ tiêm đủ 2 liều vắc-xin đúng lịch có thể phòng bệnh hiệu quả.",
+      "keyFacts": {
+        "incubation": "5–15 ngày",
+        "symptoms": "Phần lớn không có triệu chứng; một số ít đau đầu, sốt, nôn, thay đổi ý thức, co giật",
+        "transmission": "Muỗi truyền bệnh đốt (Culex tritaeniorhynchus, Culex annulus, Culex fuscocephala)",
+        "prevention": "Tiêm vắc-xin cho trẻ nhỏ, tránh muỗi đốt vào lúc chạng vạng và rạng sáng",
+        "notify": "Trong vòng một tuần"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "từ tháng 5–10 bị sốt, đau đầu, nôn kèm theo ngủ gà hoặc co giật",
+              "title": "Đi khám ngay lập tức",
+              "text": "Đây có thể là dấu hiệu của viêm não, hãy đi khám ngay và cho biết gần nhà có chuồng lợn hoặc ruộng lúa hay không."
+            },
+            {
+              "if": "con bạn tròn 15 tháng tuổi",
+              "title": "Tiêm mũi 1 vắc-xin viêm não Nhật Bản",
+              "text": "Tiêm mũi 1 khi trẻ tròn 15 tháng tuổi, cách 12 tháng tiêm mũi 2 tại trạm y tế địa phương hoặc cơ sở y tế có hợp đồng."
+            },
+            {
+              "if": "nhà ở hoặc nơi làm việc gần chuồng lợn, ruộng lúa",
+              "title": "Tăng cường phòng muỗi lúc chạng vạng và rạng sáng",
+              "text": "Muỗi truyền bệnh hoạt động nhiều vào lúc chạng vạng và rạng sáng; khi ra ngoài hãy mặc áo dài tay màu sáng và dùng thuốc chống muỗi, lắp lưới chống muỗi ở nhà."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Đại đa số người nhiễm **không có triệu chứng** hoặc chỉ sốt nhẹ, đau đầu. Dưới 1% người nhiễm bị **viêm não**: sốt cao, đau đầu dữ dội, nôn, cứng cổ, rối loạn ý thức, co giật, liệt chi.\n\nTỷ lệ tử vong của các ca viêm não khoảng 20–30%, và 30–50% người sống sót có thể để lại di chứng thần kinh hoặc tâm thần.",
+          "warning": "Thay đổi ý thức, co giật, yếu chi, cứng cổ hoặc nôn kéo dài, hãy đi khám ngay."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền như thế nào",
+          "markdown": "Virus viêm não Nhật Bản lây qua **vết đốt của muỗi truyền bệnh**. Tại Đài Loan, vật trung gian chính là muỗi Culex tritaeniorhynchus, tiếp đến là Culex annulus và Culex fuscocephala, sinh sản chủ yếu ở ruộng lúa, ao và kênh mương thủy lợi.\n\nLợn là động vật khuếch đại virus chính: muỗi đốt lợn mang virus rồi đốt người và truyền bệnh. **Bệnh không lây từ người sang người**."
+        },
+        {
+          "key": "prevention",
+          "heading": "Cách phòng ngừa",
+          "markdown": "- **Tiêm vắc-xin** là cách hiệu quả nhất: trẻ nhỏ tiêm mũi 1 khi tròn 15 tháng tuổi, cách 12 tháng tiêm mũi 2.\n- Trong mùa dịch (tháng 5–10), hạn chế hoạt động gần chuồng lợn và ruộng lúa vào lúc chạng vạng và rạng sáng.\n- Mặc áo dài tay, quần dài màu sáng, bôi thuốc chống muỗi đã được Bộ Y tế và Phúc lợi Đài Loan cho phép lên vùng da hở.\n- Lắp lưới chống muỗi ở cửa sổ và cửa ra vào."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Viêm não Nhật Bản không có thuốc đặc trị, chủ yếu điều trị hỗ trợ, bao gồm kiểm soát áp lực nội sọ, co giật và chăm sóc hô hấp; ca nặng cần điều trị tại khoa hồi sức tích cực. Đi khám sớm có thể giảm nguy cơ biến chứng và tử vong."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "Đài Loan sử dụng **vắc-xin viêm não Nhật Bản sống giảm độc lực dạng khảm (chimeric)**; lịch tiêm miễn phí bằng kinh phí nhà nước là mũi 1 khi tròn 15 tháng tuổi, cách 12 tháng tiêm mũi 2. Học sinh trước đây đã tiêm vắc-xin bất hoạt sẽ tiêm bù theo khuyến cáo chuyển tiếp của Taiwan CDC. Người lớn lưu trú dài ngày ở vùng lưu hành hoặc làm việc ngoài trời có thể đến phòng khám y học du lịch để được đánh giá việc tự chi trả tiêm vắc-xin."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện tại và thống kê",
+          "markdown": "Mỗi năm trong nước có khoảng 20–40 ca xác định, phần lớn tập trung vào tháng 6–7."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Japanese encephalitis (ensefalitis Jepang)",
+      "summary": "Japanese encephalitis ditularkan oleh nyamuk vektor (seperti Culex tritaeniorhynchus), berlangsung setiap tahun dari Mei hingga Oktober dengan puncak pada Juni–Juli. Sebagian besar orang yang terinfeksi tidak bergejala, sebagian kecil berkembang menjadi ensefalitis; 2 dosis vaksin sesuai jadwal pada anak kecil dapat mencegahnya secara efektif.",
+      "keyFacts": {
+        "incubation": "5–15 hari",
+        "symptoms": "Sebagian besar tanpa gejala; sebagian kecil sakit kepala, demam, muntah, perubahan kesadaran, kejang",
+        "transmission": "Gigitan nyamuk vektor (Culex tritaeniorhynchus, Culex annulus, Culex fuscocephala)",
+        "prevention": "Vaksinasi anak kecil; hindari gigitan nyamuk saat senja dan fajar",
+        "notify": "Dalam satu minggu"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Apa yang harus dilakukan",
+          "cards": [
+            {
+              "if": "pada bulan Mei–Oktober mengalami demam, sakit kepala, muntah disertai kantuk berlebihan atau kejang",
+              "title": "Segera berobat",
+              "text": "Ini mungkin tanda ensefalitis. Segera berobat dan sampaikan apakah ada kandang babi atau sawah di dekat rumah."
+            },
+            {
+              "if": "anak Anda genap berusia 15 bulan",
+              "title": "Berikan dosis pertama vaksin Japanese encephalitis",
+              "text": "Dosis pertama diberikan pada usia genap 15 bulan, dan dosis kedua 12 bulan kemudian, di puskesmas (pusat kesehatan masyarakat) setempat atau fasilitas kesehatan yang bekerja sama."
+            },
+            {
+              "if": "rumah atau tempat kerja Anda dekat kandang babi atau sawah",
+              "title": "Tingkatkan perlindungan dari nyamuk saat senja dan fajar",
+              "text": "Nyamuk vektor kebanyakan aktif saat senja dan fajar. Saat di luar rumah, kenakan baju lengan panjang berwarna terang dan gunakan losion antinyamuk; pasang kawat kasa di rumah."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Sebagian besar orang yang terinfeksi **tidak bergejala** atau hanya mengalami demam ringan dan sakit kepala. Kurang dari 1% orang yang terinfeksi mengalami **ensefalitis**: demam tinggi, sakit kepala hebat, muntah, leher kaku, gangguan kesadaran, kejang, dan kelumpuhan anggota gerak.\n\nAngka kematian kasus ensefalitis sekitar 20–30%, dan 30–50% penyintas dapat mengalami gejala sisa saraf atau kejiwaan.",
+          "warning": "Perubahan kesadaran, kejang, anggota gerak lemah, leher kaku, atau muntah terus-menerus: segera berobat."
+        },
+        {
+          "key": "transmission",
+          "heading": "Cara penularan",
+          "markdown": "Virus Japanese encephalitis menular melalui **gigitan nyamuk vektor**. Di Taiwan, vektor utamanya adalah Culex tritaeniorhynchus, disusul Culex annulus dan Culex fuscocephala, yang berkembang biak terutama di sawah, kolam, dan saluran irigasi.\n\nBabi adalah inang penguat utama virus: nyamuk menggigit babi yang membawa virus lalu menggigit manusia sehingga virus menular. **Tidak menular dari orang ke orang**."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- **Vaksinasi** adalah cara yang paling efektif: anak kecil menerima dosis pertama pada usia genap 15 bulan dan dosis kedua 12 bulan kemudian.\n- Pada musim penularan (Mei–Oktober), kurangi aktivitas di dekat kandang babi dan sawah saat senja dan fajar.\n- Kenakan baju lengan panjang dan celana panjang berwarna terang, dan gunakan losion antinyamuk yang disetujui Kementerian Kesehatan dan Kesejahteraan Taiwan pada bagian kulit yang terbuka.\n- Pasang kawat kasa pada jendela dan pintu rumah."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis dan pengobatan",
+          "markdown": "Tidak ada obat khusus untuk Japanese encephalitis. Pengobatan terutama bersifat suportif, termasuk pengendalian tekanan otak, kejang, dan perawatan pernapasan; kasus berat memerlukan perawatan di unit perawatan intensif. Berobat sejak dini dapat menurunkan risiko komplikasi dan kematian."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaksin",
+          "markdown": "Taiwan menggunakan **vaksin Japanese encephalitis kimerik hidup yang dilemahkan**. Jadwal vaksinasi yang dibiayai pemerintah adalah dosis pertama pada usia genap 15 bulan dan dosis kedua 12 bulan kemudian. Anak sekolah yang sebelumnya telah menerima vaksin tidak aktif dilengkapi vaksinasinya sesuai rekomendasi transisi dari Taiwan CDC. Orang dewasa yang akan tinggal lama di daerah endemis atau bekerja di luar ruangan dapat mengunjungi klinik kedokteran perjalanan untuk menilai vaksinasi dengan biaya sendiri."
+        },
+        {
+          "key": "situation",
+          "heading": "Situasi terkini dan statistik",
+          "markdown": "Taiwan mencatat sekitar 20–40 kasus terkonfirmasi per tahun, sebagian besar terkonsentrasi pada Juni–Juli."
+        },
+        {
+          "key": "faq",
+          "heading": "Pertanyaan umum"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

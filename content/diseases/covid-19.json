@@ -236,6 +236,361 @@
           "heading": "FAQ"
         }
       ]
+    },
+    "ja": {
+      "title": "COVID-19 重症化（新冠併発重症）",
+      "summary": "新型コロナウイルス感染症の多くは軽症ですが、高齢者や高リスクの人は重症化することがあります。2023 年 3 月から第 4 類の「新冠併発重症（COVID-19 の重症化）」に指定されています。最新のワクチンを接種し、早めに抗ウイルス薬を使うことで重症化を減らせます。",
+      "keyFacts": {
+        "incubation": "2～14 日（多くは 2～4 日）",
+        "symptoms": "発熱、のどの痛み、咳、鼻水、だるさ、嗅覚・味覚の変化",
+        "transmission": "飛沫、近距離での空気感染、接触",
+        "prevention": "最新のワクチンを接種する、症状があるときはマスクを着ける、こまめに手を洗う",
+        "notify": "新冠併発重症：第 4 類の規定に従う"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "どうすればよいか",
+          "cards": [
+            {
+              "if": "発熱やのどの痛みなどの症状がある",
+              "title": "マスクを着け、自宅で抗原検査をしてもよい",
+              "text": "外出時はマスクを着け、高齢者への面会は避けます。家庭用の抗原検査キットを使えます。高リスクの人は早めに受診して薬の使用を相談してください。"
+            },
+            {
+              "if": "65 歳以上、または持病があり、感染が確認された",
+              "title": "発症から 5 日以内に受診する",
+              "text": "発症から 5 日以内に受診すると、医師が経口抗ウイルス薬の処方を検討でき、重症化のリスクを下げられます。"
+            },
+            {
+              "if": "息苦しい、胸の痛みがある、意識がはっきりしない",
+              "title": "すぐに受診する",
+              "text": "これらは重症のサインです。すぐに救急外来を受診するか、119 に電話してください。"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "症状と警告サイン",
+          "markdown": "よくみられる症状は、発熱、のどの痛み、咳、鼻水、筋肉痛、だるさ、頭痛です。嗅覚や味覚の変化、下痢が出る人もいます。多くの人は 1 週間ほどで軽快します。\n\n65 歳以上の高齢者、持病のある人、免疫力が低下している人、妊婦、ワクチン未接種の人は、肺炎などの重症になりやすくなります。回復後も、疲れ、息切れ、ブレインフォグなどの「ロング COVID」の症状が続く人もいます。",
+          "warning": "息苦しさや息切れ、続く胸の痛みや圧迫感、意識がはっきりしない・呼んでも起きない、唇や皮膚が紫色になる、食事や水分がとれない、尿が明らかに減る。"
+        },
+        {
+          "key": "transmission",
+          "heading": "どのようにうつるか",
+          "markdown": "主に、患者が咳やくしゃみ、会話で出す**飛沫**や、換気の悪い密閉空間でウイルスを含む微粒子を近距離で吸い込むことでうつります。汚れたものに触れた手で目・口・鼻に触れてうつることもあります。\n\n発症の 1～2 日前から発症後およそ 5～7 日までが最も感染力が高い時期です。"
+        },
+        {
+          "key": "prevention",
+          "heading": "予防の方法",
+          "markdown": "- **最新の新型コロナワクチンを接種する**。高リスクの人は特に重要です。\n- 呼吸器症状があるときはマスクを着け、体調が悪いときは自宅で休む。\n- こまめに手を洗い、室内を換気する。\n- 病院や介護施設への訪問、高齢者との集まりの前に、自分に症状がないか確認する。"
+        },
+        {
+          "key": "treatment",
+          "heading": "診断と治療",
+          "markdown": "軽症の多くは対症療法が中心です。条件に当てはまる高リスクの患者には、医師が**公費の経口抗ウイルス薬**（Paxlovid、Molnupiravir など）を処方でき、発症から 5 日以内に使う必要があります。入院患者には、医師の指示により Remdesivir などを使うことがあります。\n\n一部の経口抗ウイルス薬は、よく使われる持病の薬と相互作用があります。現在使っている薬を自分から医師に伝えてください。"
+        },
+        {
+          "key": "vaccine",
+          "heading": "ワクチン",
+          "markdown": "新型コロナワクチンは、ウイルスの変化に合わせて成分が定期的に更新され、毎年秋冬にインフルエンザワクチンと同じ時期に提供されます。**生後 6 か月以上のすべての人**が公費ワクチンを接種できます。65 歳以上の高齢者、持病のある人、医療従事者などが優先接種の対象です。接種スケジュールと回数は「新冠疫苗」（新型コロナワクチン）のページをご覧ください。"
+        },
+        {
+          "key": "situation",
+          "heading": "現在の発生状況と統計",
+          "markdown": "新冠併発重症（COVID-19 の重症化）の届出数と外来・救急の受診者数は、毎週更新されます。"
+        },
+        {
+          "key": "faq",
+          "heading": "よくある質問"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "COVID-19 na may malubhang komplikasyon",
+      "summary": "Karamihan sa mga impeksyon ng COVID-19 ay banayad, ngunit ang mga nakatatanda at mga grupong mataas ang panganib ay maaaring magkaroon ng malubhang komplikasyon. Mula Marso 2023, nakalista ito bilang Kategorya 4 na “COVID-19 na may malubhang komplikasyon.” Ang pagpapabakuna ng pinakabagong bakuna at maagang paggamit ng antiviral na gamot ay makababawas sa malubhang pagkakasakit.",
+      "keyFacts": {
+        "incubation": "2–14 araw (karaniwang 2–4 araw)",
+        "symptoms": "Lagnat, masakit na lalamunan, ubo, sipon, pagkapagod, pagbabago ng pang-amoy o panlasa",
+        "transmission": "Mga patak (droplet), pagkalat sa hangin sa malapitan, kontak",
+        "prevention": "Magpabakuna ng pinakabagong bakuna, magsuot ng mask kapag may sintomas, madalas maghugas ng kamay",
+        "notify": "COVID-19 na may malubhang komplikasyon: ayon sa mga patakaran ng Kategorya 4"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Ano ang gagawin",
+          "cards": [
+            {
+              "if": "may lagnat, masakit na lalamunan, o mga katulad na sintomas",
+              "title": "Magsuot ng mask; puwedeng gumamit ng rapid test sa bahay",
+              "text": "Magsuot ng mask kapag lalabas at iwasang dalawin ang mga nakatatanda; puwedeng gumamit ng pambahay na rapid test. Ang mga grupong mataas ang panganib ay dapat magpatingin agad sa doktor para suriin ang gamot."
+            },
+            {
+              "if": "65 taong gulang pataas o may malalang sakit, at nakumpirmang may COVID-19",
+              "title": "Magpatingin sa doktor sa loob ng 5 araw mula sa simula ng sintomas",
+              "text": "Kung magpapatingin sa loob ng 5 araw mula sa simula ng sintomas, maaaring suriin ng doktor kung makapagrereseta ng oral na antiviral na gamot para mabawasan ang panganib ng malubhang pagkakasakit."
+            },
+            {
+              "if": "nahihirapang huminga, may pananakit ng dibdib, o hindi malinaw ang isip",
+              "title": "Magpatingin agad",
+              "text": "Mga senyales ito ng malubhang sakit. Pumunta agad sa emergency room o tumawag sa 119."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Mga sintomas at babalang senyales",
+          "markdown": "Kabilang sa karaniwang sintomas ang lagnat, masakit na lalamunan, ubo, sipon, pananakit ng kalamnan, pagkapagod, at sakit ng ulo; may ilang nawawalan ng pang-amoy o panlasa o nagtatae. Karamihan ay gumagaling sa loob ng halos isang linggo.\n\nMas malamang na magkaroon ng malubhang sakit tulad ng pulmonya ang mga nakatatandang 65 taong gulang pataas, mga may malalang sakit, mahina ang immune system, mga buntis, at mga hindi pa nabakunahan; may ilang patuloy na nakararanas ng pagkapagod, hirap sa paghinga, o “brain fog” kahit gumaling na (“long COVID”).",
+          "warning": "Hirap sa paghinga o hingal, tuloy-tuloy na pananakit o paninikip ng dibdib, malabong isip o hindi magising, maasul na labi o balat, hindi makakain o makainom, o kapansin-pansing pagkabawas ng ihi."
+        },
+        {
+          "key": "transmission",
+          "heading": "Paano ito kumakalat",
+          "markdown": "Kumakalat ito higit sa lahat sa pamamagitan ng mga **patak (droplet)** mula sa pag-ubo, pagbahing, at pagsasalita ng pasyente, at sa paglanghap ng mga maliliit na particle na may virus sa malapitan sa mga saradong lugar na hindi maaliwalas; maaari ring mahawa kapag hinawakan ang kontaminadong bagay at pagkatapos ay ang mata, bibig, o ilong.\n\nPinakanakahahawa ang tao mula 1–2 araw bago ang simula ng sintomas hanggang humigit-kumulang 5–7 araw pagkatapos nito."
+        },
+        {
+          "key": "prevention",
+          "heading": "Paano maiiwasan",
+          "markdown": "- **Magpabakuna ng pinakabagong bakuna laban sa COVID-19**, lalo na kung mataas ang iyong panganib.\n- Magsuot ng mask kapag may sintomas sa paghinga, at magpahinga sa bahay kapag may sakit.\n- Madalas maghugas ng kamay at panatilihing maaliwalas ang loob ng bahay.\n- Bago dumalaw sa ospital, pasilidad ng pangmatagalang pangangalaga, o makipagtipon sa mga nakatatanda, tiyaking wala kang sintomas."
+        },
+        {
+          "key": "treatment",
+          "heading": "Pagsusuri at paggamot",
+          "markdown": "Para sa karamihan ng banayad na kaso, paggamot sa mga sintomas ang pangunahin. Ang mga kwalipikadong pasyenteng mataas ang panganib ay maaaring bigyan ng doktor ng **oral na antiviral na gamot na pinondohan ng gobyerno** (gaya ng Paxlovid at Molnupiravir), na kailangang inumin sa loob ng 5 araw mula sa simula ng sintomas; ang mga pasyenteng naka-confine ay maaaring gamitan ng Remdesivir at iba pa ayon sa utos ng doktor.\n\nAng ilang oral na antiviral ay may interaksyon sa mga karaniwang gamot sa malalang sakit, kaya kusang sabihin sa doktor ang mga iniinom mong gamot."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Bakuna",
+          "markdown": "Ang bakuna laban sa COVID-19 ay regular na ina-update ang sangkap ayon sa pagbabago ng virus, at ibinibigay tuwing taglagas at taglamig kasabay ng bakuna laban sa trangkaso. Ang **lahat ng may edad na 6 na buwan pataas** ay maaaring tumanggap ng bakunang pinondohan ng gobyerno; priyoridad ang mga nakatatandang 65 taong gulang pataas, mga may malalang sakit, at mga manggagawang medikal. Tingnan ang pahina ng “bakuna laban sa COVID-19” para sa iskedyul at bilang ng dose."
+        },
+        {
+          "key": "situation",
+          "heading": "Kasalukuyang sitwasyon at estadistika",
+          "markdown": "Lingguhang ina-update ang bilang ng mga naiulat na COVID-19 na may malubhang komplikasyon at ang bilang ng pagbisita sa outpatient at emergency."
+        },
+        {
+          "key": "faq",
+          "heading": "Mga madalas itanong"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "COVID-19 có biến chứng nặng",
+      "summary": "Phần lớn các ca nhiễm COVID-19 là nhẹ, nhưng người cao tuổi và nhóm nguy cơ cao có thể bị biến chứng nặng. Từ tháng 3 năm 2023, bệnh được xếp vào nhóm 4 với tên “COVID-19 có biến chứng nặng”. Tiêm vắc-xin mới nhất và dùng thuốc kháng virus sớm có thể giảm nguy cơ bệnh nặng.",
+      "keyFacts": {
+        "incubation": "2–14 ngày (phần lớn 2–4 ngày)",
+        "symptoms": "Sốt, đau họng, ho, sổ mũi, mệt mỏi, thay đổi khứu giác và vị giác",
+        "transmission": "Giọt bắn, lây qua không khí ở khoảng cách gần, tiếp xúc",
+        "prevention": "Tiêm vắc-xin mới nhất, đeo khẩu trang khi có triệu chứng, rửa tay thường xuyên",
+        "notify": "COVID-19 có biến chứng nặng: theo quy định của nhóm 4"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "bị sốt, đau họng hoặc các triệu chứng tương tự",
+              "title": "Đeo khẩu trang, có thể tự xét nghiệm nhanh",
+              "text": "Đeo khẩu trang khi ra ngoài, tránh thăm người cao tuổi, có thể dùng bộ xét nghiệm nhanh tại nhà; nhóm nguy cơ cao nên đi khám sớm để được đánh giá việc dùng thuốc."
+            },
+            {
+              "if": "từ 65 tuổi trở lên hoặc có bệnh mạn tính và đã được xác định mắc bệnh",
+              "title": "Đi khám trong vòng 5 ngày kể từ khi khởi phát",
+              "text": "Đi khám trong vòng 5 ngày kể từ khi khởi phát, bác sĩ có thể đánh giá kê thuốc kháng virus đường uống để giảm nguy cơ bệnh nặng."
+            },
+            {
+              "if": "khó thở, đau ngực, lú lẫn",
+              "title": "Đi khám ngay lập tức",
+              "text": "Đây là những dấu hiệu của bệnh nặng, hãy đến ngay khoa cấp cứu hoặc gọi 119."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Các triệu chứng thường gặp gồm sốt, đau họng, ho, sổ mũi, đau cơ, mệt mỏi, đau đầu; một số người thay đổi khứu giác hoặc vị giác, tiêu chảy. Phần lớn đỡ sau khoảng một tuần.\n\nNgười từ 65 tuổi trở lên, người có bệnh mạn tính, suy giảm miễn dịch, phụ nữ mang thai và người chưa tiêm vắc-xin dễ tiến triển thành bệnh nặng như viêm phổi; một số người sau khi khỏi vẫn còn mệt mỏi, khó thở, “sương mù não” (“COVID kéo dài”).",
+          "warning": "Khó thở hoặc thở gấp, đau tức ngực kéo dài, lú lẫn hoặc gọi không tỉnh, môi hoặc da tím tái, không ăn uống được hoặc đi tiểu giảm rõ rệt."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền như thế nào",
+          "markdown": "Bệnh lây chủ yếu qua **giọt bắn** do người bệnh ho, hắt hơi, nói chuyện, và do hít phải các hạt nhỏ chứa virus ở khoảng cách gần trong không gian kín thông gió kém; cũng có thể lây khi tay chạm vào vật bị nhiễm bẩn rồi chạm vào mắt, miệng, mũi.\n\nKhả năng lây cao nhất từ 1–2 ngày trước khi khởi phát đến khoảng 5–7 ngày sau khi khởi phát."
+        },
+        {
+          "key": "prevention",
+          "heading": "Cách phòng ngừa",
+          "markdown": "- **Tiêm vắc-xin COVID-19 mới nhất**, đặc biệt quan trọng với nhóm nguy cơ cao.\n- Đeo khẩu trang khi có triệu chứng hô hấp, ở nhà nghỉ ngơi khi bị bệnh.\n- Rửa tay thường xuyên, giữ không khí trong nhà thông thoáng.\n- Trước khi thăm bệnh viện, cơ sở chăm sóc dài hạn hoặc gặp gỡ người cao tuổi, hãy chắc chắn bạn không có triệu chứng."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Phần lớn ca nhẹ chủ yếu điều trị triệu chứng. Bệnh nhân nguy cơ cao đủ điều kiện có thể được bác sĩ kê **thuốc kháng virus đường uống miễn phí bằng kinh phí nhà nước** (như Paxlovid, Molnupiravir), cần dùng trong vòng 5 ngày kể từ khi khởi phát; bệnh nhân nhập viện có thể dùng Remdesivir và các thuốc khác theo chỉ định của bác sĩ.\n\nMột số thuốc kháng virus đường uống có tương tác với các thuốc điều trị bệnh mạn tính thường dùng, vì vậy hãy chủ động cho bác sĩ biết các thuốc bạn đang dùng."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "Vắc-xin COVID-19 được cập nhật thành phần định kỳ theo sự biến đổi của virus, và được cung cấp cùng đợt với vắc-xin cúm vào mùa thu đông hằng năm. **Mọi người từ 6 tháng tuổi trở lên** đều có thể tiêm vắc-xin miễn phí bằng kinh phí nhà nước; người từ 65 tuổi trở lên, người có bệnh mạn tính, nhân viên y tế là đối tượng ưu tiên. Lịch tiêm và số liều xin xem trang “Vắc-xin COVID-19”."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện tại và thống kê",
+          "markdown": "Số ca báo cáo COVID-19 có biến chứng nặng và số lượt khám ngoại trú, cấp cứu được cập nhật hằng tuần."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "COVID-19 dengan komplikasi berat",
+      "summary": "Sebagian besar infeksi COVID-19 ringan, tetapi lansia dan kelompok berisiko tinggi dapat mengalami komplikasi berat. Sejak Maret 2023, penyakit ini masuk Kategori 4 sebagai “COVID-19 dengan komplikasi berat”. Vaksin terbaru dan penggunaan obat antivirus sejak dini dapat menurunkan risiko sakit berat.",
+      "keyFacts": {
+        "incubation": "2–14 hari (umumnya 2–4 hari)",
+        "symptoms": "Demam, sakit tenggorokan, batuk, pilek, lelah, perubahan penciuman dan pengecapan",
+        "transmission": "Percikan (droplet), penularan lewat udara jarak dekat, kontak",
+        "prevention": "Vaksin terbaru, memakai masker saat bergejala, sering mencuci tangan",
+        "notify": "COVID-19 dengan komplikasi berat: sesuai ketentuan Kategori 4"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Apa yang harus dilakukan",
+          "cards": [
+            {
+              "if": "mengalami demam, sakit tenggorokan, atau gejala serupa",
+              "title": "Pakai masker, boleh tes cepat mandiri",
+              "text": "Pakai masker saat keluar rumah dan hindari menjenguk lansia; dapat menggunakan tes cepat di rumah. Kelompok berisiko tinggi sebaiknya segera berobat ke dokter untuk dinilai kebutuhan obatnya."
+            },
+            {
+              "if": "berusia 65 tahun ke atas atau memiliki penyakit kronis dan terkonfirmasi positif",
+              "title": "Berobat dalam 5 hari sejak gejala muncul",
+              "text": "Jika berobat dalam 5 hari sejak gejala muncul, dokter dapat menilai pemberian obat antivirus oral untuk menurunkan risiko sakit berat."
+            },
+            {
+              "if": "mengalami sesak napas, nyeri dada, atau tidak sadar jernih",
+              "title": "Segera berobat",
+              "text": "Ini adalah tanda penyakit berat. Segera ke instalasi gawat darurat atau hubungi 119."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Gejala yang umum meliputi demam, sakit tenggorokan, batuk, pilek, nyeri otot, lelah, dan sakit kepala; sebagian orang mengalami perubahan penciuman atau pengecapan, serta diare. Sebagian besar membaik dalam sekitar satu minggu.\n\nLansia berusia 65 tahun ke atas, penderita penyakit kronis, orang dengan imunitas rendah, ibu hamil, dan orang yang belum divaksin lebih mudah mengalami penyakit berat seperti pneumonia; sebagian orang setelah sembuh masih merasa lelah, sesak, atau “kabut otak” (“long COVID”).",
+          "warning": "Sesak napas, nyeri atau rasa tertekan di dada yang terus-menerus, tidak sadar jernih atau sulit dibangunkan, bibir atau kulit membiru, tidak dapat makan dan minum, atau jumlah urine berkurang nyata."
+        },
+        {
+          "key": "transmission",
+          "heading": "Cara penularan",
+          "markdown": "Penularan terutama melalui **percikan (droplet)** saat penderita batuk, bersin, dan berbicara, serta saat menghirup partikel kecil yang mengandung virus dari jarak dekat di ruang tertutup dengan ventilasi buruk; dapat juga menular saat tangan menyentuh benda yang terkontaminasi lalu menyentuh mata, mulut, atau hidung.\n\nDaya tular paling tinggi sejak 1–2 hari sebelum gejala muncul hingga sekitar 5–7 hari sesudahnya."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- **Terima vaksin COVID-19 terbaru**, terutama penting bagi kelompok berisiko tinggi.\n- Pakai masker saat ada gejala pernapasan, dan beristirahat di rumah saat sakit.\n- Sering cuci tangan dan jaga ventilasi ruangan.\n- Sebelum menjenguk di rumah sakit, fasilitas perawatan jangka panjang, atau berkumpul dengan lansia, pastikan Anda tidak bergejala."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis dan pengobatan",
+          "markdown": "Sebagian besar kasus ringan cukup diobati sesuai gejala. Pasien berisiko tinggi yang memenuhi syarat dapat diberi **obat antivirus oral yang dibiayai pemerintah** oleh dokter (seperti Paxlovid, Molnupiravir), yang harus digunakan dalam 5 hari sejak gejala muncul; pasien rawat inap dapat diberi Remdesivir dan obat lain sesuai anjuran dokter.\n\nBeberapa obat antivirus oral berinteraksi dengan obat penyakit kronis yang umum, jadi beri tahu dokter obat yang sedang Anda gunakan."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaksin",
+          "markdown": "Vaksin COVID-19 diperbarui komposisinya secara berkala mengikuti perubahan virus, dan disediakan setiap musim gugur dan dingin bersamaan dengan vaksin influenza. **Semua orang berusia 6 bulan ke atas** dapat menerima vaksin yang dibiayai pemerintah; lansia 65 tahun ke atas, penderita penyakit kronis, dan tenaga kesehatan menjadi kelompok prioritas. Jadwal dan jumlah dosis dapat dilihat di halaman “Vaksin COVID-19”."
+        },
+        {
+          "key": "situation",
+          "heading": "Situasi terkini dan statistik",
+          "markdown": "Jumlah laporan COVID-19 dengan komplikasi berat serta jumlah kunjungan rawat jalan dan gawat darurat diperbarui setiap minggu."
+        },
+        {
+          "key": "faq",
+          "heading": "Pertanyaan umum"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "โควิด-19 ที่มีภาวะแทรกซ้อนรุนแรง",
+      "summary": "การติดเชื้อโควิด-19 ส่วนใหญ่มีอาการไม่รุนแรง แต่ผู้สูงอายุและกลุ่มเสี่ยงสูงอาจมีภาวะแทรกซ้อนรุนแรงได้ ตั้งแต่เดือนมีนาคม 2023 โรคนี้จัดเป็นประเภทที่ 4 ในชื่อ “โควิด-19 ที่มีภาวะแทรกซ้อนรุนแรง” การฉีดวัคซีนรุ่นล่าสุดและการใช้ยาต้านไวรัสตั้งแต่เนิ่น ๆ ช่วยลดความรุนแรงของโรคได้",
+      "keyFacts": {
+        "incubation": "2–14 วัน (ส่วนใหญ่ 2–4 วัน)",
+        "symptoms": "ไข้ เจ็บคอ ไอ น้ำมูกไหล อ่อนเพลีย การรับกลิ่นและรสเปลี่ยนไป",
+        "transmission": "ละอองฝอย ติดต่อทางอากาศในระยะใกล้ การสัมผัส",
+        "prevention": "ฉีดวัคซีนรุ่นล่าสุด สวมหน้ากากอนามัยเมื่อมีอาการ ล้างมือบ่อย ๆ",
+        "notify": "โควิด-19 ที่มีภาวะแทรกซ้อนรุนแรง: ตามกฎของประเภทที่ 4"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "ควรทำอย่างไร",
+          "cards": [
+            {
+              "if": "มีไข้ เจ็บคอ หรืออาการคล้ายกัน",
+              "title": "สวมหน้ากากอนามัย และตรวจเองด้วยชุดตรวจแบบเร็วได้",
+              "text": "สวมหน้ากากอนามัยเมื่อออกนอกบ้าน หลีกเลี่ยงการเยี่ยมผู้สูงอายุ ใช้ชุดตรวจแบบเร็วที่บ้านได้ กลุ่มเสี่ยงสูงควรไปพบแพทย์แต่เนิ่น ๆ เพื่อประเมินการใช้ยา"
+            },
+            {
+              "if": "อายุ 65 ปีขึ้นไปหรือมีโรคเรื้อรัง และตรวจพบว่าติดเชื้อ",
+              "title": "ไปพบแพทย์ภายใน 5 วันหลังเริ่มมีอาการ",
+              "text": "หากไปพบแพทย์ภายใน 5 วันหลังเริ่มมีอาการ แพทย์สามารถประเมินการสั่งยาต้านไวรัสชนิดรับประทาน เพื่อลดความเสี่ยงที่จะป่วยรุนแรง"
+            },
+            {
+              "if": "หายใจลำบาก เจ็บหน้าอก หรือไม่รู้สึกตัวดี",
+              "title": "ไปพบแพทย์ทันที",
+              "text": "สิ่งเหล่านี้เป็นสัญญาณของโรครุนแรง โปรดไปห้องฉุกเฉินทันทีหรือโทร 119"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "อาการที่พบบ่อย ได้แก่ ไข้ เจ็บคอ ไอ น้ำมูกไหล ปวดกล้ามเนื้อ อ่อนเพลีย ปวดศีรษะ บางคนรับกลิ่นหรือรสเปลี่ยนไป หรือท้องเสีย ส่วนใหญ่อาการดีขึ้นภายในประมาณหนึ่งสัปดาห์\n\nผู้สูงอายุ 65 ปีขึ้นไป ผู้มีโรคเรื้อรัง ผู้ที่ภูมิคุ้มกันต่ำ หญิงตั้งครรภ์ และผู้ที่ยังไม่ได้ฉีดวัคซีน มีโอกาสป่วยรุนแรง เช่น ปอดอักเสบ มากกว่า บางคนหลังหายแล้วยังคงเหนื่อยล้า หายใจหอบ สมองมึนงง (“ลองโควิด”)",
+          "warning": "หายใจลำบากหรือหอบ เจ็บหรือแน่นหน้าอกต่อเนื่อง ไม่รู้สึกตัวดีหรือปลุกไม่ตื่น ริมฝีปากหรือผิวหนังเขียวคล้ำ กินอาหารและดื่มน้ำไม่ได้ หรือปัสสาวะลดลงอย่างชัดเจน"
+        },
+        {
+          "key": "transmission",
+          "heading": "ติดต่อได้อย่างไร",
+          "markdown": "ติดต่อหลักผ่าน**ละอองฝอย**ที่เกิดจากการไอ จาม พูดของผู้ป่วย และการสูดดมอนุภาคเล็กที่มีไวรัสในระยะใกล้ในพื้นที่ปิดที่อากาศไม่ถ่ายเท นอกจากนี้ยังอาจติดเชื้อได้จากการที่มือสัมผัสสิ่งของที่ปนเปื้อนแล้วไปสัมผัสตา ปาก จมูก\n\nแพร่เชื้อได้มากที่สุดตั้งแต่ 1–2 วันก่อนเริ่มมีอาการจนถึงประมาณ 5–7 วันหลังเริ่มมีอาการ"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- **ฉีดวัคซีนโควิด-19 รุ่นล่าสุด** โดยเฉพาะกลุ่มเสี่ยงสูงซึ่งสำคัญเป็นพิเศษ\n- สวมหน้ากากอนามัยเมื่อมีอาการทางเดินหายใจ และพักผ่อนที่บ้านเมื่อป่วย\n- ล้างมือบ่อย ๆ และระบายอากาศในอาคารให้ดี\n- ก่อนไปเยี่ยมโรงพยาบาล สถานดูแลระยะยาว หรือพบปะผู้สูงอายุ ให้แน่ใจว่าตนเองไม่มีอาการ"
+        },
+        {
+          "key": "treatment",
+          "heading": "การวินิจฉัยและการรักษา",
+          "markdown": "ผู้ป่วยอาการไม่รุนแรงส่วนใหญ่รักษาตามอาการเป็นหลัก ผู้ป่วยกลุ่มเสี่ยงสูงที่เข้าเกณฑ์ แพทย์สามารถสั่ง**ยาต้านไวรัสชนิดรับประทานที่รัฐสนับสนุนค่าใช้จ่าย** (เช่น Paxlovid, Molnupiravir) ซึ่งต้องใช้ภายใน 5 วันหลังเริ่มมีอาการ ผู้ป่วยที่นอนโรงพยาบาลอาจได้รับ Remdesivir และยาอื่น ๆ ตามคำสั่งแพทย์\n\nยาต้านไวรัสชนิดรับประทานบางชนิดมีปฏิกิริยากับยารักษาโรคเรื้อรังที่ใช้กันทั่วไป โปรดแจ้งแพทย์เกี่ยวกับยาที่ใช้อยู่ในปัจจุบัน"
+        },
+        {
+          "key": "vaccine",
+          "heading": "วัคซีน",
+          "markdown": "วัคซีนโควิด-19 มีการปรับปรุงส่วนประกอบเป็นระยะตามการเปลี่ยนแปลงของไวรัส และให้บริการทุกปีในฤดูใบไม้ร่วงและฤดูหนาวพร้อมกับวัคซีนไข้หวัดใหญ่ **ประชาชนอายุ 6 เดือนขึ้นไปทุกคน**สามารถรับวัคซีนที่รัฐสนับสนุนค่าใช้จ่ายได้ ผู้สูงอายุ 65 ปีขึ้นไป ผู้มีโรคเรื้อรัง และบุคลากรทางการแพทย์เป็นกลุ่มที่ได้รับสิทธิ์ก่อน ดูตารางการฉีดและจำนวนเข็มได้ที่หน้า “วัคซีนโควิด-19”"
+        },
+        {
+          "key": "situation",
+          "heading": "สถานการณ์ปัจจุบันและสถิติ",
+          "markdown": "จำนวนผู้ป่วยโควิด-19 ที่มีภาวะแทรกซ้อนรุนแรงที่รายงาน และจำนวนผู้มารับบริการผู้ป่วยนอกและห้องฉุกเฉิน อัปเดตทุกสัปดาห์"
+        },
+        {
+          "key": "faq",
+          "heading": "คำถามที่พบบ่อย"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

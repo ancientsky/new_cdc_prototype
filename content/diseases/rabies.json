@@ -153,5 +153,433 @@
   "professional": {
     "specimen": "疑似病例採唾液、頸部皮膚切片、腦脊髓液及血清，送疾管署檢驗；動物檢體由農業部獸醫研究所檢驗。",
     "notifyNote": "第一類法定傳染病，應於 24 小時內通報；動物咬傷個案依「疑似狂犬病動物抓咬傷」流程登錄並評估暴露後接種。"
+  },
+  "i18n": {
+    "en": {
+      "title": "Rabies",
+      "summary": "Once symptoms of rabies appear it is almost 100% fatal, but prompt wound care and vaccination after an animal bite can prevent it effectively. Remember “Wash, Identify, Seek care, Observe”, and do not touch wild animals.",
+      "keyFacts": {
+        "incubation": "Usually 1–3 months; can be as short as a few days or as long as several years",
+        "symptoms": "Unusual sensations at the wound, fever, anxiety, fear of water, fear of wind, difficulty swallowing, paralysis",
+        "transmission": "Bite, scratch or licked wound from an infected animal",
+        "prevention": "Do not touch wild animals; vaccinate pets every year; treat bites immediately and see a doctor",
+        "notify": "Within 24 hours (Category 1)"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "have been bitten or scratched by an animal",
+              "title": "Wash, Identify, Seek care, Observe",
+              "text": "Immediately wash the wound with soap and plenty of running water for 15 minutes, remember the animal’s features, see a doctor as soon as possible to assess the need for vaccination, and observe the animal for 10 days."
+            },
+            {
+              "if": "meet a wild animal behaving abnormally in the mountains",
+              "title": "Keep away and report to the animal health authority",
+              "text": "Do not touch or pick it up. Report it to the local animal disease control authority or call 1922."
+            },
+            {
+              "if": "are staying long-term in a country where rabies occurs",
+              "title": "Assess pre-exposure vaccination before you leave",
+              "text": "People who work outdoors or with animals can see a travel medicine clinic to assess pre-exposure vaccination."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "Early symptoms are fever, headache and fatigue, together with unusual sensations such as **numbness, itching or tingling at the bite site**. Later come anxiety, agitation, hallucinations, the typical **fear of water** (throat spasms when seeing or drinking water) and **fear of wind**, and finally paralysis, coma and death.\n\nOnce neurological symptoms appear, the fatality rate is almost **100%**, so preventive treatment after exposure is very important.",
+          "warning": "After any animal bite, whatever the size of the wound, see a doctor for assessment; do not wait for symptoms to appear."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "The rabies virus is found in the saliva of infected animals and spreads through **bites and scratches**, or when an animal licks a person’s wound or mucous membranes. Since 2013, Taiwan has detected rabies virus in wild animals such as the **ferret-badger**, masked palm civet and Asian house shrew; abroad, dogs, bats, monkeys and foxes are the main carriers.\n\nIt does not generally spread from person to person."
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "- **Do not touch, pick up or feed** wild animals.\n- Vaccinate pet dogs and cats against rabies every year, keep them on a leash when outdoors, and do not abandon them.\n- After an animal bite, follow “**Wash, Identify, Seek care, Observe**”:\n  1. Wash: wash the wound with soap and plenty of running water for 15 minutes, then disinfect with povidone-iodine.\n  2. Identify: remember the animal’s features and, if possible, keep it safely for observation.\n  3. Seek care: see a doctor as soon as possible; the doctor will assess whether vaccine and immunoglobulin are needed.\n  4. Observe: keep the animal isolated and observe it for 10 days."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "There is no effective treatment once the disease develops. **Post-exposure prophylaxis** consists of wound care, **rabies vaccine** according to the exposure category (usually 4–5 doses) and, when necessary, rabies immunoglobulin. In Taiwan, post-exposure vaccine is supplied by Taiwan CDC and given at designated rabies vaccination hospitals."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "**Post-exposure vaccination**: after assessment by a doctor, it is given at designated hospitals, publicly funded. **Pre-exposure vaccination**: veterinarians, animal disease control and animal-catching personnel, wildlife researchers, and people staying long-term in affected areas or without timely access to medical care may consider self-paid vaccination (2–3 doses)."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Human cases in Taiwan are extremely rare and mostly acquired abroad. Surveillance of wild animals continues to find positive ferret-badgers, so please do not touch wild animals."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "title": "狂犬病",
+      "summary": "狂犬病は発症するとほぼ 100% が死亡しますが、動物にかまれた後に速やかに処置してワクチンを接種すれば、効果的に予防できます。「洗う・確認する・病院へ・観察する」を覚え、野生動物には触れないでください。",
+      "keyFacts": {
+        "incubation": "通常 1～3 か月。数日と短い場合も、数年と長い場合もあります",
+        "symptoms": "傷口の異常な感覚、発熱、不安、水を怖がる、風を怖がる、飲み込みにくさ、まひ",
+        "transmission": "ウイルスをもつ動物にかまれる、ひっかかれる、または傷口をなめられる",
+        "prevention": "野生動物に触れない、ペットは毎年接種する、かまれたらすぐに処置して受診する",
+        "notify": "24 時間以内（第 1 類）"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "どうすればよいか",
+          "cards": [
+            {
+              "if": "動物にかまれた、またはひっかかれた",
+              "title": "洗う・確認する・病院へ・観察する",
+              "text": "すぐに石けんと大量の流水で傷口を 15 分間洗い、動物の特徴を覚え、できるだけ早く受診してワクチン接種が必要か診てもらい、動物を 10 日間観察します。"
+            },
+            {
+              "if": "山で行動のおかしい野生動物に出会った",
+              "title": "近づかず、動物衛生機関に通報する",
+              "text": "触ったり拾ったりせず、地元の動物防疫機関に通報するか、1922 に電話してください。"
+            },
+            {
+              "if": "狂犬病が発生している国に長期滞在する予定がある",
+              "title": "出発前に曝露前接種を検討する",
+              "text": "屋外や動物に関わる仕事をする人は、渡航医学外来で曝露前予防接種が必要か相談できます。"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "症状と警告サイン",
+          "markdown": "初期には発熱、頭痛、だるさのほか、**かまれた部位のしびれ、かゆみ、チクチクする痛み**などの異常な感覚が現れます。その後、不安、興奮、幻覚、そして典型的な**恐水症状**（水を見たり飲んだりすると喉がけいれんする）と**恐風症状**が出て、最終的にまひ、昏睡、死亡に至ります。\n\n神経症状が出ると、致死率はほぼ **100%** です。そのため、曝露後の予防処置がとても重要です。",
+          "warning": "動物にかまれたら、傷の大きさにかかわらず受診して診てもらってください。症状が出るのを待たないでください。"
+        },
+        {
+          "key": "transmission",
+          "heading": "どのようにうつるか",
+          "markdown": "狂犬病ウイルスは感染した動物の唾液に含まれ、**かむ、ひっかく**ことや、人の傷口・粘膜をなめることでうつります。台湾では 2013 年以降、野生の**イタチアナグマ**（鼬獾）、ハクビシン、ジャコウネズミ（錢鼠）などからウイルスが検出されています。海外では犬、コウモリ、サル、キツネなどが主な感染源です。\n\n人から人へは、通常うつりません。"
+        },
+        {
+          "key": "prevention",
+          "heading": "予防の方法",
+          "markdown": "- 野生動物には**触れない、拾わない、えさをやらない**。\n- ペットの犬・猫には毎年動物用狂犬病ワクチンを接種し、外出時はリードでつなぎ、捨てない。\n- 動物にかまれたら「**洗う・確認する・病院へ・観察する**」を徹底する。\n  1. 洗う：石けんと大量の流水で傷口を 15 分間洗い、その後ポビドンヨードで消毒する。\n  2. 確認する：動物の特徴を覚え、可能であれば安全に保護して観察する。\n  3. 病院へ：できるだけ早く受診し、医師がワクチンと免疫グロブリンの要否を判断する。\n  4. 観察する：動物を隔離して 10 日間観察する。"
+        },
+        {
+          "key": "treatment",
+          "heading": "診断と治療",
+          "markdown": "発症後に有効な治療法はありません。**曝露後予防**は、傷口の処置、曝露の程度に応じた**狂犬病ワクチン**の接種（通常 4～5 回）、必要な場合は狂犬病免疫グロブリンの注射です。台湾では、曝露後のワクチンは台湾 CDC が提供し、指定の狂犬病ワクチン接種病院で接種します。"
+        },
+        {
+          "key": "vaccine",
+          "heading": "ワクチン",
+          "markdown": "**曝露後接種**：医師の評価を受けたうえで、指定病院で公費により接種します。**曝露前接種**：獣医師、動物防疫・捕獲に携わる人、野生動物の研究者、流行地域に長期滞在する人、すぐに医療を受けられない人は、自費で 2～3 回の接種を検討できます。"
+        },
+        {
+          "key": "situation",
+          "heading": "現在の発生状況と統計",
+          "markdown": "台湾国内の人の症例はきわめてまれで、多くは海外での感染です。野生動物の監視では引き続き陽性のイタチアナグマが見つかっていますので、野生動物には触れないでください。"
+        },
+        {
+          "key": "faq",
+          "heading": "よくある質問"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Rabies",
+      "summary": "Kapag lumabas na ang sintomas ng rabies, halos 100% itong nakamamatay, ngunit mabisa itong maiiwasan sa agarang paglilinis ng sugat at pagpapabakuna matapos makagat ng hayop. Tandaan ang “Hugasan, Kilalanin, Magpatingin, Obserbahan,” at huwag humawak ng mga ligaw na hayop.",
+      "keyFacts": {
+        "incubation": "Karaniwang 1–3 buwan; maaaring ilang araw lamang o umabot ng ilang taon",
+        "symptoms": "Kakaibang pakiramdam sa sugat, lagnat, pagkabalisa, takot sa tubig, takot sa hangin, hirap lumunok, paralisis",
+        "transmission": "Kagat, kalmot, o pagdila sa sugat ng hayop na may virus",
+        "prevention": "Huwag humawak ng mga ligaw na hayop; bakunahan ang mga alagang hayop taon-taon; agad na gamutin ang kagat at magpatingin sa doktor",
+        "notify": "Sa loob ng 24 oras (Kategorya 1)"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Ano ang gagawin",
+          "cards": [
+            {
+              "if": "nakagat o nakalmot ng hayop",
+              "title": "Hugasan, Kilalanin, Magpatingin, Obserbahan",
+              "text": "Agad na hugasan ang sugat ng sabon at maraming malinis na tubig sa loob ng 15 minuto, tandaan ang itsura ng hayop, magpatingin sa doktor sa lalong madaling panahon para suriin kung kailangan ng bakuna, at obserbahan ang hayop sa loob ng 10 araw."
+            },
+            {
+              "if": "nakakita ng ligaw na hayop na kakaiba ang kilos sa kabundukan",
+              "title": "Huwag lumapit at i-report sa awtoridad ng kalusugan ng hayop",
+              "text": "Huwag hawakan o pulutin. I-report sa lokal na awtoridad sa pagkontrol ng sakit ng hayop o tumawag sa 1922."
+            },
+            {
+              "if": "maninirahan nang matagal sa bansang may rabies",
+              "title": "Suriin ang pre-exposure na pagbabakuna bago umalis",
+              "text": "Ang mga nagtatrabaho sa labas o kasama ang mga hayop ay maaaring magpunta sa travel medicine clinic para suriin kung kailangan ng pre-exposure na bakuna."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Mga sintomas at babalang senyales",
+          "markdown": "Sa simula, may lagnat, sakit ng ulo, at pagkapagod, kasama ang kakaibang pakiramdam gaya ng **pamamanhid, pangangati, o pananakit na parang tusok sa bahaging nakagat**. Pagkatapos ay nagkakaroon ng pagkabalisa, pagiging balisa at hindi mapakali, guniguni, at ang tipikal na **takot sa tubig** (pagkikipot ng lalamunan kapag nakakita o uminom ng tubig) at **takot sa hangin**, hanggang sa paralisis, pagka-coma, at kamatayan.\n\nKapag lumabas ang mga sintomas sa nerbiyos, halos **100%** ang namamatay, kaya napakahalaga ng pang-iwas na paggamot matapos ang exposure.",
+          "warning": "Kapag nakagat ng hayop, malaki man o maliit ang sugat, magpatingin sa doktor; huwag hintaying lumabas ang mga sintomas."
+        },
+        {
+          "key": "transmission",
+          "heading": "Paano ito kumakalat",
+          "markdown": "Nasa laway ng mga hayop na may impeksyon ang rabies virus, at kumakalat ito sa pamamagitan ng **kagat at kalmot**, o kapag dinilaan ng hayop ang sugat o mucous membrane ng tao. Mula 2013, may natuklasang rabies virus sa Taiwan sa mga ligaw na hayop gaya ng **ferret-badger**, masked palm civet, at Asian house shrew; sa ibang bansa, pangunahing may dala ang mga aso, paniki, unggoy, at fox.\n\nKaraniwang hindi ito naipapasa mula sa tao patungo sa tao."
+        },
+        {
+          "key": "prevention",
+          "heading": "Paano maiiwasan",
+          "markdown": "- **Huwag humawak, pumulot, o magpakain** ng mga ligaw na hayop.\n- Bakunahan laban sa rabies taon-taon ang mga alagang aso at pusa, itali sila kapag lalabas, at huwag silang pabayaan o itapon.\n- Matapos makagat ng hayop, sundin ang “**Hugasan, Kilalanin, Magpatingin, Obserbahan**”:\n  1. Hugasan: hugasan ang sugat ng sabon at maraming malinis na tubig sa loob ng 15 minuto, saka lagyan ng povidone-iodine bilang disinfectant.\n  2. Kilalanin: tandaan ang itsura ng hayop at, kung maaari, ligtas itong ingatan para maobserbahan.\n  3. Magpatingin: magpatingin sa doktor sa lalong madaling panahon; susuriin ng doktor kung kailangan ng bakuna at immunoglobulin.\n  4. Obserbahan: ihiwalay ang hayop at obserbahan ito sa loob ng 10 araw."
+        },
+        {
+          "key": "treatment",
+          "heading": "Pagsusuri at paggamot",
+          "markdown": "Walang mabisang gamot kapag nagkasakit na. Ang **post-exposure prophylaxis** ay binubuo ng paglilinis ng sugat, **bakuna laban sa rabies** ayon sa antas ng exposure (karaniwang 4–5 dose), at kung kinakailangan, rabies immunoglobulin. Sa Taiwan, ang bakuna pagkatapos ng exposure ay ibinibigay ng Taiwan CDC at itinuturok sa mga itinalagang ospital para sa bakuna laban sa rabies."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Bakuna",
+          "markdown": "**Pagbabakuna pagkatapos ng exposure**: matapos masuri ng doktor, ibinibigay ito sa mga itinalagang ospital nang pinondohan ng gobyerno. **Pagbabakuna bago ang exposure**: ang mga beterinaryo, tauhan sa pagkontrol ng sakit ng hayop at panghuhuli ng hayop, mananaliksik ng ligaw na hayop, at ang mga mananatili nang matagal sa mga apektadong lugar o walang agarang access sa medikal na pangangalaga ay maaaring isaalang-alang ang bakuna sa sariling gastos (2–3 dose)."
+        },
+        {
+          "key": "situation",
+          "heading": "Kasalukuyang sitwasyon at estadistika",
+          "markdown": "Napakabihira ng mga kaso sa tao sa Taiwan at kadalasang nakuha sa ibang bansa. Patuloy na nakakakita ang pagmamanman sa mga ligaw na hayop ng mga ferret-badger na positibo, kaya huwag humawak ng mga ligaw na hayop."
+        },
+        {
+          "key": "faq",
+          "heading": "Mga madalas itanong"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Bệnh dại",
+      "summary": "Khi bệnh dại đã khởi phát thì tỷ lệ tử vong gần như 100%, nhưng có thể phòng ngừa hiệu quả nếu xử lý vết thương kịp thời và tiêm vắc-xin sau khi bị động vật cắn. Hãy nhớ “Rửa, Nhận diện, Đến cơ sở y tế, Theo dõi” và không chạm vào động vật hoang dã.",
+      "keyFacts": {
+        "incubation": "Thường 1–3 tháng; có thể ngắn chỉ vài ngày hoặc dài đến vài năm",
+        "symptoms": "Cảm giác bất thường ở vết thương, sốt, lo âu, sợ nước, sợ gió, khó nuốt, liệt",
+        "transmission": "Bị động vật mang virus cắn, cào hoặc liếm vào vết thương",
+        "prevention": "Không chạm vào động vật hoang dã; tiêm phòng cho thú cưng hằng năm; xử lý ngay khi bị cắn và đi khám",
+        "notify": "Trong vòng 24 giờ (nhóm 1)"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "bị động vật cắn hoặc cào",
+              "title": "Rửa, Nhận diện, Đến cơ sở y tế, Theo dõi",
+              "text": "Rửa ngay vết thương bằng xà phòng và thật nhiều nước sạch trong 15 phút, ghi nhớ đặc điểm của con vật, đi khám sớm nhất có thể để được đánh giá việc tiêm vắc-xin, và theo dõi con vật trong 10 ngày."
+            },
+            {
+              "if": "gặp động vật hoang dã có hành vi bất thường trong vùng núi",
+              "title": "Không lại gần, báo cho cơ quan thú y",
+              "text": "Không chạm vào hoặc nhặt lên. Hãy báo cho cơ quan phòng chống dịch bệnh động vật địa phương hoặc gọi 1922."
+            },
+            {
+              "if": "sẽ lưu trú dài ngày tại quốc gia có bệnh dại lưu hành",
+              "title": "Đánh giá việc tiêm phòng trước phơi nhiễm trước khi đi",
+              "text": "Người làm việc ngoài trời hoặc liên quan đến động vật có thể đến phòng khám y học du lịch để được đánh giá việc tiêm phòng trước phơi nhiễm."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Giai đoạn đầu có sốt, đau đầu, mệt mỏi và các cảm giác bất thường như **tê, ngứa hoặc đau nhói ở vị trí bị cắn**. Sau đó xuất hiện lo âu, kích động, ảo giác và đặc trưng là **sợ nước** (co thắt họng khi nhìn thấy hoặc uống nước) và **sợ gió**, cuối cùng tiến triển đến liệt, hôn mê và tử vong.\n\nKhi đã xuất hiện triệu chứng thần kinh, tỷ lệ tử vong gần như **100%**, vì vậy việc xử lý dự phòng sau phơi nhiễm rất quan trọng.",
+          "warning": "Sau khi bị động vật cắn, dù vết thương lớn hay nhỏ đều cần đi khám để được đánh giá; không chờ đến khi có triệu chứng."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền như thế nào",
+          "markdown": "Virus dại có trong nước bọt của động vật nhiễm bệnh và lây qua **vết cắn, vết cào** hoặc khi động vật liếm vào vết thương, niêm mạc của người. Từ năm 2013, Đài Loan đã phát hiện virus dại ở các loài hoang dã như **chồn bạc má** (ferret-badger), cầy vòi mốc và chuột chù nhà; ở nước ngoài, nguồn lây chủ yếu là chó, dơi, khỉ, cáo.\n\nBệnh thường không lây từ người sang người."
+        },
+        {
+          "key": "prevention",
+          "heading": "Cách phòng ngừa",
+          "markdown": "- **Không chạm vào, không nhặt, không cho ăn** động vật hoang dã.\n- Tiêm vắc-xin dại cho chó mèo nuôi hằng năm, dắt dây khi ra ngoài, không bỏ rơi.\n- Khi bị động vật cắn, thực hiện nghiêm “**Rửa, Nhận diện, Đến cơ sở y tế, Theo dõi**”:\n  1. Rửa: rửa vết thương bằng xà phòng và thật nhiều nước sạch trong 15 phút, sau đó sát khuẩn bằng povidone-iodine.\n  2. Nhận diện: ghi nhớ đặc điểm con vật; nếu có thể, giữ lại an toàn để theo dõi.\n  3. Đến cơ sở y tế: đi khám sớm nhất có thể để bác sĩ đánh giá có cần tiêm vắc-xin và globulin miễn dịch hay không.\n  4. Theo dõi: cách ly con vật và theo dõi trong 10 ngày."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Sau khi phát bệnh không có thuốc điều trị hiệu quả. **Dự phòng sau phơi nhiễm** gồm xử lý vết thương, tiêm **vắc-xin phòng dại** theo mức độ phơi nhiễm (thường 4–5 mũi) và khi cần thì tiêm globulin miễn dịch kháng dại. Tại Đài Loan, vắc-xin sau phơi nhiễm do Taiwan CDC cung cấp và được tiêm tại các bệnh viện tiêm vắc-xin phòng dại được chỉ định."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "**Tiêm sau phơi nhiễm**: sau khi bác sĩ đánh giá, được tiêm miễn phí bằng kinh phí nhà nước tại các bệnh viện được chỉ định. **Tiêm trước phơi nhiễm**: bác sĩ thú y, nhân viên phòng chống dịch bệnh động vật và bắt giữ động vật, nhà nghiên cứu động vật hoang dã, cũng như người lưu trú dài ngày ở vùng có dịch hoặc không thể tiếp cận chăm sóc y tế kịp thời có thể cân nhắc tự chi trả để tiêm 2–3 mũi."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện tại và thống kê",
+          "markdown": "Ca bệnh ở người tại Đài Loan cực kỳ hiếm, phần lớn nhiễm từ nước ngoài. Giám sát động vật hoang dã vẫn tiếp tục phát hiện chồn bạc má dương tính, vì vậy xin đừng chạm vào động vật hoang dã."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Rabies",
+      "summary": "Setelah gejala rabies muncul, penyakit ini hampir 100% fatal, tetapi dapat dicegah secara efektif dengan penanganan luka yang cepat dan vaksinasi setelah digigit hewan. Ingat “Basuh, Kenali, Berobat, Amati”, dan jangan menyentuh hewan liar.",
+      "keyFacts": {
+        "incubation": "Biasanya 1–3 bulan; bisa hanya beberapa hari atau hingga beberapa tahun",
+        "symptoms": "Sensasi tidak biasa pada luka, demam, cemas, takut air, takut angin, sulit menelan, kelumpuhan",
+        "transmission": "Gigitan, cakaran, atau luka yang dijilat hewan yang membawa virus",
+        "prevention": "Jangan menyentuh hewan liar; vaksinasi hewan peliharaan setiap tahun; segera tangani gigitan dan berobat ke dokter",
+        "notify": "Dalam 24 jam (Kategori 1)"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Apa yang harus dilakukan",
+          "cards": [
+            {
+              "if": "digigit atau dicakar hewan",
+              "title": "Basuh, Kenali, Berobat, Amati",
+              "text": "Segera basuh luka dengan sabun dan banyak air mengalir selama 15 menit, ingat ciri-ciri hewan tersebut, segera berobat ke dokter untuk dinilai perlu tidaknya vaksinasi, dan amati hewan itu selama 10 hari."
+            },
+            {
+              "if": "bertemu hewan liar yang berperilaku tidak wajar di pegunungan",
+              "title": "Jangan mendekat, laporkan ke instansi kesehatan hewan",
+              "text": "Jangan menyentuh atau memungutnya. Laporkan ke instansi pengendalian penyakit hewan setempat atau hubungi 1922."
+            },
+            {
+              "if": "akan tinggal lama di negara yang terdapat rabies",
+              "title": "Nilai vaksinasi pra-pajanan sebelum berangkat",
+              "text": "Orang yang bekerja di luar ruangan atau yang berhubungan dengan hewan dapat mengunjungi klinik kedokteran perjalanan untuk menilai vaksinasi pra-pajanan."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Gejala awal berupa demam, sakit kepala, dan lelah, disertai sensasi tidak biasa seperti **kebas, gatal, atau nyeri menusuk di area gigitan**. Selanjutnya muncul cemas, gelisah, halusinasi, serta **takut air** yang khas (tenggorokan kejang saat melihat atau minum air) dan **takut angin**, lalu berlanjut menjadi kelumpuhan, koma, dan kematian.\n\nSetelah gejala saraf muncul, angka kematiannya hampir **100%**, sehingga penanganan pencegahan setelah pajanan sangat penting.",
+          "warning": "Setelah digigit hewan, besar atau kecil lukanya, tetap periksakan diri ke dokter; jangan menunggu sampai gejala muncul."
+        },
+        {
+          "key": "transmission",
+          "heading": "Cara penularan",
+          "markdown": "Virus rabies terdapat dalam air liur hewan yang terinfeksi dan menular melalui **gigitan dan cakaran**, atau saat hewan menjilat luka atau selaput lendir manusia. Sejak 2013, Taiwan menemukan virus rabies pada hewan liar seperti **musang babi** (ferret-badger), musang luwak bertopeng, dan cecurut rumah; di luar negeri, pembawa utamanya adalah anjing, kelelawar, monyet, dan rubah.\n\nPada umumnya tidak menular dari orang ke orang."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- **Jangan menyentuh, memungut, atau memberi makan** hewan liar.\n- Vaksinasi anjing dan kucing peliharaan terhadap rabies setiap tahun, ikat dengan tali saat di luar rumah, dan jangan ditelantarkan.\n- Setelah digigit hewan, lakukan “**Basuh, Kenali, Berobat, Amati**” dengan sungguh-sungguh:\n  1. Basuh: basuh luka dengan sabun dan banyak air mengalir selama 15 menit, lalu desinfeksi dengan povidone-iodine.\n  2. Kenali: ingat ciri-ciri hewan tersebut dan, jika memungkinkan, tahan dengan aman untuk diamati.\n  3. Berobat: segera berobat ke dokter; dokter akan menilai perlu tidaknya vaksin dan imunoglobulin.\n  4. Amati: isolasi hewan dan amati selama 10 hari."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis dan pengobatan",
+          "markdown": "Tidak ada pengobatan yang efektif setelah penyakit muncul. **Profilaksis pasca-pajanan** meliputi penanganan luka, **vaksin rabies** sesuai tingkat pajanan (umumnya 4–5 dosis), dan bila perlu suntikan imunoglobulin rabies. Di Taiwan, vaksin pasca-pajanan disediakan oleh Taiwan CDC dan diberikan di rumah sakit vaksinasi rabies yang ditunjuk."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaksin",
+          "markdown": "**Vaksinasi pasca-pajanan**: setelah dinilai dokter, diberikan di rumah sakit yang ditunjuk dengan biaya ditanggung pemerintah. **Vaksinasi pra-pajanan**: dokter hewan, petugas pengendalian penyakit hewan dan penangkapan hewan, peneliti satwa liar, serta orang yang tinggal lama di daerah terjangkit atau yang tidak dapat segera memperoleh layanan medis dapat mempertimbangkan vaksinasi dengan biaya sendiri (2–3 dosis)."
+        },
+        {
+          "key": "situation",
+          "heading": "Situasi terkini dan statistik",
+          "markdown": "Kasus pada manusia di Taiwan sangat jarang dan sebagian besar tertular di luar negeri. Pemantauan satwa liar masih terus menemukan musang babi yang positif, jadi mohon jangan menyentuh hewan liar."
+        },
+        {
+          "key": "faq",
+          "heading": "Pertanyaan umum"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "โรคพิษสุนัขบ้า",
+      "summary": "เมื่อโรคพิษสุนัขบ้าแสดงอาการแล้วเกือบ 100% เสียชีวิต แต่ป้องกันได้อย่างมีประสิทธิภาพหากดูแลบาดแผลทันทีและฉีดวัคซีนหลังถูกสัตว์กัด จำไว้ว่า “ล้าง จำ ไปพบแพทย์ สังเกต” และอย่าสัมผัสสัตว์ป่า",
+      "keyFacts": {
+        "incubation": "โดยทั่วไป 1–3 เดือน อาจสั้นเพียงไม่กี่วันหรือนานหลายปี",
+        "symptoms": "รู้สึกผิดปกติที่บาดแผล ไข้ วิตกกังวล กลัวน้ำ กลัวลม กลืนลำบาก อัมพาต",
+        "transmission": "ถูกสัตว์ที่มีเชื้อกัด ข่วน หรือเลียแผล",
+        "prevention": "ไม่สัมผัสสัตว์ป่า ฉีดวัคซีนให้สัตว์เลี้ยงทุกปี เมื่อถูกกัดให้ล้างแผลทันทีและไปพบแพทย์",
+        "notify": "ภายใน 24 ชั่วโมง (ประเภทที่ 1)"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "ควรทำอย่างไร",
+          "cards": [
+            {
+              "if": "ถูกสัตว์กัดหรือข่วน",
+              "title": "ล้าง จำ ไปพบแพทย์ สังเกต",
+              "text": "ล้างแผลด้วยสบู่และน้ำสะอาดปริมาณมากทันทีเป็นเวลา 15 นาที จำลักษณะของสัตว์ ไปพบแพทย์โดยเร็วที่สุดเพื่อประเมินการฉีดวัคซีน และสังเกตอาการสัตว์เป็นเวลา 10 วัน"
+            },
+            {
+              "if": "พบสัตว์ป่าที่มีพฤติกรรมผิดปกติบนภูเขา",
+              "title": "อย่าเข้าใกล้ และแจ้งหน่วยงานด้านสุขภาพสัตว์",
+              "text": "อย่าสัมผัสหรือเก็บขึ้นมา แจ้งหน่วยงานควบคุมโรคสัตว์ในพื้นที่ หรือโทร 1922"
+            },
+            {
+              "if": "จะพำนักระยะยาวในประเทศที่มีโรคพิษสุนัขบ้า",
+              "title": "ประเมินการฉีดวัคซีนก่อนสัมผัสเชื้อก่อนเดินทาง",
+              "text": "ผู้ที่ทำงานกลางแจ้งหรือเกี่ยวข้องกับสัตว์ สามารถไปที่คลินิกเวชศาสตร์การเดินทางเพื่อประเมินการฉีดวัคซีนป้องกันก่อนสัมผัสเชื้อ"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "ระยะแรกมีไข้ ปวดศีรษะ อ่อนเพลีย และมีความรู้สึกผิดปกติ เช่น **ชา คัน หรือปวดแปลบตรงบริเวณที่ถูกกัด** ต่อมาจะวิตกกังวล กระสับกระส่าย เห็นภาพหลอน และมีอาการเฉพาะคือ **กลัวน้ำ** (คอหอยเกร็งเมื่อเห็นหรือดื่มน้ำ) และ **กลัวลม** จนถึงขั้นอัมพาต โคม่า และเสียชีวิต\n\nเมื่อมีอาการทางระบบประสาทแล้ว อัตราการเสียชีวิตเกือบ **100%** ดังนั้นการป้องกันหลังสัมผัสเชื้อจึงสำคัญมาก",
+          "warning": "เมื่อถูกสัตว์กัด ไม่ว่าแผลใหญ่หรือเล็กก็ควรไปพบแพทย์เพื่อประเมิน อย่ารอให้มีอาการ"
+        },
+        {
+          "key": "transmission",
+          "heading": "ติดต่อได้อย่างไร",
+          "markdown": "ไวรัสพิษสุนัขบ้าอยู่ในน้ำลายของสัตว์ที่ติดเชื้อ และติดต่อผ่านการ**กัด ข่วน** หรือการที่สัตว์เลียแผลหรือเยื่อบุของคน ตั้งแต่ปี 2013 ไต้หวันตรวจพบไวรัสพิษสุนัขบ้าในสัตว์ป่า เช่น **อีเห็นจมูกขาว** (ferret-badger) ชะมดหน้ากาก (masked palm civet) และหนูผี (Asian house shrew) ส่วนในต่างประเทศ พาหะหลักคือสุนัข ค้างคาว ลิง และสุนัขจิ้งจอก\n\nโดยทั่วไปไม่ติดต่อจากคนสู่คน"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- **ไม่สัมผัส ไม่เก็บ ไม่ให้อาหาร** สัตว์ป่า\n- ฉีดวัคซีนป้องกันพิษสุนัขบ้าให้สุนัขและแมวเลี้ยงทุกปี จูงด้วยสายจูงเมื่อออกนอกบ้าน และไม่ทอดทิ้ง\n- เมื่อถูกสัตว์กัด ให้ปฏิบัติตาม “**ล้าง จำ ไปพบแพทย์ สังเกต**” อย่างเคร่งครัด:\n  1. ล้าง: ล้างแผลด้วยสบู่และน้ำสะอาดปริมาณมากเป็นเวลา 15 นาที แล้วฆ่าเชื้อด้วยโพวิโดนไอโอดีน\n  2. จำ: จำลักษณะของสัตว์ และหากทำได้ ให้กักไว้สังเกตอย่างปลอดภัย\n  3. ไปพบแพทย์: ไปพบแพทย์โดยเร็วที่สุด แพทย์จะประเมินว่าต้องฉีดวัคซีนและอิมมูโนโกลบูลินหรือไม่\n  4. สังเกต: แยกสัตว์ออกและสังเกตอาการเป็นเวลา 10 วัน"
+        },
+        {
+          "key": "treatment",
+          "heading": "การวินิจฉัยและการรักษา",
+          "markdown": "เมื่อแสดงอาการแล้วไม่มีวิธีรักษาที่ได้ผล **การป้องกันหลังสัมผัสเชื้อ** ประกอบด้วยการดูแลบาดแผล การฉีด**วัคซีนป้องกันพิษสุนัขบ้า**ตามระดับการสัมผัสเชื้อ (โดยทั่วไป 4–5 เข็ม) และเมื่อจำเป็นให้ฉีดอิมมูโนโกลบูลินป้องกันพิษสุนัขบ้า ในไต้หวัน วัคซีนหลังสัมผัสเชื้อจัดหาโดย Taiwan CDC และฉีดที่โรงพยาบาลที่กำหนดสำหรับการฉีดวัคซีนป้องกันพิษสุนัขบ้า"
+        },
+        {
+          "key": "vaccine",
+          "heading": "วัคซีน",
+          "markdown": "**ฉีดหลังสัมผัสเชื้อ**: หลังแพทย์ประเมินแล้ว ฉีดได้ที่โรงพยาบาลที่กำหนดโดยใช้งบประมาณของรัฐ **ฉีดก่อนสัมผัสเชื้อ**: สัตวแพทย์ เจ้าหน้าที่ควบคุมโรคสัตว์และจับสัตว์ นักวิจัยสัตว์ป่า รวมถึงผู้ที่พำนักระยะยาวในพื้นที่ระบาดหรือไม่สามารถเข้าถึงการรักษาได้ทันเวลา อาจพิจารณาฉีดโดยจ่ายเอง 2–3 เข็ม"
+        },
+        {
+          "key": "situation",
+          "heading": "สถานการณ์ปัจจุบันและสถิติ",
+          "markdown": "ผู้ป่วยที่เป็นคนในไต้หวันพบได้น้อยมาก ส่วนใหญ่ติดเชื้อจากต่างประเทศ การเฝ้าระวังสัตว์ป่ายังคงตรวจพบอีเห็นจมูกขาวที่ให้ผลบวกอย่างต่อเนื่อง จึงขอให้อย่าสัมผัสสัตว์ป่า"
+        },
+        {
+          "key": "faq",
+          "heading": "คำถามที่พบบ่อย"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

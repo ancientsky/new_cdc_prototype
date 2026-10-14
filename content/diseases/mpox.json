@@ -232,6 +232,361 @@
           "heading": "FAQ"
         }
       ]
+    },
+    "ja": {
+      "title": "エムポックス（M痘）",
+      "summary": "エムポックス（旧称：サル痘）は主に濃厚接触でうつり、発熱、リンパ節の腫れ、発疹が現れます。高リスクの人は公費でエムポックスワクチンを 2 回接種できます。2023 年から第 2 類法定感染症に指定されています。",
+      "keyFacts": {
+        "incubation": "5～21 日（通常 6～13 日）",
+        "symptoms": "発熱、頭痛、リンパ節の腫れ、その後に発疹、水ぶくれ、膿をもつ水ぶくれ",
+        "transmission": "濃厚接触（性的接触を含む）、病変部や汚染された物との接触",
+        "prevention": "高リスクの人はエムポックスワクチンを 2 回接種する、よく知らない相手との濃厚接触を避ける",
+        "notify": "24 時間以内"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "どうすればよいか",
+          "cards": [
+            {
+              "if": "原因不明の発疹や水ぶくれがあり、過去 3 週間に濃厚接触があった",
+              "title": "発疹を覆ってから受診する",
+              "text": "マスクを着け、長袖で発疹を覆って受診し、接触歴を自分から伝えてください。各県市が指定するフレンドリーな医療機関を利用できます。"
+            },
+            {
+              "if": "確定患者と濃厚接触した",
+              "title": "4 日以内にワクチン接種を相談する",
+              "text": "曝露後 4 日以内の接種が最も効果的で、遅くとも 14 日以内に接種します。あわせて 21 日間、自主的に健康管理を行います。"
+            },
+            {
+              "if": "過去 1 年間に複数の性的パートナーがいるなど高リスクの行為があった",
+              "title": "公費ワクチンを 2 回接種する",
+              "text": "条件に当てはまる人は公費のエムポックスワクチンを予約できます。十分な防御には、2 回の間隔を 4 週間以上あけることが必要です。"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "症状と警告サイン",
+          "markdown": "初期には**発熱、頭痛、筋肉痛、背中の痛み、だるさ、リンパ節の腫れ**がよくみられます。\n\n1～3 日後に発疹が現れ、斑点、盛り上がり、水ぶくれ、膿をもつ水ぶくれ、かさぶたの順に進みます。性器、肛門、口や顔、手足に集中することがあり、痛みやかゆみを伴う場合があります。経過は約 2～4 週間で、多くは自然に治ります。",
+          "warning": "病変が広範囲に広がる、または目に出る、直腸の痛みや出血、飲み込みにくさ、意識の変化。免疫が低下している人（たとえばコントロールされていない HIV 感染者）は重症になりやすくなります。"
+        },
+        {
+          "key": "transmission",
+          "heading": "どのようにうつるか",
+          "markdown": "主に患者の発疹、かさぶた、体液との**直接接触**でうつります。近年の流行は**性的接触などの濃厚接触**に関連するものが多くなっています。長時間の対面での飛沫や、汚染されたシーツ、衣類、タオルとの接触でうつることもあり、妊婦から胎児にうつる可能性もあります。\n\n症状が出てから、すべての病変のかさぶたが取れて新しい皮膚ができるまで、感染力があります。"
+        },
+        {
+          "key": "prevention",
+          "heading": "予防の方法",
+          "markdown": "- 条件に当てはまる高リスクの人は**公費のエムポックスワクチンを 2 回**接種する。\n- よく知らない相手との濃厚接触を避ける。性行為の間ずっとコンドームを使っても、エムポックスを完全には防げませんが、ほかの性感染症のリスクは下げられます。\n- タオル、シーツ、衣類、食器を共用しない。\n- 流行している国へ行くときは、野生動物（特にげっ歯類）との接触を避ける。"
+        },
+        {
+          "key": "treatment",
+          "heading": "診断と治療",
+          "markdown": "多くの患者では対症療法が中心です。痛みをやわらげ、病変を清潔で乾いた状態に保ち、細菌感染を予防します。重症の人や高リスクの人には、医師の判断で抗ウイルス薬 tecovirimat を使うことがあります。\n\n患者は、病変がすべてかさぶたになって取れるまで、他の人との密接な接触を避けてください。"
+        },
+        {
+          "key": "vaccine",
+          "heading": "ワクチン",
+          "markdown": "台湾では非増殖型の弱毒生ワクチン（JYNNEOS）を使い、**2 回、間隔は 4 週間以上**です。公費の対象は、過去 1 年間に高リスクの性行為があった人（たとえば複数の性的パートナーがいる人、性風俗サービスに従事する人、営業施設で性行為をした人）と、保健当局が評価した曝露後の接触者です。接種場所は、協力医療機関の一覧で確認できます。"
+        },
+        {
+          "key": "situation",
+          "heading": "現在の発生状況と統計",
+          "markdown": "台湾国内の症例は散発的です。国際的には clade I の流行は中部アフリカと東アフリカの一部の国に集中しています。関連する渡航感染症情報の警戒レベルは、海外渡航のページをご覧ください。"
+        },
+        {
+          "key": "faq",
+          "heading": "よくある質問"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Mpox",
+      "summary": "Ang mpox (dating tinatawag na monkeypox) ay kumakalat pangunahin sa malapitang kontak, at nagdudulot ng lagnat, pamamaga ng mga lymph node, at pantal. Ang mga grupong mataas ang panganib ay maaaring tumanggap ng 2 dose ng bakuna laban sa mpox na pinondohan ng gobyerno. Mula 2023, isa na itong Kategorya 2 na nakahahawang sakit na dapat iulat.",
+      "keyFacts": {
+        "incubation": "5–21 araw (karaniwang 6–13 araw)",
+        "symptoms": "Lagnat, sakit ng ulo, namamagang lymph node, pagkatapos ay pantal, paltos, at pustule",
+        "transmission": "Malapitang kontak (kasama ang sekswal na kontak), pagdampi sa mga sugat o sa mga kontaminadong bagay",
+        "prevention": "2 dose ng bakuna laban sa mpox para sa mga grupong mataas ang panganib; iwasan ang malapitang kontak sa mga hindi kilalang tao",
+        "notify": "Sa loob ng 24 oras"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Ano ang gagawin",
+          "cards": [
+            {
+              "if": "may hindi maipaliwanag na pantal o paltos at nagkaroon ng malapitang kontak sa nakalipas na 3 linggo",
+              "title": "Takpan ang pantal at magpatingin sa doktor",
+              "text": "Magsuot ng mask at mahabang manggas para matakpan ang pantal bago magpatingin sa doktor, at kusang sabihin ang kasaysayan ng pakikipag-ugnayan; may mga itinalagang klinikang friendly sa bawat lungsod at county."
+            },
+            {
+              "if": "nagkaroon ng malapitang kontak sa kumpirmadong kaso",
+              "title": "Magpasuri para sa pagbabakuna sa loob ng 4 na araw",
+              "text": "Pinakamabisa ang pagbabakuna sa loob ng 4 na araw matapos ang exposure, at hindi lalampas sa 14 na araw; at magsagawa ng sariling pagsubaybay sa kalusugan sa loob ng 21 araw."
+            },
+            {
+              "if": "nagkaroon ng maraming kapareha sa sex o iba pang mataas na panganib na gawain sa nakalipas na isang taon",
+              "title": "Tumanggap ng 2 dose ng bakunang pinondohan ng gobyerno",
+              "text": "Ang mga kwalipikado ay maaaring magpa-reserba ng bakuna laban sa mpox na pinondohan ng gobyerno; kailangan ng 2 dose na may pagitang hindi bababa sa 4 na linggo para sa buong proteksyon."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Mga sintomas at babalang senyales",
+          "markdown": "Sa simula, karaniwan ang **lagnat, sakit ng ulo, pananakit ng kalamnan, pananakit ng likod, pagkapagod, at namamagang lymph node**.\n\nSa loob ng 1–3 araw ay lalabas ang pantal, na sunud-sunod na nagiging macule, papule, paltos, pustule, at langib. Maaari itong magtipon sa ari, puwit, bibig o mukha, at mga kamay at paa; maaaring masakit o makati ang mga sugat. Ang pagkakasakit ay tumatagal ng humigit-kumulang 2–4 na linggo, at karamihan ay gumagaling nang kusa.",
+          "warning": "Malawakang pagkalat ng mga sugat o mga sugat sa mata, pananakit o pagdurugo sa tumbong, hirap lumunok, pagbabago ng malay; ang mga taong mahina ang immune system (halimbawa, mga may HIV na hindi kontrolado) ay mas malamang na magkaroon ng malubhang sakit."
+        },
+        {
+          "key": "transmission",
+          "heading": "Paano ito kumakalat",
+          "markdown": "Kumakalat ito pangunahin sa **direktang kontak** sa pantal, langib, o likido sa katawan ng pasyente; ang mga pagsiklab nitong nakaraang mga taon ay kadalasang may kaugnayan sa **sekswal na kontak at iba pang malapitang kontak**. Maaari rin itong makuha sa mga patak mula sa matagal na harapang pakikipag-ugnayan, o sa pagdampi sa kontaminadong kumot, damit, o tuwalya; maaari ring maipasa ng buntis sa sanggol sa sinapupunan.\n\nNakakahawa ang tao mula sa paglitaw ng mga sintomas hanggang sa matuyo at malaglag ang lahat ng langib at tumubo ang bagong balat."
+        },
+        {
+          "key": "prevention",
+          "heading": "Paano maiiwasan",
+          "markdown": "- Ang mga kwalipikadong grupong mataas ang panganib ay dapat tumanggap ng **2 dose ng bakuna laban sa mpox na pinondohan ng gobyerno**.\n- Iwasan ang malapitang kontak sa mga hindi kilalang tao; ang paggamit ng condom sa buong pakikipagtalik ay hindi lubos na pumipigil sa mpox, ngunit nababawasan pa rin nito ang panganib ng iba pang sakit na naipapasa sa sex.\n- Huwag magbahagi ng tuwalya, kumot, damit, at kubyertos.\n- Kapag pupunta sa mga bansang may pagsiklab, iwasan ang kontak sa mga ligaw na hayop (lalo na ang mga rodent)."
+        },
+        {
+          "key": "treatment",
+          "heading": "Pagsusuri at paggamot",
+          "markdown": "Para sa karamihan ng mga pasyente, supportive na paggamot ang pangunahin: pagpapagaan ng sakit, pagpapanatiling malinis at tuyo ng mga sugat, at pag-iwas sa impeksyon ng bakterya. Para sa mga malubha o mataas ang panganib, maaaring suriin ng doktor ang paggamit ng antiviral na tecovirimat.\n\nDapat iwasan ng pasyente ang malapitang kontak sa ibang tao hanggang sa matuyo at malaglag ang lahat ng langib."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Bakuna",
+          "markdown": "Sa Taiwan, ginagamit ang non-replicating na live attenuated na bakuna (JYNNEOS), **2 dose na may pagitang hindi bababa sa 4 na linggo**. Kabilang sa mga kwalipikado para sa bakunang pinondohan ng gobyerno ang mga taong may mataas na panganib na sekswal na gawain sa nakalipas na isang taon (halimbawa, maraming kapareha sa sex, mga nagbibigay ng serbisyong sekswal, at mga nagkaroon ng sex sa mga komersyal na establisimyento), at ang mga nagkaroon ng kontak pagkatapos ng exposure ayon sa pagtatasa ng yunit ng kalusugan. Makikita ang mga lugar ng pagbabakuna sa listahan ng mga katuwang na ospital at klinika."
+        },
+        {
+          "key": "situation",
+          "heading": "Kasalukuyang sitwasyon at estadistika",
+          "markdown": "Kalat-kalat ang mga kaso sa Taiwan. Sa buong mundo, ang pagsiklab ng clade I ay nakatuon sa ilang bansa sa Gitnang Aprika at Silangang Aprika; para sa kaugnay na antas ng payo sa paglalakbay, tingnan ang seksyon para sa paglalakbay sa ibang bansa."
+        },
+        {
+          "key": "faq",
+          "heading": "Mga madalas itanong"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Mpox (bệnh đậu mùa khỉ)",
+      "summary": "Mpox (trước đây gọi là đậu mùa khỉ) lây chủ yếu qua tiếp xúc gần, gây sốt, sưng hạch bạch huyết và phát ban. Các nhóm nguy cơ cao có thể tiêm 2 liều vắc-xin mpox miễn phí bằng kinh phí nhà nước. Từ năm 2023, bệnh được xếp vào bệnh truyền nhiễm phải báo cáo nhóm 2.",
+      "keyFacts": {
+        "incubation": "5–21 ngày (thường 6–13 ngày)",
+        "symptoms": "Sốt, đau đầu, sưng hạch bạch huyết, sau đó xuất hiện phát ban, mụn nước, mụn mủ",
+        "transmission": "Tiếp xúc gần (kể cả quan hệ tình dục), tiếp xúc với tổn thương hoặc vật dụng nhiễm bẩn",
+        "prevention": "Nhóm nguy cơ cao tiêm 2 liều vắc-xin mpox; tránh tiếp xúc gần với người không quen biết",
+        "notify": "Trong vòng 24 giờ"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "bị phát ban hoặc mụn nước không rõ nguyên nhân và có tiếp xúc gần trong 3 tuần qua",
+              "title": "Che phát ban rồi đi khám",
+              "text": "Đeo khẩu trang, mặc áo dài tay che phát ban rồi đi khám và chủ động cho biết tiền sử tiếp xúc; mỗi thành phố/huyện đều có cơ sở y tế thân thiện được chỉ định."
+            },
+            {
+              "if": "có tiếp xúc gần với ca bệnh xác định",
+              "title": "Đánh giá việc tiêm vắc-xin trong vòng 4 ngày",
+              "text": "Tiêm vắc-xin trong vòng 4 ngày sau phơi nhiễm là hiệu quả nhất, chậm nhất là trong vòng 14 ngày; đồng thời tự theo dõi sức khỏe trong 21 ngày."
+            },
+            {
+              "if": "trong một năm qua có nhiều bạn tình hoặc các hành vi nguy cơ cao tương tự",
+              "title": "Tiêm 2 liều vắc-xin miễn phí bằng kinh phí nhà nước",
+              "text": "Người đủ điều kiện có thể đặt lịch tiêm vắc-xin mpox miễn phí; 2 liều cách nhau ít nhất 4 tuần mới được bảo vệ đầy đủ."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Giai đoạn đầu thường gặp **sốt, đau đầu, đau cơ, đau lưng, mệt mỏi và sưng hạch bạch huyết**.\n\nSau 1–3 ngày xuất hiện phát ban, lần lượt tiến triển từ ban phẳng, sẩn, mụn nước, mụn mủ đến đóng vảy. Phát ban có thể tập trung ở bộ phận sinh dục, hậu môn, miệng hoặc mặt, tay chân; tổn thương có thể đau hoặc ngứa. Bệnh kéo dài khoảng 2–4 tuần và phần lớn tự khỏi.",
+          "warning": "Tổn thương lan rộng hoặc xuất hiện ở mắt, đau hoặc chảy máu trực tràng, khó nuốt, thay đổi ý thức; người suy giảm miễn dịch (ví dụ người nhiễm HIV không được kiểm soát) dễ tiến triển thành bệnh nặng hơn."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền như thế nào",
+          "markdown": "Bệnh lây chủ yếu qua **tiếp xúc trực tiếp** với phát ban, vảy hoặc dịch cơ thể của người bệnh; các đợt dịch những năm gần đây phần lớn liên quan đến **quan hệ tình dục và các tiếp xúc gần khác**. Bệnh cũng có thể lây qua giọt bắn khi tiếp xúc trực diện kéo dài, hoặc qua ga giường, quần áo, khăn bị nhiễm bẩn; phụ nữ mang thai có thể truyền cho thai nhi.\n\nNgười bệnh có khả năng lây từ lúc xuất hiện triệu chứng cho đến khi tất cả tổn thương đóng vảy, bong ra và da mới mọc lên."
+        },
+        {
+          "key": "prevention",
+          "heading": "Cách phòng ngừa",
+          "markdown": "- Nhóm nguy cơ cao đủ điều kiện nên tiêm **2 liều vắc-xin mpox miễn phí bằng kinh phí nhà nước**.\n- Tránh tiếp xúc gần với người không quen biết; dùng bao cao su trong suốt quá trình quan hệ tình dục tuy không phòng hoàn toàn được mpox nhưng vẫn giúp giảm nguy cơ mắc các bệnh lây truyền qua đường tình dục khác.\n- Không dùng chung khăn, ga giường, quần áo và dụng cụ ăn uống.\n- Khi đến các quốc gia có dịch, tránh tiếp xúc với động vật hoang dã (đặc biệt là loài gặm nhấm)."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Phần lớn người bệnh được điều trị hỗ trợ là chính: giảm đau, giữ tổn thương sạch và khô, phòng nhiễm khuẩn. Với bệnh nhân nặng hoặc nguy cơ cao, bác sĩ có thể cân nhắc dùng thuốc kháng virus tecovirimat.\n\nNgười bệnh nên tránh tiếp xúc gần với người khác cho đến khi tất cả tổn thương đóng vảy và bong hết."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "Đài Loan sử dụng vắc-xin sống giảm độc lực không nhân lên (JYNNEOS), **2 liều, cách nhau ít nhất 4 tuần**. Đối tượng được tiêm miễn phí bằng kinh phí nhà nước gồm người có hành vi tình dục nguy cơ cao trong một năm qua (như có nhiều bạn tình, người cung cấp dịch vụ tình dục, người quan hệ tình dục tại các cơ sở kinh doanh) và người tiếp xúc sau phơi nhiễm được cơ quan y tế đánh giá. Có thể tra danh sách các cơ sở y tế hợp tác để biết nơi tiêm."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện tại và thống kê",
+          "markdown": "Các ca bệnh trong nước chủ yếu xuất hiện lẻ tẻ; trên thế giới, dịch clade I tập trung ở một số nước thuộc Trung Phi và Đông Phi. Mức khuyến cáo du lịch liên quan xin xem mục Đi nước ngoài."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Mpox (cacar monyet)",
+      "summary": "Mpox (dulu disebut cacar monyet) menular terutama melalui kontak dekat, dengan gejala demam, pembengkakan kelenjar getah bening, dan ruam. Kelompok berisiko tinggi dapat menerima 2 dosis vaksin mpox yang dibiayai pemerintah. Sejak 2023, mpox termasuk penyakit menular wajib lapor Kategori 2.",
+      "keyFacts": {
+        "incubation": "5–21 hari (biasanya 6–13 hari)",
+        "symptoms": "Demam, sakit kepala, pembengkakan kelenjar getah bening, lalu muncul ruam, lepuh, dan pustula",
+        "transmission": "Kontak dekat (termasuk kontak seksual), kontak dengan lesi atau benda yang terkontaminasi",
+        "prevention": "Kelompok berisiko tinggi menerima 2 dosis vaksin mpox; hindari kontak dekat dengan orang yang tidak dikenal",
+        "notify": "Dalam 24 jam"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Apa yang harus dilakukan",
+          "cards": [
+            {
+              "if": "mengalami ruam atau lepuh yang tidak diketahui penyebabnya dan dalam 3 minggu terakhir pernah melakukan kontak dekat",
+              "title": "Tutupi ruam lalu berobat ke dokter",
+              "text": "Kenakan masker dan baju lengan panjang untuk menutupi ruam, lalu berobat ke dokter dan sampaikan riwayat kontak Anda secara terbuka; tersedia fasilitas kesehatan ramah yang ditunjuk di setiap kota dan kabupaten."
+            },
+            {
+              "if": "melakukan kontak dekat dengan kasus terkonfirmasi",
+              "title": "Periksakan diri untuk vaksinasi dalam 4 hari",
+              "text": "Vaksinasi paling efektif bila diberikan dalam 4 hari setelah pajanan, paling lambat dalam 14 hari; lakukan juga pemantauan kesehatan mandiri selama 21 hari."
+            },
+            {
+              "if": "dalam setahun terakhir memiliki banyak pasangan seksual atau perilaku berisiko tinggi lainnya",
+              "title": "Terima 2 dosis vaksin yang dibiayai pemerintah",
+              "text": "Orang yang memenuhi syarat dapat membuat janji vaksin mpox yang dibiayai pemerintah; 2 dosis dengan jarak minimal 4 minggu diperlukan untuk perlindungan penuh."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Gejala awal yang umum adalah **demam, sakit kepala, nyeri otot, nyeri punggung, lelah, dan pembengkakan kelenjar getah bening**.\n\nSetelah 1–3 hari muncul ruam yang berkembang berurutan dari bercak datar, benjolan, lepuh, pustula, hingga keropeng. Ruam dapat terkonsentrasi di alat kelamin, anus, mulut atau wajah, serta tangan dan kaki; lesi bisa terasa nyeri atau gatal. Penyakit berlangsung sekitar 2–4 minggu dan sebagian besar sembuh sendiri.",
+          "warning": "Lesi menyebar luas atau muncul di mata, nyeri atau perdarahan pada rektum, sulit menelan, perubahan kesadaran; orang dengan imunitas lemah (misalnya penderita HIV yang tidak terkontrol) lebih mudah mengalami penyakit berat."
+        },
+        {
+          "key": "transmission",
+          "heading": "Cara penularan",
+          "markdown": "Penularan terutama melalui **kontak langsung** dengan ruam, keropeng, atau cairan tubuh penderita; wabah beberapa tahun terakhir banyak berkaitan dengan **kontak seksual dan kontak dekat lainnya**. Penularan juga dapat terjadi melalui percikan dari kontak tatap muka yang lama, atau kontak dengan seprai, pakaian, dan handuk yang terkontaminasi; ibu hamil dapat menularkannya ke janin.\n\nPenderita menular sejak gejala muncul hingga semua keropeng lepas dan kulit baru terbentuk."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- Kelompok berisiko tinggi yang memenuhi syarat sebaiknya menerima **2 dosis vaksin mpox yang dibiayai pemerintah**.\n- Hindari kontak dekat dengan orang yang tidak dikenal; penggunaan kondom selama hubungan seksual tidak sepenuhnya mencegah mpox, tetapi tetap menurunkan risiko infeksi menular seksual lainnya.\n- Jangan berbagi handuk, seprai, pakaian, dan alat makan.\n- Saat bepergian ke negara yang sedang mengalami wabah, hindari kontak dengan hewan liar (terutama hewan pengerat)."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis dan pengobatan",
+          "markdown": "Sebagian besar pasien terutama mendapat terapi suportif: meredakan nyeri, menjaga lesi tetap bersih dan kering, serta mencegah infeksi bakteri. Pada pasien berat atau berisiko tinggi, dokter dapat menilai penggunaan obat antivirus tecovirimat.\n\nPasien sebaiknya menghindari kontak dekat dengan orang lain sampai semua lesi berkeropeng dan lepas."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaksin",
+          "markdown": "Di Taiwan digunakan vaksin hidup yang dilemahkan dan tidak bereplikasi (JYNNEOS), **2 dosis dengan jarak minimal 4 minggu**. Sasaran vaksin yang dibiayai pemerintah meliputi orang dengan perilaku seksual berisiko tinggi dalam setahun terakhir (misalnya memiliki banyak pasangan seksual, penyedia layanan seksual, dan orang yang berhubungan seksual di tempat usaha), serta kontak pasca-pajanan yang dinilai oleh dinas kesehatan. Lokasi vaksinasi dapat dilihat pada daftar fasilitas kesehatan mitra."
+        },
+        {
+          "key": "situation",
+          "heading": "Situasi terkini dan statistik",
+          "markdown": "Kasus di dalam negeri sebagian besar muncul sporadis; secara internasional, wabah clade I terkonsentrasi di beberapa negara di Afrika Tengah dan Afrika Timur. Untuk tingkat peringatan perjalanan terkait, lihat bagian perjalanan ke luar negeri."
+        },
+        {
+          "key": "faq",
+          "heading": "Pertanyaan umum"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ฝีดาษวานร (Mpox)",
+      "summary": "ฝีดาษวานร (Mpox เดิมเรียกว่า monkeypox) ติดต่อหลักผ่านการสัมผัสใกล้ชิด ทำให้มีไข้ ต่อมน้ำเหลืองโต และผื่น กลุ่มเสี่ยงสูงสามารถรับวัคซีน Mpox ที่รัฐสนับสนุนค่าใช้จ่ายได้ 2 เข็ม ตั้งแต่ปี 2023 เป็นโรคติดต่อที่ต้องรายงานประเภทที่ 2",
+      "keyFacts": {
+        "incubation": "5–21 วัน (โดยทั่วไป 6–13 วัน)",
+        "symptoms": "ไข้ ปวดศีรษะ ต่อมน้ำเหลืองโต ตามด้วยผื่น ตุ่มน้ำ และตุ่มหนอง",
+        "transmission": "สัมผัสใกล้ชิด (รวมถึงการสัมผัสทางเพศ) สัมผัสรอยโรคหรือสิ่งของที่ปนเปื้อน",
+        "prevention": "กลุ่มเสี่ยงสูงฉีดวัคซีน Mpox 2 เข็ม หลีกเลี่ยงการสัมผัสใกล้ชิดกับผู้ที่ไม่รู้จัก",
+        "notify": "ภายใน 24 ชั่วโมง"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "ควรทำอย่างไร",
+          "cards": [
+            {
+              "if": "มีผื่นหรือตุ่มน้ำที่ไม่ทราบสาเหตุ และมีการสัมผัสใกล้ชิดในช่วง 3 สัปดาห์ที่ผ่านมา",
+              "title": "ปิดผื่นแล้วไปพบแพทย์",
+              "text": "สวมหน้ากากอนามัยและเสื้อแขนยาวปิดผื่นแล้วไปพบแพทย์ แจ้งประวัติการสัมผัสด้วยตนเอง สามารถไปสถานพยาบาลที่เป็นมิตรซึ่งแต่ละเมืองและเทศมณฑลกำหนดไว้ได้"
+            },
+            {
+              "if": "สัมผัสใกล้ชิดกับผู้ป่วยยืนยัน",
+              "title": "ประเมินการฉีดวัคซีนภายใน 4 วัน",
+              "text": "การฉีดวัคซีนภายใน 4 วันหลังสัมผัสเชื้อได้ผลดีที่สุด และช้าที่สุดไม่เกิน 14 วัน พร้อมทั้งติดตามสุขภาพตนเองเป็นเวลา 21 วัน"
+            },
+            {
+              "if": "ในรอบ 1 ปีที่ผ่านมามีคู่นอนหลายคนหรือพฤติกรรมเสี่ยงสูงอื่น ๆ",
+              "title": "ฉีดวัคซีนที่รัฐสนับสนุน 2 เข็ม",
+              "text": "ผู้ที่เข้าเกณฑ์สามารถนัดหมายฉีดวัคซีน Mpox ที่รัฐสนับสนุนค่าใช้จ่าย ต้องฉีด 2 เข็มห่างกันอย่างน้อย 4 สัปดาห์จึงจะป้องกันได้เต็มที่"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "ระยะแรกมักพบ**ไข้ ปวดศีรษะ ปวดกล้ามเนื้อ ปวดหลัง อ่อนเพลีย และต่อมน้ำเหลืองโต**\n\nหลังจาก 1–3 วันจะมีผื่นขึ้น โดยเปลี่ยนตามลำดับจากผื่นราบ ตุ่มนูน ตุ่มน้ำ ตุ่มหนอง ไปจนถึงตกสะเก็ด อาจกระจุกอยู่ที่อวัยวะเพศ ทวารหนัก ปากหรือใบหน้า มือและเท้า รอยโรคอาจเจ็บหรือคัน อาการป่วยกินเวลาประมาณ 2–4 สัปดาห์ และส่วนใหญ่หายได้เอง",
+          "warning": "รอยโรคกระจายเป็นวงกว้างหรือเกิดที่ตา ปวดหรือมีเลือดออกที่ทวารหนัก กลืนลำบาก การรับรู้เปลี่ยนไป ผู้ที่ภูมิคุ้มกันต่ำ (เช่น ผู้ติดเชื้อ HIV ที่ควบคุมไม่ได้) มีแนวโน้มที่จะป่วยรุนแรงมากกว่า"
+        },
+        {
+          "key": "transmission",
+          "heading": "ติดต่อได้อย่างไร",
+          "markdown": "ติดต่อหลักผ่าน**การสัมผัสโดยตรง**กับผื่น สะเก็ด หรือสารคัดหลั่งของผู้ป่วย การระบาดในช่วงหลายปีที่ผ่านมามักเกี่ยวข้องกับ**การสัมผัสทางเพศและการสัมผัสใกล้ชิดอื่น ๆ** อาจติดเชื้อจากละอองฝอยเมื่ออยู่ใกล้กันแบบเผชิญหน้าเป็นเวลานาน หรือจากการสัมผัสผ้าปูที่นอน เสื้อผ้า ผ้าขนหนูที่ปนเปื้อน และหญิงตั้งครรภ์อาจแพร่เชื้อสู่ทารกในครรภ์ได้\n\nผู้ป่วยแพร่เชื้อได้ตั้งแต่เริ่มมีอาการจนถึงรอยโรคทั้งหมดตกสะเก็ดหลุดและมีผิวหนังใหม่ขึ้น"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- กลุ่มเสี่ยงสูงที่เข้าเกณฑ์ควรฉีด**วัคซีน Mpox ที่รัฐสนับสนุน 2 เข็ม**\n- หลีกเลี่ยงการสัมผัสใกล้ชิดกับผู้ที่ไม่รู้จัก การใช้ถุงยางอนามัยตลอดการมีเพศสัมพันธ์แม้ไม่สามารถป้องกัน Mpox ได้อย่างสมบูรณ์ แต่ยังช่วยลดความเสี่ยงของโรคติดต่อทางเพศสัมพันธ์อื่น ๆ\n- ไม่ใช้ผ้าขนหนู ผ้าปูที่นอน เสื้อผ้า และอุปกรณ์รับประทานอาหารร่วมกัน\n- เมื่อเดินทางไปประเทศที่มีการระบาด หลีกเลี่ยงการสัมผัสสัตว์ป่า (โดยเฉพาะสัตว์ฟันแทะ)"
+        },
+        {
+          "key": "treatment",
+          "heading": "การวินิจฉัยและการรักษา",
+          "markdown": "ผู้ป่วยส่วนใหญ่ได้รับการรักษาแบบประคับประคองเป็นหลัก ได้แก่ บรรเทาอาการปวด รักษารอยโรคให้สะอาดและแห้ง และป้องกันการติดเชื้อแบคทีเรีย สำหรับผู้ป่วยอาการรุนแรงหรือกลุ่มเสี่ยงสูง แพทย์อาจพิจารณาใช้ยาต้านไวรัส tecovirimat\n\nผู้ป่วยควรหลีกเลี่ยงการสัมผัสใกล้ชิดกับผู้อื่นจนกว่ารอยโรคทั้งหมดจะตกสะเก็ดและหลุดออก"
+        },
+        {
+          "key": "vaccine",
+          "heading": "วัคซีน",
+          "markdown": "ไต้หวันใช้วัคซีนเชื้อเป็นอ่อนฤทธิ์ชนิดไม่แบ่งตัว (JYNNEOS) **2 เข็ม ห่างกันอย่างน้อย 4 สัปดาห์** กลุ่มที่ได้รับวัคซีนโดยรัฐสนับสนุนค่าใช้จ่าย ได้แก่ ผู้ที่มีพฤติกรรมทางเพศเสี่ยงสูงในรอบ 1 ปีที่ผ่านมา (เช่น มีคู่นอนหลายคน ผู้ให้บริการทางเพศ ผู้ที่มีเพศสัมพันธ์ในสถานประกอบการ) และผู้สัมผัสหลังสัมผัสเชื้อที่หน่วยงานสาธารณสุขประเมินแล้ว สามารถตรวจสอบสถานที่ฉีดได้จากรายชื่อสถานพยาบาลที่ร่วมโครงการ"
+        },
+        {
+          "key": "situation",
+          "heading": "สถานการณ์ปัจจุบันและสถิติ",
+          "markdown": "ผู้ป่วยในประเทศส่วนใหญ่พบเป็นรายเดี่ยว ในระดับนานาชาติ การระบาดของ clade I กระจุกตัวอยู่ในบางประเทศของแอฟริกากลางและแอฟริกาตะวันออก สำหรับระดับคำแนะนำการเดินทางที่เกี่ยวข้อง โปรดดูที่หมวดการเดินทางไปต่างประเทศ"
+        },
+        {
+          "key": "faq",
+          "heading": "คำถามที่พบบ่อย"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

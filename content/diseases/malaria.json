@@ -163,5 +163,291 @@
   "professional": {
     "specimen": "全血（EDTA 抗凝）製作厚、薄血片鏡檢，必要時以 PCR 鑑定種別；首次陰性但臨床高度懷疑者，應每 12–24 小時重複採檢共 3 次。",
     "notifyNote": "第二類法定傳染病，應於 24 小時內通報；疾管署抗瘧藥物可透過區管中心申請。"
+  },
+  "i18n": {
+    "en": {
+      "title": "Malaria",
+      "summary": "Malaria is spread by Anopheles mosquitoes. Taiwan eradicated it in 1965, and all current cases are imported. Before travelling to affected areas such as Africa and South Asia, ask about preventive medicine; if you have a fever after returning, always tell the doctor your travel history.",
+      "keyFacts": {
+        "incubation": "Falciparum malaria 7–14 days; other types can take several months",
+        "symptoms": "Recurring fever, chills, sweating, headache, muscle pain",
+        "transmission": "Bite of Anopheles mosquitoes; blood transfusion or shared needles",
+        "prevention": "Ask about preventive medicine before travel; prevent mosquito bites",
+        "notify": "Within 24 hours"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "have a fever within one year of returning from an affected area",
+              "title": "See a doctor immediately and give your travel history",
+              "text": "Falciparum malaria can become worse within days. See a doctor immediately and say which countries you have visited."
+            },
+            {
+              "if": "are about to travel to an affected area in Africa, South Asia or Oceania",
+              "title": "Visit a travel medicine clinic 4–6 weeks before departure",
+              "text": "The doctor will prescribe preventive medicine based on your destination and itinerary, and explain how to take it before, during and after the trip."
+            },
+            {
+              "if": "are taking preventive medicine",
+              "title": "Finish the course as directed after you return",
+              "text": "Most medicines must be continued for 1–4 weeks after returning. Do not stop on your own."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "Typical symptoms are alternating **fever, chills and sweating**, with headache, muscle pain, fatigue and nausea. Early symptoms resemble influenza and are easily overlooked.\n\n**Falciparum malaria** can worsen quickly and cause cerebral malaria (impaired consciousness, seizures), severe anaemia, kidney failure and respiratory distress; without prompt treatment it can be fatal. Vivax and ovale malaria can stay dormant in the liver and relapse months later.",
+          "warning": "Confusion, seizures, difficulty breathing, reduced urine, jaundice or bleeding: see a doctor immediately."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "Malaria is spread by the bite of **Anopheles mosquitoes** carrying the malaria parasite; these mosquitoes are mostly active at night. It can also spread through blood transfusion, organ transplant or shared needles, and from a pregnant woman to her baby. **It does not spread from person to person through ordinary contact**. Taiwan has no locally acquired malaria, but Anopheles minimus mosquitoes are still present, so imported cases need early diagnosis and treatment."
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "- Visit a travel medicine clinic **4–6 weeks** before departure to assess **preventive medicine** for your destination (such as atovaquone-proguanil, doxycycline or mefloquine).\n- Prevent mosquito bites at night during the trip: use repellent containing DEET, sleep under a bed net, and choose accommodation with window screens or air conditioning.\n- Preventive medicine must be taken as directed before, during and after the trip.\n- If you have a fever within one year of returning, always tell the doctor your travel history."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "Once confirmed, treatment is with antimalarial drugs according to the type of parasite and severity; severe malaria requires hospital admission and injectable artesunate. Taiwan CDC stocks some antimalarial drugs that medical facilities can apply to use. Vivax and ovale malaria need primaquine added to eliminate dormant forms in the liver (a G6PD test is required before use)."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "WHO has recommended malaria vaccines for children in affected areas of Africa, but they are not intended for ordinary travellers. For travellers, prevention still relies mainly on avoiding mosquito bites and preventive medicine."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Taiwan has about 10–20 imported cases a year, mostly falciparum malaria acquired in Africa."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Sốt rét",
+      "summary": "Sốt rét do muỗi Anopheles truyền. Đài Loan đã loại trừ bệnh này vào năm 1965, các ca hiện nay đều là nhập từ nước ngoài. Trước khi đến các vùng lưu hành như châu Phi, Nam Á, cần tham vấn về thuốc dự phòng; sau khi về nước nếu bị sốt, nhất định phải cho bác sĩ biết tiền sử du lịch.",
+      "keyFacts": {
+        "incubation": "Sốt rét ác tính (Plasmodium falciparum) 7–14 ngày; các thể khác có thể kéo dài đến vài tháng",
+        "symptoms": "Sốt theo chu kỳ, ớn lạnh, đổ mồ hôi, đau đầu, đau cơ",
+        "transmission": "Muỗi Anopheles đốt; truyền máu hoặc dùng chung kim tiêm",
+        "prevention": "Tham vấn thuốc dự phòng trước khi đi nước ngoài, phòng muỗi đốt",
+        "notify": "Trong vòng 24 giờ"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "bị sốt trong vòng một năm sau khi từ vùng lưu hành trở về",
+              "title": "Đi khám ngay và cho biết tiền sử du lịch",
+              "text": "Sốt rét ác tính có thể nặng lên trong vài ngày, hãy đi khám ngay và nói rõ đã đến những quốc gia nào."
+            },
+            {
+              "if": "sắp đến vùng lưu hành ở châu Phi, Nam Á hoặc châu Đại Dương",
+              "title": "Đến phòng khám y học du lịch 4–6 tuần trước khi khởi hành",
+              "text": "Bác sĩ sẽ kê thuốc dự phòng tùy theo điểm đến và lịch trình, đồng thời hướng dẫn cách uống thuốc trước khi đi, trong chuyến đi và sau khi về nước."
+            },
+            {
+              "if": "đang dùng thuốc dự phòng",
+              "title": "Sau khi về nước, uống đủ theo chỉ dẫn",
+              "text": "Phần lớn các thuốc vẫn cần tiếp tục dùng 1–4 tuần sau khi về nước, không tự ý ngừng thuốc."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Triệu chứng điển hình là **sốt, ớn lạnh, đổ mồ hôi** xuất hiện xen kẽ, kèm đau đầu, đau cơ, mệt mỏi, buồn nôn. Giai đoạn đầu triệu chứng giống cúm nên dễ bị bỏ qua.\n\n**Sốt rét ác tính (do Plasmodium falciparum)** có thể nặng lên nhanh chóng, gây sốt rét thể não (rối loạn ý thức, co giật), thiếu máu nặng, suy thận, suy hô hấp; nếu không điều trị kịp thời có thể tử vong. Sốt rét do P. vivax và P. ovale có thể ẩn náu trong gan và tái phát sau vài tháng.",
+          "warning": "Lú lẫn, co giật, khó thở, lượng nước tiểu giảm, vàng da hoặc chảy máu, hãy đi khám ngay."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền như thế nào",
+          "markdown": "Sốt rét lây qua vết đốt của **muỗi Anopheles** mang ký sinh trùng sốt rét; loài muỗi này hoạt động chủ yếu vào ban đêm. Bệnh cũng có thể lây qua truyền máu, ghép tạng hoặc dùng chung kim tiêm, và phụ nữ mang thai có thể truyền cho thai nhi. **Bệnh không lây từ người sang người qua tiếp xúc thông thường**. Đài Loan không còn sốt rét lây nhiễm tại chỗ, nhưng vẫn có muỗi Anopheles minimus, vì vậy các ca nhập từ nước ngoài cần được chẩn đoán và điều trị sớm."
+        },
+        {
+          "key": "prevention",
+          "heading": "Cách phòng ngừa",
+          "markdown": "- Đến phòng khám y học du lịch **4–6 tuần** trước khi khởi hành để đánh giá **thuốc dự phòng** theo điểm đến (như atovaquone-proguanil, doxycycline, mefloquine).\n- Phòng muỗi đốt vào ban đêm trong chuyến đi: dùng thuốc chống muỗi có DEET, ngủ màn, chọn nơi lưu trú có lưới chống muỗi hoặc điều hòa.\n- Thuốc dự phòng cần được dùng liên tục theo chỉ dẫn trước khi đi, trong chuyến đi và sau khi về nước.\n- Nếu bị sốt trong vòng một năm sau khi về nước, khi đi khám nhất định phải cho biết tiền sử du lịch."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Sau khi xác định chẩn đoán, điều trị bằng thuốc chống sốt rét tùy theo loại ký sinh trùng và mức độ nặng; sốt rét nặng cần nhập viện và điều trị bằng artesunate dạng tiêm. Taiwan CDC dự trữ một số thuốc chống sốt rét để các cơ sở y tế đăng ký sử dụng. Sốt rét do P. vivax và P. ovale cần bổ sung primaquine để loại bỏ thể ngủ trong gan (cần xét nghiệm G6PD trước khi dùng)."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "WHO đã khuyến cáo dùng vắc-xin sốt rét cho trẻ em tại các vùng lưu hành ở châu Phi, nhưng vắc-xin này không dành cho du khách thông thường. Đối với du khách, phòng bệnh vẫn chủ yếu là phòng muỗi đốt và dùng thuốc dự phòng."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện tại và thống kê",
+          "markdown": "Mỗi năm trong nước có khoảng 10–20 ca nhập từ nước ngoài, chủ yếu là sốt rét ác tính (P. falciparum) mắc tại châu Phi."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Malaria",
+      "summary": "Malaria ditularkan oleh nyamuk Anopheles. Taiwan telah memberantasnya pada 1965, dan semua kasus saat ini merupakan kasus impor. Sebelum bepergian ke daerah endemis seperti Afrika dan Asia Selatan, tanyakan tentang obat pencegahan; jika demam setelah pulang, selalu sampaikan riwayat perjalanan kepada dokter.",
+      "keyFacts": {
+        "incubation": "Malaria falciparum 7–14 hari; jenis lain dapat mencapai beberapa bulan",
+        "symptoms": "Demam berulang, menggigil, berkeringat, sakit kepala, nyeri otot",
+        "transmission": "Gigitan nyamuk Anopheles; transfusi darah atau berbagi jarum suntik",
+        "prevention": "Tanyakan obat pencegahan sebelum bepergian; cegah gigitan nyamuk",
+        "notify": "Dalam 24 jam"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Apa yang harus dilakukan",
+          "cards": [
+            {
+              "if": "demam dalam satu tahun setelah pulang dari daerah endemis",
+              "title": "Segera berobat dan sampaikan riwayat perjalanan",
+              "text": "Malaria falciparum dapat memburuk dalam beberapa hari. Segera berobat dan sebutkan negara mana saja yang pernah dikunjungi."
+            },
+            {
+              "if": "akan bepergian ke daerah endemis di Afrika, Asia Selatan, atau Oseania",
+              "title": "Kunjungi klinik kedokteran perjalanan 4–6 minggu sebelum berangkat",
+              "text": "Dokter akan meresepkan obat pencegahan sesuai tujuan dan rencana perjalanan, serta menjelaskan cara meminumnya sebelum, selama, dan setelah perjalanan."
+            },
+            {
+              "if": "sedang mengonsumsi obat pencegahan",
+              "title": "Habiskan sesuai petunjuk setelah pulang",
+              "text": "Sebagian besar obat masih harus diminum 1–4 minggu setelah pulang. Jangan berhenti sendiri."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Gejala khasnya adalah **demam, menggigil, dan berkeringat** yang muncul bergantian, disertai sakit kepala, nyeri otot, lelah, dan mual. Gejala awal mirip influenza sehingga mudah terabaikan.\n\n**Malaria falciparum** dapat memburuk dengan cepat dan menyebabkan malaria serebral (gangguan kesadaran, kejang), anemia berat, gagal ginjal, dan gangguan pernapasan; tanpa pengobatan segera dapat berakibat fatal. Malaria vivax dan ovale dapat bersembunyi di hati dan kambuh beberapa bulan kemudian.",
+          "warning": "Tidak sadar jernih, kejang, sesak napas, urine berkurang, kuning pada kulit dan mata, atau perdarahan: segera berobat."
+        },
+        {
+          "key": "transmission",
+          "heading": "Cara penularan",
+          "markdown": "Malaria ditularkan melalui gigitan **nyamuk Anopheles** yang membawa parasit malaria; nyamuk ini umumnya aktif pada malam hari. Penyakit ini juga dapat menular melalui transfusi darah, transplantasi organ, atau berbagi jarum suntik, dan dari ibu hamil ke janin. **Tidak menular dari orang ke orang melalui kontak biasa**. Taiwan tidak lagi memiliki malaria lokal, tetapi nyamuk Anopheles minimus masih ada, sehingga kasus impor perlu didiagnosis dan diobati sejak dini."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- Kunjungi klinik kedokteran perjalanan **4–6 minggu** sebelum berangkat untuk menilai **obat pencegahan** sesuai tujuan (seperti atovaquone-proguanil, doxycycline, mefloquine).\n- Cegah gigitan nyamuk pada malam hari selama perjalanan: gunakan losion antinyamuk yang mengandung DEET, tidur dengan kelambu, dan pilih penginapan yang memiliki kawat kasa atau pendingin udara.\n- Obat pencegahan harus diminum terus sesuai petunjuk sebelum, selama, dan setelah perjalanan.\n- Jika demam dalam satu tahun setelah pulang, selalu sampaikan riwayat perjalanan saat berobat."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis dan pengobatan",
+          "markdown": "Setelah terkonfirmasi, pengobatan menggunakan obat antimalaria sesuai jenis parasit dan tingkat keparahan; malaria berat memerlukan perawatan di rumah sakit dengan artesunate suntik. Taiwan CDC menyimpan persediaan sebagian obat antimalaria yang dapat diajukan penggunaannya oleh fasilitas kesehatan. Malaria vivax dan ovale memerlukan tambahan primaquine untuk memberantas bentuk dorman di hati (tes G6PD diperlukan sebelum penggunaan)."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaksin",
+          "markdown": "WHO telah merekomendasikan vaksin malaria untuk anak-anak di daerah endemis di Afrika, tetapi vaksin ini tidak ditujukan bagi wisatawan pada umumnya. Bagi wisatawan, pencegahan tetap bertumpu pada menghindari gigitan nyamuk dan obat pencegahan."
+        },
+        {
+          "key": "situation",
+          "heading": "Situasi terkini dan statistik",
+          "markdown": "Taiwan memiliki sekitar 10–20 kasus impor per tahun, sebagian besar malaria falciparum yang tertular di Afrika."
+        },
+        {
+          "key": "faq",
+          "heading": "Pertanyaan umum"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "มาลาเรีย",
+      "summary": "มาลาเรียแพร่เชื้อโดยยุงก้นปล่อง ไต้หวันกำจัดโรคนี้ได้หมดในปี 1965 ผู้ป่วยในปัจจุบันล้วนติดเชื้อมาจากต่างประเทศ ก่อนเดินทางไปพื้นที่ระบาดเช่นแอฟริกาและเอเชียใต้ ควรปรึกษาเรื่องยาป้องกัน และหากมีไข้หลังกลับมาต้องแจ้งประวัติการเดินทางแก่แพทย์เสมอ",
+      "keyFacts": {
+        "incubation": "มาลาเรียชนิดฟัลซิปารัม 7–14 วัน ชนิดอื่นอาจนานถึงหลายเดือน",
+        "symptoms": "ไข้เป็นช่วง ๆ หนาวสั่น เหงื่อออก ปวดศีรษะ ปวดกล้ามเนื้อ",
+        "transmission": "ยุงก้นปล่องกัด การให้เลือดหรือใช้เข็มร่วมกัน",
+        "prevention": "ปรึกษายาป้องกันก่อนเดินทางไปต่างประเทศ ป้องกันยุงกัด",
+        "notify": "ภายใน 24 ชั่วโมง"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "ควรทำอย่างไร",
+          "cards": [
+            {
+              "if": "มีไข้ภายใน 1 ปีหลังกลับจากพื้นที่ระบาด",
+              "title": "ไปพบแพทย์ทันทีและแจ้งประวัติการเดินทาง",
+              "text": "มาลาเรียชนิดฟัลซิปารัมอาจอาการแย่ลงภายในไม่กี่วัน โปรดไปพบแพทย์ทันทีและแจ้งว่าเคยไปประเทศใดมาบ้าง"
+            },
+            {
+              "if": "กำลังจะเดินทางไปพื้นที่ระบาดในแอฟริกา เอเชียใต้ หรือโอเชียเนีย",
+              "title": "ไปคลินิกเวชศาสตร์การเดินทาง 4–6 สัปดาห์ก่อนออกเดินทาง",
+              "text": "แพทย์จะสั่งยาป้องกันตามจุดหมายปลายทางและแผนการเดินทาง พร้อมอธิบายวิธีรับประทานยาก่อนเดินทาง ระหว่างเดินทาง และหลังกลับมา"
+            },
+            {
+              "if": "กำลังรับประทานยาป้องกันอยู่",
+              "title": "หลังกลับมาให้รับประทานต่อจนครบตามคำแนะนำ",
+              "text": "ยาส่วนใหญ่ต้องรับประทานต่อหลังกลับมาอีก 1–4 สัปดาห์ อย่าหยุดยาเอง"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "อาการทั่วไปคือ**ไข้ หนาวสั่น เหงื่อออก**สลับกัน ร่วมกับปวดศีรษะ ปวดกล้ามเนื้อ อ่อนเพลีย คลื่นไส้ อาการระยะแรกคล้ายไข้หวัดใหญ่จึงถูกมองข้ามได้ง่าย\n\n**มาลาเรียชนิดฟัลซิปารัม**อาจทรุดลงอย่างรวดเร็ว ทำให้เกิดมาลาเรียขึ้นสมอง (ความรู้สึกตัวผิดปกติ ชัก) โลหิตจางรุนแรง ไตวาย และหายใจลำบาก หากไม่ได้รับการรักษาทันเวลาอาจเสียชีวิต มาลาเรียชนิดไวแวกซ์และโอวาเลอาจแฝงตัวอยู่ในตับและกลับเป็นซ้ำหลังผ่านไปหลายเดือน",
+          "warning": "ไม่รู้สึกตัวดี ชัก หายใจลำบาก ปัสสาวะลดลง ตัวเหลืองตาเหลือง หรือมีเลือดออก โปรดไปพบแพทย์ทันที"
+        },
+        {
+          "key": "transmission",
+          "heading": "ติดต่อได้อย่างไร",
+          "markdown": "มาลาเรียติดต่อผ่านการถูก**ยุงก้นปล่อง** (Anopheles) ที่มีเชื้อมาลาเรียกัด ยุงชนิดนี้ส่วนใหญ่ออกหากินตอนกลางคืน นอกจากนี้ยังอาจติดต่อผ่านการให้เลือด การปลูกถ่ายอวัยวะ หรือการใช้เข็มร่วมกัน และหญิงตั้งครรภ์อาจแพร่เชื้อสู่ทารกในครรภ์ได้ **ไม่ติดต่อจากคนสู่คนผ่านการสัมผัสทั่วไป** ไต้หวันไม่มีมาลาเรียที่ติดในประเทศแล้ว แต่ยังมียุงก้นปล่อง Anopheles minimus อยู่ ดังนั้นผู้ป่วยที่นำเข้าจากต่างประเทศจึงต้องได้รับการวินิจฉัยและรักษาแต่เนิ่น ๆ"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- ไปคลินิกเวชศาสตร์การเดินทาง **4–6 สัปดาห์**ก่อนออกเดินทาง เพื่อประเมิน**ยาป้องกัน**ตามจุดหมายปลายทาง (เช่น atovaquone-proguanil, doxycycline, mefloquine)\n- ป้องกันยุงกัดในเวลากลางคืนระหว่างการเดินทาง: ใช้ยากันยุงที่มี DEET นอนในมุ้ง และเลือกที่พักที่มีมุ้งลวดหรือเครื่องปรับอากาศ\n- ยาป้องกันต้องรับประทานต่อเนื่องตามคำแนะนำ ทั้งก่อนเดินทาง ระหว่างเดินทาง และหลังกลับมา\n- หากมีไข้ภายใน 1 ปีหลังกลับมา เมื่อไปพบแพทย์ต้องแจ้งประวัติการเดินทางเสมอ"
+        },
+        {
+          "key": "treatment",
+          "heading": "การวินิจฉัยและการรักษา",
+          "markdown": "เมื่อยืนยันการวินิจฉัยแล้ว จะรักษาด้วยยาต้านมาลาเรียตามชนิดของเชื้อและความรุนแรง มาลาเรียรุนแรงต้องนอนโรงพยาบาลและรักษาด้วย artesunate ชนิดฉีด Taiwan CDC สำรองยาต้านมาลาเรียบางชนิดไว้ให้สถานพยาบาลขอใช้ มาลาเรียชนิดไวแวกซ์และโอวาเลต้องเพิ่ม primaquine เพื่อกำจัดเชื้อระยะพักตัวในตับ (ต้องตรวจ G6PD ก่อนใช้)"
+        },
+        {
+          "key": "vaccine",
+          "heading": "วัคซีน",
+          "markdown": "WHO แนะนำให้ใช้วัคซีนมาลาเรียในเด็กในพื้นที่ระบาดของแอฟริกา แต่ไม่ได้มีไว้สำหรับนักเดินทางทั่วไป สำหรับนักเดินทาง การป้องกันยังคงเน้นที่การป้องกันยุงกัดและยาป้องกันเป็นหลัก"
+        },
+        {
+          "key": "situation",
+          "heading": "สถานการณ์ปัจจุบันและสถิติ",
+          "markdown": "ในประเทศมีผู้ป่วยนำเข้าจากต่างประเทศปีละประมาณ 10–20 ราย ส่วนใหญ่เป็นมาลาเรียชนิดฟัลซิปารัมที่ติดเชื้อจากแอฟริกา"
+        },
+        {
+          "key": "faq",
+          "heading": "คำถามที่พบบ่อย"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }
