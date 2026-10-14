@@ -9,6 +9,7 @@
 //     專業版只下載專業索引（民眾索引只在專業索引讀不到時才補抓，core.js 的 poolFor 本來就是「有專業索引就只用專業索引」）。
 //   - 後台的評估重跑要用全部語言（評估集有英文、越南文題），傳 { allLangs: true } 讀完整的 search-index.json。
 import { ENGINE_PRIMARY as PRIMARY, ENGINE_SECONDARY as SECONDARY, indexShardNames } from './deps-manifest.js';
+import { registerRefusalText } from './rules.js';
 
 let corePromise = null;
 const loadCore = () => (corePromise ??= import('./core.js').catch((e) => { corePromise = null; throw e; }));
@@ -94,6 +95,9 @@ export function loadEngine(view = 'public', { allLangs = false } = {}) {
   if (enginePromise.has(key)) return enginePromise.get(key);
   const p = (async () => {
     const core = loadCore();
+    // 第四十八輪：當頁語言的拒答文案拆檔（建置時產出，見 i18n-split.mjs emitRefusalBundles；後台評估重跑要全部語言）。
+    // 開發時（未建置）檔案不存在，rules.js 本來就齊全，載入失敗不影響
+    const refusal = Promise.all(['ja', 'tl', 'vi', 'id', 'th'].filter((l) => allLangs || l === LANG).map((l) => import(`./refusal-i18n.${l}.js`).then((m) => registerRefusalText(l, m.default), () => {})));
     const [[index, indexPro], primary, secondary] = await Promise.all([
       Promise.all(indexesFor(view, allLangs)),
       Promise.all(PRIMARY.map(([n, fb]) => v1(n, fb))),
@@ -101,13 +105,14 @@ export function loadEngine(view = 'public', { allLangs = false } = {}) {
       Promise.all(SECONDARY.map(getSecondary)),
     ]);
     const [situation, clarifications, glossary, diseases, vaccines, countries, datasets, faq, units, aiStatus] = primary;
-    const [travelAlerts, countryLevels, services, notifyTable, media, schedule] = secondary;
+    const [travelAlerts, countryLevels, services, notifyTable, media, schedule, vaccineMaster] = secondary;
     const deps = {
       index: index ?? [], indexPro: indexPro ?? [], situation,
       clarifications: (clarifications ?? []).map((c) => ({ ...c, url: c.path ?? `/factcheck/#${c.id}`, ownerName: c.governance?.ownerName ?? c.ownerName })),
       glossary: glossary ?? [],
       diseases: (diseases ?? []).map((d) => ({ ...d, hasPage: d.hasPage ?? !!d.page })),
-      vaccines: (vaccines ?? []).map((v) => ({ id: v.id, slug: v.slug, name: v.title, title: v.title, nameEn: v.nameEn, aliases: v.aliases, diseases: v.diseases, whereUrl: v.whereUrl })),
+      vaccines: [...(vaccines ?? []).map((v) => ({ id: v.id, slug: v.slug, name: v.title, title: v.title, nameEn: v.nameEn, aliases: v.aliases, diseases: v.diseases, whereUrl: v.whereUrl })),
+        ...(vaccineMaster ?? []).filter((m) => !(vaccines ?? []).some((v) => v.id === m.id))], // 第四十八輪：尚無疫苗頁的疫苗（主檔）
       countries: countries ?? [],
       datasets: (datasets ?? []).filter((d) => d.series).map((d) => ({ ...d, ownerName: d.governance?.ownerName ?? d.ownerName })),
       faq: (faq ?? []).map((f) => ({ id: f.id, question: f.question, diseases: f.diseases, tasks: f.tasks, url: f.path, whitelist: f.governance?.whitelist !== false && !(f.governance?.stale?.length) })),
@@ -120,6 +125,7 @@ export function loadEngine(view = 'public', { allLangs = false } = {}) {
       media: (media ?? []).map((x) => ({ id: x.id, mediaType: x.mediaType, poster: x.poster, producedAt: x.producedAt, basedOnVersionLabel: x.basedOnVersionLabel, durationSeconds: x.durationSeconds })),
     };
     const { createEngine } = await core;
+    await refusal;
     return { engine: createEngine(deps), deps };
   })();
   enginePromise.set(key, p);

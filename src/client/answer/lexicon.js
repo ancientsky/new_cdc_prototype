@@ -6,7 +6,7 @@ import { tokenize } from './text.js';
 // 跨語言關鍵詞（非中文問句 → 中文檢索詞），只做檢索展開，不出現在答案中
 export const CROSS_LANG = [
   [/\b(see a doctor|seek (medical )?care|doctor|clinic|hospital)\b|đi khám|bác sĩ/i, '就醫 看醫生'],
-  [/\bfever\b|sốt/i, '發燒'], [/\brash\b|phát ban/i, '出疹 紅疹'], [/\bsymptoms?\b|triệu chứng/i, '症狀 徵象'],
+  [/\bfever\b|sốt/i, '發燒'], [/\brash\b|phát ban/i, '出疹 紅疹'], [/\bsymptoms?\b|triệu chứng|\bgejala\b|\bsintomas\b|อาการ|症状/i, '症狀 徵象'],
   [/\bwarning signs?\b|dấu hiệu cảnh báo/i, '警示徵象'], [/\bincubation\b|ủ bệnh/i, '潛伏期'],
   [/\bprevent\w*\b|phòng ngừa|phòng bệnh/i, '預防'], [/\btransmi\w*|spread\w*|lây/i, '傳染 傳播'],
   [/\bvaccin\w*|immuni[sz]\w*|vắc[\s-]?xin|tiêm/i, '疫苗 接種'], [/\btravel\w*|abroad|overseas|du lịch|nước ngoài/i, '出國 旅遊'],
@@ -26,6 +26,10 @@ export const CROSS_LANG = [
   [/\bhealth insurance\b|bảo hiểm y tế|asuransi kesehatan|ประกันสุขภาพ|健康保険/i, '健保', true],
   // 來臺旅遊（入境）：站內目前沒有給來臺旅客的接種建議；錨點讓這類問句查無，而不是拿出國旅遊或流感疫苗的片段回答
   [/\b(?:visit(?:ing)?(?: or moving to)?|coming to|moving to|arriving in|travel(?:l)?ing to|travel to|holiday in|vacation in|trip to|touring)\s+taiwan\b/i, '來臺旅客 訪臺 來臺旅遊', true],
+  // 第四十八輪（issue #101）：被動物咬傷（他加祿 nakagat、印尼 digigit、泰 ถูก…กัด、越 bị…cắn、日 噛まれ）與狗、貓。
+  // 只是把外語詞對應到中文檢索詞；主題是否確認由中文錨點（core.js zhAnchors）與疾病實體判斷，不在這裡寫死答案
+  [/\bbit(ten|es?)\b|\bscratch(ed)?\b|\b(na)?kagat\b|\bdigigit\b|\bgigitan\b|(ถูก|โดน).{0,8}กัด|bị .{0,10}cắn|噛まれ|かまれ/i, '咬傷 動物咬傷'],
+  [/\bdogs?\b|\baso\b|\banjing\b|สุนัข|หมา|\bchó\b|犬/i, '狗'], [/\bcats?\b|\bpusa\b|\bkucing\b|แมว|\bmèo\b|猫/i, '貓'],
   [/\b(vaccination|immuni[sz]ation) records?\b|hồ sơ tiêm chủng|catatan imunisasi|record ng bakuna|ประวัติการฉีดวัคซีน|予防接種の記録|接種記録/i, '接種紀錄', true],
 ];
 /** 第四十輪：問句命中的主題錨點：[{ re, zh[] }]（CROSS_LANG 第三欄為 true 者；中文問句另有 TOPIC_ZH） */
@@ -45,7 +49,9 @@ export const PARAPHRASE = [
   [/怎麼申請|如何申請|申請流程|怎麼辦理/, '申請 步驟'], [/要帶什麼|準備什麼|帶哪些/, '應備文件 準備'],
   [/影片|宣導片|衛教片|動畫/, '影片 影音'], [/職缺|徵才|徵人/, '招募'], [/標案|招標|投標/, '採購'],
   // 第四十輪：「外籍勞工／外勞」與站內用語「移工」「外籍人士」；「漏打／錯過」與「補接種」；「哺乳／餵母乳」
-  [/外籍勞工|外勞|外籍移工|外籍看護|外籍工作者/, '移工 外籍'], [/漏打|沒打到|忘了打|忘記打|錯過|延遲接種|晚打|來不及打/, '補接種 補打 漏打'],
+  [/外籍勞工|外勞|外籍移工|外籍看護|外籍工作者/, '移工 外籍'], [/漏打|沒打到|忘了打|忘記打|錯過|延遲接種|晚打|來不及打|晚了.{0,8}才打|延後(接種|打)/, '補接種 補打 漏打'],
+  // 第四十八輪（issue #94）：「打過什麼疫苗要去哪裡查」→ 接種紀錄（查的是紀錄，不是接種點）
+  [/打過(什麼|哪些|幾劑)|接種過(什麼|哪些)|(疫苗|接種)(紀錄|記錄)/, '接種紀錄 預防接種紀錄'],
   [/哺乳|餵母乳|親餵|母乳/, '哺乳'], [/懷孕|孕期|妊娠|有孕/, '孕婦 懷孕'],
 ];
 
@@ -217,9 +223,16 @@ export function matcherFor(name) {
  */
 export function latinStems(pairs, known) {
   const out = new Map();
+  const own = new Map();
+  for (const [n, k] of pairs) (own.get(k) ?? own.set(k, new Set()).get(k)).add(lc(n).trim());
   for (const [n, k] of pairs) {
-    const s = lc(/^([a-z]{4,})-\d+[a-z0-9]*$/i.exec(String(n ?? '').trim())?.[1]);
-    if (s && !known.has(s)) out.set(s, out.has(s) && out.get(s) !== k ? null : k);
+    const cands = [lc(/^([a-z]{4,})-\d+[a-z0-9]*$/i.exec(String(n ?? '').trim())?.[1])];
+    // 第四十八輪（issue #101）：三個字以上的拉丁名稱，頭或尾那個字「本身就是同一對象的另一個名稱」時，去掉它的短稱也當別名。
+    // 例：印尼文詞彙主檔寫「Demam berdarah dengue」，民眾只打「demam berdarah」；尾字 dengue 已是登革熱的別名，去掉它不會變成別的東西。
+    // 越南文「Sốt xuất huyết Dengue」→「sốt xuất huyết」同理。歧義檢查與上面的詞幹相同（已知名稱不動、兩個對象推出同一短稱都不加）
+    const w = lc(n).trim().split(/\s+/);
+    if (w.length > 2 && isLatin(n)) for (const [cut, rest] of [[w.at(-1), w.slice(0, -1)], [w[0], w.slice(1)]]) if (own.get(k).has(cut)) cands.push(rest.join(' '));
+    for (const s of cands) if (s && !known.has(s)) out.set(s, out.has(s) && out.get(s) !== k ? null : k);
   }
   for (const [s, k] of out) if (k === null) known.add(s); // 記下有歧義的詞幹：下一輪（同義詞展開）也不加
   return [...out].filter(([, k]) => k !== null);

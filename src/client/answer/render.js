@@ -14,7 +14,7 @@ const S = {
     modelExtractive: '模型：抽取式整理，未使用生成模型', modelLlm: '模型：{p} · {m}（BYOK，由你的瀏覽器直接呼叫）', report: '回報錯誤', helpful: '有幫助', auditId: '稽核編號',
     reportH: '回報這則回答', reportKind: '問題類型', reportKinds: ['內容錯誤', '已過時', '不完整', '引用來源不對', '其他'], reportText: '說明（請勿填寫個資）', send: '送出', reportDone: '已收到，承辦單位會依稽核編號查核。',
     owner: '權責單位', reviewed: '最後審閱', current: '現行版', currentYes: '是（現行有效）', currentNo: '否（已被取代）', license: '授權', openOriginal: '開啟原文', machine: '機讀版', version: '版次', effective: '生效日', supersedes: '取代',
-    cite: '引用本頁', cited: '已複製引用', subscribe: '訂閱異動', subscribed: '已訂閱', nextReview: '下次審閱', section: '條次／段落', pdfPage: '頁碼（PDF 印刷頁碼）', extraction: '文字來源', extractionMachine: '由 PDF 機器轉出，尚未人工校對；請以 PDF 原頁為準', extractionReviewed: '由 PDF 轉出，權責單位已校對', verification: '內容確認', verificationPending: '依公開資料整理，內容待權責單位確認', extractionReconstructed: '尚未取得 PDF 正本：依公開摘錄與站內內容重建的示範版，未經權責單位查證；請以疾管署 PDF 正本為準', openPdf: '開啟 PDF', change: '本段異動', before: '修訂前', after: '修訂後',
+    cite: '引用本頁', cited: '已複製引用', subscribe: '訂閱異動', subscribed: '已訂閱', nextReview: '下次審閱', section: '條次／段落', pdfPage: '頁碼（PDF 印刷頁碼）', extraction: '文字來源', extractionMachine: '由 PDF 機器轉出，尚未人工校對；請以 PDF 原頁為準', extractionReviewed: '由 PDF 轉出，權責單位已校對', verification: '內容確認', verificationPending: '依公開資料整理，內容待權責單位確認', pendingTag: '內容待確認', extractionReconstructed: '尚未取得 PDF 正本：依公開摘錄與站內內容重建的示範版，未經權責單位查證；請以疾管署 PDF 正本為準', openPdf: '開啟 PDF', change: '本段異動', before: '修訂前', after: '修訂後',
     sitH: '現在的疫情', dataDate: '資料日', publisher: '發布', illustrative: '示意資料', statusBasis: '判定依據', seeTrend: '看完整趨勢',
     refusalH: '這個問題我不能替你判斷', why: '為什麼', call1922: '撥打 1922', relatedPages: '相關官方頁面',
     noAnswerBadge: '未產生答案', noAnswer: '這次沒有產生回答：上面是固定的說明文字與官方頁面連結，不是 AI 整理的內容。',
@@ -42,7 +42,7 @@ const S = {
     modelExtractive: 'Model: extractive (no generative model used)', modelLlm: 'Model: {p} · {m} (BYOK, called directly from your browser)', report: 'Report an error', helpful: 'Helpful', auditId: 'Audit ID',
     reportH: 'Report this answer', reportKind: 'Type', reportKinds: ['Incorrect', 'Outdated', 'Incomplete', 'Wrong source', 'Other'], reportText: 'Details (no personal data please)', send: 'Send', reportDone: 'Received. The responsible unit will review it using the audit ID.',
     owner: 'Responsible unit', reviewed: 'Last reviewed', current: 'Current version', currentYes: 'Yes', currentNo: 'No (superseded)', license: 'Licence', openOriginal: 'Open original', machine: 'Machine-readable', version: 'Version', effective: 'Effective', supersedes: 'Supersedes',
-    cite: 'Cite this page', cited: 'Citation copied', subscribe: 'Subscribe to changes', subscribed: 'Subscribed', nextReview: 'Next review', section: 'Section', pdfPage: 'PDF page', extraction: 'Text source', extractionMachine: 'Machine-extracted from the PDF, not yet proofread; the PDF page prevails', extractionReviewed: 'Extracted from the PDF and proofread by the responsible unit', verification: 'Confirmation', verificationPending: 'Compiled from public sources; pending confirmation by the responsible unit', extractionReconstructed: 'No original PDF yet: demonstration version rebuilt from public excerpts and site content, not verified by the responsible unit; the official PDF prevails', openPdf: 'Open PDF', change: 'Change in this section', before: 'Before', after: 'After',
+    cite: 'Cite this page', cited: 'Citation copied', subscribe: 'Subscribe to changes', subscribed: 'Subscribed', nextReview: 'Next review', section: 'Section', pdfPage: 'PDF page', extraction: 'Text source', extractionMachine: 'Machine-extracted from the PDF, not yet proofread; the PDF page prevails', extractionReviewed: 'Extracted from the PDF and proofread by the responsible unit', verification: 'Confirmation', verificationPending: 'Compiled from public sources; pending confirmation by the responsible unit', pendingTag: 'Pending verification', extractionReconstructed: 'No original PDF yet: demonstration version rebuilt from public excerpts and site content, not verified by the responsible unit; the official PDF prevails', openPdf: 'Open PDF', change: 'Change in this section', before: 'Before', after: 'After',
     sitH: 'Current situation', dataDate: 'Data as of', publisher: 'Published by', illustrative: 'Illustrative data', statusBasis: 'Basis', seeTrend: 'See full trend',
     refusalH: "I can't make this judgement for you", why: 'Why', call1922: 'Call 1922', relatedPages: 'Related official pages',
     noAnswerBadge: 'No answer generated', noAnswer: 'No answer was produced for this question. The note and links above are standard text, not AI-generated content.',
@@ -223,12 +223,12 @@ export function conflictNotes(result) {
   }))}</p><p>${link(c.prefer.url, c.prefer.title)} · ${link(c.other.url, c.other.title)}</p></div>`).join('');
 }
 
-/** 「答案來源」卡列表 */
+/** 「答案來源」卡列表。第四十八輪（issue #93）：內容待確認（verification: pending）的來源在卡片摘要列（不必展開）就標「內容待確認」 */
 export function sourceList(sources, { pro = false } = {}) {
   if (!sources?.length) return '';
   return `<section class="c-answer__sources" aria-labelledby="ans-src-h"><h3 id="ans-src-h">${esc(L('sourcesH'))}</h3><ol class="c-source-list">${sources.map((s) => `
     <li id="src-${esc(s.n)}"><details class="c-source-card c-source-card--${esc(s.type ?? 'content')}" data-group="answer-sources"${pro ? ' open' : ''}>
-      <summary><span class="c-source-card__n" aria-hidden="true">${esc(s.n)}</span><span class="c-source-card__t">${s.type === 'media' ? '<span class="c-source-card__kind" aria-hidden="true">▶</span> ' : ''}${esc(s.title)}</span><span class="c-source-card__m">${esc(sourceMeta(s))}</span></summary>
+      <summary><span class="c-source-card__n" aria-hidden="true">${esc(s.n)}</span><span class="c-source-card__t">${s.type === 'media' ? '<span class="c-source-card__kind" aria-hidden="true">▶</span> ' : ''}${esc(s.title)}</span><span class="c-source-card__m">${esc(sourceMeta(s))}${s.verification === 'pending' ? ` <span class="c-tag c-tag--warn">${esc(L('pendingTag'))}</span>` : ''}</span></summary>
       <div class="c-source-card__body">${sourceCardBody(s, { pro })}</div>
     </details></li>`).join('')}</ol></section>`;
 }

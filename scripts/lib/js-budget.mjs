@@ -20,6 +20,7 @@
 // 第四十輪（Issue #80）：答案頁的引擎（answer/core.js 與它的模組）改成「使用者提問時才 import()」，所以：
 //   - 「含答案引擎的頁」改以「載入 answer/data.js（引擎載入器）」判定；row.bytes 是立即載入的 JS，row.total 再加上提問時才載入的引擎閉包。
 //     240 KB 的引擎頁預算套在 total 上——一題深連結（/ask/?q=…）的使用者兩份都要付，預算的意義不變，只是初始畫面輕了。
+//   - 第四十八輪：拒答文案依語言拆檔後，提問時還會 import() 當頁語言的 answer/refusal-i18n.<lang>.js，也算進 total（不因為是動態載入就不算）。
 //   - 新增 checkAskDataBudget()：答案頁提問時要下載的 JSON（當頁語言＋中文的索引分片＋引擎資料，清單與前端共用 src/client/answer/deps-manifest.js），
 //     以 gzip 後位元組估算傳輸量（GitHub Pages 與一般 CDN 對 JSON 都會 gzip；level 6 與它們的預設相近），超過 ASK_DATA_BUDGET_KB 建置失敗。
 import fs from 'node:fs';
@@ -88,6 +89,9 @@ export function checkJsBudget(
     if (engine) {
       const lazy = closure(path.join(distDir, 'assets/js/answer/core.js'), cache);
       for (const f of lazy) if (!files.has(f)) total += fs.statSync(f).size;
+      // 第四十八輪：提問時另以 import() 載入當頁語言的拒答文案（answer/refusal-i18n.<lang>.js），一併算進合計
+      const rf = path.join(distDir, `assets/js/answer/refusal-i18n.${/<html[^>]*\blang="([^"]+)"/.exec(text)?.[1]}.js`);
+      if (fs.existsSync(rf)) total += fs.statSync(rf).size;
     }
     rows.push({ page: rel, bytes, total, admin: rel.startsWith('admin/'), engine });
   }
