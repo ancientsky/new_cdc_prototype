@@ -1795,6 +1795,11 @@ const ROWS_SEARCH = {
   'search.type.tender': ['採購公告', 'Procurement', '調達公告', 'Procurement', 'Mua sắm', 'Pengadaan', 'จัดซื้อจัดจ้าง'],
   'search.type.travel': ['旅遊目的地', 'Travel destinations', '渡航先', 'Mga destinasyon', 'Điểm đến', 'Tujuan perjalanan', 'จุดหมายปลายทาง'],
   'search.type.glossary': ['詞彙', 'Glossary', '用語集', 'Talasalitaan', 'Thuật ngữ', 'Daftar istilah', 'อภิธานศัพท์'],
+  // 第五十一輪：精選結果（查詢點名疾病或疫苗時，主題頁放在清單上方；docs/ask-search-llm.md 第 16 節）
+  'search.best.h': ['精選結果', 'Best match', 'おすすめのページ', 'Pinakaangkop na pahina', 'Kết quả phù hợp nhất', 'Hasil paling sesuai', 'หน้าที่ตรงที่สุด'],
+  'search.best.note': ['您搜尋的是疾病或疫苗名稱，先列出它的主題頁；其他提到它的頁面在下方。', 'Your search names a disease or vaccine, so its main page is listed first. Other pages that mention it are below.', '検索語が感染症またはワクチンの名称のため、その主要ページを先に表示しています。言及しているほかのページは下にあります。', 'Pangalan ng sakit o bakuna ang hinanap mo, kaya nauuna ang pangunahing pahina nito. Nasa ibaba ang iba pang pahinang bumabanggit dito.', 'Bạn đang tìm tên một bệnh hoặc vắc-xin, nên trang chính của nó được liệt kê trước. Các trang khác có nhắc đến nằm bên dưới.', 'Pencarian Anda adalah nama penyakit atau vaksin, jadi halaman utamanya ditampilkan lebih dulu. Halaman lain yang menyebutnya ada di bawah.', 'คำที่ค้นเป็นชื่อโรคหรือวัคซีน จึงแสดงหน้าหลักของเรื่องนั้นก่อน หน้าอื่นที่กล่าวถึงอยู่ด้านล่าง'],
+  'search.status.bestonly': ['其他頁面沒有提到「{q}」。', 'No other pages mention “{q}”.', '「{q}」に言及しているほかのページはありません。', 'Walang ibang pahinang bumabanggit sa “{q}”.', 'Không có trang nào khác nhắc đến “{q}”.', 'Tidak ada halaman lain yang menyebut “{q}”.', 'ไม่มีหน้าอื่นที่กล่าวถึง “{q}”'],
+  'search.status.best': ['精選結果：{t}。', 'Best match: {t}. ', 'おすすめ：{t}。', 'Pinakaangkop: {t}. ', 'Phù hợp nhất: {t}. ', 'Paling sesuai: {t}. ', 'ตรงที่สุด: {t} '],
   'footer.search': ['全文搜尋', 'Full-text search', '全文検索', 'Full-text na paghahanap', 'Tìm kiếm toàn văn', 'Pencarian teks lengkap', 'ค้นหาข้อความเต็ม'],
 };
 for (const [key, vals] of Object.entries(ROWS_SEARCH)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });

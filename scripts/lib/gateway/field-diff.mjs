@@ -6,9 +6,16 @@
 //   - 清單（關鍵字、對象…）說「新增／移除」哪些；日期、數字、選項說「由 A 改為 B」。
 //   - 提供語言、內容區塊（blocks／sections）逐項說明；其他複雜欄位退回「已修改」並附前後內容。
 // 回傳純資料（不含 HTML），由瀏覽器端以 textContent 組畫面，避免任何 HTML 注入。
-import { labelOf } from './validate-item.mjs';
+import { fieldLabel as labelOf } from '../../../src/client/admin/field-labels.js';
 
+// 不比較的欄位：__file／gov 是建置在記憶體裡加的、sourceHash 每次建置重算（stableJson 也不寫進檔）；
+// status 是送審流程本身（分支上一定是 draft／review，線上一定是 published），由送審狀態另外顯示。
+// 第五十一輪：除此之外「所有」不同的欄位都要列出來——以前語言只比 status、區塊只比內文與標題，
+// 其他子欄位（複核人、sourceHash、區塊的 warning…）改了審核人看不到，畫面還會說「沒有修改」。
 const IGNORE = new Set(['__file', 'sourceHash', 'gov', 'status']);
+/** 比較用的正規化 JSON：物件鍵排序（鍵的順序不算修改），陣列順序照舊 */
+const canon = (v) => (Array.isArray(v) ? `[${v.map((x) => (x === undefined ? 'null' : canon(x))).join(',')}]` : v && typeof v === 'object' ? `{${Object.keys(v).filter((k) => v[k] !== undefined).sort().map((k) => `${JSON.stringify(k)}:${canon(v[k])}`).join(',')}}` : v === undefined ? 'undefined' : JSON.stringify(v));
+const same = (a, b) => canon(a) === canon(b);
 const ORDER = ['title', 'question', 'summary', 'answerMarkdown', 'bodyMarkdown', 'clarificationMarkdown', 'introMarkdown', 'abstractMarkdown', 'machineReadableMarkdown', 'blocks', 'sections', 'owner', 'audience', 'tasks', 'basedOn', 'keywords', 'languages', 'publishAt', 'urgent'];
 const LANG = { 'zh-TW': '中文', en: '英文', ja: '日文', tl: '他加祿文', vi: '越南文', id: '印尼文', th: '泰文' };
 const LSTAT = { source: '正本', reviewed: '已複核譯文', machine: '機器翻譯', pending: '待翻譯', none: '不提供' };
@@ -97,7 +104,8 @@ export function fieldDiff(before, after, { unitNames = {} } = {}) {
   const changes = [];
   for (const field of keys) {
     const va = b[field], vb = a[field];
-    if (JSON.stringify(va) === JSON.stringify(vb)) continue;
+    if (same(va, vb)) continue;
+    const n0 = changes.length;
     const label = labelOf(field);
     if (isNew && (vb == null || vb === '' || (Array.isArray(vb) && !vb.length))) continue;
     if ((isText(va) || va == null) && (isText(vb) || vb == null) && (String(va ?? '').length > 30 || String(vb ?? '').length > 30 || /[。！？]/.test(`${va ?? ''}${vb ?? ''}`))) {
@@ -106,8 +114,16 @@ export function fieldDiff(before, after, { unitNames = {} } = {}) {
       continue;
     }
     if (field === 'languages' && va && vb && typeof va === 'object') {
-      const items = Object.keys({ ...va, ...vb }).filter((l) => va[l]?.status !== vb[l]?.status).map((l) => `${LANG[l] ?? l}：${LSTAT[va[l]?.status] ?? '（無）'} → ${LSTAT[vb[l]?.status] ?? '（無）'}`);
-      if (items.length) changes.push({ field, label, kind: 'changed', type: 'list', summary: items.join('；'), items });
+      const items = [];
+      for (const l of Object.keys({ ...va, ...vb })) {
+        const x = va[l], y = vb[l];
+        if (same(x, y)) continue;
+        if (x?.status !== y?.status) { items.push(`${LANG[l] ?? l}：${LSTAT[x?.status] ?? '（無）'} → ${LSTAT[y?.status] ?? '（無）'}`); continue; }
+        if (!x?.sourceHash && y?.sourceHash && same({ ...x, sourceHash: y.sourceHash }, y)) { items.push(`${LANG[l] ?? l}：正本已修改，${LSTAT[y.status] ?? y.status}標為待複核`); continue; }
+        const subs = Object.keys({ ...x, ...y }).filter((k) => !same(x?.[k], y?.[k]));
+        items.push(`${LANG[l] ?? l}（${LSTAT[y?.status] ?? y?.status ?? '（無）'}）：${subs.join('、')} 有變更`);
+      }
+      changes.push({ field, label, kind: 'changed', type: 'list', summary: items.join('；'), items });
       continue;
     }
     if ((field === 'blocks' || field === 'sections') && (Array.isArray(va) || Array.isArray(vb))) {
@@ -116,14 +132,19 @@ export function fieldDiff(before, after, { unitNames = {} } = {}) {
       for (const key of new Set([...mb.keys(), ...ma.keys()])) {
         const x = ma.get(key), y = mb.get(key);
         const tx = x?.markdown ?? '', ty = y?.markdown ?? '';
-        if (tx === ty && x?.heading === y?.heading) continue;
-        const d = textDiff(tx, ty);
-        changes.push({ field, label: `${label}「${y?.heading ?? x?.heading ?? key}」`, kind: !x ? 'added' : !y ? 'removed' : 'changed', type: 'text', ...d });
+        const blabel = `${label}「${y?.heading ?? x?.heading ?? key}」`;
+        if (tx !== ty || x?.heading !== y?.heading) changes.push({ field, label: blabel, kind: !x ? 'added' : !y ? 'removed' : 'changed', type: 'text', ...textDiff(tx, ty) });
+        else if (!same(x, y)) { // 內文相同，但區塊的其他設定（待補標記、警示、資料集…）改了
+          const subs = Object.keys({ ...x, ...y }).filter((k) => !same(x?.[k], y?.[k]));
+          const j = (v) => (v == null ? '（空白）' : JSON.stringify(v, null, 1).slice(0, 400));
+          changes.push({ field, label: blabel, kind: 'changed', type: 'value', summary: `${subs.join('、')} 已修改`, from: j(Object.fromEntries(subs.map((k) => [k, x?.[k]]))), to: j(Object.fromEntries(subs.map((k) => [k, y?.[k]]))) });
+        }
       }
+      if (changes.length === n0) changes.push({ field, label, kind: 'changed', type: 'list', summary: '區塊順序調整', items: [] });
       continue;
     }
     if (Array.isArray(va) || Array.isArray(vb)) {
-      const sa = (va ?? []).map((x) => (typeof x === 'object' ? JSON.stringify(x) : String(x))), sb = (vb ?? []).map((x) => (typeof x === 'object' ? JSON.stringify(x) : String(x)));
+      const sa = (va ?? []).map((x) => (x && typeof x === 'object' ? canon(x) : String(x))), sb = (vb ?? []).map((x) => (x && typeof x === 'object' ? canon(x) : String(x)));
       const added = sb.filter((x) => !sa.includes(x)).map((x) => show(x, unitNames)), removed = sa.filter((x) => !sb.includes(x)).map((x) => show(x, unitNames));
       const summary = [added.length ? `新增：${added.join('、')}` : '', removed.length ? `移除：${removed.join('、')}` : ''].filter(Boolean).join('；') || '順序調整';
       changes.push({ field, label, kind: va == null ? 'added' : 'changed', type: 'list', summary, items: [] });

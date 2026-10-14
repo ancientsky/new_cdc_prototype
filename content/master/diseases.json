@@ -177,6 +177,7 @@
       "登革出血熱",
       "天狗熱",
       "斷骨熱",
+      "骨痛熱症",
       "Dengue"
     ],
     "legalCategory": 2,
@@ -199,6 +200,17 @@
     "i18n": {
       "en": {
         "name": "Dengue fever"
+      },
+      "vi": {
+        "aliases": [
+          "Sốt xuất huyết"
+        ]
+      },
+      "id": {
+        "aliases": [
+          "Demam berdarah",
+          "DBD"
+        ]
       }
     }
   },

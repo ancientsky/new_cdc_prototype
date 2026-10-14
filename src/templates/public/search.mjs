@@ -2,8 +2,10 @@
 // 與 /ask/（智慧查詢）分工：/ask/ 給「整理好、附來源的一句答案」，/search/ 給「在所有頁面文字裡找關鍵字、可篩選、可依日期排序」。
 // 版面骨架由伺服器端輸出（表單、篩選容器、狀態列、結果清單），src/client/search.js 才動態載入 Pagefind 並填入選項與結果。
 // 篩選選項由 Pagefind 索引決定（只列該語言索引內真的有的值），所以這裡只輸出空的容器；單位代碼 → 顯示名稱的對照放 data-units。
+// 第五十一輪：data-bestbets 是這個語言的「疾病／疫苗名稱 → 一級頁面」對照（_bestbet.mjs），查詢點名疾病或疫苗時 search.js 在清單上方放一張精選結果卡（#search-best）。
 import { html } from '../../../scripts/lib/render.mjs';
 import { ldFor, pageHead, unitName } from './_partials.mjs';
+import { bestBetData } from './_bestbet.mjs';
 
 export function pages() { return [{ path: '/search/', lang: '*', props: {}, noindex: true }]; }
 
@@ -20,7 +22,7 @@ export function render(ctx) {
   const units = Object.fromEntries((site.master.units ?? []).map((u) => [u.id, unitName(ctx, u.id)]));
   const note = lang === 'zh-TW' ? '' : html`<p class="muted c-search__langnote">${t('search.lang.note')} <a href="${url('/search/', { noLang: true })}" data-search-zh hreflang="zh-TW" lang="zh-TW">${t('search.lang.zh')}</a></p>`;
   return html`${pageHead(ctx, { trail: [{ label: t('search.title') }], h1: t('search.title'), lead: t('search.lead') })}
-<div class="c-search" data-search data-units="${JSON.stringify(units)}">
+<div class="c-search" data-search data-units="${JSON.stringify(units)}" data-bestbets="${JSON.stringify(bestBetData(ctx))}">
   <form class="c-search__form" id="search-form" action="${url('/search/')}" method="get" role="search" aria-label="${t('search.title')}">
     <label class="c-search__label" for="search-q">${t('search.label')}</label>
     <div class="c-search__row">
@@ -43,6 +45,11 @@ export function render(ctx) {
   </form>
   ${note}
   <p class="c-search__status" id="search-status" role="status" aria-live="polite">${t('search.status.idle')}</p>
+  <section class="c-search__best" id="search-best" aria-labelledby="search-best-h" data-zh-note="${t('translation.none')}" hidden>
+    <h2 class="c-search__best-h" id="search-best-h">${t('search.best.h')}</h2>
+    <p class="c-search__best-note muted">${t('search.best.note')}</p>
+    <ul class="c-search__results" id="search-best-list"></ul>
+  </section>
   <noscript><p class="c-alert c-alert--overdue">${t('search.noscript')} <a href="${url('/diseases/')}">${t('nav.diseases')}</a> · <a href="${url('/sitemap-page/')}">${t('sitemap')}</a> · <a href="tel:1922">1922</a></p></noscript>
   <section aria-labelledby="search-results-h">
     <h2 class="sr-only" id="search-results-h">${t('search.results')}</h2>

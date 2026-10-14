@@ -79,7 +79,7 @@ test('isIndexable：後台、PR 預覽、舊站轉址頁、404、搜尋頁、答
 // ───────────────────────── 標籤規則（layout 的 Pagefind 屬性） ─────────────────────────
 test('pagefindFor：正面表列——noindex、沒有 item 的工具頁、banner、dataset 都不收；疾病、旅遊目的地、詞彙頁收', () => {
   const disease = { type: 'disease', owner: 'unit.acute-infectious', publishedAt: '2018-03-01', audience: ['public', 'professional'] };
-  assert.deepEqual(pagefindFor({ item: disease }), { type: 'disease', audience: ['public', 'professional'], owner: 'unit.acute-infectious', date: '2018-03-01', year: '2018', currency: 'current', machine: false });
+  assert.deepEqual(pagefindFor({ item: disease }), { type: 'disease', audience: ['public', 'professional'], owner: 'unit.acute-infectious', date: '2018-03-01', year: '2018', currency: 'current', machine: false, canon: null });
   // 第四十九輪：外語頁的機器翻譯初稿標 machine（標題不加權）；審閱過的、中文原文都不算
   const langs = { en: { status: 'machine' }, ja: { status: 'reviewed' } };
   assert.equal(pagefindFor({ item: { ...disease, languages: langs } }, 'en').machine, true);
@@ -228,20 +228,23 @@ async function open(browser, url, viewport = { width: 1280, height: 900 }) {
 }
 const resultsReady = (page) => page.waitForFunction(() => document.querySelectorAll('#search-results li').length > 0, null, { timeout: 20000 });
 const urlsOf = (page) => page.$$eval('#search-results li h3 a', (a) => a.map((x) => x.getAttribute('href')));
+/** 第五十一輪：畫面上由上到下的所有結果連結（精選結果卡＋清單）；精選結果那一頁不會在清單重複出現 */
+const allUrlsOf = (page) => page.$$eval('#search-best:not([hidden]) li h3 a, #search-results li h3 a', (a) => a.map((x) => x.getAttribute('href')));
 
 test('端到端：?q=登革熱 深連結 ⇒ 結果含登革熱疾病頁；live region 報筆數；無 console 錯誤、無 CSP 違規（含 wasm）', async (tc) => {
   await withBrowser(tc, async ({ browser, origin }) => {
     const { page, problems } = await open(browser, `${origin}/search/?q=${encodeURIComponent('登革熱')}`);
     await resultsReady(page);
     const status = await page.textContent('#search-status');
-    assert.match(status, /「登革熱」找到 \d+ 筆結果/);
+    assert.match(status, /^精選結果：登革熱。「登革熱」找到 \d+ 筆結果/);
     assert.equal(await page.getAttribute('#search-status', 'role'), 'status');
     assert.equal(await page.inputValue('#search-q'), '登革熱', '?q= 填入搜尋框');
-    const top = await urlsOf(page);
-    assert.ok(top.some((h) => h.endsWith('/diseases/dengue/')), `前 10 筆應含登革熱疾病頁：${top.join(' ')}`);
+    const top = await allUrlsOf(page);
+    // 第五十一輪：疾病頁由「精選結果」放在第一位（不再靠 Pagefind 分數排進前三），清單不重複列
+    assert.ok(top[0].endsWith('/diseases/dengue/'), `第一筆應是登革熱疾病頁：${top.join(' ')}`);
+    assert.ok(!(await urlsOf(page)).some((h) => h.endsWith('/diseases/dengue/')), '精選結果那一頁不在下方清單重複出現');
     const base = await page.evaluate(() => document.documentElement.dataset.base);
     assert.ok(top.every((h) => h.startsWith(`${base}/`)), `結果連結要帶 basePath（GitHub Pages 專案頁、PR 預覽都有子路徑）：base=${base} ${top.join(' ')}`);
-    assert.ok(top.slice(0, 3).some((h) => h.endsWith('/diseases/dengue/')), '疾病頁排在前三（標題加權＋pageLength 調整）');
     // 結果標題是原文（不是索引用的「登 革 熱」），摘錄裡的 <mark> 沒有字元間的空白
     assert.equal(await page.textContent('#search-results li:first-child h3 a'), (await page.textContent('#search-results li:first-child h3 a')).trim());
     assert.ok(!(await page.textContent('#search-results')).includes('登 革'), '顯示的文字不得有補出來的空白');
@@ -285,7 +288,7 @@ test('端到端：完整字串查無時退一步（麻疹疫苗 ⇒ 含「麻疹
     const status = await page.textContent('#search-status');
     assert.match(status, /找到 \d+ 筆結果/);
     assert.match(status, /沒有完全相同的字串/);
-    assert.ok((await urlsOf(page)).some((h) => /\/(diseases\/measles|vaccines\/mmr)\/$/.test(h)));
+    assert.ok((await allUrlsOf(page)).some((h) => /\/(diseases\/measles|vaccines\/mmr)\/$/.test(h)));
     assert.deepEqual(problems, []);
   });
 });
@@ -374,9 +377,11 @@ test('端到端：英文版 /en/search/ 只搜英文索引；320px 不橫向捲�
     const { page, problems } = await open(browser, `${origin}/en/search/?q=dengue`, { width: 320, height: 700 });
     await resultsReady(page);
     assert.match(await page.textContent('#search-status'), /results found for “dengue”/);
-    const urls = await urlsOf(page);
+    const urls = await allUrlsOf(page);
     assert.ok(urls.length > 0 && urls.every((u) => u.includes('/en/') || !/\/(ja|vi|th|tl|id)\//.test(u)));
-    assert.ok(urls.some((u) => u.endsWith('/en/diseases/dengue/')), urls.join(' '));
+    // 第五十一輪：以前只守「在第一頁」（實測排第 9–10，見 docs/i18n.md §8）；現在由精選結果放在第一位
+    assert.ok(urls[0].endsWith('/en/diseases/dengue/'), urls.join(' '));
+    assert.equal(urls.filter((u) => u.endsWith('/en/diseases/dengue/')).length, 1, '不重複列出');
     assert.match(await page.textContent('.c-search__langnote'), /Traditional Chinese/);
     const w = await page.evaluate(() => [document.documentElement.scrollWidth, document.documentElement.clientWidth]);
     assert.ok(w[0] <= w[1], `320px 橫向捲動 ${w}`);

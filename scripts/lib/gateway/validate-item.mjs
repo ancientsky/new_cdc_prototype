@@ -14,6 +14,7 @@ import { config } from '../../../site.config.mjs';
 import { loadSite, ROOT } from '../load.mjs';
 import { validateSite } from '../validate.mjs';
 import { validateAssets, ASSETS_DIR } from '../assets.mjs';
+import { FIELD_LABELS, labelOf } from '../../../src/client/admin/field-labels.js';
 
 /** 閘道接受的型別 → content 子目錄（疫情態勢、移轉清單、主檔、治理設定不走閘道） */
 export const TYPE_DIR = {
@@ -25,18 +26,9 @@ const COLLECTION_OF = { ...TYPE_DIR, letter: 'news' };
 export const ID_RE = /^[a-z]+\.[a-z0-9][a-z0-9-]*(?:\.[a-z0-9][a-z0-9-]*)*$/; // 比 schema 再嚴一點：不允許連續的點（避免 ..）
 export const MAX_ID = 120;
 
-/** 給同事看的欄位名稱 */
-export const FIELD_LABELS = {
-  id: '內容 ID', type: '型別', title: '標題', summary: '摘要', owner: '權責單位', steward: '承辦窗口', publishedAt: '發布日期', reviewedAt: '最後審閱日',
-  reviewPeriodMonths: '審閱週期', status: '狀態', audience: '對象', sensitivity: '敏感等級', license: '授權', languages: '提供語言', tasks: '任務入口',
-  keywords: '關鍵字', diseases: '相關疾病', vaccines: '相關疫苗', countries: '相關國家', basedOn: '依據正本', structured: '結構化欄位', assets: '附件與圖片',
-  question: '問題', answerMarkdown: '答案內文', bodyMarkdown: '內文', clarificationMarkdown: '澄清說明', claim: '網傳訊息', verdict: '查證結果', shareText: '可轉傳短訊',
-  introMarkdown: '簡介', abstractMarkdown: '摘要內文', machineReadableMarkdown: '文件全文', transcriptMarkdown: '逐字稿', blocks: '內容區塊', publishAt: '排程上線時間',
-  urgent: '緊急發布', family: '文件系列', version: '版次', effectiveAt: '生效日', supersedes: '取代的版本', docType: '文件類型', newsType: '新聞類型', letterNo: '通函號',
-  i18n: '其他語言譯文', aiWhitelist: 'AI 引用白名單', verification: '內容確認狀態', sourceLang: '來源語言', producedAt: '製作日期', mediaType: '影音類型',
-  chapters: '章節', youtubeId: 'YouTube 影片', deadlineAt: '截止日', links: '相關連結', steps: '申請步驟', sections: '章節', authors: '作者', issueId: '卷期', articleNo: '篇次', pages: '頁碼',
-};
-export const labelOf = (field) => FIELD_LABELS[field] ?? field;
+/** 給同事看的欄位名稱：第五十一輪移到 src/client/admin/field-labels.js（後台「目前改動的欄位」與審核人的差異用同一份名稱） */
+export { FIELD_LABELS, labelOf };
+
 
 /** AJV 英文訊息 → 白話中文 */
 function plainAjv(msg, label) {

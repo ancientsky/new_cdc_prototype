@@ -1331,6 +1331,7 @@ Pagefind 有個行為：**只要站上有一頁出現 `data-pagefind-body`，沒
 
 - 舊站 `/Search/{id}` 的真實網址格式尚未確認（`content/migration/legacy-services.json` 的 `advanced-search` 已改為 `migrated → /search/`，備註列出剩餘項目）；確認後在 `redirects` 補轉址。
 - 同義詞／別名：上線後從「零結果查詢」紀錄（需另外決定是否以及如何蒐集，涉及隱私）補，不要預先猜。
+- **第五十一輪補充**：疾病與疫苗的名稱、別名改由 `/search/` 的「精選結果」處理（查詢點名疾病或疫苗時，主題頁固定排第一、清單去重；名稱取自既有主檔與內容頁別名，不另立清單）。英文「dengue」疾病頁原本只排第 9，權重怎麼調都不穩，理由、契約與數字見 [docs/ask-search-llm.md](docs/ask-search-llm.md) 第 16 節；同事要做的事見 docs/guide-staff.md 第 52 節。
 - 泰文斷詞：需要在索引端導入斷詞器（如 ICU 的 `Intl.Segmenter('th')`，Node 22 內建），做法與 CJK 補空白相同；本輪不做，因為泰文版內容量最小、且需要母語者驗證。
 - 手機版頁首入口：見 31.6。
 
@@ -2504,3 +2505,22 @@ i18n 新鍵（七語齊備，順序 zh-TW, en, ja, tl, vi, id, th）：`nav.more
 **協作教訓（給之後平行派工的人）：** 同一個 repo 的多個 `git worktree` **共用同一個 stash**。這輪兩個平行工作的人各自 `git stash`／`git stash pop`，結果互相拿到對方的未提交修改（引擎改動跑進翻譯的工作目錄、FAQ 譯文跑進引擎的工作目錄）。發現得早、用 patch 檔逐一還原，沒有遺失。規則：平行在不同 worktree 工作時**不用 `git stash`**，要暫存就 `git diff > 檔案`；提交前看 `git status` 只含自己負責的路徑。
 
 測試：`tests/round50-engine.test.mjs`、`round50-rereview.test.mjs`（含 Playwright 端到端與 axe）、`round49-answer-slim.test.mjs`（擴充）。
+
+## 54. 第五十一輪（2026-10-14）：修改已上架內容的合併契約、全文搜尋精選結果
+
+民眾看得到的說明在 README 第五十一輪；取捨在 architecture-decisions §39；細節：deploy.md §22、ask-search-llm.md §16、guide-staff §52–53。
+
+| 機制 | 契約 |
+| --- | --- |
+| 現行版 | `preprocess.js liveItem(api)`：API 物件去掉 `API_ONLY_KEYS`（`url`、`path`、`md`、`governance`、`gov`、`master`、`related`、`sourceHash`、`isCurrent`、`supersededBy`）與附件的公開網址，必須與 content 檔逐位元組相同（含鍵順序）。API 新增計算欄位時要加進清單，測試會先擋 |
+| 修改合併 | `mergeEdit(current, original, base)`：`base` 是預處理跑完、以現行版值回填（`seedFromLive`）後的第一次匯出。逐欄 `current` 與 `base` 相同 ⇒ 保留 `original`；不同 ⇒ 依種類套用（字串清單套增減、物件逐鍵三方、物件清單沿用未動項目、`languages` 逐語言、`assets` 追加或同名取代、疾病頁 `blocks` 逐區塊）。`EDIT_DERIVED` 只有 `status`、`reviewedAt` |
+| 譯文的正本雜湊 | 正本欄位（`sourceChanged`，與建置 `sourceHashOf` 共用 `src/client/source-pick.js`）有改時，對 `reviewed`／`machine` 且尚無 `sourceHash` 的語言補上舊版雜湊，交給治理規則 R5 標「中文已更新，譯文待複核」；不再把語言改成 `pending` |
+| 差異 | `editDiff`（頁面）與閘道 `field-diff.mjs fieldDiff`（審核人）不再略過任何欄位；只有鍵順序不同不算差異。欄位中文名稱共用 `src/client/admin/field-labels.js` |
+| 精選結果資料 | `_bestbet.mjs bestBetData(ctx)` → `/search/` 的 `data-bestbets`：`bets`（每個疾病、疫苗主頁一張；該語言沒有 reviewed 頁就連中文正本並標 `l: "zh-TW"`）、`keys`（主檔、詞彙、頁面標題與別名）、`masks`（更長的名稱遮蔽較短的） |
+| 精選結果比對 | `search-bestbet.js matchBestBets`（純函式）：正規化後名稱須完整包含於查詢、拉丁字母要詞界、被遮蔽不算、長的先比、兩字以下縮寫須整句、最多 3 張。只在沒有篩選條件時出現 |
+| 去重 | 疾病、疫苗主頁的 Pagefind 隱藏篩選 `canon:<id>`；清單以此去重，筆數照 Pagefind |
+
+測試：`tests/round51-edit-preserve.test.mjs`（全部已上架內容不改就存逐位元組相同、各合併規則、Playwright＋閘道端到端）、`tests/round51-search-bestbet.test.mjs`、`tests/round28-search.test.mjs`（登革熱、dengue 改為第一位）、`tests/admin-editor.test.mjs`（修好路徑，`GATEWAY=off`＋`?gateway=off`，34 項全過）。
+
+**教訓：** 測試若把頁面上「算出來的值」直接當輸入（舊的 `admin-edit.test.mjs` 把現行版的摘要、關鍵字直接餵給匯出函式），就永遠看不到頁面上的錯。驗證「修改」要照頁面的真實步驟：載入、等預處理、不動、匯出、和原檔比。
+

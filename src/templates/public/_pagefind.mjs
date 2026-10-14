@@ -41,7 +41,9 @@ export function pagefindFor(meta, lang = 'zh-TW') {
   // 機器初稿照樣收進全文搜尋（搜得到、結果列也會看到頁面上的「機器翻譯」標示），但標題不加權，見 pagefindMarks 的 weigh。
   const st = lang !== (item?.sourceLang ?? 'zh-TW') ? item?.languages?.[lang]?.status : null;
   const machine = !!st && st !== 'reviewed' && st !== 'source';
-  return { type, audience, owner: src.owner ?? null, date, year: date ? date.slice(0, 4) : null, currency, machine };
+  // 第五十一輪：疾病頁、疫苗頁的「正本 id」。/search/ 的精選結果卡片用它把同一頁從下方清單去重（docs/ask-search-llm.md 第 16 節）
+  const canon = (type === 'disease' || type === 'vaccine') && item?.id && item?.slug ? { id: item.id, path: `/${type === 'disease' ? 'diseases' : 'vaccines'}/${item.slug}/` } : null;
+  return { type, audience, owner: src.owner ?? null, date, year: date ? date.slice(0, 4) : null, currency, machine, canon };
 }
 
 /**
@@ -59,6 +61,8 @@ export function pagefindMarks(ctx, pf, { unitName, title } = {}) {
   if (pf.year) parts.push(one('filter', `year:${pf.year}`));
   if (pf.date) { parts.push(one('sort', `date:${pf.date}`)); parts.push(one('meta', `date:${pf.date}`)); }
   parts.push(one('filter', `currency:${pf.currency ?? 'current'}`));
+  // 只有該疾病／疫苗的主頁（路徑相同）才帶 canon；其他借用同一個 item 的頁面不帶，去重時才不會把它們也拿掉
+  if (pf.canon && ctx.path === pf.canon.path) parts.push(one('filter', `canon:${pf.canon.id}`));
   if (pf.currency && pf.currency !== 'current') parts.push(one('meta', `currency:${t(`search.currency.${pf.currency}`)}`));
   // 標題明確指定：索引用的副本會在中文字之間補空白（見 scripts/lib/pagefind.mjs），不明指的話結果標題會變成「登 革 熱」
   if (title) parts.push(one('meta', `title:${title}`));

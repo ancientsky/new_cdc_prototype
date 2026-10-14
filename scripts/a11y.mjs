@@ -25,6 +25,8 @@ export const PAGES = [
   '/documents/curriculum-dengue.2026-10-10/', // 第二十八輪：核心教材（長文件版面＋學習目標＋示範匯入警示）
   // 第二十八輪：全文搜尋——空狀態與「已有查詢結果」兩種畫面都要掃（結果清單是動態產生的）
   '/search/', '/search/?q=%E7%99%BB%E9%9D%A9%E7%86%B1&type=faq,news',
+  // 第五十一輪：精選結果卡（英文版有該語言頁；印尼文版退回中文正本、帶 lang／hreflang 與「此語言無此頁」標記）
+  '/en/search/?q=dengue', '/id/search/?q=demam%20berdarah',
 ];
 // 第四十八輪（#98）：新增「文字 200%／390」——390 px 寬、根字級放大到 200%（WCAG 1.4.4 放大文字＋1.4.10 Reflow 的實際合併情境）；
 // 這個模式與 320 px 一樣要檢查橫向捲動，並列為阻擋項。

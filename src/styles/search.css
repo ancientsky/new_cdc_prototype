@@ -28,3 +28,9 @@
 .c-search__morewrap{margin:var(--sp-4) 0}
 .c-search__empty{margin-top:var(--sp-3)}
 .c-search__empty .c-btn{margin-right:var(--sp-2);margin-bottom:var(--sp-2)}
+/* 第五十一輪：精選結果（查詢點名疾病或疫苗時，主題頁放在清單上方）。左側色條＋淺底與一般結果區分；不靠顏色傳達意義（有標題「精選結果」） */
+.c-search__best{margin:var(--sp-2) 0 var(--sp-4);padding:var(--sp-3) var(--sp-4);border:1px solid var(--line);border-left:4px solid var(--green-700);border-radius:var(--radius);background:var(--white)}
+.c-search__best-h{margin:0;font-size:var(--fs-md)}
+.c-search__best-note{margin:var(--sp-1) 0 0;font-size:var(--fs-sm)}
+.c-search__best .c-search__item{border-bottom:0;padding-bottom:var(--sp-1)}
+.c-search__best .c-search__item+.c-search__item{border-top:1px solid var(--line)}

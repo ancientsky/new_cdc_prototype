@@ -148,7 +148,7 @@ test('後台：page 型別進 TYPES／DIRS／collectionOfId；itemToForm → toC
     summary: DG.summary, keywords: DG.keywords, today: '2026-10-13', extra: f.extra,
   });
   {
-    const merged = P.mergeEdit(out, DG);
+    const merged = P.mergeEdit(out, DG, out); // 第五十一輪：第三個參數是表單剛帶入時的匯出（這裡沒改，所以就是 out）
     assert.equal(out.slug, 'about/leadership/director-general'); assert.equal(out.profile.role, 'director-general'); assert.equal(out.profile.roleTitleEn, 'Director-General');
     assert.equal(merged.slug, 'about/leadership/director-general');
     assert.equal(merged.profile.name, '羅一鈞'); assert.equal(merged.profile.termNo, 6); assert.equal(merged.profile.photoAlt, '署長羅一鈞', '表單沒有的簡介欄位原樣保留');

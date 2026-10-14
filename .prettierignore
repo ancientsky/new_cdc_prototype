@@ -82,3 +82,7 @@ eval/**/*.mjs
 !tests/round49-engine.test.mjs
 # 第五十輪：疾病頁用藥段落、專業限定服務開放民眾版
 !tests/round50-engine.test.mjs
+# 第五十一輪：全文搜尋的精選結果（docs/ask-search-llm.md 第 16 節）
+!src/client/search-bestbet.js
+!src/templates/public/_bestbet.mjs
+!tests/round51-search-bestbet.test.mjs

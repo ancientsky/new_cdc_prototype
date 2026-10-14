@@ -5,6 +5,7 @@
 // 所以不計入 js-budget（budget 只沿靜態 import 追，見 scripts/lib/js-budget.mjs 檔頭）。
 // 網址參數：q、type（逗號分隔）、audience（逗號分隔）、unit、year、current（1＝只看現行內容，第三十三輪）、sort（new|old|空＝相關度）；/ask/ 的「用全文搜尋找…」連到 ?q=。
 import { rankedSearch, despaceExcerpt, hasLongCjk, shorterQueries } from './search-query.js';
+import { matchBestBets } from './search-bestbet.js';
 
 const root = typeof document !== 'undefined' ? document.querySelector('[data-search]') : null;
 if (root) init();
@@ -19,6 +20,8 @@ function init() {
   const TYPE_ORDER = ['disease', 'vaccine', 'faq', 'news', 'letter', 'clarification', 'document', 'service', 'publication', 'article', 'labtest', 'research', 'media', 'topic', 'travel', 'glossary', 'page', 'job', 'tender'];
   const AUD_ORDER = ['public', 'professional'];
   const UNITS = (() => { try { return JSON.parse(root.dataset.units || '{}'); } catch { return {}; } })();
+  // 第五十一輪：精選結果——疾病／疫苗名稱 → 一級頁面（建置時產生，src/templates/public/_bestbet.mjs）
+  const BEST = (() => { try { return JSON.parse(root.dataset.bestbets || 'null'); } catch { return null; } })();
 
   const form = root.querySelector('#search-form');
   const input = root.querySelector('#search-q');
@@ -33,6 +36,8 @@ function init() {
   const currentCb = root.querySelector('#search-current');
   const fsType = root.querySelector('[data-filter="type"]');
   const fsAud = root.querySelector('[data-filter="audience"]');
+  const bestEl = root.querySelector('#search-best');
+  const bestList = root.querySelector('#search-best-list');
 
   let pfLoad = null;
   let optionsLoad = null;
@@ -40,6 +45,7 @@ function init() {
   let results = [];
   let shown = 0;
   let baseStatus = '';
+  let featured = 0; // Pagefind 結果裡、已經放在精選結果卡的頁數（計數照算，清單不重複列）
 
   /* ───────── 狀態 ↔ 網址 ───────── */
   const csv = (s) => (s ? s.split(',').filter(Boolean) : []);
@@ -177,6 +183,41 @@ function init() {
     li.append(h, meta, ex);
     return li;
   }
+  /** 精選結果卡：與結果列同一個樣式；該語言沒有這一頁時連中文正本，標「此語言無此頁 · 顯示中文」並附頁面語言的名稱。
+   *  標記文字由模板放在 data-zh-note（這條字串只有這裡用到；寫成 T() 會被拆檔程式收進每一頁都載入的語言檔） */
+  function bestItem(b) {
+    const li = document.createElement('li');
+    li.className = 'c-search__item c-search__item--best';
+    const h = document.createElement('h3');
+    h.className = 'c-search__title';
+    const a = document.createElement('a');
+    a.href = b.u;
+    a.textContent = b.t;
+    if (b.l) { a.lang = b.l; a.hreflang = b.l; }
+    h.append(a);
+    const meta = document.createElement('p');
+    meta.className = 'c-search__meta';
+    const pill = document.createElement('span');
+    pill.className = 'c-pill c-pill--neutral';
+    pill.textContent = T(`search.type.${b.type}`);
+    meta.append(pill);
+    if (b.a) { const n = document.createElement('span'); n.textContent = b.a; if (b.al) n.lang = b.al; meta.append(' ', n); }
+    if (b.l) { const tb = document.createElement('span'); tb.className = 'c-translation-badge c-translation-badge--none'; tb.textContent = bestEl.dataset.zhNote ?? ''; meta.append(' ', tb); }
+    li.append(h, meta);
+    if (b.s) { const ex = document.createElement('p'); ex.className = 'c-search__excerpt'; ex.textContent = b.s; li.append(ex); }
+    return li;
+  }
+  /** 精選結果頁在這個語言索引裡的 Pagefind id（用 canon 篩選值找，不必逐筆讀 data()）；退回中文頁的不在這個索引裡 */
+  async function bestIds(p, bets) {
+    const ids = new Set();
+    for (const b of bets) {
+      if (b.l) continue;
+      const r = await p.search(null, { filters: { canon: b.id } });
+      for (const x of r.results) ids.add(x.id);
+    }
+    return ids;
+  }
+
   let busyRun = -1; // 正在載入下一批的是哪一輪搜尋（同一輪重複點「顯示更多」只處理一次；新的一輪不受舊的影響）
   async function renderMore(focusFirst) {
     // 競態：篩選連續變更時舊的一輪可能比新的一輪晚回來（要等每筆的 data()）；晚到的結果不能 append 到新的清單上（測試曾抓到 2018 年的頁混進「2026」篩選）
@@ -191,7 +232,7 @@ function init() {
     list.append(...els);
     shown += batch.length;
     moreBtn.hidden = shown >= results.length;
-    statusEl.textContent = results.length > PAGE ? `${baseStatus}　${T('search.status.shown', { a: shown, n: results.length })}` : baseStatus;
+    statusEl.textContent = results.length > PAGE ? `${baseStatus}　${T('search.status.shown', { a: shown + featured, n: results.length + featured })}` : baseStatus;
     if (focusFirst && els[0]) els[0].querySelector('a')?.focus();
   }
 
@@ -201,7 +242,14 @@ function init() {
     list.replaceChildren();
     moreBtn.hidden = true;
     emptyEl.hidden = true;
-    results = []; shown = 0;
+    results = []; shown = 0; featured = 0;
+    // 精選結果：查詢點名疾病或疫苗、而且沒有篩選條件時才出現（有篩選＝使用者在縮小範圍，不插入篩選外的頁）。
+    // 不等 Pagefind：名稱對照已在頁面裡，卡片立刻畫出來；Pagefind 載入失敗時它仍然在。
+    const bets = st.q && !hasFilter(st) ? matchBestBets(st.q, BEST) : [];
+    bestList.replaceChildren(...bets.map(bestItem));
+    bestEl.hidden = !bets.length;
+    // 朗讀用頁面語言的名稱：退回中文頁的卡片（b.l）念 b.a（例：印尼文頁念 Demam berdarah dengue，不念「登革熱」）
+    const bestStatus = bets.length ? T('search.status.best', { t: bets.map((b) => (b.l && b.a) || b.t).join(' / ') }) : '';
     if (!st.q && !hasFilter(st)) { statusEl.textContent = T('search.status.idle'); return; }
     statusEl.textContent = T('search.status.loading');
     try {
@@ -224,7 +272,8 @@ function init() {
         const s2 = await rankedSearch(p, st.q, opts, true);
         if (s2.results.length) { s = s2; loose = true; }
       }
-      if (!s.results.length && st.q) {
+      if (!s.results.length && st.q && !bets.length) {
+        // 有精選結果時不走這條：「骨痛熱症」已經有登革熱頁可給，不必再改搜「熱症」湊出不相干的頁
         // 第四十輪（Issue #79）：拆半也查無 ⇒ 最後退路，逐步去掉前後的字（兒童健康手冊 → 健康手冊），第一個有結果的就用
         for (const c of shorterQueries(st.q)) {
           if (my !== runId) return;
@@ -232,23 +281,27 @@ function init() {
           if (s3.results.length) { s = s3; trimmed = c; break; }
         }
       }
+      const dup = bets.length ? await bestIds(p, bets) : null;
       if (my !== runId) return;
-      results = s.results;
+      // 精選結果那一頁不在下方清單重複出現；筆數照算（它也是含這個詞的頁面），「已顯示 a / n」把它算成已顯示
+      results = dup?.size ? s.results.filter((r) => !dup.has(r.id)) : s.results;
+      featured = s.results.length - results.length;
       showCounts(s.filters);
-      const n = results.length;
-      if (!n) {
-        statusEl.textContent = st.q ? T('search.status.none', { q: st.q }) : T('search.status.nofilter');
-        emptyEl.hidden = false;
+      const n = s.results.length;
+      if (!results.length) {
+        if (bets.length) statusEl.textContent = bestStatus + T('search.status.bestonly', { q: st.q });
+        else statusEl.textContent = st.q ? T('search.status.none', { q: st.q }) : T('search.status.nofilter');
+        emptyEl.hidden = !!bets.length;
         return;
       }
-      baseStatus = trimmed
+      baseStatus = bestStatus + (trimmed
         ? `${T('search.status.trimmed', { q: trimmed.from, t: trimmed.term })}${T('search.status.nq', { n, q: trimmed.term })}`
-        : (st.q ? T('search.status.nq', { n, q: st.q }) : T('search.status.n', { n })) + (loose ? `　${T('search.status.loose')}` : '');
+        : (st.q ? T('search.status.nq', { n, q: st.q }) : T('search.status.n', { n })) + (loose ? `　${T('search.status.loose')}` : ''));
       await renderMore(false);
     } catch (e) {
       if (my !== runId) return;
       console.error('[search]', e);
-      statusEl.textContent = T('search.status.err');
+      statusEl.textContent = bestStatus + T('search.status.err');
       emptyEl.hidden = false;
     }
   }
