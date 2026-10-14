@@ -26,6 +26,22 @@ export function meta(ctx, props = {}) {
   return { title: ctx.t('lab.title'), description: ctx.t('lab.lead'), jsonLd: ldFor(ctx, null, [{ label: ctx.t('lab.title') }]), scripts: INLINE };
 }
 
+/**
+ * 檢體用語（種類、時機、容器、量、保存、運送）：外語頁用 master/lab-terms.json 的機器初稿（頁面語言 → 英文），沒有對照就留中文並包 lang="zh-TW"。
+ * 為什麼是受控詞彙而不是逐檔 i18n：全站只有約百個不同的片語，反覆出現在十六份檢驗項目；集中一處才好審、也不會漏標「機器翻譯」。
+ */
+const hasCjk = (s) => /[\u3400-\u9fff]/.test(s);
+function termOf(ctx, s) {
+  if (s == null || s === '' || ctx.lang === 'zh-TW' || !hasCjk(s)) return { text: s, lang: null };
+  const e = ctx.site.master.labTerms?.terms?.[s];
+  if (e?.[ctx.lang]) return { text: e[ctx.lang], lang: null, machine: true };
+  if (e?.en) return { text: e.en, lang: ctx.lang === 'en' ? null : 'en', machine: true };
+  return { text: s, lang: 'zh-TW' };
+}
+const term = (ctx, s) => { const r = termOf(ctx, s); return r.lang ? html`<span lang="${r.lang}">${r.text}</span>` : r.text; };
+const termTxt = (ctx, s) => termOf(ctx, s).text;
+const termNote = (ctx) => (ctx.lang === 'zh-TW' ? '' : html`<p class="muted c-shown">${translationBadge(ctx, 'machine')} ${ctx.t('lab.terms.machine')}</p>`);
+
 const dName = (ctx, id) => diseaseName(ctx, ctx.site.diseaseMasterById.get(id)) || id;
 const labUnits = (ctx, labs) => (labs ?? []).map((k) => ctx.t(`lab.unit.${k}`)).join('、');
 
@@ -41,17 +57,18 @@ function listPage(ctx) {
 ${inlineAsk(ctx, { mode: 'pro', placeholder: t('lab.ask.ph'), label: t('lab.ask.t') })}
 ${rows.length ? html`<form class="c-labfilters" onsubmit="return false" role="search" aria-label="${t('lab.filter')}">
   ${sel('disease', t('lab.col.disease'), diseases.map((d) => [d, dName(ctx, d)]))}
-  ${sel('specimen', t('lab.col.specimen'), specimens.map((s) => [s, s]))}
+  ${sel('specimen', t('lab.col.specimen'), specimens.map((s) => [s, termTxt(ctx, s)]))}
   ${sel('lab', t('lab.col.lab'), labs.map((k) => [k, t(`lab.unit.${k}`)]))}
   <span class="c-labfilters__n muted" role="status" data-filter-count="lab-table"></span>
 </form>
+${termNote(ctx)}
 <div class="c-labtable-wrap"><table class="c-labtable" id="lab-table">
   <thead><tr><th scope="col">${t('lab.col.disease')}</th><th scope="col">${t('lab.col.specimen')}</th><th scope="col">${t('lab.col.container')}</th><th scope="col">${t('lab.col.storage')}</th><th scope="col">${t('lab.col.within')}</th><th scope="col">${t('lab.col.lab')}</th><th scope="col">${t('lab.col.tat')}</th></tr></thead>
   <tbody>${rows.map(({ lt, sp }) => html`<tr data-disease="${lt.disease}" data-specimen="${sp.name}" data-lab="${(lt.labs ?? []).join(' ')}">
     <th scope="row" data-label="${t('lab.col.disease')}"><a href="${hrefFor(ctx, lt)}">${dName(ctx, lt.disease)}</a></th>
-    <td data-label="${t('lab.col.specimen')}"><strong>${sp.name}</strong>${sp.timing ? html`<br><span class="muted">${sp.timing}</span>` : ''}</td>
-    <td data-label="${t('lab.col.container')}">${sp.container}${sp.volume ? html`<br><span class="muted">${sp.volume}</span>` : ''}</td>
-    <td data-label="${t('lab.col.storage')}">${sp.storage}<br><span class="muted">${sp.transport}</span></td>
+    <td data-label="${t('lab.col.specimen')}"><strong>${term(ctx, sp.name)}</strong>${sp.timing ? html`<br><span class="muted">${term(ctx, sp.timing)}</span>` : ''}</td>
+    <td data-label="${t('lab.col.container')}">${term(ctx, sp.container)}${sp.volume ? html`<br><span class="muted">${term(ctx, sp.volume)}</span>` : ''}</td>
+    <td data-label="${t('lab.col.storage')}">${term(ctx, sp.storage)}<br><span class="muted">${term(ctx, sp.transport)}</span></td>
     <td data-label="${t('lab.col.within')}">${lt.sendWithinHours ? t('lab.hours', { n: lt.sendWithinHours }) : '—'}</td>
     <td data-label="${t('lab.col.lab')}">${labUnits(ctx, lt.labs)}</td>
     <td data-label="${t('lab.col.tat')}">${sp.turnaroundDays != null ? t('lab.days', { n: sp.turnaroundDays }) : '—'}</td></tr>`)}</tbody></table></div>` : html`<p class="c-empty">${t('none')}</p>`}
@@ -87,13 +104,14 @@ function detail(ctx, lt) {
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
       <section class="c-block" aria-labelledby="sp-h"><h2 id="sp-h">${t('lab.specimens')}</h2>
-        <div class="c-labcards">${lt.specimens.map((sp, i) => html`<section class="c-labcard" id="sp-${i + 1}" aria-label="${sp.name}">
-          <h3 class="c-labcard__t">${sp.name}${sp.timing ? html` <span class="c-pill c-pill--info">${sp.timing}</span>` : ''}</h3>
+        ${termNote(ctx)}
+        <div class="c-labcards">${lt.specimens.map((sp, i) => html`<section class="c-labcard" id="sp-${i + 1}" aria-label="${termTxt(ctx, sp.name)}">
+          <h3 class="c-labcard__t">${term(ctx, sp.name)}${sp.timing ? html` <span class="c-pill c-pill--info">${term(ctx, sp.timing)}</span>` : ''}</h3>
           <dl class="c-deflist c-deflist--sm">
-            <div><dt>${t('lab.col.container')}</dt><dd>${sp.container}</dd></div>
-            <div><dt>${t('lab.volume')}</dt><dd>${sp.volume}</dd></div>
-            <div><dt>${t('lab.storage')}</dt><dd>${sp.storage}</dd></div>
-            <div><dt>${t('lab.transport')}</dt><dd>${sp.transport}</dd></div>
+            <div><dt>${t('lab.col.container')}</dt><dd>${term(ctx, sp.container)}</dd></div>
+            <div><dt>${t('lab.volume')}</dt><dd>${term(ctx, sp.volume)}</dd></div>
+            <div><dt>${t('lab.storage')}</dt><dd>${term(ctx, sp.storage)}</dd></div>
+            <div><dt>${t('lab.transport')}</dt><dd>${term(ctx, sp.transport)}</dd></div>
             ${sp.tests?.length ? html`<div><dt>${t('lab.tests')}</dt><dd>${sp.tests.map((x) => html`<span class="c-pill c-pill--neutral">${x}</span> `)}</dd></div>` : ''}
             ${sp.turnaroundDays != null ? html`<div><dt>${t('lab.col.tat')}</dt><dd>${t('lab.days', { n: sp.turnaroundDays })}</dd></div>` : ''}
             ${sp.note ? html`<div><dt>${t('lab.note')}</dt><dd>${sp.note}</dd></div>` : ''}

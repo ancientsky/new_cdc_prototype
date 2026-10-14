@@ -79,5 +79,13 @@
   "formats": [
     "CSV",
     "XLSX"
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Population reference data for epidemic analysis (county/city, sex, age)",
+      "summary": "Mid-year population (county or city, sex, five-year age groups) used to calculate incidence in epidemic analysis, reproduced from the Ministry of the Interior household registration statistics.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

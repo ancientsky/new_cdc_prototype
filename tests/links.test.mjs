@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { checkInternalLinks, blacklistHit, summarize } from '../scripts/lib/check-internal-links.mjs';
+import { checkInternalLinks, blacklistHit, summarize, siblingPrefixes } from '../scripts/lib/check-internal-links.mjs';
 import { validateSite, findPlaceholderUrls } from '../scripts/lib/validate.mjs';
 import { loadSite } from '../scripts/lib/load.mjs';
 import { makeCtx } from '../scripts/lib/pages.mjs';
@@ -90,6 +90,35 @@ test('相對路徑解析（../）與無 basePath 部署', () => {
   });
   const res = checkInternalLinks(dist, { basePath: '', siteUrl: SITE, write: false });
   assert.deepEqual(res.errors.map((e) => [e.kind, e.target]), [['missing', '/a/c/']]);
+});
+
+test('第四十九輪：BASE_PATH 空字串時，同主機別專案（/vaxmap-next/）的絕對網址是外部連結，不算站內缺檔；本站自己的絕對網址照查', () => {
+  const HOST = 'https://ancientsky.github.io';
+  const VAX = [`${HOST}/vaxmap-next/`, `${HOST}/vaxmap-next/info.html`];
+  const files = {
+    'index.html': page(`<a href="${VAX[0]}">地圖</a><a href="${VAX[1]}#faq">說明</a><a href="${HOST}/vaxmap-next">無斜線</a>
+      <a href="${HOST}/about/">本站 ok</a><a href="${HOST}/gone/">本站壞</a><a href="${HOST}/vaxmap-nextgen/">前綴相近的本站路徑</a>`),
+    'about/index.html': page(''),
+  };
+  // basePath 空字串＋根網域：沒告知別專案時整個主機都是站內（舊行為，證明這個測試抓得到）
+  const old = checkInternalLinks(fakeDist(files), { basePath: '', siteUrl: HOST, write: false });
+  assert.equal(kinds(old.errors, 'missing').filter((e) => /^\/vaxmap-next(\/|$)/.test(e.target)).length, 3);
+  const res = checkInternalLinks(fakeDist(files), { basePath: '', siteUrl: HOST, siblingUrls: VAX, write: false });
+  assert.deepEqual(res.errors.map((e) => e.target).sort(), ['/gone/', '/vaxmap-nextgen/'], '只剩本站自己的壞連結（/vaxmap-nextgen/ 不是 /vaxmap-next/ 底下）');
+  assert.equal(res.counts.external, 3);
+  assert.ok(res.external.domains.some((d) => d.domain === 'ancientsky.github.io' && d.count === 3));
+  // 預設 basePath：本來就不在 /new_cdc_prototype 底下 ⇒ 外部，有沒有傳 siblingUrls 結果一樣
+  const f2 = { 'index.html': page(`<a href="${VAX[0]}">地圖</a><a href="${HOST}/new_cdc_prototype/about/">ok</a>`), 'about/index.html': page('') };
+  for (const siblingUrls of [undefined, VAX]) {
+    const r = checkInternalLinks(fakeDist(f2), { basePath: '/new_cdc_prototype', siteUrl: HOST, siblingUrls, write: false });
+    assert.equal(r.ok, true); assert.equal(r.counts.external, 1); assert.equal(r.counts.internalOk, 1);
+  }
+  // siteUrl 本身帶路徑（https://host/new_cdc_prototype，basePath 空）：以該路徑為站內範圍，別專案自然在範圍外
+  const r3 = checkInternalLinks(fakeDist({ 'index.html': page(`<a href="${HOST}/new_cdc_prototype/about/">ok</a><a href="${VAX[0]}">地圖</a>`), 'about/index.html': page('') }), { basePath: '', siteUrl: `${HOST}/new_cdc_prototype`, siblingUrls: VAX, write: false });
+  assert.equal(r3.ok, true); assert.equal(r3.counts.external, 1);
+  // 自己就在別專案同名前綴底下時，不把自己排除
+  assert.deepEqual(siblingPrefixes(`${HOST}/vaxmap-next`, VAX), []);
+  assert.deepEqual(siblingPrefixes(HOST, [...VAX, 'https://other.example.org/x/', 'not a url']), ['/vaxmap-next/']);
 });
 
 test('外部連結：收集網域／次數／來源頁；黑名單（example.、placeholder、localhost、127.0.0.1、TODO、xxx）= error', () => {

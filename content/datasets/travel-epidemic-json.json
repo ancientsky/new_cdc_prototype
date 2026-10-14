@@ -73,5 +73,13 @@
       "format": "JSON",
       "url": "https://www.cdc.gov.tw/TravelEpidemic/ExportJSON"
     }
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "International travel epidemic data (TravelEpidemic ExportJSON)",
+      "summary": "A structured export of the official international travel epidemic pages (disease, country, level, start date, summary). This site fetches it daily as a snapshot.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

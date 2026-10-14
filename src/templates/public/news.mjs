@@ -2,7 +2,8 @@
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
-import { ldFor, breadcrumb, pageHead, sectionHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, statusTag, hrefFor, isFallbackLink, L, unitName, publishedOf, byDateDesc, slugOf, diseasePage, diseaseName, sitField, itemPath, pill, alertBox, isNotice, isClosed, isClosingSoon, deadlinePill, extLink, titleLink, localText, langSpan } from './_partials.mjs';
+import { ldFor, breadcrumb, pageHead, sectionHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, statusTag, hrefFor, isFallbackLink, L, unitName, publishedOf, byDateDesc, slugOf, diseasePage, diseaseName, sitField, itemPath, pill, alertBox, isNotice, isClosed, isClosingSoon, deadlinePill, extLink, titleLink, localText, langSpan, localized } from './_partials.mjs';
+import { pick, langAttr, shownNote, zhText } from './_listing.mjs';
 
 export function kindOf(n) {
   if (n.type === 'clarification') return 'clarification';
@@ -45,7 +46,12 @@ ${items.length ? '' : html`<p class="c-empty">${t('none')}</p>`}`;
 function detail(ctx, n) {
   const { site, t, fmtDate, lang } = ctx;
   const kind = kindOf(n);
-  const body = L(ctx, n, 'bodyMarkdown') ?? n.bodyMarkdown;
+  // 第四十九輪：標題、摘要、本文各自依「頁面語言 → 英文 → 中文」取；沒有譯文的欄位保持中文並標 lang="zh-TW"（狀態寫 machine 但尚無譯文的新聞原本整頁中文卻掛著「機器翻譯」標記）
+  const ti = pick(ctx, n, 'title');
+  const su = pick(ctx, n, 'summary');
+  const bo = pick(ctx, n, 'bodyMarkdown');
+  const body = bo.text ?? n.bodyMarkdown;
+  const att = localized(ctx, n).attachments ?? n.attachments;
   const diseases = (n.diseases ?? []).map((d) => ({ id: d, page: diseasePage(ctx, d), dm: site.diseaseMasterById.get(d) }));
   const decl = n.situationDeclaration;
   const sit = decl ? site.situation.items.find((i) => i.disease === decl.disease) : null;
@@ -53,12 +59,12 @@ function detail(ctx, n) {
   const langStatus = n.languages?.[lang]?.status;
   const notice = isNotice(n);
   const closed = notice && isClosed(site, n);
-  return html`${breadcrumb(ctx, [notice ? { label: t('notices.title'), href: '/notices/' } : { label: t('nav.news'), href: '/news/' }, { label: L(ctx, n, 'title') }])}
+  return html`${breadcrumb(ctx, [notice ? { label: t('notices.title'), href: '/notices/' } : { label: t('nav.news'), href: '/news/' }, { label: ti.text }])}
 <article class="c-article">
   <header class="c-pagehead"><div class="c-pagehead__main">
     <p class="c-article__meta">${pill(t(`news.type.${n.newsType === 'recruit' || n.newsType === 'procurement' ? n.newsType : kind}`), kind === 'letter' || notice ? 'info' : 'neutral')} <time datetime="${n.publishedAt}">${t('news.published')} ${fmtDate(n.publishedAt)}</time> · ${t('news.unit')}：${unitName(ctx, n.owner)}${n.letterNo ? ` · ${t('news.letterNo', { n: n.letterNo })}` : ''}</p>
-    <h1>${L(ctx, n, 'title')}</h1>
-    <p class="lead">${L(ctx, n, 'summary')}</p>
+    <h1${langAttr(ctx, ti)}>${ti.text}</h1>
+    <p class="lead"${langAttr(ctx, su)}>${su.text}</p>
     ${scopeTags(ctx, n)}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
     ${closed && !n.gov?.annotations?.some((a) => a.kind === 'closed') ? alertBox('ended', html`<strong class="c-alert__t">${t('notice.closed.t')}</strong> ${t('notice.closed.msg', { date: fmtDate(n.deadlineAt) })}`, { role: 'status' }) : ''}
@@ -67,8 +73,8 @@ function detail(ctx, n) {
   </div></header>
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
-      <div class="c-prose">${raw(md(body))}</div>
-      ${n.attachments?.length ? html`<section class="c-block"><h2>${t('news.attach')}</h2><ul class="c-linklist">${n.attachments.map((a) => html`<li><a href="${/^https?:/.test(a.url) ? a.url : ctx.url(a.url)}" rel="noopener">${a.label} ↗</a> ${a.machineReadable ? pill(t('news.attach.mr'), 'ok') : ''}</li>`)}</ul></section>` : ''}
+      ${shownNote(ctx, bo)}<div class="c-prose"${langAttr(ctx, bo)}>${raw(md(body))}</div>
+      ${att?.length ? html`<section class="c-block"><h2>${t('news.attach')}</h2><ul class="c-linklist">${att.map((a) => html`<li><a href="${/^https?:/.test(a.url) ? a.url : ctx.url(a.url)}" rel="noopener">${att === n.attachments ? zhText(ctx, a.label) : a.label} ↗</a> ${a.machineReadable ? pill(t('news.attach.mr'), 'ok') : ''}</li>`)}</ul></section>` : ''}
       ${feedback(ctx, { page: ctx.path })}
     </div>
     <aside class="c-cols__side">
@@ -82,7 +88,7 @@ function detail(ctx, n) {
         ${n.applyUrl && !closed ? html`<p><a class="c-btn c-btn--block" href="${n.applyUrl}" rel="noopener">${n.newsType === 'procurement' ? t('notice.bid') : t('notice.apply')} ↗</a></p>` : ''}
         ${n.applyUrl && closed ? html`<p class="muted">${extLink(ctx, n.applyUrl, t('notice.orig'))}</p>` : ''}
         <p><a href="${ctx.url('/notices/')}">${t('notices.title')} →</a></p></section>` : ''}
-      ${decl ? html`<section class="c-aside-card c-decl"><h2>${t('news.decl')}</h2><p><b>${diseaseName(ctx, dm)}</b>：${decl.text}</p>
+      ${decl ? html`<section class="c-aside-card c-decl"><h2>${t('news.decl')}</h2><p><b>${diseaseName(ctx, dm)}</b>：${n.i18n?.[ctx.lang]?.declText ?? zhText(ctx, decl.text)}</p>
         ${sit ? html`<p class="muted">${t('news.decl.now')} ${statusTag(ctx, sit)} · ${sitField(ctx, sit, 'metricLabel')} ${sitField(ctx, sit, 'metricValue')}</p>` : ''}
         <a href="${ctx.url('/situation/')}">${t('home.situation.more')} →</a></section>` : ''}
       ${diseases.length ? html`<section class="c-aside-card"><h2>${t('news.related')}</h2><ul class="c-linklist">${diseases.map((d) => html`<li>${d.page ? html`<a href="${hrefFor(ctx, d.page)}">${L(ctx, d.page, 'title')}</a>` : diseaseName(ctx, d.dm)}</li>`)}</ul></section>` : ''}

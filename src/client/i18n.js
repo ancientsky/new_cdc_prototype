@@ -2092,6 +2092,32 @@ const ROWS_R48 = {
 };
 for (const [key, vals] of Object.entries(ROWS_R48)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
 
+/* ───── 第四十九輪：清單頁的中文比例（網站導覽、申請服務、關於、資料目錄）。順序 zh-TW, en, ja, tl, vi, id, th ───── */
+const ROWS_R49 = {
+  'i18n.shownEn': ['以英文顯示', 'Shown in English', '英語で表示', 'Ipinapakita sa Ingles', 'Hiển thị bằng tiếng Anh', 'Ditampilkan dalam bahasa Inggris', 'แสดงเป็นภาษาอังกฤษ'],
+  'i18n.zhOnly.go': ['開啟中文頁面', 'Open the Chinese page', '中国語のページを開く', 'Buksan ang pahinang Chinese', 'Mở trang tiếng Trung', 'Buka halaman bahasa Mandarin', 'เปิดหน้าภาษาจีน'],
+  'sitemap.zhonly': ['只有中文的頁面（{n}）', 'Pages available in Chinese only ({n})', '中国語のみのページ（{n}）', 'Mga pahinang Chinese lamang ({n})', 'Các trang chỉ có tiếng Trung ({n})', 'Halaman hanya dalam bahasa Mandarin ({n})', 'หน้าที่มีเฉพาะภาษาจีน ({n})'],
+  'license.OGDL-1.0': [
+    '政府資料開放授權條款第 1 版',
+    'Taiwan Open Government Data License, version 1.0',
+    '政府データ公開ライセンス第 1 版（台湾）',
+    'Taiwan Open Government Data License, bersyon 1.0',
+    'Giấy phép Dữ liệu Chính phủ mở Đài Loan, phiên bản 1.0',
+    'Lisensi Data Terbuka Pemerintah Taiwan, versi 1.0',
+    'ใบอนุญาตข้อมูลเปิดภาครัฐไต้หวัน เวอร์ชัน 1.0',
+  ],
+  'lab.terms.machine': [
+    '檢體種類、採檢時機、容器、量、保存與運送等用語為機器翻譯初稿，以中文正本與檢驗單位指引為準。',
+    'Specimen types, timing, containers, volumes, storage and transport terms are a machine-translated draft. The Chinese original and the laboratory guidance prevail.',
+    '検体の種類・採取時期・容器・量・保存・輸送の用語は機械翻訳の草稿です。中国語の原文と検査担当部署の指示が優先されます。',
+    'Ang mga termino sa uri ng specimen, oras ng pagkuha, lalagyan, dami, imbakan at transportasyon ay draft na isinalin ng makina. Mas mananaig ang orihinal na Chinese at ang gabay ng laboratoryo.',
+    'Các thuật ngữ về loại bệnh phẩm, thời điểm lấy mẫu, dụng cụ chứa, thể tích, bảo quản và vận chuyển là bản nháp dịch máy. Bản tiếng Trung gốc và hướng dẫn của đơn vị xét nghiệm là căn cứ chính.',
+    'Istilah jenis spesimen, waktu pengambilan, wadah, volume, penyimpanan, dan pengiriman adalah draf terjemahan mesin. Naskah asli berbahasa Mandarin dan panduan laboratorium yang berlaku.',
+    'ศัพท์เกี่ยวกับชนิดสิ่งส่งตรวจ เวลาเก็บ ภาชนะ ปริมาตร การเก็บรักษา และการขนส่ง เป็นร่างที่แปลโดยเครื่อง ให้ถือฉบับภาษาจีนและแนวทางของหน่วยตรวจเป็นหลัก',
+  ],
+};
+for (const [key, vals] of Object.entries(ROWS_R49)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
+
 // translation.bar.reviewed 的 {lang} 佔位：zh 版用語言名稱
 STRINGS['zh-TW']['translation.bar.reviewed'] = STRINGS['zh-TW']['translation.bar.reviewed'].replace('{lang}', '翻譯');
 

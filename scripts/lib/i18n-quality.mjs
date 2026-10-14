@@ -29,7 +29,13 @@ const ENT = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", nbsp: ' ', '#39'
  * 其字串由 tests/round48-ui.test.mjs 檢查 th／id／tl 的 ans.* 齊備。要加頁面：在這裡加一條，並先確認該頁已低於門檻。
  * 頁面路徑格式是 dist 內的相對路徑（以 / 開頭、含 index.html）。
  */
-export const STRICT_CJK_PAGES = [/^\/(?:en|ja|tl|vi|id|th)\/index\.html$/, /^\/(?:en|ja|tl|vi|id|th)\/ask\/index\.html$/]; // 語言前綴與 site.config 的 languages 一致
+// 第四十九輪：加入申請服務總覽（/<lang>/apply/）與網站導覽（/<lang>/sitemap-page/）。兩頁是「列出全站」的清單頁，結構上就能壓到 5% 以下（中文獨有的項目收進標示過的摺疊區），不依賴內容翻譯進度。
+export const STRICT_CJK_PAGES = [
+  /^\/(?:en|ja|tl|vi|id|th)\/index\.html$/,
+  /^\/(?:en|ja|tl|vi|id|th)\/ask\/index\.html$/,
+  /^\/(?:en|ja|tl|vi|id|th)\/apply\/index\.html$/,
+  /^\/(?:en|ja|tl|vi|id|th)\/sitemap-page\/index\.html$/,
+]; // 語言前綴與 site.config 的 languages 一致
 export const isStrictCjkPage = (page) => STRICT_CJK_PAGES.some((re) => re.test(page));
 
 export const DEFAULT_CJK_ALLOW = ['衛生福利部疾病管制署', '疾病管制署', '疾管署', '繁體中文', '中文'];

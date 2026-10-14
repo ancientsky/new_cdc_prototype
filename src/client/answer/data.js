@@ -7,6 +7,10 @@
 //     答案頁沒有 ?q= 時，畫面只需要問題框；使用者聚焦或開始輸入時 ui.js 才呼叫 prefetchEngine()，送出前通常已經載好。
 //   - 答案索引依語言分片：只下載「當頁語言＋中文正本」（引擎查不到該語言的審閱譯文會退回中文，所以中文片一定要有）；
 //     專業版只下載專業索引（民眾索引只在專業索引讀不到時才補抓，core.js 的 poolFor 本來就是「有專業索引就只用專業索引」）。
+//   - 第四十九輪（Issue #103）：專業版索引不再整份另下載一份 search-index-pro.<lang>.json，改成「民眾版分片＋專業差異分片」
+//     （search-index-pro-delta.<lang>.json，只放專業獨有的片段，格式與合併規則見 index-delta.js），在記憶體合回與完整專業版分片逐位元相同的陣列。
+//     好處：民眾版分片與專業差異分片各自進 HTTP 快取，同一位同事在民眾版與專業版之間切換、或民眾版已快取過時，專業版只需再下載差異部分；
+//     差異分片讀不到、格式不認得、或與民眾版分片對不上（快取新舊錯位）時退回完整專業版分片，答案不會因此變成查無。
 //   - 後台的評估重跑要用全部語言（評估集有英文、越南文題），傳 { allLangs: true } 讀完整的 search-index.json。
 import { ENGINE_PRIMARY as PRIMARY, ENGINE_SECONDARY as SECONDARY, indexShardNames } from './deps-manifest.js';
 import { registerRefusalText } from './rules.js';
@@ -74,6 +78,17 @@ export function indexShards(base, { allLangs = false, lang = LANG } = {}) {
   return Promise.all(indexShardNames(base, lang).map((n) => v1(n, null))).then((parts) => (parts.some((x) => !Array.isArray(x)) ? v1(base, []) : parts.flat()));
 }
 
+/**
+ * 專業版索引：民眾版分片＋差異分片合成（每個語言各一組，中文正本在前，與 indexShards 的順序相同）。
+ * 任何一組缺檔或對不上 ⇒ 整個退回完整專業版分片（不混用，避免半新半舊）。
+ * 合併邏輯在 index-delta.js，只有專業版才動態載入：民眾版頁面（絕大多數使用者）的初始 JS 與提問後 JS 預算都不多一個位元組。
+ */
+export function proIndexShards({ allLangs = false, lang = LANG } = {}) {
+  const full = () => indexShards('search-index-pro', { allLangs, lang });
+  if (allLangs) return full();
+  return import('./index-delta.js').then((m) => m.loadProIndex({ lang, shard: (n) => v1(n, null), full }), full);
+}
+
 const enginePromise = new Map();
 
 // 引擎的資料分兩批（第四十輪，清單在 deps-manifest.js）：「主要」是任何問題都會用到的，「次要」只有特定意圖才用到。
@@ -81,7 +96,7 @@ const enginePromise = new Map();
 // 次要的交給 requestIdleCallback，在瀏覽器空閒時才抓，不和使用者的打字、頁面其他工作搶主執行緒與頻寬。
 const getSecondary = ([n, fb, optional]) => (optional ? v1Optional(n, fb) : v1(n, fb));
 const indexesFor = (view, allLangs) => {
-  const proIndex = view === 'pro' ? indexShards('search-index-pro', { allLangs }) : Promise.resolve([]);
+  const proIndex = view === 'pro' ? proIndexShards({ allLangs }) : Promise.resolve([]);
   const pubIndex = view === 'pro' ? proIndex.then((x) => (x?.length ? [] : indexShards('search-index', { allLangs }))) : indexShards('search-index', { allLangs });
   return [pubIndex, proIndex];
 };

@@ -63,5 +63,13 @@
     "PDF",
     "MD"
   ],
-  "canonicalUrl": "https://www.cdc.gov.tw/Disease/Index"
+  "canonicalUrl": "https://www.cdc.gov.tw/Disease/Index",
+  "i18n": {
+    "en": {
+      "title": "Disease control manuals and guidelines library",
+      "summary": "Control manuals, guidelines, case definitions and vaccination recommendations for each disease. This site manages them in version chains and provides machine-readable Markdown.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

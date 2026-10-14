@@ -65,5 +65,13 @@
     "MD",
     "JSON"
   ],
-  "canonicalUrl": "https://www.cdc.gov.tw/Disease/Index"
+  "canonicalUrl": "https://www.cdc.gov.tw/Disease/Index",
+  "i18n": {
+    "en": {
+      "title": "Disease information pages (eight-section structured content)",
+      "summary": "Information pages for notifiable diseases. This site structures them into eight sections and provides the v1/diseases API and machine-readable versions.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

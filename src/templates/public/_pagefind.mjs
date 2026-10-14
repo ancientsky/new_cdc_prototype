@@ -25,7 +25,7 @@ const isDate = (s) => /^\d{4}-\d{2}-\d{2}/.test(String(s ?? ''));
  * 這一頁在 Pagefind 的資料；null ＝ 不進索引。
  * @param {{ item?: any, noindex?: boolean, pagefind?: false | { type: string, date?: string, owner?: string, audience?: string[] } }} meta layout() 收到的 meta
  */
-export function pagefindFor(meta) {
+export function pagefindFor(meta, lang = 'zh-TW') {
   const { item, noindex, pagefind } = meta ?? {};
   if (noindex || pagefind === false) return null; // 失效版文件、模擬報名頁、404、/ask/、/search/ 都是 noindex
   let type = pagefind?.type;
@@ -37,7 +37,11 @@ export function pagefindFor(meta) {
   // 第三十三輪（ARCHITECTURE §39）：現行／歷史新聞稿／依據已修訂。搜尋結果標示，並可勾「只看現行內容」排除後兩者
   const g = item?.gov ?? {};
   const currency = g.predatesBasis || (g.stale?.length ?? 0) > 0 ? 'revised' : g.historical ? 'historical' : 'current';
-  return { type, audience, owner: src.owner ?? null, date, year: date ? date.slice(0, 4) : null, currency };
+  // 第四十九輪：這一頁是不是「還沒人工審閱的機器翻譯」（與各模板的翻譯標章同一判斷：外語頁、languages 有狀態但不是 reviewed）。
+  // 機器初稿照樣收進全文搜尋（搜得到、結果列也會看到頁面上的「機器翻譯」標示），但標題不加權，見 pagefindMarks 的 weigh。
+  const st = lang !== (item?.sourceLang ?? 'zh-TW') ? item?.languages?.[lang]?.status : null;
+  const machine = !!st && st !== 'reviewed' && st !== 'source';
+  return { type, audience, owner: src.owner ?? null, date, year: date ? date.slice(0, 4) : null, currency, machine };
 }
 
 /**
@@ -62,6 +66,12 @@ export function pagefindMarks(ctx, pf, { unitName, title } = {}) {
   if (pf.owner && unitName) parts.push(one('meta', `unit:${unitName(pf.owner)}`));
   // 標題加權：模板各自寫 <h1>，不逐一去改；在 layout 統一對主體的第一個 <h1> 補 data-pagefind-weight。
   // 理由：Pagefind 預設所有字等權，「登革熱」在 231 個旅遊目的地頁也各出現幾次，不加權時疾病頁會被淹沒。
-  const weigh = (body) => String(body).replace(/<h1(?=[\s>])/, '<h1 data-pagefind-weight="10"');
-  return { bodyAttr: ' data-pagefind-body', tail: html`${parts}`, weigh };
+  // 第四十九輪：機器翻譯初稿的標題改成 1（比 Pagefind 對 h1 的預設權重還低）。這一輪外語分支替影音、新聞、研究等補了英文機器初稿後，
+  // 英文搜「dengue」時十幾頁機器初稿的標題都有 Dengue、也都 ×10，人工審閱過的疾病頁被擠出第一頁。
+  // 不排除它們（民眾可能就是要找那支影片），只是讓審閱過的內容排在前面——與「機器翻譯不進答案索引」同一個原則的較輕版本。
+  const weigh = (body) => String(body).replace(/<h1(?=[\s>])/, `<h1 data-pagefind-weight="${pf.machine ? 1 : 10}"`);
+  // 機器初稿整個主體也降權（0.3）。只降標題沒有用：Pagefind 的分數對詞頻會飽和，十幾頁都含 dengue 時分數只差 1–2%，
+  // 實測標題 ×10 改 ×1 名次完全不變；要讓審閱過的內容排在前面，得降低整頁的詞頻貢獻。
+  const bodyAttr = pf.machine ? ' data-pagefind-body data-pagefind-weight="0.3"' : ' data-pagefind-body';
+  return { bodyAttr, tail: html`${parts}`, weigh };
 }

@@ -13,7 +13,7 @@ import net from 'node:net';
 import crypto from 'node:crypto';
 import { spawn, execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { config } from '../site.config.mjs';
+import { distBasePath, distEnv } from './helpers.mjs';
 import { parseAdGroup, adGroupName, adGroupsOf, makeSession, DEMO_ACCOUNTS } from '../src/client/admin/auth-rules.js';
 import { principalFrom, createDevAuth, createHeaderAuth, createOidcAuth, normAccount, DEV_SESSION_HEADER } from '../scripts/lib/gateway/auth.mjs';
 import { verifyJwt, signJwtForTest } from '../scripts/lib/gateway/jwt.mjs';
@@ -597,12 +597,12 @@ test('端到端：承辦人存草稿 → 送審 → 審核人退回 → 承辦�
   if (!fs.existsSync(CHROME)) return t.skip('沒有 Chromium');
   const d = tmpDir('gw-e2e-');
   const port = await freePort();
-  const env = { ...process.env, DIST_DIR: DIST, GATEWAY_REPO_DIR: path.join(d, 'repo'), GATEWAY_SEED_DIR: seed(), GATEWAY_STATE_FILE: path.join(d, 'state.json'), GATEWAY_AUDIT_FILE: path.join(d, 'audit.jsonl'), OUTBOX_DIR: path.join(d, 'outbox'), SUBSCRIPTIONS_FILE: path.join(d, 'subs.json') };
+  const env = { ...distEnv(DIST), GATEWAY_REPO_DIR: path.join(d, 'repo'), GATEWAY_SEED_DIR: seed(), GATEWAY_STATE_FILE: path.join(d, 'state.json'), GATEWAY_AUDIT_FILE: path.join(d, 'audit.jsonl'), OUTBOX_DIR: path.join(d, 'outbox'), SUBSCRIPTIONS_FILE: path.join(d, 'subs.json') };
   const srv = spawn(process.execPath, [path.join(ROOT, 'scripts/serve.mjs'), String(port)], { cwd: ROOT, stdio: ['ignore', 'ignore', 'pipe'], env });
   let stderr = ''; srv.stderr.on('data', (c) => { stderr += c; });
   const browser = await chromium.launch({ executablePath: CHROME, args: ['--no-sandbox'] });
   const errors = [];
-  const base = `http://localhost:${port}${config.basePath}`;
+  const base = `http://localhost:${port}${distBasePath(DIST)}`;
   const contentId = `faq.gw-e2e-${crypto.randomBytes(2).toString('hex')}`;
   const repo = path.join(d, 'repo');
   try {

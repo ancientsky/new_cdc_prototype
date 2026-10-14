@@ -12,7 +12,7 @@ import { pathToFileURL } from 'node:url';
 import { STRINGS, t as nodeT } from '../src/client/i18n.js';
 import { I18N_LANGS, resolveAll, langModuleSource, clientKeys } from '../scripts/lib/i18n-split.mjs';
 import { checkJsBudget } from '../scripts/lib/js-budget.mjs';
-import { config } from '../site.config.mjs';
+import { distBasePath, distEnv } from './helpers.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
@@ -74,7 +74,7 @@ test('dist：完整 i18n.js 不上線、每頁 JS 在預算內、每頁只載入
     assert.ok(fs.existsSync(f), `缺 ${f}`);
     assert.ok(fs.statSync(f).size <= BUDGET_PER_LANG, `${lang} 超過預算`);
   }
-  const r = checkJsBudget(DIST, { basePath: config.basePath });
+  const r = checkJsBudget(DIST, { basePath: distBasePath(DIST) });
   assert.ok(
     r.ok,
     `超預算：${r.public.over
@@ -108,11 +108,11 @@ test('端到端：/、/vi/、/admin/、/ask/ 無 console 錯誤，client JS 渲�
   const srv = spawn(process.execPath, [path.join(ROOT, 'scripts/serve.mjs'), String(port)], {
     cwd: ROOT,
     stdio: 'ignore',
-    env: { ...process.env, DIST_DIR: DIST },
+    env: distEnv(DIST),
   });
   const browser = await chromium.launch({ executablePath: CHROME, args: ['--no-sandbox'] });
   try {
-    const base = `http://localhost:${port}${config.basePath}`;
+    const base = `http://localhost:${port}${distBasePath(DIST)}`;
     for (let i = 0; i < 50; i++) {
       try {
         if ((await fetch(`${base}/`)).ok) break;

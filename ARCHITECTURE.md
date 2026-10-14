@@ -2442,3 +2442,45 @@ i18n 新鍵（七語齊備，順序 zh-TW, en, ja, tl, vi, id, th）：`nav.more
 ### 51.6 測試
 
 `tests/round48-engine.test.mjs`（13）、`round48-ui.test.mjs`、`round48-ask-i18n.test.mjs`；評估集 R48-01～36（含 `requires: faq.flu-school-cluster` 與 lang id／th／tl 題）。合併四路工作後重跑：評估集 326／326、a11y 0 阻擋。
+
+## 52. 第四十九輪（2026-10-14）：回答分支用到才載入、FAQ 優先、挑戰集、外語清單、精簡副本
+
+民眾看得到的說明在 README 第四十九輪；取捨在 architecture-decisions §37；各領域細節：ask-search-llm.md §14、eval-challenge.md、i18n.md §8、deploy.md §18–20、guide-staff §48–49。這裡記工程契約。
+
+### 52.1 答案引擎（src/client/answer/）
+
+| 機制 | 契約 |
+| --- | --- |
+| 回答分支 `route-*.js` | 八個只在特定意圖執行的分支（stats、rumor、notify、schedule 彙整、careers、procurement、notice、travel 近況）由 `createEngine` 內 `route(name)` 以 `ctx` 接回。`answer()` 仍同步：分支未載入時丟 `RouteNotLoaded`；瀏覽器呼叫 `answerAsync()` 接住、載入、整題重算。Node 端 `core.js` top-level await 預載全部分支。`js-budget.mjs` 把最大的一個 `route-*.js` 計入提問後合計；新分支須用 `route-` 前綴，共用程式放非 `route-` 檔（`notices-shared.js`） |
+| 問句型態錨點 `QUESTION_CUES` | 規則（`BITE_RE`、`CATCHUP_RE`）同時命中問句與單元「題目文字」（FAQ 題目、標題、如果卡條件）且 `fits` 成立 ⇒ 錨點單元：給底分、排最前、第一句免字面涵蓋過濾；錨點帶頭時只留同一件事的片段（guard `cue-focus`） |
+| 點名動物 | 咬傷問句點名動物（`ANIMAL_RE`）⇒ 題目只講別種動物且未寫泛稱「動物」的單元不採用（guard `other-animal-dropped`），在主題確認判斷之前 |
+| 外語症狀意圖 | 外語問句判意圖時只借跨語言對應的三個疾病面向詞（`FACET_CUE`：症狀、警示徵象、潛伏期） |
+| `topicMatch` | 延伸到服務頁 |
+| 官方答案優先 `officialOver` | 命中的拒答規則**全部**是用藥／法律／媒體時，找可改答單元（FAQ 或服務頁）：同疾病錨點（問句無疾病則單元不綁疾病）、單元涵蓋問句點名的藥名／劑量詞／法律媒體用語、同一面向；第二次 `answer()` 只放行這三種規則、檢索只留該單元；失敗退回原拒答。保留 1922／公關室行動；guard `official-over-refusal`。只對中文問句；急症等其他拒答永不改答 |
+| `judge.js` | 新增 `expect.firstCite`（第一個來源須符合前綴之一） |
+
+### 52.2 挑戰集（content/governance/eval-challenge.json）
+
+- 欄位：`id`、`category`（faq／service／disease／multilingual）、`source`、`style`、`split`（dev／holdout）、`q`、`expect`（優先 `mustCiteAny`／`mustNotCite`／`lowRelevance:false`），可選 `lang`、`view`。最上層 `promoted[]`：`{ id, source, q, split, promotedAt, to }`，升格進評估集的題目移到這裡、不再計分。
+- `eval/run-challenge.mjs` 永遠結束碼 0（格式錯誤才 2）；holdout 失敗明細預設不印。`build.mjs`、`scripts/`、`src/`、`.github/` 與 build／check／test 指令都不得引用挑戰集（`tests/round49-challenge.test.mjs` 守）。
+
+### 52.3 外語（src/templates/public/_listing.mjs）
+
+- `listTarget`／`splitByLang`／`pick`／`langAttr`／`shownNote`／`reviewedText`／`badgeKind`。一級內容（疾病、疫苗、澄清、疫情）只顯示 reviewed 譯文。
+- `i18n.<lang>.machineFields: [欄位]`：已審標題摘要＋機器初稿本文時逐欄標記，不降級 `languages.<lang>.status`。
+- `content/master/lab-terms.json`（`terms[中文] = { en }`）；`units[].stewardTitleEn`。
+- `i18n-quality.mjs STRICT_CJK_PAGES` 加入 `/<lang>/apply/`、`/<lang>/sitemap-page/`。
+
+### 52.4 資料載入與工具
+
+| 機制 | 契約 |
+| --- | --- |
+| 答案引擎精簡副本 | `emit-api.mjs` 輸出 `v1/answer/{services,media,datasets}.json` ＝ 完整檔去掉 `i18n`／`languages`（順序與其他欄位相同），列入 `v1/index.json` 與 openapi；`deps-manifest.js` 讀 `answer/*`。完整檔對外契約不變。`tests/round49-answer-slim.test.mjs` |
+| 專業版差異分片 | `v1/search-index-pro-delta.<lang>.json` ＝ `{ v, base{count,first,last}, omit[], at[], chunks[] }`；`index-delta.js` 建置與瀏覽器共用；建置逐語言驗證合併結果與完整專業版分片逐位元相同；前端遇 404／版本不明／指紋不符整個退回完整分片 |
+| Pagefind 機器初稿降權 | `pagefindFor(meta, lang)` 回傳 `machine`（外語頁、`languages[lang].status` 存在且非 reviewed／source）；machine 頁 `<main data-pagefind-weight="0.3">`、`<h1>` 權重 1（其他頁 10） |
+| 連結檢查 | `siblingUrls`：同主機的 `/vaxmap-next/` 視為外部連結 |
+| 測試環境 | `npm test` 以 `--import ./tests/pin-env.mjs` 固定 `BASE_PATH`／`SITE_URL`／`SITE_MODE`；`tests/helpers.mjs distBasePath`／`distEnv` 從 dist 推回建置時的設定 |
+
+### 52.5 測試與數字
+
+`tests/round49-engine.test.mjs`、`round49-challenge.test.mjs`、`round49-i18n.test.mjs`、`round49-pro-delta.test.mjs`、`round49-answer-slim.test.mjs` 等。評估集 392／392、版本題 19／19；提問後合計 227.1／240 KB；答案頁資料 zh-TW 372／en 411／專業版 499 KB；挑戰集 486 題 70.4%（dev 73.9%、holdout 67.4%）。

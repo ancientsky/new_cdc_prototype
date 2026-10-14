@@ -78,13 +78,21 @@ export const VAX_WHERE_RE = /((哪裡|哪邊|在哪|去哪).{0,8}(打|接種|施
 export const RECORD_RE = /(紀錄|記錄|打過(什麼|哪些|幾劑)|接種過|健康手冊|黃卡)/;
 
 /**
+ * 第四十九輪：咬傷／抓傷問句（被鼬獾咬、被狗咬了、咬傷、抓到）。這類問句要的是「被咬了該怎麼做」，
+ * 所以「題目或適用情境本身就是咬傷」的答案單元（FAQ 題目、疾病頁 what-to-do 卡片的「如果被動物咬傷或抓傷」）優先（core.js 問句型態錨點）。
+ */
+export const BITE_RE = /(被.{0,8}(咬|抓)|咬傷|抓傷|咬到|抓到|咬了)/;
+/** 咬傷問句點名的動物（犬＝狗）。答案單元的題目／標題點名了別的動物、又沒寫泛稱「動物」⇒ 不拿來回答（被狗咬不引用蛇咬的「五要五不」） */
+export const ANIMAL_RE = /(狗|犬|貓|鼬獾|白鼻心|錢鼠|老鼠|蝙蝠|猴|蛇|松鼠)/g;
+
+/**
  * 可解釋意圖規則。每條：{ id, intent, weight, re, note, gate? }。命中加權，最高分者為意圖；分數 < 2 → unknown。
  * view==='pro' 另加 pro.view 規則；gate:'lab' 的規則只在專業模式或含專業詞（LAB_PRO_RE）時計分。
  */
 export const INTENT_RULES = [
   // 症狀
   { id: 'sym.symptom-words', intent: 'symptoms', weight: 2, re: /(發燒|發熱|咳嗽|紅疹|起疹|出疹|疹子|拉肚子|腹瀉|嘔吐|頭痛|喉嚨痛|流鼻水|肌肉痠痛|關節痛|後眼窩痛|全身痠痛|倦怠|嗜睡|抽搐|呼吸急促|水泡|口腔潰瘍|黃疸|血便)/, note: '症狀詞' },
-  { id: 'sym.symptom-generic', intent: 'symptoms', weight: 2, re: /(症狀|徵象|徵兆|前兆|不舒服|病徵)/, note: '症狀泛稱' },
+  { id: 'sym.symptom-generic', intent: 'symptoms', weight: 2, re: /(症狀|徵象|徵兆|前兆|不舒服|病徵|長什麼樣子?|會怎樣|會怎麼樣|什麼感覺|是什麼樣子)/, note: '症狀泛稱（第四十九輪：「會怎樣」「長什麼樣子」）' },
   { id: 'sym.seek-care', intent: 'symptoms', weight: 3, re: /(要不要看醫生|該不該就醫|何時就醫|什麼時候.{0,4}就醫|幾天內.{0,6}就醫|就醫|看醫生|看診|掛號|急診|回診)/, note: '就醫時機' },
   { id: 'sym.after-travel', intent: 'symptoms', weight: 6, re: /(回國|返國|回台|回來|入境).{0,8}(發燒|出疹|紅疹|起疹|腹瀉|拉肚子|不舒服|症狀|咳嗽)/, note: '返國後症狀' },
   { id: 'sym.what-to-do', intent: 'symptoms', weight: 1, re: /(怎麼辦|該怎麼做|如何處理)/, note: '求助語' },
@@ -92,7 +100,7 @@ export const INTENT_RULES = [
   { id: 'sym.vi', intent: 'symptoms', weight: 3, re: /(sốt|triệu chứng|phát ban|ho\b|tiêu chảy|nôn|đi khám|bác sĩ)/i, note: 'Vietnamese symptom words' },
   // 疫苗
   { id: 'vac.vaccine-words', intent: 'vaccine', weight: 3, re: /(疫苗|接種|預防針|施打|追加劑|打針|打一劑|劑次)/, note: '疫苗詞' },
-  { id: 'vac.public-funded', intent: 'vaccine', weight: 2, re: /(公費|自費|接種對象|接種時程|接種點|合約院所|幾歲.{0,4}打)/, note: '公費／時程' },
+  { id: 'vac.public-funded', intent: 'vaccine', weight: 2, re: /(公費(?!的?(藥|抗病毒|口服))|自費|接種對象|接種時程|接種點|合約院所|幾歲.{0,4}打)/, note: '公費／時程（第四十九輪：「公費的藥」是抗病毒藥，不是疫苗）' },
   { id: 'vac.named', intent: 'vaccine', weight: 2, re: /(\bMMR\b|麻疹腮腺炎德國麻疹|\bBCG\b|卡介苗|\bHPV\b|\bEV71\b|\bDTaP\b|五合一|水痘疫苗|肺炎鏈球菌疫苗)/i, note: '疫苗名稱' },
   { id: 'vac.en', intent: 'vaccine', weight: 3, re: /\b(vaccin\w*|immuni[sz]\w*|shots?|jab|booster)\b/i, note: 'English vaccine words' },
   { id: 'vac.vi', intent: 'vaccine', weight: 3, re: /(vắc[\s-]?xin|vaccine|tiêm chủng|tiêm phòng|chích ngừa)/i, note: 'Vietnamese vaccine words' },
@@ -139,7 +147,7 @@ export const INTENT_RULES = [
   // 第七輪：人才招募（job）、採購公告（tender）各自成為意圖（原 ntc.recruit／ntc.procurement）
   { id: 'car.recruit', intent: 'careers', weight: 5, re: /(招募|徵才|職缺|徵人|約聘|約僱|甄選|甄試|工作機會|缺額|招考|人才招募|有缺|缺人|開缺|人事室|錄取|正取|備取|遞補|榜單|放榜|徵求.{0,6}(人員|醫師|助理|技工|研究員|技術員))/, note: '人才招募（職缺、甄選、錄取、人事室）' },
   { id: 'car.salary', intent: 'careers', weight: 3, re: /(薪水|薪資|待遇|薪點|月薪|起薪)/, note: '薪資待遇' },
-  { id: 'car.apply', intent: 'careers', weight: 2, re: /(報名|投履歷|應徵|求職|上班)/, note: '報名（弱：與其他「報名」共用）' },
+  { id: 'car.apply', intent: 'careers', weight: 2, re: /((?<!(受訓|訓練|課程|研習|講習|活動).{0,8})報名|投履歷|應徵|求職|疾管署.{0,6}上班)/, note: '報名（弱：與其他「報名」共用；第四十九輪：受訓／課程的報名不算，「上班」只算「去疾管署上班」——上班族、回去上班是在問自己的健康）' },
   { id: 'car.en', intent: 'careers', weight: 5, re: /\b(jobs?|vacanc(y|ies)|recruit\w*|hiring|careers?|job openings?)\b/i, note: 'English jobs words' },
   { id: 'prc.en', intent: 'procurement', weight: 5, re: /\b(tenders?|procurement|bidding)\b/i, note: 'English procurement words' },
   { id: 'prc.words', intent: 'procurement', weight: 5, re: /(採購|標案|招標|投標|決標|公開評選|開標|案號|流標|得標|廢標|政府電子採購網)/, note: '採購公告（招標、投標、決標）' },
@@ -159,6 +167,8 @@ export const PRO_SUB_INTENTS = ['apply', 'lab', 'notify', 'notice', 'careers', '
 export const INTENT_PRIORITY = ['rumor', 'stats', 'notify', 'careers', 'procurement', 'notice', 'apply', 'lab', 'professional', 'situation', 'travel', 'vaccine', 'symptoms'];
 
 /** 意圖判斷：回傳 { intent, reasons[], scores{} } */
+/** 第四十九輪：解釋型問句（定義、原因、代表什麼） */
+export const EXPLAIN_RE = /(是什麼|是指什麼|指的是|在算什麼|算什麼|什麼意思|的意思|為什麼|為何|是不是代表|代表什麼|怎麼算|定義)/;
 export function classifyIntent(q, { view = 'public', hasTimeRange = false, hasDisease = false, hasCountry = false } = {}) {
   const scores = {}; const reasons = [];
   // 研究計畫問句（「血清抗體盛行率研究」）不是在問送驗規定，除非明講檢體／送驗／採檢
@@ -179,6 +189,8 @@ export function classifyIntent(q, { view = 'public', hasTimeRange = false, hasDi
   }
   // 「現在疫情」與統計詞同時出現且沒有時間範圍 → 疫情優先（態勢卡回答）
   if (scores.situation && scores.stats && !hasTimeRange && /(現在|目前|最近|本週|這週|嚴重嗎)/.test(q)) { scores.stats -= 2; reasons.push('sit.over-stats'); }
+  // 第四十九輪：問「是什麼／為什麼／代表什麼」是要解釋，不是要數字（「就診率是在算什麼」「流感疫苗為什麼每年打」）；問句另有數量詞或時間範圍才仍算統計
+  if (scores.stats && !hasTimeRange && EXPLAIN_RE.test(q) && !/(幾例|多少例|多少人|病例數|個案數|人數|數據|趨勢|統計)/.test(q)) { scores.stats = 0; reasons.push('sta.explain'); }
   let best = 'unknown', bestScore = 0;
   for (const intent of INTENT_PRIORITY) { const s = scores[intent] ?? 0; if (s > bestScore) { best = intent; bestScore = s; } }
   if (bestScore < 2) { best = 'unknown'; if (hasDisease) reasons.push('unk.disease-only'); }

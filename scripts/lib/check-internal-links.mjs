@@ -14,10 +14,14 @@
 //     附 asset:true 與 hint：未宣告、內容非 published，或誤加了語言前綴 /en/files/…——檔案網址七語共用、不含語言前綴）。
 // 外部：收集網域、次數、來源頁 → v1/governance/external-links.json；建置時不連外驗證（CI 另有 fetch-data --check-links）。
 //   黑名單（example.、placeholder、localhost、127.0.0.1、TODO、xxx）⇒ error。
+//   - 第四十九輪：同主機的「別的專案」不算站內。BASE_PATH='' 時 siteOrigin 退化成整個主機（https://ancientsky.github.io），
+//     連到同主機另一個 GitHub Pages 專案（vaxmapUrl 的 /vaxmap-next/）會被誤判成站內缺檔（一次建置 3,300 多個 error）。
+//     呼叫端用 siblingUrls 列出「同主機但不屬於本站」的網址（build.mjs 傳 config.vaxmapUrl／vaxmapInfoUrl），
+//     其第一層路徑（/vaxmap-next/）底下的絕對網址一律當外部連結。siteUrl 本身帶路徑時（https://host/new_cdc_prototype）照舊以該路徑為站內範圍。
 // 輸出：v1/governance/link-report.json（errors[]、warnings[]、counts）。
 // 用法：node scripts/lib/check-internal-links.mjs [distDir] [--check] [--md]（--check 或 CI 環境下有 error ⇒ exit 1）
 //       --md：也掃 .md 機讀版的站內連結（只算 warning）。build.mjs 在輸出後呼叫；LINK_CHECK=warn 降為警告、off 略過。
-// 匯出：checkInternalLinks(distDir, { basePath, langs, siteUrl, md, write }) → { errors, warnings, counts, external, ok }
+// 匯出：checkInternalLinks(distDir, { basePath, langs, siteUrl, siblingUrls, md, write }) → { errors, warnings, counts, external, ok }
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -79,14 +83,46 @@ export function blacklistHit(u) {
 }
 
 /**
+ * 同主機的別專案前綴：siblingUrls 中與 siteUrl 同 origin 者，取其第一層路徑（'/vaxmap-next/'）。
+ * siteUrl 自己的路徑（https://host/new_cdc_prototype）若就是該前綴則不算別專案（本站自己）。
+ * @param {string} siteUrl
+ * @param {string[]} siblingUrls
+ * @param {string} basePath
+ */
+export function siblingPrefixes(siteUrl, siblingUrls = [], basePath = '') {
+  let site;
+  try { site = new URL(siteUrl); } catch { return []; }
+  const own = `${site.pathname.replace(/\/$/, '')}${basePath}`;
+  const out = new Set();
+  for (const raw of siblingUrls) {
+    let u;
+    try { u = new URL(raw); } catch { continue; }
+    if (u.origin !== site.origin) continue;
+    const seg = u.pathname.split('/').filter(Boolean)[0];
+    if (!seg) continue;
+    const prefix = `/${seg}/`;
+    if (own && (`${own}/`).startsWith(prefix)) continue; // 站台自己的子路徑
+    out.add(prefix);
+  }
+  return [...out];
+}
+
+/**
  * @param {string} distDir 建置輸出目錄
- * @param {{ basePath?: string, langs?: Array<{code:string,path:string}|string>, siteUrl?: string, md?: boolean, write?: boolean, maxSources?: number }} opts
+ * @param {{ basePath?: string, langs?: Array<{code:string,path:string}|string>, siteUrl?: string, siblingUrls?: string[], md?: boolean, write?: boolean, maxSources?: number }} opts
  */
 export function checkInternalLinks(distDir, opts = {}) {
   const t0 = Date.now();
   const basePath = (opts.basePath ?? '').replace(/\/$/, '');
   const siteUrl = (opts.siteUrl ?? '').replace(/\/$/, '');
   const siteOrigin = siteUrl ? `${siteUrl}${basePath}` : null;
+  const siblings = siblingPrefixes(siteUrl, opts.siblingUrls, basePath);
+  const hostOrigin = (() => { try { return new URL(siteUrl).origin; } catch { return null; } })();
+  /** 同主機、第一層路徑落在別專案前綴底下 */
+  const isSibling = (abs) => {
+    if (!siblings.length || !hostOrigin) return false;
+    try { const u = new URL(abs); return u.origin === hostOrigin && siblings.some((pre) => u.pathname === pre.slice(0, -1) || u.pathname.startsWith(pre)); } catch { return false; }
+  };
   const maxSources = opts.maxSources ?? 5;
   const langPrefixes = (opts.langs ?? []).map((l) => (typeof l === 'string' ? { code: l, path: `/${l}` } : l)).filter((l) => l.path);
   const langOf = (rel) => { const p = `/${rel}`; return langPrefixes.find((l) => p.startsWith(`${l.path}/`))?.code ?? 'default'; };
@@ -142,7 +178,8 @@ export function checkInternalLinks(distDir, opts = {}) {
     if (href.startsWith('//')) abs = `https:${href}`;
     let pathPart = null;
     if (/^https?:\/\//i.test(abs)) {
-      if (siteOrigin && (abs === siteOrigin || abs.startsWith(`${siteOrigin}/`) || abs.startsWith(`${siteOrigin}?`) || abs.startsWith(`${siteOrigin}#`))) {
+      const sibling = isSibling(abs);
+      if (!sibling && siteOrigin && (abs === siteOrigin || abs.startsWith(`${siteOrigin}/`) || abs.startsWith(`${siteOrigin}?`) || abs.startsWith(`${siteOrigin}#`))) {
         pathPart = abs.slice(siteUrl.length) || '/';
       } else {
         counts.external++;
@@ -237,8 +274,9 @@ export function checkInternalLinks(distDir, opts = {}) {
   // 依目標彙整後的排序：次數多的在前
   for (const e of errors) { const k = `${e.kind} ${e.target ?? e.href}`; (errorsByTarget[k] ??= { kind: e.kind, href: e.href, target: e.target ?? null, why: e.why, ...(e.hint ? { hint: e.hint } : {}), count: 0, firstFrom: e.from }).count++; }
   const report = {
-    basePath, siteOrigin, ok: errors.length === 0, counts,
+    basePath, siteOrigin, siblings, ok: errors.length === 0, counts,
     rules: {
+      siblings: '同主機別專案前綴（siblingUrls 的第一層路徑）底下的絕對網址視為外部連結，不查 dist',
       internal: '資料夾型需有 index.html、檔案型需存在；?query 忽略；#anchor 缺 id ⇒ warning；不在 basePath 底下 ⇒ error；404.html 不得用相對路徑',
       excluded: ['/ask/?q=', 'mailto:', 'tel:', 'sms:', 'javascript:', 'data:', 'blob:'],
       blacklist: BLACKLIST.map((b) => String(b.re)),
@@ -281,7 +319,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   const argv = process.argv.slice(2);
   const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
   const dist = path.resolve(argv.find((a) => !a.startsWith('--')) ?? process.env.DIST_DIR ?? path.join(ROOT, 'dist'));
-  const res = checkInternalLinks(dist, { basePath: config.basePath, langs: config.langs, siteUrl: config.siteUrl, md: argv.includes('--md') });
+  const res = checkInternalLinks(dist, { basePath: config.basePath, langs: config.langs, siteUrl: config.siteUrl, siblingUrls: [config.vaxmapUrl, config.vaxmapInfoUrl], md: argv.includes('--md') });
   summarize(res);
   if (!res.ok && (argv.includes('--check') || process.env.CI)) process.exit(1);
 }

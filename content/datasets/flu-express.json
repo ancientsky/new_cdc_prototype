@@ -67,5 +67,13 @@
     "PDF",
     "HTML"
   ],
-  "canonicalUrl": "https://antiflu.cdc.gov.tw/"
+  "canonicalUrl": "https://antiflu.cdc.gov.tw/",
+  "i18n": {
+    "en": {
+      "title": "Influenza Express (weekly influenza surveillance report)",
+      "summary": "A weekly integrated influenza surveillance report: influenza-like illness visits, virus types, severe complicated cases and international situation.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

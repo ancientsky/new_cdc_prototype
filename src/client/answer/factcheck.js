@@ -25,9 +25,10 @@ async function check(text) {
   if (!q) { out.innerHTML = `<p class="muted">${esc(L('empty'))}</p>`; return; }
   out.setAttribute('aria-busy', 'true');
   out.innerHTML = '<div class="c-skeleton" aria-hidden="true"><span></span><span class="short"></span></div>';
+  import('./route-rumor.js').catch(() => {}); // 第四十九輪：謠言查證分支與引擎並行下載（本頁每題都用得到）
   const { engine, deps } = await loadEngine('public');
   setUnits(deps.units);
-  const r = engine.answer(q, { lang: LANG, forceIntent: 'rumor' });
+  const r = await engine.answerAsync(q, { lang: LANG, forceIntent: 'rumor' });
   current = r;
   const parts = [];
   if (r.paused) parts.push(`<div class="c-banner--paused" role="status"><p>${esc(L('paused'))}</p></div>`);

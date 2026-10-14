@@ -79,5 +79,13 @@
   "formats": [
     "XLSX",
     "PDF"
-  ]
+  ],
+  "i18n": {
+    "en": {
+      "title": "Annual surveillance data on antimicrobial-resistant bacteria in healthcare-associated infections",
+      "summary": "Annual statistics on the proportion of key antimicrobial-resistant bacteria (MRSA, VRE, CRE, CRAB) under healthcare-associated infection surveillance.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

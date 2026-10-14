@@ -64,5 +64,13 @@
     "PNG",
     "JPG"
   ],
-  "canonicalUrl": "https://www.cdc.gov.tw/Advocacy"
+  "canonicalUrl": "https://www.cdc.gov.tw/Advocacy",
+  "i18n": {
+    "en": {
+      "title": "Multilingual health education materials (posters, leaflets, quick-read guides)",
+      "summary": "Posters, leaflets and social-media quick-read guides in seven languages. Each item should state its source original and version, and is taken down together with the original when the original is revised.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

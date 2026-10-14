@@ -19,7 +19,7 @@ import {
   verifyPagefindRecall,
   waitForPagefindOutput,
 } from '../scripts/lib/pagefind.mjs';
-import { config } from '../site.config.mjs';
+import { distBasePath } from './helpers.mjs';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), '..');
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
@@ -185,7 +185,7 @@ async function withSearchPage(tc, url, fn) {
   if (!hasIndex) return tc.skip('dist 尚未建置（或 PAGEFIND=off）');
   if (!fs.existsSync(PW) || !fs.existsSync(CHROME)) return tc.skip('沒有 Playwright／Chromium');
   const { chromium } = await import(pathToFileURL(PW).href);
-  const base = config.basePath;
+  const base = distBasePath(DIST); // 讀 dist 自己的 data-base（不跟呼叫端的 BASE_PATH；第四十九輪）
   const srv = http.createServer((req, res) => {
     let u = decodeURIComponent(req.url.split('?')[0]);
     if (base && u.startsWith(base)) u = u.slice(base.length) || '/';

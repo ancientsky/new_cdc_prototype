@@ -808,7 +808,9 @@ ASK_PERF=1 node --test tests/round40-ask-perf.test.mjs      # 當成測試：TBT
 
 建置時的資料傳輸量（gzip 估算）：zh-TW 366 KB、en 405 KB、專業版 489 KB。TBT 遠低於 `tests/round40-ask-perf.test.mjs` 的 1500 ms 上限；傳輸量中 JSON 占約 3/4，這就是 17 節討論分片的原因。
 
-## 17. 設計備忘：答案資料依主題分片（尚未實作，Issue #103）
+## 17. 設計備忘：答案資料依主題分片（依主題分片尚未實作；第四十九輪做了其中一項便宜做法，Issue #103）
+
+> **第四十九輪狀態：** 本節「建議」第 3 點的兩個便宜做法——（b）專業版差異分片**已做**（見 20.2）；（a）次要 JSON 改成用到才抓**沒做成**，卡在引擎核心需要新增一個非同步鉤子（見 20.1）。依主題／疾病切分的完整分片仍不做，重新評估條件不變。
 
 **問題。** 提問時瀏覽器要下載整份索引：中文分片 `v1/search-index.zh-TW.json`（原始 1.16 MB、gzip 151 KB；專業版 2.1 MB／273 KB），非中文頁再加當頁語言分片。使用者問登革熱，卻也下載了疫苗、就業、標案、新聞的段落。grokbot 建議只載入與問題相符的分片。
 
@@ -832,3 +834,105 @@ ASK_PERF=1 node --test tests/round40-ask-perf.test.mjs      # 當成測試：TBT
 2. 風險集中在安全邊界（全域 IDF 與拒答閘門）和少答，需要完整的對照測試才敢上。
 3. 比分片便宜、風險小的做法先做：（a）把引擎讀的次要 JSON（`travel-alerts`、`services`、`media`，合計約 75 KB）改成「答案類型需要才抓」；（b）專業版索引裡民眾版沒有的部分另成一個差異分片，專業版 = 民眾版分片 + 差異分片（可共用快取，專業版額外只下載約 120 KB）。這兩項都不動 BM25 與閘門。
 4. 重新評估的條件：專業版或民眾版預算在六個月內被撞到兩次以上，或索引 gzip 超過 300 KB。屆時優先走方案 3，並先實作「建置時輸出全域 df 表」這個前置工作。
+
+## 18. 連結檢查：同主機的別專案不算站內（第四十九輪）
+
+**症狀。** 用 `BASE_PATH=''` 建置（本機預覽、量效能、無障礙檢測都這樣建），連結檢查報 3,332 個「站內」壞連結，全部指向 `/vaxmap-next/` 與 `/vaxmap-next/info.html`；用預設的 `/new_cdc_prototype` 建置則是 0 個。
+
+**根因。** 我們的「疫苗及流感藥劑地圖」是另一個專案 `https://ancientsky.github.io/vaxmap-next/`（`site.config.mjs` 的 `vaxmapUrl`、`vaxmapInfoUrl`），和本站放在同一個 GitHub Pages 主機。連結檢查（`scripts/lib/check-internal-links.mjs`）用「站台網址 ＋ basePath」判斷一個絕對網址是不是站內：
+
+| 建置 | 站台網址 ＋ basePath | `https://ancientsky.github.io/vaxmap-next/` |
+| --- | --- | --- |
+| 預設 | `https://ancientsky.github.io/new_cdc_prototype` | 不在底下 ⇒ 外部連結，只收進 `external-links.json` |
+| `BASE_PATH=''` | `https://ancientsky.github.io`（整個主機） | 在底下 ⇒ 站內，去 `dist/vaxmap-next/` 找檔案，找不到 ⇒ error |
+
+`BASE_PATH=''` 的本意是「本站放在網域根目錄」，但原型的網域其實是別人共用的 GitHub Pages 主機，根目錄底下還住著別的專案。
+
+**規則（現在的）。** 一個絕對網址是站內，必須**同時**：（1）同 origin；（2）在「站台網址（含它自己的路徑）＋ basePath」底下；（3）不在「同主機別專案」的前綴底下。第 3 點由呼叫端用 `siblingUrls` 告知：`build.mjs` 傳 `[config.vaxmapUrl, config.vaxmapInfoUrl]`，檢查器取每個網址同主機的第一層路徑（`/vaxmap-next/`）當前綴，前綴底下的絕對網址一律當外部連結。注意是整個前綴不是逐一網址：`/vaxmap-next/` 底下以後新增的頁面不必再改設定；但 `/vaxmap-nextgen/` 這種只是字首相同的路徑不受影響（比對的是 `/vaxmap-next/` 或 `/vaxmap-next`）。
+
+**為什麼不是別的做法。**
+- 「`BASE_PATH=''` 時乾脆不檢查絕對網址」：會讓本站自己的絕對網址（canonical、sitemap、JSON-LD）壞了也看不出來，而這正是 `BASE_PATH=''` 建置還在檢查的東西。
+- 「在檢查器裡寫死 `vaxmap-next`」：換網域或再多一個別專案（例如將來的資料入口）就要改檢查器。來源放在 `site.config.mjs`，檢查器只認 `siblingUrls`。
+- 「`siteUrl` 帶路徑」（例如 `SITE_URL=https://ancientsky.github.io/new_cdc_prototype`、`BASE_PATH=''`）本來就正確：站內範圍就是那個路徑，別專案自然在範圍外，不必靠 `siblingUrls`；`siblingPrefixes()` 也不會把站台自己的子路徑誤當別專案。
+
+**新增別專案時：** 把它的網址加進 `build.mjs` 的 `siblingUrls`（或從 `config` 取）。報告 `v1/governance/link-report.json` 的 `siblings` 欄位列出生效的前綴，建置時看得到。測試：`tests/links.test.mjs` 的「第四十九輪」那一則（同時證明舊行為會報 3 個錯，修正後只剩本站自己的壞連結）。
+
+**驗證（2026-10-14）。** `BASE_PATH='' BUILD_TODAY=2026-10-14 npm run build`：站內 410,139 個全通、error 0（修正前同一份 dist 用舊邏輯重掃：3,332 個，全是 `/vaxmap-next/` 與 `/vaxmap-next/info.html`）；預設 basePath 的建置：同樣 3,290 頁、443,553 個連結、站內 410,139（通 410,139）、外部 14,933、error 0，加或不加 `siblingUrls` 的報告逐欄相同。
+
+## 19. 測試與呼叫端的環境變數無關（第四十九輪）
+
+**症狀。** `npm test` 全過，`BASE_PATH='' npm test` 約 24 個測試失敗（後台、`/legacy/`、`/international/`、`/vaccines/`、疫苗表……），訊息只有「The input did not match the regular expression /href="\/new_cdc_prototype\/admin\/…"/」，不容易聯想到環境變數。
+
+**根因。** `site.config.mjs` 在**被 import 的當下**讀 `process.env.BASE_PATH`（還有 `SITE_URL`、`SITE_MODE`）。模板測試的期望值寫死預設的 `/new_cdc_prototype`，而被測的程式碼用 `config.basePath` 產生 HTML。呼叫端 shell 裡設過 `BASE_PATH=''`（為了量效能、跑 e2e 常常整個 session 都 export 著）就讓兩邊對不上。所以不是 24 個測試各自寫錯，是**測試的輸入有一部分來自呼叫端的環境**。
+
+**做法。**
+1. `tests/pin-env.mjs`：在任何人 import `site.config.mjs` 之前，把 `BASE_PATH`、`SITE_URL`、`SITE_MODE` 從 `process.env` 移除，設定檔就回到預設值；呼叫端原本的 `BASE_PATH` 留在 `CALLER_BASE_PATH`（只供偵錯）。
+2. `package.json` 的 `test` 改成 `node --test --import ./tests/pin-env.mjs tests/*.test.mjs`：`--import` 保證它在每個測試檔的任何 import 之前執行。`tests/helpers.mjs` 的第一行也 import 它，所以 `node --test tests/某檔.test.mjs` 在「該檔先 import helpers」時也一樣；沒有先 import helpers 的檔（直接 `import '../site.config.mjs'` 的約 20 個）直接單檔執行時不受保護，要保證請用 `npm test` 或自己加 `--import ./tests/pin-env.mjs`。`TEST_KEEP_ENV=1` 可關閉釘選。
+3. **需要 `BASE_PATH=''` 的 dist 的 e2e 測試不受影響，而且不再依賴呼叫端環境。** e2e 讀的是「別人先建好的 dist」，那份 dist 的 basePath 真相在 dist 自己：每頁 `<html data-base="…">`（前端 `data.js` 讀的同一個屬性）。`tests/helpers.mjs` 新增 `distBasePath(distDir)` 讀它、`distEnv(distDir)` 在啟動 `scripts/serve.mjs` 時明確帶 `BASE_PATH`。round26（i18n）、round28（search）、round30（gateway）、round34（engine-split）、round40（ask-perf、search-recall）、round47（nav-panels）與 admin-editor 的 e2e 都改用它。以前這些測試用 `config.basePath`，等於「呼叫端必須用跟建置 dist 時相同的 `BASE_PATH` 跑測試」，現在不用了：dist 用 `''` 或預設建的都能跑，測試的 shell 設什麼都無所謂。
+
+**驗證（2026-10-14）。** `npm test` 與 `BASE_PATH='' npm test` 皆 961 個測試 0 失敗（dist 為 `BASE_PATH=''` 建置時 e2e 照跑；dist 為預設 basePath 建置時 e2e 也照跑）。`BASE_PATH='' npm test` 在改動前：952 個測試 24 個失敗。
+
+**往後寫測試的規則。** 模板／渲染測試用 `config.basePath`（預設值）；讀 dist 的測試用 `distBasePath(DIST)`；需要子行程的 `BASE_PATH` 時用 `distEnv(DIST)`，不要依賴 `process.env.BASE_PATH`。
+
+## 20. 答案資料載入（第四十九輪，Issue #103 的後續）
+
+第 17 節建議先做兩個便宜做法再談分片。這輪的結果：
+
+### 20.1 次要 JSON 改成用到才抓：**沒做成，需要引擎核心加一個非同步鉤子**
+
+**要抓的是什麼。** `/ask/?q=登革熱` 提問時下載的 JSON 共 395 KB（傳輸量，含索引 153 KB）。其中「次要」（`deps-manifest.js` 的 `ENGINE_SECONDARY`）七個檔加 `v1/index.json` 合計約 106 KB gzip：`travel-alerts` 36.5、`services` 23.0、`media` 18.0、`country-levels` 16.4、`immunization-schedule` 4.0、`notify-table` 3.4、`vaccine-master` 1.1，`index` 4.3。它們只有旅遊、申請服務、通報時限、影音海報、接種時程這些意圖或來源卡才用到，登革熱症狀問題一個也沒用，約佔提問後 JSON 的四分之一。
+
+**為什麼只改 `data.js` 做不到。**
+1. `createEngine(deps)` 在**建立當下**就把次要資料吃掉：`serviceById`、`mediaById`、`notifyRows`、`travelItems` 都是建立時算好的 `Map`／陣列，`scheduleItems` 是建立時取走的參考（`core.js` 開頭）。引擎建好之後再補資料不會生效。
+2. `engine.answer()` 是**同步**函式，所有呼叫端（`ui.js`、`factcheck.js`、`stats.js`、`admin/eval.js`、`judge.js`）都是 `const r = engine.answer(...)` 直接用。答案內容才知道要不要用次要資料，這時再去抓就是非同步，同步函式等不了。
+3. 不能「在提問前先判斷需不需要」：次要資料的使用不只看意圖。`mediaById`／`serviceById` 在**任何**意圖下，只要檢索到影音或申請服務的片段，就會用來補來源卡（海報、時長、步驟數）；`travelItems` 在有國家實體時就用。用意圖或關鍵字預判，漏判就是答案或來源卡跟現在不一樣，違反「行為完全相同」。
+4. 試過的繞法與為什麼放棄：（i）每題先 `answer()` 一次當探針，看結果有沒有用到次要資料再補抓、重建引擎——`createEngine` 手機 4 倍降速約 0.8 秒，罕見意圖的使用者要多付一次，而且探針是否「沒用到」得靠比對結果，容易漏；（ii）讓 `data.js` 回傳包裝過的 engine——`answer` 仍是同步，包裝也無法等待。
+
+**需要的鉤子（給負責 `core.js` 的人）。** 最小改法兩部分：（一）`createEngine` 內五個次要結構改成可重建（`let`），並新增 `engine.supply({ services, media, notifyTable, travel, schedule })` 重新計算它們；（二）每個讀取點（`core.js` 的 `mediaById.get`／`serviceById.get`／`travelItems`／`notifyRows.get`／`scheduleItems`，約 10 處）在**資料尚未供應**時把名稱記進 `engine.missing`（`Set`），仍照現在的「空資料」邏輯回答。`ui.js` 的 `run()` 已是 `async`，只要 `result = engine.answer(...)` 之後 `if (engine.missing.size) { await loadSecondary([...engine.missing]); engine.supply(...); result = engine.answer(...) }`（`data.js` 負責 `loadSecondary`，用現成的 `v1()` 快取）。這樣重答只發生在罕見意圖，結果與一次載入完全相同，且有測試可證明（同一題在「全部先載」與「用到才載」兩條路徑答案逐位元相同，評估集 327 題都跑兩遍）。預估節省：一般症狀、疫苗以外的問題少下載約 100 KB（提問傳輸約 532 KB → 約 430 KB，約 19%），TBT 不變。另一個較小的好處：`prefetchEngine()` 不再在空閒時預抓這 100 KB。這個改動碰到 `core.js` 與 `ui.js`，所以留給負責它們的同事排進下一輪。
+
+### 20.2 專業版索引改成「民眾版分片＋差異分片」：**已做，但專業版第一次載入的位元組沒有減少**
+
+**做了什麼。** 專業版索引 ＝ 民眾版索引的全部片段 ＋ 專業獨有片段（中文：571 ＋ 340 ＝ 911 個片段；專業獨有的是文件庫 216、檢驗項目 53、服務 31、疾病頁專業重點 14、研究計畫 10、文章 9、通函 5、專區與刊物各 1）。建置現在另輸出 `v1/search-index-pro-delta.<lang>.json`（七種語言各一個），內容是 `{ v, base{count,first,last}, omit[], at[], chunks[] }`：`chunks` 是專業獨有的片段、`at` 是它們在合併後陣列的位置、`omit` 是民眾版有而專業版沒有的片段 id（目前恆為空，規則上允許，因為專業版資格比民眾版多了幾道檢查）、`base` 是民眾版分片的指紋。專業版頁面（`data.js` 的 `proIndexShards`）下載「民眾版分片＋差異分片」，在記憶體合回與原本的完整專業版分片**逐位元相同（含順序）**的陣列——順序必須相同，因為 BM25 同分時的名次取決於陣列順序。合併邏輯與格式只在 `src/client/answer/index-delta.js` 一份，建置與瀏覽器共用。
+
+**安全網。**
+- 建置時（`index-builder.mjs` 的 `buildProDeltaShards`）逐語言當場驗證「民眾版分片＋差異＝專業版分片」，不一致建置失敗。
+- 前端遇到差異分片 404、格式版本不認得、或指紋與民眾版分片對不上（例如民眾版分片來自舊快取、差異分片是新的）時，**整個**退回完整專業版分片，不混用；該檔照舊輸出。
+- 對外 API 不變：`v1/search-index.json`、`search-index-pro.json` 與各語言分片原樣輸出、內容不變（`openapi.json`、`/developers/` 有文件）。差異分片是新增端點，`openapi.json` 與 `v1/index.json`、`v1/search.json`（`proDeltaShards`）都列出，並註明一般 API 使用者請用完整檔。
+- 管理後台的評估重跑（`allLangs`）仍讀完整檔。
+- `index-delta.js` 只有專業版才動態載入，民眾版頁面的初始 JS 與提問後合計不多（`th/ask` 合計 238.4 → 238.6 KB，見下面的提醒）。
+
+**量測（2026-10-14，`BASE_PATH='' BUILD_TODAY=2026-10-14 npm run build && node scripts/perf-ask.mjs`，每情境 3 次中位數，4 倍 CPU 降速）。** 專業版情境是這輪另外量的（`/ask/?view=pro&q=…`）：
+
+| 情境 | 項目 | 之前 | 之後 |
+| --- | --- | --- | --- |
+| 建置「答案頁資料傳輸量」 | 專業版（gzip 估算） | 499 KB | 504 KB（+1%） |
+| | 民眾版 zh-TW／en | 377／415 KB | 377／416 KB（`v1/index.json` 多列 7 個檔） |
+| `/ask/?view=pro&q=登革熱` | 傳輸（JSON） | 652.5 KB（517.8） | 659 KB（523.2） |
+| | TBT／答案出現 | 796 ms／1490 ms | 755 ms／1441 ms（同量級；單次量測的誤差約 ±15%） |
+| `/en/ask/?view=pro&q=dengue` | 傳輸（JSON） | 690 KB（556.9） | 697 KB（562.9） |
+| | TBT／答案出現 | 405 ms／1109 ms | 351 ms／1016 ms |
+| `/ask/?q=登革熱`（民眾版） | 傳輸／TBT／答案出現 | 531.8 KB／629 ms／1307 ms | 532 KB／559 ms／1135 ms |
+| `/en/ask/?q=dengue`（民眾版） | 傳輸／TBT／答案出現 | 569.2 KB／352 ms／1072 ms | 569.5 KB／334 ms／968 ms |
+
+**誠實的結論：** 專業版**第一次**載入（快取是空的）的位元組沒有少，反而多了約 1%：民眾版分片 153 KB ＋ 差異分片 128 KB ＝ 281 KB，和原本的完整專業版分片 276 KB 差不多，因為專業獨有的片段（文件庫全文）本來就佔了那 128 KB，而分成兩個檔案壓縮失去了跨檔的重複字串（多約 5 KB）。所以 `DEFAULT_ASK_DATA_PRO_KB` **維持 565 KB**：新量測 504 KB × 1.15 ＝ 580 KB，沒有比 565 低，不調整（餘裕由 13% 降為 12%）。這個做法的實際價值在**快取共用**：同一位同事在民眾版與專業版之間切換、或先看過民眾版（常見，專業同事也會先用民眾版查），專業版只需要再下載約 128 KB 的差異分片，不是 276 KB；一個站內民眾版分片更新時，專業版的差異分片可以獨立重用（反之亦然）。要讓專業版第一次載入也變小，得減少專業獨有片段本身的大小（例如文件庫只索引章節標題與摘要、全文改成按需載入），那是內容與索引設計的取捨，不是分片格式能解的，不在這輪範圍。
+
+**提醒（合併後更新）：** 寫這段時引擎 JS 是 238.6／240 KB；同一輪引擎分支把罕見意圖的答案組裝改成按需載入的 `route-*.js`（`docs/ask-search-llm.md` §14），合併後「提問後合計」最大降到 227.1 KB（`th/ask`），約有 13 KB 餘裕。調高預算仍要在 `js-budget.mjs` 補一行「日期、舊值、新值、為什麼」（見 15.3 的規則）。
+
+**驗證。** `tests/round49-pro-delta.test.mjs`：純函式（順序、omit、內容不同、指紋不符、位置不合理）、dist 每語言合併結果與完整專業版分片逐位元相同、`data.js proIndexShards` 在假 `document`／`fetch` 下的合併結果與三種退回情境（404、版本不認得、民眾版分片舊快取）、完整檔與 `index.json`／openapi 仍在。評估集 `npm run eval`：326 通過、0 失敗、1 略過（與改動前相同；引擎輸入的陣列逐位元相同，答案不變）。
+
+### 20.3 答案引擎改讀不含譯文的精簡副本（合併時發現、當輪修正）
+
+**發生什麼事。** 這一輪外語分支替申請服務、影音、資料集補了七語機器翻譯草稿（`docs/i18n.md` §8），四個分支合併後重新建置，「答案頁資料傳輸量」從 zh-TW 377／en 415／專業版 499 KB 漲到 402／441／530 KB，en 只剩 4 KB 就碰到 445 KB 預算。原因是答案頁下載的 `v1/services.json`（gzip 23 → 40 KB）、`media.json`（18 → 24 KB）、`datasets.json`（11.8 → 13.3 KB）整份帶著譯文，而**答案引擎根本不讀這些譯文**：引擎用中文欄位組句與來源卡，`data.js` 的 `loadEngine` 對服務與影音只挑出 `id`、`title`、`steps`、`poster` 這類欄位；這三類內容的譯文只在各自的頁面顯示。
+
+**怎麼修。** 建置另外輸出 `v1/answer/{services,media,datasets}.json`：內容與完整檔相同、順序相同，只去掉 `i18n` 與 `languages`。`deps-manifest.js` 改成讀這三份；`v1/index.json` 也列出它們（`services`、`media` 是可選檔，`data.js` 的 `v1Optional` 先查清單才下載）。完整的 `v1/services.json` 等**對外 API 不變**，仍含七語譯文。
+
+**結果（`BASE_PATH='' BUILD_TODAY=2026-10-14 npm run build`）。** 答案頁資料傳輸量 zh-TW 372、en 411、專業版 499 KB，比這一輪開始前還少約 5 KB（譯文以外，`languages` 陣列本來就不需要）。gzip：services 39.7 → 20.0 KB、media 24.0 → 16.0 KB、datasets 12.7 → 10.0 KB。
+
+**為什麼這樣比較好。**
+- 對外 API 是給外部系統用的「完整資料」，答案頁是「只需要回答所需的欄位」。兩者的需求本來就不同，共用同一份檔案，任何一邊加欄位都會讓另一邊變重。這次是加譯文，下次可能是加圖片說明或附件清單。
+- 另一種修法是把預算調高，但那只是把問題藏起來：民眾在手機上多下載 25 KB 卻什麼都沒得到。
+- 還有一種修法是讓 `data.js` 只下載需要的欄位，但靜態網站沒有伺服器能挑欄位，只能預先輸出。
+
+**防呆。** `tests/round49-answer-slim.test.mjs` 檢查：清單指向精簡副本、精簡副本＝完整檔去掉 `i18n`／`languages`（其他欄位與順序逐項相同，所以引擎拿到的資料不變、答案不變）、`index.json` 有列出、完整檔仍含譯文。評估集 392／392 通過。
+
+**給之後的人。** 如果引擎哪一天真的需要某個欄位的譯文（例如外語答案要顯示服務名稱的譯名），請在 `emit-api.mjs` 的 `forAnswer` 只保留那個欄位的那一種用法，而不是改回讀完整檔；並重看建置輸出的「答案頁資料傳輸量」。

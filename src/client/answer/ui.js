@@ -75,7 +75,9 @@ async function run(q) {
   setUnits(deps.units);
   if (my !== runId) return;
   const disease = new URLSearchParams(location.search).get('disease') || null;
-  let result = engine.answer(q, { lang: LANG, view, disease });
+  // 第四十九輪：answerAsync——統計、謠言、通報時限、時程彙整、職缺標案這幾種少數問題的回答分支用到才下載（core.js ROUTES）
+  let result = await engine.answerAsync(q, { lang: LANG, view, disease });
+  if (my !== runId) return;
   current = result;
   await render(result, deps);
   renderSide(result, deps);

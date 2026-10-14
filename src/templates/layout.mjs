@@ -73,7 +73,7 @@ const icon = (n) => raw(`<svg class="c-tabbar__ic" viewBox="0 0 24 24" width="22
 export function layout(ctx, { styles = [], title, description, body, jsonLd = [], noindex = false, bodyClass = '', scripts = [], item = null, canonicalPath = null, hideTranslationBar = false, pagefind = undefined }) {
   const { site, lang, url, t } = ctx;
   // 第二十八輪：Pagefind 全文索引。只有 pagefindFor() 認得的頁才加 data-pagefind-body（正面表列，見 public/_pagefind.mjs）
-  const pf = pagefindMarks(ctx, pagefindFor({ item, noindex, pagefind }), { unitName: (id) => unitName(ctx, id), title });
+  const pf = pagefindMarks(ctx, pagefindFor({ item, noindex, pagefind }, ctx.lang), { unitName: (id) => unitName(ctx, id), title });
   const langDef = config.langs.find((l) => l.code === lang);
   const path = ctx.path ?? '/';
   const fullTitle = title ? `${title} · ${t('site.short')}` : t('site.name');

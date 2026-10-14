@@ -29,9 +29,10 @@ async function ask(q) {
   if (!q) { out.innerHTML = ''; return; }
   out.setAttribute('aria-busy', 'true');
   out.innerHTML = '<div class="c-skeleton" aria-hidden="true"><span></span><span class="short"></span></div>';
+  import('./route-stats.js').catch(() => {}); // 第四十九輪：統計分支與引擎並行下載（本頁每題都用得到），不必等引擎建好才發現要載
   const { engine, deps } = await loadEngine('public');
   setUnits(deps.units);
-  const r = engine.answer(q, { lang: LANG, forceIntent: 'stats' });
+  const r = await engine.answerAsync(q, { lang: LANG, forceIntent: 'stats' });
   current = r;
   const parts = [];
   if (r.paused) parts.push(`<div class="c-banner--paused" role="status"><p>${esc(L('paused'))}</p></div>`);

@@ -90,5 +90,39 @@
   ],
   "transcriptMarkdown": "**[00:00] 開場：什麼是抗藥性**\n\n主持人：歡迎收聽疾管署 Podcast。今天要談一個看不見、但越來越重要的問題：抗生素抗藥性。\n\n感管組專員：細菌在長期接觸抗生素之後，會演化出不怕藥的能力，這就是抗藥性。當原本有效的藥物失效，一般的感染也可能變得難以治療。世界衛生組織把抗藥性列為全球重要的公共衛生威脅之一。\n\n**[03:00] 感冒要不要吃抗生素**\n\n主持人：很多人感冒會跟醫師要抗生素，這樣對嗎？\n\n感管組專員：大部分感冒、流感是病毒引起的，抗生素只對細菌有效，吃了不會比較快好，反而增加副作用和抗藥性。如果醫師確實開了抗生素，就要依照醫囑吃完，不要症狀好了就停藥，也不要把剩下的藥留給家人吃。\n\n**[07:00] 醫院裡的抗藥性細菌**\n\n感管組專員：在醫院裡，抗藥性細菌可能透過醫護人員的手或醫療器材傳播。所以我們推動手部衛生、接觸隔離與抗生素管理計畫，請醫院定期監測抗藥性比率，這些資料也會以開放資料公開。\n\n**[11:00] 防疫一體：人、動物、環境**\n\n獸醫專家：抗藥性不是只有人的問題。畜牧業與寵物用藥、環境中的抗生素殘留，都會影響細菌。「防疫一體」就是讓醫療、農業、環境部門一起合作，減少不必要的用藥。\n\n主持人：今天的重點：感冒不吵抗生素、吃藥依醫囑、勤洗手。我們下集見。",
   "youtubeId": null,
-  "poster": "/img/media/amr-one-health-podcast.svg"
+  "poster": "/img/media/amr-one-health-podcast.svg",
+  "i18n": {
+    "en": {
+      "title": "Podcast | Antibiotics are not a cure-all: antimicrobial resistance and One Health",
+      "summary": "A conversation between the Division of Infection Control and a veterinary expert: antibiotics do not work against viral colds, do not stop or share your medicine on your own, and how \"One Health\" across people, animals and the environment helps reduce resistant bacteria.",
+      "basedOnVersionLabel": "Infection control guidelines for medical institutions (edition of 2026-03-01) and antimicrobial resistance surveillance data",
+      "targetGroups": [
+        "General public",
+        "Healthcare workers",
+        "Livestock and veterinary professionals"
+      ],
+      "series": "One Health Podcast",
+      "chapters": [
+        {
+          "t": 0,
+          "label": "Opening: what is antimicrobial resistance"
+        },
+        {
+          "t": 180,
+          "label": "Should you take antibiotics for a cold"
+        },
+        {
+          "t": 420,
+          "label": "Resistant bacteria in hospitals"
+        },
+        {
+          "t": 660,
+          "label": "One Health: people, animals and the environment"
+        }
+      ],
+      "transcriptMarkdown": "**[00:00] Opening: what is antimicrobial resistance**\n\nHost: Welcome to the Taiwan CDC podcast. Today we talk about a problem you cannot see but that matters more and more: antibiotic resistance.\n\nInfection control specialist: After long exposure to antibiotics, bacteria evolve the ability to survive the drugs. That is resistance. When a drug that used to work stops working, even ordinary infections can become hard to treat. The World Health Organization lists antimicrobial resistance as one of the major global public health threats.\n\n**[03:00] Should you take antibiotics for a cold**\n\nHost: Many people ask their doctor for antibiotics when they have a cold. Is that right?\n\nInfection control specialist: Most colds and influenza are caused by viruses. Antibiotics only work against bacteria; taking them will not make you better faster, and will only add side effects and resistance. If your doctor does prescribe antibiotics, finish the course as directed. Do not stop when you feel better, and do not keep leftover medicine for family members.\n\n**[07:00] Resistant bacteria in hospitals**\n\nInfection control specialist: In hospitals, resistant bacteria can spread through the hands of healthcare workers or through medical equipment. That is why we promote hand hygiene, contact precautions and antimicrobial stewardship programmes, and ask hospitals to monitor resistance rates regularly. These data are also published as open data.\n\n**[11:00] One Health: people, animals and the environment**\n\nVeterinary expert: Resistance is not only a human problem. Drug use in livestock farming and for pets, and antibiotic residues in the environment, all affect bacteria. \"One Health\" means the health, agriculture and environment sectors working together to reduce unnecessary drug use.\n\nHost: The key points for today: do not insist on antibiotics for a cold, take medicine as your doctor directs, and wash your hands often. See you next episode.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

@@ -63,5 +63,13 @@
     "Video"
   ],
   "canonicalUrl": "https://www.youtube.com/results?search_query=%E7%96%BE%E7%97%85%E7%AE%A1%E5%88%B6%E7%BD%B2",
-  "note": "頻道 handle 待權責單位確認，原型暫以 YouTube 搜尋「疾病管制署」代替"
+  "note": "頻道 handle 待權責單位確認，原型暫以 YouTube 搜尋「疾病管制署」代替",
+  "i18n": {
+    "en": {
+      "title": "Taiwan CDC YouTube channel videos",
+      "summary": "Health education videos, live-streamed press conferences and short multilingual health education clips. Video descriptions should state the source original and update date.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

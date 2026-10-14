@@ -23,10 +23,15 @@
 //   - 第四十八輪：拒答文案依語言拆檔後，提問時還會 import() 當頁語言的 answer/refusal-i18n.<lang>.js，也算進 total（不因為是動態載入就不算）。
 //   - 新增 checkAskDataBudget()：答案頁提問時要下載的 JSON（當頁語言＋中文的索引分片＋引擎資料，清單與前端共用 src/client/answer/deps-manifest.js），
 //     以 gzip 後位元組估算傳輸量（GitHub Pages 與一般 CDN 對 JSON 都會 gzip；level 6 與它們的預設相近），超過 ASK_DATA_BUDGET_KB 建置失敗。
+//
+// 第四十九輪：統計、謠言、通報時限、時程彙整、職缺標案的回答分支搬到 answer/route-*.js，問到時才由 core.js import()（docs/ask-search-llm.md §14）。
+//   每個分支只在一種意圖下才用到、一題只會判成一種意圖，所以一題最多載入一個分支；提問後合計再加上「最大的一個 route-*.js」（含它靜態 import、扣掉已算過的共用模組）：
+//   合計的意義仍是「一題深連結最多要付多少」，不因為改成動態載入就少算。新增分支請沿用 route-*.js 命名，這裡才算得到。
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { ENGINE_PRIMARY, ENGINE_SECONDARY, indexShardNames } from '../../src/client/answer/deps-manifest.js';
+import { proDeltaShardNames } from '../../src/client/answer/index-delta.js';
 
 export const DEFAULT_PUBLIC_KB = 120;
 export const DEFAULT_ENGINE_KB = 240;
@@ -63,6 +68,19 @@ function closure(entry, cache) {
   return seen;
 }
 
+/** 最大的回答分支（answer/route-*.js 與它的靜態 import，扣掉頁面與引擎閉包已算過的檔）位元組 */
+function maxRouteBytes(distDir, files, lazy, cache) {
+  const dir = path.join(distDir, 'assets/js/answer');
+  if (!fs.existsSync(dir)) return 0;
+  let max = 0;
+  for (const f of fs.readdirSync(dir).filter((n) => /^route-[\w-]+\.js$/.test(n))) {
+    let b = 0;
+    for (const x of closure(path.join(dir, f), cache)) if (!files.has(x) && !lazy.has(x)) b += fs.statSync(x).size;
+    max = Math.max(max, b);
+  }
+  return max;
+}
+
 /** 檢查整個 dist。回傳 { ok, rows, public, admin } */
 export function checkJsBudget(
   distDir,
@@ -94,6 +112,8 @@ export function checkJsBudget(
       // 第四十八輪：提問時另以 import() 載入當頁語言的拒答文案（answer/refusal-i18n.<lang>.js），一併算進合計
       const rf = path.join(distDir, `assets/js/answer/refusal-i18n.${/<html[^>]*\blang="([^"]+)"/.exec(text)?.[1]}.js`);
       if (fs.existsSync(rf)) total += fs.statSync(rf).size;
+      // 第四十九輪：一題最多載入一個回答分支（answer/route-*.js），算最大的那一個
+      total += maxRouteBytes(distDir, files, lazy, cache);
     }
     rows.push({ page: rel, bytes, total, admin: rel.startsWith('admin/'), engine });
   }
@@ -122,7 +142,8 @@ const gz = (f) => zlib.gzipSync(fs.readFileSync(f), { level: 6 }).length;
 /**
  * 答案頁的資料傳輸量（第四十輪，Issue #80）：每種語言的 /ask/ 在提問時要下載的 JSON，gzip 後位元組加總。
  * 算法：索引分片（中文＋當頁語言）＋ deps-manifest 的主要與次要 JSON ＋ v1/index.json（可選檔的清單）；民眾版。
- * 不含：疾病頁 JSON 與 news.json（答案出來之後側欄才抓、且依問題而定）、專業版（另列 pro，第四十八輪起也有自己的預算 ASK_DATA_PRO_BUDGET_KB）。
+ * 不含：疾病頁 JSON 與 news.json（答案出來之後側欄才抓、且依問題而定）、專業版（另列 pro，第四十八輪起也有自己的預算 ASK_DATA_PRO_BUDGET_KB；
+ * 第四十九輪起專業版的索引量的是「民眾版中文分片＋專業差異分片」，與前端實際下載一致）。
  * 回傳 { ok, budgetKb, rows: [{ lang, bytes, raw, files }], max, maxLang, pro }。budgetKb 為 0 ＝ 只回報不擋。
  */
 export function checkAskDataBudget(
@@ -150,7 +171,12 @@ export function checkAskDataBudget(
     return { bytes, raw, files };
   };
   const rows = langs.map((lang) => ({ lang, ...measure([...indexShardNames('search-index', lang), ...shared]) }));
-  const pro = measure([...indexShardNames('search-index-pro', 'zh-TW'), ...shared]);
+  // 第四十九輪：專業版頁面下載「民眾版中文分片＋專業差異分片」（data.js proIndexShards）；差異分片不存在（舊建置）才量完整的專業版分片
+  const proDelta = proDeltaShardNames('zh-TW');
+  const proIndex = proDelta.every((n) => fs.existsSync(v1(n)))
+    ? [...indexShardNames('search-index', 'zh-TW'), ...proDelta]
+    : indexShardNames('search-index-pro', 'zh-TW');
+  const pro = measure([...proIndex, ...shared]);
   const top = rows.reduce((a, r) => (r.bytes > (a?.bytes ?? -1) ? r : a), null);
   const publicOk = !budgetKb || rows.every((r) => r.bytes <= budgetKb * 1024);
   const proOk = !proBudgetKb || pro.bytes <= proBudgetKb * 1024;

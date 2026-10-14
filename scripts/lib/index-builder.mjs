@@ -23,12 +23,15 @@
 //             chunk 帶 jobStage、applyStart、deadlineAt、hiringUnitName、positions、applyHref、hasResult、resultUrl（答案引擎 careers 意圖結構化列出）
 //   tender    overview 一塊（案號、需求單位、採購方式、類別、預算、投標截止、開標、決標／流標）＋ scope 一塊（採購標的、特別規定、履約期限）；
 //             chunk 帶 tenderStage、tenderNo、deadlineAt、openingAt、budgetNtd、pccUrl（procurement 意圖）
+// 第四十九輪（Issue #103）：專業版索引另輸出「差異分片」v1/search-index-pro-delta.<lang>.json（buildProDeltaShards；格式與合併規則在
+//   src/client/answer/index-delta.js，建置與瀏覽器共用）。專業版 ＝ 民眾版 ＋ 專業獨有片段，專業版頁面下載民眾版分片＋差異分片；完整的 -pro 檔照舊輸出。
 // 保證：失效版本（superseded）、逾期、依據正本已修訂（stale）的內容永遠不在索引。
 // 多語：i18n[lang] 有 reviewed（且譯文未過期）者另出同語 chunk；machine 一律不出。
 // 來源語言（ARCHITECTURE 14.2）：頂層欄位以 item.sourceLang（預設 zh-TW）出 chunk（英文來源 ⇒ 進英文索引）；
 //   sourceLang≠zh-TW 時 i18n['zh-TW']（reviewed）另出中文 chunk（進中文索引）。topic／service 的譯文 chunk 需 i18n 有本文欄位才出。
 import { articlePath, authorNotes, categoryLabel } from '../../src/client/bulletin-rules.js';
 import { splitPlain, parseChineseNumber, buildLexicon } from '../../src/client/answer/core.js';
+import { PRO_DELTA_BASE, applyProDelta, diffProIndex } from '../../src/client/answer/index-delta.js';
 import { splitByPage } from './pdf-text.mjs';
 import { tagRelativeDate } from './dates.mjs';
 
@@ -706,4 +709,25 @@ export function buildSearchIndex(site) {
   const result = { public: P, pro: R };
   Object.defineProperty(result, 'stats', { value: { chunks: P.length, chunksPro: R.length, byType, byTypePro, byLang, notices, jobs, tenders }, enumerable: true });
   return result;
+}
+
+/**
+ * 第四十九輪：專業版索引的差異分片。逐語言（langs＝語言碼）把 searchIndex.pro 相對於 searchIndex.public 的差異算出來，並當場驗證
+ * 「民眾版分片 ＋ 差異 ＝ 專業版分片」（陣列內容與順序逐位元相同）；不一致就丟錯，建置失敗，不會把會讓專業版少答的檔案發出去。
+ * @param {{ public: object[], pro: object[] }} searchIndex buildSearchIndex 的結果
+ * @param {string[]} langs 語言碼
+ * @returns {Record<string, ReturnType<typeof diffProIndex>>} 語言碼 → 差異（可直接當 v1/{PRO_DELTA_BASE}.<lang>.json 的 data）
+ */
+export function buildProDeltaShards(searchIndex, langs) {
+  const out = {};
+  for (const lang of langs) {
+    const part = (arr) => arr.filter((c) => (c.lang ?? 'zh-TW') === lang);
+    const pub = part(searchIndex.public);
+    const pro = part(searchIndex.pro);
+    const delta = diffProIndex(pub, pro);
+    const merged = applyProDelta(pub, delta);
+    if (!merged || JSON.stringify(merged) !== JSON.stringify(pro)) throw new Error(`${PRO_DELTA_BASE}.${lang}：民眾版分片＋差異分片與專業版分片不一致（建置中止，避免專業版少答）`);
+    out[lang] = delta;
+  }
+  return out;
 }

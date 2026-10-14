@@ -5,6 +5,8 @@ import { createHash } from 'node:crypto';
 import { config, siteOrigin } from '../../site.config.mjs';
 import { pathOf, mdPathOf, WHITELIST_REASON_LABELS, LIFECYCLE_LABELS, TODO_KIND_LABELS, NOTICE_TYPES, legacyPathOf, isLegacyPattern, JOB_STAGE_LABELS, TENDER_STAGE_LABELS, JOB_TAB_LABELS, TENDER_TAB_LABELS } from './governance.mjs';
 import { buildOpenApi } from './openapi.mjs';
+import { PRO_DELTA_BASE } from '../../src/client/answer/index-delta.js';
+import { buildProDeltaShards } from './index-builder.mjs';
 import { citationOf, citationEnOf, doiPath, doiUrl, categoryLabel, authorNotes } from '../../src/client/bulletin-rules.js';
 import { assetSummary, assetUrl } from './assets.mjs';
 import { scheduleCsv } from '../../src/client/vaxschedule.js';
@@ -425,6 +427,13 @@ export function emitApi(fullSite, write) {
   put('v1/topics.json', [...published(c.topics)].sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99) || a.id.localeCompare(b.id)).map(strip), {}, {}, '專區／專題（ended＝已結束；links 含外部連結檢查狀態）');
   put('v1/pages.json', [...published(c.pages)].sort((a, b) => a.id.localeCompare(b.id)).map(strip), {}, {}, '政策／機關頁（第四十四輪：含首長簡介 profile，供後台「同事修改這頁」載入現行版）');
   put('v1/services.json', [...published(c.services)].sort((a, b) => a.id.localeCompare(b.id)).map(strip), {}, {}, '申請／服務（步驟、應備文件、處理天數、表單）');
+  // 第四十九輪：答案引擎專用的精簡副本（v1/answer/*.json）。完整的 v1/services.json 等是給外部系統的 API，含七語譯文；
+  // 第四十九輪替服務、影音、資料集補了機器翻譯後，整份 gzip 多了約 25 KB，而答案頁其實不讀這些譯文（引擎只用中文欄位組句、
+  // 譯文只在各自頁面顯示）。所以另出一份去掉 i18n／languages 的副本給答案頁下載；公開 API 契約不變。清單見 deps-manifest.js。
+  const forAnswer = (arr) => arr.map((x) => { const { i18n: _i, languages: _l, ...rest } = x; return rest; });
+  put('v1/answer/datasets.json', forAnswer(published(c.datasets).map(strip)), {}, {}, '答案引擎用：資料集（不含譯文；完整版見 datasets.json）');
+  put('v1/answer/media.json', forAnswer([...published(c.media)].sort(byPubDesc).map(strip)), {}, {}, '答案引擎用：影音（不含譯文；完整版見 media.json）');
+  put('v1/answer/services.json', forAnswer([...published(c.services)].sort((a, b) => a.id.localeCompare(b.id)).map(strip)), {}, {}, '答案引擎用：申請服務（不含譯文；完整版見 services.json）');
   const pubs = [...published(c.publications)].sort((a, b) => (a.series ?? '').localeCompare(b.series ?? '') || String(b.volume ?? '').localeCompare(String(a.volume ?? ''), undefined, { numeric: true }) || String(b.issue ?? '').localeCompare(String(a.issue ?? ''), undefined, { numeric: true }) || byPubDesc(a, b));
   const seriesMap = new Map();
   for (const p of pubs) {
@@ -509,10 +518,19 @@ export function emitApi(fullSite, write) {
   };
   const shards = shardsOf('search-index', si.public);
   const shardsPro = shardsOf('search-index-pro', si.pro);
+  // 第四十九輪（Issue #103）：專業版差異分片＝專業版多出來的片段＋插回原位置的資訊。專業版頁面下載「民眾版分片＋差異分片」（與民眾版共用 HTTP 快取），
+  // 前端在記憶體合回與完整 -pro 分片逐位元相同的陣列（建置時已驗證）。完整的 -pro 檔照舊輸出，外部 API 使用者與舊快取不受影響。
+  const shardsProDelta = {};
+  for (const [code, delta] of Object.entries(buildProDeltaShards(si, config.langs.map((l) => l.code)))) {
+    const file = `v1/${PRO_DELTA_BASE}.${code}.json`;
+    write(file, wrap(site, delta, { lang: code, deltaOf: `/v1/search-index.${code}.json`, shardOf: '/v1/search-index-pro.json', count: delta.chunks.length }, {}, { indent: 0 }));
+    manifest.push({ path: `/${file}`, url: absUrl(`/${file}`), description: `專業版索引的 ${code} 差異分片（專業版 = 民眾版分片 + 本檔；格式見 src/client/answer/index-delta.js）`, count: delta.chunks.length });
+    shardsProDelta[code] = absUrl(`/${file}`);
+  }
   put('v1/search-index.json', si.public, { lastModified: lastModifiedOf(si.public) ?? site.today, shards }, {}, '答案單元索引（民眾，只含白名單；meta.shards 是依語言的分片）');
   put('v1/search-index-pro.json', si.pro, { lastModified: lastModifiedOf(si.pro) ?? site.today, shards: shardsPro }, {}, '答案單元索引（專業，只含現行版；meta.shards 是依語言的分片）');
   put('v1/search.json', {
-    endpoint: absUrl('/v1/search-index.json'), proEndpoint: absUrl('/v1/search-index-pro.json'), shards, proShards: shardsPro,
+    endpoint: absUrl('/v1/search-index.json'), proEndpoint: absUrl('/v1/search-index-pro.json'), shards, proShards: shardsPro, proDeltaShards: shardsProDelta,
     description: '靜態站沒有伺服器端搜尋：/v1/search 即答案單元索引（search-index.json）。下載後於用戶端以 bigram＋詞彙主檔同義詞＋BM25 檢索；只含 AI 白名單內容，失效版本不在索引中。',
     chunks: si.public.length, chunksPro: si.pro.length,
     chunkFields: ['id', 'contentId', 'type', 'lang', 'title', 'text', 'sentences', 'url', 'owner', 'ownerName', 'reviewedAt', 'nextReviewAt', 'audience', 'tasks', 'diseases', 'vaccines', 'countries', 'version', 'effectiveAt', 'isCurrent', 'whitelist', 'terms'],

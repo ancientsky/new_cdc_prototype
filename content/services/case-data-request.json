@@ -142,6 +142,30 @@
     "en": {
       "title": "Request for notifiable disease case data (research)",
       "summary": "Researchers may request de-identified case data with a research protocol and IRB approval; review takes about 30 days."
+    },
+    "tl": {
+      "title": "Kahilingan ng datos ng kaso ng nakahahawang sakit (para sa pananaliksik)",
+      "summary": "Maaaring humiling ang mga mananaliksik ng datos ng kaso na walang pagkakakilanlan; kailangan ang protocol ng pananaliksik at pag-apruba ng IRB. Aabot nang mga 30 araw ang pagsusuri.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Đề nghị cung cấp dữ liệu ca bệnh truyền nhiễm (phục vụ nghiên cứu)",
+      "summary": "Nhà nghiên cứu có thể đề nghị cung cấp dữ liệu ca bệnh đã ẩn danh kèm đề cương nghiên cứu và giấy chấp thuận của IRB; thời gian xét duyệt khoảng 30 ngày.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Permintaan data kasus penyakit menular (untuk penelitian)",
+      "summary": "Peneliti dapat meminta data kasus yang telah dianonimkan dengan melampirkan protokol penelitian dan persetujuan IRB; peninjauan memakan waktu sekitar 30 hari.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "การขอข้อมูลผู้ป่วยโรคติดต่อ (เพื่อการวิจัย)",
+      "summary": "นักวิจัยสามารถขอข้อมูลผู้ป่วยที่ลบข้อมูลระบุตัวตนแล้วได้ โดยแนบแผนวิจัยและหนังสืออนุมัติจาก IRB การพิจารณาใช้เวลาประมาณ 30 วัน",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

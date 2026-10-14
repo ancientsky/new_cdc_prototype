@@ -168,7 +168,7 @@ async function main() {
   // 全站連結完整性（站內連結必須指到存在的檔案；外部連結收集清單；佔位／示意網址 = error）
   // --check 或 CI 下有 error ⇒ exit 1；LINK_CHECK=warn 可暫時降為警告（整合期用），LINK_CHECK=off 略過。
   if (process.env.LINK_CHECK !== 'off') {
-    const links = checkInternalLinks(DIST, { basePath: config.basePath, langs: config.langs, siteUrl: config.siteUrl });
+    const links = checkInternalLinks(DIST, { basePath: config.basePath, langs: config.langs, siteUrl: config.siteUrl, siblingUrls: [config.vaxmapUrl, config.vaxmapInfoUrl] });
     summarizeLinks(links, { limit: 50, log: (m) => console.log(m) });
     log('連結報告 → v1/governance/link-report.json、external-links.json');
     if (!links.ok) {

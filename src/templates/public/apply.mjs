@@ -3,8 +3,9 @@ import { html, raw } from '../../../scripts/lib/render.mjs';
 import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import {
-  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitLink, publishedOf,
-  itemPath, isExternal, extLink, mdHeader, pill, inlineAsk, localized } from './_partials.mjs';
+  ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, L, unitLink, publishedOf,
+  itemPath, isExternal, extLink, mdHeader, pill, inlineAsk, localized, localText, langSpan } from './_partials.mjs';
+import { listEntry, zhOnlyBadge } from './_listing.mjs';
 
 const INLINE = ['/assets/js/answer/inline.js'];
 export const AUDIENCES = [
@@ -27,6 +28,24 @@ export function meta(ctx, props = {}) {
   return { title: ctx.t('apply.title'), description: ctx.t('apply.lead'), jsonLd: ldFor(ctx, null, [{ label: ctx.t('apply.title') }]), scripts: INLINE };
 }
 
+/**
+ * 第四十九輪：申請服務總覽的一列。標題與摘要依「頁面語言 → 英文 → 中文」取（localText），連結在標題用英文時連到英文頁；
+ * 只有中文的標題加「僅有中文」小標並標 lang="zh-TW"，只有中文的摘要與費用不印出（詳頁才有）：
+ * 原本外語頁把每筆服務的中文摘要整段印出來（th／id／vi／tl 約 29–32% 漢字）。機器翻譯的文字旁加「機器翻譯待審」小標。
+ */
+function svcItem(ctx, s) {
+  const { t } = ctx;
+  const e = listEntry(ctx, s);
+  const sm = localText(ctx, s, 'summary');
+  const fee = localText(ctx, s, 'fee');
+  const isMachine = (r) => r.lang !== (s.sourceLang ?? 'zh-TW') && (s.i18n?.[r.lang]?.machineTranslated === true || s.languages?.[r.lang]?.status === 'machine');
+  return html`<li class="c-svc">
+    <h3 class="c-svc__t"><a href="${e.href}"${e.hreflang ? raw(` hreflang="${e.hreflang}"`) : ''}>${zhOnlyBadge(ctx, e)}${langSpan(ctx, e.r)}</a></h3>
+    ${sm.text && !sm.zhOnly ? html`<p class="c-svc__s">${langSpan(ctx, sm)}${isMachine(sm) ? html` <span class="c-pill c-pill--neutral">${t('i18n.machine.short')}</span>` : ''}</p>` : ''}
+    <p class="c-svc__m">${pill(t(`apply.type.${s.serviceType}`), 'info')}${s.slaDays != null ? html` <span class="c-pill c-pill--neutral">${t('apply.sla', { n: s.slaDays })}</span>` : ''}${fee.text && !fee.zhOnly ? html` <span class="c-pill c-pill--neutral">${t('apply.fee')}：${langSpan(ctx, fee)}</span>` : ''}</p>
+  </li>`;
+}
+
 function listPage(ctx) {
   const { site, t } = ctx;
   const items = publishedOf(site, 'services');
@@ -36,11 +55,7 @@ function listPage(ctx) {
 ${inlineAsk(ctx, { mode: 'public', placeholder: t('apply.ask.ph'), label: t('apply.ask.t') })}
 ${groups.length ? html`<nav class="c-chips-wrap" aria-label="${t('apply.groups')}"><ul class="c-chips c-chips--wrap">${groups.map((g) => html`<li><a class="c-chip" href="#aud-${g.k}">${t(`apply.aud.${g.k}`)} (${g.list.length})</a></li>`)}</ul></nav>` : ''}
 ${groups.map((g) => html`<section class="c-block" id="aud-${g.k}" aria-labelledby="h-aud-${g.k}"><h2 id="h-aud-${g.k}">${t(`apply.aud.${g.k}`)}</h2>
-  <ul class="c-svclist">${g.list.map((s) => html`<li class="c-svc">
-    <h3 class="c-svc__t"><a href="${hrefFor(ctx, s)}"${isFallbackLink(ctx, s) ? raw(' lang="zh-TW"') : ''}>${L(ctx, s, 'title')}</a></h3>
-    <p class="c-svc__s">${L(ctx, s, 'summary')}</p>
-    <p class="c-svc__m">${pill(t(`apply.type.${s.serviceType}`), 'info')}${s.slaDays != null ? html` <span class="c-pill c-pill--neutral">${t('apply.sla', { n: s.slaDays })}</span>` : ''}${s.fee ? html` <span class="c-pill c-pill--neutral">${t('apply.fee')}：${s.fee}</span>` : ''}</p>
-  </li>`)}</ul></section>`)}
+  <ul class="c-svclist">${g.list.map((s) => svcItem(ctx, s))}</ul></section>`)}
 ${items.length ? '' : html`<p class="c-empty">${t('none')}</p>`}
 <p class="muted">${t('apply.note')}</p>`;
 }
