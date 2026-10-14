@@ -23,6 +23,10 @@
 //   - 第四十八輪：拒答文案依語言拆檔後，提問時還會 import() 當頁語言的 answer/refusal-i18n.<lang>.js，也算進 total（不因為是動態載入就不算）。
 //   - 新增 checkAskDataBudget()：答案頁提問時要下載的 JSON（當頁語言＋中文的索引分片＋引擎資料，清單與前端共用 src/client/answer/deps-manifest.js），
 //     以 gzip 後位元組估算傳輸量（GitHub Pages 與一般 CDN 對 JSON 都會 gzip；level 6 與它們的預設相近），超過 ASK_DATA_BUDGET_KB 建置失敗。
+//
+// 第四十九輪：統計、謠言、通報時限、時程彙整、職缺標案的回答分支搬到 answer/route-*.js，問到時才由 core.js import()（docs/ask-search-llm.md §14）。
+//   每個分支只在一種意圖下才用到、一題只會判成一種意圖，所以一題最多載入一個分支；提問後合計再加上「最大的一個 route-*.js」（含它靜態 import、扣掉已算過的共用模組）：
+//   合計的意義仍是「一題深連結最多要付多少」，不因為改成動態載入就少算。新增分支請沿用 route-*.js 命名，這裡才算得到。
 import fs from 'node:fs';
 import path from 'node:path';
 import zlib from 'node:zlib';
@@ -64,6 +68,19 @@ function closure(entry, cache) {
   return seen;
 }
 
+/** 最大的回答分支（answer/route-*.js 與它的靜態 import，扣掉頁面與引擎閉包已算過的檔）位元組 */
+function maxRouteBytes(distDir, files, lazy, cache) {
+  const dir = path.join(distDir, 'assets/js/answer');
+  if (!fs.existsSync(dir)) return 0;
+  let max = 0;
+  for (const f of fs.readdirSync(dir).filter((n) => /^route-[\w-]+\.js$/.test(n))) {
+    let b = 0;
+    for (const x of closure(path.join(dir, f), cache)) if (!files.has(x) && !lazy.has(x)) b += fs.statSync(x).size;
+    max = Math.max(max, b);
+  }
+  return max;
+}
+
 /** 檢查整個 dist。回傳 { ok, rows, public, admin } */
 export function checkJsBudget(
   distDir,
@@ -95,6 +112,8 @@ export function checkJsBudget(
       // 第四十八輪：提問時另以 import() 載入當頁語言的拒答文案（answer/refusal-i18n.<lang>.js），一併算進合計
       const rf = path.join(distDir, `assets/js/answer/refusal-i18n.${/<html[^>]*\blang="([^"]+)"/.exec(text)?.[1]}.js`);
       if (fs.existsSync(rf)) total += fs.statSync(rf).size;
+      // 第四十九輪：一題最多載入一個回答分支（answer/route-*.js），算最大的那一個
+      total += maxRouteBytes(distDir, files, lazy, cache);
     }
     rows.push({ page: rel, bytes, total, admin: rel.startsWith('admin/'), engine });
   }

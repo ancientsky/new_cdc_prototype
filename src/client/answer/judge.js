@@ -111,6 +111,8 @@ export function judge(q, res, g = groundingOf(res)) {
   for (const m of e.mustCite ?? []) if (!cites.some((c) => c.startsWith(m))) reasons.push(`未引用 ${m}`);
   if (e.mustCiteAny?.length && !e.mustCiteAny.some((m) => cites.some((c) => c.startsWith(m)))) reasons.push(`未引用任一 ${e.mustCiteAny.join('/')}`);
   for (const m of e.mustNotCite ?? []) if (cites.some((c) => c.startsWith(m))) reasons.push(`引用了禁止來源 ${m}`);
+  // 第四十九輪：firstCite＝第一個來源（答案開頭那句的出處）須是這些前綴之一（咬傷先答處置、補接種先答補接種 FAQ）
+  if (e.firstCite && ![].concat(e.firstCite).some((m) => String(cites[0] ?? '').startsWith(m))) reasons.push(`第一個來源 ${cites[0] ?? '無'} 不是 ${[].concat(e.firstCite).join('/')}`);
   const types = (res.sources ?? []).map((s) => String(s.type ?? ''));
   for (const m of [].concat(e.mustCiteType ?? [])) if (!types.some((t) => t.startsWith(m))) reasons.push(`未引用型別 ${m}`);
   if (e.notify === true && !res.notify?.structured) reasons.push('缺通報時限結構化回答');

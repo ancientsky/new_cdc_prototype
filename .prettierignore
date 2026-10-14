@@ -78,3 +78,5 @@ eval/**/*.mjs
 # 第四十九輪：換句話說挑戰集（docs/eval-challenge.md）
 !eval/run-challenge.mjs
 !tests/round49-challenge.test.mjs
+# 第四十九輪：答案引擎用到才載入的回答分支、四個答錯題
+!tests/round49-engine.test.mjs

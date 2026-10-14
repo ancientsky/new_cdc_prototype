@@ -6,7 +6,7 @@ import { tokenize } from './text.js';
 // 跨語言關鍵詞（非中文問句 → 中文檢索詞），只做檢索展開，不出現在答案中
 export const CROSS_LANG = [
   [/\b(see a doctor|seek (medical )?care|doctor|clinic|hospital)\b|đi khám|bác sĩ/i, '就醫 看醫生'],
-  [/\bfever\b|sốt/i, '發燒'], [/\brash\b|phát ban/i, '出疹 紅疹'], [/\bsymptoms?\b|triệu chứng|\bgejala\b|\bsintomas\b|อาการ|症状/i, '症狀 徵象'],
+  [/\bfever\b|sốt/i, '發燒'], [/\brash\b|phát ban/i, '出疹 紅疹'], [/\bsymptoms?\b|triệu chứng|\bgejala\b|\bsintomas\b|อาการ|症状/i, '症狀'],
   [/\bwarning signs?\b|dấu hiệu cảnh báo/i, '警示徵象'], [/\bincubation\b|ủ bệnh/i, '潛伏期'],
   [/\bprevent\w*\b|phòng ngừa|phòng bệnh/i, '預防'], [/\btransmi\w*|spread\w*|lây/i, '傳染 傳播'],
   [/\bvaccin\w*|immuni[sz]\w*|vắc[\s-]?xin|tiêm/i, '疫苗 接種'], [/\btravel\w*|abroad|overseas|du lịch|nước ngoài/i, '出國 旅遊'],
@@ -21,7 +21,7 @@ export const CROSS_LANG = [
   [/ワクチン|予防接種|\bbakuna\b|\bmagpabakuna\b|\bvaksin\w*|\bimunisasi\b|วัคซีน/i, '疫苗 接種'], [/無料|\blibre(ng)?\b|\bgratis\b|ฟรี/i, '公費'],
   [/旅行|渡航|\bbiyahe\b|\bperjalanan\b|เดินทาง/i, '出國 旅遊'], [/準備|\bihahanda\b|\b(di)?siapkan\b|เตรียม|chuẩn bị|\bprepare\b/i, '準備 行前'],
   [/子ども|子供|\banak\b|\bbata\b|\bbé\b|ลูก|เด็ก/i, '幼兒 兒童'],
-  [/\bmigrant workers?|\bforeign workers?|lao động (nước ngoài|nhập cư)|pekerja migran|tenaga kerja asing|manggagawang dayuhan|แรงงานต่างชาติ|แรงงานข้ามชาติ|外国人労働者/i, '移工 外籍', true],
+  [/\bmigrant workers?|\bforeign workers?|lao động|\bOFW\b|\bTKI\b|pekerja migran|tenaga kerja asing|manggagawang dayuhan|แรงงานต่างชาติ|แรงงานข้ามชาติ|外国人労働者/i, '移工 外籍', true],
   [/\bhealth (check|exam|screening)s?\b|\bmedical (check|exam)\w*|khám sức khỏe|pemeriksaan kesehatan|ตรวจสุขภาพ|健康診断/i, '健康檢查 健檢'],
   [/\bhealth insurance\b|bảo hiểm y tế|asuransi kesehatan|ประกันสุขภาพ|健康保険/i, '健保', true],
   // 來臺旅遊（入境）：站內目前沒有給來臺旅客的接種建議；錨點讓這類問句查無，而不是拿出國旅遊或流感疫苗的片段回答
@@ -43,16 +43,20 @@ export function topicAnchorsOf(q) {
 export const PARAPHRASE = [
   [/人傳人/, '人直接傳給人 傳染 傳播'], [/怎麼傳染|如何傳染|怎麼傳播|傳染途徑/, '傳染 傳播 傳染途徑'], [/看醫生|看病|去醫院/, '就醫'],
   [/打針|打疫苗|施打/, '接種 疫苗'], [/危險徵兆|警訊|嚴重的徵兆|重症徵兆/, '警示徵象 重症前兆 危險徵兆'], [/警示徵象/, '警示徵象 重症前兆'],
-  [/自己好|會好嗎|自癒/, '自行康復'], [/特效藥|吃藥會好/, '特效 抗病毒藥物 支持性療法'], [/打幾劑|幾劑/, '劑'], [/多久內|幾天內|幾小時內/, '小時內 天內'],
+  [/自己好|會好嗎|自癒/, '自行康復'], [/特效藥|吃藥會好/, '特效 抗病毒藥物 支持性療法'], [/打幾劑|幾劑/, '劑'], [/多快|多久內|幾天內|幾小時內/, '小時內 天內'],
   [/開打|什麼時候打/, '接種 開始 起'], [/哪裡打|哪裡可以打|接種地點/, '接種地點 合約院所'],
   [/要驗什麼|驗什麼|怎麼驗|怎麼檢查|做什麼檢查|要檢查什麼|如何診斷|怎麼診斷/, '診斷 檢驗 治療'],
   [/怎麼申請|如何申請|申請流程|怎麼辦理/, '申請 步驟'], [/要帶什麼|準備什麼|帶哪些/, '應備文件 準備'],
   [/影片|宣導片|衛教片|動畫/, '影片 影音'], [/職缺|徵才|徵人/, '招募'], [/標案|招標|投標/, '採購'],
   // 第四十輪：「外籍勞工／外勞」與站內用語「移工」「外籍人士」；「漏打／錯過」與「補接種」；「哺乳／餵母乳」
-  [/外籍勞工|外勞|外籍移工|外籍看護|外籍工作者/, '移工 外籍'], [/漏打|沒打到|忘了打|忘記打|錯過|延遲接種|晚打|來不及打|晚了.{0,8}才打|延後(接種|打)/, '補接種 補打 漏打'],
+  [/外籍勞工|外勞|外籍移工|外籍看護|外籍工作者/, '移工 外籍'], [/漏打|沒打到|忘了打|忘記打|錯過|延遲接種|晚打|來不及打|晚了.{0,8}才打|延後(接種|打)|沒有?(按時|準時)(打|接種)/, '補接種 補打 漏打'],
   // 第四十八輪（issue #94）：「打過什麼疫苗要去哪裡查」→ 接種紀錄（查的是紀錄，不是接種點）
   [/打過(什麼|哪些|幾劑)|接種過(什麼|哪些)|(疫苗|接種)(紀錄|記錄)/, '接種紀錄 預防接種紀錄'],
   [/哺乳|餵母乳|親餵|母乳/, '哺乳'], [/懷孕|孕期|妊娠|有孕/, '孕婦 懷孕'],
+  // 第四十九輪：民眾描述（不是官方用語）→ 站內用語。第三欄 true＝算相關度時也把這段描述換成站內用語
+  //（「眼睛變黃」與 A 肝頁的「黃疸」字面上一個字都對不到；換過以後涵蓋率量的才是「有沒有講到黃疸」）
+  [/長什麼樣子?|會怎樣|會怎麼樣|什麼感覺|是什麼樣子/, '症狀', true], [/驚跳/, '肌躍型抽搐', true], [/(眼睛|眼白|皮膚)變黃|尿很黃|尿.{0,2}變黃/, '黃疸 茶色尿', true],
+  [/捐錢|樂捐|捐助/, '捐款', true], [/倍拉維/, 'Paxlovid 抗病毒藥物', true], [/沒戴套|沒有戴套|沒用保險套|無套/, '沒有保護的性行為 保險套', true], [/隔離多久|在家.{0,4}多久/, '在家休息 幾天'],
 ];
 
 export function lc(s) { return String(s ?? '').toLowerCase(); }
