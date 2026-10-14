@@ -166,6 +166,10 @@ export const ENDPOINTS = [
   ['/v1/pages.json', 'content', '政策／機關頁（含首長簡介 profile：職稱、姓名、任次、就任年月）', arr(withApi('Page'))],
   ['/v1/topics.json', 'content', '專區／專題（governance.ended；links[].status 外部連結檢查）', arr(withApi('Topic'))],
   ['/v1/services.json', 'content', '申請／服務（步驟、應備文件、處理天數、表單）', arr(withApi('Service'))],
+  // 第四十九輪：答案頁用的精簡副本（與完整檔相同但去掉 i18n／languages；見 emit-api.mjs、docs/deploy.md §20.3）。一般 API 使用者請用完整檔
+  ['/v1/answer/services.json', 'content', '答案引擎用：申請／服務（與 /v1/services.json 相同、不含 i18n／languages 譯文欄位）', arr(withApi('Service'))],
+  ['/v1/answer/media.json', 'content', '答案引擎用：影音宣導素材（與 /v1/media.json 相同、不含譯文欄位）', arr(withApi('Media'))],
+  ['/v1/answer/datasets.json', 'data', '答案引擎用：資料目錄（與 /v1/datasets.json 相同、不含譯文欄位）', arr(withApi('Dataset'))],
   ['/v1/publications.json', 'content', '出版品（書目、卷期）；series 為系列分組', arr(withApi('Publication')), { series: arr(ref('PublicationSeries')) }],
   ['/v1/articles.json', 'content', '疫情報導文章（第二十九輪）：全文 sections、作者與單位、頁碼、圖表、引用格式；issue 為所屬卷期摘要', arr({ allOf: [ref('Article'), ref('ApiFields'), { type: 'object', properties: { issue: { type: ['object', 'null'] }, citation: { type: 'string' }, citationEn: { type: 'string' } } }] })],
   ['/v1/bulletin-categories.json', 'content', '疫情報導分類主檔（第三十五輪）：key／label／labelEn／order／count', arr({ type: 'object', properties: { key: { type: 'string' }, label: { type: 'string' }, labelEn: { type: 'string' }, order: { type: 'integer' }, count: { type: 'integer' } } })],

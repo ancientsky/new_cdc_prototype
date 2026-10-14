@@ -427,6 +427,13 @@ export function emitApi(fullSite, write) {
   put('v1/topics.json', [...published(c.topics)].sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99) || a.id.localeCompare(b.id)).map(strip), {}, {}, '專區／專題（ended＝已結束；links 含外部連結檢查狀態）');
   put('v1/pages.json', [...published(c.pages)].sort((a, b) => a.id.localeCompare(b.id)).map(strip), {}, {}, '政策／機關頁（第四十四輪：含首長簡介 profile，供後台「同事修改這頁」載入現行版）');
   put('v1/services.json', [...published(c.services)].sort((a, b) => a.id.localeCompare(b.id)).map(strip), {}, {}, '申請／服務（步驟、應備文件、處理天數、表單）');
+  // 第四十九輪：答案引擎專用的精簡副本（v1/answer/*.json）。完整的 v1/services.json 等是給外部系統的 API，含七語譯文；
+  // 第四十九輪替服務、影音、資料集補了機器翻譯後，整份 gzip 多了約 25 KB，而答案頁其實不讀這些譯文（引擎只用中文欄位組句、
+  // 譯文只在各自頁面顯示）。所以另出一份去掉 i18n／languages 的副本給答案頁下載；公開 API 契約不變。清單見 deps-manifest.js。
+  const forAnswer = (arr) => arr.map((x) => { const { i18n: _i, languages: _l, ...rest } = x; return rest; });
+  put('v1/answer/datasets.json', forAnswer(published(c.datasets).map(strip)), {}, {}, '答案引擎用：資料集（不含譯文；完整版見 datasets.json）');
+  put('v1/answer/media.json', forAnswer([...published(c.media)].sort(byPubDesc).map(strip)), {}, {}, '答案引擎用：影音（不含譯文；完整版見 media.json）');
+  put('v1/answer/services.json', forAnswer([...published(c.services)].sort((a, b) => a.id.localeCompare(b.id)).map(strip)), {}, {}, '答案引擎用：申請服務（不含譯文；完整版見 services.json）');
   const pubs = [...published(c.publications)].sort((a, b) => (a.series ?? '').localeCompare(b.series ?? '') || String(b.volume ?? '').localeCompare(String(a.volume ?? ''), undefined, { numeric: true }) || String(b.issue ?? '').localeCompare(String(a.issue ?? ''), undefined, { numeric: true }) || byPubDesc(a, b));
   const seriesMap = new Map();
   for (const p of pubs) {

@@ -79,7 +79,12 @@ test('isIndexable：後台、PR 預覽、舊站轉址頁、404、搜尋頁、答
 // ───────────────────────── 標籤規則（layout 的 Pagefind 屬性） ─────────────────────────
 test('pagefindFor：正面表列——noindex、沒有 item 的工具頁、banner、dataset 都不收；疾病、旅遊目的地、詞彙頁收', () => {
   const disease = { type: 'disease', owner: 'unit.acute-infectious', publishedAt: '2018-03-01', audience: ['public', 'professional'] };
-  assert.deepEqual(pagefindFor({ item: disease }), { type: 'disease', audience: ['public', 'professional'], owner: 'unit.acute-infectious', date: '2018-03-01', year: '2018', currency: 'current' });
+  assert.deepEqual(pagefindFor({ item: disease }), { type: 'disease', audience: ['public', 'professional'], owner: 'unit.acute-infectious', date: '2018-03-01', year: '2018', currency: 'current', machine: false });
+  // 第四十九輪：外語頁的機器翻譯初稿標 machine（標題不加權）；審閱過的、中文原文都不算
+  const langs = { en: { status: 'machine' }, ja: { status: 'reviewed' } };
+  assert.equal(pagefindFor({ item: { ...disease, languages: langs } }, 'en').machine, true);
+  assert.equal(pagefindFor({ item: { ...disease, languages: langs } }, 'ja').machine, false);
+  assert.equal(pagefindFor({ item: { ...disease, languages: langs } }, 'zh-TW').machine, false);
   assert.equal(pagefindFor({ item: disease, noindex: true }), null, '失效版文件、模擬報名頁都是 noindex');
   assert.equal(pagefindFor({ item: disease, pagefind: false }), null);
   assert.equal(pagefindFor({}), null, '首頁、列表頁、/ask/、/search/ 沒有 item 也沒有 pagefind 設定');

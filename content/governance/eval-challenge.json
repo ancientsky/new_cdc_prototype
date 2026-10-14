@@ -65,28 +65,6 @@
       }
     },
     {
-      "id": "CH-FAQ-antivenom-where-3",
-      "category": "faq",
-      "source": "faq.antivenom-where",
-      "style": "口語",
-      "split": "dev",
-      "q": "抗蛇毒血清可以自己去藥局買來放家裡嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.antivenom-where",
-          "topic.antivenom",
-          "faq.antivenom-which-snake",
-          "faq.snakebite-first-aid"
-        ],
-        "mustNotCite": [
-          "faq.rabies-bite",
-          "disease.rabies"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-antivenom-where-4",
       "category": "faq",
       "source": "faq.antivenom-where",
@@ -321,38 +299,6 @@
       }
     },
     {
-      "id": "CH-FAQ-covid-antiviral-1",
-      "category": "faq",
-      "source": "faq.covid-antiviral",
-      "style": "長輩",
-      "split": "dev",
-      "q": "阿公確診新冠可以拿公費的藥嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.covid-antiviral",
-          "disease.covid-19"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-covid-antiviral-2",
-      "category": "faq",
-      "source": "faq.covid-antiviral",
-      "style": "俗稱",
-      "split": "dev",
-      "q": "確診可以吃倍拉維嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.covid-antiviral",
-          "disease.covid-19"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-covid-antiviral-3",
       "category": "faq",
       "source": "faq.covid-antiviral",
@@ -576,24 +522,6 @@
       }
     },
     {
-      "id": "CH-FAQ-dengue-fever-when-to-see-doctor-1",
-      "category": "faq",
-      "source": "faq.dengue-fever-when-to-see-doctor",
-      "style": "口語",
-      "split": "dev",
-      "q": "懷疑登革熱要多快去看醫生",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.dengue-fever-when-to-see-doctor",
-          "disease.dengue",
-          "faq.dengue-imported-return",
-          "faq.travel-return-fever"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-dengue-fever-when-to-see-doctor-2",
       "category": "faq",
       "source": "faq.dengue-fever-when-to-see-doctor",
@@ -708,22 +636,6 @@
       "style": "俗稱",
       "split": "holdout",
       "q": "登革熱可以吃普拿疼嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.dengue-painkiller",
-          "disease.dengue"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-dengue-painkiller-2",
-      "category": "faq",
-      "source": "faq.dengue-painkiller",
-      "style": "口語",
-      "split": "dev",
-      "q": "發燒懷疑登革熱，家裡的布洛芬能吃嗎",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -879,22 +791,6 @@
       }
     },
     {
-      "id": "CH-FAQ-enterovirus-class-suspension-1",
-      "category": "faq",
-      "source": "faq.enterovirus-class-suspension",
-      "style": "家長",
-      "split": "dev",
-      "q": "班上一個小朋友腸病毒，會停課嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.enterovirus-class-suspension",
-          "disease.enterovirus"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-enterovirus-class-suspension-2",
       "category": "faq",
       "source": "faq.enterovirus-class-suspension",
@@ -961,23 +857,6 @@
       }
     },
     {
-      "id": "CH-FAQ-enterovirus-return-school-3",
-      "category": "faq",
-      "source": "faq.enterovirus-return-school",
-      "style": "情境",
-      "split": "dev",
-      "q": "孩子腸病毒第五天精神很好，可以回學校嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.enterovirus-return-school",
-          "faq.ev-stay-home",
-          "disease.enterovirus"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-ev-severe-signs-1",
       "category": "faq",
       "source": "faq.ev-severe-signs",
@@ -1000,22 +879,6 @@
       "style": "口語",
       "split": "holdout",
       "q": "腸病毒什麼情況要趕快去大醫院",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.ev-severe-signs",
-          "disease.enterovirus"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-ev-severe-signs-3",
-      "category": "faq",
-      "source": "faq.ev-severe-signs",
-      "style": "情境",
-      "split": "dev",
-      "q": "寶寶得手足口病，睡覺一直驚跳是怎樣",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -1156,40 +1019,6 @@
           "faq.ev71-vaccine",
           "vaccine.ev71",
           "disease.enterovirus"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-flu-antiviral-65-no-test-1",
-      "category": "faq",
-      "source": "faq.flu-antiviral-65-no-test",
-      "style": "長輩",
-      "split": "dev",
-      "q": "我阿嬤七十歲發燒咳嗽，沒做快篩可以拿克流感嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.flu-antiviral-65-no-test",
-          "faq.influenza-antiviral-who",
-          "disease.influenza"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-flu-antiviral-65-no-test-2",
-      "category": "faq",
-      "source": "faq.flu-antiviral-65-no-test",
-      "style": "否定",
-      "split": "dev",
-      "q": "老人家沒做流感快篩就不能開公費藥嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.flu-antiviral-65-no-test",
-          "faq.influenza-antiviral-who",
-          "disease.influenza"
         ],
         "lowRelevance": false
       }
@@ -1383,23 +1212,6 @@
       }
     },
     {
-      "id": "CH-FAQ-flu-vaccine-every-year-2",
-      "category": "faq",
-      "source": "faq.flu-vaccine-every-year",
-      "style": "口語",
-      "split": "dev",
-      "q": "流感疫苗為什麼每年都要打",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.flu-vaccine-every-year",
-          "disease.influenza",
-          "vaccine.influenza"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-flu-vaccine-every-year-3",
       "category": "faq",
       "source": "faq.flu-vaccine-every-year",
@@ -1423,24 +1235,6 @@
       "style": "口語",
       "split": "holdout",
       "q": "今年免費流感疫苗什麼人可以打",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.flu-vaccine-who",
-          "vaccine.influenza",
-          "disease.influenza",
-          "master.immunization-schedule"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-flu-vaccine-who-2",
-      "category": "faq",
-      "source": "faq.flu-vaccine-who",
-      "style": "情境",
-      "split": "dev",
-      "q": "我50歲上班族，可以打公費流感嗎",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -1646,25 +1440,6 @@
         "mustCiteAny": [
           "faq.hepb-newborn",
           "vaccine.hepatitis-b"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-hiv-pep-1",
-      "category": "faq",
-      "source": "faq.hiv-pep",
-      "style": "口語",
-      "split": "dev",
-      "q": "昨天沒戴套，很擔心怎麼辦",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.hiv-pep",
-          "disease.hiv",
-          "topic.prep",
-          "topic.anonymous-testing",
-          "topic.sti-resources"
         ],
         "lowRelevance": false
       }
@@ -2728,22 +2503,6 @@
       }
     },
     {
-      "id": "CH-FAQ-pcv-elderly-4",
-      "category": "faq",
-      "source": "faq.pcv-elderly",
-      "style": "情境",
-      "split": "dev",
-      "q": "我爸七十歲，以前打過23價，現在還要打嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.pcv-elderly",
-          "vaccine.pneumococcal"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-pregnancy-breastfeeding-vaccination-1",
       "category": "faq",
       "source": "faq.pregnancy-breastfeeding-vaccination",
@@ -2812,23 +2571,6 @@
       }
     },
     {
-      "id": "CH-FAQ-pregnant-tdap-2",
-      "category": "faq",
-      "source": "faq.pregnant-tdap",
-      "style": "簡寫",
-      "split": "dev",
-      "q": "Tdap 孕婦 幾週",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.pregnant-tdap",
-          "disease.pertussis",
-          "faq.pregnancy-breastfeeding-vaccination"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-pregnant-tdap-3",
       "category": "faq",
       "source": "faq.pregnant-tdap",
@@ -2873,27 +2615,6 @@
       "style": "情境",
       "split": "holdout",
       "q": "被鄰居的狗咬到流血怎麼辦",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.rabies-bite",
-          "disease.rabies"
-        ],
-        "mustNotCite": [
-          "faq.snakebite-first-aid",
-          "faq.snakebite-dont",
-          "topic.antivenom"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-rabies-bite-3",
-      "category": "faq",
-      "source": "faq.rabies-bite",
-      "style": "長輩",
-      "split": "dev",
-      "q": "給狗仔咬到要打針嗎",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -3041,27 +2762,6 @@
       }
     },
     {
-      "id": "CH-FAQ-snakebite-dont-2",
-      "category": "faq",
-      "source": "faq.snakebite-dont",
-      "style": "長輩",
-      "split": "dev",
-      "q": "蛇咬到要不要用繩子綁起來",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.snakebite-dont",
-          "faq.snakebite-first-aid",
-          "topic.antivenom"
-        ],
-        "mustNotCite": [
-          "faq.rabies-bite",
-          "disease.rabies"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-snakebite-dont-3",
       "category": "faq",
       "source": "faq.snakebite-dont",
@@ -3149,42 +2849,12 @@
       }
     },
     {
-      "id": "CH-FAQ-stats-ili-rate-1",
-      "category": "faq",
-      "source": "faq.stats-ili-rate",
-      "style": "口語",
-      "split": "dev",
-      "q": "類流感就診率是在算什麼",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.stats-ili-rate"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-stats-ili-rate-2",
       "category": "faq",
       "source": "faq.stats-ili-rate",
       "style": "簡寫",
       "split": "holdout",
       "q": "ILI就診率 意思",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.stats-ili-rate"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-stats-ili-rate-3",
-      "category": "faq",
-      "source": "faq.stats-ili-rate",
-      "style": "否定",
-      "split": "dev",
-      "q": "就診率高是不是代表很多人確診流感",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -3610,28 +3280,6 @@
       }
     },
     {
-      "id": "CH-FAQ-travel-japan-measles-2",
-      "category": "faq",
-      "source": "faq.travel-japan-measles",
-      "style": "家長",
-      "split": "dev",
-      "q": "帶一歲小孩去東京玩要擔心麻疹嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.travel-japan-measles",
-          "travel.JP",
-          "disease.measles",
-          "faq.measles-mmr-adult-who"
-        ],
-        "mustNotCite": [
-          "doc.mmr-recommendation.2019-05-14",
-          "news.2025-01-09-mmr-adults-measles"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-FAQ-travel-japan-measles-3",
       "category": "faq",
       "source": "faq.travel-japan-measles",
@@ -3823,22 +3471,6 @@
         "mustNotCite": [
           "faq.zoster-vaccine-funding",
           "vaccine.zoster"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-FAQ-yellow-fever-certificate-1",
-      "category": "faq",
-      "source": "faq.yellow-fever-certificate",
-      "style": "俗稱",
-      "split": "dev",
-      "q": "去巴西要黃皮書嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.yellow-fever-certificate",
-          "service.international-vaccination-certificate"
         ],
         "lowRelevance": false
       }
@@ -4090,23 +3722,6 @@
       }
     },
     {
-      "id": "CH-SVC-international-training-application-1",
-      "category": "service",
-      "source": "service.international-training-application",
-      "style": "口語",
-      "split": "dev",
-      "q": "外國衛生官員想來疾管署受訓，怎麼報名",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.international-training-application",
-          "page.international-training",
-          "topic.international-cooperation"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-SVC-international-training-application-2",
       "category": "service",
       "source": "service.international-training-application",
@@ -4315,21 +3930,6 @@
       "style": "情境",
       "split": "dev",
       "q": "記者想訪問疾管署專家要找誰",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.media-interview-request"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-SVC-media-interview-request-2",
-      "category": "service",
-      "source": "service.media-interview-request",
-      "style": "口語",
-      "split": "dev",
-      "q": "電視台要去疾管署拍攝怎麼申請",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -4586,24 +4186,6 @@
       }
     },
     {
-      "id": "CH-SVC-vaccination-record-reissue-1",
-      "category": "service",
-      "source": "service.vaccination-record-reissue",
-      "style": "家長",
-      "split": "dev",
-      "q": "小孩的黃卡弄丟了",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.vaccination-record-reissue"
-        ],
-        "mustNotCite": [
-          "faq.influenza-vaccine-where"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-SVC-vaccination-record-reissue-2",
       "category": "service",
       "source": "service.vaccination-record-reissue",
@@ -4658,22 +4240,6 @@
       }
     },
     {
-      "id": "CH-SVC-vaccine-fund-donation-1",
-      "category": "service",
-      "source": "service.vaccine-fund-donation",
-      "style": "口語",
-      "split": "dev",
-      "q": "想捐錢幫忙買疫苗",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.vaccine-fund-donation",
-          "topic.vaccine-fund-donation"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-SVC-vaccine-fund-donation-2",
       "category": "service",
       "source": "service.vaccine-fund-donation",
@@ -4701,36 +4267,6 @@
         "mustCiteAny": [
           "service.vaccine-fund-donation",
           "topic.vaccine-fund-donation"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-SVC-vaccine-injury-compensation-1",
-      "category": "service",
-      "source": "service.vaccine-injury-compensation",
-      "style": "情境",
-      "split": "dev",
-      "q": "打完疫苗出事，可以申請賠償嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.vaccine-injury-compensation"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-SVC-vaccine-injury-compensation-2",
-      "category": "service",
-      "source": "service.vaccine-injury-compensation",
-      "style": "口語",
-      "split": "dev",
-      "q": "疫苗副作用的救濟金怎麼申請",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.vaccine-injury-compensation"
         ],
         "lowRelevance": false
       }
@@ -5723,21 +5259,6 @@
       }
     },
     {
-      "id": "CH-DIS-hepatitis-a-care-3",
-      "category": "disease",
-      "source": "disease.hepatitis-a#care",
-      "style": "情境",
-      "split": "dev",
-      "q": "眼睛變黃尿很黃，要去哪裡檢查",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.hepatitis-a"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-DIS-hiv-symptoms-1",
       "category": "disease",
       "source": "disease.hiv#symptoms",
@@ -5936,23 +5457,6 @@
       }
     },
     {
-      "id": "CH-DIS-influenza-symptoms-1",
-      "category": "disease",
-      "source": "disease.influenza#symptoms",
-      "style": "口語",
-      "split": "dev",
-      "q": "得流感會怎樣",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.influenza",
-          "faq.flu-vs-cold",
-          "faq.flu-danger-signs"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-DIS-influenza-symptoms-2",
       "category": "disease",
       "source": "disease.influenza#symptoms",
@@ -6116,24 +5620,6 @@
       "style": "俗稱",
       "split": "holdout",
       "q": "得流感要不要吃克流感",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.influenza",
-          "faq.influenza-antiviral-who",
-          "faq.flu-antiviral-65-no-test",
-          "faq.flu-danger-signs"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-DIS-influenza-care-3",
-      "category": "disease",
-      "source": "disease.influenza#care",
-      "style": "情境",
-      "split": "dev",
-      "q": "流感退燒幾天可以回去上班",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -6513,27 +5999,6 @@
         "mustCiteAny": [
           "disease.malaria",
           "faq.travel-return-fever"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-DIS-measles-symptoms-1",
-      "category": "disease",
-      "source": "disease.measles#symptoms",
-      "style": "口語",
-      "split": "dev",
-      "q": "麻疹長什麼樣子",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.measles",
-          "faq.measles",
-          "faq.travel-japan-measles",
-          "faq.healthcare-workers-mmr"
-        ],
-        "mustNotCite": [
-          "disease.rubella"
         ],
         "lowRelevance": false
       }
@@ -7186,26 +6651,6 @@
       "style": "俗稱",
       "split": "holdout",
       "q": "恐水病是什麼",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.rabies"
-        ],
-        "mustNotCite": [
-          "faq.snakebite-first-aid",
-          "faq.snakebite-dont",
-          "topic.antivenom"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-DIS-rabies-symptoms-3",
-      "category": "disease",
-      "source": "disease.rabies#symptoms",
-      "style": "口語",
-      "split": "dev",
-      "q": "狂犬病發作是什麼樣子",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -9137,25 +8582,6 @@
       }
     },
     {
-      "id": "CH-ML-migrant-health-check-tl-1",
-      "category": "multilingual",
-      "source": "ml.migrant-health-check@tl",
-      "style": "簡寫",
-      "lang": "tl",
-      "split": "dev",
-      "q": "Kailangan ba ng medical pagdating sa Taiwan bilang OFW?",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.tb-foreigner-health-check",
-          "media.migrant-worker-health-check",
-          "topic.new-residents-migrant-health",
-          "topic.visiting-taiwan"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-ML-migrant-health-check-tl-2",
       "category": "multilingual",
       "source": "ml.migrant-health-check@tl",
@@ -9163,25 +8589,6 @@
       "lang": "tl",
       "split": "holdout",
       "q": "Ilang araw pagdating sa Taiwan dapat magpa-health check?",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "faq.tb-foreigner-health-check",
-          "media.migrant-worker-health-check",
-          "topic.new-residents-migrant-health",
-          "topic.visiting-taiwan"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-ML-migrant-health-check-vi-1",
-      "category": "multilingual",
-      "source": "ml.migrant-health-check@vi",
-      "style": "口語",
-      "lang": "vi",
-      "split": "dev",
-      "q": "Lao động sang Đài Loan phải khám sức khỏe khi nào?",
       "expect": {
         "refuse": false,
         "mustCiteAny": [
@@ -9211,6 +8618,280 @@
         ],
         "lowRelevance": false
       }
+    }
+  ],
+  "promoted": [
+    {
+      "id": "CH-FAQ-antivenom-where-3",
+      "source": "faq.antivenom-where",
+      "q": "抗蛇毒血清可以自己去藥局買來放家裡嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-covid-antiviral-1",
+      "source": "faq.covid-antiviral",
+      "q": "阿公確診新冠可以拿公費的藥嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-covid-antiviral-2",
+      "source": "faq.covid-antiviral",
+      "q": "確診可以吃倍拉維嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-dengue-fever-when-to-see-doctor-1",
+      "source": "faq.dengue-fever-when-to-see-doctor",
+      "q": "懷疑登革熱要多快去看醫生",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-dengue-painkiller-2",
+      "source": "faq.dengue-painkiller",
+      "q": "發燒懷疑登革熱，家裡的布洛芬能吃嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-enterovirus-class-suspension-1",
+      "source": "faq.enterovirus-class-suspension",
+      "q": "班上一個小朋友腸病毒，會停課嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-enterovirus-return-school-3",
+      "source": "faq.enterovirus-return-school",
+      "q": "孩子腸病毒第五天精神很好，可以回學校嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-ev-severe-signs-3",
+      "source": "faq.ev-severe-signs",
+      "q": "寶寶得手足口病，睡覺一直驚跳是怎樣",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-flu-antiviral-65-no-test-1",
+      "source": "faq.flu-antiviral-65-no-test",
+      "q": "我阿嬤七十歲發燒咳嗽，沒做快篩可以拿克流感嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-flu-antiviral-65-no-test-2",
+      "source": "faq.flu-antiviral-65-no-test",
+      "q": "老人家沒做流感快篩就不能開公費藥嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-flu-vaccine-every-year-2",
+      "source": "faq.flu-vaccine-every-year",
+      "q": "流感疫苗為什麼每年都要打",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-flu-vaccine-who-2",
+      "source": "faq.flu-vaccine-who",
+      "q": "我50歲上班族，可以打公費流感嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-hiv-pep-1",
+      "source": "faq.hiv-pep",
+      "q": "昨天沒戴套，很擔心怎麼辦",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-pcv-elderly-4",
+      "source": "faq.pcv-elderly",
+      "q": "我爸七十歲，以前打過23價，現在還要打嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-pregnant-tdap-2",
+      "source": "faq.pregnant-tdap",
+      "q": "Tdap 孕婦 幾週",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-rabies-bite-3",
+      "source": "faq.rabies-bite",
+      "q": "給狗仔咬到要打針嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-snakebite-dont-2",
+      "source": "faq.snakebite-dont",
+      "q": "蛇咬到要不要用繩子綁起來",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-stats-ili-rate-1",
+      "source": "faq.stats-ili-rate",
+      "q": "類流感就診率是在算什麼",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-stats-ili-rate-3",
+      "source": "faq.stats-ili-rate",
+      "q": "就診率高是不是代表很多人確診流感",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-travel-japan-measles-2",
+      "source": "faq.travel-japan-measles",
+      "q": "帶一歲小孩去東京玩要擔心麻疹嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-FAQ-yellow-fever-certificate-1",
+      "source": "faq.yellow-fever-certificate",
+      "q": "去巴西要黃皮書嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-international-training-application-1",
+      "source": "service.international-training-application",
+      "q": "外國衛生官員想來疾管署受訓，怎麼報名",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-media-interview-request-2",
+      "source": "service.media-interview-request",
+      "q": "電視台要去疾管署拍攝怎麼申請",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-vaccination-record-reissue-1",
+      "source": "service.vaccination-record-reissue",
+      "q": "小孩的黃卡弄丟了",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-vaccine-fund-donation-1",
+      "source": "service.vaccine-fund-donation",
+      "q": "想捐錢幫忙買疫苗",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-vaccine-injury-compensation-1",
+      "source": "service.vaccine-injury-compensation",
+      "q": "打完疫苗出事，可以申請賠償嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-vaccine-injury-compensation-2",
+      "source": "service.vaccine-injury-compensation",
+      "q": "疫苗副作用的救濟金怎麼申請",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-hepatitis-a-care-3",
+      "source": "disease.hepatitis-a#care",
+      "q": "眼睛變黃尿很黃，要去哪裡檢查",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-influenza-symptoms-1",
+      "source": "disease.influenza#symptoms",
+      "q": "得流感會怎樣",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-influenza-care-3",
+      "source": "disease.influenza#care",
+      "q": "流感退燒幾天可以回去上班",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-measles-symptoms-1",
+      "source": "disease.measles#symptoms",
+      "q": "麻疹長什麼樣子",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-rabies-symptoms-3",
+      "source": "disease.rabies#symptoms",
+      "q": "狂犬病發作是什麼樣子",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-ML-migrant-health-check-tl-1",
+      "source": "ml.migrant-health-check@tl",
+      "q": "Kailangan ba ng medical pagdating sa Taiwan bilang OFW?",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-ML-migrant-health-check-vi-1",
+      "source": "ml.migrant-health-check@vi",
+      "q": "Lao động sang Đài Loan phải khám sức khỏe khi nào?",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
     }
   ]
 }

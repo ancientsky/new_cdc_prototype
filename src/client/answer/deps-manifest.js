@@ -11,7 +11,7 @@ export const ENGINE_PRIMARY = [
   ['diseases', []],
   ['vaccines', []],
   ['countries', []],
-  ['datasets', []],
+  ['answer/datasets', []], // 第四十九輪：精簡副本（不含譯文，見 emit-api.mjs）
   ['faq', []],
   ['units', []],
   ['governance/ai-status', {}],
@@ -19,9 +19,9 @@ export const ENGINE_PRIMARY = [
 export const ENGINE_SECONDARY = [
   ['travel-alerts', [], false],
   ['country-levels', [], false],
-  ['services', [], true],
+  ['answer/services', [], true],
   ['notify-table', null, true],
-  ['media', [], true],
+  ['answer/media', [], true],
   ['immunization-schedule', [], true],
   ['vaccine-master', [], true], // 第四十八輪（issue #95）：還沒有疫苗頁的疫苗也要認得（皮蛇疫苗）
 ];

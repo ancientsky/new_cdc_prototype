@@ -87,7 +87,16 @@ test('dev／holdout 約各半，且每個來源題（兩題以上）兩邊都有
   assert.ok(ratio > 0.4 && ratio < 0.6, `dev 比例 ${ratio}`);
   const bySource = new Map();
   for (const q of SET.questions) bySource.set(q.source, [...(bySource.get(q.source) ?? []), q.split]);
-  for (const [src, splits] of bySource) if (splits.length >= 2) assert.ok(splits.includes('dev') && splits.includes('holdout'), `${src} 只有 ${splits[0]}`);
+  // 升格進評估集的題目記在 promoted（docs/eval-challenge.md §3、§8）；dev 題升格後，那個來源可能只剩 holdout，這是預期的。
+  const promotedIds = new Set((SET.promoted ?? []).map((p) => p.id));
+  const promotedDevSources = new Set((SET.promoted ?? []).filter((p) => p.split === 'dev' && p.source).map((p) => p.source));
+  for (const [src, splits] of bySource) {
+    if (splits.length < 2) continue;
+    const ok = (splits.includes('dev') || promotedDevSources.has(src)) && splits.includes('holdout');
+    assert.ok(ok, `${src} 只有 ${splits[0]}`);
+  }
+  // 升格的題目必須真的離開挑戰集，而且不可以是 holdout（holdout 題不得拿來修引擎，見 §3）
+  for (const q of SET.questions) assert.ok(!promotedIds.has(q.id), `${q.id} 已升格卻還在挑戰集`);
 });
 
 test('建置不讀挑戰集：build.mjs／scripts／src 不引用 eval-challenge 或 run-challenge；CI 與 build／check／test 指令也不呼叫', () => {
