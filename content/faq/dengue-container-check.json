@@ -67,6 +67,36 @@
     "en": {
       "question": "What does \"inspect, empty, clean, scrub\" mean for dengue prevention?",
       "answerMarkdown": "These are four steps to remove mosquito breeding sites, done **once a week**:\n\n1. **Inspect** containers inside and outside the home that may hold water, such as plant saucers, buckets and old tyres.\n2. **Empty** the standing water.\n3. **Clean** away containers you do not need.\n4. **Scrub** the inside walls to remove mosquito eggs.\n\nAedes mosquitoes take about 7–10 days to develop from egg to adult, so weekly cleaning breaks the cycle."
+    },
+    "ja": {
+      "question": "デング熱予防の「巡・倒・清・刷」とは何ですか？",
+      "answerMarkdown": "「巡倒清刷」は、蚊の発生源をなくすための4つのステップで、**週に1回**行うことをおすすめします。\n\n1. **巡（見回る）**：家の中や周りで水がたまりやすい容器（植木鉢の受け皿、バケツ、古タイヤなど）を見回ります。\n2. **倒（水を捨てる）**：たまった水を捨てます。\n3. **清（片づける）**：いらない容器を片づけます。\n4. **刷（こすり洗う）**：容器の内側をこすり洗いして、ヤブカ（Aedes属の蚊）の卵を取り除きます。\n\nヤブカは、卵から成虫になるまでおよそ7～10日かかるので、週に1回掃除すれば繁殖の連鎖を断ち切れます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Ano ang ibig sabihin ng \"suriin, ibuhos, linisin, kuskusin\" para maiwasan ang dengue?",
+      "answerMarkdown": "Ang \"suriin, ibuhos, linisin, kuskusin\" ay apat na hakbang para alisin ang mga lugar na pinamumugaran ng lamok, na inirerekomendang gawin **isang beses kada linggo**:\n\n1. **Suriin**: tingnan ang mga lalagyan sa loob at labas ng bahay na maaaring may naiipong tubig, tulad ng platito ng paso, balde, at lumang gulong.\n2. **Ibuhos**: ibuhos ang naipong tubig.\n3. **Linisin**: alisin ang mga lalagyang hindi na kailangan.\n4. **Kuskusin**: kuskusin ang loob ng mga lalagyan para maalis ang itlog ng lamok na Aedes.\n\nAabot ng mga 7–10 araw mula itlog hanggang maging ganap na lamok ang Aedes, kaya ang paglilinis kada linggo ay nakakaputol sa pagpaparami nila.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "\"Tuần tra, đổ, dọn, chà\" trong phòng chống sốt xuất huyết Dengue là gì?",
+      "answerMarkdown": "\"Tuần tra, đổ, dọn, chà\" là bốn bước để loại bỏ nơi muỗi đẻ trứng, nên thực hiện **mỗi tuần một lần**:\n\n1. **Tuần tra**: kiểm tra các vật chứa có thể đọng nước trong và quanh nhà, như đĩa lót chậu cây, xô, lốp xe cũ.\n2. **Đổ**: đổ bỏ nước đọng.\n3. **Dọn**: dọn bỏ những vật chứa không cần thiết.\n4. **Chà**: chà rửa thành trong của vật chứa để loại bỏ trứng muỗi Aedes.\n\nMuỗi Aedes mất khoảng 7–10 ngày để phát triển từ trứng thành muỗi trưởng thành, nên dọn mỗi tuần một lần sẽ cắt đứt chu kỳ sinh sản.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apa yang dimaksud dengan \"periksa, buang, bersihkan, sikat\" dalam pencegahan demam berdarah dengue?",
+      "answerMarkdown": "\"Periksa, buang, bersihkan, sikat\" adalah empat langkah untuk menghilangkan tempat berkembang biak nyamuk, yang dianjurkan dilakukan **seminggu sekali**:\n\n1. **Periksa**: periksa wadah di dalam dan di luar rumah yang mungkin menampung air, seperti alas pot tanaman, ember, dan ban bekas.\n2. **Buang**: buang air yang tergenang.\n3. **Bersihkan**: singkirkan wadah yang tidak diperlukan.\n4. **Sikat**: sikat dinding bagian dalam wadah untuk menghilangkan telur nyamuk Aedes.\n\nNyamuk Aedes membutuhkan sekitar 7–10 hari untuk berkembang dari telur menjadi nyamuk dewasa, sehingga membersihkan seminggu sekali dapat memutus perkembangbiakannya.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "\"สำรวจ เทน้ำ กำจัด ขัดล้าง\" ในการป้องกันไข้เลือดออกคืออะไร?",
+      "answerMarkdown": "\"สำรวจ เทน้ำ กำจัด ขัดล้าง\" คือสี่ขั้นตอนในการกำจัดแหล่งเพาะพันธุ์ยุง แนะนำให้ทำ**สัปดาห์ละครั้ง**:\n\n1. **สำรวจ**: ตรวจดูภาชนะทั้งในและนอกบ้านที่อาจมีน้ำขัง เช่น จานรองกระถางต้นไม้ ถัง และยางรถยนต์เก่า\n2. **เทน้ำ**: เทน้ำที่ขังอยู่ทิ้ง\n3. **กำจัด**: กำจัดภาชนะที่ไม่ใช้แล้ว\n4. **ขัดล้าง**: ขัดล้างผนังด้านในของภาชนะเพื่อกำจัดไข่ยุงลาย\n\nยุงลายใช้เวลาประมาณ 7–10 วันในการเจริญเติบโตจากไข่เป็นตัวเต็มวัย การทำความสะอาดสัปดาห์ละครั้งจึงช่วยตัดวงจรการแพร่พันธุ์ได้",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

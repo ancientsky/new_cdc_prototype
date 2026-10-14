@@ -73,5 +73,49 @@
   ],
   "bodyMarkdown": "水痘疫苗為活性減毒疫苗。公費對象為出生滿 12 個月的幼兒，接種 1 劑；為提升保護力，醫界建議 4–6 歲可自費接種第 2 劑。\n\n未曾得過水痘也沒有接種過的青少年與成人，可自費接種 2 劑，間隔 4–8 週。",
   "precautions": "孕婦與嚴重免疫不全者不可接種；接種後 4 週內避免懷孕。18 歲以下接種後 6 週內避免使用阿斯匹靈。",
-  "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where"
+  "whereUrl": "https://ancientsky.github.io/vaxmap-next/info.html#where",
+  "i18n": {
+    "en": {
+      "title": "Varicella (chickenpox) vaccine",
+      "summary": "Children get one government-funded dose of varicella vaccine at 12 months; a second dose at age 4–6 is available at own expense, as are 2 doses for adults who have not had chickenpox.",
+      "bodyMarkdown": "The varicella vaccine is a live attenuated vaccine. The government-funded programme covers children aged 12 months, with 1 dose; to improve protection, doctors recommend a second dose at age 4–6, which is self-paid.\n\nAdolescents and adults who have never had chickenpox and have not been vaccinated can get 2 self-paid doses, 4–8 weeks apart.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "title": "水痘ワクチン",
+      "summary": "幼児は生後12か月で、公費により水痘ワクチンを1回接種します。4〜6歳での2回目は自費で接種でき、水痘にかかったことのない成人も自費で2回接種できます。",
+      "bodyMarkdown": "水痘ワクチンは弱毒生ワクチンです。公費の対象は生後12か月の幼児で、1回接種します。予防効果を高めるため、医学界では4〜6歳での2回目の接種（自費）が推奨されています。\n\n水痘にかかったことも接種したこともない青少年と成人は、自費で2回、4〜8週間あけて接種できます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Bakuna sa bulutong-tubig",
+      "summary": "Ang mga bata ay tumatanggap ng isang dosis ng bakuna sa bulutong-tubig na pinondohan ng pamahalaan sa edad na 12 buwan; ang ikalawang dosis sa edad na 4–6 ay maaaring sariling bayad, gayundin ang 2 dosis para sa mga nasa hustong gulang na hindi pa nagkaroon ng bulutong-tubig.",
+      "bodyMarkdown": "Ang bakuna sa bulutong-tubig ay live attenuated na bakuna. Ang programang pinondohan ng pamahalaan ay para sa mga batang 12 buwan, 1 dosis; upang mapabuti ang proteksyon, inirerekomenda ng mga doktor ang ikalawang dosis sa edad na 4–6, na sariling bayad.\n\nAng mga kabataan at nasa hustong gulang na hindi pa nagkaroon ng bulutong-tubig at hindi pa nabakunahan ay maaaring tumanggap ng 2 dosis na sariling bayad, na may pagitang 4–8 linggo.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Vắc-xin thủy đậu",
+      "summary": "Trẻ đủ 12 tháng tuổi được tiêm 1 mũi vắc-xin thủy đậu do nhà nước chi trả; mũi thứ 2 lúc 4–6 tuổi có thể tự chi trả, người lớn chưa mắc thủy đậu cũng có thể tự chi trả để tiêm 2 mũi.",
+      "bodyMarkdown": "Vắc-xin thủy đậu là vắc-xin sống giảm độc lực. Chương trình do nhà nước chi trả dành cho trẻ đủ 12 tháng tuổi, tiêm 1 mũi; để tăng hiệu quả bảo vệ, giới y khoa khuyến cáo tiêm mũi thứ 2 lúc 4–6 tuổi, tự chi trả.\n\nThanh thiếu niên và người lớn chưa từng mắc thủy đậu và chưa tiêm vắc-xin có thể tự chi trả để tiêm 2 mũi, cách nhau 4–8 tuần.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Vaksin cacar air",
+      "summary": "Anak mendapat satu dosis vaksin cacar air yang dibiayai pemerintah pada usia 12 bulan; dosis kedua pada usia 4–6 tahun dapat diberikan dengan biaya sendiri, demikian juga 2 dosis untuk orang dewasa yang belum pernah terkena cacar air.",
+      "bodyMarkdown": "Vaksin cacar air adalah vaksin hidup yang dilemahkan. Program yang dibiayai pemerintah mencakup anak berusia 12 bulan, 1 dosis; untuk meningkatkan perlindungan, dokter menganjurkan dosis kedua pada usia 4–6 tahun dengan biaya sendiri.\n\nRemaja dan orang dewasa yang belum pernah terkena cacar air dan belum divaksin dapat menerima 2 dosis dengan biaya sendiri, berjarak 4–8 minggu.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "วัคซีนอีสุกอีใส",
+      "summary": "เด็กอายุครบ 12 เดือนได้รับวัคซีนอีสุกอีใส 1 เข็มโดยรัฐสนับสนุนค่าใช้จ่าย เข็มที่ 2 เมื่ออายุ 4–6 ปีฉีดได้โดยจ่ายเอง และผู้ใหญ่ที่ไม่เคยเป็นอีสุกอีใสฉีด 2 เข็มได้โดยจ่ายเอง",
+      "bodyMarkdown": "วัคซีนอีสุกอีใสเป็นวัคซีนเชื้อเป็นอ่อนฤทธิ์ โครงการที่รัฐสนับสนุนค่าใช้จ่ายสำหรับเด็กอายุครบ 12 เดือน ฉีด 1 เข็ม เพื่อเพิ่มการป้องกัน แพทย์แนะนำให้ฉีดเข็มที่ 2 เมื่ออายุ 4–6 ปี โดยจ่ายเอง\n\nวัยรุ่นและผู้ใหญ่ที่ไม่เคยเป็นอีสุกอีใสและไม่เคยฉีดวัคซีน ฉีดได้ 2 เข็มโดยจ่ายเอง ห่างกัน 4–8 สัปดาห์",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

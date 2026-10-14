@@ -71,6 +71,36 @@
     "en": {
       "question": "Does the MMR vaccine cause autism?",
       "answerMarkdown": "**No.** The claim comes from a 1998 paper that was later retracted, and its author lost his medical licence. Large studies in many countries covering millions of children have since confirmed there is no link between MMR and autism.\n\nSkipping the vaccine leaves children exposed to measles, which can cause pneumonia, encephalitis and even death."
+    },
+    "ja": {
+      "question": "MMRワクチンは自閉症の原因になりますか？",
+      "answerMarkdown": "**いいえ、なりません。**「MMRワクチンが自閉症を引き起こす」という話は、1998年に発表され、のちに撤回された論文が出どころで、その著者は医師免許も取り消されました。その後、多くの国で数百万人の子どもを対象にした大規模な研究が行われ、MMRの接種と自閉症に関連がないことが確かめられています。\n\nワクチンを接種しないと、子どもが麻疹にかかるリスクにさらされます。麻疹は、肺炎、脳炎、さらには死亡を引き起こすことがあります。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Nagdudulot ba ng autism ang bakuna ng MMR?",
+      "answerMarkdown": "**Hindi.** Ang pahayag na \"nagdudulot ng autism ang bakuna ng MMR\" ay nagmula sa isang papel noong 1998 na binawi na, at binawian din ng lisensya sa medisina ang may-akda nito. Mula noon, kinumpirma ng malalaking pag-aaral sa maraming bansa, na sumaklaw sa milyun-milyong bata, na walang kaugnayan ang pagbabakuna ng MMR sa autism.\n\nAng hindi pagpapabakuna ay naglalantad sa mga bata sa panganib ng tigdas, na maaaring magdulot ng pulmonya, encephalitis, at maging kamatayan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Vắc-xin MMR có gây ra chứng tự kỷ không?",
+      "answerMarkdown": "**Không.** Tin đồn \"vắc-xin MMR gây tự kỷ\" bắt nguồn từ một bài báo năm 1998 sau đó đã bị rút lại, và tác giả cũng bị thu hồi giấy phép hành nghề y. Sau đó, các nghiên cứu quy mô lớn ở nhiều nước trên hàng triệu trẻ em đều xác nhận rằng việc tiêm MMR không liên quan đến chứng tự kỷ.\n\nKhông tiêm vắc-xin lại khiến trẻ có nguy cơ mắc bệnh sởi, bệnh có thể gây viêm phổi, viêm não, thậm chí tử vong.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apakah vaksin MMR menyebabkan autisme?",
+      "answerMarkdown": "**Tidak.** Klaim bahwa \"vaksin MMR menyebabkan autisme\" bersumber dari sebuah makalah tahun 1998 yang kemudian ditarik, dan izin praktik dokter penulisnya juga dicabut. Sejak itu, studi besar di banyak negara terhadap jutaan anak menegaskan bahwa tidak ada hubungan antara vaksinasi MMR dan autisme.\n\nTidak memvaksin justru membuat anak berisiko terkena campak, yang dapat menyebabkan pneumonia, ensefalitis, bahkan kematian.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "วัคซีน MMR ทำให้เป็นออทิสติกหรือไม่?",
+      "answerMarkdown": "**ไม่** ข้ออ้างที่ว่า \"วัคซีน MMR ทำให้เป็นออทิสติก\" มาจากบทความวิชาการปี 1998 ซึ่งถูกถอนออกในภายหลัง และผู้เขียนก็ถูกเพิกถอนใบอนุญาตประกอบวิชาชีพแพทย์ หลังจากนั้นงานวิจัยขนาดใหญ่ในหลายประเทศที่ศึกษาเด็กหลายล้านคนยืนยันตรงกันว่า การฉีด MMR ไม่มีความเกี่ยวข้องกับออทิสติก\n\nการไม่ฉีดวัคซีนกลับทำให้เด็กเสี่ยงต่อโรคหัด ซึ่งอาจทำให้เกิดปอดอักเสบ สมองอักเสบ และถึงขั้นเสียชีวิตได้",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

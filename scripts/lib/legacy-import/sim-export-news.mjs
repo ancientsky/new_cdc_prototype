@@ -68,7 +68,8 @@ export function generateNews(outDir) {
     });
   }
   // 英文新聞稿：取兩則有英文版的近年新聞（typeid 158；只有英文內文，需補中文版）
-  for (const n of news.filter((x) => x.i18n?.en?.title && x.newsType === 'press').slice(0, 2)) {
+  // 第五十輪：只取人工英文稿。補譯後新聞多了英文機器初稿，若不排除，「前兩則有英文的新聞稿」會換人，歷史批次就無法重現
+  for (const n of news.filter((x) => x.i18n?.en?.title && !x.i18n.en.machineTranslated && x.newsType === 'press').slice(0, 2)) {
     items.push({ key: `en-${slugOf(n.id)}`, typeid: TYPEID.en, title: n.i18n.en.title, pub: n.publishedAt, upd: n.publishedAt, atts: [], source: n.id, lang: 'en', body: () => [P(n.i18n.en.summary ?? n.i18n.en.title), P('Taiwan Centers for Disease Control (Taiwan CDC) press release. Full English text is a simulated export; Chinese source is the authoritative version.')].join('\n') });
   }
   for (const [pub, title, lines] of RECENT_SYNTH) items.push({ key: `${pub}-synth`, typeid: TYPEID.press, title, pub, upd: pub, atts: [], source: null, body: () => lines.map((l) => P(l)).join('\n') });

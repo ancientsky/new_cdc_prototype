@@ -86,6 +86,36 @@
     "en": {
       "title": "Claim that all adults need another MMR dose is partly true",
       "shareText": "Taiwan CDC: not every adult needs another MMR dose. People born in 1966 or later without measles immunity who are travelling to affected areas such as Japan should see a travel clinic 2–4 weeks before departure. If you have had 2 doses or a positive antibody test, you do not need it."
+    },
+    "ja": {
+      "title": "「すべての成人がMMRをもう1回接種すべき」は一部のみ正しい",
+      "shareText": "【台湾CDCより】すべての大人がMMRを追加接種する必要はありません。1966年以降に生まれ、麻しんの免疫がなく、流行地域（日本など）へ渡航する人は、出国の2〜4週間前にトラベルクリニックで、自費で1回接種するかどうかの評価を受けてください。2回接種済みの人、または抗体検査で陽性だった人は不要です。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Bahagyang totoo ang sabing \"lahat ng nasa hustong gulang ay kailangang magpa-MMR ng isa pang dosis\"",
+      "shareText": "Taiwan CDC: hindi lahat ng nasa hustong gulang ay nangangailangan ng isa pang dosis ng MMR. Ang mga isinilang noong 1966 o pagkatapos na walang kaligtasan sa tigdas at maglalakbay sa mga apektadong lugar tulad ng Japan ay dapat magpatingin sa travel clinic 2–4 na linggo bago umalis upang masuri para sa 1 dosis na sariling bayad. Kung nakatanggap na ng 2 dosis o positibo ang antibody test, hindi na kailangan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Tin đồn \"mọi người lớn đều phải tiêm bổ sung một mũi MMR\" chỉ đúng một phần",
+      "shareText": "CDC Đài Loan: không phải người lớn nào cũng cần tiêm bổ sung MMR. Người sinh từ năm 1966 trở về sau, chưa có miễn dịch với sởi và sắp đến vùng có dịch như Nhật Bản nên đến phòng khám y học du lịch trước khi đi 2–4 tuần để được đánh giá tiêm 1 mũi tự chi trả. Nếu đã tiêm đủ 2 mũi hoặc xét nghiệm kháng thể dương tính thì không cần.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Kabar \"semua orang dewasa harus menambah satu dosis MMR\" hanya benar sebagian",
+      "shareText": "CDC Taiwan: tidak semua orang dewasa perlu menambah dosis MMR. Orang yang lahir pada 1966 atau sesudahnya, belum memiliki kekebalan terhadap campak, dan akan bepergian ke daerah wabah seperti Jepang sebaiknya datang ke klinik kesehatan perjalanan 2–4 minggu sebelum berangkat untuk dinilai apakah perlu 1 dosis dengan biaya sendiri. Jika sudah mendapat 2 dosis atau tes antibodi positif, tidak perlu.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ข่าวลือ \"ผู้ใหญ่ทุกคนต้องฉีดวัคซีน MMR เพิ่มอีก 1 เข็ม\" ถูกต้องเพียงบางส่วน",
+      "shareText": "CDC ไต้หวัน: ผู้ใหญ่ไม่ได้ต้องฉีด MMR เพิ่มทุกคน ผู้ที่เกิดตั้งแต่ปี 1966 เป็นต้นมา ไม่มีภูมิคุ้มกันโรคหัด และจะเดินทางไปพื้นที่ที่มีการระบาด เช่น ญี่ปุ่น ควรไปคลินิกเวชศาสตร์การเดินทางก่อนออกเดินทาง 2–4 สัปดาห์ เพื่อประเมินการฉีด 1 เข็มโดยชำระค่าใช้จ่ายเอง หากฉีดครบ 2 เข็มแล้วหรือตรวจพบภูมิคุ้มกันเป็นบวกก็ไม่ต้องฉีด",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

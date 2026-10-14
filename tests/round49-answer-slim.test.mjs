@@ -11,7 +11,7 @@ import { ENGINE_PRIMARY, ENGINE_SECONDARY } from '../src/client/answer/deps-mani
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
-const NAMES = ['services', 'media', 'datasets'];
+const NAMES = ['services', 'media', 'datasets', 'faq', 'vaccines']; // 第五十輪加 faq、vaccines
 const hasDist = NAMES.every((n) => fs.existsSync(path.join(DIST, 'v1/answer', `${n}.json`)));
 const read = (rel) => {
   const j = JSON.parse(fs.readFileSync(path.join(DIST, 'v1', rel), 'utf8'));
@@ -41,5 +41,20 @@ test('精簡副本 ＝ 完整 API 去掉 i18n／languages（其他欄位與順�
 test('v1/index.json 列出精簡副本（services、media 是可選檔，data.js 的 v1Optional 先查清單才下載）', { skip: !hasDist && '尚未建置 dist' }, () => {
   const idx = read('index.json');
   const paths = new Set((Array.isArray(idx) ? idx : []).map((x) => x.path));
-  for (const n of NAMES) assert.ok(paths.has(`/v1/answer/${n}.json`), `index.json 應列出 /v1/answer/${n}.json`);
+  for (const n of [...NAMES, 'clarifications']) assert.ok(paths.has(`/v1/answer/${n}.json`), `index.json 應列出 /v1/answer/${n}.json`);
+});
+
+// 第五十輪：澄清是一級內容，答案頁（謠言查證分支）會顯示外語澄清，所以副本只留「已審閱」語言的譯文，機器初稿不得進來
+test('澄清副本：i18n 只含 languages 標 reviewed 的語言；其他欄位與完整檔相同', { skip: !hasDist && '尚未建置 dist' }, () => {
+  const full = read('clarifications.json');
+  const slim = read('answer/clarifications.json');
+  assert.equal(slim.length, full.length);
+  for (const [i, c] of slim.entries()) {
+    for (const l of Object.keys(c.i18n ?? {})) assert.equal(c.languages?.[l]?.status, 'reviewed', `${c.id} 的 ${l} 不是 reviewed 卻進了答案副本`);
+    const { i18n: _a, ...a } = c;
+    const { i18n: _b, ...b } = full[i];
+    assert.deepEqual(a, b, c.id);
+  }
+  const names = [...ENGINE_PRIMARY, ...ENGINE_SECONDARY].map((e) => e[0]);
+  assert.ok(names.includes('answer/clarifications') && !names.includes('clarifications'));
 });

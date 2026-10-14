@@ -76,6 +76,36 @@
     "en": {
       "title": "Claim that COVID-19 cases must isolate for 7 days with household members is outdated",
       "shareText": "Taiwan CDC: mandatory 7-day isolation for cases and quarantine for household members ended on 20 March 2023. Mild cases no longer isolate; wear a mask if symptomatic, rest at home when ill and avoid visiting older people. High-risk people should see a doctor early."
+    },
+    "ja": {
+      "title": "「新型コロナ陽性なら7日間の自宅隔離、同居家族も隔離」は旧規則",
+      "shareText": "【台湾CDCより】新型コロナ陽性者の「7日間隔離、家族も隔離」は旧規則で、2023年3月20日に廃止されました。現在、軽症者の隔離は不要です。症状があるときはマスクを着け、体調が悪いときは自宅で休み、高齢者の見舞いは避けてください。高リスクの人は陽性が分かったら早めに受診してください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Lumang patakaran na ang sabing \"kapag nagpositibo sa COVID-19, kailangang mag-isolate sa bahay nang 7 araw at pati ang mga kasama sa bahay\"",
+      "shareText": "Taiwan CDC: ang sapilitang 7 araw na isolation ng kaso at quarantine ng mga kasama sa bahay ay inalis noong Marso 20, 2023. Hindi na kailangang mag-isolate ang may banayad na sakit; magsuot ng mask kung may sintomas, magpahinga sa bahay kapag may sakit at iwasang dalawin ang matatanda. Ang mga may mataas na panganib ay dapat magpatingin sa doktor nang maaga.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Tin đồn \"dương tính COVID-19 phải cách ly tại nhà 7 ngày, người sống cùng cũng phải cách ly\" là quy định cũ",
+      "shareText": "CDC Đài Loan: quy định bắt buộc cách ly 7 ngày đối với ca bệnh và cách ly người sống cùng nhà đã bị bãi bỏ từ ngày 20/3/2023. Ca nhẹ hiện không cần cách ly; nếu có triệu chứng hãy đeo khẩu trang, ở nhà nghỉ ngơi khi ốm và tránh thăm người cao tuổi. Người có nguy cơ cao nên đi khám sớm.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Kabar \"positif COVID-19 harus isolasi mandiri 7 hari dan anggota serumah juga harus diisolasi\" adalah aturan lama",
+      "shareText": "CDC Taiwan: kewajiban isolasi 7 hari bagi kasus dan karantina bagi anggota serumah sudah dihapus pada 20 Maret 2023. Kasus ringan tidak lagi perlu isolasi; pakai masker jika bergejala, istirahat di rumah saat sakit dan hindari menjenguk lansia. Orang berisiko tinggi sebaiknya segera berobat ke dokter.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ข่าวลือ \"ติดเชื้อโควิด-19 ต้องแยกกักตัวที่บ้าน 7 วัน และคนในบ้านต้องกักตัวด้วย\" เป็นกฎเก่า",
+      "shareText": "CDC ไต้หวัน: การบังคับแยกกักตัว 7 วันสำหรับผู้ติดเชื้อและการกักตัวของคนในบ้านถูกยกเลิกเมื่อวันที่ 20 มีนาคม 2023 ปัจจุบันผู้ที่มีอาการเล็กน้อยไม่ต้องแยกกักตัว หากมีอาการให้สวมหน้ากากอนามัย พักผ่อนที่บ้านเมื่อป่วย และหลีกเลี่ยงการเยี่ยมผู้สูงอายุ ผู้ที่มีความเสี่ยงสูงควรไปพบแพทย์โดยเร็ว",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

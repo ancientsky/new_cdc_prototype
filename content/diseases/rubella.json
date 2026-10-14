@@ -157,5 +157,291 @@
   "professional": {
     "specimen": "出疹 5 日內採咽喉擦拭液與尿液進行 RT-PCR，並採血清檢測 IgM；孕婦需追蹤 IgG avidity。",
     "notifyNote": "第二類法定傳染病，應於 24 小時內通報；先天性德國麻疹症候群為第三類，應於一週內通報。"
+  },
+  "i18n": {
+    "en": {
+      "title": "Rubella",
+      "summary": "Rubella causes mild symptoms, but infection in early pregnancy can cause congenital rubella syndrome in the baby. Women of childbearing age should confirm they are immune and, if necessary, get MMR vaccine before becoming pregnant.",
+      "keyFacts": {
+        "incubation": "14–21 days (average 16–18 days)",
+        "symptoms": "Mild fever, swollen lymph nodes behind the ears and in the neck, red rash for about 3 days",
+        "transmission": "Droplets; mother to baby (vertical)",
+        "prevention": "MMR vaccine; women of childbearing age should confirm antibodies before pregnancy",
+        "notify": "Within 24 hours"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "have a fever with a red rash during pregnancy",
+              "title": "Tell your prenatal doctor as soon as possible",
+              "text": "See a doctor as soon as possible and tell your prenatal doctor, so that rubella infection can be assessed."
+            },
+            {
+              "if": "are planning to become pregnant",
+              "title": "Check rubella antibodies before pregnancy",
+              "text": "Have your antibodies tested at a pre-marital or pre-pregnancy health check. If you are not immune, avoid becoming pregnant for 4 weeks after MMR vaccination."
+            },
+            {
+              "if": "have been diagnosed with rubella",
+              "title": "Avoid pregnant women for 7 days after the rash appears",
+              "text": "Rest at home and especially avoid contact with pregnant women until 7 days after the rash appears."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "Symptoms are usually mild: low-grade fever, fatigue and **swollen lymph nodes behind the ears, at the base of the skull and in the neck**, followed by a pale red flat-and-raised rash that spreads from the face to the whole body and fades in about 3 days. Adults may have joint pain. About half of infected people have no obvious symptoms.\n\nIf a woman is infected in the first 3 months of pregnancy, the baby is at high risk of **congenital rubella syndrome**: cataracts, congenital heart disease, hearing loss, developmental delay and more.",
+          "warning": "Pregnant women who have suspected symptoms or have been in contact with a patient should contact their prenatal doctor immediately."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "It spreads through **droplets** or contact with a patient’s nose and throat secretions. People are infectious from 7 days before to 7 days after the rash appears. A pregnant woman who is infected can pass the virus to the baby through the **placenta**; infants with congenital rubella syndrome can shed the virus for up to 1 year."
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "- Give young children 2 doses of MMR vaccine on schedule.\n- **Women of childbearing age** should have their rubella antibodies tested before marriage or pregnancy; those who are not immune should get MMR and avoid becoming pregnant for 4 weeks afterwards.\n- Pregnant women who test negative for rubella antibodies at prenatal check-ups should get MMR (publicly funded) as soon as possible after delivery.\n- Pregnant women must not receive MMR."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "There is no specific drug; treatment is mainly for symptoms. For people confirmed to be infected in early pregnancy, the doctor will explain the risks to the baby and provide counselling."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "Rubella is prevented with **MMR vaccine** (combined measles, mumps and rubella vaccine). The publicly funded schedule is 1 dose at 12 months of age and 1 dose from 5 years of age until entry into elementary school. Postpartum women who are rubella antibody negative are offered publicly funded vaccination."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Recent cases in Taiwan are mostly imported, and congenital rubella syndrome has become very rare."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Bệnh rubella (sởi Đức)",
+      "summary": "Rubella có triệu chứng nhẹ, nhưng phụ nữ mang thai nhiễm bệnh trong giai đoạn đầu thai kỳ có thể khiến thai nhi mắc hội chứng rubella bẩm sinh. Phụ nữ trong độ tuổi sinh sản nên xác nhận mình có miễn dịch, và khi cần thì tiêm vắc-xin MMR trước khi mang thai.",
+      "keyFacts": {
+        "incubation": "14–21 ngày (trung bình 16–18 ngày)",
+        "symptoms": "Sốt nhẹ, sưng hạch sau tai và ở cổ, phát ban đỏ khoảng 3 ngày",
+        "transmission": "Giọt bắn; từ mẹ sang con (lây dọc)",
+        "prevention": "Tiêm vắc-xin MMR; phụ nữ trong độ tuổi sinh sản xác nhận kháng thể trước khi mang thai",
+        "notify": "Trong vòng 24 giờ"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "bị sốt kèm phát ban đỏ trong thời gian mang thai",
+              "title": "Báo ngay cho bác sĩ khám thai",
+              "text": "Hãy đi khám sớm nhất có thể và báo cho bác sĩ khám thai để đánh giá có phải nhiễm rubella hay không."
+            },
+            {
+              "if": "đang chuẩn bị mang thai",
+              "title": "Kiểm tra kháng thể rubella trước khi mang thai",
+              "text": "Xét nghiệm kháng thể khi khám sức khỏe trước hôn nhân hoặc trước khi mang thai; nếu chưa có miễn dịch, sau khi tiêm MMR cần tránh mang thai trong vòng 4 tuần."
+            },
+            {
+              "if": "được chẩn đoán mắc rubella",
+              "title": "Tránh tiếp xúc với phụ nữ mang thai trong 7 ngày sau khi phát ban",
+              "text": "Nghỉ ngơi ở nhà, đặc biệt tránh tiếp xúc với phụ nữ mang thai cho đến 7 ngày sau khi phát ban."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Triệu chứng thường nhẹ: sốt nhẹ, mệt mỏi, **sưng hạch sau tai, dưới chẩm và ở cổ**, sau đó xuất hiện ban dạng dát sẩn màu đỏ nhạt, lan từ mặt ra khắp người và mờ dần sau khoảng 3 ngày. Người lớn có thể đau khớp. Khoảng một nửa số người nhiễm không có triệu chứng rõ rệt.\n\nPhụ nữ mang thai nhiễm bệnh trong 3 tháng đầu thai kỳ thì thai nhi có nguy cơ cao mắc **hội chứng rubella bẩm sinh**: đục thủy tinh thể, bệnh tim bẩm sinh, khiếm thính, chậm phát triển, v.v.",
+          "warning": "Phụ nữ mang thai có triệu chứng nghi ngờ hoặc đã tiếp xúc với bệnh nhân cần liên hệ ngay với bác sĩ khám thai."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền như thế nào",
+          "markdown": "Bệnh lây qua **giọt bắn** hoặc tiếp xúc với dịch tiết mũi họng của người bệnh; có khả năng lây từ 7 ngày trước đến 7 ngày sau khi phát ban. Phụ nữ mang thai nhiễm bệnh có thể truyền virus cho thai nhi qua **nhau thai**; trẻ sơ sinh mắc hội chứng rubella bẩm sinh có thể thải virus tới 1 năm."
+        },
+        {
+          "key": "prevention",
+          "heading": "Cách phòng ngừa",
+          "markdown": "- Trẻ nhỏ tiêm đủ 2 liều vắc-xin MMR đúng lịch.\n- **Phụ nữ trong độ tuổi sinh sản** xét nghiệm kháng thể rubella trước hôn nhân hoặc trước khi mang thai; người chưa có miễn dịch cần tiêm MMR và tránh mang thai trong vòng 4 tuần sau khi tiêm.\n- Phụ nữ mang thai có kháng thể rubella âm tính khi khám thai thì tiêm MMR (miễn phí bằng kinh phí nhà nước) càng sớm càng tốt sau sinh.\n- Phụ nữ mang thai không được tiêm MMR."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Không có thuốc đặc trị, chủ yếu điều trị triệu chứng. Với người được xác định nhiễm bệnh ở giai đoạn đầu thai kỳ, bác sĩ sẽ giải thích nguy cơ đối với thai nhi và tư vấn."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "Phòng rubella bằng **vắc-xin MMR** (vắc-xin phối hợp sởi, quai bị, rubella); lịch tiêm miễn phí bằng kinh phí nhà nước là 1 liều khi tròn 12 tháng tuổi và 1 liều từ khi tròn 5 tuổi đến trước khi vào tiểu học. Phụ nữ sau sinh có kháng thể rubella âm tính được tiêm miễn phí bằng kinh phí nhà nước."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện tại và thống kê",
+          "markdown": "Các ca bệnh trong nước những năm gần đây chủ yếu nhập từ nước ngoài, hội chứng rubella bẩm sinh đã rất hiếm gặp."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Rubella (campak Jerman)",
+      "summary": "Rubella menimbulkan gejala ringan, tetapi ibu hamil yang terinfeksi pada awal kehamilan dapat menyebabkan janin mengalami sindrom rubella kongenital. Perempuan usia subur sebaiknya memastikan dirinya memiliki kekebalan, dan bila perlu menerima vaksin MMR sebelum hamil.",
+      "keyFacts": {
+        "incubation": "14–21 hari (rata-rata 16–18 hari)",
+        "symptoms": "Demam ringan, pembengkakan kelenjar getah bening di belakang telinga dan leher, ruam merah sekitar 3 hari",
+        "transmission": "Percikan (droplet); dari ibu ke bayi (vertikal)",
+        "prevention": "Vaksin MMR; perempuan usia subur memastikan antibodi sebelum hamil",
+        "notify": "Dalam 24 jam"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Apa yang harus dilakukan",
+          "cards": [
+            {
+              "if": "mengalami demam disertai ruam merah selama kehamilan",
+              "title": "Segera beri tahu dokter kandungan",
+              "text": "Segera berobat dan beri tahu dokter yang memeriksa kehamilan Anda untuk menilai apakah ini infeksi rubella."
+            },
+            {
+              "if": "merencanakan kehamilan",
+              "title": "Periksa antibodi rubella sebelum hamil",
+              "text": "Periksakan antibodi saat pemeriksaan kesehatan pranikah atau prakehamilan; jika tidak memiliki kekebalan, hindari kehamilan selama 4 minggu setelah menerima MMR."
+            },
+            {
+              "if": "didiagnosis menderita rubella",
+              "title": "Hindari kontak dengan ibu hamil selama 7 hari setelah ruam muncul",
+              "text": "Beristirahat di rumah, terutama hindari kontak dengan ibu hamil hingga 7 hari setelah ruam muncul."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Gejalanya biasanya ringan: demam derajat rendah, lelah, dan **pembengkakan kelenjar getah bening di belakang telinga, bawah tulang kepala belakang, dan leher**, lalu muncul ruam makulopapular merah muda yang menyebar dari wajah ke seluruh tubuh dan menghilang sekitar 3 hari. Orang dewasa dapat mengalami nyeri sendi. Sekitar separuh orang yang terinfeksi tidak bergejala jelas.\n\nIbu hamil yang terinfeksi pada 3 bulan pertama kehamilan membuat janin berisiko tinggi mengalami **sindrom rubella kongenital**: katarak, penyakit jantung bawaan, gangguan pendengaran, keterlambatan perkembangan, dan lain-lain.",
+          "warning": "Ibu hamil yang mengalami gejala yang dicurigai atau pernah kontak dengan penderita harus segera menghubungi dokter kandungan."
+        },
+        {
+          "key": "transmission",
+          "heading": "Cara penularan",
+          "markdown": "Menular melalui **percikan (droplet)** atau kontak dengan sekret hidung dan tenggorokan penderita; menular sejak 7 hari sebelum hingga 7 hari setelah ruam muncul. Ibu hamil yang terinfeksi dapat menularkan virus ke janin melalui **plasenta**; bayi dengan sindrom rubella kongenital dapat mengeluarkan virus hingga 1 tahun."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- Anak kecil menerima 2 dosis vaksin MMR sesuai jadwal.\n- **Perempuan usia subur** memeriksakan antibodi rubella sebelum menikah atau sebelum hamil; yang tidak memiliki kekebalan menerima MMR dan menghindari kehamilan selama 4 minggu setelahnya.\n- Ibu hamil dengan antibodi rubella negatif pada pemeriksaan kehamilan menerima MMR (dibiayai pemerintah) sesegera mungkin setelah melahirkan.\n- Ibu hamil tidak boleh menerima MMR."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis dan pengobatan",
+          "markdown": "Tidak ada obat khusus; pengobatan terutama untuk meredakan gejala. Bagi yang terkonfirmasi terinfeksi pada awal kehamilan, dokter akan menjelaskan risiko bagi janin dan memberikan konseling."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaksin",
+          "markdown": "Rubella dicegah dengan **vaksin MMR** (vaksin kombinasi campak, gondongan, dan rubella); jadwal yang dibiayai pemerintah adalah 1 dosis pada usia genap 12 bulan dan 1 dosis sejak usia genap 5 tahun hingga sebelum masuk sekolah dasar. Perempuan pascapersalinan dengan antibodi rubella negatif mendapat vaksinasi yang dibiayai pemerintah."
+        },
+        {
+          "key": "situation",
+          "heading": "Situasi terkini dan statistik",
+          "markdown": "Kasus di dalam negeri beberapa tahun terakhir sebagian besar merupakan kasus impor, dan sindrom rubella kongenital sudah sangat jarang."
+        },
+        {
+          "key": "faq",
+          "heading": "Pertanyaan umum"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "หัดเยอรมัน (รูเบลลา)",
+      "summary": "หัดเยอรมันมีอาการไม่รุนแรง แต่หญิงตั้งครรภ์ที่ติดเชื้อในช่วงต้นของการตั้งครรภ์อาจทำให้ทารกเป็นกลุ่มอาการหัดเยอรมันแต่กำเนิด สตรีวัยเจริญพันธุ์ควรตรวจให้แน่ใจว่ามีภูมิคุ้มกัน และหากจำเป็นให้ฉีดวัคซีน MMR ก่อนตั้งครรภ์",
+      "keyFacts": {
+        "incubation": "14–21 วัน (เฉลี่ย 16–18 วัน)",
+        "symptoms": "ไข้ต่ำ ต่อมน้ำเหลืองหลังหูและที่คอโต ผื่นแดงประมาณ 3 วัน",
+        "transmission": "ละอองฝอย จากแม่สู่ลูก (ถ่ายทอดแนวดิ่ง)",
+        "prevention": "ฉีดวัคซีน MMR สตรีวัยเจริญพันธุ์ตรวจยืนยันภูมิคุ้มกันก่อนตั้งครรภ์",
+        "notify": "ภายใน 24 ชั่วโมง"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "ควรทำอย่างไร",
+          "cards": [
+            {
+              "if": "มีไข้ร่วมกับผื่นแดงระหว่างตั้งครรภ์",
+              "title": "แจ้งแพทย์ฝากครรภ์โดยเร็วที่สุด",
+              "text": "โปรดไปพบแพทย์โดยเร็วที่สุดและแจ้งแพทย์ฝากครรภ์ เพื่อประเมินว่าติดเชื้อหัดเยอรมันหรือไม่"
+            },
+            {
+              "if": "เตรียมตัวจะตั้งครรภ์",
+              "title": "ตรวจภูมิคุ้มกันหัดเยอรมันก่อนตั้งครรภ์",
+              "text": "ตรวจภูมิคุ้มกันเมื่อตรวจสุขภาพก่อนแต่งงานหรือก่อนตั้งครรภ์ หากไม่มีภูมิคุ้มกัน หลังฉีด MMR ให้หลีกเลี่ยงการตั้งครรภ์ภายใน 4 สัปดาห์"
+            },
+            {
+              "if": "ได้รับการวินิจฉัยว่าเป็นหัดเยอรมัน",
+              "title": "หลีกเลี่ยงหญิงตั้งครรภ์ภายใน 7 วันหลังผื่นขึ้น",
+              "text": "พักผ่อนอยู่บ้าน โดยเฉพาะหลีกเลี่ยงการสัมผัสหญิงตั้งครรภ์จนถึง 7 วันหลังผื่นขึ้น"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "อาการมักไม่รุนแรง ได้แก่ ไข้ต่ำ อ่อนเพลีย และ**ต่อมน้ำเหลืองหลังหู ท้ายทอย และที่คอโต** จากนั้นมีผื่นแบนและนูนสีแดงอ่อนกระจายจากใบหน้าไปทั่วตัว และจางหายภายในประมาณ 3 วัน ผู้ใหญ่อาจปวดข้อ ผู้ติดเชื้อประมาณครึ่งหนึ่งไม่มีอาการชัดเจน\n\nหญิงตั้งครรภ์ที่ติดเชื้อใน 3 เดือนแรกของการตั้งครรภ์ ทารกมีความเสี่ยงสูงที่จะเป็น**กลุ่มอาการหัดเยอรมันแต่กำเนิด** ได้แก่ ต้อกระจก โรคหัวใจแต่กำเนิด การได้ยินบกพร่อง พัฒนาการล่าช้า เป็นต้น",
+          "warning": "หญิงตั้งครรภ์ที่มีอาการเข้าข่ายสงสัยหรือสัมผัสผู้ป่วย ควรติดต่อแพทย์ฝากครรภ์ทันที"
+        },
+        {
+          "key": "transmission",
+          "heading": "ติดต่อได้อย่างไร",
+          "markdown": "ติดต่อผ่าน**ละอองฝอย**หรือการสัมผัสสารคัดหลั่งจากจมูกและคอหอยของผู้ป่วย แพร่เชื้อได้ตั้งแต่ 7 วันก่อนผื่นขึ้นจนถึง 7 วันหลังผื่นขึ้น หญิงตั้งครรภ์ที่ติดเชื้อสามารถแพร่ไวรัสสู่ทารกผ่าน**รก** ทารกที่เป็นกลุ่มอาการหัดเยอรมันแต่กำเนิดสามารถขับไวรัสออกมาได้นานถึง 1 ปี"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- เด็กเล็กฉีดวัคซีน MMR 2 เข็มตามตารางที่กำหนด\n- **สตรีวัยเจริญพันธุ์**ตรวจภูมิคุ้มกันหัดเยอรมันก่อนแต่งงานหรือก่อนตั้งครรภ์ ผู้ที่ไม่มีภูมิคุ้มกันให้ฉีด MMR และหลีกเลี่ยงการตั้งครรภ์ภายใน 4 สัปดาห์หลังฉีด\n- หญิงตั้งครรภ์ที่ตรวจพบภูมิคุ้มกันหัดเยอรมันเป็นลบระหว่างฝากครรภ์ ให้ฉีด MMR (รัฐสนับสนุนค่าใช้จ่าย) โดยเร็วที่สุดหลังคลอด\n- หญิงตั้งครรภ์ห้ามฉีด MMR"
+        },
+        {
+          "key": "treatment",
+          "heading": "การวินิจฉัยและการรักษา",
+          "markdown": "ไม่มียาเฉพาะ รักษาตามอาการเป็นหลัก สำหรับผู้ที่ยืนยันว่าติดเชื้อในช่วงต้นของการตั้งครรภ์ แพทย์จะอธิบายความเสี่ยงต่อทารกและให้คำปรึกษา"
+        },
+        {
+          "key": "vaccine",
+          "heading": "วัคซีน",
+          "markdown": "ป้องกันหัดเยอรมันด้วย**วัคซีน MMR** (วัคซีนรวมหัด คางทูม หัดเยอรมัน) ตารางที่รัฐสนับสนุนค่าใช้จ่ายคือ 1 เข็มเมื่ออายุครบ 12 เดือน และ 1 เข็มตั้งแต่อายุครบ 5 ปีจนถึงก่อนเข้าชั้นประถมศึกษา สตรีหลังคลอดที่ตรวจพบภูมิคุ้มกันหัดเยอรมันเป็นลบมีสิทธิ์ฉีดวัคซีนโดยรัฐสนับสนุนค่าใช้จ่าย"
+        },
+        {
+          "key": "situation",
+          "heading": "สถานการณ์ปัจจุบันและสถิติ",
+          "markdown": "ผู้ป่วยในประเทศช่วงไม่กี่ปีที่ผ่านมาส่วนใหญ่ติดเชื้อมาจากต่างประเทศ และกลุ่มอาการหัดเยอรมันแต่กำเนิดพบได้น้อยมากแล้ว"
+        },
+        {
+          "key": "faq",
+          "heading": "คำถามที่พบบ่อย"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

@@ -434,6 +434,17 @@ export function emitApi(fullSite, write) {
   put('v1/answer/datasets.json', forAnswer(published(c.datasets).map(strip)), {}, {}, '答案引擎用：資料集（不含譯文；完整版見 datasets.json）');
   put('v1/answer/media.json', forAnswer([...published(c.media)].sort(byPubDesc).map(strip)), {}, {}, '答案引擎用：影音（不含譯文；完整版見 media.json）');
   put('v1/answer/services.json', forAnswer([...published(c.services)].sort((a, b) => a.id.localeCompare(b.id)).map(strip)), {}, {}, '答案引擎用：申請服務（不含譯文；完整版見 services.json）');
+  // 第五十輪：補譯後 FAQ、疫苗、澄清也帶了大量機器譯文。FAQ 與疫苗在 data.js 只取引擎欄位，整份去掉譯文；
+  // 澄清的譯文引擎真的會用（謠言查證分支顯示外語澄清），所以只留「已審閱」語言的譯文——澄清是一級內容，機器初稿不得顯示（i18n.md §8）。
+  const reviewedOnly = (x) => {
+    if (!x.i18n) return x;
+    const i18n = Object.fromEntries(Object.entries(x.i18n).filter(([l]) => x.languages?.[l]?.status === 'reviewed'));
+    const { i18n: _i, ...rest } = x;
+    return Object.keys(i18n).length ? { ...rest, i18n } : rest;
+  };
+  put('v1/answer/faq.json', forAnswer(published(c.faq).map(strip)), {}, {}, '答案引擎用：Q&A（不含譯文；完整版見 faq.json）');
+  put('v1/answer/vaccines.json', forAnswer(published(c.vaccines).map(strip)), {}, {}, '答案引擎用：疫苗頁（不含譯文；完整版見 vaccines.json）');
+  put('v1/answer/clarifications.json', published(c.clarifications).map(strip).map(reviewedOnly), {}, {}, '答案引擎用：謠言澄清（只含已審閱語言的譯文；完整版見 clarifications.json）');
   const pubs = [...published(c.publications)].sort((a, b) => (a.series ?? '').localeCompare(b.series ?? '') || String(b.volume ?? '').localeCompare(String(a.volume ?? ''), undefined, { numeric: true }) || String(b.issue ?? '').localeCompare(String(a.issue ?? ''), undefined, { numeric: true }) || byPubDesc(a, b));
   const seriesMap = new Map();
   for (const p of pubs) {

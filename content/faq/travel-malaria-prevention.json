@@ -65,5 +65,43 @@
   "answerMarkdown": "前往撒哈拉以南非洲等瘧疾流行地區，多數情況建議使用**預防用藥**，但種類與服法需由旅遊醫學門診醫師依目的地、停留時間與個人健康狀況評估開立。\n\n預防用藥通常需在出發前開始服用，並在返國後持續服用一段時間。同時仍要做好夜間防蚊。返國一年內若發燒，請就醫並告知旅遊史。",
   "structured": {
     "feverWatchMonths": 12
+  },
+  "i18n": {
+    "en": {
+      "question": "Do I need to take malaria prevention medicine when going to Africa?",
+      "answerMarkdown": "If you are travelling to areas where malaria is common, such as sub-Saharan Africa, **preventive medicine** is recommended in most cases, but the type and how to take it must be assessed and prescribed by a travel clinic doctor based on your destination, length of stay and personal health.\n\nPreventive medicine usually has to be started before departure and continued for a period after returning. You must still protect yourself from mosquito bites at night. If you develop a fever within a year of returning, see a doctor and tell them your travel history.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "question": "アフリカへ行くとき、マラリアの予防薬を飲む必要がありますか？",
+      "answerMarkdown": "サハラ以南のアフリカなど、マラリアの流行地域へ行く場合は、多くの場合**予防薬の使用**をおすすめします。ただし、薬の種類と飲み方は、渡航医学外来の医師が、目的地、滞在期間、個人の健康状態をもとに評価して処方します。\n\n予防薬は、通常、出発前から飲み始め、帰国後もしばらく飲み続ける必要があります。夜間の蚊よけも引き続き必要です。帰国後1年以内に発熱したときは、受診して旅行歴を伝えてください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Kailangan bang uminom ng gamot na pang-iwas sa malaria kapag pupunta sa Africa?",
+      "answerMarkdown": "Kapag pupunta sa mga lugar na may malaria, tulad ng sub-Saharan Africa, sa karamihan ng kaso ay inirerekomenda ang **gamot na pang-iwas**, ngunit ang uri at paraan ng pag-inom ay kailangang suriin at ireseta ng doktor sa travel medicine clinic ayon sa destinasyon, tagal ng pananatili, at kalusugan ng bawat tao.\n\nKaraniwang kailangang simulan ang gamot na pang-iwas bago umalis at ipagpatuloy sa loob ng ilang panahon pagkabalik. Kailangan pa ring umiwas sa kagat ng lamok sa gabi. Kung magkaroon ng lagnat sa loob ng isang taon pagkabalik, magpatingin sa doktor at sabihin ang kasaysayan ng paglalakbay.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Đi châu Phi có cần uống thuốc dự phòng sốt rét không?",
+      "answerMarkdown": "Khi đến các vùng có dịch sốt rét như châu Phi cận Sahara, trong hầu hết trường hợp được khuyến cáo sử dụng **thuốc dự phòng**, nhưng loại thuốc và cách dùng cần do bác sĩ phòng khám y học du lịch đánh giá và kê đơn dựa trên điểm đến, thời gian lưu trú và tình trạng sức khỏe cá nhân.\n\nThuốc dự phòng thường phải bắt đầu uống trước khi khởi hành và tiếp tục uống một thời gian sau khi về nước. Đồng thời vẫn phải phòng muỗi đốt vào ban đêm. Nếu bị sốt trong vòng một năm sau khi về nước, hãy đi khám và cho bác sĩ biết tiền sử đi lại.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apakah perlu minum obat pencegah malaria saat pergi ke Afrika?",
+      "answerMarkdown": "Jika bepergian ke daerah endemis malaria seperti Afrika sub-Sahara, dalam sebagian besar kasus dianjurkan menggunakan **obat pencegahan**, tetapi jenis dan cara minumnya harus dinilai dan diresepkan oleh dokter klinik kedokteran perjalanan berdasarkan tujuan, lama tinggal, dan kondisi kesehatan pribadi.\n\nObat pencegahan biasanya harus mulai diminum sebelum berangkat dan dilanjutkan selama beberapa waktu setelah pulang. Anda tetap harus melindungi diri dari gigitan nyamuk pada malam hari. Jika demam dalam waktu satu tahun setelah pulang, berobatlah dan sampaikan riwayat perjalanan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ไปแอฟริกาต้องกินยาป้องกันมาลาเรียหรือไม่?",
+      "answerMarkdown": "การเดินทางไปพื้นที่ที่มีมาลาเรียระบาด เช่น แอฟริกาใต้สะฮารา ส่วนใหญ่แนะนำให้ใช้**ยาป้องกัน** แต่ชนิดและวิธีกินต้องให้แพทย์ที่คลินิกเวชศาสตร์การเดินทางประเมินและสั่งจ่ายตามจุดหมายปลายทาง ระยะเวลาที่พำนัก และสภาพสุขภาพของแต่ละคน\n\nยาป้องกันมักต้องเริ่มกินก่อนออกเดินทาง และกินต่อเนื่องไปอีกระยะหนึ่งหลังกลับ นอกจากนี้ยังต้องป้องกันยุงกัดในเวลากลางคืน หากมีไข้ภายในหนึ่งปีหลังกลับ ให้ไปพบแพทย์และแจ้งประวัติการเดินทาง",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

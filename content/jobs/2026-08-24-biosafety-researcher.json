@@ -99,5 +99,13 @@
       "machineReadable": false
     }
   ],
-  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。"
+  "note": "聯絡電話為疾管署總機，分機與報名信箱以正式簡章為準（本原型為示意，不放承辦人姓名）；薪資待遇為示意文字，實際依核定薪點折算。",
+  "i18n": {
+    "en": {
+      "title": "Division of Infection Control and Biosafety: one researcher wanted (biosafety)",
+      "summary": "The Division of Infection Control and Biosafety is recruiting one researcher to handle laboratory biosafety management, inspections and training; the written and oral examinations are under way, and the results are expected to be announced on 15 October 2026.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

@@ -64,5 +64,43 @@
   "structured": {
     "doses": 3,
     "firstDoseWithinHours": 24
+  },
+  "i18n": {
+    "en": {
+      "question": "When should newborns get the hepatitis B vaccine?",
+      "answerMarkdown": "The government-funded hepatitis B vaccine is given in 3 doses: **dose 1 as soon as possible within 24 hours of birth**, dose 2 at 1 month of age, and dose 3 at 6 months of age.\n\nIf the mother tests positive for hepatitis B surface antigen (HBsAg), the newborn also needs 1 dose of hepatitis B immunoglobulin (HBIG) as soon as possible within 24 hours of birth, in addition to the vaccine, and antibody follow-up testing at 12 months of age.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "question": "新生児のB型肝炎ワクチンは、いつ接種しますか？",
+      "answerMarkdown": "公費のB型肝炎ワクチンは全部で3回です。**生後24時間以内にできるだけ早く1回目**、生後満1か月で2回目、生後満6か月で3回目を接種します。\n\n母親がB型肝炎表面抗原（HBsAg）陽性の場合、新生児はワクチンに加えて、生後24時間以内にできるだけ早くB型肝炎免疫グロブリン（HBIG）を1回注射し、12か月になったときに抗体を確認する検査を受けます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Kailan dapat ibigay ang bakuna sa hepatitis B sa bagong silang na sanggol?",
+      "answerMarkdown": "Ang bakuna sa hepatitis B na pinondohan ng gobyerno ay may 3 dose: **ang unang dose ay ibinibigay sa lalong madaling panahon sa loob ng 24 oras mula sa pagsilang**, ang ikalawang dose pagtungtong ng 1 buwan, at ang ikatlong dose pagtungtong ng 6 na buwan.\n\nKung ang ina ay positibo sa hepatitis B surface antigen (HBsAg), bukod sa bakuna, ang sanggol ay kailangan ding turukan ng 1 dose ng hepatitis B immunoglobulin (HBIG) sa lalong madaling panahon sa loob ng 24 oras mula sa pagsilang, at susuriin ang antibody sa edad na 12 buwan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Trẻ sơ sinh tiêm vắc-xin viêm gan B khi nào?",
+      "answerMarkdown": "Vắc-xin viêm gan B do nhà nước chi trả gồm 3 liều: **liều 1 tiêm càng sớm càng tốt trong vòng 24 giờ sau sinh**, liều 2 khi trẻ tròn 1 tháng tuổi, liều 3 khi trẻ tròn 6 tháng tuổi.\n\nNếu người mẹ dương tính với kháng nguyên bề mặt viêm gan B (HBsAg), ngoài vắc-xin, trẻ sơ sinh còn cần được tiêm 1 liều globulin miễn dịch viêm gan B (HBIG) càng sớm càng tốt trong vòng 24 giờ sau sinh, và được theo dõi kháng thể khi trẻ 12 tháng tuổi.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Kapan bayi baru lahir mendapat vaksin hepatitis B?",
+      "answerMarkdown": "Vaksin hepatitis B yang ditanggung pemerintah diberikan 3 dosis: **dosis pertama sesegera mungkin dalam 24 jam setelah lahir**, dosis kedua saat bayi berusia genap 1 bulan, dan dosis ketiga saat genap 6 bulan.\n\nJika ibu positif antigen permukaan hepatitis B (HBsAg), selain vaksin, bayi baru lahir juga harus disuntik 1 dosis imunoglobulin hepatitis B (HBIG) sesegera mungkin dalam 24 jam setelah lahir, dan antibodinya diperiksa saat bayi berusia 12 bulan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ทารกแรกเกิดควรฉีดวัคซีนไวรัสตับอักเสบบีเมื่อไร?",
+      "answerMarkdown": "วัคซีนไวรัสตับอักเสบบีที่รัฐออกค่าใช้จ่ายให้มีทั้งหมด 3 เข็ม: **เข็มที่ 1 ฉีดโดยเร็วที่สุดภายใน 24 ชั่วโมงหลังคลอด** เข็มที่ 2 เมื่ออายุครบ 1 เดือน และเข็มที่ 3 เมื่ออายุครบ 6 เดือน\n\nหากมารดามีผลบวกต่อแอนติเจนพื้นผิวของไวรัสตับอักเสบบี (HBsAg) ทารกแรกเกิดนอกจากได้รับวัคซีนแล้ว ยังต้องฉีดอิมมูโนโกลบูลินไวรัสตับอักเสบบี (HBIG) 1 เข็มโดยเร็วที่สุดภายใน 24 ชั่วโมงหลังคลอด และตรวจติดตามภูมิคุ้มกันเมื่ออายุ 12 เดือน",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

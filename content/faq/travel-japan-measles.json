@@ -77,6 +77,36 @@
     "en": {
       "question": "Should I worry about measles when travelling to Japan?",
       "answerMarkdown": "Since 11 May 2026 Japan has been at **Level 1 (Watch)** for measles, meaning there is measles activity and usual precautions apply.\n\nBefore departure, check your measles immunity: if you were **born in 1966 or later** and have not had 2 doses or are unsure, see a travel clinic 2–4 weeks before departure to be assessed for one self-paid MMR dose. Infants under 1 should not travel there unless necessary. If you develop fever or rash within 18 days of return, wear a mask, see a doctor and mention your travel."
+    },
+    "ja": {
+      "question": "日本へ旅行するとき、麻疹を心配する必要がありますか？",
+      "answerMarkdown": "日本は、2026年5月11日から麻疹の**旅行疫情建議（旅行者向け感染症情報）で第1級（注意）**に指定されました。これは、現地で麻疹の流行があることを意味します。一般的な予防策を守ってください。\n\n出発前に、自分が麻疹の免疫を持っているか確認してください。**1966年（含む）以降に生まれ**、2回の接種を完了していない人、または不明な人は、出国の2～4週間前に渡航医学外来を受診し、自費でMMRワクチン1回の接種を検討することをおすすめします。1歳未満の乳児は、必要な場合を除き、渡航をおすすめしません。帰国後18日以内に発熱や発疹が出たときは、マスクをして受診し、旅行歴を伝えてください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Kailangan bang mag-alala sa tigdas kapag naglalakbay sa Japan?",
+      "answerMarkdown": "Mula Mayo 11, 2026, ang Japan ay nasa **Level 1 (Watch) ng travel health notice** para sa tigdas, na nangangahulugang may pagkalat ng tigdas doon; sundin ang mga karaniwang pag-iingat.\n\nBago umalis, tiyaking may immunity kayo sa tigdas: kung **ipinanganak noong 1966 o mas bago pa** at hindi pa nakakumpleto ng 2 dose o hindi sigurado, inirerekomendang magpunta sa travel medicine clinic 2–4 na linggo bago umalis para suriin kung maaari kayong magpabakuna ng 1 dose ng MMR nang sariling gastos. Hindi inirerekomenda ang paglalakbay ng mga sanggol na wala pang 1 taong gulang maliban kung kinakailangan. Kung magkaroon ng lagnat o butlig sa loob ng 18 araw pagbalik, magsuot ng mask, magpatingin sa doktor, at sabihin ang kasaysayan ng paglalakbay.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Đi du lịch Nhật Bản có cần lo ngại bệnh sởi không?",
+      "answerMarkdown": "Từ ngày 11 tháng 5 năm 2026, Nhật Bản được xếp vào **khuyến cáo dịch bệnh du lịch cấp 1 (Chú ý)** đối với bệnh sởi, nghĩa là tại đó có dịch sởi; hãy tuân thủ các biện pháp phòng ngừa thông thường.\n\nTrước khi khởi hành, hãy xác nhận bạn có miễn dịch với bệnh sởi hay không: người **sinh từ năm 1966 trở về sau (bao gồm năm 1966)**, chưa hoàn thành 2 liều hoặc không chắc chắn, được khuyến cáo đến phòng khám y học du lịch 2–4 tuần trước khi xuất cảnh để được đánh giá tiêm 1 liều vắc-xin MMR tự chi trả. Trẻ dưới 1 tuổi không được khuyến cáo đến đó trừ khi thật cần thiết. Nếu trong vòng 18 ngày sau khi về nước xuất hiện sốt hoặc phát ban, hãy đeo khẩu trang đi khám và cho biết tiền sử đi lại.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apakah perlu khawatir campak saat bepergian ke Jepang?",
+      "answerMarkdown": "Sejak 11 Mei 2026, Jepang dimasukkan ke dalam **Peringatan Wabah Perjalanan Tingkat 1 (Perhatian)** untuk campak, yang berarti ada wabah campak di sana; patuhi tindakan pencegahan umum.\n\nSebelum berangkat, pastikan Anda memiliki kekebalan terhadap campak: bagi yang **lahir pada tahun 1966 atau setelahnya** dan belum menyelesaikan 2 dosis atau tidak yakin, dianjurkan mengunjungi klinik kedokteran perjalanan 2–4 minggu sebelum berangkat untuk dinilai kelayakannya menerima 1 dosis vaksin MMR dengan biaya sendiri. Bayi di bawah 1 tahun tidak dianjurkan bepergian ke sana kecuali sangat perlu. Jika muncul demam atau ruam dalam 18 hari setelah pulang, kenakan masker, berobat, dan sampaikan riwayat perjalanan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "เดินทางไปญี่ปุ่นต้องกังวลเรื่องโรคหัดหรือไม่?",
+      "answerMarkdown": "ตั้งแต่วันที่ 11 พฤษภาคม 2026 ญี่ปุ่นถูกจัดเป็น**ประกาศเตือนโรคระบาดสำหรับการเดินทางระดับ 1 (เฝ้าระวัง)** สำหรับโรคหัด หมายความว่ามีการระบาดของโรคหัดในพื้นที่ ขอให้ปฏิบัติตามมาตรการป้องกันทั่วไป\n\nก่อนเดินทาง โปรดตรวจสอบว่าคุณมีภูมิคุ้มกันต่อโรคหัดหรือไม่: ผู้ที่**เกิดตั้งแต่ปี 1966 เป็นต้นไป (รวมปี 1966)** และยังฉีดไม่ครบ 2 เข็มหรือไม่แน่ใจ แนะนำให้ไปคลินิกเวชศาสตร์การเดินทางก่อนเดินทาง 2–4 สัปดาห์ เพื่อประเมินการฉีดวัคซีน MMR 1 เข็มโดยชำระค่าใช้จ่ายเอง ไม่แนะนำให้ทารกอายุต่ำกว่า 1 ปีเดินทางไปที่นั่น เว้นแต่จำเป็น หากมีไข้หรือผื่นขึ้นภายใน 18 วันหลังกลับถึงประเทศ ให้สวมหน้ากากอนามัยไปพบแพทย์และแจ้งประวัติการเดินทาง",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

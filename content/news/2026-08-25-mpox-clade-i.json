@@ -65,5 +65,14 @@
   "legacyUrls": [
     "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
   ],
-  "bodyMarkdown": "疾病管制署表示，剛果民主共和國、烏干達等中非與東非國家 M痘 clade I 疫情持續，相關國家維持**第二級：警示（Alert）**旅遊疫情建議。\n\n疾管署提醒，前往當地應避免與不明對象親密接觸，不接觸野生動物及其屍體，並注意手部衛生；符合條件者可於出發前完成 2 劑 M痘疫苗。返國後 21 天內如出現發燒、淋巴結腫大或皮疹，請遮蓋病灶後就醫並告知旅遊史。"
+  "bodyMarkdown": "疾病管制署表示，剛果民主共和國、烏干達等中非與東非國家 M痘 clade I 疫情持續，相關國家維持**第二級：警示（Alert）**旅遊疫情建議。\n\n疾管署提醒，前往當地應避免與不明對象親密接觸，不接觸野生動物及其屍體，並注意手部衛生；符合條件者可於出發前完成 2 劑 M痘疫苗。返國後 21 天內如出現發燒、淋巴結腫大或皮疹，請遮蓋病灶後就醫並告知旅遊史。",
+  "i18n": {
+    "en": {
+      "title": "Mpox clade I outbreaks continue in Africa; avoid close contact and wild animals when travelling there",
+      "summary": "Mpox clade I outbreaks continue in Central and East Africa, and the affected countries remain at travel health notice Level 2. Travellers should avoid close contact and contact with wild animals, and see a doctor if symptoms develop after returning.",
+      "bodyMarkdown": "Taiwan CDC said that mpox clade I outbreaks continue in Central and East African countries such as the Democratic Republic of the Congo and Uganda, and the affected countries remain at travel health notice **Level 2: Alert**.\n\nTaiwan CDC reminds travellers to avoid close contact with unknown persons, not to touch wild animals or their carcasses, and to keep up hand hygiene; eligible people can complete 2 doses of mpox vaccine before departure. If fever, swollen lymph nodes or a rash develops within 21 days of return, cover the lesions, see a doctor and tell them your travel history.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

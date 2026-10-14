@@ -32,7 +32,7 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
     for (const it of items) {
       tbody.append(el('tr', { dataset: { sid: it.id } },
         el('td', { text: TYPE[it.type] ?? it.type }),
-        el('td', {}, el('strong', { text: it.title }), el('div', { class: 'adm-muted', text: it.isNew ? '新內容' : '修改既有內容' })),
+        el('td', {}, el('strong', { text: it.title }), el('div', { class: 'adm-muted', text: it.kind === 'rereview' ? '重新審閱（審閱期限到了）' : it.isNew ? '新內容' : '修改既有內容' })),
         el('td', { text: it.ownerName }),
         el('td', { text: it.editors.map((e) => e.name).join('、') }),
         el('td', { text: it.submittedAt ? fmtTime(it.submittedAt) : '—' }),
@@ -57,6 +57,11 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
   function renderDiff(d) {
     const wrap = clear($('#gw-diff'));
     if (d.note) { wrap.append(el('p', { class: 'adm-muted', text: d.note })); return; }
+    // 第五十輪：重新審閱——先說清楚「這是確認內容仍正確」與核准後會發生什麼
+    if (d.reReview) {
+      wrap.append(el('div', { class: 'adm-box adm-box--info' }, el('strong', { text: '重新審閱' }), el('p', { text: d.reReview.text }), d.reReview.note ? el('p', { class: 'gw-comment', text: `承辦人說明：${d.reReview.note}` }) : null));
+      if (!d.changes.length) return;
+    }
     if (d.isNew) wrap.append(el('p', { class: 'adm-box adm-box--info', text: '這是新內容，網站上還沒有這一筆；下面列出填寫的欄位。' }));
     if (!d.changes.length) { wrap.append(el('p', { class: 'adm-muted', text: '與網站上的版本相同，沒有修改。' })); return; }
     for (const c of d.changes) {
@@ -81,6 +86,7 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
     const meta = clear($('#gw-d-meta'));
     const row = (k, v) => meta.append(el('dt', { text: k }), el('dd', { text: v }));
     row('狀態', current.statusLabel);
+    row('送審類型', current.kind === 'rereview' ? '重新審閱（權責單位確認內容仍正確；核准後更新最後審閱日）' : current.isNew ? '新內容' : '修改既有內容');
     row('權責單位', current.ownerName);
     row('承辦', current.editors.map((e) => e.name).join('、'));
     row('送審時間', current.submittedAt ? fmtTime(current.submittedAt) : '—');
@@ -109,6 +115,7 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
     current = r.data;
     msg.className = 'adm-green';
     msg.textContent = kind === 'return' ? `已退回「${current.title}」，承辦人已收到通知。`
+      : current.status === 'published' && current.kind === 'rereview' ? `已核准，「${current.title}」最後審閱日已更新為 ${current.reviewedAt}，網站下次更新後回到 AI 引用範圍；承辦人已收到通知。`
       : current.status === 'published' ? `已核准，「${current.title}」已上線，承辦人已收到通知。`
         : current.status === 'approved' ? `已核准，「${current.title}」將於 ${current.scheduledFor} 上線。`
           : `已核准（${current.approvals.length}／${current.requiredApprovals}），還需要 ${current.requiredApprovals - current.approvals.length} 位審核。`;

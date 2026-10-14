@@ -72,6 +72,36 @@
     "en": {
       "question": "Can I get the flu and COVID-19 vaccines on the same day?",
       "answerMarkdown": "Yes. Flu and COVID-19 vaccines can be **given at the same visit in different sites**, or at any interval, without affecting protection.\n\nGetting both together saves trips and helps older adults and people with chronic conditions get protected before the autumn and winter season."
+    },
+    "ja": {
+      "question": "インフルエンザワクチンと新型コロナワクチンは、同じ日に接種できますか？",
+      "answerMarkdown": "はい、できます。インフルエンザワクチンと新型コロナワクチンは、**同時に、別々の部位に接種**することも、どれだけ間隔をあけて接種することもでき、予防効果には影響しません。\n\n同時に接種すれば通う回数が減り、高齢者や慢性疾患のある人が、秋冬の流行期の前により早く予防を整えられます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Puwede bang sabay sa isang araw ang bakuna sa trangkaso at bakuna sa COVID-19?",
+      "answerMarkdown": "Oo. Ang bakuna sa trangkaso at bakuna sa COVID-19 ay maaaring **ibigay nang sabay sa magkaibang bahagi ng katawan**, o sa anumang pagitan ng panahon, at hindi ito nakakaapekto sa proteksyon.\n\nAng sabay na pagbabakuna ay nakababawas sa dami ng pagpunta sa klinika at nakatutulong sa mga nakatatanda at mga may malalang karamdaman na mas maagang maprotektahan bago ang panahon ng pagkalat sa taglagas at taglamig.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Có thể tiêm vắc-xin cúm và vắc-xin COVID-19 trong cùng một ngày không?",
+      "answerMarkdown": "Có. Vắc-xin cúm và vắc-xin COVID-19 có thể **tiêm cùng lúc ở các vị trí khác nhau**, hoặc tiêm cách nhau bất kỳ khoảng thời gian nào, không ảnh hưởng đến khả năng bảo vệ.\n\nTiêm cùng lúc giúp giảm số lần đi lại, giúp người cao tuổi và người có bệnh mạn tính được bảo vệ sớm hơn trước mùa dịch thu đông.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Bolehkah vaksin influenza dan vaksin COVID-19 diberikan pada hari yang sama?",
+      "answerMarkdown": "Boleh. Vaksin influenza dan vaksin COVID-19 dapat **diberikan bersamaan pada bagian tubuh yang berbeda**, atau dengan jarak waktu berapa pun, tanpa memengaruhi perlindungan.\n\nVaksinasi bersamaan mengurangi jumlah kunjungan sehingga lansia dan penderita penyakit kronis dapat lebih cepat terlindungi sebelum musim penyebaran di musim gugur dan dingin.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ฉีดวัคซีนไข้หวัดใหญ่และวัคซีนโควิด-19 ในวันเดียวกันได้หรือไม่?",
+      "answerMarkdown": "ได้ วัคซีนไข้หวัดใหญ่และวัคซีนโควิด-19 สามารถ**ฉีดพร้อมกันคนละตำแหน่ง** หรือฉีดห่างกันกี่วันก็ได้ โดยไม่กระทบต่อประสิทธิภาพการป้องกัน\n\nการฉีดพร้อมกันช่วยลดจำนวนครั้งที่ต้องเดินทางไปฉีด ทำให้ผู้สูงอายุและผู้ที่มีโรคเรื้อรังได้รับการปกป้องเร็วขึ้นก่อนฤดูระบาดในช่วงฤดูใบไม้ร่วงและฤดูหนาว",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

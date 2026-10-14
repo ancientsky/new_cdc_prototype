@@ -88,6 +88,41 @@
       "title": "Human papillomavirus (HPV) vaccine",
       "summary": "Government-funded HPV vaccine is offered to first-year junior high students (boys included from the 2025 school year): two doses 6 months apart at school, protecting against cervical and other HPV-related cancers.",
       "bodyMarkdown": "HPV infection is linked to cervical, anal and oropharyngeal cancers. Vaccination works best before sexual activity begins.\n\nThe government-funded programme covers **first-year junior high school students**, mainly at school: two doses 6 months apart; students who miss school sessions can catch up at contracted clinics. Others can pay for vaccination; those starting at 15 or older need 3 doses."
+    },
+    "ja": {
+      "title": "ヒトパピローマウイルス（HPV）ワクチン",
+      "summary": "公費のHPVワクチンは中学1年生が対象です（男子は113学年度入学者から対象に追加され、2025年9月に開始）。学校で2回、6か月間隔で接種し、子宮頸がんをはじめHPV関連の多くのがんを予防できます。",
+      "bodyMarkdown": "HPV感染は、子宮頸がん、肛門がん、中咽頭がんなど多くのがんと関連しています。性交渉を始める前に接種すると、予防効果が最も高くなります。\n\n公費のHPVワクチンは**中学1年生**が対象で、主に学校での集団接種として、6か月間隔で計2回接種します。学校で接種を終えられなかった人は、通知を持って契約医療機関で追加接種を受けられます。その他の年齢の人は自費で接種でき、15歳以上で接種を始める場合は3回必要です。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Bakuna sa HPV",
+      "summary": "Ang bakuna sa HPV na pinondohan ng pamahalaan ay inaalok sa mga mag-aaral sa unang taon ng junior high (kasama ang mga lalaki mula sa mga pumasok sa school year 113 ng kalendaryong ROC; nagsimula noong Setyembre 2025): 2 dosis na may pagitang 6 na buwan sa paaralan, na nagpoprotekta laban sa kanser sa cervix at iba pang kanser na kaugnay ng HPV.",
+      "bodyMarkdown": "Ang impeksyon sa HPV ay may kaugnayan sa kanser sa cervix, kanser sa anus, kanser sa oropharynx at iba pang kanser. Pinakamabisa ang proteksyon kapag nabakunahan bago magsimula ang pakikipagtalik.\n\nAng programang pinondohan ng pamahalaan ay para sa **mga mag-aaral sa unang taon ng junior high**, pangunahing sa paaralan: 2 dosis na may pagitang 6 na buwan; ang mga hindi natapos sa paaralan ay maaaring humabol sa mga contracted na klinika dala ang abiso. Ang ibang edad ay maaaring magpabakuna nang sariling bayad; ang mga nagsisimula sa edad na 15 pataas ay nangangailangan ng 3 dosis.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Vắc-xin HPV",
+      "summary": "Vắc-xin HPV do nhà nước chi trả dành cho học sinh lớp 7 (năm nhất trung học cơ sở; nam sinh được bổ sung từ khóa nhập học năm học 113 theo lịch Trung Hoa Dân Quốc, bắt đầu tiêm từ tháng 9/2025): tiêm 2 mũi cách nhau 6 tháng tại trường, giúp phòng ung thư cổ tử cung và nhiều ung thư liên quan đến HPV.",
+      "bodyMarkdown": "Nhiễm HPV liên quan đến ung thư cổ tử cung, ung thư hậu môn, ung thư hầu họng và nhiều loại ung thư khác. Tiêm trước khi bắt đầu quan hệ tình dục cho hiệu quả bảo vệ tốt nhất.\n\nChương trình do nhà nước chi trả dành cho **học sinh năm nhất trung học cơ sở**, chủ yếu tiêm tập trung tại trường, gồm 2 mũi cách nhau 6 tháng; học sinh chưa tiêm xong tại trường có thể mang giấy thông báo đến cơ sở y tế có hợp đồng để tiêm bù. Các độ tuổi khác có thể tự chi trả để tiêm; bắt đầu tiêm từ 15 tuổi trở lên cần 3 mũi.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Vaksin human papillomavirus (HPV)",
+      "summary": "Vaksin HPV yang dibiayai pemerintah diberikan kepada siswa kelas 1 SMP (siswa laki-laki ikut serta mulai angkatan masuk tahun ajaran 113 kalender ROC, dimulai September 2025): 2 dosis dengan jarak 6 bulan di sekolah, melindungi dari kanker serviks dan berbagai kanker terkait HPV.",
+      "bodyMarkdown": "Infeksi HPV berkaitan dengan kanker serviks, kanker anus, kanker orofaring, dan berbagai kanker lain. Perlindungan terbaik didapat jika divaksin sebelum mulai berhubungan seksual.\n\nProgram yang dibiayai pemerintah ditujukan bagi **siswa kelas 1 SMP**, terutama melalui vaksinasi di sekolah: 2 dosis dengan jarak 6 bulan; siswa yang belum selesai di sekolah dapat melengkapinya di klinik rekanan dengan membawa surat pemberitahuan. Usia lain dapat divaksin dengan biaya sendiri; yang mulai pada usia 15 tahun ke atas memerlukan 3 dosis.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "วัคซีนเอชพีวี (HPV)",
+      "summary": "วัคซีน HPV ที่รัฐสนับสนุนค่าใช้จ่ายให้นักเรียนชั้นมัธยมศึกษาปีที่ 1 (เด็กชายรวมอยู่ด้วยตั้งแต่ผู้เข้าเรียนปีการศึกษา 113 ตามปฏิทินไต้หวัน เริ่มฉีดเดือนกันยายน 2025) ฉีด 2 เข็มห่างกัน 6 เดือนที่โรงเรียน ป้องกันมะเร็งปากมดลูกและมะเร็งอื่นที่เกี่ยวข้องกับ HPV",
+      "bodyMarkdown": "การติดเชื้อ HPV เกี่ยวข้องกับมะเร็งปากมดลูก มะเร็งทวารหนัก มะเร็งคอหอยส่วนปาก และมะเร็งอื่นอีกหลายชนิด การฉีดวัคซีนก่อนเริ่มมีเพศสัมพันธ์ให้ผลป้องกันดีที่สุด\n\nโครงการที่รัฐสนับสนุนค่าใช้จ่ายมีเป้าหมายเป็น**นักเรียนชั้นมัธยมศึกษาปีที่ 1** ส่วนใหญ่ฉีดที่โรงเรียน รวม 2 เข็ม ห่างกัน 6 เดือน ผู้ที่ฉีดไม่ครบที่โรงเรียนสามารถนำใบแจ้งไปฉีดเพิ่มที่สถานพยาบาลที่ทำสัญญา ช่วงอายุอื่นฉีดได้โดยจ่ายเอง ผู้ที่เริ่มฉีดเมื่ออายุ 15 ปีขึ้นไปต้องฉีด 3 เข็ม",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

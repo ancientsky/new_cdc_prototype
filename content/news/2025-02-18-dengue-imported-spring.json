@@ -63,5 +63,14 @@
   "legacyUrls": [
     "https://www.cdc.gov.tw/Bulletin/List/MmgtpeidAR5Ooai4-fgHzQ"
   ],
-  "bodyMarkdown": "疾病管制署表示，春節連假後國內登革熱境外移入病例增加，感染國家以印尼、越南、馬來西亞為多，東南亞多國疫情仍處高峰。\n\n疾管署提醒，前往流行地區應穿著淺色長袖衣褲並使用防蚊液；返國後兩週內外出持續防蚊，避免病媒蚊叮咬造成本土傳播。若出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫並主動告知旅遊史。"
+  "bodyMarkdown": "疾病管制署表示，春節連假後國內登革熱境外移入病例增加，感染國家以印尼、越南、馬來西亞為多，東南亞多國疫情仍處高峰。\n\n疾管署提醒，前往流行地區應穿著淺色長袖衣褲並使用防蚊液；返國後兩週內外出持續防蚊，避免病媒蚊叮咬造成本土傳播。若出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫並主動告知旅遊史。",
+  "i18n": {
+    "en": {
+      "title": "Imported dengue cases rise after Lunar New Year; prevent mosquito bites when travelling and after you return",
+      "summary": "Imported dengue cases rose after the Lunar New Year holiday, mostly from Indonesia, Viet Nam and Malaysia. Prevent mosquito bites for two weeks after returning, and tell your doctor your travel history if you get a fever.",
+      "bodyMarkdown": "Taiwan CDC said that imported dengue cases increased after the Lunar New Year holiday, mostly from Indonesia, Viet Nam and Malaysia; epidemics in many Southeast Asian countries are still at their peak.\n\nTaiwan CDC reminds travellers to affected areas to wear light-coloured long-sleeved clothing and long trousers and to use insect repellent. For two weeks after returning, keep preventing mosquito bites when you go out, to avoid local transmission through mosquito bites. If you develop fever, headache, pain behind the eyes, or muscle and joint pain, see a doctor promptly and tell them your travel history.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

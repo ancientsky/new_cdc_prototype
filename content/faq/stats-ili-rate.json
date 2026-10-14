@@ -62,5 +62,43 @@
   "structured": {
     "unit": "%",
     "granularity": "week"
+  },
+  "i18n": {
+    "en": {
+      "question": "What does \"influenza-like illness (ILI) outpatient and emergency visit rate\" mean?",
+      "answerMarkdown": "It is the **share of weekly National Health Insurance outpatient and emergency visits that are for influenza-like illness (fever with cough or sore throat, etc.)**. Taiwan CDC uses it to track influenza activity: when it keeps rising and passes the epidemic threshold, the season is considered to have entered an epidemic period.\n\nThe visit rate is a population-level surveillance indicator and does not equal the number of confirmed cases. Whether an individual has influenza still needs to be diagnosed by a doctor.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "question": "「インフルエンザ様症状の外来・救急受診率」とは、どういう意味ですか？",
+      "answerMarkdown": "毎週の健康保険の**外来と救急の受診件数のうち、インフルエンザ様症状（発熱に咳やのどの痛みなどを伴うもの）で受診した件数が占める割合**のことです。Taiwan CDC はこれでインフルエンザの流行の大きさを観察します。数値が上がり続けて流行の基準値（閾値）を超えると、流行期に入ったことを意味します。\n\n受診率は集団の監視指標であり、確定患者数ではありません。個人がインフルエンザにかかっているかどうかは、医師の診断が必要です。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Ano ang ibig sabihin ng \"rate ng pagpapakonsulta sa outpatient at emergency dahil sa influenza-like illness\"?",
+      "answerMarkdown": "Ito ang **bahagi ng lingguhang bilang ng pagpapakonsulta sa outpatient at emergency ng National Health Insurance na dahil sa influenza-like illness (lagnat na may ubo o pananakit ng lalamunan, atbp.)**. Ginagamit ito ng Taiwan CDC para subaybayan ang antas ng aktibidad ng trangkaso: kapag patuloy na tumataas at lumampas sa epidemic threshold, nangangahulugan itong pumasok na sa panahon ng epidemya.\n\nAng rate ng pagpapakonsulta ay isang indikador ng surveillance ng populasyon at hindi ito katumbas ng bilang ng mga kumpirmadong kaso. Ang doktor pa rin ang magdidiagnose kung ang isang tao ay may trangkaso.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "\"Tỷ lệ khám ngoại trú và cấp cứu vì bệnh giống cúm\" có nghĩa là gì?",
+      "answerMarkdown": "Là **tỷ lệ lượt khám ngoại trú và cấp cứu bảo hiểm y tế mỗi tuần là do bệnh giống cúm (sốt kèm ho hoặc đau họng, v.v.)**. Taiwan CDC dùng chỉ số này để theo dõi mức độ hoạt động của cúm: khi liên tục tăng và vượt ngưỡng dịch, nghĩa là đã bước vào giai đoạn dịch.\n\nTỷ lệ khám là chỉ số giám sát cho cộng đồng, không đại diện cho số ca xác định; việc một cá nhân có bị cúm hay không vẫn cần bác sĩ chẩn đoán.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apa arti \"tingkat kunjungan rawat jalan dan gawat darurat karena penyakit mirip influenza (ILI)\"?",
+      "answerMarkdown": "Itu adalah **proporsi kunjungan rawat jalan dan gawat darurat asuransi kesehatan mingguan yang disebabkan oleh penyakit mirip influenza (demam disertai batuk atau sakit tenggorokan, dan sebagainya)**. Taiwan CDC menggunakannya untuk memantau tinggi rendahnya aktivitas influenza: jika terus naik dan melampaui ambang epidemi, berarti sudah memasuki masa epidemi.\n\nTingkat kunjungan merupakan indikator pemantauan tingkat populasi dan tidak sama dengan jumlah kasus terkonfirmasi; apakah seseorang terkena influenza tetap perlu didiagnosis oleh dokter.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "\"อัตราการมารับบริการผู้ป่วยนอกและฉุกเฉินด้วยอาการคล้ายไข้หวัดใหญ่\" หมายถึงอะไร?",
+      "answerMarkdown": "หมายถึง **สัดส่วนของจำนวนครั้งที่มารับบริการผู้ป่วยนอกและห้องฉุกเฉินที่ใช้สิทธิ์ประกันสุขภาพแห่งชาติในแต่ละสัปดาห์ ซึ่งมาด้วยอาการคล้ายไข้หวัดใหญ่ (มีไข้ร่วมกับไอหรือเจ็บคอ ฯลฯ)** Taiwan CDC ใช้ตัวชี้วัดนี้ติดตามระดับกิจกรรมของไข้หวัดใหญ่ เมื่อเพิ่มขึ้นต่อเนื่องและเกินเกณฑ์การระบาด แสดงว่าเข้าสู่ช่วงการระบาดแล้ว\n\nอัตราการมารับบริการเป็นตัวชี้วัดการเฝ้าระวังระดับประชากร ไม่ได้หมายถึงจำนวนผู้ป่วยยืนยัน การที่แต่ละคนติดไข้หวัดใหญ่หรือไม่ ยังต้องให้แพทย์เป็นผู้วินิจฉัย",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

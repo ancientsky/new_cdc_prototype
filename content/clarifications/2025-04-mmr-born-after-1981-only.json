@@ -79,6 +79,36 @@
     "en": {
       "title": "Claim that only people born after 1981 need MMR",
       "shareText": "Taiwan CDC: \"only people born after 1981 need MMR\" reflects the old recommendation. From 16 April 2025, adults born in 1966 or later without immunity should also be assessed before travelling to affected areas. Follow the latest announcement."
+    },
+    "ja": {
+      "title": "「MMRの追加接種が必要なのは1981年以降に生まれた人だけ」という情報",
+      "shareText": "【台湾CDCより】「1981年以降に生まれた人だけがMMRを接種すべき」というのは旧版の推奨です。台湾CDCは、2025年4月16日から、1966年以降に生まれて免疫のない成人も、流行地域へ渡航する前に接種の要否を評価（相談）すべきだと予告しています。最新の公告に従ってください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Ang sabing \"tanging ang mga isinilang pagkatapos ng 1981 ang kailangang magpa-MMR\"",
+      "shareText": "Taiwan CDC: ang \"tanging ang mga isinilang pagkatapos ng 1981 ang kailangang magpa-MMR\" ay lumang rekomendasyon. Mula Abril 16, 2025, ang mga nasa hustong gulang na isinilang noong 1966 o pagkatapos at walang kaligtasan ay dapat ding masuri bago maglakbay sa mga apektadong lugar. Sundin ang pinakabagong anunsyo.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Tin đồn \"chỉ người sinh sau năm 1981 mới cần tiêm bổ sung MMR\"",
+      "shareText": "CDC Đài Loan: \"chỉ người sinh sau năm 1981 mới cần tiêm MMR\" là khuyến cáo cũ. Từ ngày 16/4/2025, người lớn sinh từ năm 1966 trở về sau chưa có miễn dịch cũng cần được đánh giá tiêm chủng trước khi đến vùng có dịch. Hãy theo thông báo mới nhất.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Kabar \"hanya orang yang lahir setelah 1981 yang perlu vaksin MMR susulan\"",
+      "shareText": "CDC Taiwan: \"hanya orang yang lahir setelah 1981 yang perlu vaksin MMR\" adalah anjuran lama. Mulai 16 April 2025, orang dewasa yang lahir pada 1966 atau sesudahnya dan belum memiliki kekebalan juga perlu dinilai sebelum bepergian ke daerah wabah. Ikuti pengumuman terbaru.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ข่าวลือ \"เฉพาะคนที่เกิดหลังปี 1981 เท่านั้นที่ต้องฉีดวัคซีน MMR เพิ่ม\"",
+      "shareText": "CDC ไต้หวัน: \"เฉพาะคนที่เกิดหลังปี 1981 เท่านั้นที่ต้องฉีด MMR\" เป็นคำแนะนำฉบับเก่า ตั้งแต่ 16 เมษายน 2025 ผู้ใหญ่ที่เกิดตั้งแต่ปี 1966 เป็นต้นมาและไม่มีภูมิคุ้มกัน ควรได้รับการประเมินก่อนเดินทางไปพื้นที่ที่มีการระบาดด้วย โปรดยึดประกาศล่าสุด",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

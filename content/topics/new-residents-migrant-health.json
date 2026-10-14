@@ -114,6 +114,34 @@
     "vi": {
       "title": "Sức khỏe cho tân di dân và lao động nhập cư: thông tin bằng bảy ngôn ngữ",
       "summary": "Thông tin phòng dịch bằng bảy ngôn ngữ: khám sức khỏe lao động, bệnh lao, sốt xuất huyết, tiêm chủng và đường dây 1922 đa ngôn ngữ."
+    },
+    "ja": {
+      "title": "新住民と外国人労働者の健康：7言語の防疫情報",
+      "summary": "中国語、英語、日本語、ベトナム語、インドネシア語、タイ語、フィリピン語の7言語で防疫情報をまとめています。外国人労働者の健康診断、結核、デング熱、予防接種、多言語の1922ホットラインなど、新住民、外国人労働者、雇用主、仲介業者向けの情報です。",
+      "introMarkdown": "このコーナーでは、**7つの言語**（繁體中文、English、日本語、Tiếng Việt、Bahasa Indonesia、ไทย、Tagalog）で防疫情報と健康教育の資料を提供しています。\n\n- **外国人労働者の健康診断**：入国後3営業日以内と、雇用期間中の定期的な検査。\n- **結核**：2週間以上咳が続いたら受診してください。治療は無料です。\n- **ワクチン**：新住民の子どもと成人は、身分に応じて公費ワクチンを接種できます。\n- **1922防疫ホットライン**：ベトナム語、インドネシア語、タイ語、英語に対応しています（対応時間は公告に従います）。\n\n各言語版の審査状況は、各ページの言語メニューに表示されます。機械翻訳版は明示されます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Kalusugan ng mga bagong residente at migranteng manggagawa: impormasyon sa pitong wika",
+      "summary": "Impormasyon sa pag-iwas sa sakit sa pitong wika (Chinese, English, Japanese, Vietnamese, Indonesian, Thai at Filipino): pagsusuri sa kalusugan ng migranteng manggagawa, TB, dengue, pagbabakuna at ang multilingual na 1922 hotline, para sa mga bagong residente, migranteng manggagawa, employer at ahensya.",
+      "introMarkdown": "Nagbibigay ang seksyong ito ng impormasyon sa pag-iwas sa sakit at mga materyales sa edukasyon sa kalusugan sa **pitong wika** (繁體中文, English, 日本語, Tiếng Việt, Bahasa Indonesia, ไทย, Tagalog).\n\n- **Pagsusuri sa kalusugan ng migranteng manggagawa**: sa loob ng 3 araw ng trabaho pagdating sa bansa at regular na pagsusuri habang nagtatrabaho.\n- **TB**: magpatingin sa doktor kung umuubo nang mahigit dalawang linggo; libre ang paggamot.\n- **Bakuna**: ang mga anak at mga nasa hustong gulang na bagong residente ay maaaring tumanggap ng bakunang pinondohan ng pamahalaan ayon sa kanilang katayuan.\n- **1922 hotline sa pag-iwas sa sakit**: may serbisyo sa Vietnamese, Indonesian, Thai at English (ang oras ng serbisyo ay ayon sa anunsyo).\n\nAng katayuan ng pagrepaso ng bawat bersyon ng wika ay ipinapakita sa menu ng wika ng bawat pahina; malinaw na minamarkahan ang mga bersyong machine-translated.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Kesehatan penduduk baru dan pekerja migran: informasi dalam tujuh bahasa",
+      "summary": "Informasi pencegahan penyakit dalam tujuh bahasa (Mandarin, Inggris, Jepang, Vietnam, Indonesia, Thai, dan Filipino): pemeriksaan kesehatan pekerja migran, TBC, demam berdarah dengue, vaksinasi, dan layanan multibahasa 1922, untuk penduduk baru, pekerja migran, majikan, dan agen.",
+      "introMarkdown": "Bagian ini menyediakan informasi pencegahan penyakit dan materi edukasi kesehatan dalam **tujuh bahasa** (繁體中文, English, 日本語, Tiếng Việt, Bahasa Indonesia, ไทย, Tagalog).\n\n- **Pemeriksaan kesehatan pekerja migran**: dalam 3 hari kerja setelah tiba, dan secara berkala selama masa kerja.\n- **TBC**: berobatlah jika batuk lebih dari dua minggu; pengobatan gratis.\n- **Vaksin**: anak dan orang dewasa penduduk baru dapat menerima vaksin yang dibiayai pemerintah sesuai status mereka.\n- **Hotline pencegahan penyakit 1922**: tersedia layanan dalam bahasa Vietnam, Indonesia, Thai, dan Inggris (jam layanan mengikuti pengumuman).\n\nStatus peninjauan setiap versi bahasa ditandai di menu bahasa pada setiap halaman; versi terjemahan mesin ditandai dengan jelas.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "สุขภาพของผู้อพยพใหม่และแรงงานข้ามชาติ: ข้อมูลป้องกันโรคเจ็ดภาษา",
+      "summary": "รวบรวมข้อมูลป้องกันโรคเจ็ดภาษา (จีน อังกฤษ ญี่ปุ่น เวียดนาม อินโดนีเซีย ไทย และฟิลิปปินส์) ได้แก่ การตรวจสุขภาพแรงงานข้ามชาติ วัณโรค ไข้เลือดออก การฉีดวัคซีน และบริการหลายภาษาของสายด่วน 1922 สำหรับผู้อพยพใหม่ แรงงานข้ามชาติ นายจ้าง และนายหน้า",
+      "introMarkdown": "หน้านี้ให้ข้อมูลป้องกันโรคและสื่อให้ความรู้ด้านสุขภาพใน**เจ็ดภาษา** (繁體中文, English, 日本語, Tiếng Việt, Bahasa Indonesia, ไทย, Tagalog)\n\n- **การตรวจสุขภาพแรงงานข้ามชาติ**: ภายใน 3 วันทำการหลังเข้าประเทศ และตรวจเป็นระยะระหว่างการจ้างงาน\n- **วัณโรค**: หากไอนานเกินสองสัปดาห์ให้ไปพบแพทย์ การรักษาไม่มีค่าใช้จ่าย\n- **วัคซีน**: บุตรและผู้ใหญ่ที่เป็นผู้อพยพใหม่รับวัคซีนที่รัฐสนับสนุนค่าใช้จ่ายได้ตามสถานะ\n- **สายด่วนป้องกันโรค 1922**: มีบริการภาษาเวียดนาม อินโดนีเซีย ไทย และอังกฤษ (ช่วงเวลาให้บริการเป็นไปตามประกาศ)\n\nสถานะการตรวจสอบของแต่ละภาษาแสดงไว้ในเมนูภาษาของแต่ละหน้า ฉบับที่แปลด้วยเครื่องจะมีการระบุไว้อย่างชัดเจน",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

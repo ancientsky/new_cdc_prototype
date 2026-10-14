@@ -69,6 +69,41 @@
     "en": {
       "title": "Clarification: claims that flu vaccine causes flu or kills older people are untrue",
       "summary": "The government-funded flu vaccine is inactivated and cannot cause influenza; common side effects are a sore arm and mild fever. Older adults face far greater risk from influenza itself."
+    },
+    "ja": {
+      "title": "訂正：「インフルエンザワクチンを打つとインフルエンザにかかる、高齢者は接種後に死ぬ」は事実ではありません",
+      "summary": "「インフルエンザワクチンを打つとインフルエンザにかかる、高齢者は接種後に死ぬ」は事実ではありません。公費のインフルエンザワクチンは不活化ワクチンで、インフルエンザを引き起こしません。よくある副反応は、接種部位の痛みと軽い発熱です。",
+      "bodyMarkdown": "SNSで広まっている「インフルエンザワクチンを打つとかえってインフルエンザにかかる、高齢者は接種後に死ぬ」という情報について、台湾CDCは、これは事実ではないと訂正します。\n\n公費のインフルエンザワクチンは**不活化ワクチン**で、生きたウイルスを含まないため、接種によってインフルエンザにかかることはありません。接種後によくみられる反応は、接種部位の痛みや赤み、腫れで、一部の人には軽い発熱やだるさがありますが、通常は1〜2日以内に治まります。台湾には予防接種被害救済制度があり、ワクチンの安全性も引き続き監視されています。高齢者にとって、インフルエンザによる重症化と死亡のリスクはワクチンのリスクよりはるかに高いため、安心して接種してください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Paglilinaw: hindi totoo ang mga sabing nagdudulot ng trangkaso ang bakuna sa trangkaso o pumapatay ng matatanda",
+      "summary": "Hindi totoo na nagdudulot ng trangkaso ang bakuna sa trangkaso o na namamatay ang matatanda pagkatapos magpabakuna. Inactivated ang bakunang pinondohan ng pamahalaan at hindi ito nagdudulot ng trangkaso; ang karaniwang side effect ay pananakit sa lugar ng turok at bahagyang lagnat.",
+      "bodyMarkdown": "Kaugnay ng mensaheng kumakalat sa social media na \"nagkakatrangkaso pa nga dahil sa bakuna sa trangkaso at namamatay ang matatanda pagkatapos magpabakuna\", nililinaw ng Taiwan CDC na hindi ito totoo.\n\nAng bakuna sa trangkaso na pinondohan ng pamahalaan ay **inactivated na bakuna** at walang buhay na virus, kaya hindi ka magkakaroon ng trangkaso dahil sa pagbabakuna. Ang karaniwang reaksyon pagkatapos magpabakuna ay pananakit, pamumula at pamamaga sa lugar ng turok; may ilang taong nagkakaroon ng bahagyang lagnat at pagkapagod, na karaniwang gumagaling sa loob ng 1–2 araw. May sistema ang Taiwan ng kompensasyon para sa pinsalang dulot ng pagbabakuna at patuloy na minomonitor ang kaligtasan ng bakuna; mas mataas nang malaki ang panganib ng malubhang komplikasyon at kamatayan mula sa trangkaso sa matatanda kaysa sa panganib ng bakuna, kaya magpabakuna nang panatag.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Đính chính: tin đồn \"tiêm vắc-xin cúm sẽ bị cúm, người già tiêm xong sẽ chết\" không đúng sự thật",
+      "summary": "Tin đồn tiêm vắc-xin cúm sẽ bị cúm, người già tiêm xong sẽ chết là không đúng. Vắc-xin cúm do nhà nước chi trả là vắc-xin bất hoạt, không gây bệnh cúm; tác dụng phụ thường gặp là đau chỗ tiêm và sốt nhẹ.",
+      "bodyMarkdown": "Về thông tin lan truyền trên mạng xã hội rằng \"tiêm vắc-xin cúm lại bị cúm, người già tiêm xong sẽ chết\", CDC Đài Loan đính chính rằng đây không phải sự thật.\n\nVắc-xin cúm do nhà nước chi trả là **vắc-xin bất hoạt**, không chứa vi-rút sống, nên không thể bị cúm vì tiêm vắc-xin. Phản ứng thường gặp sau tiêm là đau, đỏ, sưng ở chỗ tiêm; một số ít người sốt nhẹ, mệt mỏi, thường đỡ trong 1–2 ngày. Đài Loan có chế độ cứu trợ thiệt hại do tiêm chủng và liên tục giám sát an toàn vắc-xin; nguy cơ biến chứng nặng và tử vong do cúm ở người cao tuổi cao hơn nhiều so với nguy cơ của vắc-xin, xin hãy yên tâm đi tiêm.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Klarifikasi: kabar \"vaksin flu bikin kena flu dan lansia bisa meninggal\" tidak benar",
+      "summary": "Kabar bahwa vaksin flu menyebabkan flu dan lansia meninggal setelah divaksin tidak benar. Vaksin flu yang dibiayai pemerintah adalah vaksin inaktif dan tidak menyebabkan influenza; efek samping umum adalah nyeri di tempat suntikan dan demam ringan.",
+      "bodyMarkdown": "Menanggapi pesan yang beredar di media sosial bahwa \"vaksin flu justru membuat terkena flu dan lansia meninggal setelah divaksin\", CDC Taiwan mengklarifikasi bahwa hal itu tidak benar.\n\nVaksin flu yang dibiayai pemerintah adalah **vaksin inaktif** yang tidak mengandung virus hidup, sehingga tidak mungkin terkena flu karena vaksinasi. Reaksi umum setelah vaksinasi adalah nyeri, kemerahan, dan bengkak di tempat suntikan; sebagian kecil orang mengalami demam ringan dan lelah, biasanya membaik dalam 1–2 hari. Taiwan memiliki sistem kompensasi untuk kerugian akibat vaksinasi dan terus memantau keamanan vaksin; risiko komplikasi berat dan kematian akibat influenza pada lansia jauh lebih tinggi daripada risiko vaksin, jadi silakan vaksin dengan tenang.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ชี้แจง: ข่าวลือ \"ฉีดวัคซีนไข้หวัดใหญ่แล้วจะเป็นไข้หวัดใหญ่ ผู้สูงอายุฉีดแล้วเสียชีวิต\" ไม่เป็นความจริง",
+      "summary": "ข่าวลือว่าฉีดวัคซีนไข้หวัดใหญ่แล้วจะเป็นไข้หวัดใหญ่ และผู้สูงอายุฉีดแล้วเสียชีวิตไม่เป็นความจริง วัคซีนไข้หวัดใหญ่ที่รัฐสนับสนุนค่าใช้จ่ายเป็นวัคซีนชนิดเชื้อตายและไม่ทำให้เป็นไข้หวัดใหญ่ ผลข้างเคียงที่พบบ่อยคือปวดบริเวณที่ฉีดและมีไข้ต่ำ",
+      "bodyMarkdown": "กรณีข้อความที่แพร่ในโซเชียลมีเดียว่า \"ฉีดวัคซีนไข้หวัดใหญ่แล้วกลับเป็นไข้หวัดใหญ่ ผู้สูงอายุฉีดแล้วเสียชีวิต\" CDC ไต้หวันชี้แจงว่าไม่เป็นความจริง\n\nวัคซีนไข้หวัดใหญ่ที่รัฐสนับสนุนค่าใช้จ่ายเป็น**วัคซีนชนิดเชื้อตาย** ไม่มีไวรัสที่มีชีวิต จึงไม่ทำให้เป็นไข้หวัดใหญ่จากการฉีดวัคซีน อาการที่พบบ่อยหลังฉีดคือปวด แดง บวมบริเวณที่ฉีด บางคนมีไข้ต่ำและอ่อนเพลีย ซึ่งมักดีขึ้นภายใน 1–2 วัน ไต้หวันมีระบบเยียวยาความเสียหายจากการฉีดวัคซีนและติดตามความปลอดภัยของวัคซีนอย่างต่อเนื่อง ความเสี่ยงของภาวะแทรกซ้อนรุนแรงและการเสียชีวิตจากไข้หวัดใหญ่ในผู้สูงอายุสูงกว่าความเสี่ยงจากวัคซีนมาก จึงขอให้มั่นใจและไปรับวัคซีน",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

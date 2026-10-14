@@ -154,5 +154,433 @@
   "professional": {
     "specimen": "鼻咽拭子（Dacron 或尼龍植絨拭子）進行 PCR 與培養；發病 3 週內檢出率較高。",
     "notifyNote": "第三類法定傳染病，應於一週內通報；家庭接觸者由衛生單位評估預防性投藥。"
+  },
+  "i18n": {
+    "en": {
+      "title": "Pertussis",
+      "summary": "Pertussis (whooping cough) spreads by droplets. Typical symptoms are bouts of severe coughing and a “whoop” sound when breathing in. Babies under 6 months are most likely to become seriously ill. Getting vaccinated on schedule, and getting Tdap late in pregnancy, protects newborns.",
+      "keyFacts": {
+        "incubation": "4–21 days (usually 7–10 days)",
+        "symptoms": "Starts like a cold, then bouts of severe coughing, a whooping sound on breathing in, and vomiting after coughing",
+        "transmission": "Droplets",
+        "prevention": "Vaccinate infants and children on schedule; Tdap in pregnancy",
+        "notify": "Within one week"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "your baby is coughing and has pauses in breathing or a blue-purple face",
+              "title": "Seek medical care immediately",
+              "text": "In young babies, pertussis may not cause an obvious cough. It may show up only as pauses in breathing (apnoea) or a blue colour (cyanosis). Go to hospital immediately."
+            },
+            {
+              "if": "have a baby under 1 year old at home",
+              "title": "Caregivers should check vaccination status",
+              "text": "Adults at home who are coughing should wear a mask and avoid kissing the baby, and should talk to a doctor about getting Tdap."
+            },
+            {
+              "if": "are 28–36 weeks pregnant",
+              "title": "Consider getting Tdap",
+              "text": "Get 1 dose of Tdap at 28–36 weeks in every pregnancy. The antibodies cross the placenta and protect your baby after birth."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "Pertussis has three stages:\n\n1. **Catarrhal stage** (1–2 weeks): runny nose and a mild cough, like an ordinary cold.\n2. **Paroxysmal stage** (2–6 weeks): bouts of violent coughing, followed by a “whoop” sound as the person breathes in. Often the person coughs until vomiting, and the face and neck turn red.\n3. **Recovery stage**: the cough gradually eases, but may last for weeks to months.\n\nIn teenagers and adults, the only symptom may be a cough that will not go away.",
+          "warning": "Pauses in breathing, a blue-purple face, being unable to feed while coughing, or convulsions in a baby: seek medical care immediately."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "It spreads through **droplets** produced when a patient coughs or sneezes, and is highly contagious. A patient is most infectious in the catarrhal stage and the early paroxysmal stage. Without treatment, a patient can spread it for about 3 weeks; after 5 days of antibiotics, infectiousness drops markedly.\n\nBabies are often infected by coughing adults or older siblings at home."
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "- Infants and young children get the **5-in-1 vaccine** (DTaP-Hib-IPV) on schedule (at 2, 4, 6 and 18 months). Children aged 5 up to school entry get **Tdap-IPV**.\n- Pregnant women are advised to get 1 dose of **Tdap** at 28–36 weeks of every pregnancy, at their own expense (some counties and cities offer subsidies).\n- Baby caregivers should check their own vaccination status, wear a mask when coughing, and wash hands often.\n- Household contacts of a patient may be given preventive antibiotics, as assessed by a doctor."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "It is treated with macrolide antibiotics (such as azithromycin). Early treatment eases symptoms and shortens the infectious period. Babies who are severely ill need to be admitted to hospital so their breathing can be watched. Cough medicines have limited effect on the coughing bouts of pertussis."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "Government-funded routine vaccination: the 5-in-1 vaccine (diphtheria, tetanus, acellular pertussis, Haemophilus influenzae type b, inactivated polio) is given as 1 dose each at 2, 4, 6 and 18 months; 1 dose of Tdap-IPV is given from age 5 up to school entry. Protection from the vaccine fades over time, so teenagers and adults can consider a Tdap booster."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Taiwan confirms several dozen cases each year, mainly in babies under 6 months."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "title": "百日咳",
+      "summary": "百日咳は飛沫で感染します。典型的な症状は、発作的な激しい咳と、息を吸うときの「ヒュー」という笛のような音です。生後 6 か月未満の赤ちゃんが最も重症になりやすい病気です。予防接種を予定どおりに受けること、そして妊娠後期に Tdap を接種することで、新生児を守ることができます。",
+      "keyFacts": {
+        "incubation": "4～21 日（通常 7～10 日）",
+        "symptoms": "初めはかぜのような症状で、その後、発作的な激しい咳、息を吸うときの笛のような音、咳き込んだ後の嘔吐が現れる",
+        "transmission": "飛沫",
+        "prevention": "乳幼児は予定どおりにワクチンを接種する；妊婦は Tdap を接種する",
+        "notify": "1 週間以内"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "どうすればよいか",
+          "cards": [
+            {
+              "if": "赤ちゃんが咳をしていて、呼吸が止まったり、顔色が紫色になったりしている",
+              "title": "すぐに受診する",
+              "text": "小さな赤ちゃんの百日咳では、はっきりした咳が出ず、呼吸が止まる（無呼吸）またはチアノーゼ（紫色になる）だけのことがあります。すぐに病院へ連れて行ってください。"
+            },
+            {
+              "if": "家に 1 歳未満の赤ちゃんがいる",
+              "title": "世話をする人は予防接種の状況を確認する",
+              "text": "家の中の大人が咳をしているときは、マスクを着け、赤ちゃんにキスをしないようにしてください。また、Tdap を接種するかどうか医師に相談してください。"
+            },
+            {
+              "if": "妊娠 28～36 週である",
+              "title": "Tdap の接種を検討する",
+              "text": "妊娠のたびに、28～36 週に Tdap を 1 回接種します。抗体が胎盤を通って、生まれた後の赤ちゃんを守ります。"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "症状と警告サイン",
+          "markdown": "百日咳の経過は 3 つの時期に分かれます。\n\n1. **カタル期**（1～2 週間）：鼻水と軽い咳が出ます。ふつうのかぜのようです。\n2. **痙咳期**（2～6 週間）：激しい咳が続けて出て、咳の後に息を吸うときに「ヒュー」という笛のような音が出ます。咳き込んで嘔吐したり、顔や首が赤くなったりすることがよくあります。\n3. **回復期**：咳は徐々に軽くなりますが、数週間から数か月続くことがあります。\n\n青少年や大人では、長引く咳だけのことがあります。",
+          "warning": "赤ちゃんの呼吸が止まる、顔色が紫色になる、咳のために飲んだり食べたりできない、けいれんする：すぐに受診してください。"
+        },
+        {
+          "key": "transmission",
+          "heading": "感染経路",
+          "markdown": "患者の咳やくしゃみで出る**飛沫**で感染し、感染力が非常に強い病気です。カタル期と痙咳期の初期が最も感染力が強く、治療しない場合は約 3 週間、人にうつす可能性があります。抗菌薬を使い始めて 5 日たつと、感染力は大きく下がります。\n\n赤ちゃんは、家の中で咳をしている大人やきょうだいからうつることがよくあります。"
+        },
+        {
+          "key": "prevention",
+          "heading": "予防",
+          "markdown": "- 乳幼児は、予定どおりに**5 種混合ワクチン**（DTaP-Hib-IPV）を接種します（2、4、6、18 か月）。5 歳から小学校入学前までは **Tdap-IPV** を接種します。\n- 妊婦は、妊娠のたびに 28～36 週に **Tdap** を 1 回、自費で接種することをお勧めします（一部の県・市では補助があります）。\n- 赤ちゃんの世話をする人は、自分の接種状況を確認し、咳が出るときはマスクを着け、こまめに手を洗ってください。\n- 患者の家庭内接触者は、医師の判断により、予防のための抗菌薬を使うことがあります。"
+        },
+        {
+          "key": "treatment",
+          "heading": "診断と治療",
+          "markdown": "マクロライド系抗菌薬（アジスロマイシンなど）で治療します。早く使い始めると、症状が軽くなり、感染する期間も短くなります。重症の赤ちゃんは、呼吸の状態を見るために入院が必要です。咳止め薬は、百日咳の発作的な咳にはあまり効きません。"
+        },
+        {
+          "key": "vaccine",
+          "heading": "ワクチン",
+          "markdown": "公費による定期接種：5 種混合ワクチン（ジフテリア、破傷風、無菌体百日咳、b 型インフルエンザ菌、不活化ポリオ）を 2、4、6、18 か月に各 1 回接種します。5 歳から小学校入学前までに Tdap-IPV を 1 回接種します。ワクチンの効果は時間がたつと弱まるため、青少年や大人は Tdap の追加接種を検討できます。"
+        },
+        {
+          "key": "situation",
+          "heading": "現在の発生状況と統計",
+          "markdown": "台湾では、毎年数十例の確定例があり、主に生後 6 か月未満の赤ちゃんです。"
+        },
+        {
+          "key": "faq",
+          "heading": "よくある質問"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Pertussis (ubong dalahit)",
+      "summary": "Ang pertussis (ubong dalahit) ay kumakalat sa pamamagitan ng droplets. Ang tipikal na sintomas ay sunud-sunod na matinding pag-ubo at tunog na “whoop” kapag humihinga papasok. Ang mga sanggol na wala pang 6 na buwan ang pinakamadaling magkaroon ng malubhang sakit. Ang pagbabakuna ayon sa iskedyul, at ang pagpapabakuna ng Tdap sa huling bahagi ng pagbubuntis, ay nagpoprotekta sa bagong silang na sanggol.",
+      "keyFacts": {
+        "incubation": "4–21 araw (karaniwan ay 7–10 araw)",
+        "symptoms": "Nagsisimula na parang sipon, pagkatapos ay sunud-sunod na matinding pag-ubo, tunog na whoop kapag humihinga papasok, at pagsusuka pagkatapos umubo",
+        "transmission": "Droplets",
+        "prevention": "Pagbabakuna sa mga sanggol at bata ayon sa iskedyul; Tdap sa pagbubuntis",
+        "notify": "Sa loob ng isang linggo"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Ano ang dapat gawin",
+          "cards": [
+            {
+              "if": "umuubo ang sanggol mo at humihinto ang paghinga o nagiging bughaw-lila ang mukha",
+              "title": "Magpatingin agad sa doktor",
+              "text": "Sa maliliit na sanggol, maaaring walang halatang ubo ang pertussis. Maaaring huminto lamang ang paghinga (apnea) o magkulay bughaw (cyanosis). Dalhin agad sa ospital."
+            },
+            {
+              "if": "may sanggol na wala pang 1 taong gulang sa bahay",
+              "title": "Dapat tiyakin ng mga tagapag-alaga ang katayuan ng pagbabakuna",
+              "text": "Dapat magsuot ng face mask ang mga nasa hustong gulang sa bahay na umuubo at iwasang halikan ang sanggol, at dapat makipag-usap sa doktor tungkol sa pagpapabakuna ng Tdap."
+            },
+            {
+              "if": "nasa 28–36 na linggo ng pagbubuntis",
+              "title": "Pag-isipan ang pagpapabakuna ng Tdap",
+              "text": "Magpabakuna ng 1 dose ng Tdap sa 28–36 na linggo sa bawat pagbubuntis. Dumadaan sa inunan ang mga antibody at pinoprotektahan ang sanggol pagkapanganak."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Mga sintomas at babalang senyales",
+          "markdown": "May tatlong yugto ang pertussis:\n\n1. **Yugtong catarrhal** (1–2 linggo): sipon at bahagyang ubo, parang karaniwang sipon.\n2. **Yugtong paroxysmal** (2–6 na linggo): sunud-sunod na matinding pag-ubo, na sinusundan ng tunog na “whoop” kapag humihinga papasok. Madalas umubo hanggang sumuka, at namumula ang mukha at leeg.\n3. **Yugto ng paggaling**: unti-unting gumagaan ang ubo, ngunit maaaring tumagal nang ilang linggo hanggang ilang buwan.\n\nSa mga kabataan at nasa hustong gulang, maaaring ubo lamang na hindi gumagaling ang sintomas.",
+          "warning": "Paghinto ng paghinga, bughaw-lilang mukha, hindi makakain dahil sa pag-ubo, o pangingisay ng sanggol: magpatingin agad sa doktor."
+        },
+        {
+          "key": "transmission",
+          "heading": "Paano ito kumakalat",
+          "markdown": "Kumakalat ito sa pamamagitan ng **droplets** mula sa pag-ubo o pagbahing ng pasyente, at napakadaling makahawa. Pinakamataas ang panganib na makahawa sa yugtong catarrhal at sa simula ng yugtong paroxysmal. Kapag hindi ginamot, makakahawa ang pasyente nang mga 3 linggo; pagkatapos ng 5 araw ng antibiotic, malaki ang ibinababa ng panganib na makahawa.\n\nMadalas mahawa ang mga sanggol mula sa mga nasa hustong gulang o nakatatandang kapatid sa bahay na umuubo."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pag-iwas",
+          "markdown": "- Dapat tumanggap ang mga sanggol at bata ng **5-in-1 na bakuna** (DTaP-Hib-IPV) ayon sa iskedyul (sa 2, 4, 6 at 18 buwan). Ang mga batang 5 taong gulang hanggang bago pumasok sa elementarya ay tatanggap ng **Tdap-IPV**.\n- Inirerekomenda sa mga buntis na magpabakuna ng 1 dose ng **Tdap** sa 28–36 na linggo ng bawat pagbubuntis, sa sariling gastos (may ilang lungsod at county na nagbibigay ng tulong-pinansyal).\n- Dapat tiyakin ng mga tagapag-alaga ng sanggol ang sarili nilang katayuan sa pagbabakuna, magsuot ng face mask kapag umuubo, at madalas maghugas ng kamay.\n- Ang mga kasama sa bahay ng pasyente ay maaaring bigyan ng antibiotic na pang-iwas, ayon sa pagsusuri ng doktor."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis at paggamot",
+          "markdown": "Ginagamot ito ng macrolide na antibiotic (gaya ng azithromycin). Kapag maagang nagamit, gumagaan ang mga sintomas at umiikli ang panahon ng pagkakahawa. Ang mga sanggol na malubha ang sakit ay kailangang ma-admit sa ospital para bantayan ang paghinga. Limitado ang bisa ng gamot sa ubo sa sunud-sunod na pag-ubo ng pertussis."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Bakuna",
+          "markdown": "Libreng (pinopondohan ng gobyerno) na regular na pagbabakuna: ang 5-in-1 na bakuna (diphtheria, tetanus, acellular pertussis, Haemophilus influenzae type b, inactivated polio) ay ibinibigay nang 1 dose bawat isa sa 2, 4, 6 at 18 buwan; 1 dose ng Tdap-IPV ang ibinibigay mula 5 taong gulang hanggang bago pumasok sa elementarya. Humihina ang proteksyon ng bakuna sa paglipas ng panahon, kaya maaaring pag-isipan ng mga kabataan at nasa hustong gulang ang booster na Tdap."
+        },
+        {
+          "key": "situation",
+          "heading": "Kasalukuyang sitwasyon at estadistika",
+          "markdown": "Sa Taiwan, may ilang dosenang kumpirmadong kaso kada taon, karamihan ay sanggol na wala pang 6 na buwan."
+        },
+        {
+          "key": "faq",
+          "heading": "Mga madalas itanong"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Bệnh ho gà",
+      "summary": "Ho gà lây qua giọt bắn. Triệu chứng điển hình là những cơn ho dữ dội và tiếng rít “hộc” khi hít vào. Trẻ dưới 6 tháng tuổi dễ bị bệnh nặng nhất. Tiêm vắc-xin đúng lịch và tiêm Tdap vào giai đoạn cuối thai kỳ giúp bảo vệ trẻ sơ sinh.",
+      "keyFacts": {
+        "incubation": "4–21 ngày (thường là 7–10 ngày)",
+        "symptoms": "Lúc đầu giống cảm lạnh, sau đó là những cơn ho dữ dội, tiếng rít khi hít vào và nôn sau khi ho",
+        "transmission": "Giọt bắn",
+        "prevention": "Tiêm vắc-xin đúng lịch cho trẻ nhỏ; tiêm Tdap khi mang thai",
+        "notify": "Trong vòng một tuần"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "em bé đang ho và có lúc ngừng thở hoặc mặt tím tái",
+              "title": "Đi khám ngay",
+              "text": "Ở trẻ sơ sinh nhỏ, ho gà có thể không gây ho rõ rệt mà chỉ biểu hiện bằng ngừng thở (ngưng thở) hoặc tím tái. Hãy đưa trẻ đến bệnh viện ngay."
+            },
+            {
+              "if": "trong nhà có trẻ dưới 1 tuổi",
+              "title": "Người chăm sóc kiểm tra tình trạng tiêm chủng",
+              "text": "Người lớn trong nhà đang ho nên đeo khẩu trang, tránh hôn em bé và trao đổi với bác sĩ về việc tiêm Tdap."
+            },
+            {
+              "if": "đang mang thai từ tuần 28 đến tuần 36",
+              "title": "Cân nhắc tiêm Tdap",
+              "text": "Mỗi lần mang thai, tiêm 1 liều Tdap vào tuần 28–36. Kháng thể truyền qua nhau thai sẽ bảo vệ em bé sau khi sinh."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Bệnh ho gà diễn tiến qua ba giai đoạn:\n\n1. **Giai đoạn viêm long** (1–2 tuần): chảy nước mũi, ho nhẹ, giống cảm lạnh thông thường.\n2. **Giai đoạn ho cơn** (2–6 tuần): những cơn ho dữ dội liên tiếp, sau cơn ho là tiếng rít “hộc” khi hít vào. Người bệnh thường ho đến mức nôn, mặt và cổ đỏ bừng.\n3. **Giai đoạn hồi phục**: cơn ho giảm dần nhưng có thể kéo dài vài tuần đến vài tháng.\n\nỞ thanh thiếu niên và người lớn, triệu chứng có thể chỉ là ho kéo dài không khỏi.",
+          "warning": "Trẻ ngừng thở, mặt tím tái, không bú hoặc ăn được vì ho, hoặc co giật: hãy đi khám ngay."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền như thế nào",
+          "markdown": "Bệnh lây qua **giọt bắn** khi người bệnh ho, hắt hơi và có khả năng lây rất mạnh. Khả năng lây cao nhất ở giai đoạn viêm long và đầu giai đoạn ho cơn. Người bệnh không điều trị có thể lây khoảng 3 tuần; sau 5 ngày dùng kháng sinh, khả năng lây giảm rõ rệt.\n\nTrẻ nhỏ thường bị lây từ người lớn hoặc anh chị trong nhà đang ho."
+        },
+        {
+          "key": "prevention",
+          "heading": "Phòng ngừa",
+          "markdown": "- Trẻ nhỏ tiêm **vắc-xin 5 trong 1** (DTaP-Hib-IPV) đúng lịch (lúc 2, 4, 6 và 18 tháng). Trẻ từ 5 tuổi đến trước khi vào tiểu học tiêm **Tdap-IPV**.\n- Phụ nữ mang thai được khuyến nghị tiêm 1 liều **Tdap** vào tuần 28–36 của mỗi lần mang thai, tự chi trả (một số huyện, thành phố có hỗ trợ).\n- Người chăm sóc trẻ nhỏ kiểm tra tình trạng tiêm chủng của chính mình; đeo khẩu trang khi ho và rửa tay thường xuyên.\n- Người trong gia đình tiếp xúc với bệnh nhân có thể được dùng kháng sinh dự phòng theo đánh giá của bác sĩ."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Điều trị bằng kháng sinh nhóm macrolide (như azithromycin). Dùng sớm giúp giảm triệu chứng và rút ngắn thời gian lây. Trẻ nhỏ bệnh nặng cần nhập viện để theo dõi hô hấp. Thuốc ho ít hiệu quả với các cơn ho của ho gà."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "Tiêm chủng thường quy do nhà nước chi trả: vắc-xin 5 trong 1 (bạch hầu, uốn ván, ho gà vô bào, Haemophilus influenzae týp b, bại liệt bất hoạt) tiêm mỗi lần 1 liều lúc 2, 4, 6 và 18 tháng; từ 5 tuổi đến trước khi vào tiểu học tiêm 1 liều Tdap-IPV. Khả năng bảo vệ của vắc-xin giảm dần theo thời gian, vì vậy thanh thiếu niên và người lớn có thể cân nhắc tiêm nhắc Tdap."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện nay và thống kê",
+          "markdown": "Mỗi năm trong nước ghi nhận vài chục ca xác định, chủ yếu là trẻ dưới 6 tháng tuổi."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Pertusis (batuk rejan)",
+      "summary": "Pertusis (batuk rejan) menular lewat percikan dahak (droplet). Gejala khasnya adalah batuk hebat yang datang tiba-tiba dan bunyi “whoop” saat menarik napas. Bayi di bawah 6 bulan paling mudah jatuh sakit berat. Vaksinasi tepat waktu, serta vaksin Tdap pada akhir kehamilan, melindungi bayi baru lahir.",
+      "keyFacts": {
+        "incubation": "4–21 hari (biasanya 7–10 hari)",
+        "symptoms": "Awalnya seperti flu, lalu batuk hebat yang datang tiba-tiba, bunyi whoop saat menarik napas, dan muntah setelah batuk",
+        "transmission": "Droplet",
+        "prevention": "Vaksinasi bayi dan anak tepat waktu; Tdap saat hamil",
+        "notify": "Dalam satu minggu"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Apa yang harus dilakukan",
+          "cards": [
+            {
+              "if": "bayi Anda batuk dan napasnya sempat berhenti atau wajahnya membiru keunguan",
+              "title": "Segera ke dokter",
+              "text": "Pada bayi kecil, pertusis bisa tidak menimbulkan batuk yang jelas. Gejalanya mungkin hanya napas berhenti (apnea) atau kulit membiru (sianosis). Segera bawa ke rumah sakit."
+            },
+            {
+              "if": "di rumah ada bayi berusia di bawah 1 tahun",
+              "title": "Pengasuh memeriksa status vaksinasi",
+              "text": "Orang dewasa di rumah yang batuk sebaiknya memakai masker dan tidak mencium bayi, serta berkonsultasi dengan dokter tentang vaksin Tdap."
+            },
+            {
+              "if": "hamil usia 28–36 minggu",
+              "title": "Pertimbangkan vaksin Tdap",
+              "text": "Setiap kehamilan, berikan 1 dosis Tdap pada usia kehamilan 28–36 minggu. Antibodi melewati plasenta dan melindungi bayi setelah lahir."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Pertusis berlangsung dalam tiga tahap:\n\n1. **Tahap kataral** (1–2 minggu): pilek dan batuk ringan, seperti flu biasa.\n2. **Tahap paroksismal** (2–6 minggu): serangan batuk hebat berturut-turut, diikuti bunyi “whoop” saat menarik napas. Penderita sering batuk sampai muntah, dan wajah serta leher memerah.\n3. **Tahap pemulihan**: batuk berangsur berkurang, tetapi bisa berlangsung beberapa minggu sampai beberapa bulan.\n\nPada remaja dan orang dewasa, gejalanya bisa hanya berupa batuk lama yang tidak sembuh.",
+          "warning": "Napas bayi berhenti, wajah membiru keunguan, tidak bisa makan atau minum karena batuk, atau kejang: segera berobat."
+        },
+        {
+          "key": "transmission",
+          "heading": "Cara penularan",
+          "markdown": "Menular lewat **percikan dahak (droplet)** saat penderita batuk atau bersin, dan sangat mudah menular. Daya tularnya paling tinggi pada tahap kataral dan awal tahap paroksismal. Penderita yang tidak diobati bisa menularkan sekitar 3 minggu; setelah 5 hari antibiotik, daya tular turun jelas.\n\nBayi sering tertular dari orang dewasa atau kakak di rumah yang sedang batuk."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- Bayi dan anak mendapat **vaksin 5-in-1** (DTaP-Hib-IPV) tepat waktu (usia 2, 4, 6, dan 18 bulan). Anak usia 5 tahun sampai sebelum masuk SD mendapat **Tdap-IPV**.\n- Ibu hamil dianjurkan mendapat 1 dosis **Tdap** pada usia kehamilan 28–36 minggu di setiap kehamilan, dengan biaya sendiri (beberapa kabupaten/kota memberi subsidi).\n- Pengasuh bayi memeriksa status vaksinasi diri sendiri; pakai masker saat batuk dan sering cuci tangan.\n- Anggota keluarga yang kontak dengan penderita dapat diberi antibiotik pencegahan sesuai penilaian dokter."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis dan pengobatan",
+          "markdown": "Diobati dengan antibiotik golongan makrolida (misalnya azitromisin). Pemberian sejak dini meringankan gejala dan memperpendek masa penularan. Bayi dengan sakit berat perlu dirawat di rumah sakit agar pernapasannya dipantau. Obat batuk kurang efektif untuk serangan batuk pertusis."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaksin",
+          "markdown": "Vaksinasi rutin dengan biaya pemerintah: vaksin 5-in-1 (difteri, tetanus, pertusis aseluler, Haemophilus influenzae tipe b, polio tidak aktif) diberikan 1 dosis pada usia 2, 4, 6, dan 18 bulan; 1 dosis Tdap-IPV diberikan sejak usia 5 tahun sampai sebelum masuk SD. Perlindungan vaksin menurun seiring waktu, sehingga remaja dan orang dewasa dapat mempertimbangkan Tdap penguat."
+        },
+        {
+          "key": "situation",
+          "heading": "Situasi terkini dan statistik",
+          "markdown": "Setiap tahun di Taiwan terkonfirmasi beberapa puluh kasus, terutama bayi di bawah 6 bulan."
+        },
+        {
+          "key": "faq",
+          "heading": "Pertanyaan yang sering diajukan"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "ไอกรน",
+      "summary": "ไอกรนแพร่เชื้อทางละอองฝอย อาการเด่นคือไอรุนแรงเป็นชุด ๆ และมีเสียงหายใจเข้าดัง “วู้ป” ทารกอายุต่ำกว่า 6 เดือนมีโอกาสป่วยรุนแรงที่สุด การฉีดวัคซีนตามกำหนด และการฉีด Tdap ในช่วงปลายของการตั้งครรภ์ ช่วยปกป้องทารกแรกเกิด",
+      "keyFacts": {
+        "incubation": "4–21 วัน (ส่วนใหญ่ 7–10 วัน)",
+        "symptoms": "เริ่มแรกคล้ายหวัด จากนั้นไอรุนแรงเป็นชุด ๆ มีเสียงหายใจเข้าดังวู้ป และอาเจียนหลังไอ",
+        "transmission": "ละอองฝอย",
+        "prevention": "ฉีดวัคซีนให้ทารกและเด็กตามกำหนด ฉีด Tdap ในหญิงตั้งครรภ์",
+        "notify": "ภายในหนึ่งสัปดาห์"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "ควรทำอย่างไร",
+          "cards": [
+            {
+              "if": "ลูกน้อยไอและหยุดหายใจ หรือใบหน้าเขียวคล้ำ",
+              "title": "ไปพบแพทย์ทันที",
+              "text": "ในทารกตัวเล็ก ไอกรนอาจไม่มีอาการไออย่างชัดเจน อาจแสดงออกเพียงหยุดหายใจ (ภาวะหยุดหายใจ) หรือตัวเขียว (ภาวะเขียวคล้ำ) ให้รีบพาไปโรงพยาบาลทันที"
+            },
+            {
+              "if": "มีทารกอายุต่ำกว่า 1 ปีอยู่ที่บ้าน",
+              "title": "ผู้ดูแลตรวจสอบสถานะการฉีดวัคซีน",
+              "text": "ผู้ใหญ่ในบ้านที่ไอควรสวมหน้ากากอนามัย หลีกเลี่ยงการจูบทารก และปรึกษาแพทย์เรื่องการฉีด Tdap"
+            },
+            {
+              "if": "ตั้งครรภ์ 28–36 สัปดาห์",
+              "title": "พิจารณาฉีด Tdap",
+              "text": "ฉีด Tdap 1 เข็มเมื่ออายุครรภ์ 28–36 สัปดาห์ในทุกการตั้งครรภ์ ภูมิคุ้มกันจะส่งผ่านรกไปปกป้องทารกหลังคลอด"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "โรคไอกรนมี 3 ระยะ:\n\n1. **ระยะหวัด** (1–2 สัปดาห์): น้ำมูกไหล ไอเล็กน้อย คล้ายหวัดทั่วไป\n2. **ระยะไอเป็นชุด** (2–6 สัปดาห์): ไอรุนแรงติด ๆ กัน หลังไอจะหายใจเข้าเสียงดัง “วู้ป” มักไอจนอาเจียน หน้าแดงคอแดง\n3. **ระยะฟื้นตัว**: อาการไอค่อย ๆ ลดลง แต่อาจยังไอต่อเนื่องหลายสัปดาห์ถึงหลายเดือน\n\nในวัยรุ่นและผู้ใหญ่ อาจมีอาการเพียงไอเรื้อรังที่ไม่หายสักที",
+          "warning": "ทารกหยุดหายใจ ใบหน้าเขียวคล้ำ กินไม่ได้เพราะไอ หรือชัก: ให้ไปพบแพทย์ทันที"
+        },
+        {
+          "key": "transmission",
+          "heading": "แพร่เชื้ออย่างไร",
+          "markdown": "แพร่เชื้อผ่าน**ละอองฝอย**ที่เกิดจากการไอหรือจามของผู้ป่วย และติดต่อได้ง่ายมาก ผู้ป่วยแพร่เชื้อได้สูงที่สุดในระยะหวัดและช่วงต้นของระยะไอเป็นชุด ผู้ป่วยที่ไม่ได้รักษาอาจแพร่เชื้อได้ประมาณ 3 สัปดาห์ เมื่อใช้ยาปฏิชีวนะครบ 5 วัน ความสามารถในการแพร่เชื้อจะลดลงอย่างชัดเจน\n\nทารกมักติดเชื้อจากผู้ใหญ่หรือพี่ในบ้านที่ไอ"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- ทารกและเด็กเล็กฉีด**วัคซีน 5 โรครวม** (DTaP-Hib-IPV) ตามกำหนด (อายุ 2, 4, 6 และ 18 เดือน) เด็กอายุ 5 ปีจนถึงก่อนเข้าประถมศึกษาฉีด **Tdap-IPV**\n- แนะนำให้หญิงตั้งครรภ์ฉีด **Tdap** 1 เข็มเมื่ออายุครรภ์ 28–36 สัปดาห์ในทุกการตั้งครรภ์ โดยจ่ายค่าใช้จ่ายเอง (บางเมืองและมณฑลมีเงินอุดหนุน)\n- ผู้ดูแลทารกตรวจสอบสถานะการฉีดวัคซีนของตนเอง สวมหน้ากากอนามัยเมื่อไอ และล้างมือบ่อย ๆ\n- ผู้ที่อยู่ร่วมบ้านและสัมผัสผู้ป่วยอาจได้รับยาปฏิชีวนะเพื่อป้องกัน ตามการประเมินของแพทย์"
+        },
+        {
+          "key": "treatment",
+          "heading": "การวินิจฉัยและการรักษา",
+          "markdown": "รักษาด้วยยาปฏิชีวนะกลุ่มแมคโครไลด์ (เช่น azithromycin) การใช้ยาตั้งแต่ระยะแรกช่วยบรรเทาอาการและลดระยะเวลาที่แพร่เชื้อ ทารกที่ป่วยรุนแรงต้องนอนโรงพยาบาลเพื่อเฝ้าระวังการหายใจ ยาแก้ไอมีผลจำกัดต่ออาการไอเป็นชุดของไอกรน"
+        },
+        {
+          "key": "vaccine",
+          "heading": "วัคซีน",
+          "markdown": "การฉีดวัคซีนประจำที่รัฐออกค่าใช้จ่าย: วัคซีน 5 โรครวม (คอตีบ บาดทะยัก ไอกรนชนิดไร้เซลล์ เชื้อฮีโมฟิลัส อินฟลูเอนซี ชนิดบี และโปลิโอชนิดเชื้อตาย) ฉีดอย่างละ 1 เข็มเมื่ออายุ 2, 4, 6 และ 18 เดือน ฉีด Tdap-IPV 1 เข็มเมื่ออายุ 5 ปีจนถึงก่อนเข้าประถมศึกษา ภูมิคุ้มกันจากวัคซีนจะลดลงตามเวลา วัยรุ่นและผู้ใหญ่จึงอาจพิจารณาฉีดกระตุ้น Tdap"
+        },
+        {
+          "key": "situation",
+          "heading": "สถานการณ์ปัจจุบันและสถิติ",
+          "markdown": "ไต้หวันพบผู้ป่วยยืนยันปีละหลายสิบราย ส่วนใหญ่เป็นทารกอายุต่ำกว่า 6 เดือน"
+        },
+        {
+          "key": "faq",
+          "heading": "คำถามที่พบบ่อย"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

@@ -65,6 +65,41 @@
     "en": {
       "title": "World AIDS Day: regular testing, PrEP and U=U to end AIDS",
       "summary": "Taiwan CDC urges people at risk to test regularly and use PrEP and condoms; people living with HIV who keep their viral load undetectable do not transmit HIV sexually (U=U)."
+    },
+    "ja": {
+      "title": "世界エイズデー：定期的な検査、PrEP、U=Uで、ともにエイズをなくそう",
+      "summary": "世界エイズデーにあたり、台湾CDCは、感染リスクのある人に定期的な検査を受け、PrEPとコンドームを活用するよう呼びかけています。感染者が規則的に服薬してウイルス量が検出されなくなれば、性行為で感染することはありません（U=U）。",
+      "bodyMarkdown": "12月1日は世界エイズデーです。台湾CDCによると、台湾のHIV新規届出数は2017年から毎年減少し、国連の95-95-95目標に向けて進み続けています。\n\n台湾CDCは、感染リスクのある人は定期的に検査を受けるよう呼びかけています。匿名検査を行う病院、地域の検査拠点、HIV自己検査キットが利用できます。曝露前予防内服（PrEP）についても相談できます。感染者は診断後できるだけ早く服薬を始め、ウイルス量が継続して検出されなくなれば、性行為で他の人に感染させることはありません（U=U）。また、社会の皆さんが、感染者が受診しやすいよう、思いやりのある態度で支えてくださるようお願いします。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Pandaigdigang Araw ng AIDS: regular na pagpapasuri, PrEP at U=U para wakasan ang AIDS",
+      "summary": "Sa Pandaigdigang Araw ng AIDS, hinihimok ng Taiwan CDC ang mga may panganib na magpasuri nang regular at gumamit ng PrEP at condom; ang mga taong may HIV na regular na umiinom ng gamot at hindi na matukoy ang viral load ay hindi nakahahawa sa pamamagitan ng pakikipagtalik (U=U).",
+      "bodyMarkdown": "Ang Disyembre 1 ay Pandaigdigang Araw ng AIDS. Ayon sa Taiwan CDC, bumababa taun-taon ang bilang ng bagong naiulat na HIV sa Taiwan mula noong 2017, at patuloy itong umuusad tungo sa 95-95-95 na target ng United Nations.\n\nHinihimok ng Taiwan CDC ang mga may panganib na mahawa na regular na magpasuri; maaaring gamitin ang mga ospital na may anonymous na pagsusuri, mga community testing site o HIV self-test kit, at maaari ring sumangguni tungkol sa pre-exposure prophylaxis (PrEP). Ang mga taong may HIV ay dapat uminom ng gamot sa lalong madaling panahon pagkatapos ma-diagnose; kapag patuloy na hindi matukoy ang viral load, hindi nila maipapasa ang virus sa iba sa pamamagitan ng pakikipagtalik (U=U). Hinihiling din sa publiko na suportahan ang mga taong may HIV sa pagpapagamot nang may magiliw na saloobin.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Ngày Thế giới phòng chống AIDS: xét nghiệm định kỳ, PrEP và U=U để cùng chấm dứt AIDS",
+      "summary": "Nhân Ngày Thế giới phòng chống AIDS, CDC Đài Loan kêu gọi người có nguy cơ nhiễm xét nghiệm định kỳ, dùng PrEP và bao cao su; người nhiễm HIV uống thuốc đều đặn để tải lượng vi-rút không phát hiện được thì không lây truyền HIV qua quan hệ tình dục (U=U).",
+      "bodyMarkdown": "Ngày 1/12 là Ngày Thế giới phòng chống AIDS. CDC Đài Loan cho biết số ca HIV mới được báo cáo trong nước giảm dần từ năm 2017, tiếp tục tiến tới mục tiêu 95-95-95 của Liên Hợp Quốc.\n\nCDC Đài Loan kêu gọi người có nguy cơ nhiễm nên xét nghiệm định kỳ, có thể dùng bệnh viện xét nghiệm ẩn danh, điểm xét nghiệm cộng đồng hoặc bộ xét nghiệm HIV tự thực hiện; cũng có thể tư vấn về dự phòng trước phơi nhiễm (PrEP). Người nhiễm HIV sau khi được chẩn đoán cần uống thuốc càng sớm càng tốt; khi tải lượng vi-rút liên tục không phát hiện được thì sẽ không lây cho người khác qua quan hệ tình dục (U=U). Cũng mong cộng đồng hỗ trợ người nhiễm đi khám bằng thái độ thân thiện.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Hari AIDS Sedunia: tes rutin, PrEP, dan U=U untuk bersama mengakhiri AIDS",
+      "summary": "Pada Hari AIDS Sedunia, CDC Taiwan mengimbau orang yang berisiko untuk tes secara rutin serta memakai PrEP dan kondom; orang dengan HIV yang minum obat secara teratur hingga viral load tidak terdeteksi tidak menularkan HIV melalui hubungan seksual (U=U).",
+      "bodyMarkdown": "Tanggal 1 Desember adalah Hari AIDS Sedunia. Menurut CDC Taiwan, jumlah laporan kasus baru HIV di Taiwan menurun setiap tahun sejak 2017 dan terus bergerak menuju target 95-95-95 PBB.\n\nCDC Taiwan mengimbau orang yang berisiko tertular untuk tes secara rutin; dapat memanfaatkan rumah sakit tes anonim, titik tes komunitas, atau alat tes mandiri HIV, dan juga dapat berkonsultasi tentang profilaksis prapajanan (PrEP). Orang dengan HIV sebaiknya segera minum obat setelah terdiagnosis; jika viral load terus tidak terdeteksi, virus tidak akan menular ke orang lain melalui hubungan seksual (U=U). Masyarakat juga diharapkan mendukung orang dengan HIV berobat dengan sikap ramah.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "วันเอดส์โลก: ตรวจสม่ำเสมอ PrEP และ U=U ร่วมกันยุติเอดส์",
+      "summary": "ในวันเอดส์โลก CDC ไต้หวันเรียกร้องให้ผู้ที่มีความเสี่ยงติดเชื้อตรวจสม่ำเสมอ ใช้ PrEP และถุงยางอนามัย ผู้ติดเชื้อเอชไอวีที่กินยาสม่ำเสมอจนตรวจไม่พบปริมาณไวรัสจะไม่แพร่เชื้อทางเพศสัมพันธ์ (U=U)",
+      "bodyMarkdown": "วันที่ 1 ธันวาคมเป็นวันเอดส์โลก CDC ไต้หวันระบุว่าจำนวนผู้ติดเชื้อเอชไอวีรายใหม่ที่ได้รับแจ้งในประเทศลดลงทุกปีตั้งแต่ปี 2017 และยังคงมุ่งสู่เป้าหมาย 95-95-95 ของสหประชาชาติ\n\nCDC ไต้หวันเรียกร้องให้ผู้ที่มีความเสี่ยงติดเชื้อตรวจเป็นประจำ สามารถใช้โรงพยาบาลที่ตรวจแบบไม่เปิดเผยตัวตน จุดตรวจในชุมชน หรือชุดตรวจเอชไอวีด้วยตนเอง และปรึกษาเรื่องการป้องกันก่อนสัมผัส (PrEP) ได้ ผู้ติดเชื้อควรเริ่มกินยาโดยเร็วหลังได้รับการวินิจฉัย เมื่อตรวจไม่พบปริมาณไวรัสอย่างต่อเนื่องก็จะไม่แพร่เชื้อให้ผู้อื่นทางเพศสัมพันธ์ (U=U) และขอให้สังคมสนับสนุนให้ผู้ติดเชื้อไปรับการรักษาด้วยท่าทีที่เป็นมิตร",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

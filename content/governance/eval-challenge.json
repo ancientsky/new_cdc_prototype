@@ -3595,21 +3595,6 @@
       }
     },
     {
-      "id": "CH-SVC-case-data-request-3",
-      "category": "service",
-      "source": "service.case-data-request",
-      "style": "簡寫",
-      "split": "dev",
-      "q": "個案資料申請 IRB 要附嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.case-data-request"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-SVC-cluster-report-1922-1",
       "category": "service",
       "source": "service.cluster-report-1922",
@@ -3985,36 +3970,6 @@
       }
     },
     {
-      "id": "CH-SVC-notifiable-disease-report-3",
-      "category": "service",
-      "source": "service.notifiable-disease-report",
-      "style": "簡寫",
-      "split": "dev",
-      "q": "NIDRS 通報 怎麼操作",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.notifiable-disease-report"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-SVC-research-data-request-1",
-      "category": "service",
-      "source": "service.research-data-request",
-      "style": "口語",
-      "split": "dev",
-      "q": "想要疾管署委託研究的成果報告全文",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.research-data-request"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-SVC-research-data-request-2",
       "category": "service",
       "source": "service.research-data-request",
@@ -4025,51 +3980,6 @@
         "refuse": false,
         "mustCiteAny": [
           "service.research-data-request"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-SVC-research-data-request-3",
-      "category": "service",
-      "source": "service.research-data-request",
-      "style": "短句",
-      "split": "dev",
-      "q": "研究成果報告 申請",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.research-data-request"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-SVC-response-hospital-designation-1",
-      "category": "service",
-      "source": "service.response-hospital-designation",
-      "style": "情境",
-      "split": "dev",
-      "q": "醫院想設負壓隔離病房，要怎麼申請",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.response-hospital-designation"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
-      "id": "CH-SVC-response-hospital-designation-2",
-      "category": "service",
-      "source": "service.response-hospital-designation",
-      "style": "口語",
-      "split": "dev",
-      "q": "怎麼成為傳染病應變醫院",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "service.response-hospital-designation"
         ],
         "lowRelevance": false
       }
@@ -7474,21 +7384,6 @@
       }
     },
     {
-      "id": "CH-DIS-varicella-care-1",
-      "category": "disease",
-      "source": "disease.varicella#care",
-      "style": "家長",
-      "split": "dev",
-      "q": "小孩出水痘可以吃阿斯匹靈嗎",
-      "expect": {
-        "refuse": false,
-        "mustCiteAny": [
-          "disease.varicella"
-        ],
-        "lowRelevance": false
-      }
-    },
-    {
       "id": "CH-DIS-varicella-care-2",
       "category": "disease",
       "source": "disease.varicella#care",
@@ -8889,6 +8784,62 @@
       "id": "CH-ML-migrant-health-check-vi-1",
       "source": "ml.migrant-health-check@vi",
       "q": "Lao động sang Đài Loan phải khám sức khỏe khi nào?",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-case-data-request-3",
+      "source": "service.case-data-request",
+      "q": "個案資料申請 IRB 要附嗎",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-notifiable-disease-report-3",
+      "source": "service.notifiable-disease-report",
+      "q": "NIDRS 通報 怎麼操作",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-research-data-request-1",
+      "source": "service.research-data-request",
+      "q": "想要疾管署委託研究的成果報告全文",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-research-data-request-3",
+      "source": "service.research-data-request",
+      "q": "研究成果報告 申請",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-response-hospital-designation-1",
+      "source": "service.response-hospital-designation",
+      "q": "醫院想設負壓隔離病房，要怎麼申請",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-SVC-response-hospital-designation-2",
+      "source": "service.response-hospital-designation",
+      "q": "怎麼成為傳染病應變醫院",
+      "split": "dev",
+      "promotedAt": "2026-10-14",
+      "to": "eval-set.json"
+    },
+    {
+      "id": "CH-DIS-varicella-care-1",
+      "source": "disease.varicella#care",
+      "q": "小孩出水痘可以吃阿斯匹靈嗎",
       "split": "dev",
       "promotedAt": "2026-10-14",
       "to": "eval-set.json"

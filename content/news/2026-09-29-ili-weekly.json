@@ -68,5 +68,15 @@
     "disease": "disease.influenza",
     "text": "類流感門急診就診率續升，處流行高峰"
   },
-  "bodyMarkdown": "疾病管制署於 2026 年 9 月 29 日（今日）發布疫情週報：上週（發布日前一週）類流感門急診就診率持續上升，社區以 A 型 H3N2 為主；腸病毒門急診就診人次開學後上升但仍低於流行閾值；南部登革熱本土病例仍持續出現。\n\n公費流感疫苗將於 10 月 1 日開打，疾管署呼籲長者、幼兒及慢性病人優先接種；65 歲以上有類流感症狀者，於高峰期就醫可由醫師直接開立公費抗病毒藥劑。各項數字以疫情態勢層及傳染病統計資料查詢系統公布為準。"
+  "bodyMarkdown": "疾病管制署於 2026 年 9 月 29 日（今日）發布疫情週報：上週（發布日前一週）類流感門急診就診率持續上升，社區以 A 型 H3N2 為主；腸病毒門急診就診人次開學後上升但仍低於流行閾值；南部登革熱本土病例仍持續出現。\n\n公費流感疫苗將於 10 月 1 日開打，疾管署呼籲長者、幼兒及慢性病人優先接種；65 歲以上有類流感症狀者，於高峰期就醫可由醫師直接開立公費抗病毒藥劑。各項數字以疫情態勢層及傳染病統計資料查詢系統公布為準。",
+  "i18n": {
+    "en": {
+      "title": "Influenza continues to rise; government-funded vaccine starts 1 October, with older adults and young children first",
+      "summary": "The rate of outpatient and emergency visits for influenza-like illness continues to rise, and enterovirus and local dengue activity remain active. Taiwan CDC urges older adults and young children to get the government-funded flu vaccine first from 1 October.",
+      "bodyMarkdown": "In its weekly epidemic report on 29 September 2026 (today), Taiwan CDC said that last week (the week before the release date) the rate of outpatient and emergency visits for influenza-like illness continued to rise, with influenza A(H3N2) predominant in the community; enterovirus visits rose after the new school term began but remain below the epidemic threshold; and local dengue cases continue to appear in southern Taiwan.\n\nGovernment-funded flu vaccination starts on 1 October. Taiwan CDC urges older adults, young children and people with chronic conditions to get vaccinated first. During the peak period, people aged 65 and over with influenza-like symptoms can be prescribed government-funded antivirals directly by the doctor. For all figures, refer to the epidemic situation layer and the Taiwan National Infectious Disease Statistics System.",
+      "declText": "The rate of visits for influenza-like illness continues to rise and is at the epidemic peak",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

@@ -86,6 +86,18 @@
       "answerMarkdown": "Tandaan ang **\"hugasan, kilalanin, magpagamot, obserbahan\"**:\n\n1. **Hugasan**: agad hugasan ang sugat gamit ang sabon at maraming tubig sa loob ng 15 minuto, saka lagyan ng povidone-iodine.\n2. **Kilalanin**: tandaan ang itsura ng hayop at kung saan ito nakita.\n3. **Magpagamot**: pumunta agad sa ospital o klinika; susuriin ng doktor kung kailangan ng bakuna laban sa rabies at immunoglobulin.\n4. **Obserbahan**: kung ligtas na maikukulong ang hayop, obserbahan ito sa loob ng 10 araw.\n\nAng kagat ng ligaw na hayop sa Taiwan (tulad ng ferret-badger o palm civet) o kagat ng hayop sa ibang bansa ay laging dapat ipasuri sa doktor para sa bakuna pagkatapos ng exposure.",
       "machineTranslated": true,
       "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "question": "犬、猫、野生動物にかまれたら、どうすればよいですか？",
+      "answerMarkdown": "「**洗う・見分ける・受診する・観察する**」を覚えてください。\n\n1. **洗う**：すぐに石けんと大量の水で傷口を15分間洗い、そのあとポビドンヨードで消毒します。\n2. **見分ける**：動物の見た目の特徴と、出没した場所を覚えておきます。\n3. **受診する**：できるだけ早く受診してください。医師が、狂犬病ワクチンと免疫グロブリンの接種が必要かどうかを評価します。\n4. **観察する**：動物を安全に留めておける場合は、隔離して10日間観察します。\n\n台湾で野生のイタチアナグマやハクビシンにかまれた場合や、海外で動物にかまれた場合は、いずれも受診して、曝露後の接種が必要かどうかを評価してもらってください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Bị chó, mèo hoặc động vật hoang dã cắn thì phải làm gì?",
+      "answerMarkdown": "Hãy nhớ **\"rửa, nhận diện, đi khám, theo dõi\"**:\n\n1. **Rửa**: ngay lập tức rửa vết thương bằng xà phòng và thật nhiều nước trong 15 phút, sau đó sát khuẩn bằng povidone-iodine.\n2. **Nhận diện**: ghi nhớ đặc điểm bên ngoài của con vật và nơi nó thường xuất hiện.\n3. **Đi khám**: đi khám càng sớm càng tốt; bác sĩ sẽ đánh giá có cần tiêm vắc-xin phòng dại và globulin miễn dịch hay không.\n4. **Theo dõi**: nếu có thể nhốt con vật một cách an toàn, hãy cách ly và theo dõi trong 10 ngày.\n\nBị chồn bạc má (ferret-badger) hoặc cầy vòi mốc hoang dã cắn ở Đài Loan, hoặc bị động vật cắn ở nước ngoài, đều cần đi khám để được đánh giá việc tiêm phòng sau phơi nhiễm.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

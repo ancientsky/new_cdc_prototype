@@ -394,6 +394,290 @@
           "heading": "Câu hỏi thường gặp"
         }
       ]
+    },
+    "ja": {
+      "title": "麻疹（はしか）",
+      "summary": "麻疹は感染力が非常に強いウイルス性の病気で、空気感染します。MMR ワクチンを 2 回きちんと接種すれば効果的に予防できます。1966 年以降に生まれて免疫がない人は、海外へ行く前に接種を検討してください。",
+      "keyFacts": {
+        "incubation": "7～21 日（発疹は約 14 日目）",
+        "symptoms": "高熱、咳、鼻水、結膜炎が出て、その後、全身に赤い発疹が出る",
+        "transmission": "空気感染、飛沫感染、接触感染",
+        "prevention": "MMR ワクチンを 2 回接種する",
+        "notify": "24 時間以内"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "どうすればよいか",
+          "cards": [
+            {
+              "if": "発熱と発疹が同時に出ている",
+              "title": "先に電話で連絡し、マスクを着けて受診する",
+              "text": "受診する前に医療機関へ電話で連絡し、マスクを着け、公共交通機関の利用を避け、渡航歴と接触歴を自分から伝えてください。"
+            },
+            {
+              "if": "麻疹の患者と接触したと連絡を受けた",
+              "title": "18 日間、自主的に健康管理をする",
+              "text": "接触した日から 18 日間は自主的に健康管理を行い、症状が出る前でも人の多い場所への出入りは避けてください。接触後 72 時間以内なら、MMR ワクチンの接種を検討できます。"
+            },
+            {
+              "if": "1966 年以降に生まれ、海外へ行く予定がある",
+              "title": "出国の 2～4 週間前に接種の要否を相談する",
+              "text": "免疫があるかどうか分からない場合は、出国の 2～4 週間前に渡航医学外来を受診し、自費で MMR ワクチンを 1 回接種するかどうか相談してください。"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "症状と警告サイン",
+          "markdown": "麻疹の初期（前駆期）には、**高熱、咳、鼻水、結膜炎**が出て、口の中の頬の内側に白いコプリック斑（Koplik spots）が出ることがあります。\n\n発熱から 3～4 日後に発疹が出始めます。赤い斑状の盛り上がった発疹が、耳の後ろ、生え際、顔から下へ全身に広がり、約 4～7 日続いた後、徐々に消えて、茶色い色素沈着が残ります。",
+          "warning": "息が速い、または息苦しい、高熱が続く、けいれん、意識の変化、ひどい下痢による脱水：乳幼児、妊婦、免疫が低下している人は、肺炎、中耳炎、脳炎を起こしやすいです。"
+        },
+        {
+          "key": "transmission",
+          "heading": "感染経路",
+          "markdown": "麻疹は、**空気**、飛沫、または患者の鼻やのどの分泌物との直接の接触で感染し、感染力が極めて強い病気です。免疫のない人が患者と同じ部屋にいると、約 9 割が感染します。ウイルスは空気中で約 2 時間生きられます。\n\n発疹が出る 4 日前から、発疹が出た後 4 日まで、人にうつす可能性があります。"
+        },
+        {
+          "key": "prevention",
+          "heading": "予防",
+          "markdown": "- 幼児は予定どおりに **MMR ワクチンを 2 回**接種します。1 回目は生後 12 か月、2 回目は 5 歳から小学校入学前です。\n- **1966 年以降に生まれ**、麻疹の免疫がない大人が、麻疹が流行している地域へ行く予定の場合は、出国の 2～4 週間前に渡航医学外来で、自費で MMR ワクチンを 1 回接種するかどうか相談することをお勧めします。医療従事者や、外国人と接する機会が多い仕事の人も、相談することをお勧めします。\n- 1 歳未満の赤ちゃんはまだワクチンを接種できません。必要でなければ、流行地域へ連れて行かないことをお勧めします。\n- 流行地域は、台湾 CDC の「渡航疫情の勧告レベル」によります。"
+        },
+        {
+          "key": "treatment",
+          "heading": "診断と治療",
+          "markdown": "麻疹には特効薬がなく、解熱、水分と栄養の補給などの対症療法が中心で、中耳炎や肺炎などの合併症を治療します。患者は、発疹が出てから 4 日後まで隔離が必要です。\n\n免疫のない接触者は、曝露後 **72 時間以内**に MMR ワクチンを接種するか、6 日以内に医師の判断で免疫グロブリンの注射を受けることで、発症のリスクを下げたり、症状を軽くしたりできます。"
+        },
+        {
+          "key": "vaccine",
+          "heading": "ワクチン",
+          "markdown": "MMR ワクチン（麻疹・おたふくかぜ・風疹の混合ワクチン）は生ワクチン（弱毒生ワクチン）で、2 回接種した場合の予防効果は約 97% です。妊婦と重い免疫不全のある人は接種できません。出産可能な年齢の女性は、接種後 4 週間は妊娠を避けてください。大人の接種は、2025 年 4 月 16 日に改訂された「国内の現行 MMR 予防接種の推奨」に従います。"
+        },
+        {
+          "key": "situation",
+          "heading": "現在の発生状況と統計",
+          "markdown": "近年の海外からの持ち込み例と、それに伴う国内の集団発生は、東南アジアや日本などでの流行に関連したものが多いです。年間の症例数はデータセットをご覧ください。"
+        },
+        {
+          "key": "faq",
+          "heading": "よくある質問"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "title": "Tigdas",
+      "summary": "Ang tigdas ay isang viral na sakit na napakadaling makahawa at kumakalat sa hangin. Epektibong napipigilan ito ng kumpletong 2 dose ng bakunang MMR. Ang mga ipinanganak noong 1966 o pagkatapos nito na walang kaligtasan sa sakit ay dapat magpasuri kung kailangan ng bakuna bago bumiyahe sa ibang bansa.",
+      "keyFacts": {
+        "incubation": "7–21 araw (lumilitaw ang pantal mga ika-14 na araw)",
+        "symptoms": "Mataas na lagnat, ubo, sipon, conjunctivitis, at pagkatapos ay pantal sa buong katawan",
+        "transmission": "Sa hangin, droplets, kontak",
+        "prevention": "2 dose ng bakunang MMR",
+        "notify": "Sa loob ng 24 oras"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Ano ang dapat gawin",
+          "cards": [
+            {
+              "if": "may lagnat at may pantal",
+              "title": "Tumawag muna, magsuot ng face mask, at magpatingin sa doktor",
+              "text": "Bago pumunta sa klinika o ospital, tumawag muna at ipaalam sa kanila. Magsuot ng face mask, iwasan ang pampublikong sasakyan, at kusang sabihin ang iyong kasaysayan ng paglalakbay at pakikisalamuha."
+            },
+            {
+              "if": "sinabihan na nakasalamuha mo ang isang kaso ng tigdas",
+              "title": "Subaybayan ang sarili mong kalusugan sa loob ng 18 araw",
+              "text": "Subaybayan ang sarili mong kalusugan sa loob ng 18 araw mula sa araw ng pakikisalamuha, at iwasan ang mataong lugar hanggang may lumitaw na sintomas. Sa loob ng 72 oras mula sa pakikisalamuha, maaaring pag-isipan ang pagpapabakuna ng MMR."
+            },
+            {
+              "if": "ipinanganak noong 1966 o pagkatapos nito at may planong bumiyahe sa ibang bansa",
+              "title": "Magpasuri kung kailangan ng bakuna 2–4 na linggo bago umalis",
+              "text": "Kung hindi ka sigurado kung may kaligtasan ka sa sakit, pumunta sa travel medicine clinic 2–4 na linggo bago umalis upang masuri kung kailangan mo ng 1 dose ng MMR na sariling gastos."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Mga sintomas at babalang senyales",
+          "markdown": "Nagsisimula ang tigdas (prodromal na yugto) sa **mataas na lagnat, ubo, sipon, at conjunctivitis**, at maaaring lumitaw ang mga puting batik ng Koplik (Koplik spots) sa loob ng pisngi.\n\nPagkalipas ng 3–4 na araw ng lagnat, magsisimulang lumabas ang pantal. Pulang bukol-bukol na pantal ito na nagsisimula sa likod ng tainga, hairline at mukha, at kumakalat pababa sa buong katawan. Tumatagal ito nang mga 4–7 araw bago unti-unting mawala, at nag-iiwan ng kayumangging kulay sa balat.",
+          "warning": "Mabilis o hirap na paghinga, tuloy-tuloy na mataas na lagnat, pangingisay, pagbabago ng malay, matinding pagtatae na may dehydration; ang mga sanggol, buntis at may mahinang resistensya ay madaling magkaroon ng pulmonya, impeksyon sa tainga at encephalitis."
+        },
+        {
+          "key": "transmission",
+          "heading": "Paano ito kumakalat",
+          "markdown": "Kumakalat ang tigdas sa pamamagitan ng **hangin**, droplets, o direktang kontak sa mga likido mula sa ilong at lalamunan ng pasyente, at napakadaling makahawa. Kapag nasa iisang silid ang taong walang kaligtasan sa sakit at ang pasyente, mga siyam sa sampu ang mahahawa. Mabubuhay ang virus sa hangin nang mga 2 oras.\n\nNakakahawa ang pasyente mula 4 na araw bago lumabas ang pantal hanggang 4 na araw pagkatapos lumabas ito."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pag-iwas",
+          "markdown": "- Ang mga bata ay tumatanggap ng **2 dose ng bakunang MMR** ayon sa iskedyul: ang unang dose sa 12 buwan, at ang ikalawang dose mula 5 taong gulang hanggang bago pumasok sa elementarya.\n- Ang mga nasa hustong gulang na **ipinanganak noong 1966 o pagkatapos nito** na walang kaligtasan sa tigdas at may planong pumunta sa mga lugar na may outbreak ay pinapayuhang pumunta sa travel medicine clinic 2–4 na linggo bago umalis upang masuri kung kailangan nila ng 1 dose ng MMR na sariling gastos; pinapayuhan ding magpasuri ang mga health worker at ang mga madalas makasalamuha ng mga dayuhan sa trabaho.\n- Hindi pa nababakunahan ang mga sanggol na wala pang 1 taong gulang; huwag silang dalhin sa mga lugar na may outbreak maliban kung kinakailangan.\n- Ang mga lugar na may outbreak ay batay sa “travel health notice level” ng Taiwan CDC."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis at paggamot",
+          "markdown": "Walang espesipikong gamot para sa tigdas. Suportang paggamot ang pangunahin, kabilang ang pagpapababa ng lagnat at pagbibigay ng tubig at nutrisyon, at paggamot sa mga komplikasyon tulad ng impeksyon sa tainga at pulmonya. Ihihiwalay ang pasyente hanggang 4 na araw pagkatapos lumabas ang pantal.\n\nAng mga nakasalamuhang walang kaligtasan sa sakit ay maaaring tumanggap ng bakunang MMR sa loob ng **72 oras** mula sa pagkakalantad, o ng immunoglobulin na ituturok sa loob ng 6 na araw ayon sa pagsusuri ng doktor, upang mabawasan ang panganib na magkasakit o gumaan ang sintomas."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Bakuna",
+          "markdown": "Ang bakunang MMR (pinagsamang bakuna para sa tigdas, beke at German measles/rubella) ay live attenuated na bakuna; ang 2 dose ay may proteksyong mga 97%. Hindi ito dapat ibigay sa mga buntis at sa mga may malubhang kahinaan ng immune system; dapat iwasan ng mga babaeng nasa edad na maaaring magbuntis ang pagbubuntis sa loob ng 4 na linggo pagkatapos ng bakuna. Ang rekomendasyon sa pagbabakuna ng mga nasa hustong gulang ay batay sa “Kasalukuyang rekomendasyon sa pagbabakuna ng MMR sa Taiwan” na binago noong Abril 16, 2025."
+        },
+        {
+          "key": "situation",
+          "heading": "Kasalukuyang sitwasyon at estadistika",
+          "markdown": "Ang mga kamakailang kaso na galing sa ibang bansa at ang mga lokal na cluster na nagmula sa mga ito ay kadalasang may kaugnayan sa mga outbreak sa Timog-silangang Asya, Japan at iba pa. Tingnan ang dataset para sa taunang bilang ng kaso."
+        },
+        {
+          "key": "faq",
+          "heading": "Mga madalas itanong"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Campak",
+      "summary": "Campak adalah penyakit virus yang sangat mudah menular dan dapat menyebar lewat udara. Vaksin MMR 2 dosis lengkap efektif mencegahnya. Orang yang lahir pada tahun 1966 atau sesudahnya dan tidak memiliki kekebalan sebaiknya menilai kebutuhan vaksinasi sebelum bepergian ke luar negeri.",
+      "keyFacts": {
+        "incubation": "7–21 hari (ruam muncul sekitar hari ke-14)",
+        "symptoms": "Demam tinggi, batuk, pilek, konjungtivitis, lalu ruam merah di seluruh tubuh",
+        "transmission": "Udara, percikan dahak (droplet), kontak",
+        "prevention": "Vaksin MMR 2 dosis",
+        "notify": "Dalam 24 jam"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Apa yang harus dilakukan",
+          "cards": [
+            {
+              "if": "demam disertai ruam",
+              "title": "Telepon dulu, pakai masker, lalu berobat",
+              "text": "Sebelum berobat, telepon fasilitas kesehatan terlebih dahulu, pakai masker, hindari transportasi umum, dan sampaikan sendiri riwayat perjalanan dan riwayat kontak Anda."
+            },
+            {
+              "if": "diberi tahu pernah kontak dengan kasus campak",
+              "title": "Pantau kesehatan sendiri selama 18 hari",
+              "text": "Pantau kesehatan sendiri selama 18 hari sejak hari kontak, dan hindari tempat ramai sebelum muncul gejala. Dalam 72 jam setelah kontak, vaksin MMR dapat dipertimbangkan."
+            },
+            {
+              "if": "lahir pada tahun 1966 atau sesudahnya dan berencana bepergian ke luar negeri",
+              "title": "Periksakan kebutuhan vaksin 2–4 minggu sebelum berangkat",
+              "text": "Bila tidak yakin apakah Anda memiliki kekebalan, datanglah ke klinik kedokteran perjalanan 2–4 minggu sebelum berangkat untuk menilai vaksinasi 1 dosis MMR dengan biaya sendiri."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Campak diawali dengan **demam tinggi, batuk, pilek, dan konjungtivitis**; bintik putih Koplik (Koplik spots) bisa muncul di dalam pipi.\n\nSetelah demam 3–4 hari, ruam mulai muncul. Ruam berupa bercak merah yang sedikit menonjol, dimulai dari belakang telinga, garis rambut, dan wajah, lalu menyebar ke bawah ke seluruh tubuh. Ruam bertahan sekitar 4–7 hari, lalu berangsur memudar dan meninggalkan warna kecokelatan pada kulit.",
+          "warning": "Napas cepat atau sulit, demam tinggi terus-menerus, kejang, perubahan kesadaran, diare berat dengan dehidrasi; bayi, ibu hamil, dan orang dengan daya tahan tubuh lemah mudah mengalami pneumonia, infeksi telinga tengah, dan ensefalitis."
+        },
+        {
+          "key": "transmission",
+          "heading": "Cara penularan",
+          "markdown": "Campak menular lewat **udara**, percikan dahak (droplet), atau kontak langsung dengan lendir hidung dan tenggorokan penderita, dan sangat mudah menular. Jika orang yang tidak memiliki kekebalan berada satu ruangan dengan penderita, sekitar sembilan dari sepuluh akan tertular. Virus dapat bertahan di udara sekitar 2 jam.\n\nPenderita menular sejak 4 hari sebelum ruam muncul sampai 4 hari sesudahnya."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- Anak mendapat **2 dosis vaksin MMR** sesuai jadwal: dosis pertama pada usia 12 bulan, dosis kedua pada usia 5 tahun sampai sebelum masuk SD.\n- Orang dewasa yang **lahir pada tahun 1966 atau sesudahnya** dan tidak memiliki kekebalan terhadap campak, bila berencana pergi ke daerah wabah, dianjurkan datang ke klinik kedokteran perjalanan 2–4 minggu sebelum berangkat untuk menilai vaksinasi 1 dosis MMR dengan biaya sendiri; tenaga kesehatan dan pekerja yang sering bertemu warga asing juga dianjurkan menilai kebutuhan ini.\n- Bayi di bawah 1 tahun belum divaksin; sebaiknya tidak dibawa ke daerah wabah kecuali sangat perlu.\n- Daerah wabah mengacu pada “tingkat peringatan kesehatan perjalanan” Taiwan CDC."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis dan pengobatan",
+          "markdown": "Tidak ada obat khusus untuk campak. Pengobatan bersifat suportif, termasuk menurunkan demam, memberi cairan dan nutrisi, serta mengobati komplikasi seperti infeksi telinga tengah dan pneumonia. Penderita diisolasi sampai 4 hari setelah ruam muncul.\n\nKontak yang tidak memiliki kekebalan dapat menerima vaksin MMR dalam **72 jam** setelah paparan, atau suntikan imunoglobulin dalam 6 hari sesuai penilaian dokter, untuk menurunkan risiko sakit atau meringankan gejala."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaksin",
+          "markdown": "Vaksin MMR (vaksin kombinasi campak, gondongan, dan rubela) adalah vaksin hidup yang dilemahkan; 2 dosis memberi perlindungan sekitar 97%. Vaksin ini tidak boleh diberikan kepada ibu hamil dan orang dengan gangguan kekebalan berat; perempuan usia subur harus menghindari kehamilan selama 4 minggu setelah vaksinasi. Anjuran vaksinasi dewasa mengikuti “Anjuran vaksinasi MMR yang berlaku saat ini di Taiwan” yang direvisi pada 16 April 2025."
+        },
+        {
+          "key": "situation",
+          "heading": "Situasi terkini dan statistik",
+          "markdown": "Kasus impor dalam beberapa tahun terakhir dan klaster lokal yang ditimbulkannya banyak terkait dengan wabah di Asia Tenggara, Jepang, dan wilayah lain. Jumlah kasus per tahun dapat dilihat di dataset."
+        },
+        {
+          "key": "faq",
+          "heading": "Pertanyaan yang sering diajukan"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "โรคหัด",
+      "summary": "โรคหัดเป็นโรคติดเชื้อไวรัสที่ติดต่อได้ง่ายมากและแพร่เชื้อทางอากาศ การฉีดวัคซีน MMR ครบ 2 เข็มป้องกันได้อย่างมีประสิทธิภาพ ผู้ที่เกิดในปี 1966 เป็นต้นมาและไม่มีภูมิคุ้มกัน ควรประเมินการฉีดวัคซีนก่อนเดินทางไปต่างประเทศ",
+      "keyFacts": {
+        "incubation": "7–21 วัน (ผื่นขึ้นประมาณวันที่ 14)",
+        "symptoms": "ไข้สูง ไอ น้ำมูกไหล เยื่อบุตาอักเสบ จากนั้นมีผื่นแดงทั่วตัว",
+        "transmission": "ทางอากาศ ละอองฝอย การสัมผัส",
+        "prevention": "ฉีดวัคซีน MMR 2 เข็ม",
+        "notify": "ภายใน 24 ชั่วโมง"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "ควรทำอย่างไร",
+          "cards": [
+            {
+              "if": "มีไข้ร่วมกับผื่น",
+              "title": "โทรแจ้งล่วงหน้า สวมหน้ากากอนามัย แล้วไปพบแพทย์",
+              "text": "ก่อนไปสถานพยาบาล ให้โทรแจ้งล่วงหน้า สวมหน้ากากอนามัย หลีกเลี่ยงการโดยสารขนส่งสาธารณะ และแจ้งประวัติการเดินทางและประวัติการสัมผัสให้แพทย์ทราบด้วยตนเอง"
+            },
+            {
+              "if": "ได้รับแจ้งว่าเคยสัมผัสผู้ป่วยโรคหัด",
+              "title": "เฝ้าติดตามสุขภาพตนเอง 18 วัน",
+              "text": "เฝ้าติดตามสุขภาพตนเอง 18 วันนับจากวันที่สัมผัส และหลีกเลี่ยงสถานที่ที่มีคนหนาแน่นก่อนที่จะมีอาการ หากอยู่ภายใน 72 ชั่วโมงหลังสัมผัส อาจพิจารณาฉีดวัคซีน MMR"
+            },
+            {
+              "if": "เกิดในปี 1966 เป็นต้นมาและวางแผนเดินทางไปต่างประเทศ",
+              "title": "ประเมินการฉีดวัคซีน 2–4 สัปดาห์ก่อนเดินทาง",
+              "text": "หากไม่แน่ใจว่ามีภูมิคุ้มกันหรือไม่ ให้ไปคลินิกเวชศาสตร์การเดินทาง 2–4 สัปดาห์ก่อนเดินทางเพื่อประเมินการฉีดวัคซีน MMR 1 เข็มโดยจ่ายค่าใช้จ่ายเอง"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "โรคหัดระยะแรก (ระยะฟักตัวที่มีอาการนำ) จะมี**ไข้สูง ไอ น้ำมูกไหล เยื่อบุตาอักเสบ** และอาจพบจุดขาวคอปลิก (Koplik spots) ที่กระพุ้งแก้มด้านใน\n\nหลังมีไข้ 3–4 วัน ผื่นจะเริ่มขึ้น เป็นผื่นแดงนูนเล็กน้อย เริ่มจากหลังหู แนวไรผม และใบหน้า แล้วลามลงไปทั่วตัว คงอยู่ประมาณ 4–7 วันแล้วค่อย ๆ จางลง ทิ้งรอยสีน้ำตาลบนผิว",
+          "warning": "หายใจเร็วหรือลำบาก ไข้สูงต่อเนื่อง ชัก ระดับความรู้สึกตัวเปลี่ยนแปลง ท้องเสียรุนแรงจนขาดน้ำ: ทารก หญิงตั้งครรภ์ และผู้ที่มีภูมิคุ้มกันต่ำมีโอกาสเกิดปอดอักเสบ หูชั้นกลางอักเสบ และสมองอักเสบได้ง่าย"
+        },
+        {
+          "key": "transmission",
+          "heading": "แพร่เชื้ออย่างไร",
+          "markdown": "โรคหัดแพร่เชื้อผ่าน**อากาศ** ละอองฝอย หรือการสัมผัสสารคัดหลั่งจากจมูกและลำคอของผู้ป่วยโดยตรง และติดต่อได้ง่ายมาก ผู้ที่ไม่มีภูมิคุ้มกันอยู่ในห้องเดียวกับผู้ป่วยจะติดเชื้อประมาณเก้าในสิบคน ไวรัสอยู่ในอากาศได้ประมาณ 2 ชั่วโมง\n\nผู้ป่วยแพร่เชื้อได้ตั้งแต่ 4 วันก่อนผื่นขึ้นจนถึง 4 วันหลังผื่นขึ้น"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- เด็กเล็กฉีด**วัคซีน MMR 2 เข็ม**ตามกำหนด: เข็มแรกเมื่ออายุครบ 12 เดือน เข็มที่สองเมื่ออายุครบ 5 ปีจนถึงก่อนเข้าประถมศึกษา\n- ผู้ใหญ่ที่**เกิดในปี 1966 เป็นต้นมา**และไม่มีภูมิคุ้มกันโรคหัด หากวางแผนเดินทางไปพื้นที่ที่มีการระบาด แนะนำให้ไปคลินิกเวชศาสตร์การเดินทาง 2–4 สัปดาห์ก่อนเดินทางเพื่อประเมินการฉีดวัคซีน MMR 1 เข็มโดยจ่ายค่าใช้จ่ายเอง บุคลากรทางการแพทย์และผู้ที่ทำงานสัมผัสชาวต่างชาติบ่อยก็แนะนำให้ประเมินเช่นกัน\n- ทารกอายุต่ำกว่า 1 ปียังฉีดวัคซีนไม่ได้ หากไม่จำเป็นไม่แนะนำให้พาไปพื้นที่ที่มีการระบาด\n- พื้นที่ที่มีการระบาดให้ยึดตาม “ระดับคำแนะนำสุขภาพสำหรับการเดินทาง” ของ Taiwan CDC"
+        },
+        {
+          "key": "treatment",
+          "heading": "การวินิจฉัยและการรักษา",
+          "markdown": "โรคหัดไม่มียารักษาโดยเฉพาะ ใช้การรักษาแบบประคับประคองเป็นหลัก ได้แก่ ลดไข้ ให้น้ำและสารอาหาร และรักษาภาวะแทรกซ้อน เช่น หูชั้นกลางอักเสบและปอดอักเสบ ผู้ป่วยต้องแยกตัวจนถึง 4 วันหลังผื่นขึ้น\n\nผู้สัมผัสที่ไม่มีภูมิคุ้มกันอาจฉีดวัคซีน MMR ภายใน **72 ชั่วโมง**หลังสัมผัสเชื้อ หรือฉีดอิมมูโนโกลบูลินภายใน 6 วันตามการประเมินของแพทย์ เพื่อลดความเสี่ยงในการป่วยหรือบรรเทาอาการ"
+        },
+        {
+          "key": "vaccine",
+          "heading": "วัคซีน",
+          "markdown": "วัคซีน MMR (วัคซีนรวมหัด คางทูม หัดเยอรมัน) เป็นวัคซีนเชื้อเป็นชนิดอ่อนฤทธิ์ ฉีด 2 เข็มให้การป้องกันประมาณ 97% ห้ามฉีดในหญิงตั้งครรภ์และผู้ที่มีภูมิคุ้มกันบกพร่องรุนแรง หญิงวัยเจริญพันธุ์ควรหลีกเลี่ยงการตั้งครรภ์เป็นเวลา 4 สัปดาห์หลังฉีด คำแนะนำการฉีดวัคซีนในผู้ใหญ่เป็นไปตาม “คำแนะนำการฉีดวัคซีน MMR ที่ใช้อยู่ในปัจจุบันของไต้หวัน” ซึ่งปรับปรุงเมื่อวันที่ 16 เมษายน 2025"
+        },
+        {
+          "key": "situation",
+          "heading": "สถานการณ์ปัจจุบันและสถิติ",
+          "markdown": "ผู้ป่วยนำเข้าจากต่างประเทศในช่วงไม่กี่ปีที่ผ่านมาและกลุ่มก้อนในประเทศที่เกิดจากผู้ป่วยเหล่านั้น ส่วนใหญ่เกี่ยวข้องกับการระบาดในเอเชียตะวันออกเฉียงใต้ ญี่ปุ่น และที่อื่น ๆ ดูจำนวนผู้ป่วยรายปีได้ที่ชุดข้อมูล"
+        },
+        {
+          "key": "faq",
+          "heading": "คำถามที่พบบ่อย"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

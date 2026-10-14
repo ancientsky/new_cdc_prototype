@@ -26,7 +26,7 @@
 import { CROSS_LANG, PARAPHRASE, topicAnchorsOf, buildLexicon, latinStems, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
 import { ANTIVIRAL_RE, CLOSED_MARK, NOTICE_TYPES, SCHEDULE_VACCINE_RE, VAXMAP_GROUP_OF, VAXMAP_GROUP_OF_DISEASE, WHICH_VACCINE_RE, ageHashOf, ageProfileOf, mmssOf, normTravel, normalizeNotifyTable, vaxmapHref } from './structured.js';
 import { EN_STOP, VI_STOP, bigrams, detectInjection, maskPII, maskPIIDetailed, parseTimeRange, rocDate, tokenize } from './text.js';
-import { ANIMAL_RE, BITE_RE, CAREERS_DETAIL_RE, DRUGS, EXPLAIN_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FACETS, QUERY_FUNC_RE, RECORD_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_RE, classifyIntent, focusOf, isLowRelevance, refusalCopy, titleHits } from './rules.js';
+import { ANIMAL_RE, BITE_RE, CAREERS_DETAIL_RE, DRUGS, EXPLAIN_RE, HISTORICAL_WEIGHT, LAB_DETAIL_RE, LAB_PROCESS_RE, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FACETS, QUERY_FUNC_RE, RECORD_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_RE, classifyIntent, focusOf, isLowRelevance, refusalCopy, titleHits } from './rules.js';
 
 // 第四十輪（issue #77）：補接種問句（漏打、錯過、延遲、忘了打、補打）。命中就不給年齡時程表，改由檢索找補接種 FAQ
 // 第四十八輪（issue #94）：加「晚了兩個月才打」「延後接種」這類口語
@@ -167,7 +167,7 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
   }));
   const vaccinesNamedIn = (t, strict = false) => { const h = lc(t).replace(/\s+/g, ''); return new Set([...vaccineStems].filter(([, s]) => s[strict ? 'strict' : 'loose'].some((n) => h.includes(n))).map(([id]) => id)); };
   /**
-   * 第四十九輪（2026-10-14 Yulun 決定）：用藥／法律／媒體拒答的「官方答案優先」。回傳可改答的 FAQ／服務頁 contentId，沒有就回 null（照舊拒答）。
+   * 第四十九輪（2026-10-14 Yulun 決定）：用藥／法律／媒體拒答的「官方答案優先」。回傳 { unit（contentId）, ids（可用的片段 id）, block? }，沒有就回 null（照舊拒答）。
    * 強相符三個條件都要：（1）同一個疾病錨點：問句點名疾病 ⇒ 單元要綁同一疾病；沒點名 ⇒ 單元也不能綁疾病；
    * （2）單元涵蓋問句點名的東西：藥名（布洛芬）、劑量詞（幾顆）、法律或媒體用語（賠償）都要出現在單元的題目、標題、關鍵詞或內文——
    *      沒點名任何東西（「該吃什麼藥」）不改答；
@@ -187,7 +187,14 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
       const hay = lc(cs.map((c) => `${c.title} ${c.question ?? ''} ${c.text} ${(c.terms ?? []).join(' ')}`).join(' '));
       if (!terms.every((t) => hay.includes(lc(t)))) continue;
       const head = `${cs[0].question ?? cs[0].title} ${(cs[0].terms ?? []).join(' ')}`;
-      if (hits.some((r) => r.re?.test(head)) || formMatch(q, head, [...ds, ...qd])) return id;
+      if (hits.some((r) => r.re?.test(head)) || formMatch(q, head, [...ds, ...qd])) return { unit: id, ids: new Set(cs.map((c) => c.id)) };
+    }
+    // 第五十輪（2026-10-14 Yulun 決定）：疾病頁的「診斷與治療」段落（block＝treatment）也算，但只認那一段：問句字面點名該疾病（不含出國推得、
+    // 不點名疫苗——那段講的是生病時的用藥，不是接種後），且段落內文寫到問句點名的每一個藥名／劑量詞。面向由段落結構保證，不另做題目相符
+    if (entities.vaccines.length) return null;
+    for (const d of entities.diseases) {
+      const c = !d.derived && poolFor(view, 'zh-TW').chunks.find((x) => x.contentId === d.id && x.block === 'treatment');
+      if (c && terms.every((t) => lc(c.text).includes(lc(t)))) return { unit: d.id, ids: new Set([c.id]), block: c.block };
     }
     return null;
   }
@@ -1159,14 +1166,15 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
       // 第四十九輪（2026-10-14 Yulun 決定）：用藥、法律、媒體這三種拒答，若有官方 FAQ／服務頁正面回答了這一題（officialOver），改用它回答；
       // 其他拒答（急症、個人診斷、注入…）一律照舊。改答時第二次呼叫 answer() 只放行這三種規則、只用那一則單元的片段，
       // 回答不完整（被別的關卡拒答、沒有句子、出現別的來源）就退回原本的拒答
-      const unit = !opts._official && !forceIntent && lang === 'zh-TW' && officialOver(q, hits, entities, view);
-      if (unit) {
-        const r2 = answer(rawQuery, { ...opts, _official: unit });
+      const off = !opts._official && !forceIntent && lang === 'zh-TW' && officialOver(q, hits, entities, view);
+      if (off) {
+        const { unit, block } = off;
+        const r2 = answer(rawQuery, { ...opts, _official: off.ids });
         if (!r2.refused && r2.sentences.length && r2.sources.every((x) => x.contentId === unit)) {
           const kind = hits[0].kind;
           const keep = kind === 'media' ? { label: tr(LL, '聯絡公關室', 'Public Relations Office'), href: '/about/#pr', kind: 'link' } : { label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' };
           r2.actions = [...r2.actions.filter((a) => a.href !== keep.href), keep];
-          r2.intentReasons.push(`${hits[0].id}:official`); r2.guards.push({ kind: 'official-over-refusal', rule: hits[0].id, unit }); r2.topicMatch ??= 'official';
+          r2.intentReasons.push(`${hits[0].id}:official`); r2.guards.push({ kind: 'official-over-refusal', rule: hits[0].id, unit, ...(block ? { block } : {}) }); r2.topicMatch ??= 'official';
           return r2;
         }
       }
@@ -1194,6 +1202,9 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     }
 
     // 檢驗（民眾模式）：檢驗項目表只在專業索引 ⇒ 導向專業模式／檢驗專區／疾病頁診斷與治療，不拿民眾片段硬湊
+    let labProc = false;
+    // 第五十輪（2026-10-14 Yulun 決定開放「診所送檢體」服務頁給民眾版）：問的是送驗流程、沒點名疾病、也沒問檢體規格 ⇒ 改走申請意圖，由服務頁回答（專業模式同理：檢驗項目表不回答流程）
+    if (result.intent === 'lab' && !entities.diseases.length && LAB_PROCESS_RE.test(q) && !LAB_DETAIL_RE.test(q)) { result.intent = 'apply'; result.intentReasons.push('lab.process-apply'); labProc = true; }
     if (result.intent === 'lab' && view !== 'pro') {
       const dz = diseaseById.get(result.disease);
       const acts = [
@@ -1239,7 +1250,9 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     const cueText = lang === 'zh-TW' ? `${q} ${viaRules(PARAPHRASE)}` : viaRules(CROSS_LANG);
     const cueCtx = { text: cueText, animals: animalsIn(cueText), vaccines: new Set([...entities.vaccines.map((v) => v.id), ...vaccinesNamedIn(q)]) };
     const cueIds = new Set(cueUnits.filter((u) => u.re.test(cueText)).flatMap((u) => u.units.filter((c) => u.fits(c, cueCtx)).map((c) => c.id)));
-    if (opts._official) for (const c of poolFor(view, 'zh-TW').chunks) if (c.contentId === opts._official) cueIds.add(c.id);
+    if (opts._official) for (const id of opts._official) cueIds.add(id);
+    // 送驗流程問句：標題講送驗／檢體的服務頁（檢驗委託）當錨點帶頭，不拿其他服務的「應備文件」湊句
+    if (labProc) for (const c of zhPub) if (c.type === 'service' && /送驗|檢體/.test(c.title)) cueIds.add(c.id);
     if (zhA.length) result.guards.push({ kind: 'topic-anchor', terms: zhA.map((a) => a.t) });
     if (profile && result.intent === 'vaccine' && !catchUp && !zhA.length && !ANTIVIRAL_RE.test(q) && (!entities.vaccines.length || WHICH_VACCINE_RE.test(q))) {
       const sa = route('schedule').scheduleAnswer(q, result, entities, profile);
@@ -1283,7 +1296,7 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
       const d0 = entities.diseases.find((d) => !d.derived)?.id;
       topicConfirmed = lang !== 'zh-TW' && chunks.length > 0 && !!d0 && (chunks[0].diseases ?? []).includes(d0);
     }
-    if (opts._official) { const kept = chunks.filter((c) => c.contentId === opts._official); kept.qWeights = chunks.qWeights; kept.model = chunks.model; chunks = kept; topicConfirmed = true; }
+    if (opts._official) { const kept = chunks.filter((c) => opts._official.has(c.id)); kept.qWeights = chunks.qWeights; kept.model = chunks.model; chunks = kept; topicConfirmed = true; }
     // 第四十九輪：咬傷問句點名了動物（狗、鼬獾…）⇒ 題目／標題只講別種動物（蛇咬的「五要五不」）、又沒寫泛稱「動物」的片段不拿來回答
     const qAnimals = BITE_RE.test(cueText) ? cueCtx.animals : new Set();
     if (qAnimals.size && chunks.length) {
@@ -1484,7 +1497,7 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     // 長的情境句（「孩子腸病毒第五天精神很好，可以回學校嗎」）多出來的情境詞會拉低涵蓋率，但它問的正是那則 FAQ 的題目（回學校）
     const generic = c0 && /^(faq|service)$/.test(c0.type);
     if (isLowRelevance(result) && c0 && (generic ? !d1 || !c0.diseases?.length || c0.diseases.includes(d1) : (c0.diseases ?? []).includes(d1))
-      && (QUERY_FACETS.some((re) => re.test(q) && re.test(`${c0.question ?? c0.title} ${picked[0].text}`)) || (generic && (anchorIds.has(c0.contentId) || formMatch(q, c0.question ?? c0.title, [...(c0.diseases ?? []), d1]))))) {
+      && (QUERY_FACETS.some((re) => re.test(q) && re.test(`${c0.question ?? c0.title} ${picked[0].text}`)) || (generic && (anchorIds.has(c0.contentId) || (labProc && c0._cue) || formMatch(q, c0.question ?? c0.title, [...(c0.diseases ?? []), d1]))))) {
       result.topicMatch = generic ? c0.type : 'disease'; result.guards.push({ kind: 'topic-match', id: c0.id });
     }
     result.completeness = completenessOf(result.intent, result.sentences, { situation: !!sit, q });

@@ -67,6 +67,36 @@
     "en": {
       "question": "How many days should a child with enterovirus stay home?",
       "answerMarkdown": "A sick child should **stay home for at least 7 days** and avoid contact with other children to reduce spread.\n\nThe virus can still be shed in stool for weeks after recovery, so after the child returns to school, parents and teachers should keep washing hands with soap after toilet use and before meals."
+    },
+    "ja": {
+      "question": "子どもがエンテロウイルス感染症にかかったら、何日家で休ませるべきですか？",
+      "answerMarkdown": "病気の子どもは**少なくとも7日間は家で休み**、ほかの幼児との接触を避けて、感染の広がりを減らすことをおすすめします。\n\nエンテロウイルスは、治ったあとも数週間にわたって腸から排出されることがあります。そのため、子どもが学校に戻った後も、保護者と先生は、トイレの後と食事の前に石けんで手を洗うことを引き続き徹底してください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Ilang araw dapat manatili sa bahay ang batang may enterovirus?",
+      "answerMarkdown": "Inirerekomenda na ang may sakit na bata ay **manatili sa bahay nang hindi bababa sa 7 araw** at iwasan ang pakikisalamuha sa ibang mga bata upang mabawasan ang pagkalat.\n\nMaaari pa ring mailabas ang enterovirus sa dumi sa loob ng ilang linggo kahit gumaling na, kaya pagbalik ng bata sa paaralan, dapat pa ring tiyakin ng mga magulang at guro ang paghuhugas ng kamay gamit ang sabon pagkatapos gumamit ng banyo at bago kumain.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Trẻ mắc enterovirus cần nghỉ ở nhà mấy ngày?",
+      "answerMarkdown": "Khuyến cáo trẻ bị bệnh **nghỉ ở nhà ít nhất 7 ngày**, tránh tiếp xúc với trẻ nhỏ khác để giảm lây truyền.\n\nSau khi khỏi bệnh, enterovirus vẫn có thể được thải qua đường ruột trong nhiều tuần, vì vậy sau khi trẻ trở lại trường, cha mẹ và giáo viên vẫn cần thực hiện nghiêm túc việc rửa tay bằng xà phòng sau khi đi vệ sinh và trước khi ăn.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Berapa hari anak yang terkena enterovirus harus beristirahat di rumah?",
+      "answerMarkdown": "Anak yang sakit dianjurkan **beristirahat di rumah setidaknya 7 hari** dan menghindari kontak dengan anak-anak lain untuk mengurangi penularan.\n\nEnterovirus masih dapat dikeluarkan melalui usus selama beberapa minggu setelah sembuh. Karena itu, setelah anak kembali ke sekolah, orang tua dan guru tetap harus memastikan anak mencuci tangan dengan sabun setelah dari toilet dan sebelum makan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "เด็กติดเชื้อเอนเทอโรไวรัส ต้องพักอยู่บ้านกี่วัน?",
+      "answerMarkdown": "แนะนำให้เด็กที่ป่วย**พักอยู่บ้านอย่างน้อย 7 วัน** และหลีกเลี่ยงการสัมผัสกับเด็กเล็กคนอื่น เพื่อลดการแพร่เชื้อ\n\nเอนเทอโรไวรัสยังอาจถูกขับออกทางลำไส้ได้นานหลายสัปดาห์หลังหายป่วย ดังนั้นเมื่อเด็กกลับไปโรงเรียนแล้ว ผู้ปกครองและครูยังต้องดูแลให้ล้างมือด้วยสบู่หลังเข้าห้องน้ำและก่อนรับประทานอาหารอย่างเคร่งครัด",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

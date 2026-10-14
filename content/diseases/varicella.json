@@ -157,5 +157,362 @@
   "professional": {
     "specimen": "水泡液拭子進行 PCR；必要時檢測血清 IgM／IgG。",
     "notifyNote": "第四類法定傳染病「水痘併發症」，應於一週內通報；單純水痘不需通報，但校園或機構群聚應通知衛生局。"
+  },
+  "i18n": {
+    "en": {
+      "title": "Varicella (chickenpox)",
+      "summary": "Chickenpox is highly contagious. The typical picture is fever and an itchy rash that appears in crops, so blisters at different stages are present at the same time. Children get 1 government-funded vaccine dose at 12 months of age. The notifiable condition is “varicella complications”.",
+      "keyFacts": {
+        "incubation": "10–21 days (usually 14–16 days)",
+        "symptoms": "Fever and tiredness, then macules, papules, blisters and scabs appear in crops all over the body",
+        "transmission": "Airborne, droplets, contact with blister fluid",
+        "prevention": "Chickenpox vaccine; patients rest at home until all blisters have crusted",
+        "notify": "Varicella complications: within one week"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "What to do",
+          "cards": [
+            {
+              "if": "your child has chickenpox",
+              "title": "Rest at home until all blisters have crusted over",
+              "text": "Rest at home until all blisters have crusted over (about 5–7 days after the rash appears). Keep fingernails short so scratching does not break the skin and cause infection."
+            },
+            {
+              "if": "the blisters are red, swollen and pus-filled, or there is a high fever that will not go down, or difficulty breathing",
+              "title": "Go back to be checked for complications",
+              "text": "This may be a bacterial skin infection or a complication such as pneumonia. Please go back to the doctor as soon as possible."
+            },
+            {
+              "if": "are pregnant or have a weakened immune system and have been in contact with someone with chickenpox",
+              "title": "Contact a doctor as soon as possible",
+              "text": "Contact a doctor as soon as possible to assess whether you need immunoglobulin or antiviral medicine."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Symptoms and warning signs",
+          "markdown": "There is first a mild fever and tiredness, then an **itchy rash** that starts on the trunk and scalp and spreads to the face and limbs. The rash goes in turn from flat red spots (macules) to raised spots (papules) to blisters, and finally to scabs. It appears **in crops**, so rashes at different stages can be seen at the same time.\n\nSymptoms are usually more severe in adults, newborns and people with a weakened immune system. After recovery, the virus stays dormant in nerve ganglia and may later reactivate as **shingles (herpes zoster)**.",
+          "warning": "Red, swollen, hot, painful or pus-filled skin, a high fever lasting more than 4 days, cough or difficulty breathing, drowsiness, unsteady walking or convulsions may be signs of complications."
+        },
+        {
+          "key": "transmission",
+          "heading": "How it spreads",
+          "markdown": "It spreads through the **air, droplets**, or direct contact with blister fluid, and is highly contagious. A person is contagious from 1–2 days before the rash appears until all blisters have crusted over. Fluid from the blisters of a person with shingles can also cause chickenpox in people who are not immune."
+        },
+        {
+          "key": "prevention",
+          "heading": "Prevention",
+          "markdown": "- Children get 1 dose of **government-funded chickenpox vaccine** at 12 months of age. Doctors recommend a second dose at ages 4–6, at own expense, for better protection.\n- Patients rest at home until all blisters have crusted over, and avoid contact with pregnant women, newborns and people with a weakened immune system.\n- Adults who have never had chickenpox and have not been vaccinated can get 2 doses at their own expense (4–8 weeks apart)."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis and treatment",
+          "markdown": "Most children are treated for their symptoms: relieving itching, keeping the skin clean and keeping fingernails short. For adults, people with a weakened immune system or severely ill patients, a doctor may consider antiviral medicine (such as acyclovir).\n\n**Avoid aspirin in anyone under 18**, because it can cause Reye syndrome."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaccine",
+          "markdown": "The chickenpox vaccine is a live attenuated vaccine. The government-funded group is children aged 12 months, who receive 1 dose. It must not be given to pregnant women, and pregnancy should be avoided for 4 weeks after vaccination. After vaccination, a few people may develop a small number of blisters at the injection site or on the body."
+        },
+        {
+          "key": "situation",
+          "heading": "Current situation and statistics",
+          "markdown": "Chickenpox cases have fallen markedly since routine childhood vaccination began. Notification data cover only “varicella complications” cases."
+        },
+        {
+          "key": "faq",
+          "heading": "FAQ"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "title": "水痘（みずぼうそう）",
+      "summary": "水痘は感染力が強い病気です。典型的な症状は、発熱と、かゆい発疹が何回かに分かれて出ることで、同じ時期にいろいろな段階の水ぶくれが見られます。幼児は 12 か月になったら、公費ワクチンを 1 回接種します。法定の届出対象は「水痘の合併症」です。",
+      "keyFacts": {
+        "incubation": "10～21 日（通常 14～16 日）",
+        "symptoms": "発熱とだるさの後、全身に斑点状の発疹、丘疹、水ぶくれ、かさぶたが何回かに分かれて出る",
+        "transmission": "空気感染、飛沫感染、水ぶくれの液との接触",
+        "prevention": "水痘ワクチンを接種する；患者はすべてかさぶたになるまで自宅で休む",
+        "notify": "水痘の合併症：1 週間以内"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "どうすればよいか",
+          "cards": [
+            {
+              "if": "お子さんが水痘にかかった",
+              "title": "水ぶくれがすべてかさぶたになるまで自宅で休む",
+              "text": "すべての水ぶくれがかさぶたになるまで（発疹が出てから約 5～7 日）自宅で休んでください。掻いて皮膚を傷つけ感染しないよう、爪を短く切ってください。"
+            },
+            {
+              "if": "水ぶくれが赤く腫れて膿んでいる、高熱が下がらない、または息が苦しい",
+              "title": "合併症の有無を確認するため、再度受診する",
+              "text": "皮膚の細菌感染や肺炎などの合併症かもしれません。できるだけ早く、もう一度受診してください。"
+            },
+            {
+              "if": "妊婦または免疫が低下している人が、水痘の患者と接触した",
+              "title": "できるだけ早く医師に連絡する",
+              "text": "できるだけ早く医師に連絡し、免疫グロブリンや抗ウイルス薬が必要かどうか評価を受けてください。"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "症状と警告サイン",
+          "markdown": "はじめに軽い発熱とだるさがあり、その後、体幹や頭皮から**かゆい発疹**が出て、顔や手足に広がります。発疹は、斑点、丘疹、水ぶくれの順に変わり、最後にかさぶたになります。**何回かに分かれて出る**ため、同じ時期にいろいろな段階の発疹が見られます。\n\n大人、新生児、免疫が低下している人は、症状が重くなりやすいです。治った後もウイルスは神経節に潜んでおり、後に再び活動して**帯状疱疹**になることがあります。",
+          "warning": "皮膚が赤く腫れて熱をもち痛む、または膿む、4 日を超える高熱、咳や息苦しさ、眠気が強い、ふらつく、けいれんは、合併症の可能性があります。"
+        },
+        {
+          "key": "transmission",
+          "heading": "感染経路",
+          "markdown": "**空気、飛沫**、または水ぶくれの液との直接の接触で感染し、感染力が非常に強い病気です。発疹が出る 1～2 日前から、すべての水ぶくれがかさぶたになるまで、人にうつす可能性があります。帯状疱疹の患者の水ぶくれの液からも、免疫のない人が水痘にかかることがあります。"
+        },
+        {
+          "key": "prevention",
+          "heading": "予防",
+          "markdown": "- 幼児は、生後 12 か月になったら **公費の水痘ワクチン**を 1 回接種します。医療界では、保護効果を高めるため、4～6 歳で自費による 2 回目の接種を勧めています。\n- 患者はすべての水ぶくれがかさぶたになるまで自宅で休み、妊婦、新生児、免疫が低下している人との接触を避けてください。\n- 水痘にかかったことがなく、ワクチンも接種していない大人は、自費で 2 回接種できます（間隔は 4～8 週間）。"
+        },
+        {
+          "key": "treatment",
+          "heading": "診断と治療",
+          "markdown": "子どもの多くは、症状に合わせた治療が中心です。かゆみを抑える、皮膚を清潔に保つ、爪を短く切る、などです。大人、免疫が低下している人、重症の患者には、医師の判断で抗ウイルス薬（アシクロビルなど）を使うことがあります。\n\n**18 歳未満はアスピリンを避けてください。**ライ症候群を起こすおそれがあります。"
+        },
+        {
+          "key": "vaccine",
+          "heading": "ワクチン",
+          "markdown": "水痘ワクチンは生ワクチン（弱毒生ワクチン）です。公費の対象は生後 12 か月の幼児で、1 回接種します。妊婦は接種できず、接種後 4 週間は妊娠を避ける必要があります。接種後、まれに注射した部位や全身に少数の水ぶくれが出ることがあります。"
+        },
+        {
+          "key": "situation",
+          "heading": "現在の発生状況と統計",
+          "markdown": "幼児の定期接種が始まってから、水痘の患者数は大きく減りました。届出のデータには「水痘の合併症」の症例のみが含まれます。"
+        },
+        {
+          "key": "faq",
+          "heading": "よくある質問"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "title": "Thủy đậu",
+      "summary": "Thủy đậu có khả năng lây rất mạnh. Biểu hiện điển hình là sốt và phát ban ngứa thành từng đợt, nên cùng lúc có thể thấy các nốt phỏng ở nhiều giai đoạn khác nhau. Trẻ nhỏ tiêm 1 liều vắc-xin do nhà nước chi trả khi tròn 12 tháng tuổi. Mục báo cáo theo luật là “biến chứng thủy đậu”.",
+      "keyFacts": {
+        "incubation": "10–21 ngày (thường là 14–16 ngày)",
+        "symptoms": "Sốt, mệt mỏi, sau đó khắp người lần lượt xuất hiện từng đợt các đốm, sẩn, mụn nước và vảy",
+        "transmission": "Qua không khí, giọt bắn, tiếp xúc với dịch mụn nước",
+        "prevention": "Tiêm vắc-xin thủy đậu; người bệnh nghỉ ở nhà đến khi tất cả mụn nước đóng vảy",
+        "notify": "Biến chứng thủy đậu: trong vòng một tuần"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Tôi nên làm gì",
+          "cards": [
+            {
+              "if": "con bạn bị thủy đậu",
+              "title": "Nghỉ ở nhà đến khi tất cả mụn nước đóng vảy",
+              "text": "Nghỉ ở nhà đến khi tất cả mụn nước đóng vảy (khoảng 5–7 ngày sau khi phát ban), cắt ngắn móng tay để tránh gãi trầy gây nhiễm trùng."
+            },
+            {
+              "if": "mụn nước đỏ, sưng, có mủ, sốt cao không hạ hoặc khó thở",
+              "title": "Quay lại khám để đánh giá biến chứng",
+              "text": "Có thể là nhiễm khuẩn da hoặc biến chứng như viêm phổi, hãy quay lại khám sớm nhất có thể."
+            },
+            {
+              "if": "đang mang thai hoặc suy giảm miễn dịch và đã tiếp xúc với người bị thủy đậu",
+              "title": "Liên hệ bác sĩ sớm nhất có thể",
+              "text": "Hãy liên hệ bác sĩ sớm nhất có thể để đánh giá có cần dùng globulin miễn dịch hoặc thuốc kháng vi-rút hay không."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Triệu chứng và dấu hiệu cảnh báo",
+          "markdown": "Đầu tiên là sốt nhẹ, mệt mỏi, sau đó xuất hiện **phát ban ngứa**, bắt đầu từ thân mình và da đầu rồi lan ra mặt và tay chân. Phát ban lần lượt chuyển từ đốm sang sẩn, mụn nước, cuối cùng đóng vảy, và **xuất hiện thành từng đợt**, nên cùng lúc có thể thấy các nốt ban ở nhiều giai đoạn.\n\nNgười lớn, trẻ sơ sinh và người suy giảm miễn dịch thường có triệu chứng nặng hơn. Sau khi khỏi, vi-rút ẩn trong hạch thần kinh và sau này có thể hoạt động trở lại thành **bệnh zona (herpes zoster)**.",
+          "warning": "Da đỏ, sưng, nóng, đau hoặc có mủ, sốt cao trên 4 ngày, ho hoặc khó thở, li bì, đi loạng choạng hoặc co giật có thể là dấu hiệu biến chứng."
+        },
+        {
+          "key": "transmission",
+          "heading": "Lây truyền như thế nào",
+          "markdown": "Bệnh lây qua **không khí, giọt bắn** hoặc tiếp xúc trực tiếp với dịch mụn nước, và có khả năng lây rất mạnh. Người bệnh có khả năng lây từ 1–2 ngày trước khi phát ban cho đến khi tất cả mụn nước đóng vảy. Dịch mụn nước của người bị zona cũng có thể gây thủy đậu cho người chưa có miễn dịch."
+        },
+        {
+          "key": "prevention",
+          "heading": "Phòng ngừa",
+          "markdown": "- Trẻ nhỏ tiêm 1 liều **vắc-xin thủy đậu do nhà nước chi trả** khi tròn 12 tháng tuổi; giới y khoa khuyến nghị tiêm liều thứ 2 tự chi trả lúc 4–6 tuổi để tăng khả năng bảo vệ.\n- Người bệnh nghỉ ở nhà đến khi tất cả mụn nước đóng vảy, tránh tiếp xúc với phụ nữ mang thai, trẻ sơ sinh và người suy giảm miễn dịch.\n- Người lớn chưa từng bị thủy đậu và chưa tiêm vắc-xin có thể tự chi trả tiêm 2 liều (cách nhau 4–8 tuần)."
+        },
+        {
+          "key": "treatment",
+          "heading": "Chẩn đoán và điều trị",
+          "markdown": "Hầu hết trẻ em được điều trị triệu chứng: giảm ngứa, giữ da sạch, cắt ngắn móng tay. Với người lớn, người suy giảm miễn dịch hoặc bệnh nặng, bác sĩ có thể cân nhắc dùng thuốc kháng vi-rút (như acyclovir).\n\n**Tránh dùng aspirin cho người dưới 18 tuổi** vì có thể gây hội chứng Reye."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vắc-xin",
+          "markdown": "Vắc-xin thủy đậu là vắc-xin sống giảm độc lực. Đối tượng do nhà nước chi trả là trẻ nhỏ tròn 12 tháng tuổi, tiêm 1 liều. Phụ nữ mang thai không được tiêm và cần tránh có thai trong 4 tuần sau khi tiêm. Sau khi tiêm, một số ít người có thể xuất hiện vài mụn nước ở chỗ tiêm hoặc trên cơ thể."
+        },
+        {
+          "key": "situation",
+          "heading": "Tình hình hiện nay và thống kê",
+          "markdown": "Sau khi tiêm chủng thường quy cho trẻ nhỏ, số ca thủy đậu giảm rõ rệt; dữ liệu báo cáo chỉ gồm các ca “biến chứng thủy đậu”."
+        },
+        {
+          "key": "faq",
+          "heading": "Câu hỏi thường gặp"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "title": "Cacar air (varisela)",
+      "summary": "Cacar air sangat mudah menular. Gambaran khasnya adalah demam dan ruam gatal yang muncul bergelombang, sehingga pada saat yang sama terlihat lepuhan dalam tahap yang berbeda-beda. Anak mendapat 1 dosis vaksin dengan biaya pemerintah pada usia 12 bulan. Penyakit yang wajib dilaporkan adalah “komplikasi cacar air”.",
+      "keyFacts": {
+        "incubation": "10–21 hari (biasanya 14–16 hari)",
+        "symptoms": "Demam dan lelah, lalu di seluruh tubuh muncul bergelombang bercak, bintil, lepuhan, dan keropeng",
+        "transmission": "Melalui udara, percikan dahak (droplet), kontak dengan cairan lepuhan",
+        "prevention": "Vaksin cacar air; penderita istirahat di rumah sampai semua lepuhan berkeropeng",
+        "notify": "Komplikasi cacar air: dalam satu minggu"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "Apa yang harus dilakukan",
+          "cards": [
+            {
+              "if": "anak Anda terkena cacar air",
+              "title": "Istirahat di rumah sampai semua lepuhan berkeropeng",
+              "text": "Istirahat di rumah sampai semua lepuhan berkeropeng (sekitar 5–7 hari setelah ruam muncul), potong kuku pendek agar tidak menggaruk sampai luka dan terinfeksi."
+            },
+            {
+              "if": "lepuhan merah, bengkak, bernanah, demam tinggi tidak turun, atau sesak napas",
+              "title": "Kembali periksa untuk menilai komplikasi",
+              "text": "Mungkin infeksi bakteri pada kulit atau komplikasi seperti pneumonia. Segera kembali ke dokter."
+            },
+            {
+              "if": "hamil atau daya tahan tubuhnya lemah dan bersentuhan dengan penderita cacar air",
+              "title": "Segera hubungi dokter",
+              "text": "Segera hubungi dokter untuk menilai apakah perlu imunoglobulin atau obat antivirus."
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "Gejala dan tanda bahaya",
+          "markdown": "Mula-mula demam ringan dan lelah, lalu muncul **ruam gatal** yang dimulai dari badan dan kulit kepala, kemudian menyebar ke wajah dan anggota gerak. Ruam berubah berurutan dari bercak, bintil, lepuhan, lalu keropeng, dan **muncul bergelombang**, sehingga pada saat yang sama terlihat ruam dalam tahap yang berbeda-beda.\n\nGejala biasanya lebih berat pada orang dewasa, bayi baru lahir, dan orang dengan daya tahan tubuh lemah. Setelah sembuh, virus tetap tidur di ganglion saraf dan dapat aktif kembali kelak menjadi **herpes zoster**.",
+          "warning": "Kulit merah, bengkak, panas, nyeri, atau bernanah, demam tinggi lebih dari 4 hari, batuk atau sesak napas, mengantuk berlebihan, jalan tidak stabil, atau kejang bisa menjadi tanda komplikasi."
+        },
+        {
+          "key": "transmission",
+          "heading": "Cara penularan",
+          "markdown": "Menular lewat **udara, percikan dahak (droplet)**, atau kontak langsung dengan cairan lepuhan, dan sangat mudah menular. Seseorang menularkan sejak 1–2 hari sebelum ruam muncul sampai semua lepuhan berkeropeng. Cairan lepuhan penderita herpes zoster juga dapat menyebabkan cacar air pada orang yang belum kebal."
+        },
+        {
+          "key": "prevention",
+          "heading": "Pencegahan",
+          "markdown": "- Anak mendapat 1 dosis **vaksin cacar air dengan biaya pemerintah** pada usia 12 bulan; dunia medis menyarankan dosis kedua dengan biaya sendiri pada usia 4–6 tahun untuk meningkatkan perlindungan.\n- Penderita istirahat di rumah sampai semua lepuhan berkeropeng dan menghindari kontak dengan ibu hamil, bayi baru lahir, dan orang dengan daya tahan tubuh lemah.\n- Orang dewasa yang belum pernah terkena cacar air dan belum divaksin dapat menerima 2 dosis dengan biaya sendiri (selang 4–8 minggu)."
+        },
+        {
+          "key": "treatment",
+          "heading": "Diagnosis dan pengobatan",
+          "markdown": "Pada sebagian besar anak, pengobatan berfokus pada gejala: meredakan gatal, menjaga kulit tetap bersih, dan memotong kuku pendek. Untuk orang dewasa, orang dengan daya tahan tubuh lemah, atau penderita berat, dokter dapat menilai penggunaan obat antivirus (seperti acyclovir).\n\n**Hindari aspirin pada usia di bawah 18 tahun** karena dapat menyebabkan sindrom Reye."
+        },
+        {
+          "key": "vaccine",
+          "heading": "Vaksin",
+          "markdown": "Vaksin cacar air adalah vaksin hidup yang dilemahkan. Sasaran yang dibiayai pemerintah adalah anak berusia 12 bulan, dengan 1 dosis. Ibu hamil tidak boleh divaksin, dan setelah vaksinasi harus menghindari kehamilan selama 4 minggu. Setelah vaksinasi, sebagian kecil orang dapat mengalami beberapa lepuhan di tempat suntikan atau di seluruh tubuh."
+        },
+        {
+          "key": "situation",
+          "heading": "Situasi terkini dan statistik",
+          "markdown": "Setelah vaksinasi rutin pada anak, kasus cacar air menurun jelas; data pelaporan hanya mencakup kasus “komplikasi cacar air”."
+        },
+        {
+          "key": "faq",
+          "heading": "Pertanyaan yang sering diajukan"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "title": "โรคสุกใส",
+      "summary": "โรคสุกใสติดต่อได้ง่ายมาก อาการทั่วไปคือมีไข้และผื่นคันที่ขึ้นเป็นระลอก จึงเห็นตุ่มน้ำหลายระยะพร้อมกัน เด็กเล็กฉีดวัคซีนที่รัฐออกค่าใช้จ่าย 1 เข็มเมื่ออายุครบ 12 เดือน โรคที่ต้องรายงานตามกฎหมายคือ “ภาวะแทรกซ้อนของสุกใส”",
+      "keyFacts": {
+        "incubation": "10–21 วัน (ส่วนใหญ่ 14–16 วัน)",
+        "symptoms": "มีไข้ อ่อนเพลีย จากนั้นมีผื่นราบ ตุ่มนูน ตุ่มน้ำ และสะเก็ดขึ้นเป็นระลอกทั่วตัว",
+        "transmission": "ทางอากาศ ละอองฝอย สัมผัสน้ำในตุ่ม",
+        "prevention": "ฉีดวัคซีนสุกใส ผู้ป่วยพักอยู่บ้านจนตุ่มน้ำทั้งหมดตกสะเก็ด",
+        "notify": "ภาวะแทรกซ้อนของสุกใส: ภายในหนึ่งสัปดาห์"
+      },
+      "blocks": [
+        {
+          "key": "what-to-do",
+          "heading": "ควรทำอย่างไร",
+          "cards": [
+            {
+              "if": "ลูกเป็นสุกใส",
+              "title": "พักอยู่บ้านจนตุ่มน้ำทั้งหมดตกสะเก็ด",
+              "text": "พักอยู่บ้านจนตุ่มน้ำทั้งหมดตกสะเก็ด (ประมาณ 5–7 วันหลังผื่นขึ้น) ตัดเล็บให้สั้นเพื่อไม่ให้เกาจนผิวถลอกและติดเชื้อ"
+            },
+            {
+              "if": "ตุ่มน้ำแดง บวม เป็นหนอง มีไข้สูงไม่ลด หรือหายใจลำบาก",
+              "title": "กลับไปพบแพทย์เพื่อประเมินภาวะแทรกซ้อน",
+              "text": "อาจเป็นการติดเชื้อแบคทีเรียที่ผิวหนังหรือภาวะแทรกซ้อน เช่น ปอดอักเสบ โปรดกลับไปพบแพทย์โดยเร็วที่สุด"
+            },
+            {
+              "if": "ตั้งครรภ์หรือมีภูมิคุ้มกันต่ำ และสัมผัสผู้ป่วยสุกใส",
+              "title": "ติดต่อแพทย์โดยเร็วที่สุด",
+              "text": "โปรดติดต่อแพทย์โดยเร็วที่สุดเพื่อประเมินว่าจำเป็นต้องได้รับอิมมูโนโกลบูลินหรือยาต้านไวรัสหรือไม่"
+            }
+          ]
+        },
+        {
+          "key": "symptoms",
+          "heading": "อาการและสัญญาณอันตราย",
+          "markdown": "เริ่มด้วยไข้ต่ำและอ่อนเพลีย จากนั้นมี**ผื่นคัน** เริ่มที่ลำตัวและหนังศีรษะ แล้วลามไปที่ใบหน้าและแขนขา ผื่นจะเปลี่ยนตามลำดับจากผื่นราบ เป็นตุ่มนูน ตุ่มน้ำ และสุดท้ายตกสะเก็ด และ**ขึ้นเป็นระลอก** จึงเห็นผื่นหลายระยะพร้อมกัน\n\nผู้ใหญ่ ทารกแรกเกิด และผู้ที่มีภูมิคุ้มกันต่ำมักมีอาการรุนแรงกว่า หลังหายแล้วไวรัสจะหลบซ่อนอยู่ในปมประสาท และอาจกลับมาทำงานอีกครั้งเป็น**โรคงูสวัด**",
+          "warning": "ผิวหนังแดง บวม ร้อน เจ็บ หรือเป็นหนอง ไข้สูงเกิน 4 วัน ไอหรือหายใจลำบาก ซึมมาก เดินเซ หรือชัก อาจเป็นสัญญาณของภาวะแทรกซ้อน"
+        },
+        {
+          "key": "transmission",
+          "heading": "แพร่เชื้ออย่างไร",
+          "markdown": "แพร่เชื้อผ่าน**อากาศ ละอองฝอย** หรือการสัมผัสน้ำในตุ่มโดยตรง และติดต่อได้ง่ายมาก ผู้ป่วยแพร่เชื้อได้ตั้งแต่ 1–2 วันก่อนผื่นขึ้นจนถึงตุ่มน้ำทั้งหมดตกสะเก็ด น้ำในตุ่มของผู้ป่วยงูสวัดก็อาจทำให้ผู้ที่ไม่มีภูมิคุ้มกันเป็นสุกใสได้"
+        },
+        {
+          "key": "prevention",
+          "heading": "การป้องกัน",
+          "markdown": "- เด็กเล็กฉีด**วัคซีนสุกใสที่รัฐออกค่าใช้จ่าย** 1 เข็มเมื่ออายุครบ 12 เดือน วงการแพทย์แนะนำให้ฉีดเข็มที่ 2 โดยจ่ายเองเมื่ออายุ 4–6 ปีเพื่อเพิ่มการปกป้อง\n- ผู้ป่วยพักอยู่บ้านจนตุ่มน้ำทั้งหมดตกสะเก็ด และหลีกเลี่ยงการสัมผัสหญิงตั้งครรภ์ ทารกแรกเกิด และผู้ที่มีภูมิคุ้มกันต่ำ\n- ผู้ใหญ่ที่ไม่เคยเป็นสุกใสและไม่เคยฉีดวัคซีน สามารถฉีด 2 เข็มโดยจ่ายเอง (ห่างกัน 4–8 สัปดาห์)"
+        },
+        {
+          "key": "treatment",
+          "heading": "การวินิจฉัยและการรักษา",
+          "markdown": "เด็กส่วนใหญ่รักษาตามอาการ ได้แก่ บรรเทาอาการคัน รักษาความสะอาดของผิว และตัดเล็บให้สั้น สำหรับผู้ใหญ่ ผู้ที่มีภูมิคุ้มกันต่ำ หรือผู้ป่วยหนัก แพทย์อาจพิจารณาใช้ยาต้านไวรัส (เช่น acyclovir)\n\n**หลีกเลี่ยงการใช้แอสไพรินในผู้ที่อายุต่ำกว่า 18 ปี** เพราะอาจทำให้เกิดกลุ่มอาการเรย์"
+        },
+        {
+          "key": "vaccine",
+          "heading": "วัคซีน",
+          "markdown": "วัคซีนสุกใสเป็นวัคซีนเชื้อเป็นชนิดอ่อนฤทธิ์ กลุ่มที่รัฐออกค่าใช้จ่ายคือเด็กเล็กอายุครบ 12 เดือน ฉีด 1 เข็ม หญิงตั้งครรภ์ห้ามฉีด และหลังฉีดต้องหลีกเลี่ยงการตั้งครรภ์เป็นเวลา 4 สัปดาห์ หลังฉีดบางคนอาจมีตุ่มน้ำจำนวนเล็กน้อยที่บริเวณที่ฉีดหรือทั่วตัว"
+        },
+        {
+          "key": "situation",
+          "heading": "สถานการณ์ปัจจุบันและสถิติ",
+          "markdown": "หลังเริ่มฉีดวัคซีนประจำให้เด็กเล็ก จำนวนผู้ป่วยสุกใสลดลงอย่างชัดเจน ข้อมูลการรายงานมีเฉพาะผู้ป่วย “ภาวะแทรกซ้อนของสุกใส” เท่านั้น"
+        },
+        {
+          "key": "faq",
+          "heading": "คำถามที่พบบ่อย"
+        }
+      ],
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

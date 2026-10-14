@@ -61,5 +61,15 @@
     "disease": "disease.influenza",
     "text": "就診人次連續兩週下降，仍高於流行閾值"
   },
-  "bodyMarkdown": "疾病管制署表示，春節後類流感門急診就診人次連續兩週下降，疫情趨緩，但仍高於流行閾值，社區流感病毒仍持續活動。\n\n疾管署提醒，開學後校園人潮聚集，學生有發燒、咳嗽症狀應在家休息；長者與慢性病人若出現類流感症狀，請儘早就醫，由醫師評估使用抗病毒藥劑。"
+  "bodyMarkdown": "疾病管制署表示，春節後類流感門急診就診人次連續兩週下降，疫情趨緩，但仍高於流行閾值，社區流感病毒仍持續活動。\n\n疾管署提醒，開學後校園人潮聚集，學生有發燒、咳嗽症狀應在家休息；長者與慢性病人若出現類流感症狀，請儘早就醫，由醫師評估使用抗病毒藥劑。",
+  "i18n": {
+    "en": {
+      "title": "Influenza is declining slowly but the epidemic season continues; keep up hand hygiene and cough etiquette",
+      "summary": "After the Lunar New Year, visits for influenza-like illness have fallen for two consecutive weeks but remain above the epidemic threshold. Taiwan CDC reminds the public to keep up hand hygiene and cough etiquette.",
+      "bodyMarkdown": "Taiwan CDC said that after the Lunar New Year, outpatient and emergency visits for influenza-like illness have fallen for two consecutive weeks and the epidemic is easing, but remain above the epidemic threshold and influenza viruses are still circulating in the community.\n\nTaiwan CDC reminds the public that crowds gather at schools after the new term begins, so students with fever or cough should rest at home. Older adults and people with chronic conditions who develop influenza-like symptoms should see a doctor early, so that the doctor can assess whether to use antiviral medication.",
+      "declText": "Visits have fallen for two consecutive weeks but remain above the epidemic threshold",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
+  }
 }

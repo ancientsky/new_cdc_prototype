@@ -14,7 +14,7 @@ import path from 'node:path';
 import { config } from '../site.config.mjs';
 import { loadSite, ROOT } from './lib/load.mjs';
 import { validateSite, contentWarnings, pendingReviewWarnings } from './lib/validate.mjs';
-import { applyGovernance } from './lib/governance.mjs';
+import { applyGovernance, overdueAsOf } from './lib/governance.mjs';
 import { buildSearchIndex } from './lib/index-builder.mjs';
 import { applyConsistency } from './lib/consistency.mjs';
 import { emitApi } from './lib/emit-api.mjs';
@@ -29,7 +29,7 @@ import { runEval } from '../eval/run-eval.mjs';
 import { todayISO } from './lib/render.mjs';
 import { checkInternalLinks, summarize as summarizeLinks } from './lib/check-internal-links.mjs';
 import { validateAssets, fixAssets, copyAssets, normalizeFileLinks } from './lib/assets.mjs';
-import { publicView, scheduledItems, taipeiTime, publishAtMs } from './lib/lanes.mjs';
+import { publicView, scheduledItems, taipeiTime, taipeiDate, publishAtMs } from './lib/lanes.mjs';
 import { piiErrors } from './lib/pii-scan.mjs';
 import { checkI18nQuality, summarizeI18nQuality } from './lib/i18n-quality.mjs';
 import { formErrors, askLogErrors } from './lib/forms.mjs';
@@ -80,6 +80,15 @@ async function main() {
 
   applyGovernance(site);
   log(`治理：白名單 ${site.gov.whitelistCount}/${site.gov.totalPublished}、待辦 ${site.gov.todos.length}、AI ${site.gov.pausedAI ? '暫停' : '運作'}`);
+  // 第五十輪：BUILD_TODAY 比真實日期早（CI、GitHub Pages 凍結在 2026-10-01）時，列出「以今天算已逾審閱期限」但這次建置仍當作未逾期的內容。
+  // 只警告、不擋建置：凍結日期是刻意的（示範案例要穩定），但不能讓「真的逾期了」被藏起來沒人知道（docs/deploy.md §21）。
+  const realToday = taipeiDate(Date.now());
+  const hiddenOverdue = overdueAsOf(site, realToday);
+  if (hiddenOverdue.length) {
+    const msg = `BUILD_TODAY=${today} 比今天（${realToday}）早：以今天計算另有 ${hiddenOverdue.length} 筆已逾審閱期限，這次建置仍當作未逾期${hiddenOverdue.some((h) => h.whitelisted) ? '、仍在 AI 白名單' : ''}：${hiddenOverdue.map((h) => `${h.id}（到期 ${h.nextReviewAt}）`).join('、')}。請權責單位重新審閱（guide-staff §51）`;
+    console.warn('  ⚠ [審閱到期]', msg);
+    if (process.env.GITHUB_ACTIONS) console.log(`::warning title=審閱到期（BUILD_TODAY 早於今天）::${msg}`);
+  }
   const scheduled = scheduledItems(site);
   log(`排程發布：now=${new Date(site.now).toISOString()}；排程中 ${scheduled.length} 筆${scheduled.length ? `（${scheduled.map((i) => `${i.id}＠${taipeiTime(publishAtMs(i.publishAt))}`).join('、')}）` : ''}，不輸出`);
 

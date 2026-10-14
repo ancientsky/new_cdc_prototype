@@ -70,6 +70,36 @@
     "en": {
       "question": "What should I do if I get a fever after returning from abroad?",
       "answerMarkdown": "Wear a mask, see a doctor promptly and **tell them which countries you visited, how long you stayed and any contacts**. If you feel unwell on arrival, you can report it to airport quarantine officers.\n\nFever after travel may be dengue, measles, malaria or influenza, and the doctor will order tests based on your travel history. If you visited a dengue-affected area, keep avoiding mosquito bites for two weeks after return."
+    },
+    "ja": {
+      "question": "海外から帰国した後に発熱したら、どうすればよいですか？",
+      "answerMarkdown": "マスクをして、できるだけ早く受診し、**どの国に行ったか、滞在期間、接触歴を自分から医師に伝えてください**。入国時に発熱や体調不良がある場合は、空港の検疫官に自分から申告することもできます。\n\n帰国後の発熱は、デング熱、麻疹、マラリア、インフルエンザなどの可能性があり、医師は旅行歴にもとづいて検査を手配します。デング熱の流行地域へ行った人は、帰国後2週間は、外出時に引き続き蚊よけをしてください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Ano ang dapat gawin kapag nilagnat pagkabalik mula sa ibang bansa?",
+      "answerMarkdown": "Magsuot ng mask, magpatingin agad sa doktor, at **kusang sabihin sa doktor kung aling mga bansa ang pinuntahan, gaano katagal ang pananatili, at mga nakasalamuha**. Kung may lagnat o masama ang pakiramdam pagdating sa bansa, maaari rin kayong kusang mag-ulat sa mga quarantine officer sa paliparan.\n\nAng lagnat pagkatapos maglakbay ay maaaring dengue, tigdas, malaria, o trangkaso, at mag-uutos ang doktor ng mga pagsusuri ayon sa kasaysayan ng paglalakbay. Kung nagpunta kayo sa lugar na may dengue, patuloy na umiwas sa kagat ng lamok kapag lumalabas sa loob ng dalawang linggo pagkabalik.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Bị sốt sau khi từ nước ngoài trở về thì nên làm gì?",
+      "answerMarkdown": "Hãy đeo khẩu trang, đi khám càng sớm càng tốt và **chủ động cho bác sĩ biết bạn đã đến những nước nào, thời gian lưu trú và tiền sử tiếp xúc**. Nếu khi nhập cảnh có sốt hoặc khó chịu trong người, bạn cũng có thể chủ động khai báo với nhân viên kiểm dịch tại sân bay.\n\nSốt sau khi về nước có thể là sốt xuất huyết Dengue, sởi, sốt rét hoặc cúm, bác sĩ sẽ chỉ định xét nghiệm dựa trên tiền sử đi lại. Người đã đến vùng có dịch sốt xuất huyết Dengue cần tiếp tục phòng muỗi đốt khi ra ngoài trong hai tuần sau khi về nước.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apa yang harus dilakukan jika demam setelah pulang dari luar negeri?",
+      "answerMarkdown": "Kenakan masker, segera berobat, dan **beri tahu dokter negara mana saja yang dikunjungi, lama tinggal, dan riwayat kontak**. Jika saat tiba sudah demam atau tidak enak badan, Anda juga dapat melapor sendiri kepada petugas karantina bandara.\n\nDemam setelah bepergian bisa disebabkan oleh dengue, campak, malaria, atau influenza, dan dokter akan mengatur pemeriksaan berdasarkan riwayat perjalanan. Bagi yang pernah ke daerah endemis dengue, tetaplah melindungi diri dari gigitan nyamuk saat keluar rumah selama dua minggu setelah pulang.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "กลับจากต่างประเทศแล้วมีไข้ ควรทำอย่างไร?",
+      "answerMarkdown": "ให้สวมหน้ากากอนามัยและรีบไปพบแพทย์ พร้อม**แจ้งแพทย์ด้วยตนเองว่าไปประเทศใดมาบ้าง พำนักนานเท่าใด และมีประวัติการสัมผัสอย่างไร** หากมีไข้หรือไม่สบายตอนเดินทางเข้าประเทศ ก็สามารถแจ้งเจ้าหน้าที่กักกันโรคที่สนามบินได้ด้วยตนเอง\n\nไข้หลังกลับจากเดินทางอาจเป็นไข้เลือดออก หัด มาลาเรีย หรือไข้หวัดใหญ่ แพทย์จะสั่งตรวจตามประวัติการเดินทาง ผู้ที่เคยไปพื้นที่ที่มีไข้เลือดออกระบาด ควรป้องกันยุงกัดต่อเนื่องเมื่อออกนอกบ้านภายในสองสัปดาห์หลังกลับ",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

@@ -69,6 +69,36 @@
     "en": {
       "question": "Who can get the government-funded HPV vaccine?",
       "answerMarkdown": "The government-funded HPV vaccine is offered to **first-year junior high school students**, mainly through school vaccination; from the 2025 school year it covers boys as well as girls. **Two doses are given 6 months apart**; students who miss school sessions can catch up at contracted clinics.\n\nOther ages can be vaccinated at their own expense; those starting at age 15 or older need 3 doses."
+    },
+    "ja": {
+      "question": "公費のHPVワクチンは、誰が接種できますか？",
+      "answerMarkdown": "公費のHPVワクチンは**中学1年生**が対象で、学校での集団接種が中心です。113学年度（中華民国暦）に入学した中学生から、対象が女子から男子にも広がりました（2025年9月に開始）。接種は**2回、6か月間隔**です。学校で完了しなかった場合は、接種のお知らせを持って契約医療機関で追加接種できます。\n\nほかの年齢の人は自費で接種できます。15歳以上で接種を始める場合は3回必要です。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Sino ang puwedeng magpabakuna ng HPV nang pinondohan ng gobyerno?",
+      "answerMarkdown": "Ang bakunang HPV na pinondohan ng gobyerno ay para sa **mga estudyante sa unang taon ng junior high school**, pangunahin sa pamamagitan ng sabay-sabay na pagbabakuna sa paaralan. Simula sa mga junior high school student na pumasok sa academic year 113 (kalendaryo ng Republic of China), pinalawak ito mula sa mga babae para isama ang mga lalaki (nagsimula noong Setyembre 2025). Binibigay ito sa **2 dose, na may pagitang 6 na buwan**; ang mga hindi nakumpleto sa paaralan ay maaaring magdala ng abiso sa pagbabakuna sa mga kontratadong klinika o ospital para humabol.\n\nAng ibang edad ay puwedeng magpabakuna nang sariling gastos; ang nagsisimula sa edad na 15 pataas ay nangangailangan ng 3 dose.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Ai được tiêm vắc-xin HPV do nhà nước chi trả?",
+      "answerMarkdown": "Vắc-xin HPV do nhà nước chi trả dành cho **học sinh lớp 1 trung học cơ sở**, chủ yếu tiêm tập trung tại trường. Từ học sinh trung học cơ sở nhập học niên khóa 113 (lịch Trung Hoa Dân Quốc), đối tượng được mở rộng từ nữ sang nam (bắt đầu tiêm từ tháng 9 năm 2025). Tiêm **2 liều, cách nhau 6 tháng**; những em chưa tiêm xong tại trường có thể mang thông báo tiêm chủng đến cơ sở y tế có hợp đồng để tiêm bù.\n\nCác độ tuổi khác có thể tự chi trả để tiêm; người bắt đầu tiêm từ 15 tuổi trở lên cần tiêm 3 liều.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Siapa yang dapat menerima vaksin HPV yang ditanggung pemerintah?",
+      "answerMarkdown": "Vaksin HPV yang ditanggung pemerintah diberikan kepada **siswa kelas 1 SMP**, terutama melalui vaksinasi massal di sekolah. Mulai siswa SMP yang masuk pada tahun ajaran 113 (kalender Republik Tiongkok), sasarannya diperluas dari siswi menjadi juga siswa laki-laki (dimulai September 2025). Vaksin diberikan **2 dosis dengan jarak 6 bulan**; yang belum menyelesaikannya di sekolah dapat membawa surat pemberitahuan vaksinasi ke fasilitas kesehatan yang bekerja sama untuk menyusul.\n\nUsia lainnya dapat divaksin dengan biaya sendiri; yang memulai vaksinasi pada usia 15 tahun ke atas memerlukan 3 dosis.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ใครฉีดวัคซีน HPV ที่รัฐออกค่าใช้จ่ายให้ได้บ้าง?",
+      "answerMarkdown": "วัคซีน HPV ที่รัฐออกค่าใช้จ่ายให้ มีไว้สำหรับ**นักเรียนชั้นมัธยมศึกษาตอนต้นปีที่ 1** โดยเน้นฉีดรวมที่โรงเรียน ตั้งแต่นักเรียนมัธยมต้นที่เข้าเรียนในปีการศึกษา 113 (ปฏิทินสาธารณรัฐจีน) เป็นต้นไป ขยายจากนักเรียนหญิงให้ครอบคลุมนักเรียนชายด้วย (เริ่มฉีดเดือนกันยายน 2025) ฉีด **2 เข็ม ห่างกัน 6 เดือน** ผู้ที่ยังฉีดไม่ครบที่โรงเรียนสามารถนำใบแจ้งการฉีดวัคซีนไปฉีดตามที่สถานพยาบาลที่ทำสัญญาได้\n\nช่วงอายุอื่นสามารถฉีดโดยชำระค่าใช้จ่ายเองได้ ผู้ที่เริ่มฉีดเมื่ออายุ 15 ปีขึ้นไปต้องฉีด 3 เข็ม",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

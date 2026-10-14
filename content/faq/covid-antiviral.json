@@ -61,5 +61,43 @@
   "answerMarkdown": "公費口服抗病毒藥主要提供給**重症高風險族群**，例如 65 歲以上長者、具慢性病（糖尿病、心血管疾病、慢性肺病、慢性腎病等）、免疫低下者、BMI ≥ 30 者與孕婦，由醫師評估後開立。\n\n藥物需在**發病 5 天內**開始使用，因此高風險者確診後應儘早就醫，並主動告知醫師目前服用的藥物，以避免交互作用。",
   "structured": {
     "startWithinDays": 5
+  },
+  "i18n": {
+    "en": {
+      "question": "Who can receive government-funded oral antiviral drugs after a COVID-19 diagnosis?",
+      "answerMarkdown": "Government-funded oral antiviral drugs are mainly for **people at high risk of severe illness**, such as adults aged 65 and over, people with chronic conditions (diabetes, cardiovascular disease, chronic lung disease, chronic kidney disease, etc.), people with weakened immune systems, people with a BMI ≥ 30, and pregnant women. A doctor assesses and prescribes them.\n\nThe drug must be started **within 5 days of symptom onset**, so high-risk people should see a doctor as early as possible after a positive test and tell the doctor which medicines they are currently taking, to avoid drug interactions.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "question": "新型コロナ感染が確認された後、公費の経口抗ウイルス薬を使えるのはどんな人ですか？",
+      "answerMarkdown": "公費の経口抗ウイルス薬は、主に**重症化リスクの高い人**が対象です。たとえば、65歳以上の高齢者、慢性疾患（糖尿病、心血管疾患、慢性肺疾患、慢性腎臓病など）のある人、免疫力が低下している人、BMI ≥ 30 の人、妊婦などで、医師が評価したうえで処方します。\n\nこの薬は**発症から5日以内**に飲み始める必要があります。そのため、リスクの高い人は感染が確認されたらできるだけ早く受診し、薬の飲み合わせによる影響を避けるため、現在服用している薬を自分から医師に伝えてください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Sino ang puwedeng gumamit ng oral na antiviral na gamot na pinondohan ng gobyerno kapag nagpositibo sa COVID-19?",
+      "answerMarkdown": "Ang oral na antiviral na gamot na pinondohan ng gobyerno ay pangunahing para sa **mga may mataas na panganib ng malubhang sakit**, tulad ng mga may edad na 65 pataas, mga may malalang karamdaman (diabetes, sakit sa puso at mga daluyan ng dugo, malalang sakit sa baga, malalang sakit sa bato, atbp.), mga mahina ang immune system, mga may BMI ≥ 30, at mga buntis. Ang doktor ang magsusuri at magrereseta nito.\n\nDapat simulan ang gamot **sa loob ng 5 araw mula sa simula ng sintomas**, kaya ang mga may mataas na panganib ay dapat magpatingin sa doktor sa lalong madaling panahon pagkatapos makumpirma ang impeksyon, at kusang sabihin sa doktor ang mga gamot na kasalukuyan nilang iniinom upang maiwasan ang interaksyon ng mga gamot.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Sau khi được xác nhận mắc COVID-19, ai được dùng thuốc kháng virus đường uống do nhà nước chi trả?",
+      "answerMarkdown": "Thuốc kháng virus đường uống do nhà nước chi trả chủ yếu dành cho **nhóm có nguy cơ cao diễn tiến nặng**, ví dụ người từ 65 tuổi trở lên, người có bệnh mạn tính (đái tháo đường, bệnh tim mạch, bệnh phổi mạn tính, bệnh thận mạn tính, v.v.), người suy giảm miễn dịch, người có BMI ≥ 30 và phụ nữ mang thai. Bác sĩ sẽ đánh giá và kê đơn.\n\nThuốc cần được bắt đầu dùng **trong vòng 5 ngày kể từ khi khởi phát bệnh**, vì vậy người có nguy cơ cao nên đi khám càng sớm càng tốt sau khi được xác nhận mắc bệnh và chủ động cho bác sĩ biết các thuốc đang dùng để tránh tương tác thuốc.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Setelah terkonfirmasi COVID-19, siapa yang dapat menggunakan obat antivirus oral yang ditanggung pemerintah?",
+      "answerMarkdown": "Obat antivirus oral yang ditanggung pemerintah terutama diberikan kepada **kelompok berisiko tinggi sakit berat**, misalnya lansia berusia 65 tahun ke atas, penderita penyakit kronis (diabetes, penyakit kardiovaskular, penyakit paru kronis, penyakit ginjal kronis, dan lain-lain), orang dengan sistem imun lemah, orang dengan BMI ≥ 30, dan ibu hamil. Dokter akan menilai dan meresepkannya.\n\nObat harus mulai digunakan **dalam 5 hari sejak gejala muncul**. Karena itu, orang berisiko tinggi sebaiknya segera berobat setelah terkonfirmasi dan memberi tahu dokter obat apa saja yang sedang dikonsumsi agar terhindar dari interaksi obat.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "หลังตรวจพบว่าติดโควิด-19 ใครใช้ยาต้านไวรัสชนิดรับประทานที่รัฐออกค่าใช้จ่ายให้ได้บ้าง?",
+      "answerMarkdown": "ยาต้านไวรัสชนิดรับประทานที่รัฐออกค่าใช้จ่ายให้ มีไว้สำหรับ**กลุ่มเสี่ยงสูงที่จะป่วยหนัก** เช่น ผู้ที่อายุ 65 ปีขึ้นไป ผู้ที่มีโรคเรื้อรัง (เบาหวาน โรคหัวใจและหลอดเลือด โรคปอดเรื้อรัง โรคไตเรื้อรัง ฯลฯ) ผู้ที่ภูมิคุ้มกันต่ำ ผู้ที่มี BMI ≥ 30 และหญิงตั้งครรภ์ โดยแพทย์จะประเมินและสั่งจ่ายยา\n\nต้องเริ่มใช้ยา**ภายใน 5 วันนับจากวันที่เริ่มป่วย** ดังนั้นกลุ่มเสี่ยงสูงควรไปพบแพทย์โดยเร็วที่สุดหลังตรวจพบเชื้อ และแจ้งแพทย์ด้วยตนเองว่ากำลังใช้ยาอะไรอยู่ เพื่อหลีกเลี่ยงปฏิกิริยาระหว่างยา",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }
