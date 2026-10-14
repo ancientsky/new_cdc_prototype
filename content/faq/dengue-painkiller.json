@@ -60,5 +60,43 @@
   "answerMarkdown": "懷疑登革熱時應先就醫，**不要自行服用阿斯匹靈或非類固醇消炎止痛藥**（如布洛芬），這類藥物可能增加出血風險。醫師通常會以乙醯胺酚處理發燒與疼痛，用藥請依醫師指示。\n\n就醫時請主動告知旅遊史或居住地是否有登革熱病例。",
   "structured": {
     "avoid": "阿斯匹靈、NSAIDs"
+  },
+  "i18n": {
+    "en": {
+      "question": "Can I take painkillers on my own if I suspect dengue?",
+      "answerMarkdown": "If you suspect dengue, see a doctor first. **Do not take aspirin or non-steroidal anti-inflammatory drugs (NSAIDs) such as ibuprofen on your own**, because these drugs may increase the risk of bleeding. Doctors usually treat fever and pain with acetaminophen; take medicines only as your doctor directs.\n\nWhen you see the doctor, tell them about your travel history or whether there are dengue cases where you live.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "question": "デング熱が疑われるとき、自己判断で痛み止めを飲んでもよいですか？",
+      "answerMarkdown": "デング熱が疑われるときは、まず受診してください。**アスピリンやイブプロフェンなどの非ステロイド性抗炎症薬（NSAIDs）を自己判断で飲まないでください**。これらの薬は出血のリスクを高める可能性があります。医師は通常、アセトアミノフェンで発熱や痛みに対処します。薬は医師の指示に従って使ってください。\n\n受診するときは、旅行歴や、住んでいる地域にデング熱の患者がいるかどうかを自分から医師に伝えてください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Puwede ba akong uminom ng pampawala ng sakit nang mag-isa kapag pinaghihinalaang dengue?",
+      "answerMarkdown": "Kapag pinaghihinalaang dengue, magpatingin muna sa doktor. **Huwag uminom nang mag-isa ng aspirin o mga non-steroidal anti-inflammatory na gamot (NSAIDs) tulad ng ibuprofen**, dahil maaaring tumaas ang panganib ng pagdurugo. Karaniwang acetaminophen ang ginagamit ng doktor para sa lagnat at pananakit; uminom ng gamot ayon lamang sa utos ng doktor.\n\nKapag magpapatingin, kusang sabihin sa doktor ang inyong kasaysayan ng paglalakbay o kung may mga kaso ng dengue sa tinitirhan ninyo.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Khi nghi ngờ sốt xuất huyết Dengue, tôi có thể tự uống thuốc giảm đau không?",
+      "answerMarkdown": "Khi nghi ngờ sốt xuất huyết Dengue, hãy đi khám trước. **Không tự uống aspirin hoặc thuốc kháng viêm không steroid (NSAID) như ibuprofen**, vì các thuốc này có thể làm tăng nguy cơ chảy máu. Bác sĩ thường dùng acetaminophen để xử trí sốt và đau; hãy dùng thuốc theo chỉ dẫn của bác sĩ.\n\nKhi đi khám, hãy chủ động cho bác sĩ biết tiền sử đi lại hoặc nơi bạn sinh sống có ca sốt xuất huyết Dengue hay không.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Bolehkah saya minum obat pereda nyeri sendiri jika dicurigai demam berdarah dengue?",
+      "answerMarkdown": "Jika dicurigai demam berdarah dengue, berobatlah dulu. **Jangan minum aspirin atau obat antiinflamasi nonsteroid (OAINS/NSAID) seperti ibuprofen sendiri**, karena obat-obat ini dapat meningkatkan risiko perdarahan. Dokter biasanya menangani demam dan nyeri dengan asetaminofen; gunakan obat sesuai petunjuk dokter.\n\nSaat berobat, beri tahu dokter tentang riwayat perjalanan Anda atau apakah ada kasus dengue di tempat tinggal Anda.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "หากสงสัยว่าเป็นไข้เลือดออก ซื้อยาแก้ปวดกินเองได้หรือไม่?",
+      "answerMarkdown": "หากสงสัยว่าเป็นไข้เลือดออก ควรไปพบแพทย์ก่อน **อย่ากินแอสไพรินหรือยาต้านการอักเสบที่ไม่ใช่สเตียรอยด์ (NSAIDs) เช่น ไอบูโพรเฟนเอง** เพราะยากลุ่มนี้อาจเพิ่มความเสี่ยงของการมีเลือดออก โดยทั่วไปแพทย์จะใช้อะเซตามิโนเฟนรักษาอาการไข้และปวด โปรดใช้ยาตามที่แพทย์สั่ง\n\nเมื่อไปพบแพทย์ ให้แจ้งประวัติการเดินทาง หรือแจ้งว่าในพื้นที่ที่อาศัยอยู่มีผู้ป่วยไข้เลือดออกหรือไม่",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

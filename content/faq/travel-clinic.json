@@ -65,6 +65,36 @@
     "en": {
       "question": "What does a travel clinic do and how early should I go before travelling?",
       "answerMarkdown": "Travel clinics assess your **destination, itinerary and health** and advise on vaccines (such as hepatitis A, yellow fever, rabies, MMR and Japanese encephalitis), malaria prevention medicine, and preparation for altitude sickness and travellers' diarrhoea.\n\nVisit **4 to 6 weeks before departure** so vaccines have time to work; last-minute travellers can still be assessed. A list of contracted clinics is on the Taiwan CDC website."
+    },
+    "ja": {
+      "question": "渡航医学外来では何ができますか？出国のどのくらい前に行けばよいですか？",
+      "answerMarkdown": "渡航医学外来では、あなたの**目的地、旅程、健康状態**に応じて、出発前の評価を行います。必要なワクチン（A型肝炎、黄熱、狂犬病、MMR、日本脳炎など）、マラリア予防薬、高山病や旅行者下痢症のための薬の備えと健康教育が含まれます。\n\nワクチンの効果が出るまでの時間を確保するため、**出国の4～6週間前**の受診をおすすめします。急な出発の場合でも、受診して評価を受けることができます。契約医療機関の一覧は、Taiwan CDC のウェブサイトで確認できます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Ano ang magagawa ng travel medicine clinic? Gaano katagal bago maglakbay dapat pumunta?",
+      "answerMarkdown": "Ang travel medicine clinic ay nagbibigay ng pagsusuri bago maglakbay ayon sa inyong **destinasyon, itineraryo, at kalagayan ng kalusugan**: ang mga kinakailangang bakuna (tulad ng hepatitis A, yellow fever, rabies, MMR, Japanese encephalitis), gamot na pang-iwas sa malaria, at paghahanda ng gamot at health education para sa altitude sickness at traveller's diarrhea.\n\nInirerekomenda na pumunta **4 hanggang 6 na linggo bago umalis** upang may panahon ang mga bakuna na makabuo ng proteksyon; kahit biglaan ang pag-alis, maaari pa ring magpatingin para sa pagsusuri. Makikita sa website ng Taiwan CDC ang listahan ng mga kontratadong klinika at ospital.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Phòng khám y học du lịch làm được những gì? Nên đi trước chuyến đi bao lâu?",
+      "answerMarkdown": "Phòng khám y học du lịch sẽ đánh giá trước chuyến đi dựa trên **điểm đến, lịch trình và tình trạng sức khỏe** của bạn: các vắc-xin cần thiết (như viêm gan A, sốt vàng, dại, MMR, viêm não Nhật Bản), thuốc dự phòng sốt rét, thuốc dự phòng và hướng dẫn sức khỏe về bệnh say độ cao và tiêu chảy du lịch.\n\nNên đi khám **4 đến 6 tuần trước khi xuất cảnh** để vắc-xin có thời gian tạo khả năng bảo vệ; nếu đi đột xuất vẫn có thể đến khám để được đánh giá. Danh sách cơ sở y tế có hợp đồng có thể tra cứu trên trang web của Taiwan CDC.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apa yang dapat dilakukan di klinik kedokteran perjalanan? Berapa lama sebelum bepergian sebaiknya datang?",
+      "answerMarkdown": "Klinik kedokteran perjalanan memberikan penilaian sebelum keberangkatan berdasarkan **tujuan, rencana perjalanan, dan kondisi kesehatan** Anda: vaksin yang diperlukan (seperti hepatitis A, demam kuning, rabies, MMR, ensefalitis Jepang), obat pencegah malaria, serta persiapan obat dan edukasi kesehatan untuk penyakit ketinggian dan diare pelancong.\n\nDisarankan datang **4 hingga 6 minggu sebelum berangkat** agar vaksin punya waktu membentuk perlindungan; jika berangkat mendadak, Anda tetap dapat datang untuk dinilai. Daftar fasilitas kesehatan yang bekerja sama dapat dilihat di situs web Taiwan CDC.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "คลินิกเวชศาสตร์การเดินทางทำอะไรได้บ้าง? ควรไปก่อนเดินทางนานแค่ไหน?",
+      "answerMarkdown": "คลินิกเวชศาสตร์การเดินทางจะประเมินก่อนเดินทางตาม**จุดหมายปลายทาง กำหนดการเดินทาง และสภาพสุขภาพ**ของคุณ ได้แก่ วัคซีนที่จำเป็น (เช่น ไวรัสตับอักเสบเอ ไข้เหลือง พิษสุนัขบ้า MMR ไข้สมองอักเสบเจอี) ยาป้องกันมาลาเรีย การเตรียมยาและให้ความรู้ด้านสุขภาพเกี่ยวกับโรคป่วยจากความสูงและท้องร่วงของนักเดินทาง\n\nแนะนำให้ไป**ก่อนเดินทาง 4 ถึง 6 สัปดาห์** เพื่อให้วัคซีนมีเวลาสร้างภูมิคุ้มกัน หากต้องเดินทางกะทันหันก็ยังไปรับการประเมินได้ รายชื่อสถานพยาบาลที่ทำสัญญาตรวจสอบได้บนเว็บไซต์ของ Taiwan CDC",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

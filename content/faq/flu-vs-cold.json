@@ -68,6 +68,36 @@
     "en": {
       "question": "How can I tell influenza from a common cold?",
       "answerMarkdown": "Influenza usually starts **suddenly** with marked whole-body symptoms such as fever, headache, muscle aches and extreme tiredness. A cold tends to develop gradually with a runny nose, sneezing and sore throat, rarely with high fever or body aches.\n\nInfluenza can lead to pneumonia, encephalitis or myocarditis. Older adults, young children, pregnant women and people with chronic conditions should see a doctor early if they have flu-like symptoms."
+    },
+    "ja": {
+      "question": "インフルエンザと普通のかぜは、どう見分ければよいですか？",
+      "answerMarkdown": "インフルエンザは通常、**急に発症**し、発熱、頭痛、筋肉痛、強いだるさなど全身の症状がはっきり出ます。普通のかぜは、鼻水、くしゃみ、のどの痛みが徐々に現れることが多く、高熱や全身の痛みはあまり出ません。\n\nインフルエンザは、肺炎、脳炎、心筋炎などの重い合併症を起こすことがあります。高齢者、幼児、妊婦、慢性疾患のある人は、インフルエンザ様症状が出たら早めに受診することをおすすめします。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Paano malalaman ang pagkakaiba ng trangkaso at ng karaniwang sipon?",
+      "answerMarkdown": "Ang trangkaso ay karaniwang **biglaang nagsisimula** at may malinaw na sintomas sa buong katawan, tulad ng lagnat, sakit ng ulo, pananakit ng kalamnan, at matinding pagkapagod. Ang karaniwang sipon ay kadalasang unti-unting lumilitaw na may sipon, pagbahin, at pananakit ng lalamunan, at bihirang may mataas na lagnat o pananakit ng katawan.\n\nMaaaring humantong ang trangkaso sa malulubhang komplikasyon tulad ng pulmonya, encephalitis, at myocarditis. Ang mga nakatatanda, maliliit na bata, buntis, at may malalang karamdaman na may sintomas na tulad ng trangkaso ay dapat magpatingin sa doktor nang maaga.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Làm thế nào để phân biệt cúm với cảm lạnh thông thường?",
+      "answerMarkdown": "Cúm thường **khởi phát đột ngột**, triệu chứng toàn thân rõ rệt như sốt, đau đầu, đau nhức cơ, mệt mỏi nhiều; cảm lạnh thông thường phần lớn xuất hiện từ từ với sổ mũi, hắt hơi, đau họng, rất ít khi sốt cao hoặc đau nhức khắp người.\n\nCúm có thể gây biến chứng nặng như viêm phổi, viêm não, viêm cơ tim. Người cao tuổi, trẻ nhỏ, phụ nữ mang thai và người có bệnh mạn tính nếu có triệu chứng giống cúm nên đi khám sớm.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Bagaimana membedakan influenza dengan flu biasa (common cold)?",
+      "answerMarkdown": "Influenza biasanya **muncul tiba-tiba** dengan gejala seluruh tubuh yang jelas, seperti demam, sakit kepala, nyeri otot, dan kelelahan yang sangat berat. Flu biasa umumnya muncul bertahap berupa pilek, bersin, dan sakit tenggorokan, dan jarang disertai demam tinggi atau nyeri seluruh tubuh.\n\nInfluenza dapat menyebabkan komplikasi berat seperti pneumonia, ensefalitis, dan miokarditis. Lansia, anak kecil, ibu hamil, dan penderita penyakit kronis yang mengalami gejala mirip influenza sebaiknya segera berobat.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "จะแยกไข้หวัดใหญ่กับไข้หวัดธรรมดาได้อย่างไร?",
+      "answerMarkdown": "ไข้หวัดใหญ่มักจะ**เริ่มป่วยกะทันหัน** มีอาการทั่วร่างกายชัดเจน เช่น มีไข้ ปวดศีรษะ ปวดเมื่อยกล้ามเนื้อ และอ่อนเพลียมาก ส่วนไข้หวัดธรรมดามักค่อย ๆ มีอาการน้ำมูกไหล จาม เจ็บคอ และไม่ค่อยมีไข้สูงหรือปวดเมื่อยทั่วตัว\n\nไข้หวัดใหญ่อาจทำให้เกิดภาวะแทรกซ้อนรุนแรง เช่น ปอดอักเสบ สมองอักเสบ และกล้ามเนื้อหัวใจอักเสบ ผู้สูงอายุ เด็กเล็ก หญิงตั้งครรภ์ และผู้ที่มีโรคเรื้อรัง หากมีอาการคล้ายไข้หวัดใหญ่ ควรไปพบแพทย์แต่เนิ่น ๆ",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

@@ -61,5 +61,43 @@
   "structured": {
     "withinHours": 72,
     "courseDays": 28
+  },
+  "i18n": {
+    "en": {
+      "question": "What can I do within 72 hours after unprotected sex?",
+      "answerMarkdown": "If you are worried about HIV infection, go to a PEP-designated hospital **within 72 hours, the sooner the better**, where a doctor will assess whether you should take **post-exposure prophylaxis (PEP)**. PEP must be taken continuously for 28 days, with follow-up visits and tests as the doctor directs.\n\nIf you are at ongoing risk of infection, you can also ask about **pre-exposure prophylaxis (PrEP)**.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "question": "避妊具なしの性行為のあとの72時間以内に、何ができますか？",
+      "answerMarkdown": "HIVに感染したかもしれないと心配なときは、**72時間以内に、早ければ早いほどよい**ので、PEP指定病院を受診してください。医師が**曝露後予防内服（PEP）**を使うかどうかを評価します。PEPは28日間続けて服用し、医師の指示に従って再受診と検査による経過観察を受けます。\n\n感染のリスクが続いている人は、さらに**曝露前予防内服（PrEP）**について相談できます。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Ano ang puwedeng gawin sa loob ng 72 oras pagkatapos ng pakikipagtalik na walang proteksyon?",
+      "answerMarkdown": "Kung nag-aalala kayong nahawa ng HIV, pumunta sa ospital na itinalaga para sa PEP **sa loob ng 72 oras, mas maaga mas mabuti**, kung saan susuriin ng doktor kung dapat gumamit ng **post-exposure prophylaxis (PEP)**. Kailangang inumin ang PEP nang tuloy-tuloy sa loob ng 28 araw, at bumalik para sa follow-up at mga pagsusuri ayon sa utos ng doktor.\n\nKung madalas kayong nanganganib mahawa, maaari pa kayong sumangguni tungkol sa **pre-exposure prophylaxis (PrEP)**.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Sau quan hệ tình dục không an toàn, trong vòng 72 giờ có thể làm gì?",
+      "answerMarkdown": "Nếu lo lắng bị nhiễm HIV, hãy đến bệnh viện chỉ định cung cấp PEP **trong vòng 72 giờ, càng sớm càng tốt**, bác sĩ sẽ đánh giá có dùng **thuốc dự phòng sau phơi nhiễm (PEP)** hay không. PEP cần uống liên tục 28 ngày và tái khám theo dõi, xét nghiệm theo chỉ định của bác sĩ.\n\nNếu thường xuyên có nguy cơ lây nhiễm, bạn có thể tìm hiểu thêm về **thuốc dự phòng trước phơi nhiễm (PrEP)**.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apa yang dapat dilakukan dalam 72 jam setelah berhubungan seks tanpa perlindungan?",
+      "answerMarkdown": "Jika khawatir tertular HIV, datanglah ke rumah sakit rujukan PEP **dalam 72 jam, semakin cepat semakin baik**; dokter akan menilai apakah perlu menggunakan **profilaksis pasca-pajanan (PEP)**. PEP harus diminum terus-menerus selama 28 hari, dengan kunjungan ulang dan pemeriksaan lanjutan sesuai arahan dokter.\n\nJika Anda sering berisiko tertular, Anda juga dapat berkonsultasi tentang **profilaksis pra-pajanan (PrEP)**.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "หลังมีเพศสัมพันธ์โดยไม่ป้องกัน ภายใน 72 ชั่วโมงทำอะไรได้บ้าง?",
+      "answerMarkdown": "หากกังวลว่าติดเชื้อเอชไอวี ให้ไปที่โรงพยาบาลที่กำหนดให้บริการ PEP **ภายใน 72 ชั่วโมง ยิ่งเร็วยิ่งดี** แพทย์จะประเมินว่าควรใช้**ยาป้องกันหลังสัมผัสเชื้อ (PEP)** หรือไม่ PEP ต้องกินต่อเนื่อง 28 วัน และกลับมาติดตามผลและตรวจตามที่แพทย์สั่ง\n\nหากมีความเสี่ยงติดเชื้อเป็นประจำ สามารถปรึกษาเรื่อง**ยาป้องกันก่อนสัมผัสเชื้อ (PrEP)** เพิ่มเติมได้",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

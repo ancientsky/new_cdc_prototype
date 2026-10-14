@@ -64,5 +64,43 @@
   "structured": {
     "publicDoseAgeMonths": 12,
     "publicDoses": 1
+  },
+  "i18n": {
+    "en": {
+      "question": "How many doses of the varicella vaccine are government-funded? Is a second dose needed?",
+      "answerMarkdown": "The government-funded varicella vaccine is **1 dose given at 12 months of age**. To improve protection, doctors recommend a second, self-paid dose at age 4–6; parents can discuss this with their doctor.\n\nTeenagers and adults who have never had chickenpox and have not been vaccinated can receive 2 self-paid doses 4–8 weeks apart. Pregnant women must not be vaccinated.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "question": "水痘ワクチンは、公費で何回接種できますか？2回目は必要ですか？",
+      "answerMarkdown": "公費の水痘ワクチンは、幼児が**生後満12か月で1回**接種します。予防効果を高めるため、医療界では4～6歳で自費による2回目の接種を推奨しています。保護者は医師と相談してください。\n\n水痘にかかったことがなく、接種したこともない青少年や成人は、自費で2回、4～8週間あけて接種できます。妊婦は接種できません。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Ilang dose ng bakuna sa bulutong-tubig (varicella) ang pinondohan ng gobyerno? Kailangan ba ang ikalawang dose?",
+      "answerMarkdown": "Ang bakuna sa bulutong-tubig na pinondohan ng gobyerno ay **1 dose na ibinibigay pagtungtong ng 12 buwan**. Para mapahusay ang proteksyon, inirerekomenda ng mga doktor ang ikalawang dose sa edad na 4–6 nang sariling gastos; maaaring pag-usapan ito ng mga magulang kasama ang doktor.\n\nAng mga kabataan at adulto na hindi pa nagkaka-bulutong-tubig at hindi pa nababakunahan ay puwedeng magpabakuna ng 2 dose nang sariling gastos, na may pagitang 4–8 linggo. Hindi puwedeng magpabakuna ang mga buntis.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Vắc-xin thủy đậu do nhà nước chi trả tiêm mấy liều? Có cần tiêm liều thứ hai không?",
+      "answerMarkdown": "Vắc-xin thủy đậu do nhà nước chi trả là **1 liều khi trẻ tròn 12 tháng tuổi**. Để tăng khả năng bảo vệ, giới y khoa khuyến cáo có thể tiêm thêm liều thứ hai tự chi trả ở độ tuổi 4–6; cha mẹ có thể trao đổi với bác sĩ.\n\nThanh thiếu niên và người lớn chưa từng mắc thủy đậu và chưa từng tiêm vắc-xin có thể tự chi trả để tiêm 2 liều, cách nhau 4–8 tuần. Phụ nữ mang thai không được tiêm.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Berapa dosis vaksin cacar air (varisela) yang ditanggung pemerintah? Apakah perlu dosis kedua?",
+      "answerMarkdown": "Vaksin cacar air yang ditanggung pemerintah adalah **1 dosis saat anak genap berusia 12 bulan**. Untuk meningkatkan perlindungan, kalangan medis menganjurkan dosis kedua dengan biaya sendiri pada usia 4–6 tahun; orang tua dapat mendiskusikannya dengan dokter.\n\nRemaja dan orang dewasa yang belum pernah terkena cacar air dan belum pernah divaksin dapat menerima 2 dosis dengan biaya sendiri, dengan jarak 4–8 minggu. Ibu hamil tidak boleh divaksin.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "วัคซีนอีสุกอีใสที่รัฐออกค่าใช้จ่ายให้ฉีดกี่เข็ม? ต้องฉีดเข็มที่สองหรือไม่?",
+      "answerMarkdown": "วัคซีนอีสุกอีใสที่รัฐออกค่าใช้จ่ายให้ คือ **1 เข็มเมื่อเด็กอายุครบ 12 เดือน** เพื่อเพิ่มการป้องกัน วงการแพทย์แนะนำให้ฉีดเข็มที่ 2 เองโดยชำระค่าใช้จ่ายเองเมื่ออายุ 4–6 ปี ผู้ปกครองสามารถปรึกษาแพทย์ได้\n\nวัยรุ่นและผู้ใหญ่ที่ไม่เคยเป็นอีสุกอีใสและไม่เคยฉีดวัคซีน สามารถชำระค่าใช้จ่ายเองเพื่อฉีด 2 เข็ม ห่างกัน 4–8 สัปดาห์ หญิงตั้งครรภ์ห้ามฉีด",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

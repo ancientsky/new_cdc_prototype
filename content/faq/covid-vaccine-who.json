@@ -74,6 +74,36 @@
     "en": {
       "question": "Who can get a government-funded COVID-19 vaccine this season, and how many doses?",
       "answerMarkdown": "Under the COVID-19 vaccination recommendations for 2026–27 (revised September 2026):\n\n- **Everyone aged 6 months and over** can receive one government-funded dose from 1 October 2026, at least 12 weeks after any previous dose.\n- **Adults aged 65+ and people who are moderately or severely immunocompromised** may receive another dose 6 months after this season's first dose.\n\nLast season's (2025–26) recommendation did not include the extra dose; follow the current version."
+    },
+    "ja": {
+      "question": "今年度の新型コロナワクチンは、誰が公費で受けられますか？何回接種しますか？",
+      "answerMarkdown": "2026年9月に改訂された「新型コロナワクチン接種の推奨（2026～2027年度）」によると：\n\n- **生後6か月以上のすべての人**は、2026年10月1日から公費の新型コロナワクチンを1回接種できます。前回の接種から少なくとも12週間あけてください。\n- **65歳以上の高齢者と、中等度から重度の免疫不全のある人**は、今年度の1回目から6か月あけて、さらに1回接種できます。\n\n昨年度（2025～2026年度）の推奨には「さらに1回接種」という規定はありませんでした。現行版に従ってください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Sino ang puwedeng magpabakuna ng COVID-19 nang pinondohan ng gobyerno ngayong taon? Ilang dose ang kailangan?",
+      "answerMarkdown": "Ayon sa \"Mga Rekomendasyon sa Pagbabakuna Laban sa COVID-19 (Taong 2026–2027)\" na binago noong Setyembre 2026:\n\n- **Lahat ng may edad na 6 na buwan pataas** ay puwedeng tumanggap ng 1 dose ng bakuna laban sa COVID-19 na pinondohan ng gobyerno simula Oktubre 1, 2026, na may pagitan na hindi bababa sa 12 linggo mula sa nakaraang dose.\n- **Ang mga may edad na 65 pataas at ang mga may katamtaman hanggang malubhang kahinaan ng immune system** ay puwedeng tumanggap ng karagdagang 1 dose 6 na buwan matapos ang kanilang unang dose sa taong ito.\n\nWalang probisyon para sa \"karagdagang 1 dose\" sa rekomendasyon noong nakaraang taon (2025–2026), kaya sundin ang kasalukuyang bersyon.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Năm nay ai được tiêm vắc-xin COVID-19 do nhà nước chi trả? Cần tiêm mấy liều?",
+      "answerMarkdown": "Theo \"Khuyến cáo tiêm chủng vắc-xin COVID-19 (niên độ 2026–2027)\" được sửa đổi vào tháng 9 năm 2026:\n\n- **Mọi người từ 6 tháng tuổi trở lên** được tiêm 1 liều vắc-xin COVID-19 do nhà nước chi trả kể từ ngày 1 tháng 10 năm 2026, cách liều trước ít nhất 12 tuần.\n- **Người từ 65 tuổi trở lên và người suy giảm miễn dịch mức trung bình đến nặng** được tiêm thêm 1 liều, cách liều thứ nhất của niên độ này 6 tháng.\n\nKhuyến cáo của niên độ trước (2025–2026) không có quy định về \"tiêm thêm 1 liều\", vì vậy hãy làm theo phiên bản hiện hành.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Siapa yang dapat memperoleh vaksin COVID-19 gratis (ditanggung pemerintah) tahun ini? Berapa dosis yang diperlukan?",
+      "answerMarkdown": "Berdasarkan \"Rekomendasi Vaksinasi COVID-19 (Tahun 2026–2027)\" yang direvisi pada September 2026:\n\n- **Semua orang berusia 6 bulan ke atas** dapat menerima 1 dosis vaksin COVID-19 yang ditanggung pemerintah mulai 1 Oktober 2026, dengan jarak minimal 12 minggu dari dosis sebelumnya.\n- **Lansia 65 tahun ke atas dan orang dengan gangguan imun sedang hingga berat** dapat menerima 1 dosis tambahan dengan jarak 6 bulan setelah dosis pertama tahun ini.\n\nRekomendasi tahun lalu (2025–2026) tidak mengatur \"1 dosis tambahan\", jadi ikuti versi yang berlaku saat ini.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ปีนี้ใครฉีดวัคซีนโควิด-19 ที่รัฐออกค่าใช้จ่ายให้ได้บ้าง? ต้องฉีดกี่เข็ม?",
+      "answerMarkdown": "ตาม \"ข้อแนะนำการฉีดวัคซีนโควิด-19 (ปี 2026–2027)\" ที่แก้ไขเมื่อเดือนกันยายน 2026:\n\n- **ผู้ที่อายุ 6 เดือนขึ้นไป**ฉีดวัคซีนโควิด-19 ที่รัฐออกค่าใช้จ่ายให้ได้ 1 เข็ม ตั้งแต่วันที่ 1 ตุลาคม 2026 โดยห่างจากเข็มก่อนหน้าอย่างน้อย 12 สัปดาห์\n- **ผู้สูงอายุ 65 ปีขึ้นไป และผู้ที่ภูมิคุ้มกันบกพร่องระดับปานกลางถึงรุนแรง** ฉีดเพิ่มได้อีก 1 เข็ม โดยห่างจากเข็มแรกของปีนี้ 6 เดือน\n\nข้อแนะนำของปีที่แล้ว (2025–2026) ไม่มีข้อกำหนดเรื่อง \"ฉีดเพิ่มอีก 1 เข็ม\" โปรดยึดฉบับปัจจุบันเป็นหลัก",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

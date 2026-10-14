@@ -57,5 +57,43 @@
   "answerMarkdown": "疾管署**不會以簡訊或通訊軟體要求民眾點連結填寫個資、信用卡或帳戶資料**，也不會要求匯款或投資。收到這類訊息請不要點連結、不要回覆，可撥打 165 反詐騙專線查證，或撥 1922 防疫專線詢問。\n\n疾管署的官方資訊以官網（cdc.gov.tw）及官方社群帳號公告為準。",
   "structured": {
     "reportChannel": "165、1922"
+  },
+  "i18n": {
+    "en": {
+      "question": "I received a text message claiming to be from Taiwan CDC asking me to click a link and fill in my information. What should I do?",
+      "answerMarkdown": "Taiwan CDC **does not use text messages or messaging apps to ask people to click links and enter personal data, credit card or bank account details**, and it never asks for money transfers or investments. If you receive such a message, do not click the link and do not reply. You can call the 165 anti-fraud hotline to check, or call the 1922 epidemic prevention hotline to ask.\n\nTaiwan CDC's official information is announced on its official website (cdc.gov.tw) and official social media accounts.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "ja": {
+      "question": "Taiwan CDC を名乗るSMSで、リンクをクリックして情報を入力するよう求められました。どうすればよいですか？",
+      "answerMarkdown": "Taiwan CDC は、**SMSやメッセージアプリで、リンクをクリックして個人情報、クレジットカード、口座の情報を入力するよう求めること**はありません。送金や投資を求めることもありません。このようなメッセージを受け取ったときは、リンクをクリックせず、返信もしないでください。165反詐欺ホットラインに電話して確認するか、1922防疫ホットラインに電話して問い合わせることができます。\n\nTaiwan CDC の公式な情報は、公式サイト（cdc.gov.tw）と公式のSNSアカウントでの発表が基準です。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Nakatanggap ako ng text na nagpapakilalang Taiwan CDC at pinapa-click ang isang link para punan ang impormasyon. Ano ang dapat kong gawin?",
+      "answerMarkdown": "**Hindi ginagamit ng Taiwan CDC ang text message o messaging app para hilingin sa publiko na mag-click ng link at ilagay ang personal na impormasyon, credit card, o account details**, at hindi rin ito humihingi ng padala ng pera o pamumuhunan. Kapag nakatanggap ng ganitong mensahe, huwag mag-click ng link at huwag sumagot. Maaari kayong tumawag sa 165 anti-fraud hotline para beripikahin, o sa 1922 epidemic prevention hotline para magtanong.\n\nAng opisyal na impormasyon ng Taiwan CDC ay batay sa mga anunsyo sa opisyal na website (cdc.gov.tw) at mga opisyal na social media account.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Tôi nhận được tin nhắn tự xưng là Taiwan CDC yêu cầu bấm vào liên kết và điền thông tin. Tôi nên làm gì?",
+      "answerMarkdown": "Taiwan CDC **không yêu cầu người dân bấm vào liên kết để điền thông tin cá nhân, thẻ tín dụng hoặc thông tin tài khoản qua tin nhắn SMS hay ứng dụng nhắn tin**, cũng không yêu cầu chuyển tiền hay đầu tư. Khi nhận được tin nhắn như vậy, xin đừng bấm vào liên kết và đừng trả lời. Bạn có thể gọi đường dây nóng chống lừa đảo 165 để xác minh, hoặc gọi đường dây nóng phòng chống dịch 1922 để hỏi.\n\nThông tin chính thức của Taiwan CDC được công bố trên trang web chính thức (cdc.gov.tw) và các tài khoản mạng xã hội chính thức.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Saya menerima pesan singkat yang mengaku dari Taiwan CDC dan meminta saya mengeklik tautan untuk mengisi data. Apa yang harus saya lakukan?",
+      "answerMarkdown": "Taiwan CDC **tidak pernah meminta masyarakat mengeklik tautan untuk mengisi data pribadi, kartu kredit, atau data rekening melalui SMS maupun aplikasi pesan**, dan juga tidak meminta transfer uang atau investasi. Jika menerima pesan seperti ini, jangan klik tautannya dan jangan membalas. Anda dapat menelepon hotline antipenipuan 165 untuk memverifikasi, atau menelepon hotline pencegahan epidemi 1922 untuk bertanya.\n\nInformasi resmi Taiwan CDC mengacu pada pengumuman di situs web resmi (cdc.gov.tw) dan akun media sosial resmi.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ได้รับข้อความ SMS อ้างว่าเป็น Taiwan CDC ให้กดลิงก์เพื่อกรอกข้อมูล ควรทำอย่างไร?",
+      "answerMarkdown": "Taiwan CDC **ไม่ส่ง SMS หรือข้อความผ่านแอปแชตเพื่อขอให้ประชาชนกดลิงก์กรอกข้อมูลส่วนบุคคล บัตรเครดิต หรือข้อมูลบัญชีธนาคาร** และไม่ขอให้โอนเงินหรือลงทุน หากได้รับข้อความลักษณะนี้ อย่ากดลิงก์และอย่าตอบกลับ สามารถโทรสายด่วนต่อต้านการฉ้อโกง 165 เพื่อตรวจสอบ หรือโทรสายด่วนป้องกันโรคระบาด 1922 เพื่อสอบถาม\n\nข้อมูลอย่างเป็นทางการของ Taiwan CDC ให้ยึดตามประกาศบนเว็บไซต์ทางการ (cdc.gov.tw) และบัญชีโซเชียลมีเดียทางการ",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    }
   }
 }

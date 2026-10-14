@@ -68,6 +68,36 @@
     "en": {
       "question": "What are the symptoms of measles and how long is it contagious?",
       "answerMarkdown": "Measles begins with **high fever, cough, runny nose and conjunctivitis**, sometimes with white Koplik spots inside the mouth. After 3–4 days a red rash starts behind the ears and on the face and spreads over the body.\n\nPatients are contagious **from 4 days before to 4 days after the rash appears** and the virus spreads through the air. If you have a fever with a rash, phone the hospital first, wear a mask and mention your travel history."
+    },
+    "ja": {
+      "question": "麻疹の症状にはどんなものがありますか？どのくらいの間、人にうつしますか？",
+      "answerMarkdown": "麻疹は初期に**高熱、咳、鼻水、結膜炎**が出て、口の中に白いコプリック斑が出ることがあります。約3～4日後に耳の後ろや顔から赤い発疹が出始め、全身に広がります。\n\n患者は**発疹が出る4日前から、発疹が出たあと4日まで**人にうつす力があり、空気感染します。発熱と発疹が出たときは、まず病院に電話で連絡し、マスクをして受診し、旅行歴を伝えてください。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Ano ang mga sintomas ng tigdas? Gaano katagal itong nakakahawa?",
+      "answerMarkdown": "Ang tigdas ay nagsisimula sa **mataas na lagnat, ubo, sipon, at conjunctivitis**, at maaaring magkaroon ng puting Koplik spots sa loob ng bibig. Pagkalipas ng mga 3–4 na araw, nagsisimulang lumabas ang pulang butlig sa likod ng tainga at sa mukha, saka kumakalat sa buong katawan.\n\nNakakahawa ang pasyente mula **4 na araw bago lumabas ang butlig hanggang 4 na araw pagkatapos nito**, at kumakalat ito sa hangin. Kapag may lagnat na may butlig, tumawag muna sa ospital, magsuot ng mask kapag magpapatingin, at sabihin ang kasaysayan ng paglalakbay.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Bệnh sởi có những triệu chứng nào? Lây truyền trong bao lâu?",
+      "answerMarkdown": "Giai đoạn đầu của bệnh sởi có **sốt cao, ho, sổ mũi, viêm kết mạc**, trong miệng có thể xuất hiện các chấm trắng Koplik. Khoảng 3–4 ngày sau, phát ban đỏ bắt đầu từ sau tai và mặt, rồi lan ra khắp cơ thể.\n\nNgười bệnh có khả năng lây **từ 4 ngày trước khi phát ban đến 4 ngày sau khi phát ban**, và bệnh lây qua đường không khí. Khi bị sốt kèm phát ban, hãy gọi điện báo cho bệnh viện trước, đeo khẩu trang khi đi khám và cho biết tiền sử đi lại.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Apa saja gejala campak? Berapa lama penderita menularkan?",
+      "answerMarkdown": "Campak diawali dengan **demam tinggi, batuk, pilek, dan konjungtivitis**, dan di dalam mulut dapat muncul bercak putih Koplik. Sekitar 3–4 hari kemudian ruam merah mulai muncul dari belakang telinga dan wajah, lalu menyebar ke seluruh tubuh.\n\nPenderita dapat menularkan **sejak 4 hari sebelum ruam muncul hingga 4 hari setelah ruam muncul**, dan penyakit ini menyebar melalui udara. Jika demam disertai ruam, hubungi rumah sakit lebih dulu, kenakan masker saat berobat, dan sampaikan riwayat perjalanan.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "โรคหัดมีอาการอย่างไร? แพร่เชื้อได้นานแค่ไหน?",
+      "answerMarkdown": "โรคหัดเริ่มต้นด้วย**ไข้สูง ไอ น้ำมูกไหล เยื่อบุตาอักเสบ** และอาจพบจุดขาวค็อปลิกในช่องปาก ประมาณ 3–4 วันต่อมาจะเริ่มมีผื่นแดงขึ้นจากหลังหูและใบหน้า แล้วลามไปทั่วร่างกาย\n\nผู้ป่วยแพร่เชื้อได้ตั้งแต่ **4 วันก่อนผื่นขึ้นจนถึง 4 วันหลังผื่นขึ้น** และแพร่ผ่านทางอากาศ เมื่อมีไข้ร่วมกับผื่นแดง ให้โทรแจ้งโรงพยาบาลก่อน สวมหน้ากากอนามัยเมื่อไปพบแพทย์ และแจ้งประวัติการเดินทาง",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

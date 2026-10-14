@@ -67,6 +67,36 @@
     "en": {
       "question": "Where can I get an anonymous HIV test?",
       "answerMarkdown": "You can choose:\n\n- **Anonymous testing hospitals**: no health insurance card needed; counselling and testing provided.\n- **Community testing sites** run by NGOs with local health bureaus.\n- **HIV self-test kits** from designated pharmacies, vending machines or online; some people can get free kits.\n\nA positive self-test must be confirmed at a hospital. If fewer than 3 months have passed since possible exposure, test again later even if negative (window period)."
+    },
+    "ja": {
+      "question": "匿名でHIV検査を受けられるのはどこですか？",
+      "answerMarkdown": "次から選べます。\n\n- **匿名検査を行う病院**：健康保険証は不要で、相談と検査を受けられます。\n- **地域の検査所**：民間団体と衛生局が協力して提供しています。\n- **HIV自己検査キット**：指定の薬局、自動販売機、ネット通販などで入手できます。一部の対象者は公費のキットを申請できます。\n\n自己検査で陽性だった場合は、病院で確認検査を受ける必要があります。感染した可能性のある時期から3か月たっていない場合は、結果が陰性でも、後でもう一度検査することをおすすめします（ウィンドウ期）。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Saan puwedeng magpa-HIV test nang anonymous?",
+      "answerMarkdown": "Maaari kayong pumili ng:\n\n- **Mga ospital para sa anonymous na pagsusuri**: hindi kailangan ang health insurance card; may counselling at pagsusuri.\n- **Mga community testing site**: ibinibigay ng mga NGO katuwang ang health bureau.\n- **HIV self-test kit**: makukuha sa mga itinalagang botika, vending machine, o online; may ilang tao na puwedeng mag-apply ng kit na pinondohan ng gobyerno.\n\nKapag positibo ang self-test, kailangang kumpirmahin ito sa ospital sa pamamagitan ng confirmatory test. Kung wala pang 3 buwan mula sa posibleng pagkahawa, inirerekomendang muling magpasuri sa susunod kahit negatibo ang resulta (window period).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Có thể xét nghiệm HIV ẩn danh ở đâu?",
+      "answerMarkdown": "Bạn có thể chọn:\n\n- **Bệnh viện xét nghiệm ẩn danh**: không cần thẻ bảo hiểm y tế, có tư vấn và xét nghiệm.\n- **Điểm xét nghiệm cộng đồng**: do các tổ chức dân sự phối hợp với sở y tế địa phương cung cấp.\n- **Bộ xét nghiệm HIV tự thực hiện**: có thể mua tại các hiệu thuốc chỉ định, máy bán hàng tự động hoặc kênh trực tuyến; một số đối tượng có thể đăng ký bộ xét nghiệm do nhà nước chi trả.\n\nNếu kết quả tự xét nghiệm dương tính, cần đến bệnh viện để xét nghiệm khẳng định; nếu chưa đủ 3 tháng kể từ lúc có thể bị nhiễm, kết quả âm tính vẫn nên xét nghiệm lại sau đó (giai đoạn cửa sổ).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Di mana saya bisa melakukan tes HIV secara anonim?",
+      "answerMarkdown": "Anda dapat memilih:\n\n- **Rumah sakit tes anonim**: tidak perlu kartu asuransi kesehatan, tersedia konsultasi dan pemeriksaan.\n- **Titik tes komunitas**: disediakan oleh organisasi masyarakat bekerja sama dengan dinas kesehatan.\n- **Alat tes mandiri HIV**: dapat diperoleh di apotek yang ditunjuk, mesin penjual otomatis, atau jalur daring; sebagian kelompok dapat mengajukan alat tes yang ditanggung pemerintah.\n\nJika hasil tes mandiri positif, perlu dilakukan pemeriksaan konfirmasi di rumah sakit. Jika belum sampai 3 bulan sejak kemungkinan tertular, hasil negatif pun sebaiknya diikuti dengan tes ulang di kemudian hari (masa jendela).",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ตรวจเอชไอวีแบบไม่เปิดเผยชื่อได้ที่ไหน?",
+      "answerMarkdown": "คุณสามารถเลือกได้ดังนี้:\n\n- **โรงพยาบาลที่ให้ตรวจแบบไม่เปิดเผยชื่อ**: ไม่ต้องใช้บัตรประกันสุขภาพ มีบริการให้คำปรึกษาและตรวจ\n- **จุดตรวจในชุมชน**: จัดโดยองค์กรเอกชนร่วมกับสำนักงานสาธารณสุข\n- **ชุดตรวจเอชไอวีด้วยตนเอง**: หาได้ที่ร้านขายยาที่กำหนด ตู้จำหน่ายอัตโนมัติ หรือช่องทางออนไลน์ บางกลุ่มสามารถขอชุดตรวจที่รัฐออกค่าใช้จ่ายให้ได้\n\nหากผลตรวจด้วยตนเองเป็นบวก ต้องไปตรวจยืนยันที่โรงพยาบาล หากเวลาห่างจากการที่อาจติดเชื้อยังไม่ถึง 3 เดือน แม้ผลเป็นลบก็แนะนำให้ตรวจซ้ำอีกครั้งภายหลัง (ระยะหน้าต่าง)",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }

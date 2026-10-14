@@ -65,6 +65,36 @@
     "en": {
       "question": "Where can I find infectious disease statistics?",
       "answerMarkdown": "You can use:\n\n- **NIDSS (Taiwan National Infectious Disease Statistics System)**: case counts of notifiable diseases by disease, year, city or county and age.\n- **Taiwan CDC open data portal**: CSV, JSON and APIs, such as daily dengue cases and influenza-like illness visits.\n- **Influenza Express** and weekly epidemic reports: key surveillance points for influenza, enterovirus and more.\n\nThis site's \"Open data and statistics\" page lists common datasets with data date, owner and licence."
+    },
+    "ja": {
+      "question": "感染症の統計数字は、どこで調べられますか？",
+      "answerMarkdown": "次のものを利用できます。\n\n- **感染症統計データ検索システム（NIDSS）**：疾病、年、県・市、年齢ごとに、法定感染症の患者数を検索できます。\n- **Taiwan CDC オープンデータプラットフォーム**：CSV、JSON、APIを提供しています。例：デング熱の毎日の確定患者数、インフルエンザ様症状の受診件数。\n- **インフルエンザ速報**と週ごとの流行報告：その週のインフルエンザやエンテロウイルスなどの監視の要点を説明しています。\n\n当サイトの「オープンデータと統計」ページにも、よく使われるデータセットをまとめ、データの日付、担当部署、ライセンスを示しています。",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "tl": {
+      "question": "Saan makikita ang mga estadistika ng epidemya?",
+      "answerMarkdown": "Maaari ninyong gamitin ang:\n\n- **Sistema sa Pagtatanong ng Estadistika ng mga Nakakahawang Sakit (NIDSS)**: makikita ang bilang ng mga kaso ng mga notifiable na nakakahawang sakit ayon sa sakit, taon, lungsod o county, at edad.\n- **Open data platform ng Taiwan CDC**: nagbibigay ng CSV, JSON, at API, tulad ng araw-araw na kumpirmadong kaso ng dengue at bilang ng pagpapakonsulta dahil sa influenza-like illness.\n- **Influenza Express** at lingguhang ulat ng epidemya: ipinapaliwanag ang mahahalagang punto ng surveillance ng trangkaso, enterovirus, at iba pa sa linggong iyon.\n\nAng pahina ng \"Open Data at Estadistika\" ng site na ito ay may kompilasyon din ng mga karaniwang dataset, na may petsa ng datos, may-ari na ahensya, at lisensya.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "vi": {
+      "question": "Có thể tra cứu số liệu thống kê dịch bệnh ở đâu?",
+      "answerMarkdown": "Bạn có thể sử dụng:\n\n- **Hệ thống tra cứu dữ liệu thống kê bệnh truyền nhiễm (NIDSS)**: tra cứu số ca bệnh truyền nhiễm phải báo cáo theo bệnh, năm, thành phố/huyện và độ tuổi.\n- **Nền tảng dữ liệu mở của Taiwan CDC**: cung cấp CSV, JSON và API, ví dụ số ca sốt xuất huyết Dengue xác định mỗi ngày, số lượt khám bệnh giống cúm.\n- **Bản tin nhanh về cúm** và báo cáo dịch bệnh hằng tuần: nêu các điểm giám sát chính về cúm và enterovirus, v.v. trong tuần.\n\nTrang \"Dữ liệu mở và thống kê\" của trang web này cũng tổng hợp các bộ dữ liệu thường dùng, ghi rõ ngày dữ liệu, đơn vị phụ trách và giấy phép.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "id": {
+      "question": "Di mana saya bisa melihat angka statistik wabah penyakit?",
+      "answerMarkdown": "Anda dapat menggunakan:\n\n- **Sistem Kueri Data Statistik Penyakit Menular (NIDSS)**: dapat mencari jumlah kasus penyakit menular wajib lapor menurut penyakit, tahun, kota/kabupaten, dan usia.\n- **Platform data terbuka Taiwan CDC**: menyediakan CSV, JSON, dan API, misalnya kasus dengue terkonfirmasi harian dan jumlah kunjungan karena penyakit mirip influenza.\n- **Influenza Express** dan laporan epidemi mingguan: menjelaskan poin pemantauan utama minggu itu untuk influenza, enterovirus, dan lainnya.\n\nHalaman \"Data Terbuka dan Statistik\" di situs ini juga merangkum dataset yang sering dipakai, dengan keterangan tanggal data, unit penanggung jawab, dan lisensi.",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
+    },
+    "th": {
+      "question": "ตรวจสอบสถิติสถานการณ์โรคระบาดได้ที่ไหน?",
+      "answerMarkdown": "คุณสามารถใช้:\n\n- **ระบบสืบค้นข้อมูลสถิติโรคติดต่อ (NIDSS)**: ค้นหาจำนวนผู้ป่วยโรคติดต่อตามกฎหมายได้ตามโรค ปี เมือง/อำเภอ และอายุ\n- **แพลตฟอร์มข้อมูลเปิดของ Taiwan CDC**: มี CSV, JSON และ API เช่น ผู้ป่วยไข้เลือดออกยืนยันรายวัน จำนวนผู้มารับบริการด้วยอาการคล้ายไข้หวัดใหญ่\n- **Influenza Express (ข่าวด่วนไข้หวัดใหญ่)** และรายงานสถานการณ์โรคระบาดรายสัปดาห์: อธิบายประเด็นสำคัญของการเฝ้าระวังไข้หวัดใหญ่ เอนเทอโรไวรัส และอื่น ๆ ในสัปดาห์นั้น\n\nหน้า \"ข้อมูลเปิดและสถิติ\" ของเว็บไซต์นี้ยังรวบรวมชุดข้อมูลที่ใช้บ่อย พร้อมระบุวันที่ของข้อมูล หน่วยงานรับผิดชอบ และสัญญาอนุญาต",
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-14"
     }
   }
 }
