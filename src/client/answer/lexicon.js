@@ -6,7 +6,7 @@ import { tokenize } from './text.js';
 // 跨語言關鍵詞（非中文問句 → 中文檢索詞），只做檢索展開，不出現在答案中
 export const CROSS_LANG = [
   [/\b(see a doctor|seek (medical )?care|doctor|clinic|hospital)\b|đi khám|bác sĩ/i, '就醫 看醫生'],
-  [/\bfever\b|sốt/i, '發燒'], [/\brash\b|phát ban/i, '出疹 紅疹'], [/\bsymptoms?\b|triệu chứng|\bgejala\b|\bsintomas\b|อาการ|症状/i, '症狀 徵象'],
+  [/\bfever\b|sốt/i, '發燒'], [/\brash\b|phát ban/i, '出疹 紅疹'], [/\bsymptoms?\b|triệu chứng|\bgejala\b|\bsintomas\b|อาการ|症状/i, '症狀'],
   [/\bwarning signs?\b|dấu hiệu cảnh báo/i, '警示徵象'], [/\bincubation\b|ủ bệnh/i, '潛伏期'],
   [/\bprevent\w*\b|phòng ngừa|phòng bệnh/i, '預防'], [/\btransmi\w*|spread\w*|lây/i, '傳染 傳播'],
   [/\bvaccin\w*|immuni[sz]\w*|vắc[\s-]?xin|tiêm/i, '疫苗 接種'], [/\btravel\w*|abroad|overseas|du lịch|nước ngoài/i, '出國 旅遊'],
@@ -49,7 +49,7 @@ export const PARAPHRASE = [
   [/怎麼申請|如何申請|申請流程|怎麼辦理/, '申請 步驟'], [/要帶什麼|準備什麼|帶哪些/, '應備文件 準備'],
   [/影片|宣導片|衛教片|動畫/, '影片 影音'], [/職缺|徵才|徵人/, '招募'], [/標案|招標|投標/, '採購'],
   // 第四十輪：「外籍勞工／外勞」與站內用語「移工」「外籍人士」；「漏打／錯過」與「補接種」；「哺乳／餵母乳」
-  [/外籍勞工|外勞|外籍移工|外籍看護|外籍工作者/, '移工 外籍'], [/漏打|沒打到|忘了打|忘記打|錯過|延遲接種|晚打|來不及打|晚了.{0,8}才打|延後(接種|打)/, '補接種 補打 漏打'],
+  [/外籍勞工|外勞|外籍移工|外籍看護|外籍工作者/, '移工 外籍'], [/漏打|沒打到|忘了打|忘記打|錯過|延遲接種|晚打|來不及打|晚了.{0,8}才打|延後(接種|打)|沒有?(按時|準時)(打|接種)/, '補接種 補打 漏打'],
   // 第四十八輪（issue #94）：「打過什麼疫苗要去哪裡查」→ 接種紀錄（查的是紀錄，不是接種點）
   [/打過(什麼|哪些|幾劑)|接種過(什麼|哪些)|(疫苗|接種)(紀錄|記錄)/, '接種紀錄 預防接種紀錄'],
   [/哺乳|餵母乳|親餵|母乳/, '哺乳'], [/懷孕|孕期|妊娠|有孕/, '孕婦 懷孕'],

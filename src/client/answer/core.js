@@ -26,11 +26,11 @@
 import { CROSS_LANG, PARAPHRASE, topicAnchorsOf, buildLexicon, latinStems, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
 import { ANTIVIRAL_RE, CLOSED_MARK, NOTICE_TYPES, SCHEDULE_VACCINE_RE, VAXMAP_GROUP_OF, VAXMAP_GROUP_OF_DISEASE, WHICH_VACCINE_RE, ageHashOf, ageProfileOf, mmssOf, normTravel, normalizeNotifyTable, vaxmapHref } from './structured.js';
 import { EN_STOP, VI_STOP, bigrams, detectInjection, maskPII, maskPIIDetailed, parseTimeRange, rocDate, tokenize } from './text.js';
-import { CAREERS_DETAIL_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FACETS, QUERY_FUNC_RE, RECORD_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_RE, classifyIntent, focusOf, isLowRelevance, refusalCopy, titleHits } from './rules.js';
+import { ANIMAL_RE, BITE_RE, CAREERS_DETAIL_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FACETS, QUERY_FUNC_RE, RECORD_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_RE, classifyIntent, focusOf, isLowRelevance, refusalCopy, titleHits } from './rules.js';
 
 // 第四十輪（issue #77）：補接種問句（漏打、錯過、延遲、忘了打、補打）。命中就不給年齡時程表，改由檢索找補接種 FAQ
 // 第四十八輪（issue #94）：加「晚了兩個月才打」「延後接種」這類口語
-export const CATCHUP_RE = /(漏打|漏接種|補打|補接種|錯過|延遲接種|晚打|晚了.{0,8}才打|延後(接種|打)|忘了打|忘記打|沒打到|重打|missed (?:a |the )?(?:dose|vaccin)|catch-?up)/i;
+export const CATCHUP_RE = /(漏打|漏接種|補打|補接種|錯過|延遲接種|晚打|晚了.{0,8}才打|延後(接種|打)|忘了打|忘記打|沒打到|重打|沒有?(按時|準時)(打|接種)|missed (?:a |the )?(?:dose|vaccin)|catch-?up)/i;
 
 export { bigrams, detectInjection, maskPII, maskPIIDetailed, numbersByUnit, parseChineseNumber, parseTimeRange, pdfHref, rocDate, splitPlain, tokenize } from './text.js';
 export { ADMIT_RE, INTENT_RULES, LAB_PRO_RE, LAB_PUBLIC_RE, PRO_SUB_INTENTS, REFUSAL_RULES, RELEVANCE, classifyIntent, isLowRelevance } from './rules.js';
@@ -64,6 +64,8 @@ class RouteNotLoaded extends Error {
 }
 if (globalThis.process?.versions?.node) await Promise.all(Object.keys(ROUTES).map(importRoute));
 
+/** 第四十九輪：外語問句判意圖時可借用的跨語言對應詞（疾病面向） */
+const FACET_CUE = /^(症狀|警示徵象|潛伏期)$/;
 
 // ───────────────────────── createEngine ─────────────────────────
 
@@ -130,6 +132,24 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
   for (const c of zhPub) if (/^(faq|disease|vaccine|service|topic)$/.test(c.type)) for (const t of c.terms ?? []) { const k = lc(t).trim(); if (k.length > 1 && !/^[\d\s]+$/.test(k)) (termIds.get(k) ?? termIds.set(k, new Set()).get(k)).add(c.contentId); }
   const hays = new WeakMap();
   const hayOf = (c) => { let h = hays.get(c); if (h == null) hays.set(c, (h = chunkHay(c))); return h; };
+  // 第四十九輪：問句型態錨點。問句屬於某種「問法」（被…咬、漏打／補打）時，題目或適用情境本身就是這種問法的答案單元
+  //（FAQ 題目「被狗、貓或野生動物咬傷該怎麼辦？」、疾病頁卡片「如果被動物咬傷或抓傷」、FAQ「疫苗漏打或延遲接種怎麼辦？」）優先。
+  // 與主題錨點不同：主題錨點看「講什麼」（鼬獾、餵母乳），型態錨點看「問什麼」（該怎麼處置、要不要補），以片段為單位（同一頁的流行病學段落不算）。
+  // 完全由內容的題目與卡片條件推得，不寫死問句；新增一則「被蜂螫怎麼辦」FAQ 只要把問法加進下面的清單。
+  const subjectOf = (c) => `${c.question ?? c.title ?? ''} ${c.card?.if ?? ''}`;
+  const animalsIn = (t) => new Set((String(t).match(ANIMAL_RE) ?? []).map((a) => (a === '犬' ? '狗' : a)));
+  /** 單元的題目／標題寫了泛稱「動物」，或點名了問句裡的動物 */
+  const animalFits = (c, qa) => { const sub = subjectOf(c); return sub.includes('動物') || [...animalsIn(sub)].some((a) => qa.has(a)); };
+  // 第四十九輪：問句提到的疫苗（字面：「MMR漏打」「五合一晚打」——實體比對要求拉丁名稱前後不接文字，中英相連的 MMR 抓不到）
+  const vaccineStems = vaccines.map((v) => [v.id, [v.name, String(v.name ?? '').replace(/\s*疫苗$/, ''), v.slug && v.slug.length <= 5 ? v.slug : null].filter((n) => n && String(n).length >= 2).map(lc)]);
+  const vaccinesNamedIn = (t) => { const h = lc(t); return new Set(vaccineStems.filter(([, ns]) => ns.some((n) => h.includes(n))).map(([id]) => id)); };
+  const QUESTION_CUES = [
+    // 咬傷：問句要點名動物（狗、鼬獾…）或說「動物」才算（被蚊子咬不是這類問題），單元也要講得到這種動物
+    { re: BITE_RE, fits: (c, x) => (x.animals.size > 0 || x.text.includes('動物')) && animalFits(c, x.animals) },
+    // 補接種：單元綁了特定疫苗（「卡介苗大人需要補打嗎」「不確定有沒有打過 MMR 要不要補打」）而問句沒點名那支疫苗 ⇒ 不算——補接種原則因疫苗而異，沒點名時通用的那則才是答案
+    { re: CATCHUP_RE, fits: (c, x) => !c.vaccines?.length || c.vaccines.some((v) => x.vaccines.has(v)) },
+  ];
+  const cueUnits = QUESTION_CUES.map((cue) => ({ ...cue, units: zhPub.filter((c) => /^(faq|disease|vaccine|service|topic)$/.test(c.type) && cue.re.test(subjectOf(c))) }));
   function zhAnchors(q) {
     const lq = lc(q); const out = [];
     for (const [t, ids] of termIds) {
@@ -281,7 +301,9 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     const scored = [];
     for (const d of model.docs) {
       let s = bm25Score(model, d, qw);
-      if (s <= 0) continue;
+      // 第四十九輪：問句型態錨點的片段即使字面沒撞到（「我被路邊的狗咬了」vs「被狗、貓或野生動物咬傷」）也列入候選，給最低分 0.5 再加權
+      if (s <= 0 && !opts.cueIds?.has(d.c.id)) continue;
+      if (s <= 0) s = 0.5;
       const c = d.c;
       let falseToks = null;
       if (boundaryPhrases.length) {
@@ -293,7 +315,8 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
         }
       }
       for (const t of c.terms ?? []) if (t && String(t).length >= 2 && !ent.names.has(lc(t)) && qLower.includes(lc(t))) s += 0.6;
-      const anc = aIds.has(c.contentId);
+      const cue = !!opts.cueIds?.has(c.id);
+      const anc = aIds.has(c.contentId) || cue;
       if (dIds.size) {
         if ((c.diseases ?? []).some((x) => dIds.has(x))) s = s * 1.6 + 2;
         // 問的是 A 病，不拿 B 病的內容回答。第四十八輪例外：主題錨點命中、且題目沒點名任何疾病的 FAQ（「懷孕或哺乳期間可以打疫苗嗎」標了流感只因內文舉例）
@@ -334,9 +357,10 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
       if (c.historical && !NEWS_CUE.test(q)) s *= HISTORICAL_WEIGHT;
       if (c.type === 'research' && RESEARCH_CUE.test(q)) s = s * 1.6 + 1.5;
       if (labPublic && c.block === 'treatment') s = s * 1.5 + 1;
-      scored.push({ ...c, _score: Math.round(s * 1000) / 1000, ...(falseToks?.size ? { _falseTokens: falseToks } : {}), ...(anc ? { _anchor: true } : {}) });
+      scored.push({ ...c, _score: Math.round(s * 1000) / 1000, ...(falseToks?.size ? { _falseTokens: falseToks } : {}), ...(anc ? { _anchor: true } : {}), ...(cue ? { _cue: true } : {}) });
     }
-    scored.sort((a, b) => b._score - a._score);
+    // 第四十九輪：問句型態錨點的片段排最前面——「問法相同」（被…咬了怎麼辦 ↔ FAQ「被狗、貓或野生動物咬傷該怎麼辦？」）比字面重疊更能代表對題
+    scored.sort((a, b) => (b._cue ? 1 : 0) - (a._cue ? 1 : 0) || b._score - a._score);
     const top = scored[0]?._score ?? 0;
     const out = [];
     for (const c of scored) {
@@ -457,10 +481,12 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
         if (view === 'pro' && (c.type === 'document' || c.type === 'letter')) s += 0.5;
         if (c.extraction?.reviewStatus === 'machine') s -= 0.6; // 未校對的 PDF 文字：同樣講到時讓已審內容先
         const whereHit = !!whereReq && ci < 3 && whereReq.re.test(sen);
+        // 第四十九輪：問句型態錨點片段（咬傷處置 FAQ）的第一句就是答案本身（一沖二認三送四觀察），不要求含問句詞（它寫「動物」，不寫「鼬獾」）
+        const cueLead = !!c._cue && si === 0;
         if (whereHit) s += 0.6;
-        if (cov <= 0.05 && covTitle < 0.3 && !(ci === 0 && si === 0) && !whereHit) return;
+        if (cov <= 0.05 && covTitle < 0.3 && !(ci === 0 && si === 0) && !whereHit && !cueLead) return;
         // 問句除了病名還有其他關鍵詞時，句子（或其片段標題）至少要命中一個，避免「只因為同一種病」被選入
-        if (neToks.length && !neToks.some((t) => toks.has(t) || titleToks.has(t)) && !(ci === 0 && si === 0) && !whereHit) return;
+        if (neToks.length && !neToks.some((t) => toks.has(t) || titleToks.has(t)) && !(ci === 0 && si === 0) && !whereHit && !cueLead) return;
         cands.push({ text: sen, cite: [c.id], score: s, slot, chunk: c, from, to, dep: CONNECTIVE_RE.test(sen) });
       });
     });
@@ -513,7 +539,8 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     const where = req.find((r) => r.key === 'where');
     if (where) for (const p of picked) if (where.re.test(p.text)) p.slot = -1;
     // 第四十八輪（issue #94）：主題錨點命中的內容排在其他句子前面（「五合一晚了兩個月才打」先答補接種 FAQ，再補五合一時程）
-    const rank = (p) => (p.chunk?._anchor ? Math.min(p.slot, -0.5) : p.slot);
+    // 第四十九輪：問句型態錨點（被…咬 → 咬傷處置、漏打 → 補接種）再排在主題錨點前面
+    const rank = (p) => (p.chunk?._cue ? Math.min(p.slot, -1) : p.chunk?._anchor ? Math.min(p.slot, -0.5) : p.slot);
     picked.sort((a, b) => rank(a) - rank(b) || b.score - a.score);
     return picked;
   }
@@ -1063,7 +1090,11 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     result.timeRange = hasRange ? range : null;
 
     // 2 意圖
-    const ci = classifyIntent(q, { view, hasTimeRange: hasRange, hasDisease: !!result.disease, hasCountry: entities.countries.length > 0 });
+    // 第四十九輪：外語問句的意圖也看跨語言對應出來的中文詞（gejala／อาการ → 症狀）。意圖規則表多半只有中、英、越文的說法，
+    // 印尼文、泰文的「症狀」原本判不出意圖（unknown），組句就不會優先「症狀」句，挑到警示徵象；中文問句「登革熱症狀」本來就判得出來。
+    // 只借「疾病面向」的詞（症狀、警示徵象、潛伏期）：出國、移工這類詞在外語裡有歧義（越文 nước ngoài＝外國／外籍，visiting Taiwan＝來臺），借了會把來臺、移工問句誤判成出國
+    const crossCue = lang !== 'zh-TW' ? CROSS_LANG.filter(([re, zh]) => FACET_CUE.test(zh) && re.test(q)).map((r) => r[1]).join(' ') : '';
+    const ci = classifyIntent(crossCue ? `${q} ${crossCue}` : q, { view, hasTimeRange: hasRange, hasDisease: !!result.disease, hasCountry: entities.countries.length > 0 });
     result.intent = ci.intent; result.intentReasons = ci.reasons; result.intentScores = ci.scores;
     if (forceIntent) { result.intent = forceIntent; result.intentReasons.push(`forced.${forceIntent}`); }
     if (VAX_WHERE_RE.test(q) && !RECORD_RE.test(q)) result.whereAsk = true;
@@ -1144,6 +1175,9 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     const viaRules = (rules) => rules.filter(([re]) => re.test(q)).map((r) => r[1]).join(' ');
     const zhA = zhAnchors(lang === 'zh-TW' ? `${q} ${viaRules(PARAPHRASE)}` : viaRules(CROSS_LANG));
     const anchorIds = new Set(zhA.flatMap((a) => [...a.ids]));
+    const cueText = lang === 'zh-TW' ? `${q} ${viaRules(PARAPHRASE)}` : viaRules(CROSS_LANG);
+    const cueCtx = { text: cueText, animals: animalsIn(cueText), vaccines: new Set([...entities.vaccines.map((v) => v.id), ...vaccinesNamedIn(q)]) };
+    const cueIds = new Set(cueUnits.filter((u) => u.re.test(cueText)).flatMap((u) => u.units.filter((c) => u.fits(c, cueCtx)).map((c) => c.id)));
     if (zhA.length) result.guards.push({ kind: 'topic-anchor', terms: zhA.map((a) => a.t) });
     if (profile && result.intent === 'vaccine' && !catchUp && !zhA.length && !ANTIVIRAL_RE.test(q) && (!entities.vaccines.length || WHICH_VACCINE_RE.test(q))) {
       const sa = route('schedule').scheduleAnswer(q, result, entities, profile);
@@ -1164,9 +1198,9 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     let chunks = [];
     let zhChunks = null;
     let topicConfirmed = false;
-    const zhRetrieve = () => (zhChunks ??= retrieve(q, { view, lang: 'zh-TW', k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards, anchorIds }));
+    const zhRetrieve = () => (zhChunks ??= retrieve(q, { view, lang: 'zh-TW', k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards, anchorIds, cueIds }));
     if (lang !== 'zh-TW') {
-      chunks = retrieve(q, { view, lang, k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards, anchorIds });
+      chunks = retrieve(q, { view, lang, k, intent: result.intent, entities, expanded, presetDisease, guards: result.guards, anchorIds, cueIds });
       if (chunks.length && chunks[0]._score < 2.5) chunks = [];
       // 主題已確認：問句有錨點，且同語言前 3 塊有一塊「標題」就在講這個主題（英文來源的來臺專區）。
       // 這時相關度偏低只代表問句用詞（what should I do／precautions）和片段不同，不是主題不對 ⇒ 不因相關度門檻丟掉（下方的查無門檻同理）
@@ -1187,9 +1221,22 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
       const d0 = entities.diseases.find((d) => !d.derived)?.id;
       topicConfirmed = lang !== 'zh-TW' && chunks.length > 0 && !!d0 && (chunks[0].diseases ?? []).includes(d0);
     }
+    // 第四十九輪：咬傷問句點名了動物（狗、鼬獾…）⇒ 題目／標題只講別種動物（蛇咬的「五要五不」）、又沒寫泛稱「動物」的片段不拿來回答
+    const qAnimals = BITE_RE.test(cueText) ? cueCtx.animals : new Set();
+    if (qAnimals.size && chunks.length) {
+      const kept = chunks.filter((c) => !animalsIn(subjectOf(c)).size || animalFits(c, qAnimals));
+      if (kept.length < chunks.length) { result.guards.push({ kind: 'other-animal-dropped', animals: [...qAnimals], dropped: chunks.length - kept.length }); kept.qWeights = chunks.qWeights; kept.model = chunks.model; chunks = kept; }
+    }
+    // 第四十九輪：問句型態錨點帶頭（咬傷、補接種）⇒ 只留同一件事的片段：錨點單元本身、與它同疾病，或問句自己點名的疾病／疫苗。
+    // 其他片段只是字面撞到（「怎麼處理」→ 媒體採訪申請「處理天數」、「補打」→ 日本麻疹澄清），不拿來湊句
+    if (chunks[0]?._cue) {
+      const keepDis = new Set([...chunks.filter((c) => c._cue).flatMap((c) => c.diseases ?? []), ...entities.diseases.map((d) => d.id)]);
+      const kept = chunks.filter((c) => c._cue || (c.diseases ?? []).some((d) => keepDis.has(d)) || (c.vaccines ?? []).some((v) => cueCtx.vaccines.has(v)));
+      if (kept.length < chunks.length) { result.guards.push({ kind: 'cue-focus', dropped: chunks.length - kept.length }); kept.qWeights = chunks.qWeights; kept.model = chunks.model; chunks = kept; }
+    }
     // 第四十八輪（issue #94／#101）：前 3 塊有主題錨點命中的內容（被鼬獾咬、晚了兩個月才打 → 漏打、外語「被狗咬」→ 動物咬傷）＝主題已確認，
     // 不因問句口語、字面涵蓋率低而判查無
-    if (chunks.slice(0, 3).some((c) => anchorIds.has(c.contentId))) topicConfirmed = true;
+    if (chunks.slice(0, 3).some((c) => anchorIds.has(c.contentId) || c._cue)) topicConfirmed = true; // 第四十九輪：問句型態錨點同理
     // 沒有疾病實體時：以最相關片段的疾病為主，不混入其他疾病的片段
     // 第四十八輪（issue #94）：問句有主題錨點時，以錨點命中的片段的疾病為主（「被鼬獾咬不用打疫苗嗎」是狂犬病，不是分數最高的孕婦接種 FAQ 的流感）
     const lead = chunks.find((c) => anchorIds.has(c.contentId) && c.diseases?.length) ?? chunks[0];
@@ -1298,6 +1345,8 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
       const qw = chunks.qWeights; const model = chunks.model;
       const topToks = new Set(tokenize(`${chunks[0].title} ${chunks[0].text}`));
       let cov = 0, tot = 0; for (const [t, w] of qw) { if (!model.has(t)) continue; const idf = model.idf(t) * w; tot += idf; if (topToks.has(t)) cov += idf; }
+      // 第四十九輪：第一塊是問句型態錨點（問法相同、點名的動物也對得上）＝題目層級已對題，覆蓋率以 1 計（它寫「動物」不寫「路邊的狗」）
+      if (chunks[0]._cue) cov = tot;
       const ent = result.disease ? ((chunks[0].diseases ?? []).includes(result.disease) ? 1 : 0) : 0.5;
       result.confidence = Math.round(Math.min(1, 0.6 * (cov / (tot || 1)) + 0.25 * ent + 0.15 * Math.min(1, chunks[0]._score / 12)) * 100) / 100;
     }

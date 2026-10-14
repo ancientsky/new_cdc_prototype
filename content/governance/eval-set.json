@@ -5162,6 +5162,345 @@
         ]
       },
       "note": "第四十八輪 #101：外語問句主題已確認（詞彙主檔各語名稱／跨語言錨點），沒有審閱譯文時以中文原文回答並附 translationSource，不判查無"
+    },
+    {
+      "id": "R49-01",
+      "category": "fact",
+      "q": "被鼬獾咬",
+      "expect": {
+        "refuse": false,
+        "firstCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "mustInclude": [
+          "一沖二認三送四觀察"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：咬傷問句（被＋動物＋咬／抓）先答「一沖二認三送四觀察」——FAQ 題目寫的就是這個情境，題目型態錨點讓它排第一，不因片段沒寫到那種動物而判查無"
+    },
+    {
+      "id": "R49-02",
+      "category": "fact",
+      "q": "被鼬獾咬了怎麼辦",
+      "expect": {
+        "refuse": false,
+        "firstCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "mustInclude": [
+          "一沖二認三送四觀察"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：咬傷問句（被＋動物＋咬／抓）先答「一沖二認三送四觀察」——FAQ 題目寫的就是這個情境，題目型態錨點讓它排第一，不因片段沒寫到那種動物而判查無"
+    },
+    {
+      "id": "R49-03",
+      "category": "fact",
+      "q": "手被鼬獾抓傷了",
+      "expect": {
+        "refuse": false,
+        "firstCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "mustInclude": [
+          "一沖二認三送四觀察"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：咬傷問句（被＋動物＋咬／抓）先答「一沖二認三送四觀察」——FAQ 題目寫的就是這個情境，題目型態錨點讓它排第一，不因片段沒寫到那種動物而判查無"
+    },
+    {
+      "id": "R49-04",
+      "category": "fact",
+      "q": "在山上被白鼻心咬到",
+      "expect": {
+        "refuse": false,
+        "firstCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "mustInclude": [
+          "一沖二認三送四觀察"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：咬傷問句（被＋動物＋咬／抓）先答「一沖二認三送四觀察」——FAQ 題目寫的就是這個情境，題目型態錨點讓它排第一，不因片段沒寫到那種動物而判查無"
+    },
+    {
+      "id": "R49-05",
+      "category": "fact",
+      "q": "被錢鼠咬到要就醫嗎",
+      "expect": {
+        "refuse": false,
+        "firstCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "mustInclude": [
+          "一沖二認三送四觀察"
+        ],
+        "lowRelevance": false
+      },
+      "note": "第四十九輪：咬傷問句（被＋動物＋咬／抓）先答「一沖二認三送四觀察」——FAQ 題目寫的就是這個情境，題目型態錨點讓它排第一，不因片段沒寫到那種動物而判查無"
+    },
+    {
+      "id": "R49-06",
+      "category": "multilingual",
+      "lang": "id",
+      "q": "Gejala demam berdarah apa saja",
+      "expect": {
+        "refuse": false,
+        "intent": "symptoms",
+        "mustCite": [
+          "disease.dengue"
+        ],
+        "mustInclude": [
+          "後眼窩痛"
+        ]
+      },
+      "note": "第四十九輪：外語「症狀」問句（gejala／อาการ／sintomas）意圖判成症狀，答典型症狀，不是先答警示徵象"
+    },
+    {
+      "id": "R49-07",
+      "category": "multilingual",
+      "lang": "th",
+      "q": "ไข้เลือดออกมีอาการอย่างไร",
+      "expect": {
+        "refuse": false,
+        "intent": "symptoms",
+        "mustCite": [
+          "disease.dengue"
+        ],
+        "mustInclude": [
+          "後眼窩痛"
+        ]
+      },
+      "note": "第四十九輪：外語「症狀」問句（gejala／อาการ／sintomas）意圖判成症狀，答典型症狀，不是先答警示徵象"
+    },
+    {
+      "id": "R49-08",
+      "category": "multilingual",
+      "lang": "th",
+      "q": "อาการของไข้เลือดออก",
+      "expect": {
+        "refuse": false,
+        "intent": "symptoms",
+        "mustCite": [
+          "disease.dengue"
+        ],
+        "mustInclude": [
+          "後眼窩痛"
+        ]
+      },
+      "note": "第四十九輪：外語「症狀」問句（gejala／อาการ／sintomas）意圖判成症狀，答典型症狀，不是先答警示徵象"
+    },
+    {
+      "id": "R49-09",
+      "category": "multilingual",
+      "lang": "tl",
+      "q": "Ano ang sintomas ng dengue?",
+      "expect": {
+        "refuse": false,
+        "intent": "symptoms",
+        "mustCite": [
+          "disease.dengue"
+        ],
+        "mustInclude": [
+          "後眼窩痛"
+        ]
+      },
+      "note": "第四十九輪：外語「症狀」問句（gejala／อาการ／sintomas）意圖判成症狀，答典型症狀，不是先答警示徵象"
+    },
+    {
+      "id": "R49-10",
+      "category": "fact",
+      "q": "被狗咬了怎麼辦",
+      "expect": {
+        "refuse": false,
+        "firstCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "mustNotCite": [
+          "topic.antivenom",
+          "faq.snakebite"
+        ],
+        "mustNotInclude": [
+          "五要五不",
+          "毒蛇"
+        ]
+      },
+      "note": "第四十九輪：問句點名了某種動物，就不拿只講別種動物的咬傷內容（被狗咬不引蛇傷「五要五不」）"
+    },
+    {
+      "id": "R49-11",
+      "category": "fact",
+      "q": "我被路邊的狗咬了",
+      "expect": {
+        "refuse": false,
+        "firstCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "mustNotCite": [
+          "topic.antivenom",
+          "faq.snakebite"
+        ],
+        "mustNotInclude": [
+          "五要五不",
+          "毒蛇"
+        ]
+      },
+      "note": "第四十九輪：問句點名了某種動物，就不拿只講別種動物的咬傷內容（被狗咬不引蛇傷「五要五不」）"
+    },
+    {
+      "id": "R49-12",
+      "category": "fact",
+      "q": "被家裡的貓咬到怎麼辦",
+      "expect": {
+        "refuse": false,
+        "firstCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "mustNotCite": [
+          "topic.antivenom",
+          "faq.snakebite"
+        ],
+        "mustNotInclude": [
+          "五要五不",
+          "毒蛇"
+        ]
+      },
+      "note": "第四十九輪：問句點名了某種動物，就不拿只講別種動物的咬傷內容（被狗咬不引蛇傷「五要五不」）"
+    },
+    {
+      "id": "R49-13",
+      "category": "fact",
+      "q": "小孩被流浪狗咬",
+      "expect": {
+        "refuse": false,
+        "firstCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "mustNotCite": [
+          "topic.antivenom",
+          "faq.snakebite"
+        ],
+        "mustNotInclude": [
+          "五要五不",
+          "毒蛇"
+        ]
+      },
+      "note": "第四十九輪：問句點名了某種動物，就不拿只講別種動物的咬傷內容（被狗咬不引蛇傷「五要五不」）"
+    },
+    {
+      "id": "R49-14",
+      "category": "fact",
+      "q": "被貓抓傷怎麼處理",
+      "expect": {
+        "refuse": false,
+        "firstCite": [
+          "faq.rabies-bite",
+          "disease.rabies"
+        ],
+        "mustNotCite": [
+          "topic.antivenom",
+          "faq.snakebite"
+        ],
+        "mustNotInclude": [
+          "五要五不",
+          "毒蛇"
+        ]
+      },
+      "note": "第四十九輪：問句點名了某種動物，就不拿只講別種動物的咬傷內容（被狗咬不引蛇傷「五要五不」）"
+    },
+    {
+      "id": "R49-15",
+      "category": "fact",
+      "q": "被蛇咬傷怎麼辦",
+      "expect": {
+        "refuse": false,
+        "mustCiteAny": [
+          "faq.snakebite",
+          "topic.antivenom"
+        ],
+        "mustNotCite": [
+          "faq.rabies-bite"
+        ]
+      },
+      "note": "第四十九輪：反向——點名蛇就答蛇傷，不拿狂犬病的咬傷處置"
+    },
+    {
+      "id": "R49-16",
+      "category": "vaccine",
+      "q": "補打疫苗",
+      "expect": {
+        "refuse": false,
+        "firstCite": "faq.catch-up-vaccination",
+        "mustInclude": [
+          "不必從頭重打"
+        ]
+      },
+      "note": "第四十九輪：漏打／補打／錯過／沒按時打 → 第一句出自補接種 FAQ，不被單一疫苗的 FAQ 或接種時程表搶走"
+    },
+    {
+      "id": "R49-17",
+      "category": "vaccine",
+      "q": "疫苗漏打了要補打嗎",
+      "expect": {
+        "refuse": false,
+        "firstCite": "faq.catch-up-vaccination",
+        "mustInclude": [
+          "不必從頭重打"
+        ]
+      },
+      "note": "第四十九輪：漏打／補打／錯過／沒按時打 → 第一句出自補接種 FAQ，不被單一疫苗的 FAQ 或接種時程表搶走"
+    },
+    {
+      "id": "R49-18",
+      "category": "vaccine",
+      "q": "疫苗忘記打怎麼辦",
+      "expect": {
+        "refuse": false,
+        "firstCite": "faq.catch-up-vaccination",
+        "mustInclude": [
+          "不必從頭重打"
+        ]
+      },
+      "note": "第四十九輪：漏打／補打／錯過／沒按時打 → 第一句出自補接種 FAQ，不被單一疫苗的 FAQ 或接種時程表搶走"
+    },
+    {
+      "id": "R49-19",
+      "category": "vaccine",
+      "q": "小孩疫苗沒按時打要補嗎",
+      "expect": {
+        "refuse": false,
+        "firstCite": "faq.catch-up-vaccination",
+        "mustInclude": [
+          "不必從頭重打"
+        ]
+      },
+      "note": "第四十九輪：漏打／補打／錯過／沒按時打 → 第一句出自補接種 FAQ，不被單一疫苗的 FAQ 或接種時程表搶走"
+    },
+    {
+      "id": "R49-20",
+      "category": "vaccine",
+      "q": "錯過疫苗接種時間怎麼辦",
+      "expect": {
+        "refuse": false,
+        "firstCite": "faq.catch-up-vaccination",
+        "mustInclude": [
+          "不必從頭重打"
+        ]
+      },
+      "note": "第四十九輪：漏打／補打／錯過／沒按時打 → 第一句出自補接種 FAQ，不被單一疫苗的 FAQ 或接種時程表搶走"
     }
   ]
 }

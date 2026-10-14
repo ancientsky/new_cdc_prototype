@@ -119,3 +119,73 @@ test('JS 預算把最大的一個回答分支算進提問後合計（不因為�
   assert.ok(ask.total - ask.bytes >= core + biggest, `提問後合計 ${ask.total} 應含 core.js ${core} 與最大分支 ${biggest}`);
   assert.ok(!fs.readFileSync(path.join(dir, 'core.js'), 'utf8').includes('甄選結果只在職缺頁公布報名編號'), '職缺回答的文案不該留在 core.js');
 });
+
+// ───────── 第二部分：四個答錯的題目（規則見 docs/ask-search-llm.md §14.5） ─────────
+let ENGINE = null;
+async function engine() {
+  if (ENGINE) return ENGINE;
+  const { engineFromSite } = await import('../eval/run-eval.mjs');
+  ENGINE = engineFromSite(site());
+  return ENGINE;
+}
+const firstSource = (r) => r.sources?.[0]?.contentId ?? '';
+const cites = (r) => (r.sources ?? []).map((s) => s.contentId);
+const textOf = (r) => (r.sentences ?? []).map((s) => s.text).join(' ');
+
+test('咬傷：被＋動物＋咬／抓，第一句出自咬傷處置（一沖二認三送四觀察），不因片段沒寫到那種動物而查無', async () => {
+  const e = await engine();
+  for (const q of ['被鼬獾咬', '被狗咬了怎麼辦', '被家裡的貓咬到怎麼辦', '被老鼠咬到', '我家的狗咬了我']) {
+    const r = e.answer(q);
+    assert.equal(r.refused, false, q);
+    assert.match(firstSource(r), /^(faq\.rabies-bite|disease\.rabies)$/, q);
+    assert.ok(textOf(r).includes('一沖二認三送四觀察'), q);
+  }
+});
+
+test('點名動物：被狗、貓咬不引蛇傷內容；被蛇咬不引狂犬病咬傷 FAQ', async () => {
+  const e = await engine();
+  for (const q of ['被狗咬了怎麼辦', '被狗咬傷要怎麼處理？', '被貓抓傷怎麼處理']) {
+    const r = e.answer(q);
+    assert.ok(!cites(r).some((c) => /^(topic\.antivenom|faq\.snakebite)/.test(c)), `${q}：${cites(r)}`);
+    assert.ok(!cites(r).some((c) => c.startsWith('service.')), `${q} 不該拿字面撞到「處理」的服務頁湊句：${cites(r)}`);
+  }
+  const snake = e.answer('被蛇咬傷怎麼辦');
+  assert.ok(
+    cites(snake).some((c) => /^(topic\.antivenom|faq\.snakebite)/.test(c)),
+    cites(snake).join(),
+  );
+  assert.ok(!cites(snake).includes('faq.rabies-bite'), cites(snake).join());
+});
+
+test('外語症狀題：印尼、泰、他加祿文判成症狀意圖，答典型症狀；只借「症狀／警示徵象／潛伏期」，來臺與移工問句的意圖不受影響', async () => {
+  const e = await engine();
+  for (const [q, lang] of [
+    ['Apa gejala demam berdarah?', 'id'],
+    ['อาการไข้เลือดออกมีอะไรบ้าง', 'th'],
+    ['Ano ang sintomas ng dengue?', 'tl'],
+  ]) {
+    const r = e.answer(q, { lang });
+    assert.equal(r.intent, 'symptoms', q);
+    assert.ok(textOf(r).includes('後眼窩痛'), q);
+    assert.ok(!(r.sentences[0]?.text ?? '').startsWith('警示徵象'), q);
+  }
+  assert.notEqual(e.answer('I am visiting Taiwan next month, what precautions?', { lang: 'en' }).intent, 'travel');
+  assert.notEqual(e.answer('Lao động nước ngoài làm khám sức khỏe và bảo hiểm y tế như thế nào?', { lang: 'vi' }).intent, 'travel');
+});
+
+test('補接種：漏打／補打／沒按時打第一句出自補接種 FAQ；點名疫苗時該疫苗的 FAQ 與補接種 FAQ 都在', async () => {
+  const e = await engine();
+  for (const q of ['補打疫苗', '疫苗漏打了要補打嗎', '小孩疫苗沒按時打要補嗎', '錯過疫苗接種時間怎麼辦']) {
+    const r = e.answer(q);
+    assert.equal(firstSource(r), 'faq.catch-up-vaccination', `${q}：${cites(r)}`);
+    assert.ok(
+      cites(r).every((c) => c === 'faq.catch-up-vaccination'),
+      `${q} 不混入單一疫苗或無關的片段：${cites(r)}`,
+    );
+  }
+  const mmr = e.answer('MMR漏打要補嗎');
+  assert.ok(cites(mmr).includes('faq.catch-up-vaccination') && cites(mmr).includes('faq.measles-mmr-check-record'), cites(mmr).join());
+  const dtap = e.answer('小孩五合一晚了兩個月才打可以嗎');
+  assert.equal(firstSource(dtap), 'faq.catch-up-vaccination');
+  assert.ok(cites(dtap).includes('disease.pertussis'), cites(dtap).join());
+});
