@@ -62,7 +62,22 @@ export function isLowRelevance(result) { return typeof result?.relevance === 'nu
  * 第四十八輪（issue #102）：問句的「面向」詞組（費用、就醫、疫苗、症狀、預防、傳染、咬抓傷）。
  * 問句與第一句答案（或它出自的 FAQ 題目、片段標題）落在同一個面向、且講的是同一個疾病 ⇒ 答案切題（topicMatch），不標低相關。
  */
-export const QUERY_FACETS = [/(費用|錢|自付|自費|部分負擔|免費|公費|補助|健保)/, /(就醫|看醫生|看病|看診|門診|哪裡看|掛號|胸腔科|醫院)/, /(疫苗|接種|打針|施打|補打|漏打|晚打|才打|打過|打了)/, /(症狀|徵兆|徵象|前兆)/, /(預防|防範|避免)/, /(傳染|傳播|會傳)/, /(咬|抓傷)/];
+// 第五十二輪：面向詞補口語說法——就醫（急診）、疫苗（要打／不用打／可以打…，不含「打電話」）、症狀（會怎樣、什麼感覺），
+// 另加兩個面向：分辨（差別、不同、一樣嗎）與在家休息／停課（隔離多久 ↔ 在家休息幾天）
+export const QUERY_FACETS = [/(費用|錢|自付|自費|部分負擔|免費|公費|補助|健保)/, /(就醫|看醫生|看病|看診|門診|哪裡看|掛號|胸腔科|醫院|急診)/, /(疫苗|接種|打針|施打|補打|漏打|晚打|才打|打過|打了|(要|不用|不必|需要|可以|能|該|多|再|還要?)打(?!電話|給))/, /(症狀|徵兆|徵象|前兆|會怎樣|什麼感覺)/, /(預防|防範|避免)/, /(傳染|傳播|會傳)/, /(咬|抓傷)/, /(差別|差異|不同|分辨|區別|一樣嗎|不一樣)/, /(隔離|在家休息|休息幾天|停課|請假|返校|回學校)/];
+/**
+ * 第五十二輪：疾病頁固定段落（index-builder 的 block：symptoms、transmission、prevention、treatment、vaccine）各自回答一類問題。
+ * 問句點名疾病、又用了該面向的說法（含口語：有藥醫、會癢、傳給、怎麼防）⇒ 那一段就是在回答這題：檢索加權、組句優先、不標低相關（core.js）。
+ * 看的是資料結構（段落 key），不是猜標題用字；新增疾病頁只要照固定段落寫，就自動適用。
+ */
+export const DISEASE_FACETS = {
+  symptoms: /(症狀|徵兆|徵象|前兆|病徵|不舒服|會怎樣|會怎麼樣|什麼感覺|長什麼樣|癢|發燒|發熱|起疹|出疹|紅疹|疹子|水泡|腹瀉|拉肚子|嘔吐|黃疸)/,
+  transmission: /(傳染|傳給|傳人|會傳|傳播|感染途徑|怎麼得|怎麼感染|被傳)/,
+  prevention: /(預防(?!針)|怎麼防|如何防|防範|防止|避免(感染|得到|被傳))/,
+  treatment: /(治療|藥|醫得好|治得好|能治|治好|會好|痊癒|根治)/,
+  vaccine: /(疫苗|預防針|接種|打針)/,
+};
+export const facetsOf = (q) => Object.keys(DISEASE_FACETS).filter((k) => DISEASE_FACETS[k].test(q));
 /** 問句去掉功能詞後才斷詞，避免「苗哪」「裡打」這種跨功能詞的雜訊雙字拉低涵蓋率 */
 export const QUERY_FUNC_RE = /(請問|想問|我想知道|可以|怎麼辦|怎麼|怎樣|如何|什麼|哪裡|哪些|哪個|哪一|是否|有沒有|能不能|會不會|需不需要|應該|是不是|告訴我|知道|幫我|一下|的話|為什麼|為何|多少|有哪|[的了嗎呢吧啊是在有沒不也都就還和與及或我你他她它們這那哪要會能請問想誰幾])/g;
 
@@ -95,7 +110,7 @@ export const ANIMAL_RE = /(狗|犬|貓|鼬獾|白鼻心|錢鼠|老鼠|蝙蝠|猴
  */
 export const INTENT_RULES = [
   // 症狀
-  { id: 'sym.symptom-words', intent: 'symptoms', weight: 2, re: /(發燒|發熱|咳嗽|紅疹|起疹|出疹|疹子|拉肚子|腹瀉|嘔吐|頭痛|喉嚨痛|流鼻水|肌肉痠痛|關節痛|後眼窩痛|全身痠痛|倦怠|嗜睡|抽搐|呼吸急促|水泡|口腔潰瘍|黃疸|血便)/, note: '症狀詞' },
+  { id: 'sym.symptom-words', intent: 'symptoms', weight: 2, re: /(發燒|發熱|咳嗽|咳(了|很久|好久|不停|不好)|一直咳|紅疹|起疹|出疹|疹子|拉肚子|腹瀉|嘔吐|頭痛|喉嚨痛|流鼻水|肌肉痠痛|關節痛|後眼窩痛|全身痠痛|倦怠|嗜睡|抽搐|呼吸急促|水泡|口腔潰瘍|黃疸|血便)/, note: '症狀詞（第五十二輪：「咳了一個月」「一直咳」）' },
   { id: 'sym.symptom-generic', intent: 'symptoms', weight: 2, re: /(症狀|徵象|徵兆|前兆|不舒服|病徵|長什麼樣子?|會怎樣|會怎麼樣|什麼感覺|是什麼樣子)/, note: '症狀泛稱（第四十九輪：「會怎樣」「長什麼樣子」）' },
   { id: 'sym.seek-care', intent: 'symptoms', weight: 3, re: /(要不要看醫生|該不該就醫|何時就醫|什麼時候.{0,4}就醫|幾天內.{0,6}就醫|就醫|看醫生|看診|掛號|急診|回診)/, note: '就醫時機' },
   { id: 'sym.after-travel', intent: 'symptoms', weight: 6, re: /(回國|返國|回台|回來|入境).{0,8}(發燒|出疹|紅疹|起疹|腹瀉|拉肚子|不舒服|症狀|咳嗽)/, note: '返國後症狀' },
@@ -104,7 +119,7 @@ export const INTENT_RULES = [
   { id: 'sym.vi', intent: 'symptoms', weight: 3, re: /(sốt|triệu chứng|phát ban|ho\b|tiêu chảy|nôn|đi khám|bác sĩ)/i, note: 'Vietnamese symptom words' },
   // 疫苗
   { id: 'vac.vaccine-words', intent: 'vaccine', weight: 3, re: /(疫苗|接種|預防針|施打|追加劑|打針|打一劑|劑次)/, note: '疫苗詞' },
-  { id: 'vac.public-funded', intent: 'vaccine', weight: 2, re: /(公費(?!的?(藥|抗病毒|口服))|自費|接種對象|接種時程|接種點|合約院所|幾歲.{0,4}打)/, note: '公費／時程（第四十九輪：「公費的藥」是抗病毒藥，不是疫苗）' },
+  { id: 'vac.public-funded', intent: 'vaccine', weight: 2, re: /(公費(?![^，。？?\s]{0,4}(藥|抗病毒|口服))|自費|接種對象|接種時程|接種點|合約院所|幾歲.{0,4}打)/, note: '公費／時程（第四十九輪：「公費的藥」是抗病毒藥，不是疫苗；第五十二輪：「公費流感藥」「公費新冠口服藥」同理）' },
   { id: 'vac.named', intent: 'vaccine', weight: 2, re: /(\bMMR\b|麻疹腮腺炎德國麻疹|\bBCG\b|卡介苗|\bHPV\b|\bEV71\b|\bDTaP\b|五合一|水痘疫苗|肺炎鏈球菌疫苗)/i, note: '疫苗名稱' },
   { id: 'vac.en', intent: 'vaccine', weight: 3, re: /\b(vaccin\w*|immuni[sz]\w*|shots?|jab|booster)\b/i, note: 'English vaccine words' },
   { id: 'vac.vi', intent: 'vaccine', weight: 3, re: /(vắc[\s-]?xin|vaccine|tiêm chủng|tiêm phòng|chích ngừa)/i, note: 'Vietnamese vaccine words' },

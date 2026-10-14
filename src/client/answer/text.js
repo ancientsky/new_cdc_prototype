@@ -55,7 +55,9 @@ export const THAI_RE = /^[฀-๿]+$/;
 export const EN_STOP = new Set('a an the of to in on for and or is are was were be been do does did i me my you your we our it its this that these those what which who whom how when where why can could should would will shall may might must have has had with by at from as about if than then so not no yes there here any some please tell know want need get go going am im i\'m into out up'.split(' '));
 export const VI_STOP = new Set('tôi bạn có không là và của cho với thì mà này đó những các một được khi nào gì ai'.split(' '));
 // 查詢端的高頻功能 bigram（不影響文件端）
-export const STOP_BIGRAMS = new Set(['什麼', '怎麼', '可以', '要不', '不要', '是不', '不是', '有沒', '沒有', '請問', '一下', '如果', '這個', '那個', '哪些', '是否', '會不', '不會', '應該', '我們', '你們', '他們', '我的', '我要', '我想', '想問', '問一', '知道', '告訴', '訴我', '的人', '了嗎', '是真', '真的', '的嗎', '嗎？', '一個', '多少', '還是', '或是', '還有', '到底', '需不', '不需', '能不', '不能', '這樣', '那樣', '怎樣', '如何', '哪裡', '為什', '的話', '現在', '目前', '最近', '要怎', '麼辦', '怎麼辦']);
+export const STOP_BIGRAMS = new Set(['什麼', '怎麼', '可以', '要不', '不要', '是不', '不是', '有沒', '沒有', '請問', '一下', '如果', '這個', '那個', '哪些', '是否', '會不', '不會', '應該', '我們', '你們', '他們', '我的', '我要', '我想', '想問', '問一', '知道', '告訴', '訴我', '的人', '了嗎', '是真', '真的', '的嗎', '嗎？', '一個', '多少', '還是', '或是', '還有', '到底', '需不', '不需', '能不', '不能', '這樣', '那樣', '怎樣', '如何', '哪裡', '為什', '的話', '現在', '目前', '最近', '要怎', '麼辦', '怎麼辦', '哪一', '哪個']);
+
+const QWORD_RE = /什/;
 
 export function stem(w) {
   if (/^\d+$/.test(w) || w.length <= 3) return w;
@@ -67,15 +69,26 @@ export function stem(w) {
   return w;
 }
 
+/**
+ * 第五十二輪：異體字（民眾打「台灣」，站上寫「臺灣」）。斷詞前把常見異體字收成站上用字，問句與片段兩邊用同一份斷詞，所以兩邊一起變。
+ * 只收「在任何詞裡都是同一個字」的異體（臺／台、裡／裏、著／着、群／羣、峰／峯），不收簡繁對應（一對多，例如「发」可能是發或髮）。
+ */
+const VARIANT_RE = /[台裏着羣峯]/g;
+const VARIANT = { 台: '臺', 裏: '裡', 着: '著', 羣: '群', 峯: '峰' };
+export const foldVariants = (s) => String(s ?? '').replace(VARIANT_RE, (ch) => VARIANT[ch]);
+
 /** 斷詞：中文字元 bigram（單字成段保留 unigram）＋ 拉丁／越南文詞（小寫、簡易詞幹）＋ 泰文 bigram ＋ 數字 */
 export function tokenize(text, { query = false } = {}) {
   const out = [];
-  const str = String(text ?? '').normalize('NFKC').toLowerCase();
+  const str = foldVariants(String(text ?? '').normalize('NFKC').toLowerCase());
   for (const m of str.matchAll(TOKEN_RE)) {
     if (m[1]) {
       const r = m[1];
       if (r.length === 1) { out.push(r); continue; }
-      for (let i = 0; i < r.length - 1; i++) { const b = r.slice(i, i + 2); if (!(query && STOP_BIGRAMS.has(b))) out.push(b); }
+      // 第五十二輪：問句端含「什」的 bigram（是什、有什、吃什）都是疑問詞「什麼」的碎片，不是主題。「麼」「哪」不整個拿掉：
+      //「怎麼處理」的「麼處」、「去哪打」的「去哪」對得到 FAQ 題目（學校流感群聚怎麼處理、去哪裡打）；只拿掉「哪一」「哪個」；
+      // 「PrEP是什麼」的「是什」曾讓標題就叫「PrEP 是什麼？」的影片蓋過 PrEP 專區
+      for (let i = 0; i < r.length - 1; i++) { const b = r.slice(i, i + 2); if (!(query && (STOP_BIGRAMS.has(b) || QWORD_RE.test(b)))) out.push(b); }
     } else {
       const w = m[2];
       if (THAI_RE.test(w)) { for (let i = 0; i < w.length - 1; i++) out.push(w.slice(i, i + 2)); continue; }
