@@ -2484,3 +2484,23 @@ i18n 新鍵（七語齊備，順序 zh-TW, en, ja, tl, vi, id, th）：`nav.more
 ### 52.5 測試與數字
 
 `tests/round49-engine.test.mjs`、`round49-challenge.test.mjs`、`round49-i18n.test.mjs`、`round49-pro-delta.test.mjs`、`round49-answer-slim.test.mjs` 等。評估集 392／392、版本題 19／19；提問後合計 227.1／240 KB；答案頁資料 zh-TW 372／en 411／專業版 499 KB；挑戰集 486 題 70.4%（dev 73.9%、holdout 67.4%）。
+
+## 53. 第五十輪（2026-10-14）：重新審閱、疾病頁用藥段落、服務開放民眾版、補譯與答案副本
+
+民眾看得到的說明在 README 第五十輪；取捨在 architecture-decisions §38；細節：ask-search-llm.md §15、deploy.md §20.3／§21、guide-staff §50–51、eval-challenge.md §9。
+
+| 機制 | 契約 |
+| --- | --- |
+| 重新審閱 | 閘道 `POST /api/gateway/rereview { contentId, type, note? }`：讀 main 上的現行版（路徑只由驗證過的 type＋id 推出），須已發布、編輯角色、同單位，已有進行中送審件則 409；之後與一般送審同一路徑（車道、四眼、通知）。`/submit` 接受 `reReview: true`（改了內容也算重新審閱）。送審件 `kind: 'rereview'`；稽核 `rereview`／`approve`／`return` 帶 kind，`publish` 帶 `reviewedAtBefore`、`reviewedAt`、`contentChanged`；提交訊息加 `Review-Kind:`；通知主旨【請審核・重新審閱】【已重新審閱】；不出現 Git 用語 |
+| /admin/due/ | 偵測到閘道（同 /admin/publish/）時每列「送出重新審閱」＋「要修改內容」，顯示 審核中／退回（附意見、「不用修改，再送出」）／已重新審閱；無閘道維持示範按鈕並以 `data-gw-hide` 提醒框說明 |
+| 建置警告 | `governance.mjs overdueAsOf()`；`BUILD_TODAY` 早於台北今天時列出「以今天計已逾期」的內容（`⚠ [審閱到期]`，GitHub Actions 加 `::warning`），不擋建置 |
+| `npm run gateway:pull` | 把本機閘道 repo 核准的結果列出（預設）或寫回 `content/`（`-- --write`），讓 `npm run dev` 看得到 |
+| 疾病頁用藥段落 | `officialOver` 在 FAQ／服務頁之後，接受疾病頁 `block === 'treatment'` 的片段：問句點名該疾病（旅遊地推論的不算）、未點名疫苗、片段逐字含問句的全部藥名／藥類／劑量詞；重答時以允許的片段 id 集合限縮；guard `official-over-refusal` 記 `block: 'treatment'` |
+| 送檢體流程 | `rules.js LAB_PROCESS_RE`／`LAB_DETAIL_RE`：檢驗意圖、未點名疾病、問流程且未問細節 ⇒ 改判申請服務（reason `lab.process-apply`），標題含「送驗／檢體」的服務頁帶頭；點名疾病或問容器／保存等照舊專業版限定 |
+| 服務開放 | 5 個服務 `audience` 由 `["professional"]` 改為 `["public","professional"]`；治理規則不變（民眾版答案單元 767 → 798） |
+| 答案副本 | `v1/answer/{faq,vaccines}.json` 去掉 `i18n`／`languages`；`v1/answer/clarifications.json` 的 `i18n` 只留 `languages[l].status === 'reviewed'` 的語言；deps-manifest 讀副本；openapi 列出 |
+| 補譯 | 417 筆 `i18n.<lang>` 機器初稿，`machineTranslated: true`、`machineTranslatedAt: "2026-10-14"`，`languages.<lang>.status` 維持 `machine` |
+
+**協作教訓（給之後平行派工的人）：** 同一個 repo 的多個 `git worktree` **共用同一個 stash**。這輪兩個平行工作的人各自 `git stash`／`git stash pop`，結果互相拿到對方的未提交修改（引擎改動跑進翻譯的工作目錄、FAQ 譯文跑進引擎的工作目錄）。發現得早、用 patch 檔逐一還原，沒有遺失。規則：平行在不同 worktree 工作時**不用 `git stash`**，要暫存就 `git diff > 檔案`；提交前看 `git status` 只含自己負責的路徑。
+
+測試：`tests/round50-engine.test.mjs`、`round50-rereview.test.mjs`（含 Playwright 端到端與 axe）、`round49-answer-slim.test.mjs`（擴充）。

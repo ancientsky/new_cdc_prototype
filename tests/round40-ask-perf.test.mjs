@@ -87,7 +87,7 @@ test('答案頁的初始模組（ui.js、render.js、data.js、inline.js）不�
 test('deps-manifest：主要＋次要清單與 data.js 讀的檔一致；分片名稱（中文頁只一片，外語頁加中文正本）', () => {
   const names = [...ENGINE_PRIMARY, ...ENGINE_SECONDARY].map(([n]) => n);
   assert.equal(new Set(names).size, names.length, '沒有重複');
-  for (const n of ['faq', 'diseases', 'glossary', 'governance/ai-status', 'travel-alerts', 'country-levels']) assert.ok(names.includes(n), n);
+  for (const n of ['answer/faq', 'diseases', 'glossary', 'governance/ai-status', 'travel-alerts', 'country-levels']) assert.ok(names.includes(n), n);
   assert.deepEqual(indexShardNames('search-index', 'zh-TW'), ['search-index.zh-TW']);
   assert.deepEqual(indexShardNames('search-index-pro', 'vi'), ['search-index-pro.zh-TW', 'search-index-pro.vi']);
 });
