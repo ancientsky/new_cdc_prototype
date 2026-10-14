@@ -1,4 +1,6 @@
-node_modules/
+# 不加結尾斜線：結尾斜線只比對「資料夾」，git worktree 常把 node_modules 做成指向主工作樹的符號連結（symlink），
+# 符號連結不是資料夾，`node_modules/` 擋不住它，會變成未追蹤檔案被 git add . 誤收（第四十九輪）。
+node_modules
 dist/
 .DS_Store
 *.log
