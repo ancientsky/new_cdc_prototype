@@ -151,6 +151,36 @@ test('開放民眾版：民眾模式的申請問句由這些服務頁回答', as
     assert.equal(r.refused, false, q);
     assert.equal(r.sources[0]?.contentId, unit, `${q}：${r.sources.map((x) => x.contentId)}`);
   }
-  // 檢體規格（容器、保存、運送）仍是專業內容：民眾模式照舊導向專業模式（第五十輪不改這條）
+  // 檢體規格（容器、保存、運送）仍是專業內容：民眾模式照舊導向專業模式
   assert.equal(e.answer('登革熱檢體容器').refusal?.kind, 'pro-only');
+});
+
+test('送驗流程問句（怎麼送、直接寄、要準備什麼）沒點名疾病也沒問規格 ⇒ 改走申請意圖，只由檢驗委託服務頁回答（民眾與專業模式）', async () => {
+  const e = await engine();
+  for (const [q, view] of [
+    ['診所要怎麼送檢體', 'public'],
+    ['檢體可以直接寄到疾管署嗎', 'public'],
+    ['送驗要準備什麼', 'public'],
+    ['診所送檢體到哪裡', 'public'],
+    ['診所要怎麼送檢體', 'pro'],
+  ]) {
+    const r = e.answer(q, { view });
+    assert.equal(r.refused, false, `${q}（${view}）`);
+    assert.equal(r.intent, 'apply', q);
+    assert.ok(r.intentReasons.includes('lab.process-apply'), q);
+    assert.ok(
+      r.sources.every((x) => x.contentId === 'service.lab-test-request'),
+      `${q}（${view}）：${r.sources.map((x) => x.contentId)}`,
+    );
+  }
+});
+
+test('檢體規格問句（點名疾病，或問容器、保存、溫度）在民眾模式仍導向專業模式（LB007 的意圖不變）', async () => {
+  const e = await engine();
+  for (const q of ['麻疹檢體要怎麼送', '登革熱檢體送哪裡', '流感檢體保存溫度', '檢體要用什麼容器']) {
+    const r = e.answer(q);
+    assert.equal(r.refused, true, q);
+    assert.equal(r.refusal.kind, 'pro-only', q);
+    assert.ok(!r.intentReasons.includes('lab.process-apply'), q);
+  }
 });
