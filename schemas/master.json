@@ -157,7 +157,17 @@
           "type": "integer"
         },
         "i18n": {
-          "type": "object"
+          "type": "object",
+          "description": "各語言的病名與別名：{ \"en\": { \"name\": \"Dengue fever\" }, \"vi\": { \"aliases\": [\"Sốt xuất huyết\"] } }。aliases 是該語言民眾常用的說法，第五十一輪起供全文搜尋的精選結果比對（docs/ask-search-llm.md 第 16 節）",
+          "propertyNames": { "enum": ["en", "ja", "tl", "vi", "id", "th"] },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "aliases": { "type": "array", "items": { "type": "string" } }
+            },
+            "additionalProperties": false
+          }
         }
       }
     },

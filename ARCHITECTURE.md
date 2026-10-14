@@ -1331,6 +1331,7 @@ Pagefind 有個行為：**只要站上有一頁出現 `data-pagefind-body`，沒
 
 - 舊站 `/Search/{id}` 的真實網址格式尚未確認（`content/migration/legacy-services.json` 的 `advanced-search` 已改為 `migrated → /search/`，備註列出剩餘項目）；確認後在 `redirects` 補轉址。
 - 同義詞／別名：上線後從「零結果查詢」紀錄（需另外決定是否以及如何蒐集，涉及隱私）補，不要預先猜。
+- **第五十一輪補充**：疾病與疫苗的名稱、別名改由 `/search/` 的「精選結果」處理（查詢點名疾病或疫苗時，主題頁固定排第一、清單去重；名稱取自既有主檔與內容頁別名，不另立清單）。英文「dengue」疾病頁原本只排第 9，權重怎麼調都不穩，理由、契約與數字見 [docs/ask-search-llm.md](docs/ask-search-llm.md) 第 16 節；同事要做的事見 docs/guide-staff.md 第 52 節。
 - 泰文斷詞：需要在索引端導入斷詞器（如 ICU 的 `Intl.Segmenter('th')`，Node 22 內建），做法與 CJK 補空白相同；本輪不做，因為泰文版內容量最小、且需要母語者驗證。
 - 手機版頁首入口：見 31.6。
 
