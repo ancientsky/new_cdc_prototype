@@ -1534,6 +1534,21 @@ function kpiStatus(k) {
   return k.current >= tgt ? 'ok' : k.current >= tgt * 0.8 ? 'warn' : 'bad';
 }
 
+/**
+ * 第五十輪：以另一個日期（通常是真實的今天）來看，哪些已上線內容會逾審閱期限、但在這次建置（site.today）還沒逾期。
+ * 為什麼需要：CI 與 GitHub Pages 用 BUILD_TODAY=2026-10-01 凍結「今天」（讓示範案例穩定），真實日期往後走時，
+ * 已逾期的內容在 CI 建出來的站上仍算「未逾期」、仍在 AI 白名單，CI 看不到這個落差。build.mjs 用它印警告（docs/deploy.md §21）。
+ * 必須在 applyGovernance(site) 之後呼叫。
+ * @returns {{ id: string, title: string, owner: string, nextReviewAt: string, whitelisted: boolean }[]}
+ */
+export function overdueAsOf(site, date) {
+  if (!date || !(date > site.today)) return [];
+  return site.all
+    .filter((i) => i.status === 'published' && i.gov?.nextReviewAt && !i.gov.overdue && !i.gov.superseded && !i.gov.scheduled && i.gov.nextReviewAt < date)
+    .map((i) => ({ id: i.id, title: i.title, owner: i.owner, nextReviewAt: i.gov.nextReviewAt, whitelisted: !!i.gov.whitelist?.effective }))
+    .sort((a, b) => a.nextReviewAt.localeCompare(b.nextReviewAt) || a.id.localeCompare(b.id));
+}
+
 /** 7.5 品質指標表（13 列）＋第二輪四列（影音逐字稿、影音依據現行、外部連結健康、已截止未封存公告）＋白名單參考列。每季報告與後台儀表板共用。 */
 export function computeKpi(site) {
   const cfg = site.config;

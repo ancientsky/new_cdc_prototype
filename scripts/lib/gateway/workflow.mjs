@@ -6,6 +6,8 @@
 //   送審              驗證 → 提交（status: review）→ 開合併請求、標籤「審核中」→ 通知審核人
 //   退回修改（必填意見）  合併請求留言、標籤改「退回」→ 通知承辦人；已收的核准歸零（改過的內容要重審）
 //   核准上線          四眼原則檢查 → 記一筆核准；核准數達車道要求 → 提交（status: published、Approved-by:）→ 合併到 main → 通知承辦人
+//   送出重新審閱（第五十輪）  內容不改：把 main 上的現行版原樣放進送審件 → 之後與送審完全相同（車道、四眼、通知）；
+//                     核准時只把 reviewedAt 改成核准當天（上線那一步本來就這樣做），稽核與提交訊息標明「重新審閱」
 //
 // 規則：
 //   - 角色由 AD 群組來（編輯／審核／管理）；只能動自己單位的內容，跨單位角色（總編輯、治理幕僚、平台管理）與車道指定審核單位例外。
@@ -19,10 +21,12 @@ import { loadLanes, laneOfItem, authorAllowed, publishAtMs, taipeiDate, taipeiTi
 import { DEMO_ACCOUNTS, CROSS_UNIT_ROLES } from '../../../src/client/admin/auth-rules.js';
 import { normAccount } from './auth.mjs';
 import { fieldDiff } from './field-diff.mjs';
-import { assertContentPath } from './validate-item.mjs';
+import { assertContentPath, contentPathOf } from './validate-item.mjs';
 import { SERVICE_IDENTITY } from './git-local.mjs';
 
 export const STATUS = { draft: '草稿', in_review: '審核中', returned: '退回', approved: '已核准', published: '已上線' };
+/** 送審件的種類（第五十輪）：一般修改／新內容（edit）與重新審閱（rereview：到期內容由權責單位確認仍正確，核准後更新最後審閱日） */
+export const KIND_LABEL = { edit: '修改或新增內容', rereview: '重新審閱' };
 export const REVIEW_LABEL = { in_review: '網站內容::審核中', returned: '網站內容::退回', approved: '網站內容::已核准' };
 
 export class GatewayError extends Error {
@@ -117,6 +121,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
       requiredApprovals: sub.lane?.requiredApprovals ?? 1, laneLabel: sub.lane?.label ?? null, laneNotes: sub.lane?.reasons ?? [],
       comments: sub.comments, history: sub.history, publishAt: sub.publishAt ?? null, scheduledFor: sub.publishAt ? taipeiTime(publishAtMs(sub.publishAt) ?? 0) : null,
       files: sub.files ?? [], companions: (sub.companions ?? []).map(({ id, title }) => ({ id, title })),
+      kind: sub.kind ?? 'edit', kindLabel: KIND_LABEL[sub.kind ?? 'edit'], reReviewNote: sub.reReviewNote ?? null, reviewedAt: sub.reviewedAt ?? null,
       ...(p ? {
         can: {
           edit: !eb && ['draft', 'returned'].includes(st), submit: !eb && ['draft', 'returned'].includes(st),
@@ -211,7 +216,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     });
   }
 
-  async function submit(p, { item, submissionId, files = null, companions = [] }, ctx = {}) {
+  async function submit(p, { item, submissionId, files = null, companions = [], reReview = false }, ctx = {}) {
     await ensureReady();
     return queue(async () => {
       try {
@@ -226,23 +231,61 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
           const curComps = []; for (const c of sub.companions ?? []) { const j = JSON.parse(await git.readFile(sub.branch, c.path) ?? 'null'); if (j) curComps.push(j); }
           ({ sub, commit } = await writeVersion(p, cur, sub.id, 'review', '送審', { companions: curComps }));
         }
-        sub.status = 'in_review'; sub.submittedAt = iso(); sub.approvals = [];
-        const rv = await git.openReview({ branch: sub.branch, title: `送審：${sub.title}`, description: reviewDescription(sub), labels: [REVIEW_LABEL.in_review] });
-        sub.reviewId = rv.id;
-        sub.history.push({ at: iso(), action: 'submit', label: '送審', account: p.account, name: p.name });
-        audit.write('submit', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, path: sub.path, branch: sub.branch, commit, review: rv.id, lane: sub.lane.id } });
-        if (sub.lane.autoMerge) {
-          // 自動上線車道（送審人在授權名單）：CI 就是審核者，直接上線；上線後由指定單位複核
-          await publish(sub, p, [], ctx);
-          const pr = sub.lane.postPublishReview;
-          if (pr) notifier.send('post-publish', { to: directory.reviewersFor([pr.unit], [p.account]), title: sub.title, unitName: unitName(sub.owner), editorName: p.name, hours: pr.hours, link: link(ctx, 'review', sub.id) });
-        } else {
-          notifier.send('submitted', { to: directory.reviewersFor([sub.owner, ...sub.lane.reviewers], sub.editors.map((e) => e.account)), title: sub.title, unitName: unitName(sub.owner), editorName: p.name, link: link(ctx, 'review', sub.id) });
-        }
-        store.put(sub);
-        return view(sub, p);
+        // 第五十輪：承辦人在上架頁修改到期內容時可勾「這也是重新審閱」；之後退回再送審，種類沿用
+        if (reReview === true && !sub.isNew) sub.kind = 'rereview';
+        return await enterReview(p, sub, commit, ctx, sub.kind === 'rereview' ? 'rereview' : 'submit');
       } catch (e) { auditFail('submit', p, e, { submission: submissionId, contentId: item?.id }); throw e; }
     });
+  }
+
+  /**
+   * 送出重新審閱（第五十輪）：內容不改，把網站上的現行版原樣送審。
+   * 為什麼要有這個動作：到期內容常常「內容仍正確，只是到了該確認的時候」。以前只能從上架頁重新匯出一份，
+   * 表單會順手改掉摘要、關鍵字、譯文狀態等欄位（見 docs/deploy.md §21），審核人也看不出這是重新審閱。
+   * 這裡直接讀 main 上的檔，不經過表單；之後的規則（車道、四眼、通知）與一般送審完全相同；核准上線時 publish() 把 reviewedAt 改成核准當天。
+   * @param {any} p
+   * @param {{ contentId: string, type: string, note?: string }} args
+   */
+  async function reReview(p, { contentId, type, note }, ctx = {}) {
+    await ensureReady();
+    return queue(async () => {
+      try {
+        const where = contentPathOf({ id: contentId, type });
+        if (where.ok === false) throw new GatewayError(422, 'invalid', '找不到這筆內容（內容 ID 或型別不對）', where.errors);
+        const raw = await git.readFile(git.targetBranch, where.path);
+        let cur = null; try { cur = raw ? JSON.parse(raw) : null; } catch { cur = null; }
+        if (!cur || cur.id !== contentId || cur.type !== type) throw new GatewayError(404, 'notfound', '網站上找不到這筆內容；新內容請從「上架」送審');
+        if (cur.status !== 'published') throw new GatewayError(409, 'state', '只有已上線的內容可以重新審閱');
+        const text = String(note ?? '').trim();
+        if (text.length > 2000) throw new GatewayError(422, 'note', '說明最多 2000 字', [{ field: 'note', label: '說明', message: '說明最多 2000 字' }]);
+        const eb = editBlock(p, cur.owner); if (eb) throw new GatewayError(403, 'forbidden', eb);
+        const other = openFor(contentId);
+        if (other) throw new GatewayError(409, 'busy', `這筆內容已有一個進行中的送審件（${STATUS[other.status]}），請從那一件繼續；它核准上線時最後審閱日也會一起更新`);
+        const { sub, commit } = await writeVersion(p, cur, null, 'review', '重新審閱（內容未修改）');
+        sub.kind = 'rereview'; sub.reReviewNote = text || null;
+        return await enterReview(p, sub, commit, ctx, 'rereview');
+      } catch (e) { auditFail('rereview', p, e, { contentId: String(contentId ?? '').slice(0, 130) }); throw e; }
+    });
+  }
+
+  /** 存好送審版之後的共同步驟：狀態改審核中、開審核、稽核、通知（或自動上線車道直接上線） */
+  async function enterReview(p, sub, commit, ctx, auditAction) {
+    const rr = sub.kind === 'rereview';
+    sub.status = 'in_review'; sub.submittedAt = iso(); sub.approvals = [];
+    const rv = await git.openReview({ branch: sub.branch, title: `${rr ? '重新審閱' : '送審'}：${sub.title}`, description: reviewDescription(sub), labels: [REVIEW_LABEL.in_review] });
+    sub.reviewId = rv.id;
+    sub.history.push({ at: iso(), action: 'submit', label: rr ? '送出重新審閱' : '送審', account: p.account, name: p.name });
+    audit.write(auditAction, { actor: p, detail: { submission: sub.id, contentId: sub.contentId, path: sub.path, branch: sub.branch, commit, review: rv.id, lane: sub.lane.id, ...(rr ? { kind: 'rereview', ...(sub.reReviewNote ? { noteChars: sub.reReviewNote.length } : {}) } : {}) } });
+    if (sub.lane.autoMerge) {
+      // 自動上線車道（送審人在授權名單）：CI 就是審核者，直接上線；上線後由指定單位複核
+      await publish(sub, p, [], ctx);
+      const pr = sub.lane.postPublishReview;
+      if (pr) notifier.send('post-publish', { to: directory.reviewersFor([pr.unit], [p.account]), title: sub.title, unitName: unitName(sub.owner), editorName: p.name, hours: pr.hours, link: link(ctx, 'review', sub.id) });
+    } else {
+      notifier.send('submitted', { to: directory.reviewersFor([sub.owner, ...sub.lane.reviewers], sub.editors.map((e) => e.account)), title: sub.title, unitName: unitName(sub.owner), editorName: p.name, reReview: rr, comment: sub.reReviewNote ?? undefined, link: link(ctx, 'review', sub.id) });
+    }
+    store.put(sub);
+    return view(sub, p);
   }
 
   async function returnForChanges(p, { submissionId, comment }, ctx = {}) {
@@ -259,7 +302,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
         sub.comments.push({ at: iso(), kind: 'return', account: p.account, name: p.name, text });
         sub.history.push({ at: iso(), action: 'return', label: '退回修改', account: p.account, name: p.name });
         store.put(sub);
-        audit.write('return', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, review: sub.reviewId, commentChars: text.length } });
+        audit.write('return', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, review: sub.reviewId, commentChars: text.length, ...(sub.kind === 'rereview' ? { kind: 'rereview' } : {}) } });
         notifier.send('returned', { to: sub.editors, title: sub.title, unitName: unitName(sub.owner), actorName: p.name, comment: text, link: link(ctx, 'publish', sub.id) });
         return view(sub, p);
       } catch (e) { auditFail('return', p, e, { submission: submissionId }); throw e; }
@@ -277,7 +320,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
         await git.comment(sub.reviewId, `核准（${who(p)}）${text ? `：\n\n${text}` : ''}`);
         if (text) sub.comments.push({ at: iso(), kind: 'approve', account: p.account, name: p.name, text });
         sub.history.push({ at: iso(), action: 'approve', label: '核准', account: p.account, name: p.name });
-        audit.write('approve', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, review: sub.reviewId, approvals: sub.approvals.length, required: sub.lane.requiredApprovals } });
+        audit.write('approve', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, review: sub.reviewId, approvals: sub.approvals.length, required: sub.lane.requiredApprovals, ...(sub.kind === 'rereview' ? { kind: 'rereview' } : {}) } });
         if (sub.approvals.length >= sub.lane.requiredApprovals) await publish(sub, p, sub.approvals, ctx);
         else {
           sub.updatedAt = iso();
@@ -295,12 +338,17 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     if (!cur) throw new GatewayError(409, 'missing', '找不到送審的內容');
     const today = taipeiDate(now());
     const final = { ...cur, status: 'published', reviewedAt: today, ...(sub.isNew ? { publishedAt: today } : {}) };
+    const rr = sub.kind === 'rereview';
+    // 重新審閱：記下內容有沒有跟著改（稽核用；只比內容，不比狀態與審閱日）
+    let contentChanged = null;
+    if (rr) { const before = JSON.parse(await git.readFile(git.targetBranch, sub.path) ?? 'null'); const strip = (x) => (x ? stableJson({ ...x, status: null, reviewedAt: null }) : ''); contentChanged = strip(before) !== strip(cur); }
     const comps = []; for (const c of sub.companions ?? []) { const j = JSON.parse(await git.readFile(sub.branch, c.path) ?? 'null'); if (j) comps.push(j); }
     const { path } = validated(final, 'published', { extra: comps, files: sub.files?.length ? await branchFiles(sub) : null });
     const trailers = approvals.map((a) => `Approved-by: ${who(a)}`);
     if (!approvals.length) trailers.push(`Approved-by: 自動（${sub.lane.label}，送審人在授權名單）`);
     trailers.push(`Lane: ${sub.lane.id}`);
-    const c = await git.commit({ branch: sub.branch, files: [{ path, content: stableJson(final) }], message: message('核准上線', sub, p, trailers), author: SERVICE_IDENTITY });
+    if (rr) trailers.push(`Review-Kind: re-review (reviewedAt ${cur.reviewedAt ?? '-'} -> ${today}; content ${contentChanged ? 'changed' : 'unchanged'})`);
+    const c = await git.commit({ branch: sub.branch, files: [{ path, content: stableJson(final) }], message: message(rr ? '核准上線（重新審閱）' : '核准上線', sub, p, trailers), author: SERVICE_IDENTITY });
     let merged;
     try { merged = await git.merge(sub.reviewId, { message: message('上線', sub, p, trailers), author: SERVICE_IDENTITY }); } catch (e) {
       if (e?.code === 'conflict') throw new GatewayError(409, 'conflict', '這筆內容在審核期間已被其他人更新上線，無法直接上線。請承辦人重新開啟最新版、修改後再送審。');
@@ -308,10 +356,10 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     }
     const scheduled = final.publishAt && (publishAtMs(final.publishAt) ?? 0) > now();
     sub.status = scheduled ? 'approved' : 'published';
-    sub.publishedAt = iso(); sub.updatedAt = iso();
-    sub.history.push({ at: iso(), action: 'publish', label: scheduled ? `已核准，排程 ${taipeiTime(publishAtMs(final.publishAt) ?? 0)} 上線` : '已上線', account: p.account, name: p.name });
-    audit.write('publish', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, path, commit: c.sha, merge: merged.sha, approvedBy: approvals.map((a) => a.account), lane: sub.lane.id } });
-    notifier.send('approved', { to: sub.editors, title: sub.title, unitName: unitName(sub.owner), actorName: approvals.length ? p.name : '系統（快速上線）', scheduled: scheduled ? taipeiTime(publishAtMs(final.publishAt) ?? 0) : null, link: link(ctx, 'publish', sub.id) });
+    sub.publishedAt = iso(); sub.updatedAt = iso(); sub.reviewedAt = today;
+    sub.history.push({ at: iso(), action: 'publish', label: scheduled ? `已核准，排程 ${taipeiTime(publishAtMs(final.publishAt) ?? 0)} 上線` : rr ? `已重新審閱，最後審閱日更新為 ${today}` : '已上線', account: p.account, name: p.name });
+    audit.write('publish', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, path, commit: c.sha, merge: merged.sha, approvedBy: approvals.map((a) => a.account), lane: sub.lane.id, ...(rr ? { kind: 'rereview', reviewedAtBefore: cur.reviewedAt ?? null, reviewedAt: today, contentChanged } : {}) } });
+    notifier.send('approved', { to: sub.editors, title: sub.title, unitName: unitName(sub.owner), actorName: approvals.length ? p.name : '系統（快速上線）', scheduled: scheduled ? taipeiTime(publishAtMs(final.publishAt) ?? 0) : null, reReview: rr, reviewedAt: today, link: link(ctx, rr ? 'due' : 'publish', sub.id) });
   }
 
   function mustReview(p, sid) {
@@ -326,8 +374,8 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     if (e instanceof GatewayError) audit.write(action, { actor: p, result: e.status === 422 ? 'rejected' : 'denied', detail: { ...detail, reason: e.code, fields: e.fields?.map((f) => f.field) } });
     else audit.write(action, { actor: p, result: 'error', detail: { ...detail, reason: String(e?.message ?? e).slice(0, 200) } });
   }
-  const reviewDescription = (sub) => [`權責單位：${unitName(sub.owner)}`, `承辦：${sub.editors.map((e) => e.name).join('、')}`, `車道：${sub.lane.label}（需 ${sub.lane.requiredApprovals} 位核准）`, ...sub.lane.reasons, '', '本合併請求由網站內容管理系統（寫入閘道）代為建立；請在後台「複核區」審核，不要直接在 GitLab 合併。'].join('\n');
-  const link = (ctx, page, sid) => `${ctx.origin ?? ''}${ctx.basePath ?? config.basePath}/admin/${page}/?${page === 'review' ? 'item' : 'gw'}=${encodeURIComponent(sid)}`;
+  const reviewDescription = (sub) => [...(sub.kind === 'rereview' ? ['重新審閱：權責單位確認內容仍正確（審閱期限到了）；核准後只把「最後審閱日」更新為核准當天。', ...(sub.reReviewNote ? [`說明：${sub.reReviewNote}`] : []), ''] : []), `權責單位：${unitName(sub.owner)}`, `承辦：${sub.editors.map((e) => e.name).join('、')}`, `車道：${sub.lane.label}（需 ${sub.lane.requiredApprovals} 位核准）`, ...sub.lane.reasons, '', '本合併請求由網站內容管理系統（寫入閘道）代為建立；請在後台「複核區」審核，不要直接在 GitLab 合併。'].join('\n');
+  const link = (ctx, page, sid) => `${ctx.origin ?? ''}${ctx.basePath ?? config.basePath}/admin/${page}/${page === 'due' ? '' : `?${page === 'review' ? 'item' : 'gw'}=${encodeURIComponent(sid)}`}`;
 
   /* ───────── 查詢 ───────── */
   /**
@@ -363,8 +411,14 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     if (!(await git.branchExists(sub.branch))) return { isNew: sub.isNew, changes: [], note: sub.status === 'published' || sub.status === 'approved' ? '這筆內容已經上線，沒有待審的修改' : '沒有內容' };
     const before = await git.readFile(git.targetBranch, sub.path);
     const after = await git.readFile(sub.branch, sub.path);
-    return fieldDiff(before ? JSON.parse(before) : null, after ? JSON.parse(after) : null, { unitNames });
+    const d = fieldDiff(before ? JSON.parse(before) : null, after ? JSON.parse(after) : null, { unitNames });
+    // 第五十輪：重新審閱要讓審核人一眼看出「這是確認，不是修改」，以及核准後會發生什麼
+    if (sub.kind === 'rereview') {
+      const was = before ? JSON.parse(before).reviewedAt ?? null : null;
+      return { ...d, reReview: { lastReviewedAt: was, note: sub.reReviewNote ?? null, text: d.changes.length ? `重新審閱（同時修改了 ${d.changes.length} 個欄位）：核准後內容照下列修改上線，最後審閱日更新為核准當天。` : `重新審閱：承辦人確認內容仍正確，內容沒有修改。核准後最後審閱日由 ${was ?? '（未填）'} 更新為核准當天，網站下次更新後離開逾期清單、回到 AI 引用範圍。請確認內容（含所依據的指引）仍正確再核准。` } };
+    }
+    return d;
   }
 
-  return { saveDraft, submit, returnForChanges, approve, list, detail, content, diff, laneFor, reviewBlock, ensureReady, STATUS };
+  return { saveDraft, submit, reReview, returnForChanges, approve, list, detail, content, diff, laneFor, reviewBlock, ensureReady, STATUS };
 }

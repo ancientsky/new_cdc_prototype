@@ -16,6 +16,8 @@
 //   GET  /api/gateway/items/:id/preview      → 預覽頁（HTML；CSP sandbox，不執行任何腳本）
 //   POST /api/gateway/drafts                 { item, submissionId? }  儲存草稿
 //   POST /api/gateway/submit                 { item?, submissionId? } 送審
+//   POST /api/gateway/rereview               { contentId, type, note? } 送出重新審閱（第五十輪：內容不改，現行版原樣送審；核准後只更新最後審閱日）
+//        /submit 另收 reReview: true（修改到期內容時一併標為重新審閱）
 //   POST /api/gateway/items/:id/return       { comment }              退回修改（意見必填）
 //   POST /api/gateway/items/:id/approve      { comment? }             核准上線
 //   GET  /api/gateway/intl-epidemic/status   → { lastRun, history }   國際疫情匯入紀錄（第四十三輪；docs/intl-epidemic.md）
@@ -273,9 +275,13 @@ export function createGatewayApi(opts = {}) {
         if (Buffer.byteLength(JSON.stringify(rest), 'utf8') > MAX_BODY) throw new GatewayError(413, 'too_large', '內容太大（上限 512 KB）；附件請另外處理');
         const decoded = decodeFiles(files);
         const companions = decodeCompanions(body.companions);
-        const args = { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined, files: decoded, companions };
+        const args = { item: body.item, submissionId: typeof body.submissionId === 'string' ? body.submissionId : undefined, files: decoded, companions, reReview: body.reReview === true };
         if (sub === '/drafts') return send(res, 200, await workflow.saveDraft(p, args));
         return send(res, 200, await workflow.submit(p, args, ctx));
+      }
+      if (sub === '/rereview') {
+        const contentId = typeof body.contentId === 'string' ? body.contentId : '', type = typeof body.type === 'string' ? body.type : '';
+        return send(res, 200, await workflow.reReview(p, { contentId, type, note: typeof body.note === 'string' ? body.note : undefined }, ctx));
       }
       const m = /^\/items\/(gw-\d{8}-[0-9a-f]{6})\/(return|approve)$/.exec(sub);
       if (m && m[2] === 'return') return send(res, 200, await workflow.returnForChanges(p, { submissionId: m[1], comment: body.comment }, ctx));

@@ -936,3 +936,116 @@ ASK_PERF=1 node --test tests/round40-ask-perf.test.mjs      # 當成測試：TBT
 **防呆。** `tests/round49-answer-slim.test.mjs` 檢查：清單指向精簡副本、精簡副本＝完整檔去掉 `i18n`／`languages`（其他欄位與順序逐項相同，所以引擎拿到的資料不變、答案不變）、`index.json` 有列出、完整檔仍含譯文。評估集 392／392 通過。
 
 **給之後的人。** 如果引擎哪一天真的需要某個欄位的譯文（例如外語答案要顯示服務名稱的譯名），請在 `emit-api.mjs` 的 `forAnswer` 只保留那個欄位的那一種用法，而不是改回讀完整檔；並重看建置輸出的「答案頁資料傳輸量」。
+
+## 21. 重新審閱：閘道的規則，以及 BUILD_TODAY 會藏起逾期（第五十輪）
+
+給資訊室。同事端的操作見 guide-staff §50。
+
+### 21.1 問題與改之前的實測
+
+內容逾期（`reviewedAt + reviewPeriodMonths` 早於建置日）時，治理規則 R1 會把它移出 AI 白名單，並在前台加註（`scripts/lib/governance.mjs`）。2026-10-14 有四筆逾期：
+
+- `disease.chikungunya`（2025-07-28，12 個月）
+- `disease.japanese-encephalitis`（2025-08-12，12 個月）
+- `faq.mpox-who-vaccine`（2026-04-02，6 個月）
+- `faq.tb-cough-two-weeks`（2026-04-01，6 個月）
+
+要回到白名單，只需要權責單位重新審閱、把 `reviewedAt` 改成新日期。`reviewedAt` 不在 `sourceHashOf` 裡，所以譯文不會因此變成「待複核」。
+
+改之前用閘道的測試骨架（`createGatewayApi`＋`createLocalGit`＋示範帳號）實測，結果如下：
+
+| 環節 | 結果 |
+| --- | --- |
+| `/admin/due/` 的按鈕 | 只寫 `localStorage`（`cdc.admin.reviewed`），什麼都沒改 |
+| 閘道：把 main 上的現行版**原樣**存草稿、送審 | 可以。分支上的檔案多了 `status: draft/review`，所以 `git-local` 的 `commit()` 不會回 `unchanged`，合併請求也不是空的 |
+| 審核人看到的差異 | `changes: []`，畫面只寫「與網站上的版本相同，沒有修改」，看不出這是重新審閱 |
+| 四眼原則、角色、別單位 | 都擋得住：送出的人不能核准；`demo-008` 回 403；`demo-001` 沒有審核角色 |
+| 核准 | `publish()` 把 `reviewedAt` 改成當天並合併。main 上只差一行 |
+| 稽核、提交訊息、通知 | 和一般修改完全一樣，**沒有任何地方標明這是重新審閱** |
+| 同事實際能走的路 | 只有 `/admin/publish/?edit=` 重新匯出。表單會改掉 `summary`、`keywords`、`languages`（例如英文 `reviewed` 變回 `pending`）、`structured`，而且 `editDiff` 忽略這些欄位，畫面還會顯示「目前與現行版相同」 |
+| 慢性傳染病組（`faq.tb-cough-two-weeks`） | 沒有示範帳號，只有跨單位角色能送審與核准 |
+| `npm run dev` 核准之後 | 結果在 `.local/gateway-repo` 的 main。建置讀的是工作目錄的 `content/`，兩邊不會同步，本機站台看不到結果 |
+| CI | `BUILD_TODAY=2026-10-01`，所以 `faq.tb-cough-two-weeks`、`faq.mpox-who-vaccine` 在 CI 不算逾期（見 21.4） |
+
+結論：後端規則本身可行，但缺一個「內容不改、只確認」的明確動作。實際能用的路徑又會順手改到其他欄位，審核人、稽核和本機站台也都看不出重新審閱這件事。
+
+### 21.2 閘道的重新審閱契約
+
+**端點：** `POST /api/gateway/rereview { contentId, type, note? }`。
+
+- 同源、CSRF、JSON 的規則和其他寫入端點相同。
+- `note` 最多 2000 字。稽核只記字數，不記本文。
+
+**閘道怎麼處理（`workflow.reReview`）：**
+
+1. 路徑只由 `type`＋`id` 推出（`contentPathOf`），從**目標分支（main）**讀現行版，不收前端送來的內容。這樣表單的副作用不會跟著進來。
+2. 檢查內容必須是 `status: published`，型別與 id 也要和檔案一致。不符時回 404、409 或 422。
+3. 權限和送審一樣：要有「編輯」角色，且內容屬於自己的單位（或是跨單位角色）。
+4. 同一筆內容已有進行中的送審件時回 409。那一件核准時，`reviewedAt` 本來就會更新。
+5. 接著和一般送審共用同一段程式（`enterReview`）：
+   - 車道依 `lanes.json`，一級內容加 `tier1Reviewers`。
+   - 核准人數依 `requiredApprovals`。
+   - 送出的人會記成 editor，所以不能核准（四眼原則）。
+   - 通知審核人。
+6. 送審件帶 `kind: 'rereview'`。
+   - 退回後再送審，種類沿用。
+   - `/submit` 也接受 `reReview: true`，用在「修改到期內容時一併標為重新審閱」。
+
+**核准上線（`publish()`）：**
+
+- 寫入的內容和以前一樣：`status: published`、`reviewedAt: 今天（臺北）`。
+- 提交訊息多一行 `Review-Kind: re-review (reviewedAt 舊 -> 新; content unchanged|changed)`。
+
+**稽核：**
+
+| 動作 | 記錄內容 |
+| --- | --- |
+| `rereview`（送出） | `kind: 'rereview'` |
+| `approve`、`return` | 帶 `kind` |
+| `publish` | `kind`、`reviewedAtBefore`、`reviewedAt`、`contentChanged`（比對時不看 status 與 reviewedAt） |
+
+**同事看得到的文字：**
+
+- 畫面、通知、API 回應都不出現 Git 用語（`tests/round50-rereview.test.mjs` 以 `GIT_WORDS` 檢查）。
+- `GET /items/:id/diff` 多一個 `reReview: { lastReviewedAt, note, text }`，複核頁用它顯示「重新審閱：內容沒有修改，核准後最後審閱日由 … 更新為核准當天」。
+
+**後台畫面：**
+
+- `/admin/due/` 偵測閘道的方式和 `/admin/publish/` 相同（`detectGateway`）。
+- 有閘道：每列是「送出重新審閱」，並顯示這筆的狀態（審核中、退回＋意見、已重新審閱）。
+- 沒有閘道：維持示範按鈕，頁首的提醒框（`data-gw-hide`）說明它不會改變任何內容，並指向 guide-staff §50。
+
+**GitLab：**
+
+- 分支上的送審版和 main 只差 `status`，最後的合併提交只差 `reviewedAt`，所以合併請求一定有變更，不會是空的。
+- 若開了「Pipelines must succeed」，同樣適用 §14.4 的待辦。
+
+### 21.3 本機原型：核准結果怎麼回到站台
+
+`npm run dev` 的閘道寫進 `.local/gateway-repo`（bare repo，第一次啟動時以當時的 `content/` 為種子），建置讀的是工作目錄。新增的 `npm run gateway:pull` 會比對「種子以來 main 上改過的 `content/` 檔」和工作目錄，列出不同的檔；加 `-- --write` 才寫入，之後執行 `npm run build`。
+
+注意：如果種子是很久以前建的，工作目錄裡這些檔後來的修改會被 main 的版本蓋掉。所以預設只列出、不寫入。要重建種子，就刪掉 `.local/gateway-repo` 與 `.local/gateway-state.json`。
+
+正式環境不需要這一步：GitLab CI 從 main 建置。
+
+### 21.4 BUILD_TODAY 的取捨與建議
+
+`content-pr.yml` 與 `pages.yml` 用 `BUILD_TODAY=2026-10-01` 凍結「今天」。
+
+**好處：** 示範案例穩定，例如「逾期」「依據已修訂」「態勢資料日」的展示，以及測試的期望值，不會隨真實日期改變。
+
+**代價：** 真實日期往後走時，CI 與 GitHub Pages 建出來的站，把已經逾期的內容當成未逾期，**仍然放在 AI 白名單**。CI 綠燈也看不出這件事。這次就是如此：`faq.tb-cough-two-weeks`（到期 2026-10-01）與 `faq.mpox-who-vaccine`（到期 2026-10-02），在 CI 與公開示範站上都還算「現行」。
+
+**這一輪做的（不會破壞既有行為）：**
+
+- 建置時，若 `BUILD_TODAY` 早於真實的臺北日期，就用 `overdueAsOf(site, 今天)`（`governance.mjs`）列出「以今天算已逾期、這次建置看不到」的內容，印出 `⚠ [審閱到期]` 警告。
+- 在 GitHub Actions 中，另外輸出 `::warning` 註記，顯示在執行摘要上。
+- 只警告，不讓建置失敗。
+
+**建議（需要決策，這一輪沒改）：**
+
+1. **對外的建置用真實日期：** 把 `pages.yml` 的 `BUILD_TODAY` 改成只在 repo variable 有設定時才帶入（`vars.BUILD_TODAY`，預設空值）。這樣公開示範站與正式站都依真實日期判斷逾期。
+2. **測試與 PR 檢查繼續凍結日期：** 測試需要可重現的結果，治理案例的期望值也是依 2026-10-01 寫的。改成真實日期會讓測試隨日期失敗，而失敗的原因與 PR 無關。
+3. **正式環境的 GitLab CI 一律用真實日期：** 不設 `BUILD_TODAY`，凍結日期只留給原型示範。
+
+用真實日期的代價是：示範站上「逾期」的案例會隨時間變多（內容沒人維護就會這樣），某些展示截圖會和文件不一致。這正好反映內容的真實狀態，我們認為比顯示錯誤的「現行」好。

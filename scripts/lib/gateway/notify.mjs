@@ -10,9 +10,10 @@ import { buildEml, writeEml } from '../mail-outbox.mjs';
 const esc = (v) => String(v ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 
 const KIND_TEXT = {
-  submitted: { subject: (s) => `【請審核】${s.title}`, lead: (s) => `${s.editorName} 送審了一筆內容，請您審核。`, action: '開啟審核畫面' },
+  // 第五十輪：重新審閱（到期內容由權責單位確認仍正確）另外標明，審核人才知道要看的是「內容是否仍正確」而不是修改處
+  submitted: { subject: (s) => `【請審核${s.reReview ? '・重新審閱' : ''}】${s.title}`, lead: (s) => (s.reReview ? `${s.editorName} 確認這筆到期內容仍正確，送出重新審閱，請您審核；核准後最後審閱日更新為今天。` : `${s.editorName} 送審了一筆內容，請您審核。`), action: '開啟審核畫面' },
   returned: { subject: (s) => `【已退回】${s.title}`, lead: (s) => `${s.actorName} 退回了您送審的內容，請依意見修改後再送審。`, action: '開啟並修改' },
-  approved: { subject: (s) => `【已核准上線】${s.title}`, lead: (s) => `${s.actorName} 核准了您送審的內容${s.scheduled ? `，將於 ${s.scheduled} 上線` : '，網站將在下次更新時上線'}。`, action: '查看內容' },
+  approved: { subject: (s) => (s.reReview ? `【已重新審閱】${s.title}` : `【已核准上線】${s.title}`), lead: (s) => (s.reReview ? `${s.actorName} 核准了您送出的重新審閱，最後審閱日已更新為 ${s.reviewedAt}；網站下次更新後離開逾期清單、回到 AI 引用範圍。` : `${s.actorName} 核准了您送審的內容${s.scheduled ? `，將於 ${s.scheduled} 上線` : '，網站將在下次更新時上線'}。`), action: '查看內容' },
   partial: { subject: (s) => `【已核准 ${s.approvals}/${s.required}】${s.title}`, lead: (s) => `${s.actorName} 已核准，還需要 ${s.required - s.approvals} 位審核。`, action: '查看內容' },
   'post-publish': { subject: (s) => `【上線後複核】${s.title}`, lead: (s) => `${s.editorName} 的內容已依快速上線規則上線，請於 ${s.hours} 小時內複核。`, action: '開啟審核畫面' },
 };
