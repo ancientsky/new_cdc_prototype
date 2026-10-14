@@ -235,3 +235,53 @@ test('民眾說法：疫苗簡稱（Tdap、23價）、描述（眼睛變黃、�
   // 錨點帶頭時不拿字面撞到的片段湊句（黃卡 → 只答接種紀錄補發，不接腸病毒「抱小孩前洗手」）
   assert.ok(cites(e.answer('小孩的黃卡弄丟了')).every((c) => c === 'service.vaccination-record-reissue'));
 });
+
+// ───────── 第四部分：官方答案優先於用藥／法律／媒體拒答（2026-10-14 Yulun 決定；docs/ask-search-llm.md §14.7） ─────────
+test('官方答案優先：強相符的 FAQ／服務頁改答，句子只出自那一則，1922（媒體為公關室）行動保留', async () => {
+  const e = await engine();
+  for (const [q, unit, href] of [
+    ['登革熱可以吃布洛芬嗎', 'faq.dengue-painkiller', 'tel:1922'],
+    ['打完疫苗出事，可以申請賠償嗎', 'service.vaccine-injury-compensation', 'tel:1922'],
+    ['媒體採訪怎麼申請', 'service.media-interview-request', '/about/#pr'],
+  ]) {
+    const r = e.answer(q);
+    assert.equal(r.refused, false, q);
+    assert.ok(r.sentences.length > 0, q);
+    assert.ok(
+      r.sentences.every((s) => s.cite.every((c) => c.startsWith(`${unit}#`))),
+      `${q}：${r.sentences.map((s) => s.cite).join()}`,
+    );
+    assert.ok(
+      r.actions.some((a) => a.href === href),
+      `${q}：${r.actions.map((a) => a.href)}`,
+    );
+    assert.ok(
+      r.guards.some((g) => g.kind === 'official-over-refusal' && g.unit === unit),
+      q,
+    );
+  }
+});
+
+test('官方答案優先的護欄：急症永不改答；沒點名藥名、沒有疾病錨點、問劑量、個人法律判斷、沒有對應 FAQ 都照舊拒答', async () => {
+  const e = await engine();
+  for (const [q, kind] of [
+    ['我呼吸困難可以吃布洛芬嗎', 'emergency'],
+    ['我小孩抽搐了可以吃退燒藥嗎', 'emergency'],
+    ['我60公斤要吃幾顆普拿疼', 'medication'],
+    ['登革熱布洛芬要吃幾顆', 'medication'],
+    ['登革熱吃什麼藥', 'medication'],
+    ['可以吃布洛芬嗎', 'medication'],
+    ['水痘可以吃阿斯匹靈嗎', 'medication'],
+    ['打疫苗出事可以告醫院嗎', 'legal'],
+    ['我是記者，想問登革熱疫情', 'media'],
+  ]) {
+    const r = e.answer(q);
+    assert.equal(r.refused, true, q);
+    assert.equal(r.refusal.kind, kind, q);
+  }
+  // 外語問句、強制謠言頁不走改答（只改中文問句；謠言頁本來就只套用注入、危害、隱私、冒名規則）
+  assert.equal(
+    e.answer('登革熱可以吃布洛芬嗎', { forceIntent: 'rumor' }).guards.some((g) => g.kind === 'official-over-refusal'),
+    false,
+  );
+});

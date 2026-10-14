@@ -26,7 +26,7 @@
 import { CROSS_LANG, PARAPHRASE, topicAnchorsOf, buildLexicon, latinStems, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
 import { ANTIVIRAL_RE, CLOSED_MARK, NOTICE_TYPES, SCHEDULE_VACCINE_RE, VAXMAP_GROUP_OF, VAXMAP_GROUP_OF_DISEASE, WHICH_VACCINE_RE, ageHashOf, ageProfileOf, mmssOf, normTravel, normalizeNotifyTable, vaxmapHref } from './structured.js';
 import { EN_STOP, VI_STOP, bigrams, detectInjection, maskPII, maskPIIDetailed, parseTimeRange, rocDate, tokenize } from './text.js';
-import { ANIMAL_RE, BITE_RE, CAREERS_DETAIL_RE, EXPLAIN_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FACETS, QUERY_FUNC_RE, RECORD_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_RE, classifyIntent, focusOf, isLowRelevance, refusalCopy, titleHits } from './rules.js';
+import { ANIMAL_RE, BITE_RE, CAREERS_DETAIL_RE, DRUGS, EXPLAIN_RE, HISTORICAL_WEIGHT, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FACETS, QUERY_FUNC_RE, RECORD_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_RE, classifyIntent, focusOf, isLowRelevance, refusalCopy, titleHits } from './rules.js';
 
 // 第四十輪（issue #77）：補接種問句（漏打、錯過、延遲、忘了打、補打）。命中就不給年齡時程表，改由檢索找補接種 FAQ
 // 第四十八輪（issue #94）：加「晚了兩個月才打」「延後接種」這類口語
@@ -64,6 +64,8 @@ class RouteNotLoaded extends Error {
 }
 if (globalThis.process?.versions?.node) await Promise.all(Object.keys(ROUTES).map(importRoute));
 
+/** 第四十九輪：有官方 FAQ／服務頁正面回答時可改答的拒答種類（急症等其他拒答永不改答） */
+const OFFICIAL_KINDS = new Set(['medication', 'legal', 'media']);
 /** 第四十九輪：外語問句判意圖時可借用的跨語言對應詞（疾病面向） */
 const FACET_CUE = /^(症狀|警示徵象|潛伏期)$/;
 
@@ -164,6 +166,31 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     return [v.id, { strict: norm(full), loose: norm([...full, namesDisease(short) ? null : short]) }];
   }));
   const vaccinesNamedIn = (t, strict = false) => { const h = lc(t).replace(/\s+/g, ''); return new Set([...vaccineStems].filter(([, s]) => s[strict ? 'strict' : 'loose'].some((n) => h.includes(n))).map(([id]) => id)); };
+  /**
+   * 第四十九輪（2026-10-14 Yulun 決定）：用藥／法律／媒體拒答的「官方答案優先」。回傳可改答的 FAQ／服務頁 contentId，沒有就回 null（照舊拒答）。
+   * 強相符三個條件都要：（1）同一個疾病錨點：問句點名疾病 ⇒ 單元要綁同一疾病；沒點名 ⇒ 單元也不能綁疾病；
+   * （2）單元涵蓋問句點名的東西：藥名（布洛芬）、劑量詞（幾顆）、法律或媒體用語（賠償）都要出現在單元的題目、標題、關鍵詞或內文——
+   *      沒點名任何東西（「該吃什麼藥」）不改答；
+   * （3）同一面向：單元的題目／標題／關鍵詞本身就是同一類問句（會觸發同一條規則），或與問句題目相符（formMatch）。
+   */
+  const DRUGS_G = new RegExp(DRUGS, 'gi');
+  function officialOver(q, hits, entities, view) {
+    if (!hits.every((r) => OFFICIAL_KINDS.has(r.kind))) return null;
+    const terms = [...new Set(hits.flatMap((r) => { const m = r.re?.exec(q)?.[0] ?? ''; return r.kind === 'medication' && r.id !== 'ref.med.dose' ? m.match(DRUGS_G) ?? [] : [m.replace(/嗎$/, '')]; }))].filter(Boolean);
+    if (!terms.length) return null;
+    const qd = new Set(entities.diseases.map((d) => d.id));
+    const units = new Map();
+    for (const c of poolFor(view, 'zh-TW').chunks) if (c.type === 'faq' || c.type === 'service') (units.get(c.contentId) ?? units.set(c.contentId, []).get(c.contentId)).push(c);
+    for (const [id, cs] of units) {
+      const ds = cs[0].diseases ?? [];
+      if (qd.size ? !ds.some((d) => qd.has(d)) : ds.length) continue;
+      const hay = lc(cs.map((c) => `${c.title} ${c.question ?? ''} ${c.text} ${(c.terms ?? []).join(' ')}`).join(' '));
+      if (!terms.every((t) => hay.includes(lc(t)))) continue;
+      const head = `${cs[0].question ?? cs[0].title} ${(cs[0].terms ?? []).join(' ')}`;
+      if (hits.some((r) => r.re?.test(head)) || formMatch(q, head, [...ds, ...qd])) return id;
+    }
+    return null;
+  }
   const QUESTION_CUES = [
     // 咬傷：問句要點名動物（狗、鼬獾…）或說「動物」才算（被蚊子咬不是這類問題），單元也要講得到這種動物
     { re: BITE_RE, fits: (c, x) => (x.animals.size > 0 || x.text.includes('動物')) && animalFits(c, x.animals) },
@@ -1127,10 +1154,23 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
 
     // 3 拒答（謠言查證頁貼上的是網傳訊息本身：只套用注入、危害、隱私、冒名規則）
     const RUMOR_RULE_KINDS = new Set(['prompt-injection', 'harmful', 'privacy', 'impersonation']);
-    for (const r of REFUSAL_RULES) {
-      if (forceIntent === 'rumor' && !RUMOR_RULE_KINDS.has(r.kind)) continue;
-      const hit = r.test ? r.test(q) : r.re.test(q);
-      if (hit) { result.intentReasons.push(r.id); return setRefusal(result, r.kind, r.id); }
+    const hits = REFUSAL_RULES.filter((r) => !(forceIntent === 'rumor' && !RUMOR_RULE_KINDS.has(r.kind)) && !(opts._official && OFFICIAL_KINDS.has(r.kind)) && (r.test ? r.test(q) : r.re.test(q)));
+    if (hits.length) {
+      // 第四十九輪（2026-10-14 Yulun 決定）：用藥、法律、媒體這三種拒答，若有官方 FAQ／服務頁正面回答了這一題（officialOver），改用它回答；
+      // 其他拒答（急症、個人診斷、注入…）一律照舊。改答時第二次呼叫 answer() 只放行這三種規則、只用那一則單元的片段，
+      // 回答不完整（被別的關卡拒答、沒有句子、出現別的來源）就退回原本的拒答
+      const unit = !opts._official && !forceIntent && lang === 'zh-TW' && officialOver(q, hits, entities, view);
+      if (unit) {
+        const r2 = answer(rawQuery, { ...opts, _official: unit });
+        if (!r2.refused && r2.sentences.length && r2.sources.every((x) => x.contentId === unit)) {
+          const kind = hits[0].kind;
+          const keep = kind === 'media' ? { label: tr(LL, '聯絡公關室', 'Public Relations Office'), href: '/about/#pr', kind: 'link' } : { label: tr(LL, '撥打 1922', 'Call 1922'), href: 'tel:1922', kind: 'hotline' };
+          r2.actions = [...r2.actions.filter((a) => a.href !== keep.href), keep];
+          r2.intentReasons.push(`${hits[0].id}:official`); r2.guards.push({ kind: 'official-over-refusal', rule: hits[0].id, unit }); r2.topicMatch ??= 'official';
+          return r2;
+        }
+      }
+      result.intentReasons.push(hits[0].id); return setRefusal(result, hits[0].kind, hits[0].id);
     }
 
     const expanded = expandQuery(q, lang);
@@ -1199,6 +1239,7 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     const cueText = lang === 'zh-TW' ? `${q} ${viaRules(PARAPHRASE)}` : viaRules(CROSS_LANG);
     const cueCtx = { text: cueText, animals: animalsIn(cueText), vaccines: new Set([...entities.vaccines.map((v) => v.id), ...vaccinesNamedIn(q)]) };
     const cueIds = new Set(cueUnits.filter((u) => u.re.test(cueText)).flatMap((u) => u.units.filter((c) => u.fits(c, cueCtx)).map((c) => c.id)));
+    if (opts._official) for (const c of poolFor(view, 'zh-TW').chunks) if (c.contentId === opts._official) cueIds.add(c.id);
     if (zhA.length) result.guards.push({ kind: 'topic-anchor', terms: zhA.map((a) => a.t) });
     if (profile && result.intent === 'vaccine' && !catchUp && !zhA.length && !ANTIVIRAL_RE.test(q) && (!entities.vaccines.length || WHICH_VACCINE_RE.test(q))) {
       const sa = route('schedule').scheduleAnswer(q, result, entities, profile);
@@ -1242,6 +1283,7 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
       const d0 = entities.diseases.find((d) => !d.derived)?.id;
       topicConfirmed = lang !== 'zh-TW' && chunks.length > 0 && !!d0 && (chunks[0].diseases ?? []).includes(d0);
     }
+    if (opts._official) { const kept = chunks.filter((c) => c.contentId === opts._official); kept.qWeights = chunks.qWeights; kept.model = chunks.model; chunks = kept; topicConfirmed = true; }
     // 第四十九輪：咬傷問句點名了動物（狗、鼬獾…）⇒ 題目／標題只講別種動物（蛇咬的「五要五不」）、又沒寫泛稱「動物」的片段不拿來回答
     const qAnimals = BITE_RE.test(cueText) ? cueCtx.animals : new Set();
     if (qAnimals.size && chunks.length) {
@@ -1382,7 +1424,7 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     if (result.intent === 'notice') { picked = route('notice').noticeCompose(q, chunks, picked); if (picked.length) result.confidence = Math.max(result.confidence, 0.6); }
     // 問「去哪裡打疫苗」時不插態勢句（高峰期的英文問句曾整段答成疫情狀態 peak）；真的組不出句子才用態勢句
     // 第四十九輪：問「是指什麼／為什麼」要的是解釋，高峰期也不把態勢句插在前面（「新聞說流感併發重症又增加，那是指什麼」）
-    if (sit && (result.intent === 'situation' || (!picked.length && sit.items.length) || (result.peak && picked.length < 3 && !result.whereAsk && !EXPLAIN_RE.test(q)))) {
+    if (sit && !opts._official && (result.intent === 'situation' || (!picked.length && sit.items.length) || (result.peak && picked.length < 3 && !result.whereAsk && !EXPLAIN_RE.test(q)))) {
       const ss = situationSentences(sit, lang);
       for (const [id, s] of ss.sources) sourceMap.set(id, s);
       picked = [...ss.sentences.slice(0, Math.max(2, 4 - picked.length)), ...picked].slice(0, view === 'pro' ? 5 : 4);
