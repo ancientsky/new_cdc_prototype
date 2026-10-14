@@ -1,23 +1,37 @@
 // /admin/vaccines/schedule/ 疫苗接種時程表編輯（第三十六輪）：左邊改一筆，右邊時程地圖與表格同時重畫（同一份 renderMapSvg／renderTableHtml，和前台一模一樣）。
 // 點預覽圖上的標記＝跳到那一筆的表單（借 TinaCMS 的 click-to-field，第二十二輪）。整份改完匯出 immunization-schedule.json 交資訊室，或複製 diff 摘要貼進送審說明。
 // 文字一律 textContent／esc()；只在這台瀏覽器暫存（localStorage），不會自己寫進主檔。
+// 第五十三輪（docs/deploy.md §25、guide-staff §56）：有寫入閘道時接上「送審與上線」（publish-gateway.js 的主檔模式）：
+//   存檔送「開始時的主檔＋我的版本」，閘道以列（id）三方合併到網站上的主檔；同一筆同一欄兩邊改得不同 ⇒ 409，「載入最新版（保留我的修改）」。
+//   沒有閘道（GitHub Pages、?gateway=off）時照舊只匯出 JSON。
 import { $, $$, esc, store, readEmbedded, copyText, downloadText } from './common.js';
 import { rowsOf, renderMapSvg, renderTableHtml, scheduleCsv, TABS } from '../vaxschedule.js';
-import { emptyState, stateFromItem, buildItem, problemsOf, problemsOfAll, errorsOnly, nextId, monthsText, sortedForExport, diffSummary, mergeSchedule, STAGE_LABEL, FUNDED_LABEL, FIELD_LABEL, joinMonths } from './vaxschedule-edit-core.js';
+import { emptyState, stateFromItem, buildItem, problemsOf, problemsOfAll, errorsOnly, nextId, monthsText, sortedForExport, diffSummary, mergeSchedule, STAGE_LABEL, FUNDED_LABEL, FIELD_LABEL, joinMonths, scheduleDiffOptions } from './vaxschedule-edit-core.js';
+import { mergeRows, rowChanges } from './master-merge.js';
+import { contentVersion } from './content-version.js';
+import { initPublishGateway } from './publish-gateway.js';
 
-const D = readEmbedded('adm-vxs-data', { items: [], vaccines: [], strings: {} });
+const D = readEmbedded('adm-vxs-data', { items: [], vaccines: [], strings: {}, version: '' });
+const MASTER = 'immunization-schedule';
+const MASTER_ID = 'master.immunization-schedule';
 const KEY = 'cdc.admin.vaxschedule';
 const T = (k, v = {}) => String(D.strings[k] ?? k).replace(/\{(\w+)\}/g, (_, x) => v[x] ?? '');
 const vaccineIds = D.vaccines.map((v) => v.id);
 const vname = (id) => D.vaccines.find((v) => v.id === id)?.name ?? id;
 
 /* 狀態：整份主檔（工作副本）＋目前編輯的 index */
-let items = (store.get(KEY)?.items ?? D.items).map((i) => ({ ...i }));
+const saved0 = store.get(KEY);
+let items = (saved0?.items ?? D.items).map((i) => ({ ...i }));
 // 第五十二輪（docs/deploy.md §24）：開始編輯時的現行版。匯出＝mergeSchedule(工作副本, 現行版, orig)：只套用改過的筆與欄位，順序與沒動的筆原樣。
 // 存在這台電腦的草稿一併記下 orig，之後 main 上被別人改的筆不會被草稿蓋回去（舊草稿沒有 orig 就用現行版）。
-let orig = store.get(KEY)?.orig ?? D.items;
+let orig = saved0?.orig ?? D.items;
+// 第五十三輪：live＝合併的底（網站上的主檔，或送審件裡的）；source：live 從哪裡來（site／gateway）。從送審件帶回的草稿要記住那一版。
+let live = saved0?.gwLive ?? D.items;
+let source = saved0?.gwLive ? 'gateway' : 'site';
 /** 匯出的主檔（下載、複製、修訂摘要、畫面上的 JSON 都用這一份） */
-const exported = () => mergeSchedule(items, D.items, orig);
+const exported = () => mergeSchedule(items, live, orig);
+/** 「與目前上線版本相比」用的網站版本：載入過網站上的最新版就用它 */
+const siteRows = () => (source === 'site' ? live : D.items);
 let cur = 0;
 let tab = 'all';
 let form = stateFromItem(items[0] ?? emptyState());
@@ -110,7 +124,7 @@ function paintChecks() {
 function paintExport() {
   const out = exported();
   $('#vx-out').textContent = JSON.stringify(out, null, 2);
-  const d = diffSummary(D.items, out);
+  const d = diffSummary(siteRows(), out);
   const all = problemsOfAll(out, vaccineIds);
   $('#vx-diff').textContent = d.dirty ? `與目前上線版本相比：新增 ${d.added.length}、刪除 ${d.removed.length}、修改 ${d.changed.length}${d.changed.length ? `（${d.changed.slice(0, 6).join('、')}${d.changed.length > 6 ? '…' : ''}）` : ''}` : '與目前上線版本相同。';
   const st = $('#vx-export-state');
@@ -143,13 +157,14 @@ $('#vx-del').addEventListener('click', () => {
   items.splice(cur, 1); cur = Math.max(0, cur - 1); form = stateFromItem(items[cur] ?? emptyState()); fill(form); paintAll();
 });
 $('#vx-verify').addEventListener('click', () => { F.verified.checked = true; commitForm(); paintAll(); });
-$('#vx-save').addEventListener('click', () => { commitForm(); store.set(KEY, { items, orig, savedAt: new Date().toISOString() }); $('#vx-msg').textContent = `已暫存在這台電腦（${new Date().toLocaleTimeString('zh-TW', { hour12: false })}）。同事看不到，匯出後才會送出。`; });
-$('#vx-reset').addEventListener('click', () => { if (!confirm('放棄這台電腦上的修改，回到目前上線版本？')) return; store.del(KEY); items = D.items.map((i) => ({ ...i })); orig = D.items; cur = 0; form = stateFromItem(items[0] ?? emptyState()); fill(form); paintAll(); $('#vx-msg').textContent = '已回到目前上線版本。'; });
+function saveLocal() { commitForm(); store.set(KEY, { items, orig, ...(source === 'gateway' ? { gwLive: live } : {}), savedAt: new Date().toISOString() }); }
+$('#vx-save').addEventListener('click', () => { saveLocal(); $('#vx-msg').textContent = `已暫存在這台電腦（${new Date().toLocaleTimeString('zh-TW', { hour12: false })}）。同事看不到，匯出後才會送出。`; });
+$('#vx-reset').addEventListener('click', () => { if (!confirm('放棄這台電腦上的修改，回到目前上線版本？')) return; store.del(KEY); items = D.items.map((i) => ({ ...i })); orig = D.items; live = D.items; source = 'site'; cur = 0; form = stateFromItem(items[0] ?? emptyState()); fill(form); paintAll(); $('#vx-msg').textContent = '已回到目前上線版本。'; document.dispatchEvent(new CustomEvent('adm:gw-target')); });
 $('#vx-copy').addEventListener('click', (e) => copyText(`${$('#vx-out').textContent}\n`, e.currentTarget));
 $('#vx-dl').addEventListener('click', () => downloadText('immunization-schedule.json', `${$('#vx-out').textContent}\n`));
 $('#vx-csv').addEventListener('click', () => downloadText('immunization-schedule.csv', scheduleCsv(sortedForExport(exported(), vaccineIds), vname, T2), 'text/csv'));
 $('#vx-copydiff').addEventListener('click', (e) => {
-  const d = diffSummary(D.items, exported());
+  const d = diffSummary(siteRows(), exported());
   const lines = ['疫苗接種時程表修訂（content/master/immunization-schedule.json）', d.added.length ? `新增：${d.added.join('、')}` : '', d.removed.length ? `刪除：${d.removed.join('、')}` : '', d.changed.length ? `修改：${d.changed.join('、')}` : '', '', '依據：（請填疾管署公告名稱與日期）', '同步改了疫苗頁 publicFunded：（有／無，哪些頁）'].filter((l, i) => l !== '' || i > 3);
   copyText(`${lines.join('\n')}\n`, e.currentTarget);
 });
@@ -160,4 +175,53 @@ const want = new URLSearchParams(location.search).get('id');
 const wi = want ? items.findIndex((i) => i.id === want) : -1;
 cur = wi >= 0 ? wi : 0;
 form = stateFromItem(items[cur] ?? emptyState()); fill(form); paintAll();
-if (store.get(KEY)?.savedAt) $('#vx-msg').textContent = `已載入這台電腦上的暫存（${new Date(store.get(KEY).savedAt).toLocaleString('zh-TW', { hour12: false })}）；要放棄請按「回到上線版本」。`;
+if (saved0?.savedAt) $('#vx-msg').textContent = `已載入這台電腦上的暫存（${new Date(store.get(KEY).savedAt).toLocaleString('zh-TW', { hour12: false })}）；要放棄請按「回到上線版本」。`;
+
+/* ───────── 第五十三輪：送審與上線（有寫入閘道時才出現；GitHub Pages 與 ?gateway=off 仍只匯出 JSON） ───────── */
+const DIFF = scheduleDiffOptions(vname);
+/** 換成系統送回的一整份主檔（送審件的，或網站上的最新版）：工作副本、開始時的主檔、合併的底都換掉；目前那一筆盡量留在原處 */
+function reseed(rows, { start = rows, work = rows, src }) {
+  const keep = items[cur]?.id;
+  live = rows; orig = start; source = src;
+  items = work.map((i) => ({ ...i }));
+  const at = items.findIndex((i) => i.id === keep);
+  cur = at >= 0 ? at : Math.min(cur, Math.max(0, items.length - 1));
+  form = stateFromItem(items[cur] ?? emptyState()); fill(form); paintAll();
+}
+const rowName = (k, list) => { const r = list.find((x) => String(x?.id) === k); return `「${r?.label ?? k}」（${k}）`; };
+/**
+ * 載入最新版（保留我的修改）：同一份 mergeRows（閘道存檔時也用它）。我改的筆與欄位重新套用到最新版上；
+ * 同一筆同一欄兩邊改得不一樣的，先用最新版，列出我原本的那一筆。之後「開始時的主檔」換成最新版，下次存檔就以它為起點。
+ */
+function reloadLatest(rows, _v, { source: src = 'site' } = {}) {
+  commitForm();
+  const mine = exported();
+  try { store.set('cdc.admin.staleCopy', { id: MASTER_ID, savedAt: new Date().toISOString(), item: mine }); } catch { /* 存不下就算了，畫面仍會列出我的值 */ }
+  const m = mergeRows(orig, mine, rows, DIFF);
+  const theirs = rowChanges(orig, rows, DIFF).rows.map((r) => `${r.kind === 'added' ? '新增' : r.kind === 'removed' ? '刪除' : '修改'}${rowName(r.key, r.kind === 'removed' ? orig : rows)}`);
+  const bad = new Set(m.conflicts.map((c) => c.key));
+  const mineList = m.mine.filter((k) => !bad.has(k)).map((k) => rowName(k, mine.some((x) => String(x?.id) === k) ? mine : orig));
+  const conflicts = m.conflicts.map((c) => ({ label: `${rowName(c.key, c.yours ? [c.yours] : rows)}${c.fields.length ? `的${c.fields.map(DIFF.fieldLabel).join('、')}` : ''}`, yours: c.yours ? JSON.stringify(c.yours, null, 1) : '（你刪除了這一筆）' }));
+  reseed(rows, { work: m.rows, src });
+  saveLocal();
+  return { theirs, mine: mineList, conflicts };
+}
+initPublishGateway({
+  exportObj: () => { commitForm(); return exported(); },
+  exportMaster: () => { commitForm(); return { name: MASTER, items: exported(), start: orig }; },
+  getContentId: () => MASTER_ID,
+  downloadName: () => MASTER,
+  loadItem: (rows) => { if (Array.isArray(rows)) { reseed(rows, { src: 'gateway' }); saveLocal(); } },
+  fieldInput: {},
+  // 主檔沒有「依哪一版改」以外的資訊：版本碼＝開始改時那一份主檔的碼（閘道用它核對 start）；衝突與否由逐筆合併判斷
+  getBaseHash: () => contentVersion(orig),
+  getEditTarget: () => ({ id: MASTER_ID, type: 'master', version: contentVersion(orig) }),
+  reloadLatest,
+  onSaved: (sub) => {
+    // 閘道存的＝合併後的整份主檔（可能含別人同時改的其他筆）：之後以它為起點繼續改
+    if (Array.isArray(sub?.rows)) reseed(sub.rows, { src: 'gateway' });
+    saveLocal();
+    if (sub?.status === 'published') $('#vx-msg').textContent = '接種時程表已上線。';
+  },
+});
+window.__admVx = { exported, reloadLatest, get items() { return items; }, get orig() { return orig; }, get live() { return live; }, get source() { return source; }, select }; // 供自動化測試

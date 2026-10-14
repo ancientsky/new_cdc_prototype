@@ -36,12 +36,18 @@ function cyrb53(str, seed) {
 }
 
 /**
- * 一筆內容（API 的一筆、檔案的 JSON、表單的匯出都可以）→ 版本碼。null／undefined ⇒ NEW_VERSION。
+ * 一筆內容（API 的一筆、檔案的 JSON、表單的匯出都可以）或一整份主檔（陣列）→ 版本碼。null／undefined ⇒ NEW_VERSION。
  * @param {any} item
  * @returns {string}
  */
 export function contentVersion(item) {
   if (item == null) return NEW_VERSION;
+  // 第五十三輪：主檔（例：疫苗接種時程表，一整份陣列）也用同一套版本碼。主檔沒有 API 才有的欄位、也沒有狀態與最後審閱日，
+  // 所以整份照算（列的順序算修改；每一列的鍵順序不算），閘道與編輯頁算出同一個值（docs/deploy.md §25）。
+  if (Array.isArray(item)) {
+    const t = canon(item);
+    return `v1-${cyrb53(t, 0)}${cyrb53(t, 0x9e3779b9)}`;
+  }
   const live = liveItem(item);
   const o = {};
   for (const [k, v] of Object.entries(live ?? {})) if (!IGNORE.has(k)) o[k] = v;

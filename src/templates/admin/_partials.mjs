@@ -152,6 +152,25 @@ export function unitOptions(site, { all = true, selected = DEFAULT_UNIT, allLabe
   ];
 }
 
+/**
+ * 「送審與上線」面板（第五十三輪：職缺、採購、接種時程的編輯頁共用；上架頁與疫情報導編輯頁沿用自己的同一份標記）。
+ * 有寫入閘道時 publish-gateway.js 才把它打開（hidden 拿掉）；GitHub Pages 示範站與 ?gateway=off 時一直隱藏，頁面照舊產生上架包／下載。
+ * @param {string} hint 這一頁的說明（存草稿、送審、核准後會發生什麼）
+ * @param {{ card?: boolean }} [o] card：獨立一張卡片（右欄）；否則接在表單下方
+ */
+export function gatewayPanel(hint, { card = false } = {}) {
+  return html`<section class="${card ? 'adm-card ' : ''}adm-gwpanel" id="gw-panel" aria-labelledby="gw-h" hidden>
+      <h2 id="gw-h">送審與上線</h2>
+      <p class="adm-hint">${hint}</p>
+      <p class="gw-statusline">目前狀態：<span class="adm-badge adm-badge--gray" id="gw-state">尚未送審</span> <span class="adm-muted" id="gw-approvals"></span></p>
+      <div id="gw-notes"></div>
+      <div class="gw-errors" id="gw-errors" tabindex="-1" hidden></div>
+      <div class="adm-actions"><button type="button" class="adm-btn adm-btn--ghost" id="gw-save">儲存草稿</button><button type="button" class="adm-btn" id="gw-submit">送審</button></div>
+      <p class="adm-muted" id="gw-status" role="status" aria-live="polite"></p>
+      <details id="gw-history-wrap" hidden><summary>歷程</summary><ol class="gw-history" id="gw-history"></ol></details>
+    </section>`;
+}
+
 export function dataScript(id, obj) {
   return raw(`<script type="application/json" id="${id}">${jsonScript(obj)}</script>`);
 }

@@ -67,54 +67,8 @@ export function changedFields(merged, original) {
   return { fields: editDiff(merged, original), derived: EDIT_DERIVED.filter((k) => merged?.[k] !== undefined && !sameValue(merged[k], live[k])) };
 }
 
-/** 這三個編輯頁特有的欄位名稱（field-labels.js 沒有的才補；不認得的仍顯示代碼，寧可難看也不能漏報） */
-const EDITOR_LABELS = {
-  hiringUnit: '用人單位',
-  jobType: '職類',
-  workplace: '工作地點',
-  salaryNote: '薪資待遇',
-  qualifications: '資格條件',
-  duties: '工作內容',
-  applyStart: '報名開始日',
-  applyMethod: '報名方式',
-  examPlan: '甄試日程',
-  resultPlannedAt: '結果預計公布日',
-  attachments: '附件連結',
-  amendments: '異動紀錄',
-  manualStatus: '取消／補實',
-  manualStatusNote: '取消／補實原因',
-  result: '甄選結果',
-  waitlistUpdates: '遞補公告',
-  tenderNo: '標案案號',
-  requestingUnit: '需求單位',
-  method: '採購方式',
-  awardRule: '決標原則',
-  category: '標的分類',
-  announcedAt: '公告日',
-  openingAt: '開標日',
-  briefingAt: '廠商說明會',
-  pccUrl: '政府電子採購網連結',
-  scope: '採購範圍',
-  specialTerms: '特別條款',
-  contractPeriod: '履約期限',
-  award: '決標資訊',
-  titleEn: '英文篇名',
-  affiliations: '服務單位',
-  articleType: '分類',
-  keywordsEn: '英文關鍵字',
-  doi: 'DOI',
-  legacyDoiUrl: '舊 DOI 網址',
-  receivedAt: '投稿日期',
-  acceptedAt: '接受日期',
-  abstractEn: '英文摘要',
-  highlights: '重點三句話',
-  figures: '圖表',
-  references: '參考文獻',
-  acknowledgementsMarkdown: '誌謝',
-  pdfUrl: 'PDF',
-  note: '備註',
-};
-export const editorFieldLabel = (k) => (fieldLabel(k) !== k ? fieldLabel(k) : (EDITOR_LABELS[k] ?? k));
+/** 這三個編輯頁的欄位名稱：第五十三輪起與審核人的差異共用 field-labels.js 的同一份（職缺、採購經閘道送審後，兩邊要叫同一個名字）；不認得的仍顯示代碼 */
+export const editorFieldLabel = (k) => fieldLabel(k);
 /** 「目前改動的欄位」一行字（給畫面）：內容與現行版相同時也明說，並列出匯出時一定會更新的欄位。輸入是 changedFields() 的結果 */
 export function changedText({ fields = [], derived = [] } = {}) {
   const tail = derived.length ? `（另外匯出時會更新：${derived.map(editorFieldLabel).join('、')}）` : '';

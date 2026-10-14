@@ -1,7 +1,9 @@
 // /admin/vaccines/schedule/ 疫苗接種時程表編輯（第三十六輪）：急性傳染病組（預防接種）在這裡改主檔 content/master/immunization-schedule.json。
 // 左：清單＋一筆的表單；右：時程地圖與表格的即時預覽（與前台同一份渲染函式），點圖上的標記就跳到那一筆；下：檢查、匯出、diff 摘要。
 import { html } from '../../../scripts/lib/render.mjs';
-import { pageHead, adminMeta, dataScript } from './_partials.mjs';
+import fs from 'node:fs';
+import { pageHead, adminMeta, dataScript, gatewayPanel } from './_partials.mjs';
+import { versionOfText } from '../../client/admin/content-version.js';
 import { STRINGS } from '../../client/i18n.js';
 import { TABS } from '../../client/vaxschedule.js';
 export { layout } from './_layout.mjs';
@@ -21,10 +23,12 @@ export function render(ctx) {
     items,
     vaccines: site.master.vaccines.map((m) => ({ id: m.id, name: m.name, nameEn: m.nameEn, hasPage: !!m.hasPage })),
     strings: Object.fromEntries(Object.entries(STRINGS['zh-TW']).filter(([k]) => k.startsWith('vxs.') || k === 'a11y.scrollTable')),
+    // 第五十三輪（docs/deploy.md §25）：主檔檔案的版本碼（經寫入閘道存檔時，告訴閘道「我是依哪一版改的」）
+    version: versionOfText(fs.readFileSync(new URL('../../../content/master/immunization-schedule.json', import.meta.url), 'utf8')),
   };
   const un = items.filter((i) => i.verified === false).length;
   return html`
-${pageHead({ title: '疫苗接種時程表', what: '改一筆，右邊的時程地圖與表格就一起變，因為前台的地圖、表格、問答「幾歲能打哪些公費疫苗」、開放資料 JSON／CSV 都讀同一份主檔。點地圖上的標記或表格的一列，就跳到那一筆的表單。', flow: '改完按「匯出 JSON」交資訊室取代 content/master/immunization-schedule.json，或複製「修訂摘要」貼進送審說明；CI 會跑和這裡同一套檢查（疫苗 id、年齡上下限、必填欄位），通過並核定後合併即同時更新地圖、表格、問答與 API。主檔尚未接寫入閘道（見 ARCHITECTURE §42）。' })}
+${pageHead({ title: '疫苗接種時程表', what: '改一筆，右邊的時程地圖與表格就一起變，因為前台的地圖、表格、問答「幾歲能打哪些公費疫苗」、開放資料 JSON／CSV 都讀同一份主檔。點地圖上的標記或表格的一列，就跳到那一筆的表單。', flow: '改完按「匯出 JSON」交資訊室取代 content/master/immunization-schedule.json，或複製「修訂摘要」貼進送審說明；CI 會跑和這裡同一套檢查（疫苗 id、年齡上下限、必填欄位），通過並核定後合併即同時更新地圖、表格、問答與 API。有後台系統連線時（正式環境、npm run dev），改用下方「送審與上線」：存草稿、送審，審核人核准後上線，不必再匯出交資訊室（第五十三輪）。' })}
 <div class="adm-box ${un ? 'adm-box--warn' : 'adm-box--ok'}"><strong>目前上線版本：${items.length} 筆，${un} 筆待核對。</strong>${un ? '待核對的筆在前台顯示「待承辦人確認」；逐筆對照疾管署公告後勾「已核對」即可。' : '全部已核對。'}　改疫苗政策時，疫苗頁的「公費對象」表（正本）要一起改，見同事指南 §18。</div>
 <div class="adm-split adm-vx-split">
 <section class="adm-card" aria-labelledby="vxl-h">
@@ -90,6 +94,7 @@ ${pageHead({ title: '疫苗接種時程表', what: '改一筆，右邊的時程�
   <div class="c-tabs__list vxs-tabs" role="tablist" aria-label="依年齡階段">${TABS.map((tb, i) => html`<button type="button" role="tab" aria-selected="${i === 0 ? 'true' : 'false'}" data-vx-tab="${tb.id}">${STRINGS['zh-TW'][`vxs.tab.${tb.id}`]}</button>`)}</div>
   <div class="vxs adm-vx-preview"><div class="vxs-scroll" id="vx-map"></div></div></section>
 <section class="adm-card" aria-labelledby="vxt-h"><h2 id="vxt-h">時程表預覽</h2><p class="adm-card__sub">同一份資料的表格（前台地圖下方那張）。點一列＝編輯那一筆。</p><div class="vxs adm-vx-preview" id="vx-table"></div></section>
+${gatewayPanel('有系統連線時才會出現這一區：「儲存草稿」把整份時程表存進系統（同組同事也看得到）；「送審」交給審核人，核准後地圖、表格、問答與開放資料一起更新。系統只套用你改過的那幾筆、那幾欄：別人同時改了其他筆不會被蓋掉；改到同一筆同一欄時會先擋下，請按「載入最新版」。主檔變更一律需要審核。', { card: true })}
 <section class="adm-card" aria-labelledby="vxe-h"><h2 id="vxe-h">匯出 <span id="vx-export-state" class="adm-badge adm-badge--gray"></span></h2>
   <p class="adm-card__sub" id="vx-diff"></p>
   <div class="adm-actions"><button type="button" class="adm-btn" id="vx-dl">匯出 JSON（交資訊室）</button><button type="button" class="adm-btn adm-btn--ghost" id="vx-copy">複製 JSON</button><button type="button" class="adm-btn adm-btn--ghost" id="vx-csv">下載 CSV</button><button type="button" class="adm-btn adm-btn--ghost" id="vx-copydiff">複製修訂摘要（送審說明用）</button></div>

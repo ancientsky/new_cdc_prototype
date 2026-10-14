@@ -42,6 +42,9 @@ export const DEMO_ACCOUNTS = [
   { sub: 'demo-006', name: '吳○瑜', title: '平台管理', unit: 'unit.it', roles: ['platform'] },
   { sub: 'demo-007', name: '黃○婷', title: '承辦人', unit: 'unit.personnel', roles: ['editor'] },
   { sub: 'demo-008', name: '劉○君', title: '承辦人', unit: 'unit.secretariat', roles: ['editor', 'reviewer'] },
+  // 第五十三輪：慢性傳染病組（結核病、愛滋病、肝炎）也有自己的承辦人與科長，與急性傳染病組同一個配置（承辦人只能存草稿與送審，科長可審核別人送的）
+  { sub: 'demo-009', name: '周○廷', title: '承辦人', unit: 'unit.chronic-infectious', roles: ['editor'] },
+  { sub: 'demo-010', name: '鄭○萱', title: '科長', unit: 'unit.chronic-infectious', roles: ['editor', 'reviewer'] },
 ];
 
 /** 工作階段長度：8 小時（上班一天）；正式環境由 IdP 與閘道決定，並應有閒置逾時（建議 30 分鐘）。 */

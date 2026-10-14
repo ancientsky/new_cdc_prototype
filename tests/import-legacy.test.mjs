@@ -486,7 +486,7 @@ test('後台 /admin/import/：批次摘要、逐頁表、草稿下載連結；�
 
 // ───────────────────────── 第十輪：跨疾病通用化與登革熱第二批 ─────────────────────────
 import { shortFor } from '../scripts/lib/legacy-import/rules.mjs';
-import { generateDisease } from '../scripts/lib/legacy-import/sim-export-disease.mjs';
+import { generateDisease, EXPORTED_AT } from '../scripts/lib/legacy-import/sim-export-disease.mjs';
 import { generateNews } from '../scripts/lib/legacy-import/sim-export-news.mjs';
 import { generateGuidelines } from '../scripts/lib/legacy-import/sim-export-guidelines.mjs';
 import { generateQa } from '../scripts/lib/legacy-import/sim-export-qa.mjs';
@@ -880,9 +880,15 @@ test('已提交的第五批輸出（狂犬病、瘧疾、A 型肝炎、德國麻
     const exp = path.join(ROOT, 'data/legacy-export', slug);
     const dir = tmp('exp5');
     generateDisease(`disease.${slug}`, dir);
-    for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(readJSON(path.join(dir, f)), readJSON(path.join(exp, f)), `${slug} ${f}`);
+    for (const f of fs.readdirSync(exp).filter((x) => x.endsWith('.json') && x !== '_export.json')) assert.deepEqual(asOfExport(readJSON(path.join(dir, f)), readJSON(path.join(exp, f))), readJSON(path.join(exp, f)), `${slug} ${f}`);
   }
 });
+// 第五十三輪：模擬匯出的「最後更新時間」取自新站內容的 reviewedAt。內容在舊站快照（EXPORTED_AT）之後才重新審閱的
+//（屈公病 2026-10-14，Yulun 決定假設已重審），重新產生會得到快照當時不可能出現的日期；已提交的快照保留當時的日期，只有這一欄這樣比
+function asOfExport(gen, committed) {
+  if (gen.updatedAt > EXPORTED_AT && committed.updatedAt <= EXPORTED_AT) return { ...gen, updatedAt: committed.updatedAt };
+  return gen;
+}
 
 test('第六批（新聞與公告欄目，無移轉清單）：三級處理——既有新聞比對、近年新聞 auto-ok ＋ 10% 抽樣名單、久遠封存與活動 drop；通函建 letter 且權責歸疾病組；英文稿不自動上線；澄清稿建 clarification', () => {
   const dir = tmp('news');

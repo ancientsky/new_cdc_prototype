@@ -2,10 +2,11 @@
 // 沒有閘道（GitHub Pages）就不出現，複核區維持原本的瀏覽器示範。畫面文字全部以 textContent 寫入。
 // 第五十二輪：送審期間網站上的同一頁被更新了（docs/deploy.md §23）⇒ 差異上方說明、「核准上線」停用，並預先填好退回意見。
 //   疫情報導文章一起送的新卷期與分類主檔（§24.7）也列出來：審核人核准的不只是這一篇。
+// 第五十三輪（§25）：職缺、採購的異動紀錄、甄試日程、甄選結果等逐項列出（type: rows）；接種時程主檔逐筆、逐欄列出，上方說明核准後哪些頁面會跟著變。
 import { $ } from './common.js';
 import { detectGateway, el, clear, fmtTime, errorText, STATUS_TONE } from './gateway-client.js';
 
-const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', news: '新聞稿', letter: '致醫界通函', clarification: '澄清', document: '文件', vaccine: '疫苗頁', media: '影音', topic: '專區', service: '申請服務', publication: '出版品', labtest: '檢驗項目', research: '研究計畫', job: '人才招募', tender: '採購公告', banner: '宣導 Banner', page: '一般頁', dataset: '資料集' };
+const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', news: '新聞稿', letter: '致醫界通函', clarification: '澄清', document: '文件', vaccine: '疫苗頁', media: '影音', topic: '專區', service: '申請服務', publication: '出版品', labtest: '檢驗項目', research: '研究計畫', job: '人才招募', tender: '採購公告', banner: '宣導 Banner', page: '一般頁', dataset: '資料集', master: '主檔' };
 
 (async function init() {
   const box = $('#gw-review');
@@ -34,7 +35,7 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
     for (const it of items) {
       tbody.append(el('tr', { dataset: { sid: it.id } },
         el('td', { text: TYPE[it.type] ?? it.type }),
-        el('td', {}, el('strong', { text: it.title }), el('div', { class: 'adm-muted', text: it.kind === 'rereview' ? '重新審閱（審閱期限到了）' : it.isNew ? '新內容' : '修改既有內容' })),
+        el('td', {}, el('strong', { text: it.title }), el('div', { class: 'adm-muted', text: it.kind === 'rereview' ? '重新審閱（審閱期限到了）' : it.master ? '主檔修改' : it.isNew ? '新內容' : '修改既有內容' })),
         el('td', { text: it.ownerName }),
         el('td', { text: it.editors.map((e) => e.name).join('、') }),
         el('td', { text: it.submittedAt ? fmtTime(it.submittedAt) : '—' }),
@@ -63,6 +64,7 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
     if (d.note) { wrap.append(el('p', { class: 'adm-muted', text: d.note })); return; }
     // 第五十二輪：送審件開始後網站版本變了——先說明，下面的差異是這個送審件自己改的
     if (d.outdated) wrap.append(el('div', { class: 'adm-box adm-box--warn', role: 'alert' }, el('strong', { text: '還不能核准：網站上的版本在送審期間已更新' }), el('p', { text: d.outdated.text })));
+    if (d.master) wrap.append(el('div', { class: 'adm-box adm-box--info', id: 'gw-diff-master' }, el('strong', { text: `這是主檔的修改：${d.master.label}` }), el('p', { text: d.master.text })));
     if (d.categories?.changes?.length) wrap.append(el('div', { class: 'adm-box adm-box--info', id: 'gw-diff-cats' }, el('strong', { text: '核准後也會更新疫情報導的分類（所有文章共用）' }), el('ul', {}, ...d.categories.changes.map((t) => el('li', { text: t })))));
     // 第五十輪：重新審閱——先說清楚「這是確認內容仍正確」與核准後會發生什麼
     if (d.reReview) {
@@ -78,6 +80,7 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
           el('div', {}, el('p', { class: 'gw-col__h', text: d.outdated ? '送審開始時網站上的版本' : '網站上的版本' }), c.before.length ? sentences(c.before, 'before') : el('p', { class: 'adm-muted', text: '（空白）' })),
           el('div', {}, el('p', { class: 'gw-col__h', text: '送審的版本' }), c.after.length ? sentences(c.after, 'after') : el('p', { class: 'adm-muted', text: '（空白）' }))));
       } else if (c.type === 'text') sec.append(el('p', { class: 'gw-plain', text: c.after.map((s) => s.t).join('') }));
+      else if (c.type === 'rows' && c.rows?.length) sec.append(el('ul', { class: 'gw-rows' }, ...c.rows.map((r) => el('li', { class: `gw-row--${r.kind}` }, r.kind === 'added' ? el('ins', { text: r.text }) : r.kind === 'removed' ? el('del', { text: r.text }) : r.text))));
       else if (c.type === 'value' && c.from && c.to && c.from.length > 40) sec.append(el('div', { class: 'gw-cols' }, el('pre', { class: 'adm-pre', tabindex: '0', text: c.from }), el('pre', { class: 'adm-pre', tabindex: '0', text: c.to })));
       wrap.append(sec);
     }
@@ -93,7 +96,7 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
     const meta = clear($('#gw-d-meta'));
     const row = (k, v) => meta.append(el('dt', { text: k }), el('dd', { text: v }));
     row('狀態', current.statusLabel);
-    row('送審類型', current.kind === 'rereview' ? '重新審閱（權責單位確認內容仍正確；核准後更新最後審閱日）' : current.isNew ? '新內容' : '修改既有內容');
+    row('送審類型', current.kind === 'rereview' ? '重新審閱（權責單位確認內容仍正確；核准後更新最後審閱日）' : current.master ? '主檔修改（所有使用這份主檔的頁面一起更新）' : current.isNew ? '新內容' : '修改既有內容');
     row('權責單位', current.ownerName);
     row('承辦', current.editors.map((e) => e.name).join('、'));
     row('送審時間', current.submittedAt ? fmtTime(current.submittedAt) : '—');

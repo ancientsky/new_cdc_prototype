@@ -166,3 +166,29 @@ export function mergeSchedule(items, live, orig = live) {
   }
   return out;
 }
+
+/* ───────── 第五十三輪：經寫入閘道送審（docs/deploy.md §25）：審核人看到的「逐筆、逐欄」差異 ───────── */
+/** 主檔一筆的欄位名稱（主檔的鍵；FIELD_LABEL 是表單欄位，兩者不完全一樣） */
+export const ROW_FIELD_LABEL = {
+  vaccine: '疫苗', label: '項目名稱', labelEn: '英文名稱', dose: '劑次', ageMinMonths: '建議年齡下限', ageMaxMonths: '建議區間上限', hardLimitMonths: '可接種年齡上限',
+  hardLimitNote: '上限依據', hardLimitSource: '上限來源', hardLimitVerified: '上限已核對', ageLabel: '年齡（人看的寫法）', stage: '階段', funded: '費用', group: '公費對象',
+  interval: '間隔', recurring: '每年接種', startAt: '生效日', endAt: '結束日', note: '備註', source: '來源', verified: '已核對',
+};
+/**
+ * rowChanges（master-merge.js）用的選項：列名、欄位名、值的白話（月齡寫成「1 歲 6 個月」、階段與費用寫中文、疫苗寫名稱）。
+ * @param {(id: string) => string} [vaccineName]
+ */
+export function scheduleDiffOptions(vaccineName = (id) => id) {
+  const show = (f, v) => {
+    if (v == null) return f === 'ageMaxMonths' ? '不設上限' : '（空白）';
+    if (/Months$/.test(f) && Number.isFinite(v)) { const t = monthsText(v); return t === `${v} 個月` ? t : `${t}（${v} 個月）`; }
+    if (f === 'stage') return STAGE_LABEL[v] ?? String(v);
+    if (f === 'funded') return FUNDED_LABEL[v] ?? String(v);
+    if (f === 'vaccine') return `${vaccineName(v)}（${v}）`;
+    if (typeof v === 'boolean') return v ? '是' : '否';
+    if (f === 'recurring') return v === 'yearly' ? '每年' : String(v);
+    if (v && typeof v === 'object' && !Array.isArray(v) && ('title' in v || 'url' in v)) return [v.title, v.url].filter(Boolean).join('｜');
+    return typeof v === 'string' ? v : JSON.stringify(v);
+  };
+  return { key: 'id', label: (r) => String(r?.label ?? r?.id ?? ''), fieldLabel: (f) => ROW_FIELD_LABEL[f] ?? FIELD_LABEL[f] ?? f, show };
+}
