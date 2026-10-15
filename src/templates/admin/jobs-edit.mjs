@@ -128,7 +128,7 @@ ${pageHead({
     <div class="adm-actions"><button type="button" class="adm-btn" id="jf-save">儲存草稿（本機）</button><button type="button" class="adm-btn adm-btn--ghost" id="jf-reset">放棄草稿、重新帶入</button></div>
     <p class="adm-muted" id="jf-msg" role="status" aria-live="polite"></p>
   </form>
-  ${gatewayPanel('有系統連線時才會出現這一區：「儲存草稿」把這一版存進系統（人事室同事也看得到）；「送審」交給審核人，核准後上線，不必再下載 JSON 開 PR。存檔時以網站上的現行版為底，只改你動過的欄位；你開啟之後別人改過，系統會先擋下並幫你把修改套到最新版。甄選結果仍只能公布報名編號，並且要有下架日。')}
+  ${gatewayPanel('有系統連線時才會出現這一區：「儲存草稿」把這一版存進系統（人事室同事也看得到）；「送審」：人事室承辦人送出即上線（快車道，不必等核准；系統仍先做格式、日期與個資檢查，上線後公關室 24 小時內複核），其他單位的同事改職缺則交給審核人、核准後上線。不必再下載 JSON 開 PR。存檔時以網站上的現行版為底，只改你動過的欄位；你開啟之後別人改過，系統會先擋下並幫你把修改套到最新版。甄選結果仍只能公布報名編號，並且要有下架日。')}
 </section>
 <div class="adm-jf-aside">
 <section class="adm-card" aria-labelledby="jp-h"><h2 id="jp-h">預覽與檢核</h2>

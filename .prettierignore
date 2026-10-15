@@ -99,3 +99,7 @@ eval/**/*.mjs
 # 第五十三輪：職缺、採購、接種時程接上寫入服務（docs/deploy.md §25）
 !src/client/admin/master-merge.js
 !tests/round53-editors-gateway.test.mjs
+# 第五十四輪：版本碼就緒檢查、Yulun 三項決定（docs/deploy.md §26）
+!scripts/lib/gateway/basehash-report.mjs
+!scripts/gateway-basehash.mjs
+!tests/round54-decisions.test.mjs

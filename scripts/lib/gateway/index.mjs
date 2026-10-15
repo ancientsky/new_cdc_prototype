@@ -57,6 +57,7 @@ import { createValidator, MASTER_FILES } from './validate-item.mjs';
 import { createStateStore, createAuditLog } from './store.mjs';
 import { createNotifier } from './notify.mjs';
 import { createWorkflow, GatewayError } from './workflow.mjs';
+import { loadLanes, validateLanes } from '../lanes.mjs';
 import { publishFeed, readImportRecord, canImportIntl, PublishError } from '../intl-epidemic-publish.mjs';
 
 export const SERVICE_NAME = 'cdc-web-gateway';
@@ -97,6 +98,8 @@ export function configFromEnv(env = process.env) {
     csrfSecret: env.GATEWAY_CSRF_SECRET || '',
     // 第五十三輪：要不要拒絕沒帶版本碼的寫入（docs/deploy.md §25.6）。預設關：照舊接受，稽核記 baseHash: missing
     requireBaseHash: env.GATEWAY_REQUIRE_BASE_HASH === '1',
+    // 第五十四輪：另指一份車道設定（預設 content/governance/lanes.json，與 CI 同一份）。給測試站或演練用，例：先關掉型別授權看審核流程
+    lanesFile: env.GATEWAY_LANES_FILE ? path.resolve(ROOT, env.GATEWAY_LANES_FILE) : '',
   };
 }
 
@@ -109,6 +112,14 @@ export function googleFromConfig(g) {
 export function createGitProvider(g) {
   if (g.provider === 'gitlab') return createGitLab(g.gitlab);
   return createLocalGit({ dir: g.dir, seedDir: g.seedDir });
+}
+
+/** 另指的車道設定檔：形狀不對就不啟動（寧可起不來，也不要用一份壞掉的名單決定誰能免審上線） */
+function lanesFrom(file) {
+  const c = loadLanes(file);
+  const errs = validateLanes(c);
+  if (errs.length) throw new Error(`GATEWAY_LANES_FILE（${file}）有誤：${errs.join('；')}`);
+  return c;
 }
 
 /**
@@ -127,7 +138,7 @@ export function createGatewayApi(opts = {}) {
   const validator = opts.validator ?? createValidator();
   // 第五十三輪：接種時程主檔的差異寫疫苗名稱（審核人看「B 型肝炎疫苗」而不是 vaccine.hepatitis-b）
   const vaccineNames = Object.fromEntries(readJSON(path.join(ROOT, 'content/master/vaccines.json'), []).map((v) => [v.id, v.name]));
-  const workflow = createWorkflow({ git, validator, store, audit, notifier, unitNames, vaccineNames, now, requireBaseHash: cfg.requireBaseHash === true, ...(opts.directory ? { directory: opts.directory } : {}), ...(opts.lanesCfg ? { lanesCfg: opts.lanesCfg } : {}) });
+  const workflow = createWorkflow({ git, validator, store, audit, notifier, unitNames, vaccineNames, now, requireBaseHash: cfg.requireBaseHash === true, ...(opts.directory ? { directory: opts.directory } : {}), ...(opts.lanesCfg ? { lanesCfg: opts.lanesCfg } : cfg.lanesFile ? { lanesCfg: lanesFrom(cfg.lanesFile) } : {}) });
   const secret = cfg.csrfSecret ? Buffer.from(cfg.csrfSecret) : crypto.randomBytes(32);
   const csrfFor = (p) => crypto.createHmac('sha256', secret).update(`${p.authMode}|${p.account}`).digest('base64url');
 

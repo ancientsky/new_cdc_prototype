@@ -33,7 +33,7 @@
 //   - 任何寫入前先過 validate-item.mjs（與建置同一套檢查）；路徑只由驗證過的 id 推出。
 import crypto from 'node:crypto';
 import { config } from '../../../site.config.mjs';
-import { loadLanes, laneOfItem, authorAllowed, publishAtMs, taipeiDate, taipeiTime } from '../lanes.mjs';
+import { loadLanes, laneOfItem, authorAllowed, laneAuthorGate, publishAtMs, taipeiDate, taipeiTime } from '../lanes.mjs';
 import { DEMO_ACCOUNTS, CROSS_UNIT_ROLES } from '../../../src/client/admin/auth-rules.js';
 import { normAccount } from './auth.mjs';
 import { fieldDiff } from './field-diff.mjs';
@@ -141,7 +141,8 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     if (typeof master === 'string') { if (want?.autoMerge) id = 'standard'; reasons.push(`更新${master}：主檔變更需審核，走${lanesCfg.lanes.standard.label}`); }
     else if (want?.autoMerge && master) { reasons.push(`同時更新疫情報導分類主檔：主檔變更需審核，改走${lanesCfg.lanes.standard.label}`); id = 'standard'; }
     else if (want?.autoMerge) {
-      const gate = authorAllowed(p.account, want.allowedAuthors, { teams: p.groups });
+      // 第五十四輪：laneAuthorGate 另看 allowedAuthorsByType（人事室只管職缺、秘書室只管採購；名單寫 team:<AD 群組>）
+      const gate = laneAuthorGate(want, p.account, [item.type], { teams: p.groups });
       const urgentGate = item.urgent === true && id === 'emergency' && lanesCfg.rules?.urgentAllowedAuthors ? authorAllowed(p.account, lanesCfg.rules.urgentAllowedAuthors, { teams: p.groups }) : { allowed: true };
       if (gate.allowed && urgentGate.allowed) reasons.push(`${want.label}：送審人在授權名單內，檢查通過即上線`);
       else { reasons.push(`${want.label}只限授權名單內的同事；改走${lanesCfg.lanes.standard.label}，需要審核`); id = 'standard'; }
@@ -452,7 +453,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     const r = await git.commit({ branch: sub.branch, files: commitFiles, message: message(action, sub, p), author: SERVICE_IDENTITY });
     const contentHash = contentVersion(JSON.parse(stableJson(clean)));
     sub.versions = [...(sub.versions ?? []), { version: contentHash, at: iso(), account: p.account, name: p.name, label: action, commit: r.sha }].slice(-30);
-    return { sub, item: clean, commit: r.sha, unchanged: !!r.unchanged, contentHash, legacy: baseHash === undefined && !internal, rebased: rebase };
+    return { sub, item: clean, commit: r.sha, unchanged: !!r.unchanged, contentHash, legacy: baseHash === undefined && !internal, internal: !!internal, rebased: rebase };
   }
 
   /** 第五十三輪：沒帶版本碼、而設定要求一定要帶（requireBaseHash）⇒ 428，不寫入（白話，不出現 Git 用語） */
@@ -529,12 +530,13 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     const r = await git.commit({ branch: sub.branch, files: [{ path, content: `${JSON.stringify(rows, null, 2)}\n` }], message: message(action, sub, p, [`Master-File: ${name}`]), author: SERVICE_IDENTITY });
     const contentHash = contentVersion(rows);
     sub.versions = [...(sub.versions ?? []), { version: contentHash, at: iso(), account: p.account, name: p.name, label: action, commit: r.sha }].slice(-30);
-    return { sub, rows, commit: r.sha, unchanged: !!r.unchanged, contentHash, legacy: baseHash === undefined && !internal, rebased: rebase, merged: mg.theirs.length > 0 };
+    return { sub, rows, commit: r.sha, unchanged: !!r.unchanged, contentHash, legacy: baseHash === undefined && !internal, internal: !!internal, rebased: rebase, merged: mg.theirs.length > 0 };
   }
 
   /* ───────── 動作 ───────── */
-  /** 版本檢查的稽核欄位：沒帶版本碼（舊版頁面）記 missing；從 main 另開新分支記 rebased */
-  const versionAudit = (w) => ({ ...(w.legacy ? { baseHash: 'missing' } : {}), ...(w.rebased ? { rebased: true } : {}) });
+  /** 版本檢查的稽核欄位：沒帶版本碼（舊版頁面）記 missing；從 main 另開新分支記 rebased；
+   *  第五十四輪：同事從頁面送來的寫入記 fromPage（閘道自己組的「不用修改，再送出」不算），npm run gateway:basehash 用它算「有多少次寫入、幾次漏帶」 */
+  const versionAudit = (w) => ({ ...(w.internal ? {} : { fromPage: true }), ...(w.legacy ? { baseHash: 'missing' } : {}), ...(w.rebased ? { rebased: true } : {}) });
 
   async function saveDraft(p, { item, submissionId, files = null, companions = [], baseHash = undefined, categories = null, master = null }) {
     await ensureReady();

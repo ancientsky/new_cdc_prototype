@@ -40,10 +40,10 @@ const TODAY = taipeiDate(NOW);
 const validator = createValidator();
 
 // 四筆逾期內容的「副本」：放進測試自己的版本庫，不動 content/ 裡的正本（重新審閱是權責單位的事）
-const FILES = { 'disease.chikungunya': 'diseases/chikungunya.json', 'disease.japanese-encephalitis': 'diseases/japanese-encephalitis.json', 'faq.mpox-who-vaccine': 'faq/mpox-who-vaccine.json', 'faq.tb-cough-two-weeks': 'faq/tb-cough-two-weeks.json' };
+const FILES = { 'disease.chikungunya': 'diseases/chikungunya.json', 'disease.japanese-encephalitis': 'diseases/japanese-encephalitis.json', 'faq.mpox-who-vaccine': 'faq/mpox-who-vaccine.json', 'faq.tb-cough-two-weeks': 'faq/tb-cough-two-weeks.json', 'media.mmr-waiting-room-2025': 'media/mmr-waiting-room-2025.json' };
 // 第五十三輪：屈公病、日本腦炎的正本已依 Yulun 2026-10-14 決定「假設權責組室已重新審過」把 reviewedAt 改成 2026-10-14。
 // 這裡測的是閘道流程本身，所以副本一律釘回第五十輪的逾期日期（不隨 content/ 正本日後被重新審閱而改變）。
-const OVERDUE_AT = { 'disease.chikungunya': '2025-07-28', 'disease.japanese-encephalitis': '2025-08-12', 'faq.mpox-who-vaccine': '2026-04-02', 'faq.tb-cough-two-weeks': '2026-04-01' };
+const OVERDUE_AT = { 'disease.chikungunya': '2025-07-28', 'disease.japanese-encephalitis': '2025-08-12', 'faq.mpox-who-vaccine': '2026-04-02', 'faq.tb-cough-two-weeks': '2026-04-01', 'media.mmr-waiting-room-2025': '2025-01-14' };
 const pinned = (id, raw) => raw.replace(/"reviewedAt": "[\d-]+"/, `"reviewedAt": "${OVERDUE_AT[id]}"`);
 const read = (id) => JSON.parse(pinned(id, fs.readFileSync(path.join(ROOT, 'content', FILES[id]), 'utf8')));
 function seed() {
@@ -270,7 +270,8 @@ test('端到端：/admin/due/ 送出重新審閱 → /admin/review/ 另一位核
   // 第五十三輪：屈公病、日本腦炎已假設重新審閱（正本 reviewedAt 2026-10-14），dist 清單上這兩列的審閱日已是今天，核准後不會再顯示「已重新審閱」；
   // 改用 dist 清單上審閱日仍是逾期日的、急性傳染病組（示範帳號所屬）的內容（舊的 dist 仍可能是屈公病）
   const dueHtml = fs.readFileSync(duePage, 'utf8');
-  const e2eId = ['disease.chikungunya', 'disease.japanese-encephalitis', 'faq.mpox-who-vaccine'].find((id) => new RegExp(`data-id="${id}"[^>]*data-reviewed="${OVERDUE_AT[id]}"`).test(dueHtml));
+  // 第五十四輪：兩則 Q&A 也假設重新審閱（正本 reviewedAt 2026-10-15），急性組在 dist 上仍逾期的只剩 MMR 候診室影片（審閱日 2025-01-14）
+  const e2eId = ['disease.chikungunya', 'disease.japanese-encephalitis', 'faq.mpox-who-vaccine', 'media.mmr-waiting-room-2025'].find((id) => new RegExp(`data-id="${id}"[^>]*data-reviewed="${OVERDUE_AT[id]}"`).test(dueHtml));
   if (!e2eId) return t.skip('dist 的審閱到期清單沒有急性傳染病組的逾期內容');
   let chromium;
   try { ({ chromium } = await import('playwright')); } catch { return t.skip('沒有 Playwright'); }
