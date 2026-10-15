@@ -13,6 +13,15 @@ name: Content PR lane (checks, preview, auto-merge)
 #   lane ：needs: test，有寫入權限。只做 gh 呼叫（留言、標籤、合併、觸發部署）和 git 推 previews 分支。
 #          不 checkout、不 npm ci、不執行 repo 內任何腳本（留言用 jq，不用 node）；artifact 一律當不可信資料，
 #          下載後先驗證格式（列舉值、檔案清單比對 PR 實際變更）才使用。
+#
+# 第五十六輪（docs/deploy.md 第 28 節、docs/ci-scaling.md §6.1）：內容 PR 與程式 PR 分流、一個 PR 只建一次站、快取 Chromium。
+#   純內容 PR（相對 origin/main 的每個變更檔都在 content/ 或 data/snapshots/）：個資掃描、build --check、npm run test:content、
+#     lane.mjs、一次預覽建置、上傳；不跑 lint、format、typecheck、完整 npm test、Chromium 安裝與 axe。
+#     為什麼安全：純內容 PR 沒有改任何程式，test job 執行的程式碼與 main 相同；合併後 pages.yml 在 main 上仍跑完整的
+#     lint／format／typecheck／npm test，沒過就不部署。
+#   其他 PR（含程式、測試、文件、工作流程、設定）：照舊全跑；axe 改掃預覽建置（同一份 dist），不再另建一份 BASE_PATH='' 的站。
+#   「純內容」在 test job 由 git diff 算出（決定跳過哪些步驟），lane job 再用 PR 的 API 檔案清單（含改名前的路徑）自己判定一次；
+#   只有 lane job 判定為純內容時，被略過的程式檢查才算通過（留言顯示「略過（純內容變更）」），artifact 怎麼寫都不能讓程式 PR 免檢。
 # 為什麼不用 pull_request_target：它在 base 分支的脈絡執行並預設帶寫入權杖，一旦 checkout PR 的程式碼就等於把寫入權杖交給 PR 作者
 # （GitHub Security Lab 稱 "pwn request"）。目前只接受同 repo 分支的 PR（SAME_REPO）；若未來接受 fork，見 docs/deploy.md 第四十輪。
 on:
@@ -48,6 +57,22 @@ jobs:
           # 不把權杖留在 .git/config：後面的 npm ci／npm test 讀得到工作目錄，卻讀不到權杖
           persist-credentials: false
 
+      # 第五十六輪：分流。在 npm ci 之前、只用 git 算出變更檔（--no-renames：改名的新舊路徑都列，把 scripts/x 改名成 content/x 也算動到程式）。
+      # 每個檔都在 content/ 或 data/snapshots/ ⇒ content_only=true，下面的程式檢查跳過；沒有變更檔也當程式 PR（全跑）。
+      # 這只決定 test job 跑什麼；合併與否看 lane job 自己用 API 檔案清單算的結果（見「Validate results」）。
+      - name: Classify changes (content-only or code)
+        id: scope
+        run: |
+          git diff --name-only --no-renames origin/main...HEAD > "$RUNNER_TEMP/changed.txt"
+          cat "$RUNNER_TEMP/changed.txt"
+          if [ -s "$RUNNER_TEMP/changed.txt" ] && ! grep -Ev '^(content|data/snapshots)/' "$RUNNER_TEMP/changed.txt" > /dev/null; then
+            echo "content_only=true" >> "$GITHUB_OUTPUT"
+            echo "純內容變更：只跑內容閘門（個資、build --check、test:content、車道、預覽）"
+          else
+            echo "content_only=false" >> "$GITHUB_OUTPUT"
+            echo "含程式／文件變更（或沒有變更檔）：全部檢查"
+          fi
+
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
@@ -64,8 +89,10 @@ jobs:
         continue-on-error: true
         run: git diff --name-only -z --diff-filter=d origin/main...HEAD | xargs -0 node scripts/pii-scan.mjs
 
+      # 以下四項（lint、格式、型別、完整 npm test）只在程式 PR 跑；純內容 PR 的程式與 main 相同，合併後 pages.yml 會再全跑一次。
       - name: Lint (eslint)
         id: lint
+        if: steps.scope.outputs.content_only != 'true'
         continue-on-error: true
         run: npm run lint
 
@@ -73,55 +100,34 @@ jobs:
       # Prettier 只強制用在 .prettierignore 放行清單裡的新檔，所以這一步不會要求重排既有程式碼。
       - name: Format check (prettier, allow-listed new files)
         id: format
+        if: steps.scope.outputs.content_only != 'true'
         continue-on-error: true
         run: npm run format:check
 
       - name: Type check (tsc, files with // @ts-check)
         id: typecheck
+        if: steps.scope.outputs.content_only != 'true'
         continue-on-error: true
         run: npm run typecheck
 
       - name: Tests (governance rules)
         id: test
+        if: steps.scope.outputs.content_only != 'true'
         continue-on-error: true
         run: npm test
+
+      # 第五十六輪：純內容 PR 只跑「驗證已提交內容」的測試子集（package.json 的 test:content；清單與加入規則見 docs/deploy.md 第 28 節）。
+      # 程式 PR 不跑這一步：完整的 npm test 已經包含這些檔。
+      - name: Content tests (npm run test:content)
+        id: content_test
+        if: steps.scope.outputs.content_only == 'true'
+        continue-on-error: true
+        run: npm run test:content
 
       - name: Build check (schema + governance + eval gate)
         id: check
         continue-on-error: true
         run: BUILD_TODAY=2026-10-01 node scripts/build.mjs --check
-
-      # 第二十四輪（ARCHITECTURE 27）：無障礙檢測。用 BASE_PATH='' 另建一份到暫存目錄（靜態伺服器不用處理子路徑），
-      # 再用 Playwright＋axe-core 掃代表頁（桌機 1280／手機 320）；serious／critical 或 320px 橫向捲動 → 失敗並擋合併。
-      - name: Install Chromium for a11y check
-        id: a11y_browser
-        continue-on-error: true
-        run: npx playwright install --with-deps chromium
-
-      # build.mjs 在輸出 HTML 後會跑 Pagefind 全文索引（約 20 秒，第二十八輪），所以這份 dist 有 /pagefind/，
-      # axe 才掃得到 /search/ 的結果列。--check 不索引（上一步），驗證不付這個時間。
-      - name: Build for a11y check (BASE_PATH='')
-        id: a11y_build
-        if: steps.a11y_browser.outcome == 'success'
-        continue-on-error: true
-        env:
-          BASE_PATH: ''
-          BUILD_TODAY: 2026-10-01
-          LINK_CHECK: warn
-          DIST_DIR: ${{ runner.temp }}/a11y-dist
-        run: node scripts/build.mjs
-
-      # 第四十輪（#83）：A11Y_JSON 另外輸出機器可讀的數字（阻擋數、moderate／minor 警告數與規則別次數），
-      # 下面「Collect results」收進 result.json，PR 留言的無障礙列就看得到「不擋合併但有 N 項警告」。
-      - name: Accessibility check (axe-core)
-        id: a11y
-        if: steps.a11y_build.outcome == 'success'
-        continue-on-error: true
-        env:
-          DIST_DIR: ${{ runner.temp }}/a11y-dist
-          A11Y_REPORT: ${{ runner.temp }}/a11y-report.md
-          A11Y_JSON: ${{ runner.temp }}/a11y-summary.json
-        run: npm run a11y
 
       # 個人帳號的 repo 沒有 team；組織的 team 清單需要 read:org，GITHUB_TOKEN 給不了，查不到就留空（與拆分前行為相同）。
       # 這一步只跑 gh 指令，不執行 repo 內任何東西，所以權杖只放在這一步的 env。
@@ -141,14 +147,18 @@ jobs:
         env:
           TEAMS: ${{ steps.teams.outputs.teams }}
         run: |
-          git diff --name-only origin/main...HEAD
+          # 檔案清單取自「Classify changes」的 git diff --name-only --no-renames origin/main...HEAD（改名的新舊路徑都列，與 lane job 的 API 清單一致）
           mkdir -p "$RUNNER_TEMP/result"
-          node scripts/lane.mjs --since="$PR_CREATED_AT" --author="$PR_AUTHOR" --teams="$TEAMS" $(git diff --name-only origin/main...HEAD) < /dev/null > "$RUNNER_TEMP/result/lane.json"
+          node scripts/lane.mjs --since="$PR_CREATED_AT" --author="$PR_AUTHOR" --teams="$TEAMS" --files-from="$RUNNER_TEMP/changed.txt" < /dev/null > "$RUNNER_TEMP/result/lane.json"
           cat "$RUNNER_TEMP/result/lane.json"
 
-      - name: Build preview
+      # 第五十六輪：一個 PR 只建一次站。以前 a11y 另建一份 BASE_PATH='' 的站（靜態伺服器不用處理子路徑），預覽再建一份；
+      # scripts/a11y.mjs 本來就認得 BASE_PATH（把網址的前綴去掉再找檔），所以 axe 直接掃這份預覽 dist，省一次完整建置（約 30 秒）。
+      # 這份 dist 有 /pagefind/（build.mjs 內建索引），axe 掃得到 /search/ 的結果列；預覽也因此能直接搜這個 PR 的內容。
+      # 審核（pull_request_review）重跑時不推預覽：純內容 PR 不必建；程式 PR 仍要建，給 axe 掃。
+      - name: Build preview (also scanned by axe)
         id: preview_build
-        if: steps.check.outcome == 'success' && github.event_name == 'pull_request'
+        if: steps.check.outcome == 'success' && (github.event_name == 'pull_request' || steps.scope.outputs.content_only != 'true')
         continue-on-error: true
         env:
           BASE_PATH: /${{ github.event.repository.name }}/preview/pr-${{ github.event.pull_request.number }}
@@ -159,8 +169,44 @@ jobs:
           # 預覽要讓審核人看得到排程中（publishAt 未到）的內容；主站照真實時間
           PREVIEW_SCHEDULED: '1'
           DIST_DIR: ${{ runner.temp }}/preview-dist
-        # 預覽站也含 dist/pagefind/（build.mjs 內建），所以 /pr-N/search/ 能直接搜這個 PR 的內容
         run: npm run build
+
+      # 第二十四輪（ARCHITECTURE 27）：無障礙檢測，Playwright＋axe-core 掃代表頁（桌機 1280／手機 320／文字 200%）；
+      # serious／critical 或橫向捲動 → 失敗並擋合併。只在程式 PR 跑：純內容 PR 沒改版型，掃出來的結果與 main 相同。
+      # 第五十六輪：Chromium 快取。key 是 package-lock.json 的 playwright-core 版本（瀏覽器版本跟著它走）。
+      # 這裡只「還原」（actions/cache/restore），不寫入：快取只由 pages.yml 在 main 上存，PR 的程式碼碰不到別人會用的快取。
+      # 有快取時 playwright install 只補系統套件（--with-deps），不再下載瀏覽器。
+      - name: Playwright version (Chromium cache key)
+        id: pw
+        if: steps.scope.outputs.content_only != 'true'
+        run: echo "version=$(jq -r '.packages["node_modules/playwright-core"].version // "none"' package-lock.json | tr -cd '0-9A-Za-z.-')" >> "$GITHUB_OUTPUT"
+
+      - name: Restore Chromium cache (saved by pages.yml on main)
+        if: steps.scope.outputs.content_only != 'true'
+        uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ steps.pw.outputs.version }}
+
+      - name: Install Chromium for a11y check
+        id: a11y_browser
+        if: steps.scope.outputs.content_only != 'true'
+        continue-on-error: true
+        run: npx playwright install --with-deps chromium
+
+      # 第四十輪（#83）：A11Y_JSON 另外輸出機器可讀的數字（阻擋數、moderate／minor 警告數與規則別次數），
+      # 下面「Collect results」收進 result.json，PR 留言的無障礙列就看得到「不擋合併但有 N 項警告」。
+      # BASE_PATH 與預覽建置相同：a11y.mjs 的靜態伺服器把這個前綴去掉再對應到 DIST_DIR。
+      - name: Accessibility check (axe-core, on the preview build)
+        id: a11y
+        if: steps.scope.outputs.content_only != 'true' && steps.preview_build.outcome == 'success' && steps.a11y_browser.outcome == 'success'
+        continue-on-error: true
+        env:
+          DIST_DIR: ${{ runner.temp }}/preview-dist
+          BASE_PATH: /${{ github.event.repository.name }}/preview/pr-${{ github.event.pull_request.number }}
+          A11Y_REPORT: ${{ runner.temp }}/a11y-report.md
+          A11Y_JSON: ${{ runner.temp }}/a11y-summary.json
+        run: npm run a11y
 
       # 把各步驟的 outcome 收成一個 JSON 交給 lane job。outcome 由工作流程運算式帶入（不是 PR 程式碼寫的），
       # 但整個 artifact 仍當不可信資料：lane job 會再驗一次格式。always() 讓前面有步驟失敗時也能交出部分結果。
@@ -172,17 +218,20 @@ jobs:
           O_FORMAT: ${{ steps.format.outcome }}
           O_TYPECHECK: ${{ steps.typecheck.outcome }}
           O_TEST: ${{ steps.test.outcome }}
+          O_CONTENT_TEST: ${{ steps.content_test.outcome }}
           O_CHECK: ${{ steps.check.outcome }}
           O_A11Y: ${{ steps.a11y.outcome }}
           O_PREVIEW_BUILD: ${{ steps.preview_build.outcome }}
           O_LANE: ${{ steps.lane.outcome }}
+          # 只是 test job 的說法，lane job 不採信（會用 API 的檔案清單自己判定）
+          SCOPE: ${{ steps.scope.outputs.content_only == 'true' && 'content' || 'full' }}
         run: |
           mkdir -p "$RUNNER_TEMP/result"
           [ -f "$RUNNER_TEMP/a11y-summary.json" ] || echo '{}' > "$RUNNER_TEMP/a11y-summary.json"
           jq -n --slurpfile a "$RUNNER_TEMP/a11y-summary.json" \
             --arg pii "$O_PII" --arg lint "$O_LINT" --arg format "$O_FORMAT" --arg typecheck "$O_TYPECHECK" \
-            --arg test "$O_TEST" --arg check "$O_CHECK" --arg a11y "$O_A11Y" --arg preview_build "$O_PREVIEW_BUILD" --arg lane "$O_LANE" \
-            '{outcomes: {pii: $pii, lint: $lint, format: $format, typecheck: $typecheck, test: $test, check: $check, a11y: $a11y, preview_build: $preview_build, lane: $lane}, a11y: ($a[0] // {})}' \
+            --arg test "$O_TEST" --arg content_test "$O_CONTENT_TEST" --arg check "$O_CHECK" --arg a11y "$O_A11Y" --arg preview_build "$O_PREVIEW_BUILD" --arg lane "$O_LANE" --arg scope "$SCOPE" \
+            '{scope: $scope, outcomes: {pii: $pii, lint: $lint, format: $format, typecheck: $typecheck, test: $test, content_test: $content_test, check: $check, a11y: $a11y, preview_build: $preview_build, lane: $lane}, a11y: ($a[0] // {})}' \
             > "$RUNNER_TEMP/result/result.json"
           cat "$RUNNER_TEMP/result/result.json"
 
@@ -197,7 +246,7 @@ jobs:
 
       # 預覽 dist 只有建置成功才有。lane job 把它推到 previews 分支（那是 lane job 唯一碰到 PR 產物的地方，只複製檔案、不執行）。
       - name: Upload preview dist
-        if: steps.preview_build.outcome == 'success'
+        if: steps.preview_build.outcome == 'success' && github.event_name == 'pull_request'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: preview-dist
@@ -206,9 +255,13 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+      # 純內容 PR：程式檢查是 skipped，不算失敗，但 test:content 要過；程式 PR：照舊每一項都要 success。
+      # （這裡只決定 test job 的紅綠；能不能合併由 lane job 依它自己判定的範圍決定。）
       - name: Fail when checks failed
-        if: steps.test.outcome != 'success' || steps.lint.outcome != 'success' || steps.format.outcome != 'success' || steps.typecheck.outcome != 'success' || steps.check.outcome != 'success' || steps.a11y.outcome != 'success' || steps.pii.outcome != 'success'
+        if: steps.check.outcome != 'success' || (steps.scope.outputs.content_only == 'true' && steps.content_test.outcome != 'success') || (steps.scope.outputs.content_only != 'true' && (steps.test.outcome != 'success' || steps.lint.outcome != 'success' || steps.format.outcome != 'success' || steps.typecheck.outcome != 'success' || steps.a11y.outcome != 'success')) || steps.pii.outcome != 'success'
         env:
+          SCOPE: ${{ steps.scope.outputs.content_only == 'true' && '純內容' || '含程式／文件' }}
+          O_CONTENT_TEST: ${{ steps.content_test.outcome }}
           O_TEST: ${{ steps.test.outcome }}
           O_LINT: ${{ steps.lint.outcome }}
           O_FORMAT: ${{ steps.format.outcome }}
@@ -217,7 +270,7 @@ jobs:
           O_A11Y: ${{ steps.a11y.outcome }}
           O_PII: ${{ steps.pii.outcome }}
         run: |
-          echo "測試：$O_TEST；Lint：$O_LINT；格式：$O_FORMAT；型別：$O_TYPECHECK；治理閘門：$O_CHECK；無障礙檢測：$O_A11Y；個資掃描：$O_PII"
+          echo "範圍：$SCOPE；測試：$O_TEST；內容測試：$O_CONTENT_TEST；Lint：$O_LINT；格式：$O_FORMAT；型別：$O_TYPECHECK；治理閘門：$O_CHECK；無障礙檢測：$O_A11Y；個資掃描：$O_PII"
           exit 1
 
   lane:
@@ -249,6 +302,10 @@ jobs:
 
       # artifact 是 PR 程式碼產生的，一律當資料：每個值都過列舉／格式檢查才寫進 GITHUB_ENV（所以不可能夾帶換行或其他變數），
       # lane.json 的檔案清單必須涵蓋 PR 實際變更的每個檔（用 API 查，不信 artifact），否則不採用。
+      # 第五十六輪：「純內容」由這一步自己用 API 的檔案清單判定（不看 artifact 的 scope），並在這裡算出唯一的合併閘門 GATE：
+      #   個資掃描、治理閘門一律要 success；lint、格式、型別、npm test、axe 要 success，或「純內容 PR 而且是 skipped」（content-skip）；
+      #   內容測試要 success，或 npm test 已 success（covered：完整測試含這些檔）。content-skip／covered 只能由這一步產生，
+      #   artifact 裡出現這兩個字會先被列舉檢查變成 invalid。Decide merge 與最後的 Fail 都只看 GATE。
       - name: Validate results (artifact is untrusted data)
         id: load
         env:
@@ -256,13 +313,44 @@ jobs:
         run: |
           D="$RUNNER_TEMP/result"
           fail() { echo "ok=false" >> "$GITHUB_OUTPUT"; echo "::error::$1"; exit 0; }
+          : > "$RUNNER_TEMP/env.txt"
           [ "$DOWNLOAD" = "success" ] || fail "找不到 test job 的結果 artifact（test job 可能在上傳前就失敗）"
           [ -s "$D/result.json" ] && [ -s "$D/lane.json" ] || fail "結果 artifact 缺 result.json 或 lane.json"
           jq -e . "$D/result.json" > /dev/null && jq -e . "$D/lane.json" > /dev/null || fail "結果不是合法 JSON"
-          for k in pii lint format typecheck test check a11y preview_build lane; do
+          # PR 實際變更的檔（API，不信 artifact）。改名的檔兩個路徑都列：把 scripts/x 改名成 content/x 也算動到程式。
+          # 檔案 API 最多列 3000 個；列出的檔數少於 PR 的 changedFiles 就無法驗證，不採用。
+          gh api "repos/$REPO/pulls/$PR/files" --paginate --jq '.[] | "f \(.filename)", (.previous_filename // empty | "p \(.)")' > "$RUNNER_TEMP/real-raw.txt" || fail "查不到 PR 的檔案清單"
+          TOTAL="$(gh pr view "$PR" -R "$REPO" --json changedFiles --jq .changedFiles)" || fail "查不到 PR 的變更檔數"
+          LISTED="$(grep -c '^f ' "$RUNNER_TEMP/real-raw.txt" || true)"
+          [[ "$TOTAL" =~ ^[0-9]+$ ]] || fail "PR 的變更檔數不是整數"
+          [ "$LISTED" -ge "$TOTAL" ] || fail "檔案 API 只列出 $LISTED／$TOTAL 個變更檔，無法驗證，不採用"
+          cut -c3- "$RUNNER_TEMP/real-raw.txt" | sort -u > "$RUNNER_TEMP/real-files.txt"
+          CONTENT_ONLY=false
+          if [ -s "$RUNNER_TEMP/real-files.txt" ] && ! grep -Ev '^(content|data/snapshots)/' "$RUNNER_TEMP/real-files.txt" > /dev/null; then CONTENT_ONLY=true; fi
+          CLAIM="$(jq -r '.scope // "" | tostring' "$D/result.json")"
+          if [ "$CLAIM" = "content" ] && [ "$CONTENT_ONLY" != "true" ]; then echo "::warning::test job 判定為純內容，但 PR 實際含程式／文件變更：被略過的檢查一律當未通過"; fi
+          declare -A O
+          for k in pii lint format typecheck test content_test check a11y preview_build lane; do
             v="$(jq -r --arg k "$k" '.outcomes[$k] // "skipped" | tostring' "$D/result.json")"
             case "$v" in success | failure | skipped | cancelled) ;; *) v=invalid ;; esac
-            echo "$(echo "$k" | tr '[:lower:]' '[:upper:]')=$v" >> "$GITHUB_ENV"
+            case "$k" in
+              lint | format | typecheck | test | a11y)
+                if [ "$CONTENT_ONLY" = "true" ] && [ "$v" = "skipped" ]; then v=content-skip; fi
+                ;;
+            esac
+            O[$k]="$v"
+          done
+          if [ "${O[content_test]}" = "skipped" ] && [ "${O[test]}" = "success" ]; then O[content_test]=covered; fi
+          GATE=pass
+          for k in pii check; do
+            [ "${O[$k]}" = "success" ] || GATE=fail
+          done
+          for k in lint format typecheck test a11y content_test; do
+            case "${O[$k]}" in success | content-skip | covered) ;; *) GATE=fail ;; esac
+          done
+          echo "範圍（API 檔案清單）：$([ "$CONTENT_ONLY" = "true" ] && echo 純內容 || echo 含程式／文件)；閘門：$GATE"
+          for k in pii lint format typecheck test content_test check a11y preview_build lane; do
+            echo "$(echo "$k" | tr '[:lower:]' '[:upper:]')=${O[$k]}" >> "$RUNNER_TEMP/env.txt"
           done
           LANE="$(jq -r '.lane | tostring' "$D/lane.json")"
           LABEL="$(jq -r '.ghLabel | tostring' "$D/lane.json")"
@@ -272,8 +360,7 @@ jobs:
           [[ "$LABEL" =~ ^lane:(emergency|fast|standard)$ ]] || fail "ghLabel 不合法"
           [[ "$AUTO" =~ ^(true|false)$ ]] || fail "autoMerge 不是布林"
           [[ "$NEED" =~ ^[0-9]$ ]] || fail "requiredApprovals 不是 0 到 9 的整數"
-          # 比對檔案清單：artifact 說的檔案必須涵蓋 PR 實際改到的每個檔（不能少報）
-          gh pr diff "$PR" -R "$REPO" --name-only | sort -u > "$RUNNER_TEMP/real-files.txt" || fail "查不到 PR 的檔案清單"
+          # 比對檔案清單：artifact 說的檔案必須涵蓋 PR 實際改到的每個檔（不能少報；real-files.txt 在上面由 API 取得）
           jq -r '.files[].file' "$D/lane.json" | sort -u > "$RUNNER_TEMP/lane-files.txt"
           MISSING="$(comm -23 "$RUNNER_TEMP/real-files.txt" "$RUNNER_TEMP/lane-files.txt" | head -n 3)"
           [ -z "$MISSING" ] || fail "lane.json 的檔案清單漏了 PR 實際變更的檔，不採用：$MISSING"
@@ -288,7 +375,11 @@ jobs:
             echo "NEED=$NEED"
             echo "A11Y_WARN=$WARN"
             echo "A11Y_RULES=$RULES"
-          } >> "$GITHUB_ENV"
+            echo "CONTENT_ONLY=$CONTENT_ONLY"
+            echo "GATE=$GATE"
+          } >> "$RUNNER_TEMP/env.txt"
+          # 全部驗證通過才一次寫進 GITHUB_ENV（中途 fail 的話後面的步驟看不到任何一個值，GATE 也不存在）
+          cat "$RUNNER_TEMP/env.txt" >> "$GITHUB_ENV"
           echo "ok=true" >> "$GITHUB_OUTPUT"
 
       - name: Download preview dist
@@ -349,8 +440,9 @@ jobs:
           # 每位審核人只看最新一則（COMMENTED 不算），state 為 APPROVED 才計數
           APPROVALS=$(gh pr view "$PR" -R "$REPO" --json reviews --jq '[.reviews[] | select(.state != "COMMENTED")] | group_by(.author.login) | map(max_by(.submittedAt)) | map(select(.state == "APPROVED")) | length')
           echo "approvals=$APPROVALS" >> "$GITHUB_OUTPUT"
+          # 第五十六輪：檢查是否通過只看 Validate results 算出的 GATE（純內容 PR 被略過的程式檢查已在那裡依 API 檔案清單判斷）
           if [ "$STATE" != "open" ]; then ACTION=closed
-          elif [ "$TEST" != "success" ] || [ "$LINT" != "success" ] || [ "$FORMAT" != "success" ] || [ "$TYPECHECK" != "success" ] || [ "$CHECK" != "success" ] || [ "$A11Y" != "success" ] || [ "$PII" != "success" ]; then ACTION=blocked
+          elif [ "$GATE" != "pass" ]; then ACTION=blocked
           elif [ "$DRAFT" = "true" ]; then ACTION=draft
           elif [ "$AUTO" = "true" ]; then ACTION=merge
           elif [ "$APPROVALS" -ge "$NEED" ]; then ACTION=merge
@@ -369,7 +461,7 @@ jobs:
         run: |
           # 留言用 jq 產生（第四十輪：lane job 不執行 node 或 repo 內任何腳本）。這段 jq 程式寫在 workflow 裡，不來自 artifact。
           cat > "$RUNNER_TEMP/comment.jq" <<'JQ'
-          def icon($o): ({"success": "✅ 通過", "failure": "❌ 失敗", "skipped": "⏭ 略過", "cancelled": "⏹ 取消"}[$o // ""] // "—");
+          def icon($o): ({"success": "✅ 通過", "failure": "❌ 失敗", "skipped": "⏭ 略過", "cancelled": "⏹ 取消", "content-skip": "⏭ 略過（純內容變更）", "covered": "—（已含在 npm test）"}[$o // ""] // "—");
           . as $L
           | $ENV as $e
           | ($e.APPROVALS // "0") as $ap
@@ -390,7 +482,9 @@ jobs:
               "",
               "| 項目 | 結果 |",
               "| --- | --- |",
+              "| 變更範圍 | " + (if $e.CONTENT_ONLY == "true" then "純內容（content/、data/snapshots/）：只跑內容閘門，程式檢查略過（合併後 main 上全跑）" else "含程式／文件：全部檢查" end) + " |",
               "| 測試（npm test） | " + icon($e.TEST) + " |",
+              "| 內容測試（npm run test:content） | " + icon($e.CONTENT_TEST) + " |",
               "| Lint（eslint） | " + icon($e.LINT) + " |",
               "| 格式（prettier，放行清單內的新檔） | " + icon($e.FORMAT) + " |",
               "| 型別檢查（tsc，檔首有 @ts-check 的檔） | " + icon($e.TYPECHECK) + " |",
@@ -450,11 +544,15 @@ jobs:
           done
           gh pr edit "$PR" -R "$REPO" --add-label "$LABEL"
 
+      # 第五十六輪：--match-head-commit：只合併這次檢查的那個 head。檢查期間作者又推了新 commit（例如純內容 PR 再補一個程式檔）
+      # ⇒ head 不符、不合併；新的推送會觸發新的一輪檢查。
       - name: Merge (squash)
         id: merge
         if: env.SAME_REPO == 'true' && steps.decide.outputs.action == 'merge'
+        env:
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
         run: |
-          if gh pr merge "$PR" -R "$REPO" --squash --delete-branch; then
+          if gh pr merge "$PR" -R "$REPO" --squash --delete-branch --match-head-commit "$HEAD_SHA"; then
             echo "merged=true" >> "$GITHUB_OUTPUT"
           else
             gh pr comment "$PR" -R "$REPO" --body "<!-- lane-bot-merge -->自動合併失敗（可能與 main 衝突或分支保護規則不允許）。請更新分支後重新推送，或由審核人手動合併。"
@@ -467,7 +565,7 @@ jobs:
         run: gh workflow run pages.yml --ref main -R "$REPO" -f refresh=false
 
       - name: Fail when checks failed
-        if: always() && (steps.load.outputs.ok != 'true' || env.TEST != 'success' || env.LINT != 'success' || env.FORMAT != 'success' || env.TYPECHECK != 'success' || env.CHECK != 'success' || env.A11Y != 'success' || env.PII != 'success')
+        if: always() && (steps.load.outputs.ok != 'true' || env.GATE != 'pass')
         run: |
-          echo "測試：${TEST:-?}；Lint：${LINT:-?}；格式：${FORMAT:-?}；型別：${TYPECHECK:-?}；治理閘門：${CHECK:-?}；無障礙檢測：${A11Y:-?}；個資掃描：${PII:-?}"
+          echo "閘門：${GATE:-?}（純內容：${CONTENT_ONLY:-?}）；測試：${TEST:-?}；內容測試：${CONTENT_TEST:-?}；Lint：${LINT:-?}；格式：${FORMAT:-?}；型別：${TYPECHECK:-?}；治理閘門：${CHECK:-?}；無障礙檢測：${A11Y:-?}；個資掃描：${PII:-?}"
           exit 1

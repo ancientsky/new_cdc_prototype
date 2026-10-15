@@ -50,7 +50,7 @@ BASE_PATH='' npm run build && node scripts/serve.mjs
 檔案：`.github/workflows/pages.yml`。
 
 - **觸發：** push 到 `main`、**每 2 小時排程**（偶數整點 UTC；第九輪起，讓 `publishAt` 排程發布到點上線）、手動 `workflow_dispatch`（輸入 `refresh`，預設 true）。
-- **build 工作：** checkout → Node 22 → `npm ci` → `npm test`（只驗 repo 內的內容與快照）→ **只在 02:00 UTC（台灣 10:00）那一次排程與手動執行（`refresh` 不是 false）時**跑 `npm run fetch`（失敗不中斷）並把快照 commit 回 `main` → 取出 `previews` 分支（PR 預覽，不存在就略過）→ `npm run build`（`BASE_PATH` 取自儲存庫名稱、`SITE_URL` 取自擁有者；建置把預覽複製到 `dist/preview/`）→ 上傳 `dist/`。
+- **build 工作：** checkout → Node 22 → `npm ci` → 還原 Chromium 快取（沒命中才下載一次；給 `content-pr.yml` 的程式 PR 用，§28.5）→ lint、format、typecheck → `npm test`（只驗 repo 內的內容與快照）→ **只在 02:00 UTC（台灣 10:00）那一次排程與手動執行（`refresh` 不是 false）時**跑 `npm run fetch`（失敗不中斷）並把快照 commit 回 `main` → 取出 `previews` 分支（PR 預覽，不存在就略過）→ `npm run build`（`BASE_PATH` 取自儲存庫名稱、`SITE_URL` 取自擁有者；建置把預覽複製到 `dist/preview/`）→ 上傳 `dist/`。
 - **deploy 工作：** `actions/deploy-pages` 發布，網址 `https://ancientsky.github.io/new_cdc_prototype/`。
 - **併發：** 同一時間只保留最新一次部署，舊的會被取消。
 
@@ -66,7 +66,7 @@ BASE_PATH='' npm run build && node scripts/serve.mjs
 
 | 檔案 | 觸發 | 做什麼 |
 | --- | --- | --- |
-| `.github/workflows/content-pr.yml` | `pull_request`（開啟／更新／重新開啟）、`pull_request_review`（提交審核） | 測試 → `build --check` → `scripts/lane.mjs` 判定車道 → 以 `BASE_PATH=…/preview/pr-{N}` 建置預覽並推到 `previews` 分支 → PR 留言與 `lane:*` 標籤 → 快車道／緊急發布檢查全過即 squash 合併；一般車道有核准且檢查全過才合併 → 觸發 `pages.yml` |
+| `.github/workflows/content-pr.yml` | `pull_request`（開啟／更新／重新開啟）、`pull_request_review`（提交審核） | 判定純內容或程式 PR（第五十六輪，§28）→ 測試（純內容 PR 只跑內容子集）→ `build --check` → `scripts/lane.mjs` 判定車道 → 以 `BASE_PATH=…/preview/pr-{N}` 建置預覽（程式 PR 的 axe 也掃這份）並推到 `previews` 分支 → PR 留言與 `lane:*` 標籤 → 快車道／緊急發布檢查全過即 squash 合併；一般車道有核准且檢查全過才合併 → 觸發 `pages.yml` |
 | `.github/workflows/preview-cleanup.yml` | PR 關閉、每日 01:41 UTC、手動 | 刪除 `previews` 分支的 `pr-{N}/`；**沒有合併就關閉**的 PR 才重新部署（合併的 push 已經部署一次，見 2.1）。自動合併的 PR 不會觸發 `closed`，分支上的目錄由每日排程補清 |
 | `.github/workflows/lane-sla.yml` | 每小時 | 開啟中的 PR 超過車道 SLA ⇒ 留言並加 `sla:breach` |
 
@@ -74,12 +74,15 @@ BASE_PATH='' npm run build && node scripts/serve.mjs
 
 ```
 PR 開啟／更新 ─▶ content-pr.yml
-   npm ci → npm test → BUILD_TODAY=2026-10-01 node scripts/build.mjs --check
-   → node scripts/lane.mjs $(git diff --name-only origin/main...HEAD)      # 車道、審核人、SLA（JSON）
-   → 建置預覽（BASE_PATH=/new_cdc_prototype/preview/pr-N、LINK_CHECK=warn、PREVIEW_SCHEDULED=1）
+   git diff --name-only --no-renames origin/main...HEAD                  # 全在 content/、data/snapshots/ ⇒ 純內容 PR（§28）
+   npm ci → 個資掃描 →（程式 PR）lint、format、typecheck、npm test ／（純內容 PR）npm run test:content
+   → BUILD_TODAY=2026-10-01 node scripts/build.mjs --check
+   → node scripts/lane.mjs --files-from=<上面的清單>                     # 車道、審核人、SLA（JSON）
+   → 建置預覽（BASE_PATH=/new_cdc_prototype/preview/pr-N、LINK_CHECK=warn、PREVIEW_SCHEDULED=1；只建這一次）
+   →（程式 PR）還原 Chromium 快取、playwright install、axe 掃同一份預覽 dist
    → 推到 previews 分支 pr-N/（孤兒快照提交、force-with-lease，失敗重試）
    → PR 留言（含 <!-- lane-bot -->，之後原地更新）＋ 標籤 lane:emergency｜lane:fast｜lane:standard
-   → 快車道／緊急發布：檢查全過 ⇒ gh pr merge --squash --delete-branch
+   → 快車道／緊急發布：檢查全過 ⇒ gh pr merge --squash --delete-branch --match-head-commit <檢查過的 head>
      一般車道：每位審核人最新一則審核為 APPROVED 且檢查全過 ⇒ 合併；否則留言「等待審核：需 N 位核准；SLA 至 …」
    → gh workflow run pages.yml --ref main -f refresh=false
 審核人按 Approve ─▶ content-pr.yml（pull_request_review）重跑檢查 ⇒ 合併 ⇒ 觸發 pages.yml
@@ -144,12 +147,12 @@ PR 關閉 ─▶ preview-cleanup.yml：刪 previews/pr-N/ →（只有沒合併�
 
 | job | 權限 | 做什麼 | 不做什麼 |
 | --- | --- | --- | --- |
-| `test` | `contents: read` | checkout（`persist-credentials: false`）、`npm ci`、個資掃描、lint、`format:check`、`typecheck`、`npm test`、`build --check`、a11y、`scripts/lane.mjs`、預覽建置；最後把各步驟 outcome、`lane.json`、a11y 摘要（`lane-result` artifact）和預覽 dist（`preview-dist` artifact）上傳 | 沒有任何寫入；job 層級環境變數沒有權杖，只有「查作者 team」那一步（只跑 `gh`）帶 `GITHUB_TOKEN` |
+| `test` | `contents: read` | checkout（`persist-credentials: false`）、判定純內容／程式 PR（第五十六輪，§28）、`npm ci`、個資掃描、lint、`format:check`、`typecheck`、`npm test`（純內容 PR 改跑 `test:content`，程式檢查略過）、`build --check`、`scripts/lane.mjs`、預覽建置（只建一次）、a11y（掃預覽 dist）；最後把各步驟 outcome、`lane.json`、a11y 摘要（`lane-result` artifact）和預覽 dist（`preview-dist` artifact）上傳 | 沒有任何寫入；job 層級環境變數沒有權杖，只有「查作者 team」那一步（只跑 `gh`）帶 `GITHUB_TOKEN` |
 | `lane` | `contents`／`pull-requests`／`issues`／`actions: write` | `actions/download-artifact` 下載、驗證、`gh` 留言與標籤、`git` 推 `previews` 分支、`gh pr merge`、`gh workflow run pages.yml` | **不 checkout、不 setup-node、不 `npm`、不 `node`、不執行 repo 內任何腳本** |
 
 兩個 job 之間的規矩：
 
-- **artifact 一律當不可信資料**。`lane` job 的「Validate results」先檢查：結果檔存在且是合法 JSON；每個步驟 outcome 只接受 `success|failure|skipped|cancelled`，其他值（含夾帶換行）一律變 `invalid`（`invalid` 不等於 `success`，所以擋合併）；車道、標籤、`autoMerge`、`requiredApprovals` 要符合固定格式；`lane.json` 的檔案清單必須涵蓋 `gh pr diff --name-only` 查到的每個檔（不能少報程式變更來走快車道）。通過的值才寫進 `GITHUB_ENV`，所以 artifact 不可能夾帶額外的環境變數。驗證不過 ⇒ 留言「無法判定」、不合併、job 失敗。
+- **artifact 一律當不可信資料**。`lane` job 的「Validate results」先檢查：結果檔存在且是合法 JSON；每個步驟 outcome 只接受 `success|failure|skipped|cancelled`，其他值（含夾帶換行）一律變 `invalid`（`invalid` 不等於 `success`，所以擋合併）；車道、標籤、`autoMerge`、`requiredApprovals` 要符合固定格式；`lane.json` 的檔案清單必須涵蓋 PR 實際改到的每個檔（不能少報程式變更來走快車道；第五十六輪起清單改用檔案 API 取，含改名前的路徑）。第五十六輪起，「純內容 PR」與合併閘門 `GATE` 也在這一步由 lane job 自己判定，不採信 artifact（§28.3）。通過的值才寫進 `GITHUB_ENV`，所以 artifact 不可能夾帶額外的環境變數。驗證不過 ⇒ 留言「無法判定」、不合併、job 失敗。
 - **PR 留言改用 `jq` 產生**（以前是 `node --input-type=module -e`）：`jq` 程式寫在 workflow 裡，不來自 artifact，也不是 repo 的檔案。Node 只能執行 repo 內容，而 `lane` job 沒有 checkout，要用就得 checkout，等於把 PR（或 main）的程式放進有寫入權的 job；`jq`／`bash` 是 runner 內建，沒有這個問題。若將來真的需要 Node（例如更複雜的留言），只能 checkout **main**（`ref: main`）而不是 PR，並且在這裡說明理由；測試 `tests/round40-ci-isolation.test.mjs` 目前會擋掉 `lane` job 裡任何 `node`／`npm`／`checkout`，要放寬得同時改測試。
 - 預覽 dist 是 PR 建置出來的檔案，`lane` job 只複製進 `previews` 分支、不執行。這與拆分前相同：預覽內容本來就公開在 GitHub Pages，審核人看的就是 PR 作者能控制的輸出。
 - `test` job 失敗（檢查沒過）時，`lane` job 仍然執行（`if: ${{ !cancelled() }}`），這樣 PR 留言和 `lane:*` 標籤照常更新；`test` 與 `lane` 最後都有「Fail when checks failed」步驟，所以 Actions 上兩個 job 都紅，`main` 的必要狀態檢查名稱仍是 `lane`（沒改名）。
@@ -1774,5 +1777,113 @@ node scripts/gateway-basehash.mjs --file=稽核紀錄.jsonl --days=14 --min-writ
 實測、推估與對策全文在 [ci-scaling.md](ci-scaling.md)。維運要記得的三件事：
 
 1. **看 Actions 變慢時，先看是哪一步。** 每個 job 的每一步都有起訖時間（Actions API `jobs`），十天的紀錄顯示 checkout 一直 2–3 秒，長的是 `npm test` 與 axe。
-2. **內容的閘門只有 `build --check` 的 4 秒；** PR 車道其餘 5 分鐘是程式品質檢查與三次建置。內容 PR 與程式 PR 分流是最便宜的加速（ci-scaling §6.1）。
+2. **內容的閘門只有 `build --check` 的 4 秒；** PR 車道其餘 5 分鐘是程式品質檢查與三次建置。內容 PR 與程式 PR 分流是最便宜的加速（ci-scaling §6.1；第五十六輪已做，見 §28）。
 3. **內容加倍時先超過的是 `ASK_DATA_BUDGET_KB`（§15.3），不是 CI。** 看到這個錯誤不要放寬預算，照 §17 分片或改伺服器端。
+
+## 28. 第五十六輪：內容 PR 與程式 PR 分流、一個 PR 只建一次站、Chromium 快取、程式／文件的審核人
+
+起因是 [ci-scaling.md](ci-scaling.md) §2.2 的實測：`content-pr.yml` 的 test job 約 5.7 分鐘，其中 axe 162 秒、三次建站（`--check` 4 秒、a11y 用 28 秒、預覽 29 秒）、`npm test` 79 秒、安裝 Chromium 16 秒，而真正把關內容的 `build --check` 只要 4 秒。一筆新聞稿的 PR 和一個改版型的 PR 跑一樣的東西，前者大部分是白等。本輪做 ci-scaling §6.1 的四項，外加修正 PR 留言的審核人。
+
+### 28.1 分流：什麼叫「純內容 PR」
+
+**規則**：相對 `origin/main`，這個 PR 改到的**每一個**檔都在 `content/` 或 `data/snapshots/` 底下（改名的檔，新舊兩個路徑都算）。只要有一個檔不是（`scripts/`、`src/`、`tests/`、`schemas/`、`docs/`、`.github/`、`package.json`、`package-lock.json`、`eval/`…），就是程式 PR，照舊全部檢查。沒有任何變更檔也當程式 PR。
+
+| 步驟 | 純內容 PR | 程式 PR（含文件、設定） | 第五十五輪以前（所有 PR） |
+| --- | --- | --- | --- |
+| checkout、`npm ci` | 跑 | 跑 | 跑 |
+| 個資掃描（變更檔） | 跑 | 跑 | 跑 |
+| lint、format、typecheck | **略過** | 跑 | 跑 |
+| `npm test`（全部，約 79 秒） | **略過** | 跑 | 跑 |
+| `npm run test:content`（內容測試子集，約 20 秒） | **跑** | 不跑（已含在 `npm test`） | — |
+| `build --check`（schema、治理、評估集版本題） | 跑 | 跑 | 跑 |
+| `lane.mjs` | 跑 | 跑 | 跑 |
+| 建站 | **一次**（預覽） | **一次**（預覽，axe 也掃這份） | 兩次（a11y 用 `BASE_PATH=''` 一份、預覽一份） |
+| 安裝 Chromium | **略過** | 跑（先還原快取） | 跑（每次下載） |
+| axe（24 頁 × 3 種視窗） | **略過** | 跑（掃預覽 dist） | 跑 |
+| 上傳 artifact | 跑 | 跑 | 跑 |
+| 審核人按 Approve 後重跑 | 不建站（預覽只在 `pull_request` 事件推） | 建站（給 axe） | 建兩次 |
+
+**預期時間**（test job，以 10-15 run #77 的各步驟秒數推算，尚待第一個實際 PR 驗證）：
+
+| | 以前 | 現在 |
+| --- | --- | --- |
+| 純內容 PR | 約 5.7 分鐘 | 約 1.3 分鐘：checkout＋`npm ci` 約 8 秒、個資 1 秒、`build --check` 4 秒、`test:content` 約 20 秒、預覽建置 29 秒、上傳 7 秒，加上 runner 啟動 |
+| 程式 PR | 約 5.7 分鐘 | 約 5 分鐘：少一次建站（28 秒）；Chromium 命中快取後只剩 `--with-deps` 補系統套件（16 秒 → 約 5–10 秒）。axe 的 162 秒與 `npm test` 的 79 秒仍在，要再快得照 ci-scaling §6.2 |
+
+PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文件）與「內容測試（npm run test:content）」。純內容 PR 被略過的列顯示 **「⏭ 略過（純內容變更）」**，不是「❌ 失敗」；程式 PR 的內容測試列顯示「—（已含在 npm test）」。
+
+### 28.2 為什麼略過是安全的
+
+1. **純內容 PR 沒有改任何程式。** test job 執行的 `scripts/`、`src/`、`tests/`、`package.json` 與 `main`（合併基準）相同；lint、format、typecheck、`npm test` 檢查的是程式，對同一份程式重跑只會得到和 `main` 一樣的結果。內容本身的閘門（schema、跨檔參照、治理規則、評估集版本題、個資）都還在：`build --check`、個資掃描、`test:content`。
+2. **axe 掃的是版型。** 純內容 PR 沒有改版型與樣式。內文的無障礙要求（圖片替代文字長度、檔案資產宣告）在 `build --check` 的資產規則裡。
+3. **合併後 `main` 一定全跑。** `pages.yml` 在 push 到 `main` 時跑 lint、format、typecheck、完整 `npm test` 才建置部署，任何一項沒過就不部署。所以內容子集漏掉的東西，最晚在部署前被擋下（代價是 `main` 會紅，見 28.6）。
+
+### 28.3 程式 PR 不能偽裝成純內容
+
+「純內容」由 test job 算一次（決定跳過哪些步驟），lane job 再獨立算一次（決定能不能合併），**以 lane job 的為準**：
+
+- **test job**（`Classify changes`）：在 `npm ci` 之前，只用 `git diff --name-only --no-renames origin/main...HEAD` 算。`--no-renames` 讓改名的新舊路徑都列出來（把 `scripts/lane.mjs` 改名成 `content/news/x.json` 會列出兩個路徑，其中一個在 `scripts/`）。同一份清單也交給 `lane.mjs`（`--files-from`），所以 `lane.json` 也列了改名前的路徑。
+- **lane job**（`Validate results`）：不看 artifact 的 `scope`，自己用 `gh api repos/{repo}/pulls/{n}/files` 取 PR 的檔案清單（`filename` 加上改名前的 `previous_filename`），再判定一次。檔案 API 最多列 3000 個檔，列出的數量少於 `gh pr view --json changedFiles` 就整份不採用。以前比對用的 `gh pr diff --name-only` 只列改名後的路徑，而且 diff 太大時會失敗，這次一併換掉。
+- **唯一的合併閘門 `GATE`** 也在這一步算：個資掃描、治理閘門一律要 `success`；lint、format、typecheck、`npm test`、axe 要 `success`，或「lane job 判定純內容**而且** outcome 是 `skipped`」，這時記成 `content-skip`；內容測試要 `success`，或完整 `npm test` 已 `success`（記成 `covered`）。`Decide merge` 與最後的 `Fail when checks failed` 只看 `GATE`。
+- `content-skip`、`covered` 只能由這一步產生：artifact 的 outcome 先過列舉檢查（`success|failure|skipped|cancelled`），寫 `content-skip` 會變成 `invalid`。
+- 驗證中途失敗時，`GITHUB_ENV` 一個值都不寫（先寫到暫存檔，全部通過才一次併入），後面的步驟看不到 `GATE`，一律不合併。
+- **合併只合檢查過的 head**：`gh pr merge --match-head-commit`（`github.event.pull_request.head.sha`）。以前若作者在檢查跑完、合併之前又推一個 commit，合併的會是沒檢查過的新 head；現在 head 不符就不合併，新的推送會觸發新的一輪。分流之後這點更重要（純內容 PR 檢查完再補一個程式檔）。
+
+`tests/round40-ci-isolation.test.mjs` 的 `#56` 測試把這些情境實跑一遍：純內容通過、內容測試沒跑、artifact 說純內容但實際改了 `scripts/`、改名、`.github/`／`package.json`／`contentx/` 這類邊界、artifact 直接寫 `content-skip`、檔案 API 列不完、`Decide merge` 只看 `GATE`。
+
+### 28.4 內容測試子集 `npm run test:content`
+
+`package.json` 的 `test:content`：只跑「驗證已提交內容」的測試檔（治理規則套在真實內容上、連結、資產、來源語言、SEO／JSON-LD／API 輸出、日期、個資、移轉清單、跨內容一致性、評估挑戰集格式、官方資料快照、車道設定）。本機 4 核約 22 秒（完整 `npm test` 本機約 104 秒）。
+
+| 檔案 | 為什麼在內容子集 |
+| --- | --- |
+| `api.test.mjs` | v1 API 用真實內容輸出：外殼、etag、必要檔案 |
+| `assets.test.mjs` | 檔案資產宣告核對、替代文字、複製到 dist |
+| `governance.test.mjs`、`governance-r2.test.mjs` | 治理規則（白名單、逾期、版本鏈、公告截止…）套在 repo 內容上 |
+| `intl-epidemic.test.mjs` | `data/snapshots/travel-epidemic.json` 的欄位與再匯入 noop |
+| `jobs.test.mjs` | 職缺、採購（快車道內容）的 schema、階段分布、個資閘門 |
+| `jsonld.test.mjs`、`seo.test.mjs` | JSON-LD、sitemap、robots、llms.txt、feeds |
+| `lanes.test.mjs` | `content/governance/lanes.json` 的形狀與車道判定 |
+| `links.test.mjs` | 站內連結完整性、佔位網址政策 |
+| `migration.test.mjs`、`migration-scale.test.mjs` | `content/migration/` 移轉清單與 redirects |
+| `round25-dates.test.mjs` | 新聞稿相對日期規則，既有內容全數通過 |
+| `round30-pii.test.mjs` | 個資規則、實際內容零命中 |
+| `round33-consistency.test.mjs` | 跨內容說法不一致的偵測與判定檔 |
+| `round44-leadership.test.mjs` | 首長簡介內容與 schema |
+| `round49-challenge.test.mjs` | `content/governance/eval-challenge.json` 的格式與引用 |
+| `sourcelang.test.mjs` | 來源語言與譯文欄位 |
+| `travel.test.mjs`、`travel-data.test.mjs` | 旅遊疫情快照的等級分布與資料契約 |
+| `units.test.mjs` | 單位主檔 |
+
+**加入規則**：
+
+- 會因為「改了 `content/` 或 `data/snapshots/` 的某個檔」而失敗的測試才放進來；只測程式邏輯（合成資料、純函式）的不放。
+- 不放啟動瀏覽器、HTTP 伺服器或寫入閘道的測試（`tests/round40-ci-isolation.test.mjs` 會檢查清單裡沒有 `playwright`、`chromium`、`createServer`、`serve.mjs`、`gateway`）。
+- 整包要維持在 30 秒內（CI runner 4 核）。`round53-holdout2.test.mjs`（封存盲測題組的引用檢查，單檔約 18 秒，大半是跑執行器）因此沒有放進來，它由合併後 `main` 的完整測試把關。
+- 新增時三個地方一起改：`package.json` 的 `test:content`、這張表、檔案本身（不用改工作流程）。測試會檢查清單裡的每個檔都出現在本節。
+
+### 28.5 一個 PR 只建一次站、Chromium 快取
+
+- **一次建站**：`scripts/a11y.mjs` 本來就讀 `BASE_PATH`，靜態伺服器把網址的前綴去掉再對到 `DIST_DIR`。所以 a11y 不必另建 `BASE_PATH=''` 的站，直接掃預覽 dist（`BASE_PATH=/<repo>/preview/pr-N`、`PREVIEW_SCHEDULED=1`）。差別只有預覽多了排程中的內容（多掃到的頁只會更嚴，不會漏），以及網址多一段前綴（掃的是和審核人、民眾實際看到相同路徑的版本）。本機以預覽參數建置後跑 `npm run a11y` 的結果見 28.7。
+- **掃描本身的防呆**（`scripts/a11y.mjs`）：子路徑一旦設錯，伺服器會回 404 頁或缺 CSS 的頁面，axe 掃了也「通過」。所以主文件不是 2xx 時整個檢測失敗；同站資源（CSS、JS、索引、答案資料）回 404 列為阻擋，報告另有一張「同站資源 404」表。
+- **Chromium 快取**：`actions/cache` v6.1.0（`55cc8345863c7cc4c66a329aec7e433d2d1c52a9`，以 `git ls-remote https://github.com/actions/cache refs/tags/v6.1.0` 核對；與其他 action 一樣固定 SHA、註解版本，SHA 已加進 `tests/lanes.test.mjs` 與 `#56` 測試）。路徑 `~/.cache/ms-playwright`，key 是 `playwright-chromium-<OS>-<package-lock.json 的 playwright-core 版本>`，升級 Playwright 就換 key。
+  - **PR 只還原、不寫入**（`actions/cache/restore`）：test job 執行 PR 的程式碼，若它也能存快取，`npm ci` 的 `postinstall` 就有機會往快取目錄放東西。GitHub 的快取範圍本來就讓 PR 存的快取只有同一個 PR 讀得到，但只還原更單純。
+  - **由 `pages.yml` 在 `main` 上存**：`npm ci` 之後還原，沒命中才 `npx playwright install chromium` 下載一次，job 成功時存檔。PR 讀得到 base 分支（`main`）的快取；`pages.yml` 每 2 小時排程都會還原一次，快取不會因 7 天沒用而被清掉。
+  - 仍然跑 `npx playwright install --with-deps chromium`：有快取時只補系統套件，不再下載瀏覽器；快取沒命中也照常下載，不會失敗。
+  - `pages.yml` 的 `npm test` 不受影響：端到端測試找的是 `/opt/pw-browsers` 與 `dist/`，CI 上本來就略過。
+
+### 28.6 程式／文件 PR 的審核人：OASIS
+
+以前 `lanes.json` 一般車道的 `reviewers` 只有 `unit.pr`，程式、文件的 PR 也走一般車道，留言就寫「審核人：公關室（@ancientsky）」。實際上程式、治理規則與文件是 OASIS（AI推動辦公室）在管。
+
+- 一般車道新增 `codeReviewers: ["unit.oasis"]`（`validateLanes` 檢查只能放在一般車道、必須是非空字串陣列）。
+- `laneForFiles`：只有程式／文件變更（`lane.mjs` 判定理由「程式／文件變更需審核」）⇒ 審核人只有 `codeReviewers`；同一個 PR 也改了內容 ⇒ 內容審核人（`reviewers`）與 `codeReviewers` 聯集，一級內容照舊再加 `tier1Reviewers`；純內容 PR 不變（一般車道仍是公關室）。`content/governance/`（治理設定）與 `content/master/`（主檔）在路徑上屬內容（CI 分流算純內容），但審核人同樣取 `codeReviewers`（`CODE_REVIEWER_REASONS`），與 CODEOWNERS 的註解一致；`data/snapshots/` 照舊是 `reviewers`。
+- 原型的 `reviewerAccounts` 每個單位都對到 `ancientsky`，所以帳號不變，留言上的單位名稱從「公關室」變成「AI推動辦公室」（混合 PR 是「公關室、AI推動辦公室」）。正式環境把 `unit.oasis` 對到 OASIS 的 team 即可。
+- 寫入閘道（`scripts/lib/gateway/workflow.mjs`）只處理內容，不受影響。
+
+### 28.7 已知限制與驗證
+
+- **純內容 PR 可能讓 `main` 變紅。** 完整測試裡有些檔斷言特定內容（例如答案引擎的題目、盲測題組的引用）；純內容 PR 改了那些內容，PR 上的子集不會發現，合併後 `pages.yml` 的 `npm test` 失敗、不部署，之後的程式 PR 也會紅，直到有人修。處理：看 `pages.yml` 失敗的測試檔，若它其實是在驗證內容，把它加進 `test:content`（28.4 的規則）。
+- **內文造成的無障礙問題在純內容 PR 上不掃。** 例如內文標題跳級；`build --check` 擋得到替代文字，擋不到標題層級。這類問題會在下一個程式 PR 的 axe 被看到。
+- **本機驗證（2026-10-15）**：以 CI 的預覽參數建置（`BASE_PATH=/new_cdc_prototype/preview/pr-999`、`PREVIEW_SCHEDULED=1`、`LINK_CHECK=warn`，本機 4 核 63 秒），再以相同 `BASE_PATH`、`DIST_DIR` 跑 `npm run a11y`：27 頁 × 3 種視窗共 81 次，阻擋 0、警告 0（約 226 秒），沒有任何頁被略過。故意把 `BASE_PATH` 設成空字串去掃同一份 dist ⇒ 檢測失敗（答案頁等不到內容逾時），不會假通過。電子報頁探測的 `/api/health` 在靜態主機本來就是 404（頁面退回模擬模式），不列入「同站資源 404」。`npm run test:content` 本機 4 核約 22 秒（21 個檔、248 個測試）。
+- **本機沒辦法跑 Actions。** `if:` 運算式、`actions/cache` 的實際命中、`gh api --paginate` 的分頁都只能在第一個 PR 上確認。第一個純內容 PR 與第一個程式 PR 請各看一次 Actions 紀錄與 PR 留言（純內容 PR 應該看到「⏭ 略過（純內容變更）」與內容測試 ✅；程式 PR 的 `Restore Chromium cache` 在 `pages.yml` 跑過一次之後應該顯示 cache hit）。

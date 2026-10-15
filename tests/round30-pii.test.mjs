@@ -204,7 +204,9 @@ test('CI：content-pr.yml 在合併前跑個資掃描（PR 改到的檔），lan
   assert.match(y, /id: pii\n\s+continue-on-error: true\n\s+run: git diff --name-only -z --diff-filter=d origin\/main\.\.\.HEAD \| xargs -0 node scripts\/pii-scan\.mjs/);
   assert.ok(y.indexOf('id: pii') < y.indexOf('id: lint'), '在 Lint 之前');
   assert.match(y, /\| 個資掃描（[^|]*） \| " \+ icon\(\$e\.PII\)/); // 第四十輪：留言改用 jq 產生
-  assert.match(y, /\[ "\$PII" != "success" \]; then ACTION=blocked/);
+  // 第五十六輪：擋合併改由 lane job 的 Validate results 算出單一閘門 GATE；個資掃描在「一律要 success」的那組（純內容 PR 也不能略過）
+  assert.match(y, /for k in pii check; do\n\s+\[ "\$\{O\[\$k\]\}" = "success" \] \|\| GATE=fail/);
+  assert.match(y, /elif \[ "\$GATE" != "pass" \]; then ACTION=blocked/);
   assert.match(y, /steps\.pii\.outcome != 'success'\n/);
   for (const m of y.matchAll(/uses: ([^\s@]+)@(\S+)/g)) assert.match(m[2], /^[0-9a-f]{40}$/, `${m[1]} 仍固定 commit SHA`);
 });

@@ -182,6 +182,8 @@
 
 ### 6.1 現在就能做（原型期，各約半天）
 
+> 第五十六輪（2026-10-16）：四項都做了，見 [deploy.md](deploy.md) §28 與 README 第五十六輪；實際的加速數字請在合併後的第一個內容 PR 與程式 PR 核對。
+
 1. **內容 PR 與程式 PR 走不同的檢查。** PR 只改 `content/`、`data/snapshots/` 時：跑 `build --check`（4 秒）、PII 掃描、變更頁的連結檢查、一次預覽建置；**不跑** `npm test` 的程式測試、lint、typecheck、axe（內容不會改版型，axe 的結果和上一次一樣）。PR 改到 `src/`、`scripts/`、`schemas/`、`tests/` 才全跑。預期內容 PR 從 6–8 分鐘降到 1 分鐘內。`lane.mjs` 已經會算「改了哪些檔」，這一步只是把結果拿來決定要跑哪些步驟。
 2. **一個 PR 只建一次站。** 現在建三次（check、a11y、preview）；a11y 與 preview 可以共用同一份 `dist`（`BASE_PATH` 的差異用相對路徑或在掃描時設 base 解決）。省約 30 秒。
 3. **快取 Chromium。** `playwright install` 每次 16 秒，用 `actions/cache` 快取 `~/.cache/ms-playwright`。

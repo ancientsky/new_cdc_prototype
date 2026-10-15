@@ -146,7 +146,8 @@ test('workflows：第三方 action 全部固定 40 字元 SHA 並註解版本；
   for (const f of fs.readdirSync(path.join(ROOT, '.github/workflows')).filter((x) => x.endsWith('.yml'))) {
     const txt = read(`.github/workflows/${f}`);
     for (const m of txt.matchAll(/uses:\s*([^\s#]+)(.*)/g)) {
-      assert.match(m[1], /^[\w.-]+\/[\w.-]+@[0-9a-f]{40}$/, `${f}: ${m[1]} 要固定 commit SHA`);
+      // 第五十六輪：允許同一個 action repo 的子路徑（actions/cache/restore），一樣要 40 字元 SHA
+      assert.match(m[1], /^[\w.-]+\/[\w.-]+(\/[\w.-]+)*@[0-9a-f]{40}$/, `${f}: ${m[1]} 要固定 commit SHA`);
       assert.match(m[2], /#\s*v\d/, `${f}: ${m[1]} 要註解版本號`);
     }
   }
