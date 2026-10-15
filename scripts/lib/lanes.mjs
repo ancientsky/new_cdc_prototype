@@ -5,6 +5,7 @@
 //   laneOfItem(item)            → 'emergency'｜'fast'｜'standard'（urgent:true 且型別允許 ⇒ emergency；否則依型別）
 //   laneForFiles(files, opts)   → scripts/lane.mjs 與 CI 用的 JSON（多檔取最嚴格：standard ＞ fast ＞ emergency；opts.author 不在 allowedAuthors ⇒ 降為 standard）
 //   authorAllowed(author, list, { teams }) → 第二十三輪：作者是否在車道授權名單（帳號或 team:<org>/<slug>）
+//   laneAuthorGate(lane, author, types, { teams }) → 第五十四輪：再看 allowedAuthorsByType（只對特定型別授權的名單，例：人事室只管職缺）
 //   slaOf(lane, since)          → { minutes|workingDays, dueAt, label }
 // 二、排程發布：publishAt 以「真實現在時間」判斷（不受 BUILD_TODAY 影響），讓排程內容到點真的上線。
 //   nowOf(site|now)             → 毫秒；優先 site.now（測試注入）→ 環境變數 BUILD_NOW → Date.now()
@@ -50,6 +51,15 @@ export function validateLanes(cfg, allTypes = []) {
     // 第二十三輪（26.3）：能跳過人審的車道一定要有授權名單，否則任何有寫入權限的人都能直接上線
     if (l.autoMerge && !(Array.isArray(l.allowedAuthors) && l.allowedAuthors.length)) errs.push(`${k}：自動合併車道必須有 allowedAuthors（誰可以不經人審直接上線）`);
     if (l.allowedAuthors != null && (!Array.isArray(l.allowedAuthors) || l.allowedAuthors.some((a) => typeof a !== 'string' || !a.trim()))) errs.push(`${k}.allowedAuthors 必須是非空字串陣列`);
+    // 第五十四輪：只對某些型別授權的名單。型別必須是這條車道自己的型別，否則等於用名單把別的車道的內容拉進來
+    if (l.allowedAuthorsByType != null) {
+      if (!l.autoMerge) errs.push(`${k}.allowedAuthorsByType 只用在自動合併車道`);
+      if (typeof l.allowedAuthorsByType !== 'object' || Array.isArray(l.allowedAuthorsByType)) errs.push(`${k}.allowedAuthorsByType 必須是物件（型別 → 名單）`);
+      else for (const [t, list] of Object.entries(l.allowedAuthorsByType)) {
+        if (!(l.types ?? []).includes(t)) errs.push(`${k}.allowedAuthorsByType.${t}：型別 ${t} 不在這條車道`);
+        if (!Array.isArray(list) || !list.length || list.some((a) => typeof a !== 'string' || !a.trim())) errs.push(`${k}.allowedAuthorsByType.${t} 必須是非空字串陣列`);
+      }
+    }
   }
   if (cfg.rules?.urgentAllowedAuthors != null && !Array.isArray(cfg.rules.urgentAllowedAuthors)) errs.push('rules.urgentAllowedAuthors 必須是陣列');
   for (const k of Object.keys(lanes)) if (!LANE_STRICTNESS.includes(k)) errs.push(`未知車道 ${k}`);
@@ -162,6 +172,26 @@ export function authorAllowed(author, list, { teams = [] } = {}) {
   return { allowed: false, reason: `作者 ${author} 不在授權名單內（${list.join('、')}）` };
 }
 
+/**
+ * 第五十四輪：自動合併車道的作者閘門。先看整條車道的 allowedAuthors；不在名單時，再看 allowedAuthorsByType——
+ * 這次變更的**每一個**型別都要有自己的名單、作者也都在裡面才算（例：人事室承辦人只能讓職缺免審上線；同一次也改了新聞稿就不行）。
+ * 為什麼不直接把人事室加進 allowedAuthors：那份名單對整條快車道有效，人事室就能讓新聞稿、澄清稿免審上線，超出 Yulun 決定的範圍。
+ * @param {any} lane lanes.json 的一條車道 @param {string|null} author @param {string[]} types @param {{ teams?: string[] }} [o]
+ */
+export function laneAuthorGate(lane, author, types, { teams = [] } = {}) {
+  const gate = authorAllowed(author, lane?.allowedAuthors, { teams });
+  if (gate.allowed) return gate;
+  const byType = lane?.allowedAuthorsByType ?? {};
+  const uniq = [...new Set(types ?? [])];
+  if (!uniq.length) return gate;
+  const uncovered = uniq.filter((t) => !Array.isArray(byType[t]));
+  if (uncovered.length) return uncovered.length < uniq.length ? { allowed: false, reason: `${gate.reason}；型別授權只涵蓋 ${Object.keys(byType).join('、')}，這次還有 ${uncovered.join('、')}` } : gate;
+  const per = uniq.map((t) => ({ t, g: authorAllowed(author, byType[t], { teams }) }));
+  const miss = per.find((x) => !x.g.allowed);
+  if (miss) return { allowed: false, reason: `${gate.reason}；${miss.t} 的型別授權名單也沒有（${miss.g.reason}）` };
+  return { allowed: true, reason: `${per.map((x) => `${x.t}：${x.g.reason}`).join('；')}（型別授權）` };
+}
+
 /** 取兩車道中較嚴格者 */
 export const stricter = (a, b) => (LANE_STRICTNESS.indexOf(a) >= LANE_STRICTNESS.indexOf(b) ? a : b);
 
@@ -268,7 +298,7 @@ export function laneForFiles(files, { root = ROOT, cfg = loadLanes(), since = Da
   // 沒傳作者（本機跑、舊 CI）也視為不在名單，寧可多一道人審。urgent 另看 rules.urgentAllowedAuthors。
   let authorGate = null;
   if (cfg.lanes[lane]?.autoMerge) {
-    const gate = authorAllowed(author, cfg.lanes[lane].allowedAuthors, { teams });
+    const gate = laneAuthorGate(cfg.lanes[lane], author, classified.map((c) => c.type), { teams });
     const urgentFiles = classified.filter((c) => c.lane === 'emergency' && /urgent/.test(c.reason));
     const urgentGate = urgentFiles.length && cfg.rules?.urgentAllowedAuthors ? authorAllowed(author, cfg.rules.urgentAllowedAuthors, { teams }) : { allowed: true, reason: null };
     authorGate = { author: author ?? null, allowed: gate.allowed && urgentGate.allowed, reason: gate.allowed ? (urgentGate.allowed ? gate.reason : `urgent：${urgentGate.reason}`) : gate.reason, requestedLane: lane };

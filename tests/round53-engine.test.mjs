@@ -67,7 +67,7 @@ test('屈公病、日本腦炎頁：審閱日 2026-10-14，BUILD_TODAY=2026-10-0
       assert.ok(Object.values(item.languages).some((l) => l.status === 'machine'), `${id} 有機器翻譯草稿（測試前提）`);
       assert.deepEqual(item.gov.renderableLangs, ['zh-TW'], id);
     }
-    // 這次只重審這兩頁：tb-cough-two-weeks、mpox-who-vaccine 不動
+    // 這次只重審這兩頁：tb-cough-two-weeks、mpox-who-vaccine 不動（第五十四輪 Yulun 另決定那兩則也視為已審，日期是 2026-10-15，tests/round54-decisions.test.mjs）
     for (const id of ['faq.tb-cough-two-weeks', 'faq.mpox-who-vaccine']) assert.notEqual(s.byId.get(id).reviewedAt, '2026-10-14', id);
   }
 });

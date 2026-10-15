@@ -60,6 +60,14 @@ const row = (rows, id) => rows.find((r) => r.id === id);
 const withRow = (rows, id, patch) => rows.map((r) => (r.id === id ? { ...r, ...patch } : r));
 const schedJson = (rows) => `${JSON.stringify(rows, null, 2)}\n`;
 const master = (items, start = SCHED) => ({ name: 'immunization-schedule', items, start });
+// 第五十四輪起，人事室的職缺、秘書室的採購免審上線（lanes.json allowedAuthorsByType；tests/round54-decisions.test.mjs）。
+// 這個檔測的是送審、審核人看差異、核准的流程（跨單位編輯者仍走這條），所以釘回第五十三輪的車道設定（沒有型別授權）。
+const LANES_R53 = (() => {
+  const c = JSON.parse(readRel('content/governance/lanes.json'));
+  delete c.lanes.fast.allowedAuthorsByType;
+  delete c.lanes.fast.allowedAuthorsByTypeNote;
+  return c;
+})();
 
 /** 頁面拿到的資料島 */
 function island(tpl, pagePath, id) {
@@ -90,6 +98,7 @@ function makeApi(extra = {}) {
     validator,
     csrfSecret: 't',
     now: () => NOW,
+    lanesCfg: LANES_R53,
     ...extra,
   });
   const audit = () =>
@@ -756,7 +765,9 @@ async function startE2E(t, marker) {
     GATEWAY_AUDIT_FILE: path.join(d, 'audit.jsonl'),
     OUTBOX_DIR: path.join(d, 'outbox'),
     SUBSCRIPTIONS_FILE: path.join(d, 'subs.json'),
+    GATEWAY_LANES_FILE: path.join(d, 'lanes-r53.json'),
   };
+  fs.writeFileSync(env.GATEWAY_LANES_FILE, JSON.stringify(LANES_R53));
   const srv = spawn(process.execPath, [path.join(ROOT, 'scripts/serve.mjs'), String(port)], { cwd: ROOT, stdio: ['ignore', 'ignore', 'pipe'], env });
   let stderr = '';
   srv.stderr.on('data', (c) => {

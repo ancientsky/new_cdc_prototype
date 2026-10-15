@@ -2560,3 +2560,18 @@ i18n 新鍵（七語齊備，順序 zh-TW, en, ja, tl, vi, id, th）：`nav.more
 
 **教訓：** 「dev 進步、holdout 也進步」不足以證明會類推。這輪用一套完全沒看過的題目才看清：同一批引擎改動，舊 holdout 多 3 題、新盲測只多 1 題。評估要有一份「沒有人為了它改過任何東西」的題組，而且要定期換新。
 
+## 57. 第五十四輪（2026-10-15）：型別授權的快車道、版本碼就緒檢查、兩則 Q&A 假設重審
+
+民眾看得到的說明在 README 第五十四輪；取捨在 architecture-decisions §42；細節：deploy.md §26、publishing-lanes.md §3.0.1、guide-staff §57。
+
+| 機制 | 契約 |
+| --- | --- |
+| 型別授權 | `lanes.json` 自動合併車道可有 `allowedAuthorsByType: { <型別>: [帳號或 team:…] }`；`laneAuthorGate(lane, author, types, { teams })`：在 `allowedAuthors` ⇒ 可以，否則每個型別都要有名單且作者都在；寫入閘道 `laneFor` 傳 `[item.type]` 與 AD 群組，CI `laneForFiles` 傳所有檔案的型別與 GitHub team。`validateLanes`：型別必須屬於該車道、名單非空、只用在 `autoMerge` 車道 |
+| 現行名單 | 快車道 `job` → `team:CDC-WEB-personnel-editor`、`tender` → `team:CDC-WEB-secretariat-editor`；`allowedAuthors` 不變 |
+| `GATEWAY_LANES_FILE` | 選用；閘道改讀另一份車道設定，`validateLanes` 有錯就丟例外、不啟動 |
+| 稽核 `fromPage` | 存草稿、送審的稽核，非閘道內部組的寫入記 `fromPage: true`（`writeVersion`／`writeMaster` 回傳 `internal`） |
+| 就緒檢查 | `scripts/lib/gateway/basehash-report.mjs` `baseHashReadiness(entries, { today, days = 14, minWrites = 1 })` → `{ ready, reasons, window, sources, cleanSince, chain }`；漏帶 ＝ `baseHash: "missing"` 或 `denied` + `version_required`；CLI `npm run gateway:basehash`（結束碼 0／1／2） |
+| 兩則 Q&A | `faq.tb-cough-two-weeks`、`faq.mpox-who-vaccine` 的 `reviewedAt` 2026-10-15，譯文欄位不動 |
+
+**教訓：** 授權名單要和決定的範圍一樣大。「讓人事室的職缺免審」最省事的寫法是把人事室加進快車道名單，但那份名單的效力是整條車道（含新聞稿）。名單的作用範圍若大於決定，就是在設定檔裡偷偷多做了一個沒人同意過的決定。
+

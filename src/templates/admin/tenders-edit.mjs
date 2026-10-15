@@ -91,7 +91,7 @@ ${pageHead({
     <div class="adm-actions"><button type="button" class="adm-btn" id="tf-save">儲存草稿（本機）</button><button type="button" class="adm-btn adm-btn--ghost" id="tf-reset">重新帶入（放棄修改）</button></div>
     <p class="adm-muted" id="tf-msg" role="status" aria-live="polite"></p>
   </form>
-  ${gatewayPanel('有系統連線時才會出現這一區：「儲存草稿」把這一版存進系統（秘書室同事也看得到）；「送審」交給審核人，核准後上線，不必再下載 JSON 開 PR。存檔時以網站上的現行版為底，只改你動過的欄位；你開啟之後別人改過，系統會先擋下並幫你把修改套到最新版。')}
+  ${gatewayPanel('有系統連線時才會出現這一區：「儲存草稿」把這一版存進系統（秘書室同事也看得到）；「送審」：秘書室承辦人送出即上線（快車道，不必等核准；系統仍先做格式、日期與個資檢查，上線後公關室 24 小時內複核），其他單位的同事改採購公告則交給審核人、核准後上線。不必再下載 JSON 開 PR。存檔時以網站上的現行版為底，只改你動過的欄位；你開啟之後別人改過，系統會先擋下並幫你把修改套到最新版。')}
 </section>
 <div>
 <section class="adm-card" aria-labelledby="tp-h"><h2 id="tp-h">預覽與檢核</h2>

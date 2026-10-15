@@ -23,7 +23,7 @@
     },
     "fast": {
       "label": "快車道",
-      "description": "新聞稿、通函、澄清、職缺、採購、宣導 Banner：檢查通過即自動合併，送出後約 3 分鐘上線，公關室 24 小時內複核；僅限 allowedAuthors 名單內的承辦人，其他人送的自動改走一般車道",
+      "description": "新聞稿、通函、澄清、職缺、採購、宣導 Banner：檢查通過即自動合併，送出後約 3 分鐘上線，公關室 24 小時內複核；僅限 allowedAuthors 名單內的承辦人（職缺另含人事室承辦人、採購另含秘書室承辦人：allowedAuthorsByType），其他人送的自動改走一般車道",
       "types": [
         "news",
         "letter",
@@ -37,6 +37,15 @@
       "allowedAuthors": [
         "ancientsky"
       ],
+      "allowedAuthorsByType": {
+        "job": [
+          "team:CDC-WEB-personnel-editor"
+        ],
+        "tender": [
+          "team:CDC-WEB-secretariat-editor"
+        ]
+      },
+      "allowedAuthorsByTypeNote": "第五十四輪（Yulun 2026-10-15）：人事室承辦人的職缺、秘書室承辦人的採購公告免審上線（仍有機器檢查與公關室 24 小時內上線後複核）。只對該型別有效：同一次變更含其他型別就照 allowedAuthors 判斷。team: 後面是 AD 群組（寫入閘道）；GitHub PR 則是 org/slug。docs/publishing-lanes.md、docs/deploy.md §26。",
       "reviewers": [],
       "postPublishReviewHours": 24,
       "postPublishReviewer": "unit.pr",

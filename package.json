@@ -16,6 +16,7 @@
     "eval": "node eval/run-eval.mjs",
     "dev": "node scripts/build.mjs && node scripts/serve.mjs",
     "gateway:pull": "node scripts/gateway-pull.mjs",
+    "gateway:basehash": "node scripts/gateway-basehash.mjs",
     "a11y": "node scripts/a11y.mjs",
     "perf:ask": "node scripts/perf-ask.mjs",
     "pii": "node scripts/pii-scan.mjs",
