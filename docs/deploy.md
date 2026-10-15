@@ -1768,3 +1768,11 @@ node scripts/gateway-basehash.mjs --file=稽核紀錄.jsonl --days=14 --min-writ
 `tests/round53-editors-gateway.test.mjs` 測的是送審、看差異、核准的流程，改成釘回第五十三輪的車道設定（沒有型別授權；單元測試傳 `lanesCfg`，端到端用 `GATEWAY_LANES_FILE`），流程本身沒變。
 
 **踩到的坑：** `tests/round50-rereview.test.mjs` 的端到端測試要在建置出來的「審閱到期」頁找一筆急性傳染病組的逾期內容來走一次重新審閱。第五十三、五十四輪把四筆逾期內容都假設重審之後，清單上原本的候選都不逾期了，測試會**靜靜地略過**（`skip`），CI 仍是綠的。這一輪補上仍逾期的「MMR 候診室影片」當候選。教訓：靠「站上剛好有某種狀態的真實內容」的端到端測試，內容一被處理就失效；跑完整測試時要看略過了幾項、為什麼略過，而不是只看有沒有失敗。
+
+## 27. CI 與建置時間的成長（第五十五輪）
+
+實測、推估與對策全文在 [ci-scaling.md](ci-scaling.md)。維運要記得的三件事：
+
+1. **看 Actions 變慢時，先看是哪一步。** 每個 job 的每一步都有起訖時間（Actions API `jobs`），十天的紀錄顯示 checkout 一直 2–3 秒，長的是 `npm test` 與 axe。
+2. **內容的閘門只有 `build --check` 的 4 秒；** PR 車道其餘 5 分鐘是程式品質檢查與三次建置。內容 PR 與程式 PR 分流是最便宜的加速（ci-scaling §6.1）。
+3. **內容加倍時先超過的是 `ASK_DATA_BUDGET_KB`（§15.3），不是 CI。** 看到這個錯誤不要放寬預算，照 §17 分片或改伺服器端。
