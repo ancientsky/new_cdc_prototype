@@ -8,6 +8,7 @@
 //       --author=GitHub 帳號（PR 作者；第二十三輪：自動合併車道要在 lanes.json allowedAuthors 內，否則降為一般車道）、--teams=org/slug,org/slug（作者所屬 team，CI 查好傳入）
 // 輸出：{ lane, label, ghLabel, autoMerge, requiredApprovals, reviewers, reviewerAccounts, sla, postPublishReview, files:[{file,type,lane,reason}], reasons:[] }
 // 多檔取最嚴格（standard ＞ fast ＞ emergency）；content/ 以外（scripts、src、docs…）一律一般車道並註明「程式／文件變更需審核」。
+// 第五十六輪：程式／文件變更的審核人取一般車道的 codeReviewers（OASIS）；同時改了內容則與內容審核人聯集。
 import fs from 'node:fs';
 import path from 'node:path';
 import { laneForFiles, loadLanes, validateLanes } from './lib/lanes.mjs';

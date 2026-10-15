@@ -1,6 +1,6 @@
 {
   "version": "v1",
-  "note": "發布車道（ARCHITECTURE 17.1）。由變更檔案推出車道與審核需求（scripts/lane.mjs，多檔取最嚴格：standard ＞ fast ＞ emergency）；CI（.github/workflows/content-pr.yml）依此決定自動合併或等待審核。一級內容（site.config.tier1Types）走一般車道時，審核人改用 tier1Reviewers。 第二十三輪（26.3）：自動合併車道還要看「誰」送的——allowedAuthors（GitHub 帳號或 team:org/slug）；不在名單內的 PR 自動降為一般車道（要 1 位核准）。urgent 另受 rules.urgentAllowedAuthors 限制。",
+  "note": "發布車道（ARCHITECTURE 17.1）。由變更檔案推出車道與審核需求（scripts/lane.mjs，多檔取最嚴格：standard ＞ fast ＞ emergency）；CI（.github/workflows/content-pr.yml）依此決定自動合併或等待審核。一級內容（site.config.tier1Types）走一般車道時，審核人改用 tier1Reviewers；程式／文件變更的審核人是 codeReviewers（第五十六輪）。 第二十三輪（26.3）：自動合併車道還要看「誰」送的——allowedAuthors（GitHub 帳號或 team:org/slug）；不在名單內的 PR 自動降為一般車道（要 1 位核准）。urgent 另受 rules.urgentAllowedAuthors 限制。",
   "lanes": {
     "emergency": {
       "label": "緊急發布",
@@ -53,7 +53,7 @@
     },
     "standard": {
       "label": "一般車道",
-      "description": "疾病、疫苗、文件、Q&A 等需人審的內容，以及所有程式／文件變更：檢查通過＋1 位核准才合併",
+      "description": "疾病、疫苗、文件、Q&A 等需人審的內容，以及所有程式／文件變更：檢查通過＋1 位核准才合併（內容由公關室審；程式／文件變更由 OASIS 審：codeReviewers）",
       "types": [
         "disease",
         "vaccine",
@@ -75,6 +75,10 @@
       "reviewers": [
         "unit.pr"
       ],
+      "codeReviewers": [
+        "unit.oasis"
+      ],
+      "codeReviewersNote": "第五十六輪：程式、測試、文件、工作流程等 content/ 與 data/snapshots/ 以外的變更（lane.mjs 判定理由「程式／文件變更需審核」），以及治理設定（content/governance/）與主檔（content/master/）的變更，由 OASIS（AI推動辦公室）審，不再顯示為公關室。只有程式／文件 ⇒ 審核人只有 codeReviewers；同一個 PR 也改了內容 ⇒ reviewers（公關室）與 codeReviewers 聯集，一級內容再加 tier1Reviewers。純內容的 PR 照舊由 reviewers 審。docs/publishing-lanes.md 第 8 節、docs/deploy.md 第 28 節。",
       "tier1Reviewers": [
         "unit.pr",
         "unit.oasis"

@@ -4,6 +4,7 @@
 // 一、車道：content/governance/lanes.json 定義 emergency／fast／standard 三條車道。
 //   laneOfItem(item)            → 'emergency'｜'fast'｜'standard'（urgent:true 且型別允許 ⇒ emergency；否則依型別）
 //   laneForFiles(files, opts)   → scripts/lane.mjs 與 CI 用的 JSON（多檔取最嚴格：standard ＞ fast ＞ emergency；opts.author 不在 allowedAuthors ⇒ 降為 standard）
+//                                 審核人：內容用 reviewers（一級內容加 tier1Reviewers）；程式／文件變更用 codeReviewers（第五十六輪）
 //   authorAllowed(author, list, { teams }) → 第二十三輪：作者是否在車道授權名單（帳號或 team:<org>/<slug>）
 //   laneAuthorGate(lane, author, types, { teams }) → 第五十四輪：再看 allowedAuthorsByType（只對特定型別授權的名單，例：人事室只管職缺）
 //   slaOf(lane, since)          → { minutes|workingDays, dueAt, label }
@@ -52,6 +53,11 @@ export function validateLanes(cfg, allTypes = []) {
     if (l.autoMerge && !(Array.isArray(l.allowedAuthors) && l.allowedAuthors.length)) errs.push(`${k}：自動合併車道必須有 allowedAuthors（誰可以不經人審直接上線）`);
     if (l.allowedAuthors != null && (!Array.isArray(l.allowedAuthors) || l.allowedAuthors.some((a) => typeof a !== 'string' || !a.trim()))) errs.push(`${k}.allowedAuthors 必須是非空字串陣列`);
     // 第五十四輪：只對某些型別授權的名單。型別必須是這條車道自己的型別，否則等於用名單把別的車道的內容拉進來
+    // 第五十六輪：程式／文件變更的審核人（只在一般車道；程式與文件一律走一般車道）
+    if (l.codeReviewers != null) {
+      if (k !== 'standard') errs.push(`${k}.codeReviewers 只用在一般車道（程式／文件變更一律走一般車道）`);
+      if (!Array.isArray(l.codeReviewers) || !l.codeReviewers.length || l.codeReviewers.some((a) => typeof a !== 'string' || !a.trim())) errs.push(`${k}.codeReviewers 必須是非空字串陣列`);
+    }
     if (l.allowedAuthorsByType != null) {
       if (!l.autoMerge) errs.push(`${k}.allowedAuthorsByType 只用在自動合併車道`);
       if (typeof l.allowedAuthorsByType !== 'object' || Array.isArray(l.allowedAuthorsByType)) errs.push(`${k}.allowedAuthorsByType 必須是物件（型別 → 名單）`);
@@ -244,6 +250,11 @@ function contentIndex(root) {
   return idx;
 }
 
+/** content/ 與 data/snapshots/ 以外的檔案（程式、測試、文件、工作流程、設定）的判定理由；laneForFiles 用它挑出「程式／文件變更」 */
+export const CODE_REASON = '程式／文件變更需審核';
+/** 由 codeReviewers（OASIS）審的判定理由：程式／文件之外，治理設定（content/governance/）與主檔（content/master/）也歸 OASIS（CODEOWNERS 同此） */
+export const CODE_REVIEWER_REASONS = new Set([CODE_REASON, '治理設定變更需審核', '主檔變更需審核']);
+
 /**
  * 單一變更檔案 → { file, type, lane, reason }
  * @param {string} file
@@ -255,7 +266,7 @@ export function classifyFile(file, { root = ROOT, cfg = loadLanes(), index } = {
   const m = f.match(/^content\/([^/]+)\/(.+)$/);
   if (!m) {
     if (f.startsWith('data/snapshots/')) return std('官方資料快照變更需審核（排程回寫直接進 main，不經 PR）');
-    return std('程式／文件變更需審核');
+    return std(CODE_REASON);
   }
   const [, dir, rest] = m;
   if (dir === 'situation') return { file: f, type: 'situation', lane: laneOfItem({ type: 'situation' }, cfg), reason: '疫情態勢層' };
@@ -293,7 +304,8 @@ export function laneForFiles(files, { root = ROOT, cfg = loadLanes(), since = Da
   for (const c of classified) reasons.push(`${c.file}：${c.reason} → ${cfg.lanes[c.lane].label}`);
   const lanesUsed = new Set(classified.map((c) => c.lane));
   if (lanesUsed.size > 1) reasons.push(`多檔取最嚴格：${cfg.lanes[lane].label}`);
-  if (classified.some((c) => c.reason === '程式／文件變更需審核')) reasons.push('程式／文件變更需審核');
+  if (classified.some((c) => c.reason === CODE_REASON)) reasons.push(CODE_REASON);
+  const codeCount = classified.filter((c) => CODE_REVIEWER_REASONS.has(c.reason)).length; // 程式／文件、治理設定、主檔：由 codeReviewers 審
   // 第二十三輪（26.3）：自動合併車道還要看「誰」送的。不在名單 ⇒ 降為一般車道（檔案分類不變，只是要 1 位核准）；
   // 沒傳作者（本機跑、舊 CI）也視為不在名單，寧可多一道人審。urgent 另看 rules.urgentAllowedAuthors。
   let authorGate = null;
@@ -307,6 +319,13 @@ export function laneForFiles(files, { root = ROOT, cfg = loadLanes(), since = Da
   }
   const l = cfg.lanes[lane];
   let reviewers = [...(l.reviewers ?? [])];
+  // 第五十六輪：程式／文件變更改由 codeReviewers 審（OASIS 管程式、治理規則與文件）。只有程式／文件 ⇒ 只用 codeReviewers；
+  // 同時改了內容 ⇒ 內容審核人（reviewers）與 codeReviewers 聯集，下面一級內容再加 tier1Reviewers。純內容的 PR 不受影響。
+  if (codeCount && lane === 'standard' && Array.isArray(l.codeReviewers) && l.codeReviewers.length) {
+    const contentToo = codeCount < classified.length;
+    reviewers = contentToo ? [...new Set([...reviewers, ...l.codeReviewers])] : [...l.codeReviewers];
+    reasons.push(contentToo ? `含程式／文件／治理設定／主檔變更，審核人加 ${l.codeReviewers.join('、')}（內容另由 ${(l.reviewers ?? []).join('、') || '—'} 審）` : `只有程式／文件／治理設定／主檔變更，審核人為 ${l.codeReviewers.join('、')}`);
+  }
   const tier1 = lane === 'standard' && classified.some((c) => c.lane === 'standard' && tier1Types.includes(c.type));
   if (tier1 && l.tier1Reviewers) { reviewers = [...new Set([...reviewers, ...l.tier1Reviewers])]; reasons.push(`含一級內容（${[...new Set(classified.filter((c) => tier1Types.includes(c.type)).map((c) => c.type))].join('、')}），審核人加 ${l.tier1Reviewers.join('、')}`); }
   const acc = cfg.reviewerAccounts ?? {};

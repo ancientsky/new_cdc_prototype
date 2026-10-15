@@ -2589,3 +2589,20 @@ i18n 新鍵（七語齊備，順序 zh-TW, en, ja, tl, vi, id, th）：`nav.more
 | 內容成長第一道牆 | 答案資料預算 445 KB（`ASK_DATA_BUDGET_KB`）在內容約 2 倍時超過；要分片或伺服器端回答（deploy.md §17、§15.3） |
 
 **教訓：** 「越來越慢」先量再歸因；Git、建置、測試三種成長分開講；內容 PR 不該為程式測試買單。
+
+## 59. 第五十六輪（2026-10-16）：PR 車道分流、單次建置、Chromium 快取、codeReviewers
+
+民眾看得到的說明在 README 第五十六輪；取捨在 architecture-decisions §44；細節 deploy.md §28、publishing-lanes §8。
+
+| 機制 | 契約 |
+| --- | --- |
+| 純內容判定 | test job：`git diff --name-only --no-renames origin/main...HEAD` 每個檔都在 `content/` 或 `data/snapshots/`（沒有變更檔 ⇒ 程式 PR）；lane job 不信 artifact，用 `pulls/{n}/files`（含 `previous_filename`）自己再判一次，列出檔數 < `changedFiles` 就不採用 |
+| 閘門 `GATE` | 只在 lane job「Validate results」算：pii、check 必須 success；lint／format／typecheck／test／a11y 要 success 或（lane job 判定純內容且 skipped ⇒ `content-skip`）；content_test 要 success 或（test success ⇒ `covered`）。artifact 自己寫 `content-skip`／`covered` 會先被列舉檢查變成 invalid。Decide merge 與 Fail 只看 GATE；所有值驗證完才一次寫進 `GITHUB_ENV` |
+| `npm run test:content` | package.json 的固定清單（21 檔，約 22 秒）；tests/round40-ci-isolation.test.mjs 檢查清單檔案存在、不含瀏覽器／伺服器／閘道測試、都列在 deploy.md §28 |
+| 單次建置 | 預覽建置（`BASE_PATH=/repo/preview/pr-N`、`DIST_DIR`）同時給 axe 掃；`scripts/a11y.mjs` 以相同 BASE_PATH 去前綴；主頁非 2xx 丟例外、同站資源 404（`/api/` 除外）列為阻擋，`A11Y_JSON.blocking` 含 404 數 |
+| Chromium 快取 | key `playwright-chromium-<os>-<playwright-core 版本>`；pages.yml 用 `actions/cache`（存）、content-pr.yml 用 `actions/cache/restore`（只還原）；SHA 55cc8345…（v6.1.0）釘在 tests/lanes.test.mjs；round23 的 SHA 正規式允許 `actions/cache/restore@<sha>` 子路徑 |
+| 合併 | `gh pr merge --squash --delete-branch --match-head-commit <head.sha>` |
+| `codeReviewers` | lanes.json 一般車道限定、非空字串陣列（`validateLanes`）；`laneForFiles`：判定理由在 `CODE_REVIEWER_REASONS`（程式／文件、治理設定、主檔）的檔 ⇒ 審核人用 codeReviewers；同時有內容 ⇒ 與 reviewers 聯集；tier1 再加 tier1Reviewers；`lane.mjs --files-from=<檔>` 讀清單 |
+| 審核重跑 | `pull_request_review` 事件：純內容 PR 不再建置；程式 PR 仍建（給 axe），但不上傳預覽 |
+
+**教訓：** 要略過檢查，判定「能不能略過」的人不能是被檢查的程式。test job 跑的是 PR 的程式碼，它說「我是純內容」只能決定自己跑什麼；能不能合併由不執行 PR 程式的 lane job 依平台 API 重算。

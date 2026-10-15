@@ -1,6 +1,8 @@
 // 無障礙自動檢測（第二十四輪）：用 Playwright 開 Chromium，對 dist/ 的代表頁跑 axe-core。
 /* global document */
 // 用法：BASE_PATH='' node scripts/build.mjs && npm run a11y
+//       或掃有子路徑的建置（CI 的做法，第五十六輪）：BASE_PATH=/repo/preview/pr-N DIST_DIR=… node scripts/build.mjs，
+//       再以相同的 BASE_PATH、DIST_DIR 執行 npm run a11y（靜態伺服器把網址的 BASE_PATH 前綴去掉再對應到 DIST_DIR）。
 // - 本腳本「不建置」，只讀 dist/（或 DIST_DIR）；沒有 dist 會明確報錯。
 // - 每個樣板挑一頁代表，桌機 1280px 與手機 320px 各跑一次（320px 同時檢查橫向捲動，對應 WCAG 1.4.10 Reflow）。
 // - serious／critical 違規 → exit 1；moderate／minor 只列警告（不擋合併），但數量會輸出：報告開頭、終端機最後一行，
@@ -14,7 +16,7 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
-// 靜態伺服器要認得 basePath；建置時用 BASE_PATH='' 最單純，沒設則沿用站台設定
+// 靜態伺服器要認得 basePath：與建置時的 BASE_PATH 相同（CI 掃預覽建置時是 /repo/preview/pr-N；本機用 BASE_PATH='' 最單純）
 const BASE = (process.env.BASE_PATH ?? process.env.A11Y_BASE_PATH ?? '').replace(/\/$/, '');
 
 /** 代表頁：每種樣板一頁；dist 內不存在的路徑會被略過並列警告 */
@@ -77,6 +79,9 @@ async function main() {
   const findings = []; // { page, vp, rule, impact, help, helpUrl, nodes:[{target, summary}] }
   const overflow = []; // { page, vp, scrollWidth, clientWidth }
   const skipped = [];
+  // 第五十六輪：同站資源回 404（CSS、JS、索引、答案資料）＝掃到的畫面和民眾看到的不同（最常見是 BASE_PATH 與建置不一致）→ 列為阻擋。
+  // /api/ 是動態端點（例如電子報頁探測 /api/health，靜態主機本來就沒有，頁面會退回模擬模式），不算靜態資源
+  const missing = []; // { page, vp, url }
   let runs = 0;
   try {
     for (const vp of VIEWPORTS) {
@@ -86,8 +91,15 @@ async function main() {
         const noIndex = p.includes('/search/?q=') && !fs.existsSync(path.join(DIST, 'pagefind'));
         if (noIndex || !exists(p)) { if (!skipped.includes(p)) skipped.push(p); continue; }
         const page = await ctx.newPage();
+        page.on('response', (r) => {
+          const u = r.url();
+          const rel = u.slice(`http://127.0.0.1:${port}`.length).split('?')[0];
+          if (r.status() === 404 && u.startsWith(`http://127.0.0.1:${port}/`) && !rel.startsWith(`${BASE}/api/`)) missing.push({ page: p, vp: vp.name, url: u.slice(`http://127.0.0.1:${port}`.length) });
+        });
         try {
-          await page.goto(`${origin}${p}`, { waitUntil: 'networkidle' });
+          const resp = await page.goto(`${origin}${p}`, { waitUntil: 'networkidle' });
+          // 第五十六輪：BASE_PATH 對不上時伺服器回 404.html，axe 會掃到錯誤頁卻顯示通過；主文件不是 2xx 就當整個檢測失敗
+          if (!resp || resp.status() >= 400) throw new Error(`${p}：HTTP ${resp ? resp.status() : '無回應'}（BASE_PATH「${BASE}」與 DIST_DIR 的建置是否一致？）`);
           if (vp.fontScale) await page.evaluate((pct) => { document.documentElement.style.fontSize = `${pct}%`; }, vp.fontScale);
           if (p.includes('/ask/?q=')) await page.waitForSelector('#answer[aria-busy="false"]', { timeout: 15000 }); // 答案由前端引擎渲染，等到有內容才掃（逾時 ⇒ 失敗，比掃到空畫面誠實）
           if (p.includes('/search/?q=')) await page.waitForSelector('#search-results li', { timeout: 15000 }); // 全文搜尋：等 Pagefind 載入並畫出結果才掃（逾時 ⇒ 例外 ⇒ 整個檢測失敗，比掃到空畫面誠實）
@@ -108,12 +120,13 @@ async function main() {
   } finally { await browser.close(); server.close(); }
 
   const blocking = findings.filter((f) => BLOCKING.has(f.impact));
+  const nBlock = blocking.length + overflow.length + missing.length;
   const warn = findings.filter((f) => !BLOCKING.has(f.impact));
   const md = [];
   md.push('## 無障礙檢測（axe-core）', '');
   md.push(`- 掃描：${runs} 次（${PAGES.length - skipped.length} 頁 × ${VIEWPORTS.map((v) => v.name).join('、')}）；規則集：${TAGS.join(', ')}`);
   if (skipped.length) md.push(`- 略過（dist 內沒有）：${skipped.join('、')}`);
-  md.push(`- 結果：**${blocking.length + overflow.length} 項阻擋**（serious／critical${overflow.length ? '＋橫向捲動' : ''}）、${warn.length} 項警告（moderate／minor）`);
+  md.push(`- 結果：**${nBlock} 項阻擋**（serious／critical${overflow.length ? '＋橫向捲動' : ''}${missing.length ? '＋同站資源 404' : ''}）、${warn.length} 項警告（moderate／minor）`);
   // 警告依規則別統計（同一規則在不同頁、不同視窗各算一筆，與下方表格列數一致）
   const warningRules = {};
   for (const f of warn) warningRules[f.rule] = (warningRules[f.rule] ?? 0) + 1;
@@ -126,24 +139,30 @@ async function main() {
     md.push('');
   };
   table(blocking, '阻擋（serious／critical）');
+  if (missing.length) {
+    md.push('### 阻擋：同站資源 404（掃到的畫面不完整；先確認 BASE_PATH 與 DIST_DIR 的建置一致）', '', '| 頁面 | 視窗 | 404 的網址 |', '|---|---|---|');
+    for (const m of missing.slice(0, 50)) md.push(`| \`${m.page}\` | ${m.vp} | \`${m.url}\` |`);
+    if (missing.length > 50) md.push(`| … | | 另有 ${missing.length - 50} 筆 |`);
+    md.push('');
+  }
   if (overflow.length) {
     md.push('### 阻擋：橫向捲動（320 px／文字 200%＋390 px；WCAG 1.4.10）', '', '| 頁面 | 視窗 | scrollWidth | clientWidth |', '|---|---|---|---|');
     for (const o of overflow) md.push(`| \`${o.page}\` | ${o.vp} | ${o.scrollWidth} | ${o.clientWidth} |`);
     md.push('');
   }
   table(warn, '警告（moderate／minor，不擋合併）');
-  if (!findings.length && !overflow.length) md.push('沒有任何違規。', '');
+  if (!findings.length && !overflow.length && !missing.length) md.push('沒有任何違規。', '');
   const report = md.join('\n');
   console.log(report);
   for (const f of blocking) console.log(`\n[${f.impact}] ${f.rule} @ ${f.page} (${f.vp})\n` + f.nodes.slice(0, 4).map((n) => `  - ${n.target}\n    ${n.html}`).join('\n'));
-  console.log(`\n[a11y] 阻擋 ${blocking.length + overflow.length}、警告 ${warn.length}（moderate／minor，不擋合併）${warn.length ? `：${Object.entries(warningRules).map(([r, n]) => `${r}×${n}`).join('、')}` : ''}`);
+  console.log(`\n[a11y] 阻擋 ${nBlock}、警告 ${warn.length}（moderate／minor，不擋合併）${warn.length ? `：${Object.entries(warningRules).map(([r, n]) => `${r}×${n}`).join('、')}` : ''}`);
   if (process.env.A11Y_JSON) {
-    const summary = { runs, blocking: blocking.length + overflow.length, warnings: warn.length, warningRules };
+    const summary = { runs, blocking: nBlock, warnings: warn.length, warningRules };
     try { fs.writeFileSync(process.env.A11Y_JSON, `${JSON.stringify(summary)}\n`); } catch { /* 摘要寫不出去不影響結果 */ }
   }
   if (process.env.A11Y_REPORT) fs.writeFileSync(process.env.A11Y_REPORT, `${report}\n`);
   if (process.env.GITHUB_STEP_SUMMARY) { try { fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${report}\n`); } catch { /* 摘要寫不進去不影響結果 */ } }
-  process.exit(blocking.length || overflow.length ? 1 : 0);
+  process.exit(nBlock ? 1 : 0);
 }
 
 main().catch((e) => { console.error(e); process.exit(2); });

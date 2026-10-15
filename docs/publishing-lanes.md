@@ -37,7 +37,7 @@
 
 1. **流程看不見。** 承辦人只做三件事：填對欄位、寫內文、加附件，然後按送出。分支、PR、檢查、合併、部署由系統代做（後台 `/admin/publish/` 的「模擬送出」把這些步驟攤開給你看，正式環境承辦人看不到也不用管）。
 2. **CI 當審核者。** 機器能判斷的，就不要讓人審：schema 與跨檔參照、治理規則（逾期、版本鏈、白名單、反向稽核）、評估集版本題、檔案資產（存在、雜湊、alt、授權）、連結。人只審機器不能判斷的：措辭、事實、立場。設定檔中以 `rules.ciIsTheReviewer: true` 明示。
-3. **分車道。** 依「錯了的代價」和「是否被 AI 引用、影響醫療行為」分三條車道（第 3 節），而不是依單位或職級。一個 PR 同時含多種型別時，**取最嚴格的車道**（一般 ＞ 快 ＞ 緊急）；程式、文件、設定等非內容變更一律走一般車道。
+3. **分車道。** 依「錯了的代價」和「是否被 AI 引用、影響醫療行為」分三條車道（第 3 節），而不是依單位或職級。一個 PR 同時含多種型別時，**取最嚴格的車道**（一般 ＞ 快 ＞ 緊急）；程式、文件、設定等非內容變更一律走一般車道，由 OASIS 審（不是公關室，第 8 節）。
 4. **多語不擋中文。** 翻譯還沒審完，不能卡住中文正本上線。規則：`rules.translationsNeverBlock: true`；一級內容（疾病、疫苗、澄清、態勢）未審核的語言頁本來就不渲染，二級內容（新聞稿、Q&A、專區、申請服務）可先以機器翻譯上線並標示。
 5. **上線後仍有人看。** 快車道與緊急發布的內容上線後自動產生「上線後複核」待辦（第 7 節），不是上線就沒事。
 
@@ -52,7 +52,7 @@
 | 內容型別 | 疫情態勢（`situation`）；以及標了 `urgent: true` 的新聞稿、致醫界通函、澄清 | 新聞稿、致醫界通函、澄清、人才招募（`job`）、採購公告（`tender`）、宣導 Banner | 疾病、疫苗、文件、Q&A、專區、申請服務、一般頁面、出版品、檢驗項目、研究計畫、資料集、影音、移轉清單 |
 | 自動合併 | 是 | 是 | **否** |
 | 需要的人工核准 | 0 位 | 0 位 | **1 位** |
-| 審核人 | —（上線後由公關室複核） | —（上線後由公關室複核） | 公關室；**一級內容（疾病、疫苗）：公關室＋OASIS** |
+| 審核人 | —（上線後由公關室複核） | —（上線後由公關室複核） | 公關室；**一級內容（疾病、疫苗）：公關室＋OASIS**；程式、文件、工作流程等非內容變更：**OASIS**（`codeReviewers`，第五十六輪；同時改了內容則公關室＋OASIS） |
 | 誰可以用（第二十三輪） | `allowedAuthors` 名單內的值班帳號；`urgent` 另受 `rules.urgentAllowedAuthors` 限制 | `allowedAuthors` 名單內的承辦人（帳號或 `team:<org>/<slug>`）；職缺另含人事室承辦人、採購另含秘書室承辦人（`allowedAuthorsByType`，第五十四輪） | 任何有寫入權限的人（反正要人審） |
 | SLA | 10 分鐘（目標上線時間） | 180 分鐘（PR 開啟後仍未合併就提醒） | 2 個工作天 |
 | 上線後複核 | 24 小時內，公關室 | 24 小時內，公關室 | 不需要（已事先審核） |
@@ -143,7 +143,8 @@ CI 把 PR 作者（`github.event.pull_request.user.login`）傳給 `scripts/lane
 
 ## 8. CODEOWNERS 與審核權限
 
-- `.github/CODEOWNERS` 把路徑對應到審核單位：`content/diseases/**`、`content/vaccines/**`、`content/documents/**`、`content/faq/**` → 公關室＋OASIS；其餘內容目錄 → 各權責單位。GitHub 的 CODEOWNERS 只認帳號與團隊，**原型沒有團隊**，帳號一律用倉庫擁有者示範，單位對應以註解標示（`lanes.json` 的 `reviewerAccounts` 同理）。
+- `.github/CODEOWNERS` 把路徑對應到審核單位：`content/diseases/**`、`content/vaccines/**`、`content/documents/**`、`content/faq/**` → 公關室＋OASIS；其餘內容目錄 → 各權責單位。
+- **車道機器人留言上的「審核人」**（`lanes.json` → `scripts/lane.mjs`）：純內容的一般車道 PR → `reviewers`（公關室）；一級內容 → 再加 `tier1Reviewers`（公關室＋OASIS）；**程式、測試、文件、工作流程等 `content/` 與 `data/snapshots/` 以外的變更 → `codeReviewers`（OASIS，AI推動辦公室；第五十六輪）**，同一個 PR 也改了內容時與內容審核人聯集。公關室是內容總編輯，不審程式；程式、治理規則與文件由 OASIS 負責。治理設定（`content/governance/`）與主檔（`content/master/`）在路徑上屬內容（CI 分流算純內容），但審核人同樣取 `codeReviewers`（OASIS），與 CODEOWNERS 的註解一致。GitHub 的 CODEOWNERS 只認帳號與團隊，**原型沒有團隊**，帳號一律用倉庫擁有者示範，單位對應以註解標示（`lanes.json` 的 `reviewerAccounts` 同理）。
 - 一般車道的核准檢查：CI 以 `gh pr view --json reviews` 確認有核准且檢查通過才合併，否則在 PR 留言說明還缺什麼。
 - **正式環境要做的事**：建立單位對應的團隊或群組；分支保護（`main` 禁止直接 push、必須通過 CI；**不要**設原生的「合併前需 N 位核准」，它會擋下快車道的自動合併——核准人數交給車道機器人判斷，或用規則集讓機器人帳號繞過並留紀錄，見 [deploy.md](deploy.md)）；管理員繞過規則要留紀錄；審核人名單由資料治理委員會核定，異動走 `lanes.json` 的 PR（自己受車道規範）。
 - 調整車道（把某型別從一般車道移到快車道，或反之）：**一律走一般車道的 PR 並經委員會議定**，因為 `content/governance/` 本身就是治理設定。
@@ -229,12 +230,12 @@ CI 把 PR 作者（`github.event.pull_request.user.login`）傳給 `scripts/lane
 
 | 檔案 | 觸發 | 做什麼 |
 | --- | --- | --- |
-| `content-pr.yml` | `pull_request`（開啟、更新、重新開啟）；`pull_request_review`（提交審核後重跑，讓一般車道核准即合併） | checkout → `npm ci` → `npm test` → `node scripts/build.mjs --check` → `node scripts/lane.mjs`（改動檔案取自 `git diff --name-only origin/main...HEAD`）→ 以 `BASE_PATH=/new_cdc_prototype/preview/pr-{N}` 建置預覽 → 推到 `previews` 分支的 `pr-{N}/`（只保留一個快照提交，避免歷史累積）→ 決定動作（檢查未過＝不合併；自動合併車道＝合併；一般車道＝每位審核人最新一則為 APPROVED 的人數 ≥ 需求才合併）→ 在 PR 留言（或更新同一則）並加標籤 `lane:fast`／`lane:standard`／`lane:emergency` → `gh pr merge --squash --delete-branch` → 觸發 `pages.yml` 重新部署。分叉來的 PR 拿不到寫入權杖，只跑檢查 |
+| `content-pr.yml` | `pull_request`（開啟、更新、重新開啟）；`pull_request_review`（提交審核後重跑，讓一般車道核准即合併） | checkout → 判定純內容／程式 PR（每個變更檔都在 `content/`、`data/snapshots/` 才算純內容；第五十六輪）→ `npm ci` → 個資掃描 →（程式 PR）lint、format、typecheck、`npm test`／（純內容 PR）`npm run test:content` → `node scripts/build.mjs --check` → `node scripts/lane.mjs`（改動檔案取自 `git diff --name-only --no-renames origin/main...HEAD`）→ 以 `BASE_PATH=/new_cdc_prototype/preview/pr-{N}` 建置預覽（只建這一次；程式 PR 的 axe 也掃這份）→ 推到 `previews` 分支的 `pr-{N}/`（只保留一個快照提交，避免歷史累積）→ 決定動作（檢查未過＝不合併；自動合併車道＝合併；一般車道＝每位審核人最新一則為 APPROVED 的人數 ≥ 需求才合併）→ 在 PR 留言（或更新同一則）並加標籤 `lane:fast`／`lane:standard`／`lane:emergency` → `gh pr merge --squash --delete-branch --match-head-commit`（只合檢查過的 head）→ 觸發 `pages.yml` 重新部署。純內容 PR 略過的程式檢查在留言顯示「略過（純內容變更）」；是否純內容由 lane job 以 PR 的 API 檔案清單再判定一次，程式 PR 無法偽裝（[deploy.md](deploy.md) §28）。分叉來的 PR 拿不到寫入權杖，只跑檢查 |
 | `preview-cleanup.yml` | PR 關閉；每日 01:41 UTC 排程；手動 | 刪除 `previews/pr-{N}/`（排程時掃描所有已非開啟狀態的 PR），觸發主站重新部署 |
 | `lane-sla.yml` | 每小時（:23） | 依 `lane:*` 標籤與建立時間找出開啟超過 SLA 的 PR，留言並加 `sla:breach`（每個 PR 只留一次言） |
-| `pages.yml` | push main、每 2 小時排程（偶數整點）、手動 | `npm ci` → `npm test` → 重抓官方資料並把快照 commit 回 main（**只在 02:00 UTC 那一次排程與手動執行時**；`content-pr.yml` 觸發的部署傳 `refresh=false` 不重抓）→ 取出 `previews` 分支 → `npm run build`（複製到 `dist/preview/`）→ 部署 Pages |
+| `pages.yml` | push main、每 2 小時排程（偶數整點）、手動 | `npm ci` → 還原或下載 Chromium 並存快取（給 `content-pr.yml` 的程式 PR 還原；第五十六輪）→ `npm test` → 重抓官方資料並把快照 commit 回 main（**只在 02:00 UTC 那一次排程與手動執行時**；`content-pr.yml` 觸發的部署傳 `refresh=false` 不重抓）→ 取出 `previews` 分支 → `npm run build`（複製到 `dist/preview/`）→ 部署 Pages |
 
-**車道判定**（`scripts/lane.mjs`）：輸入變更檔案清單，輸出 JSON（`lane`、`autoMerge`、`requiredApprovals`、`reviewers`、`sla`、`files[]` 每檔的型別與車道、`reasons[]`）。多檔取最嚴格；`content/` 以外的檔案視為一般車道。單檔也可本機試：
+**車道判定**（`scripts/lane.mjs`）：輸入變更檔案清單，輸出 JSON（`lane`、`autoMerge`、`requiredApprovals`、`reviewers`、`sla`、`files[]` 每檔的型別與車道、`reasons[]`）。多檔取最嚴格；`content/` 以外的檔案視為一般車道，審核人取 `codeReviewers`（OASIS）。單檔也可本機試：
 
 ```bash
 node scripts/lane.mjs content/news/2026-09-18-flu-antiviral-extended.json

@@ -112,6 +112,30 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第五十六輪：內容 PR 只跑內容閘門、一個 PR 只建一次站、程式變更由 OASIS 審
+
+Yulun（2026-10-15）：第五十五輪列的四項加速「要，請派 Opus 實做」；另外整理一份 CI／CD 流程、測試基準與對傳統上架方式的比較；PR 留言一直把審核人寫成公關室，要改。細節：[docs/deploy.md](docs/deploy.md) 第 28 節、[docs/publishing-lanes.md](docs/publishing-lanes.md) 第 8 節、[docs/ci-cd-overview.md](docs/ci-cd-overview.md)；工程契約 ARCHITECTURE §59，取捨 architecture-decisions §44。
+
+### 做了什麼
+
+- **內容 PR 與程式 PR 分流**：每個變更檔都在 `content/` 或 `data/snapshots/` 的 PR 只跑個資掃描、`build --check`、內容測試子集（`npm run test:content`，21 個檔約 22 秒）、車道判定與一次預覽建置；lint、型別、完整測試、axe 都略過，留言顯示「略過（純內容變更）」。改到程式、測試、文件、工作流程的 PR 照舊全跑。
+- **一個 PR 只建一次站**：無障礙掃描改掃預覽建置那一份（同樣的 `BASE_PATH`），不再另建一份；掃描多了兩道保險：主頁不是 2xx、同站靜態檔 404 都算失敗，避免路徑接錯卻顯示通過。
+- **Chromium 快取**：`pages.yml` 在 main 上存，PR 只還原；鍵是 package-lock 裡的 Playwright 版本。
+- **審核人**：一般車道新增 `codeReviewers`（OASIS）。只改程式／文件／治理設定／主檔的 PR 審核人是 AI推動辦公室；同時改內容則公關室＋OASIS；純內容 PR 照舊。
+- **CI／CD 流程總覽**（docs/ci-cd-overview.md）：流程圖、關卡、基準數字、比較表、常見質疑、反問廠商的題目。
+
+### 為什麼這樣做
+
+- **純內容 PR 沒有改程式，程式檢查的結果和 main 一樣**，再跑一次只是等。合併後 main 的建置仍跑全部測試，沒過就不部署，所以錯誤最晚在部署前被擋。
+- **能不能合併只看 lane job 自己算的閘門**：它用 PR 的 API 檔案清單（含改名前路徑）重新判定是否純內容，artifact 寫什麼都不能讓程式 PR 免檢；合併加 `--match-head-commit`，檢查期間又推的 commit 不會被一起合進去。
+- **公關室是內容總編輯，不審程式**；程式、治理規則與文件歸 OASIS，與 CODEOWNERS 的註解一致。
+
+### 結果與還沒解的
+
+- 預估（依第五十五輪 run #77 的逐步時間）：純內容 PR 從 5.7 分鐘降到約 1.3 分鐘，程式 PR 約 5 分鐘；**實際數字要看合併後的第一個內容 PR 與程式 PR**，請在 Actions 核對。
+- 已知取捨：純內容 PR 不跑答案引擎與盲測題組的測試，改了內容讓那些測試失敗時會在 main 的建置才發現（不部署、後續程式 PR 變紅）；內文裡的無障礙問題（例如標題層級跳號）要到下一個程式 PR 才會被掃到。
+- 快取要等 main 上 `pages.yml` 跑過一次才有。
+
 ## 第五十五輪：內容越來越多，Git＋CI 會不會慢到爆炸？
 
 Yulun（2026-10-15）：廠商質疑用 Git 做 CI，內容越來越多會不會慢到爆炸；原型的 CI 最近也越來越久；Anthropic 的 Scion 文章有沒有幫助。這一輪只做分析與文件，不改程式。細節：[docs/ci-scaling.md](docs/ci-scaling.md)；工程摘要 ARCHITECTURE §58，取捨 architecture-decisions §43。
@@ -886,6 +910,7 @@ docs/                使用說明與治理文件
 | [docs/i18n.md](docs/i18n.md) | **多語工程筆記**：詞彙退回規則（`id_` 欄位、永不顯示 `term.*` 鍵值）、外語頁中文比例檢查（`I18N_CJK_CHECK`）、「這頁沒有你的語言」提示、機器翻譯初稿怎麼審核後上線、來臺專區（第四十輪） |
 | [docs/ask-log.md](docs/ask-log.md) | **智慧問答查詢紀錄**：記什麼、不記什麼（遮兩次、無 IP、時間到分鐘、不要追蹤就不送）、為什麼用 fetch keepalive 不用 sendBeacon、k-匿名報表與疑似同義詞候選、正式收件端契約與資訊室確認清單、離線 LLM 掛點（第四十一輪） |
 | [docs/intl-epidemic.md](docs/intl-epidemic.md) | **國際重要疫情資訊自動上架**：四種做法比較（表單／拉取／推送／標準 feed）、交換格式 v1（JSON、CSV、舊官網匯出）、三條路一個匯入器、機器把關規則、實作位置、要請疫情中心與資訊室回答的問題、本輪教訓（第四十三輪） |
+| [docs/ci-cd-overview.md](docs/ci-cd-overview.md) | **CI／CD 流程總覽（拿去談的版本）**：原型與正式環境的流程圖、11 道關卡各擋什麼錯、可重跑的基準數字表、與傳統上架的比較、常見質疑與回答、反問 CMS 廠商的題目 |
 | [docs/ci-scaling.md](docs/ci-scaling.md) | **內容越來越多，Git＋CI 會不會慢到爆炸**：Actions 334 次執行的逐步實測（變慢的是測試與無障礙掃描，checkout 一直 2–3 秒）、本機把內容加到 4 倍與 10 倍的建置時間、舊站規模的推估、Anthropic Scion 文章哪些能借用、分三層的對策（內容 PR 與程式 PR 分開、一個 PR 建一次站、增量索引、自架 runner、分倉） |
 | [docs/transition-faq.md](docs/transition-faq.md) | **同事常問的五個問題**：小改現行官網能不能導入 AI 與治理（能外掛問答、不能做治理）、新站另做舊站留著會怎樣（只能唯讀並行）、怎麼驗廠商能力（三道實作題）、200 字差別說明、時程估算與切換做法（經費另案評估，不寫在公開儲存庫，見 §8）、LINE 疾管家會不會跟著換（連到 line-chatbot.md） |
 | [docs/careers-privacy.md](docs/careers-privacy.md) | 人才招募個資處理原則：報名資料不進 repo、模擬報名只存瀏覽器、正式報名在站外或後端、只公布報名編號與遮罩姓名、保存與下架、查詢與刪除、個資法對應與告知事項範本 |

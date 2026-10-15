@@ -35,6 +35,22 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      # 第五十六輪（docs/deploy.md 第 28 節）：替 content-pr.yml 的程式 PR 存 Chromium 快取。PR 那邊只還原（actions/cache/restore）、不寫入，
+      # 所以別人會用到的快取只來自 main 上這一步（PR 讀得到 base 分支的快取；PR 存的快取 main 與其他 PR 讀不到）。
+      # key 是 package-lock.json 的 playwright-core 版本：命中時這三步不到幾秒；只有升級 Playwright 後的第一次部署下載一次。
+      # 每 2 小時的排程都會還原一次，快取不會因 7 天沒用到而被清掉。
+      - name: Playwright version (Chromium cache key)
+        id: pw
+        run: echo "version=$(jq -r '.packages["node_modules/playwright-core"].version // "none"' package-lock.json | tr -cd '0-9A-Za-z.-')" >> "$GITHUB_OUTPUT"
+      - name: Chromium cache for content-pr (restore, or download once and save)
+        id: pwcache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-chromium-${{ runner.os }}-${{ steps.pw.outputs.version }}
+      - name: Download Chromium into the cache (cache miss only)
+        if: steps.pwcache.outputs.cache-hit != 'true'
+        run: npx playwright install chromium
       - name: Lint (eslint) + format check + type check
         run: |
           npm run lint

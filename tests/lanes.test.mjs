@@ -44,6 +44,8 @@ test('lanes.json：形狀正確、三條車道、每個內容型別恰好一條�
   assert.equal(emergency.autoMerge, true); assert.equal(fast.autoMerge, true); assert.equal(standard.autoMerge, false);
   assert.equal(standard.requiredApprovals, 1);
   assert.deepEqual(standard.reviewers, ['unit.pr']); assert.deepEqual(standard.tier1Reviewers, ['unit.pr', 'unit.oasis']);
+  assert.deepEqual(standard.codeReviewers, ['unit.oasis']); // 第五十六輪：程式／文件變更由 OASIS 審
+  assert.equal(emergency.codeReviewers, undefined); assert.equal(fast.codeReviewers, undefined);
   assert.equal(fast.postPublishReviewHours, 24); assert.equal(emergency.postPublishReviewHours, 24);
   assert.deepEqual(fast.types, ['news', 'letter', 'clarification', 'job', 'tender', 'banner']);
   assert.equal(cfg.rules.translationsNeverBlock, true);
@@ -58,6 +60,13 @@ test('lanes.json：形狀正確、三條車道、每個內容型別恰好一條�
   assert.ok(errs.some((e) => e.includes('disease')), errs.join('；'));
   assert.ok(errs.some((e) => e.includes('至少要 1 位核准')), errs.join('；'));
   assert.ok(validateLanes({ lanes: {} }, ALL_TYPES).some((e) => e.includes('沒有對應車道')));
+  // 第五十六輪：codeReviewers 只放一般車道、必須是非空字串陣列
+  const badCode = structuredClone(cfg);
+  badCode.lanes.fast.codeReviewers = ['unit.oasis'];
+  badCode.lanes.standard.codeReviewers = [];
+  const codeErrs = validateLanes(badCode, ALL_TYPES);
+  assert.ok(codeErrs.some((e) => e.includes('fast.codeReviewers 只用在一般車道')), codeErrs.join('；'));
+  assert.ok(codeErrs.some((e) => e.includes('standard.codeReviewers 必須是非空字串陣列')), codeErrs.join('；'));
 });
 
 test('_common.json：publishAt（date-time 或 date）、urgent（只限 news／letter／clarification）、postPublishReview', () => {
@@ -123,9 +132,12 @@ test('laneForFiles：單檔快車道自動合併；多檔取最嚴格；一級�
   assert.ok(mixed.reasons.some((r) => r.includes('多檔取最嚴格')));
   assert.equal(mixed.postPublishReview, null);
 
+  // 第五十六輪：程式／文件＋內容 ⇒ 內容審核人（公關室）與 codeReviewers（OASIS）聯集
   const code = laneForFiles(['scripts/build.mjs', 'src/templates/public/news.mjs', 'docs/deploy.md', 'content/news/x.json'], { since });
-  assert.equal(code.lane, 'standard'); assert.equal(code.tier1, false); assert.deepEqual(code.reviewers, ['unit.pr']);
+  assert.equal(code.lane, 'standard'); assert.equal(code.tier1, false); assert.deepEqual(code.reviewers, ['unit.pr', 'unit.oasis']);
+  assert.deepEqual(code.reviewerNames, ['公關室', 'AI推動辦公室']);
   assert.ok(code.reasons.includes('程式／文件變更需審核'));
+  assert.ok(code.reasons.some((r) => r.startsWith('含程式／文件／治理設定／主檔變更，審核人加 unit.oasis')), code.reasons.join('；'));
   assert.equal(code.files.find((f) => f.file === 'scripts/build.mjs').reason, '程式／文件變更需審核');
 
   const faq = laneForFiles(['content/faq/x.json'], { since });
@@ -136,6 +148,45 @@ test('laneForFiles：單檔快車道自動合併；多檔取最嚴格；一級�
   assert.equal(laneForFiles(['content/governance/lanes.json'], { since }).lane, 'standard');
   const none = laneForFiles([], { since });
   assert.equal(none.lane, 'standard'); assert.ok(none.reasons[0].includes('沒有變更檔案'));
+});
+
+test('第五十六輪 laneForFiles 審核人：只有程式／文件 ⇒ OASIS；混內容 ⇒ 聯集；一級內容再加 tier1Reviewers；純內容照舊公關室', () => {
+  const since = '2026-10-05T01:00:00Z';
+  // 只有程式、測試、文件、工作流程：審核人只有 OASIS（以前留言寫「公關室」）
+  const only = laneForFiles(['scripts/lane.mjs', 'tests/lanes.test.mjs', 'docs/publishing-lanes.md', '.github/workflows/content-pr.yml'], { since, author: 'ancientsky' });
+  assert.equal(only.lane, 'standard'); assert.equal(only.autoMerge, false); assert.equal(only.requiredApprovals, 1);
+  assert.deepEqual(only.reviewers, ['unit.oasis']);
+  assert.deepEqual(only.reviewerNames, ['AI推動辦公室']);
+  assert.deepEqual(only.reviewerAccounts, ['ancientsky']);
+  assert.ok(only.reasons.includes('只有程式／文件／治理設定／主檔變更，審核人為 unit.oasis'), only.reasons.join('；'));
+  assert.equal(only.authorGate, null, '一般車道不看作者名單');
+  // 程式＋一級內容：公關室、OASIS（tier1Reviewers 也含兩者，不重複）
+  const t1 = laneForFiles(['scripts/build.mjs', 'content/diseases/dengue.json'], { since });
+  assert.deepEqual(t1.reviewers, ['unit.pr', 'unit.oasis']); assert.equal(t1.tier1, true);
+  // 程式＋快車道內容：整包降為一般車道，內容與程式的審核人都要
+  const fastMix = laneForFiles(['src/templates/public/news.mjs', 'content/news/x.json'], { since, author: 'ancientsky' });
+  assert.equal(fastMix.lane, 'standard'); assert.deepEqual(fastMix.reviewers, ['unit.pr', 'unit.oasis']);
+  // 純內容（一般車道）照舊只有公關室；官方資料快照也是內容路徑，不加 codeReviewers
+  for (const files of [['content/faq/x.json'], ['data/snapshots/travel.json']]) {
+    const r = laneForFiles(files, { since });
+    assert.equal(r.lane, 'standard', files[0]);
+    assert.deepEqual(r.reviewers, ['unit.pr'], files[0]);
+    assert.ok(!r.reasons.some((x) => x.includes('程式／文件')), files[0]);
+  }
+  // 治理設定與主檔歸 OASIS（CODEOWNERS 同此）：只改它們 ⇒ 只有 OASIS；混內容 ⇒ 聯集；仍是內容路徑（CI 分流算純內容）
+  for (const files of [['content/governance/lanes.json'], ['content/master/diseases.json']]) {
+    const r = laneForFiles(files, { since });
+    assert.equal(r.lane, 'standard', files[0]);
+    assert.deepEqual(r.reviewers, ['unit.oasis'], files[0]);
+    assert.ok(!r.reasons.includes('程式／文件變更需審核'), files[0]);
+  }
+  assert.deepEqual(laneForFiles(['content/governance/eval-set.json', 'content/faq/x.json'], { since }).reviewers, ['unit.pr', 'unit.oasis']);
+  // 純快車道內容：沒有事前審核人
+  assert.deepEqual(laneForFiles(['content/news/x.json'], { since, author: 'ancientsky' }).reviewers, []);
+  // lanes.json 沒有 codeReviewers 的舊設定：退回 reviewers（行為與第五十五輪相同）
+  const legacy = structuredClone(cfg);
+  delete legacy.lanes.standard.codeReviewers;
+  assert.deepEqual(laneForFiles(['scripts/build.mjs'], { since, cfg: legacy }).reviewers, ['unit.pr']);
 });
 
 test('laneForFiles：讀檔判斷 urgent 與型別；檔案資產隨所屬內容；缺檔依目錄推定', () => {
@@ -364,7 +415,9 @@ test('content-pr.yml：觸發、權限、併發、檢查、車道、預覽、留
     'actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2', 'actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2',
     'npm run format:check', 'npm run typecheck',
     'BUILD_TODAY=2026-10-01 node scripts/build.mjs --check',
-    'node scripts/lane.mjs', 'git diff --name-only origin/main...HEAD',
+    'node scripts/lane.mjs', 'git diff --name-only --no-renames origin/main...HEAD', '--files-from="$RUNNER_TEMP/changed.txt"',
+    // 第五十六輪：純內容分流、內容測試子集、一次建置、Chromium 快取（只還原）、合併只合檢查過的 head
+    'id: scope', 'npm run test:content', 'actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0', '--match-head-commit "$HEAD_SHA"',
     'preview/pr-${{ github.event.pull_request.number }}', 'BUILD_TODAY: 2026-10-01', 'SITE_URL: https://', 'LINK_CHECK: warn', 'npm run build',
     'previews', '--orphan', '--force-with-lease', 'github-actions[bot]', 'for attempt in',
     'gh workflow run pages.yml --ref main',
