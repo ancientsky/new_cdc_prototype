@@ -8,17 +8,13 @@
 // 切換視圖用 <a target="denguemap-frame">：沒有 JS 也能切；inline script 只負責更新 aria-current、iframe title 與「開新視窗」連結（CSP 以雜湊放行）。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { denguemapState, taipeiMinute } from '../../../scripts/lib/denguemap.mjs';
-import { denguemapLink, denguemapButton, sourceCard, unitName, hrefFor } from './_partials.mjs';
+import { denguemapLink, denguemapButton, sourceCard, unitName, hrefFor, DENGUEMAP_OF_DISEASE } from './_partials.mjs';
 
 export const DENGUEMAP_OWNER = 'unit.epidemic-intelligence';
 export const DENGUEMAP_TOPIC_ID = 'topic.denguemap';
 const FRAME = 'denguemap-frame';
-/**
- * 哪些疾病頁有登革熱地圖入口（與 vaxmap 的 VAXMAP_GROUP_OF 同一作法：先寫在程式，第二階段改成疾病主檔欄位）。
- *  card：疫情區塊最上方放疫情小卡（含病例地圖／聚集警示／蚊媒地圖按鈕）；vectorIn：在哪個區塊放「蚊媒地圖」按鈕。
- * 屈公病與登革熱同為埃及斑蚊、白線斑蚊傳播，病媒蚊風險地圖同樣適用；病例數是登革熱的，所以屈公病頁不放小卡。
- */
-export const DENGUEMAP_OF_DISEASE = { 'disease.dengue': { card: true }, 'disease.chikungunya': { vectorIn: 'prevention' } };
+/** 哪些疾病頁有登革熱地圖入口：定義在 _partials.mjs（態勢卡 sitCard 也要用，避免循環匯入），這裡轉出 */
+export { DENGUEMAP_OF_DISEASE };
 
 /** 快照＋過期判斷（模板共用）；now 預設 site.now（建置的真實時間，不受 BUILD_TODAY 影響） */
 export function denguemapCardData(site, { now = site.now ?? Date.now() } = {}) {
@@ -53,7 +49,7 @@ export function denguemapCard(ctx, { heading = 'h3', topicLink = true, now } = {
   const tp = topicLink ? topicOf(site) : null;
   const topicA = tp ? html`<a href="${hrefFor(ctx, tp)}">${t('denguemap.topic')} →</a>` : '';
   const head = html`<header class="c-dmcard__head"><${raw(H)} id="dmcard-h" class="c-dmcard__t">${t('denguemap.card.t')}</${raw(H)}><span class="c-pill c-pill--info">${t('denguemap.card.badge')}</span></header>`;
-  const lastTime = d.snap?.manifest?.generatedAt ? taipeiMinute(d.snap.manifest.generatedAt) : '';
+  const lastTime = taipeiMinute(d.dataTime ?? d.snap?.manifest?.sources?.cases?.fetchedAt ?? d.snap?.manifest?.generatedAt ?? '');
   if (d.state !== 'ok') {
     const why =
       d.state === 'missing'
@@ -74,9 +70,27 @@ export function denguemapCard(ctx, { heading = 'h3', topicLink = true, now } = {
       <p class="c-linkrow c-dmcard__links">${denguemapButton(ctx, { view: 'map', label: t('denguemap.open') })} ${topicA}</p>
     </section>`;
   }
-  const s = d.snap.summary,
-    m = d.snap.manifest;
-  const towns = s.topTowns14.filter((r) => r[1] > 0).length;
+  const s = d.snap.summary;
+  const localTowns = s.topTowns14.filter((r) => r[1] > 0);
+  const towns = localTowns.length;
+  // 第五十七輪（之三）：summary.townNames 有名稱 ⇒ 列最多 3 個本土鄉鎮（每個連到地圖該縣市的本土病例）；任一缺名稱 ⇒ 退回只列鄉鎮數
+  const top3 = localTowns.slice(0, 3);
+  const named = top3.length && top3.every((r) => s.townNames?.[r[0]]);
+  const townLabel = (r) => {
+    const n = s.townNames[r[0]];
+    if (ctx.lang === 'zh-TW') return `${n.countyZh}${n.zh} ${r[1]} 例`;
+    const en = `${n.en}, ${n.countyEn} (${r[1]})`;
+    return ctx.lang === 'en' ? en : html`<span lang="en">${en}</span>`;
+  };
+  const townLinks = named
+    ? html`<p class="c-dmcard__towns">
+        <b>${t('denguemap.towns')}</b>
+        ${top3.map(
+          (r, i) =>
+            html`${i ? (ctx.lang === 'zh-TW' ? '、' : '; ') : ''}${denguemapButton(ctx, { view: 'map', county: s.townNames[r[0]].county, type: 'local', label: townLabel(r), cls: 'c-dmcard__town' })}`,
+        )}${towns > 3 ? html` <span class="muted">${ctx.lang === 'zh-TW' ? '（' : '('}${t('denguemap.towns.more', { n: towns })}${ctx.lang === 'zh-TW' ? '）' : ')'}</span>` : ''}
+      </p>`
+    : '';
   const prev = (type) =>
     d.prevIncomplete?.[type] ? t('denguemap.prev.incomplete') : t('denguemap.prev', { year: s.year - 1, n: s.prevYtd[type].toLocaleString('en-US') });
   const owner = unitName(ctx, DENGUEMAP_OWNER);
@@ -98,9 +112,10 @@ export function denguemapCard(ctx, { heading = 'h3', topicLink = true, now } = {
     </dl>
     <p class="c-dmcard__meta">
       <span><b>${t('denguemap.latest')}</b> <time datetime="${s.latestOnset}">${ctx.fmtDate(s.latestOnset)}</time></span>
-      <span><b>${t('denguemap.towns14')}</b> ${towns}</span>
-      <span><b>${t('denguemap.datatime')}</b> <time datetime="${m.generatedAt}">${lastTime}</time>${t('denguemap.tpe')}</span>
+      ${named ? '' : html`<span><b>${t('denguemap.towns14')}</b> ${towns}</span>`}
+      <span><b>${t('denguemap.datatime')}</b> <time datetime="${d.dataTime}">${lastTime}</time>${t('denguemap.tpe')}</span>
     </p>
+    ${townLinks} ${d.casesStale ? html`<p class="c-dmcard__kept" role="note">${t('denguemap.kept', { time: lastTime })}${t('denguemap.tpe')}</p>` : ''}
     <p class="c-dmcard__note muted">${t('denguemap.note')}</p>
     <p class="c-linkrow c-dmcard__links">
       ${denguemapButton(ctx, { view: 'map', type: 'local', label: t('denguemap.view.map') })}

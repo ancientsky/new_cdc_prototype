@@ -318,11 +318,14 @@ export function sitCard(ctx, it, { variant = 'compact' } = {}) {
   const metric = html`<p class="c-sit-card__metric">${arrow}<span class="c-sit-card__num">${sitField(ctx, it, 'metricValue')}</span>${trendSr}${demo}</p>`;
   const desc = html`<p class="c-sit-card__desc">${sitField(ctx, it, 'metricLabel')}${sitField(ctx, it, 'deltaText') ? html`<br><span class="c-sit-card__delta">${sitField(ctx, it, 'deltaText')}</span>` : ''}</p>`;
   const advice = html`<p class="c-sit-card__advice"><b>${t('sit.advice')}</b>${sitField(ctx, it, 'advice')}</p>`;
+  // 第五十七輪：登革熱等有地圖的疾病，卡片底部加「登革熱地圖 ↗」（開新視窗；docs/denguemap-integration.md 1.2）
+  const dmLink = DENGUEMAP_OF_DISEASE[it.disease]?.card && site.config?.denguemapUrl ? html`<p class="c-sit-card__dm">${denguemapButton(ctx, { view: 'map', type: 'local', label: t('denguemap.short'), cls: 'c-sit-card__dmlink' })}</p>` : '';
   const open = () => html`<article class="c-sit-card c-sit-card--${it.status} c-sit-card--${variant} c-sit-card--style-${style}">`;
   if (style === 'minimal') {
     return html`${open()}
   ${head}
   <p class="c-sit-card__line">${arrow}<b class="c-sit-card__num">${sitField(ctx, it, 'metricValue')}</b>${trendSr} <span>${sitField(ctx, it, 'metricLabel')}</span>${demo}</p>
+  ${dmLink}
 </article>`;
   }
   if (style === 'advice') {
@@ -330,6 +333,7 @@ export function sitCard(ctx, it, { variant = 'compact' } = {}) {
   ${head}
   <p class="c-sit-card__lead">${sitField(ctx, it, 'advice')}</p>
   <p class="c-sit-card__line">${arrow}<b class="c-sit-card__num">${sitField(ctx, it, 'metricValue')}</b>${trendSr} <span>${sitField(ctx, it, 'metricLabel')}${sitField(ctx, it, 'deltaText') ? `，${sitField(ctx, it, 'deltaText')}` : ''}</span>${demo}</p>
+  ${dmLink}
 </article>`;
   }
   if (style === 'chart') {
@@ -341,6 +345,7 @@ export function sitCard(ctx, it, { variant = 'compact' } = {}) {
   <figure class="c-sit-card__spark">${raw(sparklineSvg(it.weekly, { color: `var(--status-${it.status})`, width: 220, height: 44, title }))}<figcaption>${labels.length ? html`<span>${labels[0]}</span><span>${t('situation.weekly', { n: it.weekly.length })}</span><span>${labels[labels.length - 1]}</span>` : t('situation.weekly', { n: it.weekly.length })}</figcaption></figure>
   ${desc}
   ${advice}
+  ${dmLink}
 </article>`;
   }
   return html`${open()}
@@ -348,6 +353,7 @@ export function sitCard(ctx, it, { variant = 'compact' } = {}) {
   ${metric}
   ${desc}
   ${advice}
+  ${dmLink}
 </article>`;
 }
 
@@ -770,6 +776,12 @@ export function vaxmapButton(ctx, { label, cls = 'c-btn', ...linkOpts } = {}) {
    地圖只有中、英兩語：本站 zh-TW 不帶（嵌入時明帶 lang=zh，免得地圖依瀏覽器語言自己切成英文）、其他語言一律 lang=en。
    嵌入模式（embed:true）：?embed=1&theme=light|dark&lang=zh|en 放在 search（地圖也接受放在 hash 的 query）。規則與參數表見 docs/denguemap-integration.md。 */
 export const DENGUEMAP_VIEWS = ['map', 'clusters', 'vector', 'trends', 'imported', 'about'];
+/**
+ * 哪些疾病頁有登革熱地圖入口（與 vaxmap 的 VAXMAP_GROUP_OF 同一作法：先寫在程式，第二階段改成疾病主檔欄位）。
+ *  card：疫情區塊放疫情小卡、態勢卡加地圖連結；vectorIn：在哪個區塊放「蚊媒地圖」按鈕。
+ * 屈公病與登革熱同為埃及斑蚊、白線斑蚊傳播，病媒蚊風險地圖同樣適用；病例數是登革熱的，所以屈公病頁不放小卡。
+ */
+export const DENGUEMAP_OF_DISEASE = { 'disease.dengue': { card: true }, 'disease.chikungunya': { vectorIn: 'prevention' } };
 const DENGUEMAP_TYPES = ['local', 'imported', 'all'];
 const DENGUEMAP_TYPE_VIEWS = new Set(['map', 'trends']);
 export const denguemapLang = (lang) => (lang === 'zh-TW' || lang === 'zh' ? null : 'en');

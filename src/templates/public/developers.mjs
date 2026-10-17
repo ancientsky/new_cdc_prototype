@@ -257,7 +257,7 @@ ${vaxmapLink(ctx, { info: true, anchor: 'where', lang: 'vi' })}</code></pre>
 ${denguemapLink(ctx, { view: 'imported', country: 'vn', lang: 'en' })}
 ${denguemapLink(ctx, { view: 'vector', embed: true, theme: 'light' })}</code></pre>
     <p>疫情摘要小檔（不需要地圖也能用）：<a href="${ctx.site.config.denguemapDataUrl}summary.json" rel="noopener"><code>summary.json</code></a>（今年本土／境外移入與去年同期、近 7／14／30 天、各縣市、近 14 天病例鄉鎮）與 <a href="${ctx.site.config.denguemapDataUrl}manifest.json" rel="noopener"><code>manifest.json</code></a>（資料時間、來源狀態、資料品質警示）。本站登錄為資料集 <a href="${url('/data/')}#dataset.denguemap-summary"><code>dataset.denguemap-summary</code></a>，疾病頁的疫情小卡用的是建置時快照。</p>
-    <p class="muted">不認得的參數值會被忽略，不會報錯。資料每 3 小時檢查、有變動才更新；<code>manifest.warnings</code> 有今年的 <code>cases-shortfall</code> 或 <code>sources.cases.stale</code> 為 true 時請不要直接引用數字。整合方案見 <code>docs/denguemap-integration.md</code>。</p>
+    <p class="muted">不認得的參數值會被忽略，不會報錯。資料每 3 小時檢查、有變動才更新；<code>manifest.warnings</code> 有今年的 <code>cases-shortfall</code>、或 <code>sources.cases.fetchedAt</code>（最後一次成功抓取）超過 48 小時時請不要直接引用數字；<code>stale: true</code> 只代表最近一次抓取失敗、沿用上一版，引用時請一併寫出 <code>fetchedAt</code>。整合方案見 <code>docs/denguemap-integration.md</code>。</p>
   </section>
 
   <section id="redirects" aria-labelledby="red-h">

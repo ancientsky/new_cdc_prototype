@@ -15,7 +15,8 @@ import { loadSite } from '../scripts/lib/load.mjs';
 import { applyGovernance } from '../scripts/lib/governance.mjs';
 import { makeCtx } from '../scripts/lib/pages.mjs';
 import { STRINGS } from '../src/client/i18n.js';
-import { denguemapLink, denguemapButton } from '../src/templates/public/_partials.mjs';
+import { denguemapLink, denguemapButton, sitCard } from '../src/templates/public/_partials.mjs';
+import { navPanels } from '../src/templates/public/_nav-panels.mjs';
 import { denguemapCard, denguemapEmbed, DENGUEMAP_OF_DISEASE } from '../src/templates/public/_denguemap.mjs';
 import {
   validateSummary,
@@ -27,6 +28,7 @@ import {
   denguemapState,
   taipeiMinute,
   isIsoDate,
+  cleanName,
   SNAPSHOT_FILE,
   MAX_BYTES,
 } from '../scripts/lib/denguemap.mjs';
@@ -263,7 +265,7 @@ test('importDenguemap：成功寫快照；失敗保留既有快照只記 lastLiv
   assert.equal(fs.existsSync(path.join(dryDir, SNAPSHOT_FILE)), false);
 });
 
-test('syncDenguemapDataset：lastUpdated＝generatedAt 的臺北日期、provenance.fetchedAt＝抓取日，沒變不寫檔', () => {
+test('syncDenguemapDataset：lastUpdated＝病例資料最後一次成功抓取的臺北日期、provenance.fetchedAt＝抓取日，沒變不寫檔', () => {
   const dir = tmpDir();
   const src = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/datasets/denguemap-summary.json'), 'utf8'));
   fs.writeFileSync(
@@ -272,7 +274,11 @@ test('syncDenguemapDataset：lastUpdated＝generatedAt 的臺北日期、provena
   );
   // 2026-10-17T17:30Z ＝ 臺北 10-18 01:30
   const s = buildSnapshot({
-    manifest: { ...MANIFEST, generatedAt: '2026-10-17T17:30:00Z' },
+    manifest: {
+      ...MANIFEST,
+      generatedAt: '2026-10-17T17:30:00Z',
+      sources: { ...MANIFEST.sources, cases: { ok: true, stale: false, fetchedAt: '2026-10-17T17:30:00Z' } },
+    },
     summary: SUMMARY,
     sourceUrl: `${RAW}summary.json`,
     fetchedAt: '2026-10-17T18:00:00.000Z',
@@ -295,14 +301,27 @@ test('已提交的快照通過驗證、來源是 Pages 或 raw 的 summary.json'
 });
 
 // ───────── 三、疫情小卡 ─────────
-test('denguemapState：48 小時、cases stale／ok:false、今年 cases-shortfall ⇒ stale；舊年份短缺不影響', () => {
+test('denguemapState：病例資料時間（cases.fetchedAt）48 小時、從未成功、今年 cases-shortfall ⇒ stale；stale:true 在時限內照常顯示；舊年份短缺不影響', () => {
   const s0 = snap();
   assert.deepEqual(denguemapState(s0, { now: NOW, maxAgeHours: 48 }).state, 'ok');
   assert.equal(denguemapState(s0, { now: Date.parse('2026-10-19T01:02:06Z'), maxAgeHours: 48 }).state, 'ok', '剛好 48 小時仍算新');
   assert.deepEqual(denguemapState(s0, { now: Date.parse('2026-10-19T01:03:00Z'), maxAgeHours: 48 }).reasons, ['too-old']);
   const m1 = clone(MANIFEST);
+  // stale:true（這次抓取失敗、沿用上一版）但上次成功在 48 小時內 ⇒ 照常顯示，資料時間用 cases.fetchedAt（不是較新的 generatedAt）
   m1.sources.cases = { ok: false, stale: true, fetchedAt: '2026-10-16T01:00:00Z' };
-  assert.deepEqual(denguemapState(snap(m1), { now: NOW }).reasons, ['cases-stale']);
+  const st1 = denguemapState(snap(m1), { now: NOW });
+  assert.equal(st1.state, 'ok');
+  assert.equal(st1.casesStale, true);
+  assert.equal(st1.dataTime, '2026-10-16T01:00:00Z');
+  assert.equal(st1.ageHours, 26);
+  // 上次成功超過 48 小時 ⇒ too-old（即使 generatedAt 很新）
+  assert.deepEqual(denguemapState(snap(m1), { now: Date.parse('2026-10-18T01:01:00Z') }).reasons, ['too-old']);
+  // 從未成功（ok:false、stale:false、fetchedAt:null）⇒ cases-missing；計時退回 generatedAt
+  const m0 = clone(MANIFEST);
+  m0.sources.cases = { ok: false, stale: false, fetchedAt: null };
+  const st0 = denguemapState(snap(m0), { now: NOW });
+  assert.deepEqual(st0.reasons, ['cases-missing']);
+  assert.equal(st0.dataTime, MANIFEST.generatedAt);
   const m2 = clone(MANIFEST);
   m2.warnings = [{ code: 'cases-shortfall', year: 2026, type: 'local', got: 3, expected: 14 }];
   assert.deepEqual(denguemapState(snap(m2), { now: NOW }).reasons, ['cases-shortfall']);
@@ -382,6 +401,28 @@ test('去年 cases-shortfall：今年數字照常，該類型的「去年同期�
   const m3 = clone(MANIFEST);
   m3.warnings = [{ code: 'cases-shortfall', year: 2024, type: 'local', got: 1, expected: 462 }];
   assert.deepEqual(denguemapState(snap(m3), { now: NOW }).prevIncomplete, { local: false, imported: false });
+});
+
+test('小卡：病例來源 stale 但在 48 小時內 ⇒ 顯示數字、資料時間用最後一次成功抓取、加黃色註記', () => {
+  const m = clone(MANIFEST);
+  m.generatedAt = '2026-10-17T02:30:00Z';
+  m.sources.cases = { ok: false, stale: true, fetchedAt: '2026-10-16T22:02:06Z' };
+  const h = H(denguemapCard(ctxWith('zh-TW', snap(m))));
+  assert.match(h, /data-denguemap-state="ok"/);
+  assert.match(h, /<b class="c-dmcard__n">14<\/b>/);
+  assert.match(h, /資料時間<\/b><time datetime="2026-10-16T22:02:06Z">2026-10-17 06:02<\/time>（臺北時間）/);
+  assert.match(h, /<p class="c-dmcard__kept" role="note">地圖最近一次更新沒有成功，以下是 2026-10-17 06:02 取得的資料（臺北時間）<\/p>/);
+  assert.match(
+    H(denguemapCard(ctxWith('en', snap(m)))),
+    /The map&#39;s latest update did not succeed; these figures are from 2026-10-17 06:02 \(Taipei time\)|The map's latest update did not succeed; these figures are from 2026-10-17 06:02 \(Taipei time\)/,
+  );
+  assert.ok(!H(denguemapCard(ctxWith('zh-TW', snap()))).includes('c-dmcard__kept'), '正常時沒有註記');
+  // 從未成功 ⇒ 不顯示數字
+  const m0 = clone(MANIFEST);
+  m0.sources.cases = { ok: false, stale: false, fetchedAt: null };
+  const h0 = H(denguemapCard(ctxWith('zh-TW', snap(m0))));
+  assert.match(h0, /data-denguemap-state="stale"[\s\S]*地圖還沒有成功取得過病例資料/);
+  assert.ok(!/c-dmcard__n/.test(h0));
 });
 
 test('疫情小卡七語：每個 denguemap.* 字串七語齊備（英文單位刻意留空）；英文頁沒有中文介面字、日期依語言格式', () => {
@@ -473,6 +514,95 @@ test('pages.yml：每次建置前重抓登革熱地圖（失敗不擋建置）�
   for (const h of ['## 0.', '## 1.', '## 2.', '## 3.', '## 4.', '## 5.']) assert.ok(doc.includes(h), h);
 });
 
+// ───────── 第五十七輪（之三）：鄉鎮名稱、首頁態勢卡、主選單 ─────────
+const TOWNS = {
+  10013010: { county: '10013', countyZh: '屏東縣', countyEn: 'Pingtung County', zh: '屏東市', en: 'Pingtung City' },
+  64000050: { county: '64000', countyZh: '高雄市', countyEn: 'Kaohsiung City', zh: '苓雅區', en: 'Lingya District' },
+};
+const withTowns = (over = {}) => ({ ...clone(SUMMARY), townNames: { ...clone(TOWNS), ...over } });
+
+test('townNames 驗證：選填；8 碼、在 topTowns14、county＝前 5 碼、名稱 NFKC／去控制字元／≤ 60 字／不含 HTML', () => {
+  assert.ok(validateSummary(SUMMARY).ok, '沒有 townNames 照常接受');
+  const ok = validateSummary(withTowns({ 10013010: { ...TOWNS['10013010'], zh: ' 屏東市\u0007\u200b ' } }));
+  assert.ok(ok.ok, ok.errors.join('；'));
+  assert.equal(ok.value.townNames['10013010'].zh, '屏東市');
+  assert.equal(cleanName('Ｐｉｎｇｔｕｎｇ'), 'Pingtung', 'NFKC 全形轉半形');
+  for (const [why, over] of [
+    ['不在 topTowns14', { 63000030: { county: '63000', countyZh: '臺北市', countyEn: 'Taipei City', zh: '大安區', en: "Da'an District" } }],
+    ['代碼不是 8 碼', { 6400005: TOWNS['64000050'] }],
+    ['county 不是前 5 碼', { 64000050: { ...TOWNS['64000050'], county: '67000' } }],
+    ['HTML', { 64000050: { ...TOWNS['64000050'], zh: '<img src=x onerror=alert(1)>' } }],
+    ['太長', { 64000050: { ...TOWNS['64000050'], en: 'x'.repeat(61) } }],
+    ['空字串', { 64000050: { ...TOWNS['64000050'], countyZh: '\u0000 ' } }],
+    ['不是字串', { 64000050: { ...TOWNS['64000050'], zh: 5 } }],
+  ])
+    assert.equal(validateSummary(withTowns(over)).ok, false, why);
+  assert.equal(validateSummary({ ...clone(SUMMARY), townNames: [] }).ok, false);
+  // 快照只留驗證後的欄位
+  assert.deepEqual(Object.keys(snap(MANIFEST, withTowns()).summary.townNames).sort(), ['10013010', '64000050']);
+});
+
+test('小卡列前 3 個本土鄉鎮（中文「屏東縣屏東市 2 例」、英文與其他語言用英文名），每個連到該縣市本土病例；缺名稱退回鄉鎮數', () => {
+  const s2 = withTowns();
+  s2.topTowns14 = [
+    ['10013010', 2, 0],
+    ['64000050', 0, 2],
+  ];
+  const zh = H(denguemapCard(ctxWith('zh-TW', snap(MANIFEST, s2))));
+  assert.match(
+    zh,
+    /<b>近 14 天本土病例所在鄉鎮市區<\/b><a class="c-dmcard__town" href="https:\/\/ancientsky\.github\.io\/denguemap\/#\/map\?county=10013&amp;type=local" target="_blank" rel="noopener" title="開新視窗">屏東縣屏東市 2 例 ↗/,
+  );
+  assert.ok(!zh.includes('苓雅區'), '只列本土 > 0 的鄉鎮');
+  assert.ok(!zh.includes('近 14 天有本土病例的鄉鎮市區'), '有名稱時不另列數量');
+  const en = H(denguemapCard(ctxWith('en', snap(MANIFEST, s2))));
+  assert.match(en, /county=10013&amp;type=local&amp;lang=en"[^>]*>Pingtung City, Pingtung County \(2\) ↗/);
+  const vi = H(denguemapCard(ctxWith('vi', snap(MANIFEST, s2))));
+  assert.match(vi, /<span lang="en">Pingtung City, Pingtung County \(2\)<\/span> ↗/, '其他語言用英文名並標 lang="en"');
+  // 超過 3 個本土鄉鎮 ⇒ 列 3 個＋「等 N 個」
+  const s4 = clone(SUMMARY);
+  s4.last14 = { local: 8, imported: 18 };
+  s4.last30 = { local: 8, imported: 33 };
+  s4.topTowns14 = [
+    ['64000090', 3, 0],
+    ['64000050', 2, 0],
+    ['64000040', 2, 0],
+    ['10013010', 1, 0],
+  ];
+  s4.townNames = Object.fromEntries(
+    s4.topTowns14.map(([c]) => [c, { county: c.slice(0, 5), countyZh: '縣市', countyEn: 'County', zh: `鄉${c}`, en: `Town ${c}` }]),
+  );
+  const h4 = H(denguemapCard(ctxWith('zh-TW', snap(MANIFEST, s4))));
+  assert.equal((h4.match(/class="c-dmcard__town"/g) ?? []).length, 3);
+  assert.match(h4, /（等 4 個鄉鎮市區）/);
+  // 前 3 個任一缺名稱 ⇒ 退回鄉鎮數
+  delete s4.townNames['64000040'];
+  const h5 = H(denguemapCard(ctxWith('zh-TW', snap(MANIFEST, s4))));
+  assert.ok(!h5.includes('c-dmcard__town'));
+  assert.match(h5, /近 14 天有本土病例的鄉鎮市區<\/b> 4/);
+});
+
+test('首頁態勢卡（sitCard）：登革熱卡有「登革熱地圖 ↗」、其他疾病沒有；主選單傳染病面板有外部連結、總數 ≤ 9', () => {
+  for (const l of ['zh-TW', 'en', 'th']) {
+    const ctx = makeCtx(site(), l);
+    const it = site().situation.items.find((i) => i.disease === 'disease.dengue');
+    const h = H(sitCard(ctx, it));
+    assert.match(
+      h,
+      /<p class="c-sit-card__dm"><a class="c-sit-card__dmlink" href="https:\/\/ancientsky\.github\.io\/denguemap\/#\/map\?type=local[^"]*" target="_blank" rel="noopener"/,
+      l,
+    );
+    assert.ok(h.includes(STRINGS[l]['denguemap.short']), l);
+    const other = site().situation.items.find((i) => i.disease !== 'disease.dengue');
+    assert.ok(!H(sitCard(ctx, other)).includes('denguemap'), `${l} 非登革熱卡不加`);
+    const p = navPanels(ctx).diseases;
+    const dm = p.cols[1].links.find((x) => /denguemap/.test(x.href));
+    assert.ok(dm && dm.ext === true && dm.label === STRINGS[l]['denguemap.short'], l);
+    const n = p.cols.reduce((a, c) => a + c.links.length, 0) + 1;
+    assert.ok(n <= 9 && p.cols.every((c) => c.links.length <= 5), `${l} 面板 ${n} 個連結`);
+  }
+});
+
 // ───────── dist（若已建置）─────────
 test(
   'dist（若已建置）：登革熱頁有小卡、屈公病頁有蚊媒地圖、專區頁中英都有 iframe、headers 的 frame-src',
@@ -486,6 +616,12 @@ test(
       assert.match(read(p), /<iframe\s+class="c-dmembed__frame"[^>]*loading="lazy"/, p);
     assert.match(read('topics/denguemap.md'), /## 互動地圖/);
     assert.match(read('diseases/dengue.md'), /登革熱地圖（概念原型、非官方站）/);
+    assert.match(read('index.html'), /class="c-sit-card__dmlink"[^>]*>登革熱地圖 ↗/, '首頁態勢卡');
+    assert.match(
+      read('index.html'),
+      /id="nav-panel-diseases"[\s\S]*?denguemap\/#\/map" target="_blank" rel="noopener">登革熱地圖 ↗<span class="sr-only">（開新視窗）<\/span>/,
+      '主選單',
+    );
     if (fs.existsSync(path.join(ROOT, 'dist/headers/headers.json')))
       assert.match(JSON.parse(read('headers/headers.json')).headers['Content-Security-Policy'], /frame-src https:\/\/ancientsky\.github\.io /);
   },

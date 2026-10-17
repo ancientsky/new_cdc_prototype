@@ -9,8 +9,9 @@
 //   2. 嚴格驗證：計數必須是非負整數、日期必須是真實的 ISO 日期、縣市代碼 5 碼、鄉鎮代碼 8 碼且前 5 碼是縣市碼；未知欄位丟掉（白名單輸出）。
 //   3. 全部失敗 ⇒ 保留既有快照（只記 lastLiveAttempt），exit 0，與其他官方資料來源同一規則。
 //
-// 過期規則（denguemapState，小卡用）：manifest.generatedAt 距建置時間超過 config.denguemapMaxAgeHours（48）、
-// manifest 標記病例來源 stale／失敗、或有今年的 cases-shortfall 警示 ⇒ 不顯示數字，只顯示「資料更新中」＋連結。
+// 過期規則（denguemapState，小卡用）：病例資料時間（sources.cases.fetchedAt，沒有才用 generatedAt）距建置時間超過
+// config.denguemapMaxAgeHours（48）、病例來源從未成功抓過（ok:false 且 stale:false）、或有今年的 cases-shortfall 警示
+// ⇒ 不顯示數字，只顯示「資料更新中」＋連結。stale:true（這次失敗、沿用上一版）但仍在 48 小時內 ⇒ 照常顯示並寫出資料時間。
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -40,6 +41,19 @@ export function isIsoUtc(s) {
   return typeof s === 'string' && ISO_UTC.test(s) && isIsoDate(s.slice(0, 10)) && !Number.isNaN(Date.parse(s));
 }
 const nonNegInt = (v) => Number.isSafeInteger(v) && v >= 0;
+export const MAX_NAME = 60;
+/** 名稱正規化：NFKC、去控制字元、收空白；空字串、超過 MAX_NAME 字、含 < > 的一律不收（回傳 null） */
+export function cleanName(v) {
+  if (typeof v !== 'string') return null;
+  // eslint-disable-next-line no-control-regex
+  const c = v
+    .normalize('NFKC')
+    .replace(/[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u2028-\u202e\u2060-\u206f\ufeff]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  if (!c || [...c].length > MAX_NAME || /[<>]/.test(c)) return null;
+  return c;
+}
 
 /** { local, imported } 兩個非負整數；回傳正規化後的物件或 null */
 function pair(v, where, errors) {
@@ -102,6 +116,47 @@ export function validateSummary(s) {
       }
       if (v.last14 && (r[1] > v.last14.local || r[2] > v.last14.imported)) errors.push(`topTowns14[${i}] ${r[0]} 的病例數大於近 14 天全國數`);
       if (v.topTowns14.length < MAX_TOP_TOWNS) v.topTowns14.push([r[0], r[1], r[2]]);
+    }
+  }
+  // townNames（選填，地圖 2026-10-17 新增）：只收 topTowns14 有的代碼；名稱 NFKC、去控制字元、≤ 60 字、不得含 HTML 角括號。
+  // 沒有這個欄位 ⇒ 小卡退回「鄉鎮數」一行（舊版 summary 照常可用）。
+  if (s.townNames !== undefined) {
+    const tn = s.townNames;
+    if (!tn || typeof tn !== 'object' || Array.isArray(tn)) errors.push('townNames 不是物件');
+    else {
+      const codes = new Set((Array.isArray(s.topTowns14) ? s.topTowns14 : []).map((r) => (Array.isArray(r) ? r[0] : null)));
+      const kept = new Set(v.topTowns14.map((r) => r[0]));
+      const names = {};
+      for (const [code, o] of Object.entries(tn).slice(0, 60)) {
+        if (!TOWN_RE.test(code)) {
+          errors.push(`townNames 代碼不是 8 碼：${code.slice(0, 20)}`);
+          continue;
+        }
+        if (!codes.has(code)) {
+          errors.push(`townNames.${code} 不在 topTowns14`);
+          continue;
+        }
+        if (!o || typeof o !== 'object' || Array.isArray(o)) {
+          errors.push(`townNames.${code} 不是物件`);
+          continue;
+        }
+        if (!COUNTY_RE.test(String(o.county ?? '')) || o.county !== code.slice(0, 5)) {
+          errors.push(`townNames.${code}.county 不是該鄉鎮的 5 碼縣市碼`);
+          continue;
+        }
+        const out = { county: o.county };
+        for (const k of ['countyZh', 'countyEn', 'zh', 'en']) {
+          const c = cleanName(o[k]);
+          if (c == null) {
+            errors.push(`townNames.${code}.${k} 不是 1–${MAX_NAME} 字的純文字`);
+            break;
+          }
+          out[k] = c;
+        }
+        if (Object.keys(out).length === 5 && kept.has(code)) names[code] = out; // 超過 MAX_TOP_TOWNS 而被截掉的鄉鎮，名稱也不留
+      }
+      if (Object.keys(tn).length > 60) errors.push(`townNames 有 ${Object.keys(tn).length} 筆，超過 60`);
+      v.townNames = names;
     }
   }
   return { ok: errors.length === 0, errors, value: errors.length ? null : v };
@@ -282,7 +337,7 @@ export async function importDenguemap({
     for (const a of attempts) logger(`  ${a.base} 失敗（${a.error}），改用下一個來源`);
     const s = snapshot.summary;
     logger(
-      `✓ ${LABEL}：${s.year} 年本土 ${s.ytd.local}、境外 ${s.ytd.imported}，最新發病日 ${s.latestOnset}，資料時間 ${snapshot.manifest.generatedAt}${snapshot.manifest.warnings.length ? `，警示 ${snapshot.manifest.warnings.length} 筆` : ''} ← ${snapshot.sourceUrl}`,
+      `✓ ${LABEL}：${s.year} 年本土 ${s.ytd.local}、境外 ${s.ytd.imported}，最新發病日 ${s.latestOnset}，病例資料時間 ${snapshot.manifest.sources.cases.fetchedAt ?? snapshot.manifest.generatedAt}${snapshot.manifest.sources.cases.stale ? '（病例來源這次失敗、沿用上一版）' : ''}${snapshot.manifest.warnings.length ? `，警示 ${snapshot.manifest.warnings.length} 筆` : ''} ← ${snapshot.sourceUrl}`,
     );
     if (dry) {
       logger(`(dry) 不寫入 ${SNAPSHOT_FILE}`);
@@ -319,7 +374,8 @@ export async function importDenguemap({
 /**
  * 小卡要不要顯示數字。回傳 { state: 'ok'|'stale'|'missing', reasons: string[]（機讀代碼）, ageHours }。
  *  - missing：沒有快照、或快照沒有通過驗證的 manifest／summary
- *  - stale：generatedAt 距 now 超過 maxAgeHours；cases 來源 stale 或 ok:false；今年（summary.year）有 cases-shortfall 警示
+ *  - stale：病例資料時間（cases.fetchedAt ?? generatedAt）距 now 超過 maxAgeHours；cases 從未成功（ok:false 且 stale:false）；今年（summary.year）有 cases-shortfall 警示
+ *  另回傳 dataTime（小卡顯示的資料時間）與 casesStale（沿用上一版時小卡加註）
  * 另回傳 prevIncomplete：{ local, imported }，去年該類型有 cases-shortfall 時為 true（小卡把「去年同期」換成「去年同期資料不完整」）。
  * 只讀快照本身，不讀時鐘：now（毫秒）由呼叫端給（建置用 site.now，測試可固定）。
  */
@@ -331,16 +387,20 @@ export function denguemapState(snap, { now, maxAgeHours = 48 } = {}) {
   const m = vm.value,
     s = vs.value;
   const reasons = [];
-  const ageHours = (Number(now) - Date.parse(m.generatedAt)) / 3600e3;
-  if (!(ageHours <= maxAgeHours)) reasons.push('too-old');
+  // 第五十七輪（之三）：資料時間＝病例來源最後一次「成功」抓取的時間（sources.cases.fetchedAt；沒有才用 generatedAt）。
+  // stale:true 只代表「這次抓取失敗、沿用上一版」——上游常常時好時壞，只看這個旗標會讓小卡大半時間空白；
+  // 所以 stale 但仍在 48 小時內 ⇒ 照常顯示數字，並把資料時間（較舊的那個）寫出來，讀者自己看得到有多舊。
   const cases = m.sources.cases;
-  if (cases.stale || !cases.ok) reasons.push('cases-stale');
+  const dataTime = cases.fetchedAt ?? m.generatedAt;
+  const ageHours = (Number(now) - Date.parse(dataTime)) / 3600e3;
+  if (!(ageHours <= maxAgeHours)) reasons.push('too-old');
+  if (!cases.ok && !cases.stale) reasons.push('cases-missing'); // 從未成功抓過
   if (m.warnings.some((w) => w.code === 'cases-shortfall' && w.year === s.year)) reasons.push('cases-shortfall');
   // 去年（summary.year − 1）有 cases-shortfall ⇒ 今年數字照常顯示，但該類型的「去年同期」比較不可信，小卡改顯示「去年同期資料不完整」。
   // 警示沒寫 type ⇒ 兩類都算。imported-shortfall 是 imported.json（國別）的檢查，與小卡的病例數無關，不看。
   const prevShort = (t) => m.warnings.some((w) => w.code === 'cases-shortfall' && w.year === s.year - 1 && (w.type === undefined || w.type === t));
   const prevIncomplete = { local: prevShort('local'), imported: prevShort('imported') };
-  return { state: reasons.length ? 'stale' : 'ok', reasons, ageHours: Math.round(ageHours * 10) / 10, prevIncomplete };
+  return { state: reasons.length ? 'stale' : 'ok', reasons, ageHours: Math.round(ageHours * 10) / 10, prevIncomplete, dataTime, casesStale: !!cases.stale };
 }
 
 /** ISO UTC → 臺北時間 'YYYY-MM-DD HH:mm'（資料時間顯示到分鐘；不依賴執行環境時區） */
