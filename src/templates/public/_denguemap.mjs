@@ -77,7 +77,8 @@ export function denguemapCard(ctx, { heading = 'h3', topicLink = true, now } = {
   const s = d.snap.summary,
     m = d.snap.manifest;
   const towns = s.topTowns14.filter((r) => r[1] > 0).length;
-  const prev = (n) => t('denguemap.prev', { year: s.year - 1, n: n.toLocaleString('en-US') });
+  const prev = (type) =>
+    d.prevIncomplete?.[type] ? t('denguemap.prev.incomplete') : t('denguemap.prev', { year: s.year - 1, n: s.prevYtd[type].toLocaleString('en-US') });
   const owner = unitName(ctx, DENGUEMAP_OWNER);
   const note = html`${t('source')}${ctx.lang === 'zh-TW' ? '：' : ': '}${t('denguemap.source.name')} · ${t('denguemap.datatime')}
   ${lastTime}${t('denguemap.tpe')} · ${t('denguemap.latest')} ${ctx.fmtDate(s.latestOnset)} ·
@@ -91,9 +92,9 @@ export function denguemapCard(ctx, { heading = 'h3', topicLink = true, now } = {
   return html`<section class="c-dmcard" id="denguemap-card" aria-labelledby="dmcard-h" data-denguemap-state="ok">
     ${head}
     <dl class="c-dmcard__stats">
-      ${stat(ctx, t('denguemap.ytd.local', { year: s.year }), s.ytd.local, prev(s.prevYtd.local))}
-      ${stat(ctx, t('denguemap.ytd.imported', { year: s.year }), s.ytd.imported, prev(s.prevYtd.imported))}
-      ${stat(ctx, t('denguemap.d14.local'), s.last14.local)} ${stat(ctx, t('denguemap.d14.imported'), s.last14.imported)}
+      ${stat(ctx, t('denguemap.ytd.local', { year: s.year }), s.ytd.local, prev('local'))}
+      ${stat(ctx, t('denguemap.ytd.imported', { year: s.year }), s.ytd.imported, prev('imported'))} ${stat(ctx, t('denguemap.d14.local'), s.last14.local)}
+      ${stat(ctx, t('denguemap.d14.imported'), s.last14.imported)}
     </dl>
     <p class="c-dmcard__meta">
       <span><b>${t('denguemap.latest')}</b> <time datetime="${s.latestOnset}">${ctx.fmtDate(s.latestOnset)}</time></span>
@@ -118,7 +119,10 @@ nav.addEventListener('click',function(e){var a=e.target.closest('a[data-dm-view]
 
 /**
  * 嵌入區塊。opts: { views（EMBED_VIEWS 子集）, view（預設第一個）, heading }。
- * iframe：title、loading=lazy、referrerpolicy=no-referrer、allow=fullscreen、sandbox（allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox）；
+ * iframe：title、loading=lazy、referrerpolicy=no-referrer、allow=fullscreen、sandbox（allow-scripts：地圖本身；allow-same-origin：Web Worker 與 storage；
+ *   allow-popups＋allow-popups-to-escape-sandbox：「開啟完整地圖 ↗」；allow-downloads：蚊媒地圖的 CSV）。
+ *   注意：原型的地圖與本站同在 ancientsky.github.io（同源），allow-scripts＋allow-same-origin 等於沒有隔離；換到專用網域後 sandbox 才真正生效
+ *   （docs/denguemap-integration.md §3.3）；
  * 高度由 CSS 依視窗決定（.c-dmembed__frame）。iframe 載不出來時，下方的「在新視窗開啟」連結一直看得到；沒有 JS 時另有 noscript 說明。
  */
 export function denguemapEmbed(ctx, { views = ['map', 'vector', 'imported'], view, heading = '' } = {}) {
@@ -146,7 +150,7 @@ export function denguemapEmbed(ctx, { views = ['map', 'vector', 'imported'], vie
           referrerpolicy="no-referrer"
           allow="fullscreen"
           allowfullscreen
-          sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+          sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-downloads"
         ></iframe>
       </div>
       <noscript><p class="c-dmembed__noscript" role="note">${t('denguemap.embed.noscript')}</p></noscript>

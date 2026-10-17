@@ -2130,6 +2130,7 @@ const ROWS_R57 = {
   'denguemap.ytd.local': ['{year} 年本土病例', 'Local cases in {year}', '{year}年の国内感染例', 'Lokal na kaso sa {year}', 'Ca lây nhiễm trong nước năm {year}', 'Kasus lokal tahun {year}', 'ผู้ป่วยติดเชื้อในประเทศ ปี {year}'],
   'denguemap.ytd.imported': ['{year} 年境外移入病例', 'Imported cases in {year}', '{year}年の輸入例', 'Imported na kaso sa {year}', 'Ca nhập cảnh năm {year}', 'Kasus impor tahun {year}', 'ผู้ป่วยติดเชื้อจากต่างประเทศ ปี {year}'],
   'denguemap.prev': ['{year} 年同期 {n} 例', 'Same period in {year}: {n}', '{year}年同期 {n}例', 'Parehong panahon ng {year}: {n}', 'Cùng kỳ năm {year}: {n}', 'Periode sama {year}: {n}', 'ช่วงเดียวกันปี {year}: {n} ราย'],
+  'denguemap.prev.incomplete': ['去年同期資料不完整', "Last year's data incomplete", '前年同期のデータが不完全', 'Kulang ang datos noong nakaraang taon', 'Dữ liệu cùng kỳ năm trước chưa đầy đủ', 'Data periode sama tahun lalu tidak lengkap', 'ข้อมูลช่วงเดียวกันของปีที่แล้วไม่ครบถ้วน'],
   'denguemap.d14.local': ['近 14 天本土病例', 'Local cases, last 14 days', '直近14日の国内感染例', 'Lokal na kaso, nakaraang 14 araw', 'Ca trong nước, 14 ngày qua', 'Kasus lokal, 14 hari terakhir', 'ผู้ป่วยในประเทศ 14 วันล่าสุด'],
   'denguemap.d14.imported': ['近 14 天境外移入病例', 'Imported cases, last 14 days', '直近14日の輸入例', 'Imported na kaso, nakaraang 14 araw', 'Ca nhập cảnh, 14 ngày qua', 'Kasus impor, 14 hari terakhir', 'ผู้ป่วยจากต่างประเทศ 14 วันล่าสุด'],
   'denguemap.unit': ['例', '', '例', 'kaso', 'ca', 'kasus', 'ราย'],

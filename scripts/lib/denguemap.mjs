@@ -320,6 +320,7 @@ export async function importDenguemap({
  * 小卡要不要顯示數字。回傳 { state: 'ok'|'stale'|'missing', reasons: string[]（機讀代碼）, ageHours }。
  *  - missing：沒有快照、或快照沒有通過驗證的 manifest／summary
  *  - stale：generatedAt 距 now 超過 maxAgeHours；cases 來源 stale 或 ok:false；今年（summary.year）有 cases-shortfall 警示
+ * 另回傳 prevIncomplete：{ local, imported }，去年該類型有 cases-shortfall 時為 true（小卡把「去年同期」換成「去年同期資料不完整」）。
  * 只讀快照本身，不讀時鐘：now（毫秒）由呼叫端給（建置用 site.now，測試可固定）。
  */
 export function denguemapState(snap, { now, maxAgeHours = 48 } = {}) {
@@ -335,7 +336,11 @@ export function denguemapState(snap, { now, maxAgeHours = 48 } = {}) {
   const cases = m.sources.cases;
   if (cases.stale || !cases.ok) reasons.push('cases-stale');
   if (m.warnings.some((w) => w.code === 'cases-shortfall' && w.year === s.year)) reasons.push('cases-shortfall');
-  return { state: reasons.length ? 'stale' : 'ok', reasons, ageHours: Math.round(ageHours * 10) / 10 };
+  // 去年（summary.year − 1）有 cases-shortfall ⇒ 今年數字照常顯示，但該類型的「去年同期」比較不可信，小卡改顯示「去年同期資料不完整」。
+  // 警示沒寫 type ⇒ 兩類都算。imported-shortfall 是 imported.json（國別）的檢查，與小卡的病例數無關，不看。
+  const prevShort = (t) => m.warnings.some((w) => w.code === 'cases-shortfall' && w.year === s.year - 1 && (w.type === undefined || w.type === t));
+  const prevIncomplete = { local: prevShort('local'), imported: prevShort('imported') };
+  return { state: reasons.length ? 'stale' : 'ok', reasons, ageHours: Math.round(ageHours * 10) / 10, prevIncomplete };
 }
 
 /** ISO UTC → 臺北時間 'YYYY-MM-DD HH:mm'（資料時間顯示到分鐘；不依賴執行環境時區） */

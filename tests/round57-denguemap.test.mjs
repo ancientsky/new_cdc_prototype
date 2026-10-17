@@ -348,6 +348,42 @@ test('疫情小卡：ok 顯示今年／去年同期／近 14 天／最新發病�
   assert.match(H(denguemapCard(ctxWith('zh-TW', null))), /data-denguemap-state="missing"[\s\S]*尚未取得登革熱地圖的資料/);
 });
 
+test('去年 cases-shortfall：今年數字照常，該類型的「去年同期」換成「去年同期資料不完整」；今年的 imported-shortfall 不影響小卡', () => {
+  const m = clone(MANIFEST);
+  m.warnings = [
+    { code: 'cases-shortfall', year: 2025, type: 'local', got: 5, expected: 180 },
+    { code: 'imported-shortfall', year: 2026, got: 100, expected: 191 },
+    { code: 'imported-shortfall', got: 294, expected: 894 },
+  ];
+  const st = denguemapState(snap(m), { now: NOW });
+  assert.equal(st.state, 'ok');
+  assert.deepEqual(st.prevIncomplete, { local: true, imported: false });
+  const h = H(denguemapCard(ctxWith('zh-TW', snap(m))));
+  assert.match(
+    h,
+    /2026 年本土病例<\/dt><dd><b class="c-dmcard__n">14<\/b><span class="c-dmcard__u">例<\/span><span class="c-dmcard__sub">去年同期資料不完整<\/span>/,
+  );
+  assert.ok(!h.includes('2025 年同期 23 例'), '不顯示會誤導的本土比較');
+  assert.match(
+    h,
+    /2026 年境外移入病例<\/dt><dd><b class="c-dmcard__n">186<\/b><span class="c-dmcard__u">例<\/span><span class="c-dmcard__sub">2025 年同期 175 例/,
+    '境外移入的比較照常',
+  );
+  // 警示沒寫 type ⇒ 兩類都換；英文與其他語言用同一個 i18n key
+  const m2 = clone(MANIFEST);
+  m2.warnings = [{ code: 'cases-shortfall', year: 2025, got: 1, expected: 400 }];
+  assert.deepEqual(denguemapState(snap(m2), { now: NOW }).prevIncomplete, { local: true, imported: true });
+  const en = H(denguemapCard(ctxWith('en', snap(m2))));
+  assert.equal((en.match(/Last year's data incomplete|Last year&#39;s data incomplete/g) ?? []).length, 2);
+  assert.ok(!/Same period in 2025/.test(en));
+  for (const l of ['ja', 'tl', 'vi', 'id', 'th'])
+    assert.ok(STRINGS[l]['denguemap.prev.incomplete'] && STRINGS[l]['denguemap.prev.incomplete'] !== STRINGS.en['denguemap.prev.incomplete'], l);
+  // 前年以前（2024）的短缺不影響去年同期
+  const m3 = clone(MANIFEST);
+  m3.warnings = [{ code: 'cases-shortfall', year: 2024, type: 'local', got: 1, expected: 462 }];
+  assert.deepEqual(denguemapState(snap(m3), { now: NOW }).prevIncomplete, { local: false, imported: false });
+});
+
 test('疫情小卡七語：每個 denguemap.* 字串七語齊備（英文單位刻意留空）；英文頁沒有中文介面字、日期依語言格式', () => {
   const keys = Object.keys(STRINGS['zh-TW']).filter((k) => k.startsWith('denguemap.'));
   assert.ok(keys.length >= 30);
@@ -379,7 +415,7 @@ test('疾病頁入口：登革熱疫情區塊有小卡、屈公病預防區塊�
     'loading="lazy"',
     'referrerpolicy="no-referrer"',
     'allow="fullscreen"',
-    'sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"',
+    'sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-downloads"',
   ])
     assert.ok(e.includes(attr), attr);
   assert.equal((e.match(/data-dm-view=/g) ?? []).length, 3, '不認得的視圖被丟掉');

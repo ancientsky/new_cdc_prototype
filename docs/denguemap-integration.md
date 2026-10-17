@@ -182,7 +182,7 @@ PR 預覽（`content-pr.yml`）不重抓，用已提交的快照；快照超過 
 | `sources.cases.stale === true` 或 `ok === false` | `cases-stale` | 同上（原因：地圖的病例資料這次沒有更新成功） |
 | `warnings` 有 `code: "cases-shortfall"` 且 `year` 等於 `summary.year`（今年） | `cases-shortfall` | 同上（原因：上游病例資料暫時不完整） |
 
-舊年份（例如 2023）的短缺警示**不影響**今年的數字，小卡照常顯示；`imported-shortfall` 是 `imported.json`（境外移入地球的國別資料）的檢查，與小卡的病例數無關，也不擋。判斷用建置當下的真實時間（`site.now`，不受 `BUILD_TODAY` 影響）。
+舊年份的短缺警示**不影響**今年的數字，小卡照常顯示；但**去年**（`summary.year − 1`）某類型有 `cases-shortfall` 時，該類型的「{前一年} 年同期 N 例」改顯示「去年同期資料不完整」（警示沒寫 `type` ⇒ 本土、境外都換），不做會誤導的比較（與地圖自己標示資料品質的作法一致）。`imported-shortfall` 是 `imported.json`（境外移入地球的國別資料）的檢查，小卡的境外移入數來自病例檔，所以今年的 `imported-shortfall` 也**不影響**小卡。判斷用建置當下的真實時間（`site.now`，不受 `BUILD_TODAY` 影響）。
 
 ---
 
@@ -233,7 +233,7 @@ vaxmap 方案 3.1 的結論同樣適用：一般疾病頁不嵌整張地圖（�
 <iframe name="denguemap-frame" src="…/denguemap/?embed=1&theme=light&lang=zh#/map"
         title="登革熱地圖：病例地圖（嵌入）" loading="lazy" referrerpolicy="no-referrer"
         allow="fullscreen" allowfullscreen
-        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+        sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-downloads"></iframe>
 <noscript>互動地圖需要 JavaScript…</noscript>
 <p>地圖沒有顯示？<a href="…/denguemap/#/map" target="_blank">開啟登革熱地圖 ↗</a></p>
 ```
@@ -259,7 +259,8 @@ vaxmap 方案 3.1 的結論同樣適用：一般疾病頁不嵌整張地圖（�
 
 **同源的影響（原型特有，請資訊室注意）**：GitHub Pages 上本站（`/new_cdc_prototype/`）、vaxmap（`/vaxmap-next/`）與登革熱地圖（`/denguemap/`）是**同一個 origin**。
 
-- `sandbox="allow-scripts allow-same-origin"` 在同源時**沒有隔離效果**：嵌入的地圖可以讀寫父頁 DOM、共用 `localStorage`（地圖的鍵名有 `denguemap.` 前綴，本站與地圖目前不會互相覆蓋；嵌入模式也刻意不寫偏好）。瀏覽器 console 會出現「allow-scripts 與 allow-same-origin 並用可逃出沙箱」的提醒，屬預期。仍保留 `sandbox`，是為了換到不同網域後自動生效（擋表單送出、擋頂層導頁、限制彈窗）。
+- `sandbox` 五項各有用途：`allow-scripts`（地圖本身）、`allow-same-origin`（MapLibre 的 Web Worker 與 storage）、`allow-popups`＋`allow-popups-to-escape-sandbox`（「開啟完整地圖 ↗」開的新分頁不繼承沙箱）、`allow-downloads`（蚊媒地圖的危險級里別 CSV）。不給 `allow-forms`、`allow-top-navigation`。
+- `allow-scripts allow-same-origin` 在同源時**沒有隔離效果**：嵌入的地圖可以讀寫父頁 DOM、共用 `localStorage`（地圖的鍵名有 `denguemap.` 前綴，本站與地圖目前不會互相覆蓋；嵌入模式也刻意不寫偏好）。瀏覽器 console 會出現「allow-scripts 與 allow-same-origin 並用可逃出沙箱」的提醒，屬預期。仍保留 `sandbox`，是為了換到不同網域後自動生效（擋表單送出、擋頂層導頁、限制彈窗）。
 - 信任邊界因此是「`ancientsky.github.io` 底下所有 repo」——原型可以接受，正式站不行。
 - GitHub Pages 不能設 HTTP 標頭，`<meta>` 形式的 CSP 又不能宣告 `frame-ancestors`，所以原型的地圖**任何網站都能嵌**；地圖沒有登入或會改變狀態的操作，點擊劫持風險低。
 - 站內連結檢查（`check-internal-links.mjs`）的 `siblingUrls` 已加 `denguemapUrl`：`BASE_PATH=''` 建置時，`https://ancientsky.github.io/denguemap/…` 才不會被當成站內缺檔。
@@ -319,7 +320,7 @@ vaxmap 方案在「列出最近 5 家院所」時建議 Web Component；登革�
 1. 看小卡有沒有數字。沒有 ⇒ 地圖或上游正在出問題，請開地圖的「資料說明 → 資料品質」看警示。
 2. 看「最新發病日」與「資料時間」差幾天：差距大表示最近沒有新病例，或後端資料延遲。
 3. 近一週的本土數字會往上補（研判時間差）；比較去年同期時，兩邊都是「1/1 到同月同日」的發病數。
-4. 2023–2025 年的歷史資料若有 `cases-shortfall` 警示，地圖的趨勢頁與歷年比較會偏低；小卡只用今年與去年同期，去年若有短缺警示，「去年同期」可能偏低（目前規則只擋今年，見第 5 節待決）。
+4. 2023–2025 年的歷史資料若有 `cases-shortfall` 警示，地圖的趨勢頁與歷年比較會偏低；小卡只用今年與去年同期：去年有短缺警示時，該類型的比較改顯示「去年同期資料不完整」，今年的數字照常。
 
 ### 4.4 無障礙與多語
 
@@ -342,7 +343,6 @@ vaxmap 方案在「列出最近 5 家院所」時建議 Web Component；登革�
 
 - 地圖目前**不是官方站**，資料是從疾管署登革熱地圖後端擷取的快照；正式導向前要確認後端同意被定時擷取（每 3 小時）與資料授權。
 - 上游截斷資料的問題在後端，地圖只能偵測與保留上一版；若後端長期回傳不完整資料，小卡會長期停在「資料更新中」——這是設計上寧缺勿錯的結果，請疫情中心追後端。
-- 「去年同期」若去年有 `cases-shortfall`，比較會失真；是否也要擋（或改為顯示「去年資料不完整」）請防疫醫師室決定。
 - 原型同源（3.3）：嵌入的地圖等於有本站頁面的完整權限；正式站必須換網域或同團隊部署。
 - 本站沒有 `twice-daily`／`hourly` 這類頻率值；若日後有更多「幾小時一次」的資料集，建議新增 `maxAgeHours` 欄位（vaxmap 方案 2.3 也提過），並讓 R6 待辦寫小時。
 - 本文件的參數以 2026-10-17 的地圖（含正在實作的嵌入模式）為準；地圖 `params.ts` 新增參數時，更新 1.1 的表與 `_partials.mjs` 的白名單即可。

@@ -295,9 +295,10 @@ function denguemapMarkdown(ctx) {
   const link = denguemapLink(ctx, { view: 'map' });
   if (d.state !== 'ok') return [`- 登革熱地圖（概念原型、非官方站）：資料更新中，請開啟登革熱地圖查看：${link}`];
   const s = d.snap.summary;
+  const prev = (type) => (d.prevIncomplete?.[type] ? '去年同期資料不完整' : `${s.year - 1} 年同期 ${s.prevYtd[type]} 例`);
   return [
     `- 登革熱地圖（概念原型、非官方站）快照，資料時間 ${taipeiMinute(d.snap.manifest.generatedAt)}（臺北時間），最新發病日 ${s.latestOnset}，依發病日統計：`,
-    `  - ${s.year} 年本土 ${s.ytd.local} 例（${s.year - 1} 年同期 ${s.prevYtd.local} 例）、境外移入 ${s.ytd.imported} 例（${s.year - 1} 年同期 ${s.prevYtd.imported} 例）`,
+    `  - ${s.year} 年本土 ${s.ytd.local} 例（${prev('local')}）、境外移入 ${s.ytd.imported} 例（${prev('imported')}）`,
     `  - 近 14 天本土 ${s.last14.local} 例、境外移入 ${s.last14.imported} 例`,
     `  - 正式數字以疾管署公布為準；地圖：${link}`,
   ];
