@@ -1,0 +1,241 @@
+{
+  "schema": 1,
+  "label": "登革熱地圖疫情摘要（summary.json＋manifest.json）",
+  "mode": "live",
+  "fetchedAt": "2026-10-17T02:42:20.781Z",
+  "sourceUrl": "https://raw.githubusercontent.com/ancientsky/denguemap/main/public/data/summary.json",
+  "manifest": {
+    "schema": 1,
+    "generatedAt": "2026-10-17T01:02:06Z",
+    "latestOnset": "2026-10-14",
+    "sources": {
+      "cases": {
+        "ok": true,
+        "stale": false,
+        "fetchedAt": "2026-10-17T01:02:06Z"
+      },
+      "imported": {
+        "ok": true,
+        "stale": false,
+        "fetchedAt": "2026-10-17T01:02:06Z"
+      },
+      "notices": {
+        "ok": true,
+        "stale": false,
+        "fetchedAt": "2026-10-17T01:02:06Z"
+      },
+      "clusters": {
+        "ok": true,
+        "stale": false,
+        "fetchedAt": "2026-10-17T01:02:06Z"
+      },
+      "vector": {
+        "ok": true,
+        "stale": false,
+        "fetchedAt": "2026-10-17T01:02:06Z"
+      },
+      "ns1": {
+        "ok": true,
+        "stale": false,
+        "fetchedAt": "2026-10-17T01:02:06Z"
+      },
+      "travel": {
+        "ok": true,
+        "stale": false,
+        "fetchedAt": "2026-10-17T01:02:06Z"
+      }
+    },
+    "warnings": []
+  },
+  "summary": {
+    "asOf": "2026-10-17",
+    "latestOnset": "2026-10-14",
+    "year": 2026,
+    "ytd": {
+      "local": 14,
+      "imported": 186
+    },
+    "last7": {
+      "local": 0,
+      "imported": 5
+    },
+    "last14": {
+      "local": 2,
+      "imported": 18
+    },
+    "last30": {
+      "local": 3,
+      "imported": 33
+    },
+    "prevYtd": {
+      "local": 23,
+      "imported": 175
+    },
+    "byCounty": {
+      "10002": {
+        "local": 0,
+        "imported": 4
+      },
+      "10004": {
+        "local": 0,
+        "imported": 5
+      },
+      "10005": {
+        "local": 0,
+        "imported": 1
+      },
+      "10007": {
+        "local": 2,
+        "imported": 15
+      },
+      "10008": {
+        "local": 0,
+        "imported": 2
+      },
+      "10009": {
+        "local": 0,
+        "imported": 3
+      },
+      "10013": {
+        "local": 2,
+        "imported": 3
+      },
+      "10014": {
+        "local": 0,
+        "imported": 1
+      },
+      "10015": {
+        "local": 0,
+        "imported": 1
+      },
+      "10017": {
+        "local": 0,
+        "imported": 1
+      },
+      "10018": {
+        "local": 0,
+        "imported": 3
+      },
+      "10020": {
+        "local": 0,
+        "imported": 2
+      },
+      "63000": {
+        "local": 0,
+        "imported": 26
+      },
+      "64000": {
+        "local": 10,
+        "imported": 32
+      },
+      "65000": {
+        "local": 0,
+        "imported": 31
+      },
+      "66000": {
+        "local": 0,
+        "imported": 18
+      },
+      "67000": {
+        "local": 0,
+        "imported": 14
+      },
+      "68000": {
+        "local": 0,
+        "imported": 24
+      }
+    },
+    "topTowns14": [
+      [
+        "10013010",
+        2,
+        0
+      ],
+      [
+        "64000050",
+        0,
+        2
+      ],
+      [
+        "10007020",
+        0,
+        1
+      ],
+      [
+        "63000030",
+        0,
+        1
+      ],
+      [
+        "63000110",
+        0,
+        1
+      ],
+      [
+        "64000040",
+        0,
+        1
+      ],
+      [
+        "64000060",
+        0,
+        1
+      ],
+      [
+        "65000010",
+        0,
+        1
+      ],
+      [
+        "65000020",
+        0,
+        1
+      ],
+      [
+        "65000050",
+        0,
+        1
+      ],
+      [
+        "65000080",
+        0,
+        1
+      ],
+      [
+        "67000280",
+        0,
+        1
+      ],
+      [
+        "67000310",
+        0,
+        1
+      ],
+      [
+        "67000330",
+        0,
+        1
+      ],
+      [
+        "67000360",
+        0,
+        1
+      ],
+      [
+        "68000010",
+        0,
+        1
+      ],
+      [
+        "68000030",
+        0,
+        1
+      ],
+      [
+        "68000050",
+        0,
+        1
+      ]
+    ]
+  }
+}

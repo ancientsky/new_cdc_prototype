@@ -95,6 +95,8 @@ export function loadSite(config) {
     ckan: readJSON(path.join(SNAPSHOTS, 'ckan-packages.json'), { meta: { mode: 'missing' }, data: [] }),
     // 第四十三輪：國際重要疫情資訊匯入紀錄（scripts/lib/intl-epidemic.mjs；治理引擎據此產生 intl-feed-held／intl-feed-unmapped 待辦）
     intlImport: readJSON(path.join(SNAPSHOTS, 'intl-epidemic-import.json'), { version: 1, lastRun: null, history: [] }),
+    // 第五十七輪：登革熱地圖 summary＋manifest 子集（scripts/fetch-data.mjs 的 importDenguemap；疾病頁疫情小卡讀它，過期規則在 _denguemap.mjs）
+    denguemap: readJSON(path.join(SNAPSHOTS, 'denguemap-summary.json'), { mode: 'missing', fetchedAt: null, sourceUrl: null, manifest: null, summary: null }),
   };
   // 移轉清單（ARCHITECTURE 13.1）：舊站專區 → 新站內容的逐頁對照。不是對外內容頁，不放進 collections／all
   // （不進索引、sitemap、白名單、KPI）；治理引擎據此算 site.migration 與 item.gov.legacy。

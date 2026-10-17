@@ -35,6 +35,17 @@
       }
     },
     "contentIds": { "type": "array", "items": { "type": "string" }, "description": "站內相關內容 id（疾病、FAQ、文件、影片…）" },
+    "embed": {
+      "type": "object",
+      "description": "第五十七輪：專區頁嵌入外部互動地圖（只有已登錄的 kind；網址由 site.config 推出，內容檔不寫網址，CSP frame-src 也由同一設定推出）。docs/denguemap-integration.md 第 3.2 節",
+      "required": ["kind"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "enum": ["denguemap"] },
+        "views": { "type": "array", "minItems": 1, "maxItems": 5, "uniqueItems": true, "items": { "enum": ["map", "clusters", "vector", "trends", "imported"] }, "description": "可切換的視圖，第一個為預設" },
+        "card": { "type": "boolean", "description": "嵌入區塊下方加疫情小卡（建置時快照）" }
+      }
+    },
     "priority": { "type": "integer" }
   }
 }

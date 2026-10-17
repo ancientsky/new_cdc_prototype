@@ -4,8 +4,9 @@ import { md } from '../../../scripts/lib/markdown.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import {
   ldFor, breadcrumb, provenance, alerts, alertBox, pageData, scopeTags, feedback, translationBadge, hrefFor, isFallbackLink, L, unitName, itemPath,
-  isExternal, imgSrc, isTopicEnded, mediaCard, mdHeader,
+  isExternal, imgSrc, isTopicEnded, mediaCard, mdHeader, denguemapLink,
 } from './_partials.mjs';
+import { denguemapEmbed, denguemapCard } from './_denguemap.mjs';
 
 const trailOf = (ctx, tp) => [{ label: ctx.t('topic.title'), href: '/services/' }, { label: L(ctx, tp, 'title') }];
 
@@ -67,6 +68,7 @@ export function render(ctx, { item: tp }) {
   <div class="c-cols c-cols--2">
     <div class="c-cols__main">
       ${body ? html`<div class="c-prose">${raw(md(body))}</div>` : ''}
+      ${tp.embed?.kind === 'denguemap' ? html`${denguemapEmbed(ctx, { views: tp.embed.views })}${tp.embed.card ? denguemapCard(ctx, { heading: 'h2', topicLink: false }) : ''}` : ''}
       ${(tp.blocks ?? []).map((sec) => sectionBlock(ctx, tp, sec))}
       <section class="c-block" aria-labelledby="tl-h"><h2 id="tl-h">${t('topic.links')}</h2>
         <ul class="c-toplinks">${tp.links.map((l) => linkRow(ctx, l))}</ul>
@@ -90,6 +92,8 @@ export function markdown(ctx, { item: tp }) {
   const lines = [`# ${L(ctx, tp, 'title')}`, '', ...mdHeader(ctx, tp, tp.endAt ? `專區期間：${tp.startAt ?? ''}～${tp.endAt}` : '')];
   if (isTopicEnded(site, tp)) lines.push(`> 本專區已於 ${tp.endAt} 結束，保留供查閱。`);
   lines.push('', L(ctx, tp, 'introMarkdown') ?? tp.introMarkdown ?? '');
+  // 第五十七輪：嵌入的互動地圖在機讀版只給深連結（iframe 對 AI 與純文字讀者沒有意義）
+  if (tp.embed?.kind === 'denguemap') lines.push('', '## 互動地圖（登革熱地圖，概念原型、非官方站）', '', ...(tp.embed.views ?? ['map']).map((v) => `- ${ctx.t(`denguemap.view.${v}`)}：${denguemapLink(ctx, { view: v })}`));
   for (const sec0 of tp.blocks ?? []) { const sec = sectionOf(ctx, tp, sec0); lines.push('', `## ${sec.heading}${sec.audience === 'professional' ? `（${ctx.t('topic.section.pro')}）` : ''}`, '', sec.markdown); }
   lines.push('', '## 連結', '');
   for (const l of tp.links) lines.push(`- [${L(ctx, l, 'label')}](${l.href.startsWith('/') ? ctx.url(l.href, { absolute: true, noLang: true }) : l.href})${l.note ? `：${l.note}` : ''}${l.status === 'broken' ? '（連結失效，已通知權責單位）' : ''}${l.lastCheckedAt ? `（最後檢查 ${l.lastCheckedAt}）` : ''}`);

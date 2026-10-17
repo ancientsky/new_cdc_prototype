@@ -16,12 +16,18 @@
 //        不連網（ARCHITECTURE 12.1）：讀既有 country-epid-level.json（與 country-epid-events.json），以主檔重新聚合，
 //        重算 Background／Targeted*、meta.background、stats.targeted、changeSummary30、各國 RecentChanges；
 //        事件快照不存在（或為 derived）⇒ 以 mode:'derived' 從現況每筆建議反推一則 new 事件。mode／fetchedAt／dataDate 不變。
+//   node scripts/fetch-data.mjs --denguemap [--dry]
+//        第五十七輪：只抓登革熱地圖的 summary.json＋manifest.json（先 Pages 版、再 raw 版）→ data/snapshots/denguemap-summary.json，
+//        並同步 content/datasets/denguemap-summary.json 的 lastUpdated。pages.yml 每次建置前都跑這一步（地圖每 3 小時更新，
+//        官方資料的全量重抓一天只有一次）。抓不到或驗證不過 ⇒ 保留既有快照，exit 0。不帶旗標的完整 fetch 也會做這一步。
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { EXTERNAL_LINK_FIELDS } from './lib/governance.mjs';
 import { parseFeed, planImport, applyImport, describePlan, OFFICIAL_EXPORT_URL } from './lib/intl-epidemic.mjs';
 import { LEVEL_TEXT, LEVEL_NONE, pick, normalizeLevel, toISODate, normalizeTravelRow } from './lib/travel-normalize.mjs';
+import { importDenguemap, taipeiMinute } from './lib/denguemap.mjs';
+import { config as siteConfig } from '../site.config.mjs';
 
 // 欄位正規化移到 scripts/lib/travel-normalize.mjs（第四十三輪：國際疫情匯入器也要用，避免循環匯入）；這裡轉出維持既有 API
 export { LEVEL_TEXT, LEVEL_NONE, normalizeLevel, toISODate, normalizeTravelRow };
@@ -35,6 +41,7 @@ const NO_SYNC = args.has('--no-sync');
 const SYNC_ONLY = args.has('--sync-only');
 const CHECK_LINKS = args.has('--check-links');
 const REAGGREGATE = args.has('--reaggregate');
+const DENGUEMAP_ONLY = args.has('--denguemap');
 const UA = 'cdc-ai-ready-prototype/0.2 (+github pages build)';
 const TIMEOUT_MS = 20000;
 const log = (...m) => console.log('[fetch]', ...m);
@@ -727,13 +734,35 @@ export async function checkLinks({ contentDir = CONTENT_DIR, fetchImpl = fetch, 
   return summary;
 }
 
+// ── 登革熱地圖摘要（第五十七輪，docs/denguemap-integration.md 第 2 節）────────
+export const DENGUEMAP_DATASET_FILE = 'denguemap-summary.json';
+/**
+ * 快照成功後同步資料目錄的那一筆：lastUpdated＝manifest.generatedAt 的臺北日期、provenance.fetchedAt＝抓取日。
+ * 只動這兩個欄位（其餘由權責單位維護）；沒變就不寫檔。回傳變更欄位清單。
+ */
+export function syncDenguemapDataset(snapshot, { dry = false, datasetsDir = DATASETS_DIR } = {}) {
+  const file = path.join(datasetsDir, DENGUEMAP_DATASET_FILE);
+  if (!snapshot?.manifest || !fs.existsSync(file)) return [];
+  const ds = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const next = { ...ds, lastUpdated: taipeiMinute(snapshot.manifest.generatedAt).slice(0, 10) || ds.lastUpdated, provenance: { ...(ds.provenance ?? {}), fetchedAt: String(snapshot.fetchedAt).slice(0, 10) } };
+  const diff = ['lastUpdated', 'provenance'].filter((k) => JSON.stringify(ds[k]) !== JSON.stringify(next[k]));
+  if (diff.length && !dry) fs.writeFileSync(file, JSON.stringify(next, null, 2) + '\n');
+  return diff;
+}
+async function refreshDenguemap() {
+  const r = await importDenguemap({ config: siteConfig, snapshotsDir: SNAPSHOTS, dry: DRY, logger: log });
+  if (r.ok && !NO_SYNC) { const d = syncDenguemapDataset(r.snapshot, { dry: DRY }); if (d.length) log(`  資料目錄 ${DENGUEMAP_DATASET_FILE}：${d.join('、')}${DRY ? '（dry，未寫入）' : ''}`); }
+}
+
 // ── 主流程 ────────────────────────────────────────────
 async function main() {
   if (CHECK_LINKS) { await checkLinks({ dry: DRY }); return; }
   if (REAGGREGATE) { reaggregate(); return; }
+  if (DENGUEMAP_ONLY) { await refreshDenguemap(); return; }
   if (DRY) log('dry-run：只抓取與比對，不寫入檔案');
   let packages = null;
   if (!SYNC_ONLY) {
+    await refreshDenguemap();
     for (const s of SOURCES) {
       if (s.importer) { try { await importTravelEpidemic(); } catch (e) { keepSnapshot(s.file, s, e); } continue; }
       try { const data = s.pick(await getJSON(s.url)); writeSnapshot(s.file, { sourceUrl: s.url, label: s.label, ...(s.meta?.(data) ?? {}) }, data); s.after?.(data); } catch (e) { keepSnapshot(s.file, s, e); }

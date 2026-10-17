@@ -3,7 +3,7 @@
 // 針對性等級＝排除背景提醒後的最高等級；沒有針對性建議的國家頁面刻意保持平靜（綠勾＋一般預防措施）。契約見 ARCHITECTURE.md §12.2。
 import { html, raw, jsonScript } from '../../../scripts/lib/render.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
-import { ldFor, pageHead, sectionHead, askBox, hrefFor, L, diseasePage, publishedOf, feedback, pill } from './_partials.mjs';
+import { ldFor, pageHead, sectionHead, askBox, hrefFor, L, diseasePage, publishedOf, feedback, pill, denguemapButton } from './_partials.mjs';
 import * as TravelMap from './_travel-map.mjs';
 import { alertOf, alertPath, excerptOf } from '../../../scripts/lib/travel-alerts.mjs';
 
@@ -733,8 +733,9 @@ function renderCountry(ctx, c, model) {
   for (const e of tg) { const m = diseaseMasterOf(site, e); if (m) related.set(m.id, m); }
   const relPages = [...related.values()].map((m) => ({ m, page: diseasePage(ctx, m.id) }));
   const docs = site.collections.documents.filter((d) => d.isCurrent && (d.countries?.includes(c.iso2) || (tg.length && d.tasks?.includes('travel') && d.diseases?.some((x) => related.has(x)))));
+  // 第五十七輪：目的地有登革熱建議 ⇒ 連到登革熱地圖的境外移入視圖並帶國碼（地圖不認得的國碼會被忽略、顯示全部國家）
   const relBlock = relPages.length || docs.length ? html`<section class="tv-rel" aria-labelledby="cr-h">${sectionHead(ctx, { id: 'cr-h', title: t('travel.country.related') })}
-  ${relPages.length ? html`<h3>${t('travel.country.diseases')}</h3><ul>${relPages.map(({ m, page }) => html`<li>${page ? html`<a href="${hrefFor(ctx, page)}">${L(ctx, page, 'title')}</a>` : (ctx.lang === 'zh-TW' ? m.name : m.nameEn ?? m.name)}</li>`)}</ul>` : ''}
+  ${relPages.length ? html`<h3>${t('travel.country.diseases')}</h3><ul>${relPages.map(({ m, page }) => html`<li>${page ? html`<a href="${hrefFor(ctx, page)}">${L(ctx, page, 'title')}</a>` : (ctx.lang === 'zh-TW' ? m.name : m.nameEn ?? m.name)}${m.id === 'disease.dengue' ? html` · ${denguemapButton(ctx, { view: 'imported', country: String(c.iso2 ?? '').toLowerCase(), label: t('denguemap.view.imported.country', { name }), cls: 'tv-dmlink' })}` : ''}</li>`)}</ul>` : ''}
   ${docs.length ? html`<h3>${t('travel.country.docs')}</h3><ul class="c-linklist">${docs.map((d) => html`<li><a href="${hrefFor(ctx, d)}">${L(ctx, d, 'title')}</a> <span class="muted">${d.version}</span></li>`)}</ul>` : ''}
 </section>` : '';
   return html`${styleTag()}<div class="tv">${head}

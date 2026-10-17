@@ -2,7 +2,7 @@
 // 沒有 JS 時三段全部顯示；pro.js 會把它們變成分頁（網址 #public / #pro / #staff）。
 import { html } from '../../../scripts/lib/render.mjs';
 import { proStyles } from '../pro/_styles.mjs';
-import { vaxmapLink, vaxmapButton } from './_partials.mjs';
+import { vaxmapLink, vaxmapButton, denguemapButton } from './_partials.mjs';
 
 export function pages() { return [{ path: '/guide/', lang: 'zh-TW' }]; }
 
@@ -75,6 +75,14 @@ export function render(ctx) {
     </ul>
     <p class="c-linkrow">${vaxmapButton(ctx, { group: 'flu', label: '流感疫苗接種點' })} ${vaxmapButton(ctx, { group: 'covid', label: '新冠疫苗接種點', cls: 'c-btn c-btn--ghost' })} ${vaxmapButton(ctx, { group: 'antiviral', label: '流感抗病毒藥劑', cls: 'c-btn c-btn--ghost' })}</p>
     <p class="muted">直接開啟：<a href="${vaxmapLink(ctx, {})}" target="_blank" rel="noopener">疫苗及流感藥劑地圖（開新視窗 ↗）</a>。整合說明：<code>docs/vaxmap-integration.md</code>。</p>
+    <h3 id="denguemap">怎麼看登革熱地圖</h3>
+    <p>登革熱疾病頁的「目前疫情與統計」最上方有一張<strong>疫情小卡</strong>：今年本土與境外移入病例（和去年同期比）、近 14 天病例、最新發病日與資料時間。數字來自登革熱地圖（概念原型、非官方站），本站每次建置時取一次；資料超過 48 小時沒更新、或地圖標示上游資料不完整時，小卡不顯示數字，只請您開啟地圖。</p>
+    <ul>
+      <li>按「病例地圖」「聚集警示」「蚊媒地圖」會<strong>開新視窗</strong>；屈公病頁的預防段落、疫情態勢頁的登革熱卡、有登革熱建議的出國目的地頁（境外移入，帶國家）也有入口。</li>
+      <li>想在本站直接操作地圖，到${A('/topics/denguemap/', '登革熱地圖專區')}：可在病例地圖、聚集警示、蚊媒地圖、境外移入之間切換；手機上用兩指移動地圖，單指仍可捲動頁面。</li>
+      <li>地圖上的點是「最小統計區」的中心點，不是住址；顏色越醒目表示發病越近（7 天內可能仍在病毒血症期）。</li>
+    </ul>
+    <p class="c-linkrow">${denguemapButton(ctx, { view: 'map', label: '登革熱病例地圖' })} ${denguemapButton(ctx, { view: 'vector', label: '蚊媒地圖', cls: 'c-btn c-btn--ghost' })}</p>
     ${shot('首頁問題框與態勢卡')}
     ${shot('答案頁：來源編號、來源卡展開、回報錯誤')}
     <p>延伸：${A('/ask/', '提問頁')} · ${A('/factcheck/', '謠言查證')} · ${A('/accessibility/', '無障礙說明')} · ${A('/policy/ai/', 'AI 與資料使用聲明')}。完整版：<code>docs/guide-public.md</code>。</p>
