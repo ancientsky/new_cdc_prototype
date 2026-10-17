@@ -103,3 +103,7 @@ eval/**/*.mjs
 !scripts/lib/gateway/basehash-report.mjs
 !scripts/gateway-basehash.mjs
 !tests/round54-decisions.test.mjs
+# 第五十七輪：登革熱地圖整合（docs/denguemap-integration.md）
+!scripts/lib/denguemap.mjs
+!src/templates/public/_denguemap.mjs
+!tests/round57-denguemap.test.mjs

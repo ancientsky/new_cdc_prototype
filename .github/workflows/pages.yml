@@ -77,6 +77,13 @@ jobs:
           # 國際重要疫情資訊（docs/intl-epidemic.md）：有設就改拉疫情中心資料庫的 v1 feed；沒設（空字串）＝維持現行官網 ExportJSON
           INTL_FEED_URL: ${{ secrets.INTL_FEED_URL }}
           INTL_FEED_TOKEN: ${{ secrets.INTL_FEED_TOKEN }}
+      # 第五十七輪（docs/denguemap-integration.md 2.4）：登革熱地圖每 3 小時更新，官方資料的全量重抓一天只有一次；
+      # 所以每次建置前只重抓登革熱地圖的 summary＋manifest（先 Pages 版、再 raw 版），疾病頁疫情小卡的數字最多落後地圖一個建置週期。
+      # 結果只用於這次建置、不 commit（02 UTC 那次由上一步的完整 fetch 一起回寫）；抓不到就沿用已提交的快照，小卡依 48 小時規則自動降級。
+      - name: Refresh dengue map summary (every build; falls back to the committed snapshot)
+        if: steps.refresh.outputs.refresh != 'true'
+        run: node scripts/fetch-data.mjs --denguemap
+        continue-on-error: true
       - name: Commit refreshed snapshots back to main (02 UTC schedule / manual runs only)
         if: steps.refresh.outputs.refresh == 'true'
         run: |

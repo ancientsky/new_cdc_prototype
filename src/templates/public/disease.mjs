@@ -6,9 +6,11 @@ import { barChartSvg } from '../../client/charts.js';
 import {
   ldFor, breadcrumb, provenance, alerts, pageData, statusTag, scopeTags, viewToggle, feedback, askBox, translationBadge,
   numberSource, datasetSourceCard, hrefFor, isFallbackLink, L, unitName, publishedOf, byDateDesc, dated, itemPath, seriesOf, sitField, licenseLabel,
-  isMediaOutdated, isTopicEnded, fmtDur, refItem, isExternal, legacyOf, extLink,
+  isMediaOutdated, isTopicEnded, fmtDur, refItem, isExternal, legacyOf, extLink, denguemapButton, denguemapLink,
 } from './_partials.mjs';
 import { curricula, curriculumList } from './_curriculum.mjs';
+import { denguemapCard, denguemapCardData, DENGUEMAP_OF_DISEASE } from './_denguemap.mjs';
+import { taipeiMinute } from '../../../scripts/lib/denguemap.mjs';
 
 const trailOf = (ctx, item) => [{ label: ctx.t('nav.diseases'), href: '/diseases/' }, { label: L(ctx, item, 'title') }];
 
@@ -60,6 +62,10 @@ function renderBlock(ctx, item, b, ctxData) {
   }
   if (b.markdown) body.push(raw(md(b.markdown)));
   if (b.warning) body.push(html`<div class="c-warning" role="note"><strong>${t('disease.warning.t')}</strong> ${b.warning}</div>`);
+  // 第五十七輪：登革熱地圖入口（docs/denguemap-integration.md 1.2）。登革熱：疫情區塊最上方放建置時的疫情小卡；其他蚊媒病（屈公病）：預防區塊放蚊媒地圖
+  const dm = DENGUEMAP_OF_DISEASE[item.id];
+  if (dm?.vectorIn === b.key) body.push(html`<p class="c-linkrow">${denguemapButton(ctx, { view: 'vector', label: t('denguemap.vector.cta'), cls: 'c-btn c-btn--ghost' })}</p>`);
+  if (b.key === 'situation' && dm?.card) body.push(denguemapCard(ctx));
   if (b.key === 'situation') {
     const wk = sit?.weekly;
     const labels = sit?.weeklyLabels;
@@ -283,6 +289,21 @@ function docLink(ctx, ref) {
   return d ? html`<a href="${hrefFor(ctx, d)}">${d.title}</a> <span class="muted">${d.version}</span>` : html`<span class="muted">${ref}</span>`;
 }
 
+/** .md 機讀版的登革熱地圖段落：數字一定帶資料時間與來源；過期時只給連結（與頁面小卡同一套 denguemapState） */
+function denguemapMarkdown(ctx) {
+  const d = denguemapCardData(ctx.site);
+  const link = denguemapLink(ctx, { view: 'map' });
+  if (d.state !== 'ok') return [`- 登革熱地圖（概念原型、非官方站）：資料更新中，請開啟登革熱地圖查看：${link}`];
+  const s = d.snap.summary;
+  const prev = (type) => (d.prevIncomplete?.[type] ? '去年同期資料不完整' : `${s.year - 1} 年同期 ${s.prevYtd[type]} 例`);
+  return [
+    `- 登革熱地圖（概念原型、非官方站）快照，資料時間 ${taipeiMinute(d.snap.manifest.generatedAt)}（臺北時間），最新發病日 ${s.latestOnset}，依發病日統計：`,
+    `  - ${s.year} 年本土 ${s.ytd.local} 例（${prev('local')}）、境外移入 ${s.ytd.imported} 例（${prev('imported')}）`,
+    `  - 近 14 天本土 ${s.last14.local} 例、境外移入 ${s.last14.imported} 例`,
+    `  - 正式數字以疾管署公布為準；地圖：${link}`,
+  ];
+}
+
 export function markdown(ctx, { item }) {
   const { site, lang } = ctx;
   const owner = unitName(ctx, item.owner);
@@ -301,6 +322,7 @@ export function markdown(ctx, { item }) {
     if (b.cards) for (const c of b.cards) lines.push(`- 如果你${c.if}：${c.text}`);
     if (b.markdown) lines.push(b.markdown);
     if (b.warning) lines.push('', `**警示徵象：**${b.warning}`);
+    if (b.key === 'situation' && DENGUEMAP_OF_DISEASE[item.id]?.card) lines.push('', ...denguemapMarkdown(ctx));
   }
   void site; void licenseLabel;
   return lines.join('\n') + '\n';

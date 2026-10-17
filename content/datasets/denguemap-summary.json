@@ -1,0 +1,94 @@
+{
+  "id": "dataset.denguemap-summary",
+  "type": "dataset",
+  "category": "structured-table",
+  "title": "登革熱地圖疫情摘要（summary.json）",
+  "owner": "unit.epidemic-intelligence",
+  "steward": "疫情中心 Data Steward（原型階段：登革熱地圖維護者代管擷取與部署）",
+  "publishedAt": "2026-10-17",
+  "reviewedAt": "2026-10-17",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "data",
+    "situation"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "diseases": [
+    "disease.dengue"
+  ],
+  "summary": "登革熱地圖（概念原型、非官方站）每 3 小時由疾管署登革熱地圖後端產生的小檔：今年本土／境外移入累計與去年同期、近 7／14／30 天、各縣市累計、近 14 天病例鄉鎮；附 manifest 的資料時間與資料品質警示。",
+  "keywords": [
+    "登革熱",
+    "登革熱地圖",
+    "本土病例",
+    "境外移入",
+    "summary.json",
+    "manifest.json"
+  ],
+  "provenance": {
+    "fetchedAt": "2026-10-17",
+    "mode": "snapshot",
+    "sourceUrl": "https://cdcdengue.azurewebsites.net/"
+  },
+  "updateFrequency": "daily",
+  "lastUpdated": "2026-10-17",
+  "formats": [
+    "JSON"
+  ],
+  "canonicalUrl": "https://ancientsky.github.io/denguemap/data/summary.json",
+  "mirrors": [
+    "https://raw.githubusercontent.com/ancientsky/denguemap/main/public/data/summary.json"
+  ],
+  "schemaUrl": "https://github.com/ancientsky/denguemap/blob/main/docs/data-contract.md",
+  "resources": [
+    {
+      "name": "summary.json（疫情摘要）",
+      "format": "JSON",
+      "url": "https://ancientsky.github.io/denguemap/data/summary.json"
+    },
+    {
+      "name": "manifest.json（資料時間、來源狀態、資料品質警示）",
+      "format": "JSON",
+      "url": "https://ancientsky.github.io/denguemap/data/manifest.json"
+    }
+  ],
+  "note": "原型：正本是登革熱地圖 GitHub Pages 發布的 data/summary.json，本站不存副本、只在建置時快照（data/snapshots/denguemap-summary.json）供疾病頁疫情小卡使用。地圖每 3 小時檢查一次、有變動才更新；本站 daily（容許 2 天）與小卡的 48 小時門檻相同。授權暫填 OGDL-1.0，正式登錄前請疫情中心確認（docs/denguemap-integration.md 第 2.3 節）。",
+  "i18n": {
+    "en": {
+      "title": "Dengue map case summary (summary.json)",
+      "summary": "Small file produced every 3 hours by the dengue map (concept prototype, not an official site) from Taiwan CDC's dengue map backend: local and imported cases this year vs the same period last year, last 7/14/30 days, by county, and towns with cases in the last 14 days; plus the manifest's data time and data-quality warnings."
+    }
+  }
+}

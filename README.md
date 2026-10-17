@@ -112,6 +112,30 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第五十七輪：登革熱地圖接進來：深連結、疾病頁疫情小卡、專區嵌入
+
+Yulun（2026-10-17）：把登革熱地圖（ancientsky/denguemap，概念原型）接進新官網：深連結、建置時的「疫情小卡」、iframe 嵌入，另寫一份比照 vaxmap 的整合方案給資訊室與防疫醫師室。細節：[docs/denguemap-integration.md](docs/denguemap-integration.md)；工程契約 ARCHITECTURE §60。
+
+### 做了什麼
+
+- **深連結**：`site.config.mjs` 加 `denguemapUrl`（與資料、raw 備援網址、48 小時門檻）；`_partials.mjs` 加 `denguemapLink()`／`denguemapButton()`，視圖、縣市碼、本土／境外、國碼都走白名單；地圖只有中英，本站繁中不帶、其他語言一律 `lang=en`。入口：登革熱頁、屈公病頁（蚊媒地圖）、疫情態勢頁、有登革熱建議的出國目的地頁（境外移入帶國碼）、答案頁行動鈕、開發者入口與使用指南。
+- **疫情小卡**：登革熱頁「目前疫情與統計」區塊（說明文字之後、趨勢圖之前），建置時的 HTML（不需 client JS）：今年本土／境外移入與去年同期、近 14 天、最新發病日、近 14 天有本土病例的鄉鎮數、資料時間（臺北時間）與來源卡（疫情中心、非官方站）。資料超過 48 小時、地圖標示病例來源 stale、或今年有上游資料短缺警示 ⇒ 不顯示數字，只請讀者開地圖。去年有短缺警示時，該類型的「去年同期」改顯示「去年同期資料不完整」。
+- **快照**：`fetch-data.mjs --denguemap` 先抓 Pages 版、再抓 raw 版，嚴格驗證後寫 `data/snapshots/denguemap-summary.json`；失敗保留既有快照。`pages.yml` 每次建置前都重抓一次（地圖每 3 小時更新）。
+- **專區嵌入**：新專區 `/topics/denguemap/`（中英），用新的 `embed` 欄位嵌入地圖的嵌入模式，可在病例地圖、聚集警示、蚊媒地圖、境外移入之間切換（沒有 JS 也能切）；CSP `frame-src` 改由設定推出並去重。
+- **資料目錄**：`dataset.denguemap-summary`（Owner 疫情中心，`daily`＝容許 2 天，與小卡 48 小時同一門檻）。
+
+### 為什麼這樣做
+
+- 病例點位每天在變，本站不自己畫地圖；疾病頁只需要「幾個數字＋資料時間」，建置時快照就夠，零 client JS、零 CSP 變更。
+- 上游後端會間歇回傳截斷的歷史資料，地圖已會保留上一版並標警示；小卡照這些旗標降級，**寧可不顯示也不顯示錯的數字**。
+- 嵌入只放專區頁：疾病頁嵌整張地圖太重、手機捲動會卡；專區頁用地圖的嵌入模式（隱藏頁首、兩指操作）。
+
+### 結果與還沒解的
+
+- 原型的地圖與本站同在 `ancientsky.github.io`（同源）：`sandbox` 沒有隔離效果、CSP 字串不變；正式站建議把地圖放到專用網域並設 `frame-ancestors`（整合方案 3.3）。
+- 本站沒有鄉鎮代碼主檔，小卡只列鄉鎮數、不列名稱；授權、Owner、專區英文審稿待疫情中心確認（整合方案第 5 節）。
+- 開發環境連不到 `*.github.io`：第一份快照經 raw 版取得，專區頁的 iframe 在本機看不到地圖（只看得到備援連結），要在可連線的環境或部署後確認。
+
 ## 第五十六輪：內容 PR 只跑內容閘門、一個 PR 只建一次站、程式變更由 OASIS 審
 
 Yulun（2026-10-15）：第五十五輪列的四項加速「要，請派 Opus 實做」；另外整理一份 CI／CD 流程、測試基準與對傳統上架方式的比較；PR 留言一直把審核人寫成公關室，要改。細節：[docs/deploy.md](docs/deploy.md) 第 28 節、[docs/publishing-lanes.md](docs/publishing-lanes.md) 第 8 節、[docs/ci-cd-overview.md](docs/ci-cd-overview.md)；工程契約 ARCHITECTURE §59，取捨 architecture-decisions §44。
@@ -872,6 +896,7 @@ docs/                使用說明與治理文件
 完整說明見 [ARCHITECTURE.md](ARCHITECTURE.md)。
 
 - **相關專案**：[疫苗及流感藥劑地圖 vaxmap-next](https://ancientsky.github.io/vaxmap-next/)（接種點、庫存、八語）。本站所有接種點入口以深連結導向它，整合方案見 [`docs/vaxmap-integration.md`](docs/vaxmap-integration.md)。
+- **相關專案**：[登革熱地圖 denguemap](https://ancientsky.github.io/denguemap/)（病例、聚集、病媒蚊、境外移入，中英文，概念原型）。登革熱頁的疫情小卡、專區嵌入與各入口的整合方案見 [`docs/denguemap-integration.md`](docs/denguemap-integration.md)。
 
 ## 資料來源與示意聲明
 

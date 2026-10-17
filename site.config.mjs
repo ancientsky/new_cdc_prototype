@@ -21,6 +21,13 @@ export const config = {
   // 疫苗及流感藥劑地圖：原型一律導向改良版 vaxmap-next（深連結：#g=flu|covid|pcv|antiviral&city=…&lang=en…）
   vaxmapUrl: 'https://ancientsky.github.io/vaxmap-next/',
   vaxmapInfoUrl: 'https://ancientsky.github.io/vaxmap-next/info.html',
+  // 第五十七輪：登革熱地圖（概念原型、非官方站；docs/denguemap-integration.md）。深連結走 hash：#/map|clusters|vector|trends|imported|about?county=64000&type=local；
+  // 英文 lang=en（地圖只有中、英）；嵌入模式 ?embed=1&theme=light&lang=zh|en。資料檔每 3 小時更新：建置前 fetch-data 先抓 Pages 版，抓不到再抓 raw（同一份 git 檔）。
+  denguemapUrl: 'https://ancientsky.github.io/denguemap/',
+  denguemapDataUrl: 'https://ancientsky.github.io/denguemap/data/',
+  denguemapRawDataUrl: 'https://raw.githubusercontent.com/ancientsky/denguemap/main/public/data/',
+  // 小卡的新鮮度門檻（小時）：manifest.generatedAt 距建置時間超過此值 ⇒ 不顯示數字（與資料目錄 daily 容許 2 天對齊）
+  denguemapMaxAgeHours: 48,
   hotline: '1922',
   hotlineIntl: '+886-800-001922',
   defaultLang: 'zh-TW',

@@ -11,7 +11,7 @@
 //   dist/headers/_headers              — Netlify／Cloudflare Pages 格式
 //   dist/headers/README.md             — 怎麼套、怎麼驗、為什麼
 //
-// CSP 的來源白名單從程式碼事實推出：frame-src 只有 vaxmap 與 YouTube（影片用 youtube-nocookie 嵌入）；connect-src 多 api.anthropic.com
+// CSP 的來源白名單從程式碼事實推出：frame-src 只有 vaxmap、登革熱地圖（第五十七輪，專區頁嵌入）與 YouTube（影片用 youtube-nocookie 嵌入）；connect-src 多 api.anthropic.com
 // 只因示範用 BYOK（正式站拿掉 BYOK 就拿掉）；img-src 允許 data:（favicon 與預覽佔位圖是 data URI）。
 import fs from 'node:fs';
 import path from 'node:path';
@@ -56,11 +56,14 @@ export function collectInlineHashes(dist) {
   return { hashes: [...hashes.keys()], firstSeen: Object.fromEntries(hashes), count: hashes.size, pages };
 }
 
-/** 標頭基準（值）。opts.hashes = inline script 雜湊；opts.vaxmapOrigin、opts.extraFrame 可覆寫。 */
+/** 標頭基準（值）。opts.hashes = inline script 雜湊；opts.vaxmapOrigin、opts.denguemapOrigin 可覆寫。 */
+// 第五十七輪：frame-src 的地圖來源由 site.config 的 vaxmapUrl、denguemapUrl 推出並去重。原型兩張地圖與本站同在 ancientsky.github.io，
+// 所以 frame-src 字串不變；正式站把地圖放到官方網域子路徑或專用網域時，改設定重建即可（docs/denguemap-integration.md 3.3）。
 // 第三十輪（#55）：formOrigins＝site.config.mjs forms 裡生效中的 post 端點來源（機關個資表單系統）。只加進 connect-src（fetch 送出）與 form-action（不支援 fetch 時的一般表單 POST），其他指令不動。
 // 第四十一輪：askLogOrigins＝site.config.mjs askLog 生效中的 post 端點來源（查詢紀錄收件系統）。fetch／sendBeacon 只受 connect-src 管，所以只加進 connect-src。
-export function securityHeaders({ hashes = [], llmOrigin = 'https://api.anthropic.com', vaxmapOrigin = new URL(config.vaxmapUrl).origin, frameAncestors = "'self'", formOrigins: forms = formOrigins(config), askLogOrigins: askLog = askLogOrigins(config) } = {}) {
+export function securityHeaders({ hashes = [], llmOrigin = 'https://api.anthropic.com', vaxmapOrigin = new URL(config.vaxmapUrl).origin, denguemapOrigin = new URL(config.denguemapUrl).origin, frameAncestors = "'self'", formOrigins: forms = formOrigins(config), askLogOrigins: askLog = askLogOrigins(config) } = {}) {
   const connect = [...new Set([...forms, ...askLog])];
+  const frames = [...new Set([vaxmapOrigin, denguemapOrigin].filter(Boolean))];
   const csp = [
     "default-src 'self'",
     // 'wasm-unsafe-eval'（第二十八輪）：Pagefind 全文搜尋用 WebAssembly；它只允許編譯 .wasm，不允許 eval() 與 new Function()，所以不等於 'unsafe-eval'
@@ -69,7 +72,7 @@ export function securityHeaders({ hashes = [], llmOrigin = 'https://api.anthropi
     "img-src 'self' data: https://i.ytimg.com",
     "font-src 'self'",
     `connect-src 'self' ${llmOrigin} ${connect.join(' ')}`.trim(),
-    `frame-src ${vaxmapOrigin} https://www.youtube-nocookie.com https://www.youtube.com`,
+    `frame-src ${frames.join(' ')} https://www.youtube-nocookie.com https://www.youtube.com`,
     `frame-ancestors ${frameAncestors}`,
     "object-src 'none'",
     "base-uri 'self'",
@@ -134,7 +137,7 @@ export function renderReadme(h, info) {
 
 ## 為什麼是這些值
 
-- **CSP**：\`default-src 'self'\` 擋掉第三方腳本注入；inline script 用雜湊而不是 \`'unsafe-inline'\`；\`'wasm-unsafe-eval'\` 只為了全文搜尋（Pagefind）載入 WebAssembly，不開放 \`eval()\`；\`frame-src\` 只放疫苗地圖與 YouTube；\`frame-ancestors 'self'\` 防點擊劫持（現行官網是 \`'self' *.cdc.gov.tw\`，正式站換網域時依需要加子網域）；\`connect-src\` 多 \`api.anthropic.com\` 只因示範用 BYOK，正式站拿掉。
+- **CSP**：\`default-src 'self'\` 擋掉第三方腳本注入；inline script 用雜湊而不是 \`'unsafe-inline'\`；\`'wasm-unsafe-eval'\` 只為了全文搜尋（Pagefind）載入 WebAssembly，不開放 \`eval()\`；\`frame-src\` 只放疫苗地圖、登革熱地圖與 YouTube（地圖來源由 \`site.config.mjs\` 的 \`vaxmapUrl\`、\`denguemapUrl\` 推出，目前：${[...new Set([config.vaxmapUrl, config.denguemapUrl].map((u) => new URL(u).origin))].join('、')}）；\`frame-ancestors 'self'\` 防點擊劫持（現行官網是 \`'self' *.cdc.gov.tw\`，正式站換網域時依需要加子網域）；\`connect-src\` 多 \`api.anthropic.com\` 只因示範用 BYOK，正式站拿掉。
 - **表單端點**（第三十輪）：\`site.config.mjs\` 的 \`forms\` 有設 post 端點時，該來源自動加進 \`connect-src\` 與 \`form-action\`（目前：${formOrigins(config).join('、') || '無，全部表單為原型模擬'}）；個資表單系統換網域只要改設定重建。
 - **查詢紀錄端點**（第四十一輪）：\`site.config.mjs\` 的 \`askLog\` 設為 post 時，該來源自動加進 \`connect-src\`（目前：${askLogOrigins(config).join('、') || '無，未啟用正式端點'}）；詳見 docs/ask-log.md。
 - **HSTS** 一年含子網域；**nosniff**、**Referrer-Policy**、**Permissions-Policy** 為 OWASP Secure Headers 建議值。

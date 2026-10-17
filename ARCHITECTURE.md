@@ -2606,3 +2606,23 @@ i18n 新鍵（七語齊備，順序 zh-TW, en, ja, tl, vi, id, th）：`nav.more
 | 審核重跑 | `pull_request_review` 事件：純內容 PR 不再建置；程式 PR 仍建（給 axe），但不上傳預覽 |
 
 **教訓：** 要略過檢查，判定「能不能略過」的人不能是被檢查的程式。test job 跑的是 PR 的程式碼，它說「我是純內容」只能決定自己跑什麼；能不能合併由不執行 PR 程式的 lane job 依平台 API 重算。
+
+## 60. 第五十七輪（2026-10-17）：登革熱地圖整合（深連結、疫情小卡、專區嵌入）
+
+民眾看得到的說明在 README 第五十七輪；整合方案 docs/denguemap-integration.md。
+
+| 機制 | 契約 |
+| --- | --- |
+| 設定 | `site.config.mjs`：`denguemapUrl`、`denguemapDataUrl`、`denguemapRawDataUrl`、`denguemapMaxAgeHours`（48） |
+| 深連結 | `_partials.mjs` `denguemapLink(ctx, { view, county, type, country, lang, embed, theme })`：view ∈ map／clusters／vector／trends／imported／about（其他 ⇒ map）；county `/^\d{5}$/`；type ∈ local／imported／all 且只在 map、trends；country `/^[a-z]{2}$/` 且只在 imported；lang：zh-TW ⇒ 不帶、其他 ⇒ `en`；embed ⇒ search `?embed=1[&theme=light|dark]&lang=zh|en`。`denguemapButton` 與 `vaxmapButton` 同一套「開新視窗 ↗」。client 端 `structured.js` `denguemapHref(lang)` 同規則 |
+| 快照 | `scripts/lib/denguemap.mjs`：`fetchDenguemap` 依序試 Pages、raw；manifest＋summary 同源且 `latestOnset` 相同；`validateSummary`／`validateManifest` 白名單輸出（非負整數、真實 ISO 日期、縣市 5 碼、鄉鎮 8 碼字串、7≤14≤30、縣市合計 ≤ 今年）；大小上限 64／256 KB（串流計數）；`importDenguemap` 失敗保留既有快照＋`lastLiveAttempt`，從無快照寫 `mode:'missing'`。`fetch-data.mjs --denguemap` 只跑這一步並同步 `content/datasets/denguemap-summary.json` 的 `lastUpdated`（臺北日期）與 `provenance.fetchedAt`；`pages.yml` 每次建置前跑（`continue-on-error`、不 commit） |
+| 讀取 | `load.mjs` → `site.snapshots.denguemap`（預設 `{ mode:'missing', manifest:null, summary:null }`） |
+| 過期規則 | `denguemapState(snap, { now, maxAgeHours })` → ok／stale（`too-old`、`cases-stale`、`cases-shortfall` 只看 `year === summary.year`）／missing，另回傳 `prevIncomplete{local,imported}`（`year === summary.year − 1` 的 cases-shortfall，沒有 type ⇒ 兩類；小卡改顯示「去年同期資料不完整」）；`now` 用 `site.now`（真實時間，不受 BUILD_TODAY 影響） |
+| 小卡 | `_denguemap.mjs` `denguemapCard(ctx, { heading, topicLink, now })`；`DENGUEMAP_OF_DISEASE = { 'disease.dengue': { card }, 'disease.chikungunya': { vectorIn: 'prevention' } }`，`disease.mjs` 的 `renderBlock` 讀它；`.md` 版同一套規則 |
+| 嵌入 | 專區 `embed: { kind:'denguemap', views[], card }`（`schemas/topic.json`，`additionalProperties:false`）；`denguemapEmbed` 一個 iframe（`name=denguemap-frame`、title、lazy、`referrerpolicy=no-referrer`、`allow=fullscreen`、sandbox 五項：scripts、same-origin、popups、popups-to-escape-sandbox、downloads），切換鈕 `<a target>`；inline script 只更新 aria-current／title／開新視窗連結，CSP 以建置雜湊放行 |
+| CSP | `securityHeaders({ denguemapOrigin })`：frame-src 地圖來源 `[vaxmap, denguemap]` 去重；原型同源 ⇒ 字串不變 |
+| 連結檢查 | `siblingUrls` 加 `config.denguemapUrl`（build.mjs、check-internal-links CLI） |
+| i18n | `src/client/i18n.js` `ROWS_R57`（`denguemap.*`，七語；`STRINGS.en['denguemap.unit']=''`） |
+| 測試 | `tests/round57-denguemap.test.mjs` |
+
+**教訓：** 外部資料進到本站頁面，判斷「能不能顯示」要用資料自己的品質旗標（manifest 的 stale、shortfall），不能只看時間；時間新、但上游截斷的資料比過期資料更危險。

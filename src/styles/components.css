@@ -1282,3 +1282,33 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .c-profile__body ul{list-style:none;padding:0}.c-profile__body li{padding:var(--sp-1) 0;border-bottom:1px solid var(--line-2)}
 .c-profile__scope{font-size:.9rem;margin-top:var(--sp-5)}
 @media (max-width:640px){.c-profile__head{flex-direction:row;gap:var(--sp-3)}.c-profile__figure{width:110px}.c-profile__photo{width:110px;height:138px}}
+/* 第五十七輪：登革熱地圖疫情小卡（_denguemap.mjs）與專區頁嵌入地圖 */
+.c-dmcard{margin:var(--sp-4) 0;border:1px solid var(--line);border-left:4px solid var(--green-700);border-radius:var(--radius);padding:var(--sp-4);background:#fff}
+.c-dmcard--stale{border-left-color:var(--warn)}
+.c-dmcard__head{display:flex;flex-wrap:wrap;align-items:center;gap:var(--sp-2) var(--sp-3);margin-bottom:var(--sp-3)}
+.c-dmcard__t{margin:0;font-size:var(--fs-lg)}
+.c-dmcard__stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:var(--sp-3);margin:0 0 var(--sp-3)}
+.c-dmcard__stat{background:var(--green-50);border-radius:var(--radius-sm);padding:var(--sp-3)}
+.c-dmcard__stat dt{font-size:var(--fs-sm);color:var(--ink-2)}
+.c-dmcard__stat dd{margin:var(--sp-1) 0 0}
+.c-dmcard__n{font-size:var(--fs-2xl);line-height:1.1;color:var(--green-900);font-variant-numeric:tabular-nums}
+.c-dmcard__u{font-size:var(--fs-sm);color:var(--ink-2)}
+.c-dmcard__sub{display:block;font-size:var(--fs-xs);color:var(--ink-3);margin-top:2px}
+.c-dmcard__meta{display:flex;flex-wrap:wrap;gap:var(--sp-1) var(--sp-4);margin:0 0 var(--sp-2);font-size:var(--fs-sm)}
+.c-dmcard__note{font-size:var(--fs-sm);margin:0 0 var(--sp-2)}
+.c-dmcard__links{display:flex;flex-wrap:wrap;gap:var(--sp-2);align-items:center}
+.c-dmcard__stale{margin:0 0 var(--sp-2);padding:var(--sp-2) var(--sp-3);background:var(--warn-bg);color:var(--warn);border-radius:var(--radius-sm)}
+.c-dmcard__why{margin:0 0 var(--sp-2);padding-left:1.2em;font-size:var(--fs-sm)}
+.c-dmembed{margin:var(--sp-5) 0;position:relative}
+.c-dmembed__skip{position:absolute;left:-9999px;top:0}
+.c-dmembed__skip:focus{left:0;z-index:5}
+.c-dmembed__tabs{display:flex;flex-wrap:wrap;gap:var(--sp-2);margin:0 0 var(--sp-2)}
+.c-dmembed__tab{display:inline-flex;align-items:center;min-height:44px;padding:6px 14px;border:1px solid var(--green-700);border-radius:var(--radius-pill);color:var(--green-700);background:#fff;font-weight:700;text-decoration:none}
+.c-dmembed__tab:hover{background:var(--green-50);color:var(--green-900)}
+.c-dmembed__tab[aria-current="true"]{background:var(--green-700);color:#fff}
+.c-dmembed__box{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--line-2)}
+.c-dmembed__frame{display:block;width:100%;height:clamp(420px,72vh,760px);border:0}
+.c-dmembed__fallback{margin:var(--sp-2) 0 0;font-weight:700}
+.c-dmembed__noscript{margin:var(--sp-2) 0 0;padding:var(--sp-2) var(--sp-3);background:var(--warn-bg);color:var(--warn);border-radius:var(--radius-sm)}
+.c-dmembed__hint{font-size:var(--fs-sm);margin:var(--sp-1) 0 0}
+@media (max-width:640px){.c-dmcard{padding:var(--sp-3)}.c-dmcard__stats{grid-template-columns:1fr 1fr;gap:var(--sp-2)}.c-dmcard__n{font-size:var(--fs-xl)}.c-dmembed__frame{height:min(78vh,620px);height:min(78svh,620px);min-height:380px}}

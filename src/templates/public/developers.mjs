@@ -3,7 +3,7 @@
 import { html } from '../../../scripts/lib/render.mjs';
 import { siteOrigin } from '../../../site.config.mjs';
 import { proStyles } from '../pro/_styles.mjs';
-import { vaxmapLink } from './_partials.mjs';
+import { vaxmapLink, denguemapLink } from './_partials.mjs';
 import { buildRedirects, buildLegacyMap } from '../../../scripts/lib/emit-api.mjs';
 
 const ENDPOINTS = [
@@ -120,7 +120,7 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
   <h1>開發者入口</h1>
   <p class="lead">內容只存一份；網頁、API、機讀版、AI 索引都是它的消費者。這裡說明怎麼取用、怎麼引用，以及每個欄位的意思。</p>
   <nav aria-label="本頁目錄"><ul class="pf-pills">
-    ${[['quick', '快速開始'], ['meta', 'meta 外殼'], ['endpoints', '端點'], ['openapi', 'OpenAPI'], ['limits', '限流與金鑰'], ['events', '變更事件'], ['machine', '機讀版'], ['vocab', 'cdc: 詞彙表'], ['license', '授權與引用'], ['embed', '嵌入範例'], ['vaxmap', '相關服務：接種點地圖'], ['redirects', '舊網址對照']].map(([id, label]) => html`<li><a class="pf-btn" href="#${id}">${label}</a></li>`)}
+    ${[['quick', '快速開始'], ['meta', 'meta 外殼'], ['endpoints', '端點'], ['openapi', 'OpenAPI'], ['limits', '限流與金鑰'], ['events', '變更事件'], ['machine', '機讀版'], ['vocab', 'cdc: 詞彙表'], ['license', '授權與引用'], ['embed', '嵌入範例'], ['vaxmap', '相關服務：接種點地圖'], ['denguemap', '相關服務：登革熱地圖'], ['redirects', '舊網址對照']].map(([id, label]) => html`<li><a class="pf-btn" href="#${id}">${label}</a></li>`)}
   </ul></nav>
 
   <section id="quick" aria-labelledby="quick-h">
@@ -240,6 +240,24 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
 ${vaxmapLink(ctx, { group: 'antiviral', lang: 'en' })}
 ${vaxmapLink(ctx, { info: true, anchor: 'where', lang: 'vi' })}</code></pre>
     <p class="muted">不認得的參數值會被忽略，不會報錯。資料為每日兩次的快照，頁面會顯示資料時間；整合方案（連結、資料、呈現、治理四層）見 <code>docs/vaxmap-integration.md</code>。</p>
+  </section>
+
+  <section id="denguemap" aria-labelledby="dm-h">
+    <h2 id="dm-h">相關服務：登革熱地圖（denguemap）</h2>
+    <p>登革熱病例分布、聚集警示、村里病媒蚊風險與境外移入來源國由獨立的地圖網站提供（<strong>概念原型、非官方站</strong>）：<a href="${denguemapLink(ctx, { lang: null })}" target="_blank" rel="noopener">${ctx.site.config.denguemapUrl}</a>（開新視窗）。可分享網址的狀態放在 hash 路由（<code>#/視圖?參數</code>），不需要金鑰：</p>
+    <div class="pf-table-wrap"><table class="pf-table"><thead><tr><th scope="col">參數</th><th scope="col">值</th><th scope="col">範例</th></tr></thead><tbody>
+      <tr><th scope="row">視圖</th><td><code>map</code> 病例地圖、<code>clusters</code> 聚集警示、<code>vector</code> 蚊媒地圖、<code>trends</code> 病例趨勢、<code>imported</code> 境外移入、<code>about</code> 資料說明</td><td><code>#/vector</code></td></tr>
+      <tr><th scope="row"><code>county</code></th><td>內政部 5 碼縣市代碼（高雄市 <code>64000</code>、臺南市 <code>67000</code>、屏東縣 <code>10013</code>）；用於 map、vector、trends</td><td><code>#/map?county=64000</code></td></tr>
+      <tr><th scope="row"><code>type</code></th><td><code>local</code> 本土（預設）、<code>imported</code> 境外移入、<code>all</code>；用於 map、trends</td><td><code>#/trends?type=imported</code></td></tr>
+      <tr><th scope="row"><code>country</code></th><td>ISO 3166-1 二碼小寫；用於 imported</td><td><code>#/imported?country=vn</code></td></tr>
+      <tr><th scope="row"><code>lang</code></th><td><code>en</code>；繁中不寫。地圖只有中、英，本站其他語言一律帶 <code>en</code></td><td><code>#/map?lang=en</code></td></tr>
+      <tr><th scope="row">嵌入模式</th><td>放在 <code>?</code>（search）：<code>embed=1</code>、<code>theme=light|dark</code>、<code>lang=zh|en</code>；隱藏地圖自己的頁首與選單、手機改兩指操作、附「開啟完整地圖 ↗」</td><td><code>?embed=1&amp;lang=zh#/vector</code></td></tr>
+    </tbody></table></div>
+    <pre tabindex="0"><code>${denguemapLink(ctx, { view: 'map', county: '64000', type: 'local' })}
+${denguemapLink(ctx, { view: 'imported', country: 'vn', lang: 'en' })}
+${denguemapLink(ctx, { view: 'vector', embed: true, theme: 'light' })}</code></pre>
+    <p>疫情摘要小檔（不需要地圖也能用）：<a href="${ctx.site.config.denguemapDataUrl}summary.json" rel="noopener"><code>summary.json</code></a>（今年本土／境外移入與去年同期、近 7／14／30 天、各縣市、近 14 天病例鄉鎮）與 <a href="${ctx.site.config.denguemapDataUrl}manifest.json" rel="noopener"><code>manifest.json</code></a>（資料時間、來源狀態、資料品質警示）。本站登錄為資料集 <a href="${url('/data/')}#dataset.denguemap-summary"><code>dataset.denguemap-summary</code></a>，疾病頁的疫情小卡用的是建置時快照。</p>
+    <p class="muted">不認得的參數值會被忽略，不會報錯。資料每 3 小時檢查、有變動才更新；<code>manifest.warnings</code> 有今年的 <code>cases-shortfall</code> 或 <code>sources.cases.stale</code> 為 true 時請不要直接引用數字。整合方案見 <code>docs/denguemap-integration.md</code>。</p>
   </section>
 
   <section id="redirects" aria-labelledby="red-h">

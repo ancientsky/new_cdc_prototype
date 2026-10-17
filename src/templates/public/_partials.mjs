@@ -764,6 +764,46 @@ export function vaxmapButton(ctx, { label, cls = 'c-btn', ...linkOpts } = {}) {
   return html`<a class="${cls}" href="${href}" target="_blank" rel="noopener" title="${nw}">${text} ↗<span class="sr-only">${ctx.lang === 'zh-TW' ? `（${nw}）` : ` (${nw})`}</span></a>`;
 }
 
+/* ───────── 第五十七輪：登革熱地圖（denguemap）深連結 ─────────
+   可分享網址用 hash 路由：#/map?county=64000&type=local；視圖 map／clusters／vector／trends／imported／about。
+   county＝內政部 5 碼縣市代碼；type＝local／imported／all（只在 map、trends 有意義）；country＝ISO 3166-1 alpha-2 小寫（只在 imported）。
+   地圖只有中、英兩語：本站 zh-TW 不帶（嵌入時明帶 lang=zh，免得地圖依瀏覽器語言自己切成英文）、其他語言一律 lang=en。
+   嵌入模式（embed:true）：?embed=1&theme=light|dark&lang=zh|en 放在 search（地圖也接受放在 hash 的 query）。規則與參數表見 docs/denguemap-integration.md。 */
+export const DENGUEMAP_VIEWS = ['map', 'clusters', 'vector', 'trends', 'imported', 'about'];
+const DENGUEMAP_TYPES = ['local', 'imported', 'all'];
+const DENGUEMAP_TYPE_VIEWS = new Set(['map', 'trends']);
+export const denguemapLang = (lang) => (lang === 'zh-TW' || lang === 'zh' ? null : 'en');
+
+/**
+ * 回傳登革熱地圖深連結。opts: { view, county, type, country, lang, embed, theme }
+ *  - 不認得的 view 退回 map；county 必須 5 碼數字、type 必須在白名單、country 必須兩個小寫字母，否則丟棄（與地圖的 params.ts 一致，不會產生壞網址）。
+ *  - lang：預設取 ctx.lang；傳 null 強制不帶；可直接傳 'zh'／'en'。
+ *  - embed：true ⇒ ?embed=1&lang=zh|en（必帶語言）＋theme（light／dark，其他值丟棄）。
+ */
+export function denguemapLink(ctx, { view = 'map', county, type, country, lang, embed = false, theme } = {}) {
+  const cfg = ctx.site.config;
+  const v = DENGUEMAP_VIEWS.includes(view) ? view : 'map';
+  const lg = lang === undefined ? denguemapLang(ctx.lang) : lang === null ? null : denguemapLang(lang);
+  const hq = [];
+  if (county != null && /^\d{5}$/.test(String(county))) hq.push(`county=${county}`);
+  if (type && DENGUEMAP_TYPES.includes(type) && DENGUEMAP_TYPE_VIEWS.has(v)) hq.push(`type=${type}`);
+  if (country && v === 'imported' && /^[a-z]{2}$/.test(String(country))) hq.push(`country=${country}`);
+  const sq = [];
+  if (embed) {
+    sq.push('embed=1');
+    if (theme === 'light' || theme === 'dark') sq.push(`theme=${theme}`);
+    sq.push(`lang=${lg ?? 'zh'}`);
+  } else if (lg) hq.push(`lang=${lg}`);
+  return `${cfg.denguemapUrl}${sq.length ? `?${sq.join('&')}` : ''}#/${v}${hq.length ? `?${hq.join('&')}` : ''}`;
+}
+
+/** 開新視窗的按鈕（與 vaxmapButton 同一套「開新視窗 ↗」標示）；label 必填（各入口的用語不同） */
+export function denguemapButton(ctx, { label, cls = 'c-btn', ...linkOpts } = {}) {
+  const href = denguemapLink(ctx, { ...linkOpts, embed: false });
+  const nw = VAXMAP_NEW_WINDOW[ctx.lang] ?? VAXMAP_NEW_WINDOW.en;
+  return html`<a class="${cls}" href="${href}" target="_blank" rel="noopener" title="${nw}">${label ?? ctx.t('denguemap.open')} ↗<span class="sr-only">${ctx.lang === 'zh-TW' ? `（${nw}）` : ` (${nw})`}</span></a>`;
+}
+
 /* ═════════════ 第五輪（V2）：舊網址對應（三層露出）與舊網址正規化 ═════════════ */
 
 /**

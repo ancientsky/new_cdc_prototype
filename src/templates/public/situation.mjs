@@ -3,7 +3,8 @@ import { html, raw } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import * as JL from '../../../scripts/lib/jsonld.mjs';
 import { barChartSvg, sparklineSvg } from '../../client/charts.js';
-import { ldFor, pageHead, statusTag, diseaseHref, diseaseName, sitField, unitName, sourceCard, numberSource, trendArrow, sectionHead, feedback, datasetSourceCard } from './_partials.mjs';
+import { ldFor, pageHead, statusTag, diseaseHref, diseaseName, sitField, unitName, sourceCard, numberSource, trendArrow, sectionHead, feedback, datasetSourceCard, denguemapButton } from './_partials.mjs';
+import { DENGUEMAP_OF_DISEASE } from './_denguemap.mjs';
 
 const STATUSES = ['stable', 'rising', 'peak', 'declining'];
 
@@ -49,7 +50,7 @@ ${sit.note ? html`<p class="c-alert c-alert--overdue" role="note">${sit.note}</p
           <p class="c-sit-card__desc">${sitField(ctx, it, 'metricLabel')}${sitField(ctx, it, 'deltaText') ? html`<br><span class="c-sit-card__delta">${sitField(ctx, it, 'deltaText')}</span>` : ''}</p>
           <p class="c-sit-card__advice"><b>${t('sit.advice')}</b>${sitField(ctx, it, 'advice')}</p>
           <p class="muted"><b>${t('status.pop.basis')}</b> ${sitField(ctx, it, 'basis')}</p>
-          <p class="c-linkrow">${href ? html`<a href="${href}">${t('situation.page')} →</a>` : ''}${ds ? html` ${href ? '· ' : ''}<a href="${url('/data/')}#${ds.id}">${t('disease.dataset')}</a>` : ''}</p>
+          <p class="c-linkrow">${href ? html`<a href="${href}">${t('situation.page')} →</a>` : ''}${ds ? html` ${href ? '· ' : ''}<a href="${url('/data/')}#${ds.id}">${t('disease.dataset')}</a>` : ''}${DENGUEMAP_OF_DISEASE[it.disease]?.card ? html` ${denguemapButton(ctx, { view: 'map', type: 'local', label: t('denguemap.open'), cls: 'c-btn c-btn--ghost c-btn--sm' })}` : ''}</p>
         </div>
         <figure class="c-sitbig__chart">${it.weekly?.length ? raw(barChartSvg(it.weekly, { labels: it.weeklyLabels, color: `var(--status-${it.status})`, width: 420, height: 170, title: `${diseaseName(ctx, dm)} · ${sitField(ctx, it, 'metricLabel')}` })) : ''}<figcaption class="muted">${t('situation.weekly', { n: it.weekly?.length ?? 0 })}${it.illustrative ? ` · ${t('illustrative')}` : ''} ${it.weekly?.length > 1 ? raw(sparklineSvg(it.weekly, { color: `var(--status-${it.status})`, width: 80, height: 22, title: '' })) : ''}</figcaption></figure>
       </div>

@@ -1,0 +1,194 @@
+{
+  "id": "topic.denguemap",
+  "type": "topic",
+  "title": "登革熱地圖",
+  "owner": "unit.epidemic-intelligence",
+  "steward": "疫情中心承辦人（待指派）；蚊媒資料：急性傳染病組；技術維運：原型階段為地圖維護者，正式上線移交資訊室",
+  "publishedAt": "2026-10-17",
+  "reviewedAt": "2026-10-17",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "tasks": [
+    "situation",
+    "data"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "在本站直接看登革熱病例地圖、病媒蚊風險（蚊媒地圖）與境外移入來源國；地圖每 3 小時自疾管署資料更新。說明怎麼讀地圖、數字的意義與限制。",
+  "keywords": [
+    "登革熱地圖",
+    "登革熱",
+    "病例地圖",
+    "蚊媒地圖",
+    "病媒蚊",
+    "布氏指數",
+    "境外移入",
+    "聚集警示",
+    "NS1"
+  ],
+  "slug": "denguemap",
+  "kind": "resource-hub",
+  "diseases": [
+    "disease.dengue",
+    "disease.chikungunya"
+  ],
+  "introMarkdown": "下方是嵌入本頁的**登革熱地圖**：病例分布、近兩週聚集警示、村里病媒蚊風險與境外移入來源國，資料每 3 小時自疾管署登革熱地圖後端更新。地圖目前是**概念原型、非官方站**，正式數字以疾管署公布為準。\n\n想看完整畫面、分享特定縣市或視圖，請按「開啟登革熱地圖」在新視窗開啟；網址可以直接分享。",
+  "embed": {
+    "kind": "denguemap",
+    "views": [
+      "map",
+      "clusters",
+      "vector",
+      "imported"
+    ],
+    "card": true
+  },
+  "blocks": [
+    {
+      "key": "how-to-read",
+      "heading": "怎麼讀這張地圖",
+      "audience": "public",
+      "markdown": "- **依發病日**：病例放在「發病日」那一天，不是通報日或研判日；最近幾天的病例常在之後幾天才研判確定，所以最近一週的數字會再往上補。\n- **本土與境外移入**：本土病例是在臺灣境內被病媒蚊叮咬感染；境外移入是在國外感染、回國後發病。境外移入病例回國後如果被病媒蚊叮咬，可能引發本土疫情，所以返國兩週內外出仍要防蚊。\n- **點的位置不是住址**：每個點是病例所在「最小統計區」的中心點（數十戶到數百戶的小區塊），用來看分布，不能也不應用來找出個人。\n- **顏色代表發病多久**：發病 7 天內的病例以最醒目的顏色標示，這段時間病人可能仍在病毒血症期，被病媒蚊叮咬就可能把病毒傳給蚊子；8–14 天、15–30 天、30 天以上依序淡化。\n- **蚊媒地圖**：村里的病媒蚊風險（近 5 週的布氏指數、誘卵桶與誘蚊桶陽性率），紅色代表危險級，請加強「巡、倒、清、刷」。"
+    },
+    {
+      "key": "for-professionals",
+      "heading": "給防疫人員：資料來源與限制",
+      "audience": "professional",
+      "markdown": "- 資料來源是疾管署登革熱地圖後端（病例、境外移入、群聚、病媒蚊調查、NS1 快篩院所）；地圖的資料管線每 3 小時檢查一次，資料有變動才更新。地圖右上角與「資料說明」頁顯示資料時間與各來源狀態。\n- **上游資料不完整時的處理**：疾管署後端曾間歇回傳截斷的歷史資料。地圖管線遇到筆數驟減會沿用上一版、不覆寫，並在 manifest 標示 `stale` 與資料品質警示（`cases-shortfall`）。本站的疫情小卡看到今年有短缺警示、病例來源 stale，或資料超過 48 小時，就不顯示數字，只請讀者開啟地圖。\n- 本頁與疾病頁的數字是**建置時快照**，最多落後地圖數小時；疫情研判、記者會與公文請以疾管署正式統計（傳染病統計資料查詢系統、每日新聞稿）為準。\n- 地圖不含任何個案識別資料；點位為最小統計區中心點，群聚範圍為疫調劃定的區域。"
+    }
+  ],
+  "links": [
+    {
+      "label": "開啟登革熱地圖（病例地圖）",
+      "href": "https://ancientsky.github.io/denguemap/#/map",
+      "external": true,
+      "note": "概念原型、非官方站；網址可分享（例：#/map?county=64000 高雄市）",
+      "i18n": {
+        "en": {
+          "label": "Open the dengue map (case map)",
+          "note": "Concept prototype, not an official site; addresses can be shared (e.g. #/map?county=64000 for Kaohsiung)"
+        }
+      }
+    },
+    {
+      "label": "蚊媒地圖：村里病媒蚊風險",
+      "href": "https://ancientsky.github.io/denguemap/#/vector",
+      "external": true,
+      "i18n": {
+        "en": {
+          "label": "Mosquito map: risk by village"
+        }
+      }
+    },
+    {
+      "label": "境外移入：來源國與國際疫情",
+      "href": "https://ancientsky.github.io/denguemap/#/imported",
+      "external": true,
+      "i18n": {
+        "en": {
+          "label": "Imported cases: countries of origin and outbreak news"
+        }
+      }
+    },
+    {
+      "label": "地圖的資料說明與資料品質",
+      "href": "https://ancientsky.github.io/denguemap/#/about",
+      "external": true,
+      "i18n": {
+        "en": {
+          "label": "About the map's data and data quality"
+        }
+      }
+    },
+    {
+      "label": "登革熱疾病介紹",
+      "href": "/diseases/dengue/",
+      "external": false,
+      "i18n": {
+        "en": {
+          "label": "Dengue: disease information"
+        }
+      }
+    },
+    {
+      "label": "疫情摘要資料檔（summary.json）",
+      "href": "https://ancientsky.github.io/denguemap/data/summary.json",
+      "external": true,
+      "note": "資料目錄：dataset.denguemap-summary",
+      "i18n": {
+        "en": {
+          "label": "Case summary data file (summary.json)",
+          "note": "Data catalog: dataset.denguemap-summary"
+        }
+      }
+    },
+    {
+      "label": "疾管署登革熱地圖（2015 年版）",
+      "href": "https://cdcdengue.azurewebsites.net/",
+      "external": true,
+      "i18n": {
+        "en": {
+          "label": "Taiwan CDC dengue map (2015 version)"
+        }
+      }
+    }
+  ],
+  "contentIds": [
+    "disease.dengue",
+    "disease.chikungunya",
+    "dataset.denguemap-summary",
+    "dataset.dengue-daily",
+    "dataset.dengue-local-weekly"
+  ],
+  "i18n": {
+    "en": {
+      "machineTranslated": true,
+      "machineTranslatedAt": "2026-10-17",
+      "title": "Dengue map",
+      "summary": "See dengue cases, mosquito risk by village and the countries imported cases came from, right on this page; the map refreshes from Taiwan CDC data every 3 hours. How to read it, what the numbers mean and their limits.",
+      "introMarkdown": "Below is the **dengue map** embedded in this page: where cases are, cluster alerts for the last two weeks, mosquito risk by village and the countries imported cases came from. Its data refresh every 3 hours from Taiwan CDC's dengue map backend. The map is a **concept prototype, not an official site**; official figures are those published by Taiwan CDC.\n\nTo see the full screen or share a county or view, use \"Open the dengue map\" to open it in a new window; its address can be shared as is.",
+      "blocks": [
+        {
+          "key": "how-to-read",
+          "heading": "How to read the map",
+          "markdown": "- **By onset date**: each case is placed on the day symptoms began, not the day it was reported or confirmed. Recent cases are often confirmed a few days later, so the last week's numbers usually rise.\n- **Local vs imported**: local cases were infected by mosquitoes in Taiwan; imported cases were infected abroad and fell ill after returning. An imported case bitten by local mosquitoes can start local spread, so keep avoiding bites for two weeks after you return.\n- **Dots are not home addresses**: each dot is the centre of the smallest statistical area (a block of tens to hundreds of households). It shows distribution and cannot, and must not, be used to identify anyone.\n- **Colour shows time since onset**: cases within 7 days of onset are the most prominent colour; during this time a patient may still be viraemic, and a mosquito biting them can pick up the virus. 8–14, 15–30 and over 30 days fade in turn.\n- **Mosquito map**: mosquito risk by village (Breteau index and ovitrap/gravitrap positivity over the last 5 weeks); red means high risk, so step up removing standing water."
+        },
+        {
+          "key": "for-professionals",
+          "heading": "For public health staff: sources and limits",
+          "markdown": "- The source is Taiwan CDC's dengue map backend (cases, imported cases, clusters, vector surveys, NS1 test sites). The map's pipeline checks every 3 hours and updates only when data change; the map shows the data time and each source's status.\n- **When upstream data are incomplete**: the backend has intermittently returned truncated history. The pipeline then keeps the previous version and flags the manifest as `stale` with a data-quality warning (`cases-shortfall`). This site's summary card hides its numbers when there is a shortfall warning for the current year, the case source is stale, or the data are over 48 hours old, and asks readers to open the map instead.\n- Numbers on this page and the disease page are **build-time snapshots** and may lag the map by a few hours. For assessments, press briefings and official documents use Taiwan CDC's official statistics.\n- The map holds no identifying case data; dots are statistical-area centroids and cluster areas are those drawn by the investigation."
+        }
+      ]
+    }
+  }
+}

@@ -22,6 +22,13 @@ export function vaxmapHref(group, lang, { info = false, anchor = '' } = {}) {
   return (cfg.vaxmapUrl || VAXMAP_URL) + (h ? `#${h}` : '');
 }
 
+// ───────── 第五十七輪：登革熱地圖深連結（docs/denguemap-integration.md 1.2；與 _partials.mjs 的 denguemapLink 同規則：繁中不帶、其他語言 lang=en）─────────
+export const DENGUEMAP_URL = 'https://ancientsky.github.io/denguemap/';
+export function denguemapHref(lang) {
+  const cfg = (typeof window !== 'undefined' && window.CDC && window.CDC.config) || {};
+  return `${cfg.denguemapUrl || DENGUEMAP_URL}#/map${lang && lang !== 'zh-TW' ? '?lang=en' : ''}`;
+}
+
 // ───────────────────────── 年齡／身分解析與疫苗時程比對（跨疫苗彙整） ─────────────────────────
 // 「65 歲以上可以打哪些公費疫苗」「滿一歲的小孩要打什麼疫苗」這類問句沒有指定單一疫苗，
 // 檢索只會撈到某一支疫苗頁；改由疫苗接種時程主檔（immunization-schedule）依年齡區間結構化組句。

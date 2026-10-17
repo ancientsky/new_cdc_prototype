@@ -16,7 +16,7 @@
 //   黑名單（example.、placeholder、localhost、127.0.0.1、TODO、xxx）⇒ error。
 //   - 第四十九輪：同主機的「別的專案」不算站內。BASE_PATH='' 時 siteOrigin 退化成整個主機（https://ancientsky.github.io），
 //     連到同主機另一個 GitHub Pages 專案（vaxmapUrl 的 /vaxmap-next/）會被誤判成站內缺檔（一次建置 3,300 多個 error）。
-//     呼叫端用 siblingUrls 列出「同主機但不屬於本站」的網址（build.mjs 傳 config.vaxmapUrl／vaxmapInfoUrl），
+//     呼叫端用 siblingUrls 列出「同主機但不屬於本站」的網址（build.mjs 傳 config.vaxmapUrl／vaxmapInfoUrl；第五十七輪加 denguemapUrl 的 /denguemap/），
 //     其第一層路徑（/vaxmap-next/）底下的絕對網址一律當外部連結。siteUrl 本身帶路徑時（https://host/new_cdc_prototype）照舊以該路徑為站內範圍。
 // 輸出：v1/governance/link-report.json（errors[]、warnings[]、counts）。
 // 用法：node scripts/lib/check-internal-links.mjs [distDir] [--check] [--md]（--check 或 CI 環境下有 error ⇒ exit 1）
@@ -319,7 +319,7 @@ if (process.argv[1] && import.meta.url === pathToFileURL(path.resolve(process.ar
   const argv = process.argv.slice(2);
   const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
   const dist = path.resolve(argv.find((a) => !a.startsWith('--')) ?? process.env.DIST_DIR ?? path.join(ROOT, 'dist'));
-  const res = checkInternalLinks(dist, { basePath: config.basePath, langs: config.langs, siteUrl: config.siteUrl, siblingUrls: [config.vaxmapUrl, config.vaxmapInfoUrl], md: argv.includes('--md') });
+  const res = checkInternalLinks(dist, { basePath: config.basePath, langs: config.langs, siteUrl: config.siteUrl, siblingUrls: [config.vaxmapUrl, config.vaxmapInfoUrl, config.denguemapUrl], md: argv.includes('--md') });
   summarize(res);
   if (!res.ok && (argv.includes('--check') || process.env.CI)) process.exit(1);
 }
