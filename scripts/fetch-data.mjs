@@ -737,14 +737,14 @@ export async function checkLinks({ contentDir = CONTENT_DIR, fetchImpl = fetch, 
 // ── 登革熱地圖摘要（第五十七輪，docs/denguemap-integration.md 第 2 節）────────
 export const DENGUEMAP_DATASET_FILE = 'denguemap-summary.json';
 /**
- * 快照成功後同步資料目錄的那一筆：lastUpdated＝manifest.generatedAt 的臺北日期、provenance.fetchedAt＝抓取日。
+ * 快照成功後同步資料目錄的那一筆：lastUpdated＝病例資料最後一次成功抓取（sources.cases.fetchedAt，沒有才用 generatedAt）的臺北日期、provenance.fetchedAt＝抓取日。
  * 只動這兩個欄位（其餘由權責單位維護）；沒變就不寫檔。回傳變更欄位清單。
  */
 export function syncDenguemapDataset(snapshot, { dry = false, datasetsDir = DATASETS_DIR } = {}) {
   const file = path.join(datasetsDir, DENGUEMAP_DATASET_FILE);
   if (!snapshot?.manifest || !fs.existsSync(file)) return [];
   const ds = JSON.parse(fs.readFileSync(file, 'utf8'));
-  const next = { ...ds, lastUpdated: taipeiMinute(snapshot.manifest.generatedAt).slice(0, 10) || ds.lastUpdated, provenance: { ...(ds.provenance ?? {}), fetchedAt: String(snapshot.fetchedAt).slice(0, 10) } };
+  const next = { ...ds, lastUpdated: taipeiMinute(snapshot.manifest.sources?.cases?.fetchedAt ?? snapshot.manifest.generatedAt).slice(0, 10) || ds.lastUpdated, provenance: { ...(ds.provenance ?? {}), fetchedAt: String(snapshot.fetchedAt).slice(0, 10) } };
   const diff = ['lastUpdated', 'provenance'].filter((k) => JSON.stringify(ds[k]) !== JSON.stringify(next[k]));
   if (diff.length && !dry) fs.writeFileSync(file, JSON.stringify(next, null, 2) + '\n');
   return diff;

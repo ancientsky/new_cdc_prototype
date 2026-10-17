@@ -297,9 +297,12 @@ function denguemapMarkdown(ctx) {
   const s = d.snap.summary;
   const prev = (type) => (d.prevIncomplete?.[type] ? '去年同期資料不完整' : `${s.year - 1} 年同期 ${s.prevYtd[type]} 例`);
   return [
-    `- 登革熱地圖（概念原型、非官方站）快照，資料時間 ${taipeiMinute(d.snap.manifest.generatedAt)}（臺北時間），最新發病日 ${s.latestOnset}，依發病日統計：`,
+    `- 登革熱地圖（概念原型、非官方站）快照，資料時間 ${taipeiMinute(d.dataTime)}（臺北時間）${d.casesStale ? '（地圖最近一次更新沒有成功，沿用此時間的資料）' : ''}，最新發病日 ${s.latestOnset}，依發病日統計：`,
     `  - ${s.year} 年本土 ${s.ytd.local} 例（${prev('local')}）、境外移入 ${s.ytd.imported} 例（${prev('imported')}）`,
     `  - 近 14 天本土 ${s.last14.local} 例、境外移入 ${s.last14.imported} 例`,
+    ...(s.topTowns14.filter((r) => r[1] > 0).slice(0, 3).every((r) => s.townNames?.[r[0]]) && s.topTowns14.some((r) => r[1] > 0)
+      ? [`  - 近 14 天本土病例所在鄉鎮市區：${s.topTowns14.filter((r) => r[1] > 0).slice(0, 3).map((r) => `${s.townNames[r[0]].countyZh}${s.townNames[r[0]].zh} ${r[1]} 例`).join('、')}`]
+      : []),
     `  - 正式數字以疾管署公布為準；地圖：${link}`,
   ];
 }

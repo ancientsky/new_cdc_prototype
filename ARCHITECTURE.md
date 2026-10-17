@@ -2616,8 +2616,10 @@ i18n 新鍵（七語齊備，順序 zh-TW, en, ja, tl, vi, id, th）：`nav.more
 | 設定 | `site.config.mjs`：`denguemapUrl`、`denguemapDataUrl`、`denguemapRawDataUrl`、`denguemapMaxAgeHours`（48） |
 | 深連結 | `_partials.mjs` `denguemapLink(ctx, { view, county, type, country, lang, embed, theme })`：view ∈ map／clusters／vector／trends／imported／about（其他 ⇒ map）；county `/^\d{5}$/`；type ∈ local／imported／all 且只在 map、trends；country `/^[a-z]{2}$/` 且只在 imported；lang：zh-TW ⇒ 不帶、其他 ⇒ `en`；embed ⇒ search `?embed=1[&theme=light|dark]&lang=zh|en`。`denguemapButton` 與 `vaxmapButton` 同一套「開新視窗 ↗」。client 端 `structured.js` `denguemapHref(lang)` 同規則 |
 | 快照 | `scripts/lib/denguemap.mjs`：`fetchDenguemap` 依序試 Pages、raw；manifest＋summary 同源且 `latestOnset` 相同；`validateSummary`／`validateManifest` 白名單輸出（非負整數、真實 ISO 日期、縣市 5 碼、鄉鎮 8 碼字串、7≤14≤30、縣市合計 ≤ 今年）；大小上限 64／256 KB（串流計數）；`importDenguemap` 失敗保留既有快照＋`lastLiveAttempt`，從無快照寫 `mode:'missing'`。`fetch-data.mjs --denguemap` 只跑這一步並同步 `content/datasets/denguemap-summary.json` 的 `lastUpdated`（臺北日期）與 `provenance.fetchedAt`；`pages.yml` 每次建置前跑（`continue-on-error`、不 commit） |
+| townNames | 選填；`validateSummary` 只收 topTowns14 內、8 碼、county＝前 5 碼、名稱經 `cleanName`（NFKC、去控制／零寬字元、1–60 字、無 `<>`）；不合格整份拒收；小卡前 3 個本土鄉鎮任一缺名 ⇒ 退回鄉鎮數 |
+| 首頁與主選單 | `sitCard` 對 `DENGUEMAP_OF_DISEASE[*].card` 的疾病加 `.c-sit-card__dm` 連結；`_nav-panels.mjs` 傳染病面板「找法」加外部連結（`ext`，開新視窗 ↗＋sr-only），`DISEASE_MAX` 4 → 3；`DENGUEMAP_OF_DISEASE` 移到 `_partials.mjs`（`_denguemap.mjs` 轉出） |
 | 讀取 | `load.mjs` → `site.snapshots.denguemap`（預設 `{ mode:'missing', manifest:null, summary:null }`） |
-| 過期規則 | `denguemapState(snap, { now, maxAgeHours })` → ok／stale（`too-old`、`cases-stale`、`cases-shortfall` 只看 `year === summary.year`）／missing，另回傳 `prevIncomplete{local,imported}`（`year === summary.year − 1` 的 cases-shortfall，沒有 type ⇒ 兩類；小卡改顯示「去年同期資料不完整」）；`now` 用 `site.now`（真實時間，不受 BUILD_TODAY 影響） |
+| 過期規則 | `denguemapState(snap, { now, maxAgeHours })` → ok／stale（`too-old`：`sources.cases.fetchedAt ?? generatedAt` 超過 maxAgeHours；`cases-missing`：ok:false 且 stale:false；`cases-shortfall` 只看 `year === summary.year`；stale:true 在時限內不擋，回傳 `casesStale`、`dataTime` 給小卡加註）／missing，另回傳 `prevIncomplete{local,imported}`（`year === summary.year − 1` 的 cases-shortfall，沒有 type ⇒ 兩類；小卡改顯示「去年同期資料不完整」）；`now` 用 `site.now`（真實時間，不受 BUILD_TODAY 影響） |
 | 小卡 | `_denguemap.mjs` `denguemapCard(ctx, { heading, topicLink, now })`；`DENGUEMAP_OF_DISEASE = { 'disease.dengue': { card }, 'disease.chikungunya': { vectorIn: 'prevention' } }`，`disease.mjs` 的 `renderBlock` 讀它；`.md` 版同一套規則 |
 | 嵌入 | 專區 `embed: { kind:'denguemap', views[], card }`（`schemas/topic.json`，`additionalProperties:false`）；`denguemapEmbed` 一個 iframe（`name=denguemap-frame`、title、lazy、`referrerpolicy=no-referrer`、`allow=fullscreen`、sandbox 五項：scripts、same-origin、popups、popups-to-escape-sandbox、downloads），切換鈕 `<a target>`；inline script 只更新 aria-current／title／開新視窗連結，CSP 以建置雜湊放行 |
 | CSP | `securityHeaders({ denguemapOrigin })`：frame-src 地圖來源 `[vaxmap, denguemap]` 去重；原型同源 ⇒ 字串不變 |
@@ -2625,4 +2627,4 @@ i18n 新鍵（七語齊備，順序 zh-TW, en, ja, tl, vi, id, th）：`nav.more
 | i18n | `src/client/i18n.js` `ROWS_R57`（`denguemap.*`，七語；`STRINGS.en['denguemap.unit']=''`） |
 | 測試 | `tests/round57-denguemap.test.mjs` |
 
-**教訓：** 外部資料進到本站頁面，判斷「能不能顯示」要用資料自己的品質旗標（manifest 的 stale、shortfall），不能只看時間；時間新、但上游截斷的資料比過期資料更危險。
+**教訓：** 外部資料進到本站頁面，判斷「能不能顯示」要讀懂資料自己的品質旗標，不能只看時間：時間新、但上游截斷的資料（shortfall）比過期資料更危險；反過來，stale 只是「這次沒抓到、沿用上一版」，若一律擋掉，上游時好時壞就會讓小卡大半時間空白——要用「最後一次成功抓取」計時。

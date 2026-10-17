@@ -4,12 +4,13 @@
 // 每個面板最多 9 個連結（含「前往○○專區」）、最少 4 個；每欄最多 5 個。
 import { html, raw } from '../../../scripts/lib/render.mjs';
 import { langAvailable } from '../../../scripts/lib/pages.mjs';
-import { hrefFor, L } from './_partials.mjs';
+import { hrefFor, L, denguemapLink } from './_partials.mjs';
 import { immunizationLinks } from './vaccines.mjs';
 import * as TravelMap from './_travel-map.mjs';
 
-/** 傳染病面板「近期與常見」最多幾個疾病頁（9 − 欄二 4 個 − 前往專區 1 個 = 4；同時符合每欄 ≤ 5） */
-export const DISEASE_MAX = 4;
+/** 傳染病面板「近期與常見」最多幾個疾病頁（9 − 欄二 5 個 − 前往專區 1 個 = 3；同時符合每欄 ≤ 5）。
+ *  第五十七輪：欄二加「登革熱地圖 ↗」（外部、開新視窗），疾病頁由 4 個減為 3 個。 */
+export const DISEASE_MAX = 3;
 /** 有面板的主選單項目：路徑 → 面板 key（之後要加面板：在 navPanels 加一組、在這裡登記） */
 export const PANEL_OF = { '/diseases/': 'diseases', '/vaccines/': 'vaccines', '/travel/': 'travel' };
 
@@ -57,9 +58,11 @@ function build(ctx) {
           links: [
             { href: url('/diseases/'), label: t('nav.panel.all.diseases', { n: site?.master?.diseases?.length ?? 0 }) },
             { href: url('/situation/'), label: t('nav.situation') },
+            // 第五十七輪：登革熱地圖（概念原型，docs/denguemap-integration.md 1.2）；與疫苗面板的 vaxmap 同為外部連結、開新視窗 ↗
+            site?.config?.denguemapUrl ? { href: denguemapLink(ctx, { view: 'map' }), label: t('denguemap.short'), ext: true } : null,
             { href: url('/documents/'), label: t('nav.panel.docs.pro'), pro: true },
             { href: url('/report/'), label: t('nav.panel.report.pro'), pro: true },
-          ],
+          ].filter(Boolean),
         },
       ],
       all: goto('diseases', '/diseases/'),
@@ -119,7 +122,7 @@ export function navPanelHtml(ctx, key, label) {
   const p = navPanels(ctx)[key];
   if (!p) return '';
   const li = (l) =>
-    html`<li${l.pro ? raw(' class="c-pro-only"') : ''}><a href="${l.href}"${l.ext ? raw(' target="_blank" rel="noopener"') : ''}>${l.label}${l.ext ? ' ↗' : ''}</a></li>`;
+    html`<li${l.pro ? raw(' class="c-pro-only"') : ''}><a href="${l.href}"${l.ext ? raw(' target="_blank" rel="noopener"') : ''}>${l.label}${l.ext ? html` ↗<span class="sr-only">${ctx.lang === 'zh-TW' ? `（${t('denguemap.newwin')}）` : ` (${t('denguemap.newwin')})`}</span>` : ''}</a></li>`;
   return html`<details class="c-nav__dd" data-nav-dd>
     <summary class="c-nav__more"><span class="sr-only">${t('nav.more', { name: label })}</span>${CHEV}</summary>
     <div class="c-nav__panel" id="nav-panel-${key}" role="group" aria-label="${t('nav.panel.label', { name: label })}">

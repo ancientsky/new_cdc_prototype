@@ -84,7 +84,7 @@
       "key": "for-professionals",
       "heading": "給防疫人員：資料來源與限制",
       "audience": "professional",
-      "markdown": "- 資料來源是疾管署登革熱地圖後端（病例、境外移入、群聚、病媒蚊調查、NS1 快篩院所）；地圖的資料管線每 3 小時檢查一次，資料有變動才更新。地圖右上角與「資料說明」頁顯示資料時間與各來源狀態。\n- **上游資料不完整時的處理**：疾管署後端曾間歇回傳截斷的歷史資料。地圖管線遇到筆數驟減會沿用上一版、不覆寫，並在 manifest 標示 `stale` 與資料品質警示（`cases-shortfall`）。本站的疫情小卡看到今年有短缺警示、病例來源 stale，或資料超過 48 小時，就不顯示數字，只請讀者開啟地圖。\n- 本頁與疾病頁的數字是**建置時快照**，最多落後地圖數小時；疫情研判、記者會與公文請以疾管署正式統計（傳染病統計資料查詢系統、每日新聞稿）為準。\n- 地圖不含任何個案識別資料；點位為最小統計區中心點，群聚範圍為疫調劃定的區域。"
+      "markdown": "- 資料來源是疾管署登革熱地圖後端（病例、境外移入、群聚、病媒蚊調查、NS1 快篩院所）；地圖的資料管線每 3 小時檢查一次，資料有變動才更新。地圖右上角與「資料說明」頁顯示資料時間與各來源狀態。\n- **上游資料不完整時的處理**：疾管署後端曾間歇回傳截斷的歷史資料。地圖管線遇到筆數驟減會沿用上一版、不覆寫，並在 manifest 標示 `stale` 與資料品質警示（`cases-shortfall`）。本站的疫情小卡看到今年有短缺警示、病例資料（最後一次成功取得的時間）超過 48 小時，或從未成功取得，就不顯示數字，只請讀者開啟地圖；病例來源只是這次更新失敗（stale）但仍在 48 小時內時，照常顯示數字並寫出資料時間。\n- 本頁與疾病頁的數字是**建置時快照**，最多落後地圖數小時；疫情研判、記者會與公文請以疾管署正式統計（傳染病統計資料查詢系統、每日新聞稿）為準。\n- 地圖不含任何個案識別資料；點位為最小統計區中心點，群聚範圍為疫調劃定的區域。"
     }
   ],
   "links": [
@@ -186,7 +186,7 @@
         {
           "key": "for-professionals",
           "heading": "For public health staff: sources and limits",
-          "markdown": "- The source is Taiwan CDC's dengue map backend (cases, imported cases, clusters, vector surveys, NS1 test sites). The map's pipeline checks every 3 hours and updates only when data change; the map shows the data time and each source's status.\n- **When upstream data are incomplete**: the backend has intermittently returned truncated history. The pipeline then keeps the previous version and flags the manifest as `stale` with a data-quality warning (`cases-shortfall`). This site's summary card hides its numbers when there is a shortfall warning for the current year, the case source is stale, or the data are over 48 hours old, and asks readers to open the map instead.\n- Numbers on this page and the disease page are **build-time snapshots** and may lag the map by a few hours. For assessments, press briefings and official documents use Taiwan CDC's official statistics.\n- The map holds no identifying case data; dots are statistical-area centroids and cluster areas are those drawn by the investigation."
+          "markdown": "- The source is Taiwan CDC's dengue map backend (cases, imported cases, clusters, vector surveys, NS1 test sites). The map's pipeline checks every 3 hours and updates only when data change; the map shows the data time and each source's status.\n- **When upstream data are incomplete**: the backend has intermittently returned truncated history. The pipeline then keeps the previous version and flags the manifest as `stale` with a data-quality warning (`cases-shortfall`). This site's summary card hides its numbers when there is a shortfall warning for the current year, when the case data (time of the last successful fetch) are over 48 hours old, or when they have never been fetched, and asks readers to open the map instead. If only the latest fetch failed (stale) and the data are within 48 hours, the numbers stay, with their data time shown.\n- Numbers on this page and the disease page are **build-time snapshots** and may lag the map by a few hours. For assessments, press briefings and official documents use Taiwan CDC's official statistics.\n- The map holds no identifying case data; dots are statistical-area centroids and cluster areas are those drawn by the investigation."
         }
       ]
     }

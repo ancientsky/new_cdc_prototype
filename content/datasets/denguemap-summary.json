@@ -4,7 +4,7 @@
   "category": "structured-table",
   "title": "登革熱地圖疫情摘要（summary.json）",
   "owner": "unit.epidemic-intelligence",
-  "steward": "疫情中心 Data Steward（原型階段：登革熱地圖維護者代管擷取與部署）",
+  "steward": "疫情中心 Data Steward；技術維運原型階段由登革熱地圖維護者代管擷取與部署，正式上線移交資訊室",
   "publishedAt": "2026-10-17",
   "reviewedAt": "2026-10-17",
   "reviewPeriodMonths": 6,
@@ -84,7 +84,7 @@
       "url": "https://ancientsky.github.io/denguemap/data/manifest.json"
     }
   ],
-  "note": "原型：正本是登革熱地圖 GitHub Pages 發布的 data/summary.json，本站不存副本、只在建置時快照（data/snapshots/denguemap-summary.json）供疾病頁疫情小卡使用。地圖每 3 小時檢查一次、有變動才更新；本站 daily（容許 2 天）與小卡的 48 小時門檻相同。授權暫填 OGDL-1.0，正式登錄前請疫情中心確認（docs/denguemap-integration.md 第 2.3 節）。",
+  "note": "原型：正本是登革熱地圖 GitHub Pages 發布的 data/summary.json，本站不存副本、只在建置時快照（data/snapshots/denguemap-summary.json）供疾病頁疫情小卡使用。地圖每 3 小時檢查一次、有變動才更新；本站 daily（容許 2 天）與小卡的 48 小時門檻相同。Owner 疫情中心、授權 OGDL-1.0（資料源自疾管署開放資料，政府資料開放授權條款）已確認（2026-10-17）。",
   "i18n": {
     "en": {
       "title": "Dengue map case summary (summary.json)",

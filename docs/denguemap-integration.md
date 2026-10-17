@@ -1,6 +1,6 @@
 # 新官網原型 × 登革熱地圖（denguemap）整合方案
 
-給資訊室（部署、CSP 與 HTTP 標頭、排程）與防疫醫師室（數字的意義、什麼時候不能引用）看；疫情中心、急性傳染病組、OASIS 參考。架構比照 [vaxmap-integration.md](vaxmap-integration.md)：分四層，由「現在就能做」到「要一起治理」，最後一節是分階段時程。
+給資訊室（`unit.it`；部署、CSP 與 HTTP 標頭、排程）與防疫醫師室（`unit.preventive-medicine` 預防醫學辦公室；數字的意義、什麼時候不能引用）看；疫情中心、急性傳染病組、OASIS 參考。架構比照 [vaxmap-integration.md](vaxmap-integration.md)：分四層，由「現在就能做」到「要一起治理」，最後一節是分階段時程。
 
 - 本站（新官網原型）：<https://ancientsky.github.io/new_cdc_prototype/>
 - 登革熱地圖（疾管署 2015 年版登革熱地圖的現代化重製，**概念原型、非官方站**）：<https://ancientsky.github.io/denguemap/>；原始碼 `ancientsky/denguemap`，資料契約見該 repo 的 `docs/data-contract.md`
@@ -53,6 +53,8 @@ https://ancientsky.github.io/denguemap/?embed=1&theme=light&lang=zh#/vector     
 | 登革熱疾病頁「目前疫情與統計」的**疫情小卡**（第 3.1 節） | `/diseases/dengue/#situation`（繁中、英、越；登革熱頁只有這三語是已審譯文） | 按鈕「病例地圖」`#/map?type=local`、「聚集警示」`#/clusters`、「蚊媒地圖」`#/vector`；連結「登革熱地圖專區」→ `/topics/denguemap/` |
 | 屈公病疾病頁「如何預防」 | `/diseases/chikungunya/#prevention` | 「看病媒蚊風險：蚊媒地圖」`#/vector`（同為埃及斑蚊、白線斑蚊；病例數是登革熱的，所以不放小卡） |
 | 疫情態勢頁登革熱大卡 | `/situation/#d-dengue`（七語） | 「開啟登革熱地圖」`#/map?type=local` |
+| 首頁「現在的疫情」登革熱態勢卡（任務頁「現在的疫情」同一張卡） | `/`、`/tasks/situation/`（七語；`_partials.mjs` 的 `sitCard`） | 卡片底部「登革熱地圖 ↗」`#/map?type=local` |
+| 主選單「傳染病」面板 → 找法 | 每頁頁首（七語；`_nav-panels.mjs`，與疫苗面板的 vaxmap 同為外部連結、開新視窗 ↗） | 「登革熱地圖 ↗」`#/map`。面板上限 9 個連結，所以「近期與常見」疾病由 4 個減為 3 個（`DISEASE_MAX = 3`，docs/navigation.md） |
 | 出國目的地頁（目的地有登革熱旅遊疫情建議者） | `/travel/{ISO2}/` 的「相關疾病」 | 「從{國名}移入的登革熱病例」`#/imported?country={iso2}` |
 | **登革熱地圖專區**（第 3.2 節，嵌入地圖） | `/topics/denguemap/`、`/en/topics/denguemap/` | iframe 嵌入（病例地圖／聚集警示／蚊媒地圖／境外移入切換）＋「開啟登革熱地圖」 |
 | 答案頁行動鈕（疫情態勢意圖，問的是登革熱） | `core.js` `actionsFor` 的 `situation` | 「看登革熱地圖」`#/map`（語言依答案語言） |
@@ -64,8 +66,7 @@ https://ancientsky.github.io/denguemap/?embed=1&theme=light&lang=zh#/vector     
 
 尚未改、需要別的 Owner 處理：
 
-- 首頁態勢卡（`home.mjs` 的 `sitCard`，首頁 Owner）：登革熱卡目前只連疾病頁；建議高峰期加「開啟登革熱地圖」，並在使用者選了縣市時帶 `county`。
-- 主選單面板（`_nav-panels.mjs`）有每面板 9 個連結的上限與測試，這一輪不加；若要放，建議放在「傳染病 → 找法」欄、取代較少用的一項。
+- 首頁態勢卡已加地圖連結（上表）；使用者選了縣市時帶 `county` 要等首頁的縣市選單（首頁 Owner）。
 - 評估集（`content/governance/eval-set.json`，OASIS）：可加「現在登革熱嚴重嗎」期望行動鈕含 `denguemap` 的題目。
 - 日本腦炎（三斑家蚊）不是地圖的病媒，不加入口。
 
@@ -96,7 +97,9 @@ https://ancientsky.github.io/denguemap/?embed=1&theme=light&lang=zh#/vector     
   "last30": { "local": 3,  "imported": 33 },
   "prevYtd":{ "local": 23, "imported": 175 },   // 去年同期（1/1 到去年同月同日）
   "byCounty": { "64000": { "local": 10, "imported": 32 } },   // 今年累計，內政部縣市碼
-  "topTowns14": [["10013010", 2, 0]]            // 近 14 天 [鄉鎮碼, 本土, 境外]，依本土遞減，最多 20
+  "topTowns14": [["10013010", 2, 0]],           // 近 14 天 [鄉鎮碼, 本土, 境外]，依本土遞減，最多 20
+  "townNames": { "10013010": { "county": "10013", "countyZh": "屏東縣", "countyEn": "Pingtung County",
+                               "zh": "屏東市", "en": "Pingtung City" } }   // 2026-10-17 新增（選填）：恰為 topTowns14 的代碼
 }
 ```
 
@@ -115,6 +118,7 @@ https://ancientsky.github.io/denguemap/?embed=1&theme=light&lang=zh#/vector     
 - `node scripts/fetch-data.mjs --denguemap`（完整的 `npm run fetch` 也會做）：先抓 Pages 版，失敗（連不上、HTTP 錯誤、超過大小上限、驗證不過）再抓 raw 版；`summary` 與 `manifest` 一定取自同一個來源，且兩者的 `latestOnset` 必須相同（避免一新一舊）。
 - **嚴格驗證**（`scripts/lib/denguemap.mjs`）：計數必須是非負整數；日期必須是真實存在的 ISO 日期、`generatedAt` 是 ISO UTC；縣市碼 `/^\d{5}$/`、鄉鎮碼 8 碼字串；近 7 ≤ 14 ≤ 30 天；各縣市合計不大於今年累計；`generatedAt` 不得晚於抓取時間；未知欄位丟掉（白名單輸出）。大小上限 summary 64 KB、manifest 256 KB，邊讀邊數，超過就中止。
 - 全部失敗 ⇒ **保留既有快照**、只在檔內記 `lastLiveAttempt`（時間與原因），程式 exit 0，不擋建置（與其他官方資料來源同一規則）。從來沒有快照 ⇒ 寫一個 `mode: "missing"` 的空殼，小卡顯示「尚未取得」。
+- `townNames`（選填，地圖 2026-10-17 新增）：代碼必須 8 碼、在 `topTowns14` 裡、`county` 等於代碼前 5 碼；四個名稱欄位先做 NFKC、去控制字元與零寬字元、收空白，必須是 1–60 字且不含 `<` `>`（不收 HTML）。沒有這個欄位 ⇒ 照常接受，小卡退回只列鄉鎮數；有但不合格 ⇒ 整份不接受、保留上一版快照（與其他欄位同一規則）。
 - 輸出 `data/snapshots/denguemap-summary.json`：
 
 ```jsonc
@@ -127,7 +131,7 @@ https://ancientsky.github.io/denguemap/?embed=1&theme=light&lang=zh#/vector     
   "summary": { /* 2.1 的 summary，驗證後的白名單欄位 */ } }
 ```
 
-- 成功時同步資料目錄那一筆的 `lastUpdated`（`generatedAt` 的臺北日期）與 `provenance.fetchedAt`，只動這兩個欄位。
+- 成功時同步資料目錄那一筆的 `lastUpdated`（`sources.cases.fetchedAt`，沒有才用 `generatedAt`，的臺北日期）與 `provenance.fetchedAt`，只動這兩個欄位。
 - 第一份快照（2026-10-17）是在開發環境經 raw 版取得（開發環境連不到 `*.github.io`，GitHub Actions 兩者都連得到）。
 
 ### 2.3 把 `summary.json` 登錄成資料目錄的一筆資產（已完成）
@@ -154,9 +158,9 @@ https://ancientsky.github.io/denguemap/?embed=1&theme=light&lang=zh#/vector     
 
 | 欄位 | 值 | 說明 |
 | --- | --- | --- |
-| Owner | `unit.epidemic-intelligence`（疫情中心） | 病例統計的權責（與 `dataset.dengue-daily` 相同）；技術維運原型階段是地圖維護者 → 日後資訊室 |
+| Owner | `unit.epidemic-intelligence`（疫情中心，**已確認**，2026-10-17） | 病例統計的權責（與 `dataset.dengue-daily` 相同）；技術維運原型階段是地圖維護者 → 日後資訊室 |
 | 更新頻率 | 每 3 小時檢查、有變動才更新 | 本站沒有「每 3 小時」的頻率值，對應最接近的 `daily`（容許 2 天），見 2.4 |
-| 授權 | 原型暫填 OGDL-1.0 | 資料源自疾管署登革熱地圖後端；正式登錄前請疫情中心確認授權與是否可再散布 |
+| 授權 | OGDL-1.0（**已確認**，2026-10-17） | 資料源自疾管署開放資料，依政府資料開放授權條款第 1 版，可再散布並須標示來源 |
 | 正本位置 | 地圖 Pages 發布的 `data/summary.json` | 本站只存 metadata 與一份建置用快照（`data/snapshots/`），不對外提供副本 |
 | AI 白名單 | 不申請（`requested: false`） | 數字每 3 小時變，答案引擎只給深連結（1.2），不轉述數字 |
 
@@ -166,21 +170,23 @@ https://ancientsky.github.io/denguemap/?embed=1&theme=light&lang=zh#/vector     
 | --- | --- | --- |
 | 地圖資料管線 | 每 3 小時檢查；有變動才 commit；`generatedAt` 只在資料或旗標改變時前進（`asOf` 每天變，所以正常情況下至少每天前進一次） | 地圖維護者（Actions 失敗） |
 | 本站 `pages.yml` | **每次建置前**（每 2 小時與每次合併）跑 `fetch-data.mjs --denguemap`，結果只用於這次建置、不 commit；02 UTC 的全量重抓會一起回寫快照到 main | — |
-| 小卡 | `generatedAt` 距建置時間 > **48 小時**（`denguemapMaxAgeHours`）⇒ 不顯示數字 | 讀者看到「資料更新中」 |
+| 小卡 | 病例資料時間（`sources.cases.fetchedAt`，最後一次成功抓取）距建置時間 > **48 小時**（`denguemapMaxAgeHours`）⇒ 不顯示數字；`stale` 但在 48 小時內 ⇒ 顯示並加註資料時間 | 讀者看到「資料更新中」或較舊的資料時間 |
 | 資料目錄 R6 | `daily` 容許 **2 天**（`DATASET_FREQ_DAYS.daily`）⇒ 逾期待辦給疫情中心 | 疫情中心 |
 
-小卡的 48 小時與資料目錄的 2 天是**同一個門檻、兩邊各一道**：小卡保護讀者（不顯示過期數字），待辦提醒 Owner（地圖或擷取壞了）。比 vaxmap 的 36 小時寬，是因為地圖資料「沒變就不前進」：平日沒有新病例時，`generatedAt` 可能接近一整天才前進一次。數字最多落後地圖約一個建置週期（2 小時）加地圖本身的 3 小時檢查間隔。
+小卡的 48 小時與資料目錄的 2 天是**同一個門檻、兩邊各一道**：小卡保護讀者（不顯示過期數字），待辦提醒 Owner（地圖或擷取壞了）。比 vaxmap 的 36 小時寬，是因為地圖資料「沒變就不前進」，而且上游常常一次抓取失敗、下一次才成功：用「最後一次成功抓取」計時、給 48 小時，才不會因為一兩次失敗就讓小卡空白。數字最多落後地圖約一個建置週期（2 小時）加地圖本身的 3 小時檢查間隔。
 
-PR 預覽（`content-pr.yml`）不重抓，用已提交的快照；快照超過 48 小時的預覽會顯示「資料更新中」，屬預期。
+PR 預覽（`content-pr.yml`）不重抓，用已提交的快照；病例資料超過 48 小時的預覽會顯示「資料更新中」，屬預期。
 
 ### 2.5 小卡什麼時候不顯示數字（`denguemapState`）
 
 | 條件 | 代碼 | 小卡顯示 |
 | --- | --- | --- |
 | 沒有快照，或快照沒有通過驗證 | `missing` | 「尚未取得登革熱地圖的資料」＋開地圖按鈕 |
-| `manifest.generatedAt` 距建置時間超過 48 小時 | `too-old` | 「資料更新中，請開啟登革熱地圖查看」＋原因＋最後取得的資料時間 |
-| `sources.cases.stale === true` 或 `ok === false` | `cases-stale` | 同上（原因：地圖的病例資料這次沒有更新成功） |
+| 病例資料時間（`sources.cases.fetchedAt`＝最後一次**成功**抓取；沒有才用 `manifest.generatedAt`）距建置時間超過 48 小時 | `too-old` | 「資料更新中，請開啟登革熱地圖查看」＋原因＋最後取得的資料時間 |
+| `sources.cases.ok === false` 且 `stale === false`（從未成功抓過） | `cases-missing` | 同上（原因：地圖還沒有成功取得過病例資料） |
 | `warnings` 有 `code: "cases-shortfall"` 且 `year` 等於 `summary.year`（今年） | `cases-shortfall` | 同上（原因：上游病例資料暫時不完整） |
+
+`sources.cases.stale === true` 只代表「最近一次抓取失敗、沿用上一版」。上游時好時壞，若只看這個旗標，小卡大半時間會空白；所以 **stale 但仍在 48 小時內 ⇒ 照常顯示數字**，資料時間改用 `sources.cases.fetchedAt`（比 `generatedAt` 舊），並在數字下方加註「地圖最近一次更新沒有成功，以下是 {時間} 取得的資料」，讀者看得到有多舊。
 
 舊年份的短缺警示**不影響**今年的數字，小卡照常顯示；但**去年**（`summary.year − 1`）某類型有 `cases-shortfall` 時，該類型的「{前一年} 年同期 N 例」改顯示「去年同期資料不完整」（警示沒寫 `type` ⇒ 本土、境外都換），不做會誤導的比較（與地圖自己標示資料品質的作法一致）。`imported-shortfall` 是 `imported.json`（境外移入地球的國別資料）的檢查，小卡的境外移入數來自病例檔，所以今年的 `imported-shortfall` 也**不影響**小卡。判斷用建置當下的真實時間（`site.now`，不受 `BUILD_TODAY` 影響）。
 
@@ -192,14 +198,14 @@ PR 預覽（`content-pr.yml`）不重抓，用已提交的快照；快照超過 
 
 位置：登革熱疾病頁「目前疫情與統計」區塊，說明文字之後、近週趨勢圖之前（`disease.mjs` 的 `renderBlock`）。建置時的 HTML，**不需要 client JS、不加任何 CSP 來源**。
 
-| 欄位 | 來源 | 給防疫醫師室的說明 |
+| 欄位 | 來源 | 給防疫醫師室（`unit.preventive-medicine`）的說明 |
 | --- | --- | --- |
 | {年} 年本土病例（{前一年} 年同期） | `ytd.local`、`prevYtd.local` | **依發病日**統計、今年 1/1 起；本土＝在臺灣境內感染。最近幾天的病例常在之後才研判確定，所以近期數字會往上補 |
 | {年} 年境外移入病例（同期） | `ytd.imported`、`prevYtd.imported` | 在國外感染、入境後發病；境外移入被病媒蚊叮咬可能引發本土傳播 |
 | 近 14 天本土／境外移入 | `last14` | 14 天＝登革熱潛伏期上限，與群聚事件定義的「同一村里 14 日內」一致 |
 | 最新發病日 | `latestOnset` | 不是通報日或資料日 |
-| 近 14 天有本土病例的鄉鎮市區 | `topTowns14` 中本土 > 0 的筆數 | **只列數量、不列名稱**：本站主檔沒有鄉鎮代碼表（第 5 節待決）；想看是哪裡，按「聚集警示」 |
-| 資料時間（臺北時間，到分鐘） | `manifest.generatedAt` | 地圖資料最後一次改變的時間；來源卡另列「本站快照」時間 |
+| 近 14 天本土病例所在鄉鎮市區 | `topTowns14` 中本土 > 0 的前 3 筆＋`townNames` | 例「高雄市前鎮區 2 例」（英文與其他語言「Qianzhen District, Kaohsiung City (2)」），每個連到地圖該縣市的本土病例 `#/map?county=64000&type=local`（開新視窗）；超過 3 個加「等 N 個鄉鎮市區」。名稱來自地圖的 `townNames`（內政部名稱），本站不另建鄉鎮主檔；前 3 個任一缺名稱（舊版 summary）⇒ 退回只列「近 14 天有本土病例的鄉鎮市區 N」 |
+| 資料時間（臺北時間，到分鐘） | `sources.cases.fetchedAt`（沒有才用 `manifest.generatedAt`） | 病例資料最後一次成功取得的時間；最近一次更新失敗（stale）時另加黃色註記；來源卡另列「本站快照」時間 |
 | 來源卡 | `sourceCard`：正本＝`summary.json`、資料日、Owner＝疫情中心、授權、`summary.json`／`manifest.json`／資料目錄連結；註記「來源：登革熱地圖（概念原型、非官方站）」 | 正式數字以疾管署公布為準 |
 
 小卡下方三個按鈕（開新視窗）：病例地圖、聚集警示、蚊媒地圖，以及「登革熱地圖專區 →」。七語都有介面字（`src/client/i18n.js` 的 `ROWS_R57`；英文的單位刻意留空）；登革熱頁目前出繁中、英、越三語，日期依語言格式。
@@ -303,21 +309,22 @@ vaxmap 方案在「列出最近 5 家院所」時建議 Web Component；登革�
 | 病例資料、疫情摘要（`dataset.denguemap-summary`）、小卡的數字 | **疫情中心** | 原型：地圖維護者（擷取、驗證、部署）；正式：資訊室（擷取機器、排程、告警） |
 | 蚊媒資料（村里病媒蚊調查、危險級里別） | **急性傳染病組**（病媒防治）＋地方衛生局（調查） | 同上 |
 | 境外移入國別、國際疫情新聞 | 疫情中心（國際疫情）、檢疫組（旅遊疫情建議） | 同上 |
-| 登革熱地圖專區（`topic.denguemap`） | 疫情中心 | 疫情中心承辦人（待指派）；英文為機器翻譯、待審 |
+| 登革熱地圖專區（`topic.denguemap`） | 疫情中心 | 疫情中心承辦人；英文為機器翻譯、待審 |
+| 數字的解讀、引用規則（4.3） | 防疫醫師室（`unit.preventive-medicine`，預防醫學辦公室） | 與疫情中心共同決定小卡的降級規則（第 2.5 節）是否調整 |
 | 地圖程式與嵌入模式 | 原型：地圖維護者 | 正式：**資訊室**（部署、CSP、`frame-ancestors`、憑證） |
 | 深連結規則、`DENGUEMAP_OF_DISEASE`、本文件 | OASIS | 資訊室（地圖改 URL 結構時通知） |
 
 ### 4.2 資料時間顯示規則（與本站「數字的來源卡」一致）
 
-- 凡出現病例數，**同時顯示資料時間**（`manifest.generatedAt`，臺北時間到分鐘）與**最新發病日**，並註明「依發病日統計」「來源：登革熱地圖（概念原型、非官方站）」「正式數字以疾管署公布為準」。
-- 用既有的來源卡（`sourceCard`：正本、資料日、Owner、授權、取得方式），資料日取 `generatedAt` 的臺北日期，**不取本站建置日**；另註「本站快照」時間。
+- 凡出現病例數，**同時顯示資料時間**（`sources.cases.fetchedAt`＝最後一次成功取得，臺北時間到分鐘）與**最新發病日**，並註明「依發病日統計」「來源：登革熱地圖（概念原型、非官方站）」「正式數字以疾管署公布為準」。
+- 用既有的來源卡（`sourceCard`：正本、資料日、Owner、授權、取得方式），資料日取 `sources.cases.fetchedAt`（沒有才用 `generatedAt`）的臺北日期，**不取本站建置日**；另註「本站快照」時間。
 - 第 2.5 節任一條件成立：不顯示任何數字，改顯示「資料更新中，請開啟登革熱地圖查看」＋原因。
 - 年份一律寫絕對年份（「2026 年本土病例」「2025 年同期」），不寫「今年」「去年」——小卡的文字可能被複製或被 AI 引用，離開當天就失去意義（本站相對日期規則，第二十五輪）。
 - 不在答案引擎、新聞稿或態勢層轉述地圖數字；需要引用時引用疾管署正式統計，地圖只給深連結。
 
-### 4.3 給防疫醫師室：引用前的檢查
+### 4.3 給防疫醫師室（`unit.preventive-medicine`）：引用前的檢查
 
-1. 看小卡有沒有數字。沒有 ⇒ 地圖或上游正在出問題，請開地圖的「資料說明 → 資料品質」看警示。
+1. 看小卡有沒有數字。沒有 ⇒ 地圖或上游正在出問題，請開地圖的「資料說明 → 資料品質」看警示。有黃色註記「最近一次更新沒有成功」⇒ 數字是註記時間的資料，可能少算之後的病例。
 2. 看「最新發病日」與「資料時間」差幾天：差距大表示最近沒有新病例，或後端資料延遲。
 3. 近一週的本土數字會往上補（研判時間差）；比較去年同期時，兩邊都是「1/1 到同月同日」的發病數。
 4. 2023–2025 年的歷史資料若有 `cases-shortfall` 警示，地圖的趨勢頁與歷年比較會偏低；小卡只用今年與去年同期：去年有短缺警示時，該類型的比較改顯示「去年同期資料不完整」，今年的數字照常。
@@ -335,13 +342,13 @@ vaxmap 方案在「列出最近 5 家院所」時建議 Web Component；登革�
 
 | 階段 | 內容 | 負責 | 驗收 |
 | --- | --- | --- | --- |
-| **第一階段：連結＋小卡＋專區嵌入（本輪已完成）** | 深連結 `denguemapLink`；疾病頁小卡；屈公病、態勢頁、目的地頁、答案頁、開發者與指南入口；`dataset.denguemap-summary`；`fetch-data --denguemap` 每次建置前重抓；專區頁嵌入；CSP 由設定推出 | OASIS（本站）、地圖維護者（嵌入模式） | `npm test` 的 `round57-denguemap`；登革熱頁三語都有小卡；專區頁在可連 github.io 的環境能切換四個視圖 |
-| **第二階段：主檔對齊與正式確認** | 疾病主檔加選填欄位 `denguemap: { card, views }` 取代 `DENGUEMAP_OF_DISEASE`；鄉鎮代碼主檔（內政部 8 碼，含中英名）或請地圖在 `summary.topTowns14` 附名稱，小卡列出前 3 個本土鄉鎮；疫情中心確認授權與 Owner；專區英文審稿；首頁態勢卡帶縣市；地圖反向連結（1.3） | 疫情中心、急性傳染病組、OASIS、地圖維護者 | 小卡顯示鄉鎮名；資料目錄授權確認；`topic.denguemap` 英文 `reviewed` |
+| **第一階段：連結＋小卡＋專區嵌入（本輪已完成）** | 深連結 `denguemapLink`；疾病頁小卡（含前 3 個本土鄉鎮名稱）；屈公病、態勢頁、首頁態勢卡、主選單、目的地頁、答案頁、開發者與指南入口；Owner 疫情中心與授權 OGDL-1.0 已確認；`dataset.denguemap-summary`；`fetch-data --denguemap` 每次建置前重抓；專區頁嵌入；CSP 由設定推出 | OASIS（本站）、地圖維護者（嵌入模式） | `npm test` 的 `round57-denguemap`；登革熱頁三語都有小卡；專區頁在可連 github.io 的環境能切換四個視圖 |
+| **第二階段：主檔對齊與正式確認** | 疾病主檔加選填欄位 `denguemap: { card, views }` 取代 `DENGUEMAP_OF_DISEASE`；專區英文審稿；首頁態勢卡依讀者縣市帶 `county`；地圖反向連結（1.3） | 疫情中心、急性傳染病組、OASIS、地圖維護者 | 主檔欄位取代程式常數；`topic.denguemap` 英文 `reviewed` |
 | **第三階段：官方網域與同一資料閘道** | 地圖移到官方專用網域（3.3 B），設 `frame-ancestors`；擷取機器、排程、告警併入資訊室；態勢層與小卡改讀同一份疫情中心統計 API（`api.cdc.gov.tw/v1/dengue-summary`，含 `dataDate`、`owner`、資料品質旗標）；評估是否需要 Web Component | 資訊室、疫情中心 | 單一資料入口；本站不再讀 github.io；`frame-src` 只有官方網域 |
 
 ### 風險與待決
 
-- 地圖目前**不是官方站**，資料是從疾管署登革熱地圖後端擷取的快照；正式導向前要確認後端同意被定時擷取（每 3 小時）與資料授權。
+- 地圖目前**不是官方站**，資料是從疾管署登革熱地圖後端擷取的快照；正式導向前要確認後端同意被定時擷取（每 3 小時）。資料授權（OGDL-1.0）與 Owner（疫情中心）已於 2026-10-17 確認。
 - 上游截斷資料的問題在後端，地圖只能偵測與保留上一版；若後端長期回傳不完整資料，小卡會長期停在「資料更新中」——這是設計上寧缺勿錯的結果，請疫情中心追後端。
 - 原型同源（3.3）：嵌入的地圖等於有本站頁面的完整權限；正式站必須換網域或同團隊部署。
 - 本站沒有 `twice-daily`／`hourly` 這類頻率值；若日後有更多「幾小時一次」的資料集，建議新增 `maxAgeHours` 欄位（vaxmap 方案 2.3 也提過），並讓 R6 待辦寫小時。

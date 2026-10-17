@@ -2,47 +2,47 @@
   "schema": 1,
   "label": "登革熱地圖疫情摘要（summary.json＋manifest.json）",
   "mode": "live",
-  "fetchedAt": "2026-10-17T02:42:20.781Z",
+  "fetchedAt": "2026-10-17T04:45:47.868Z",
   "sourceUrl": "https://raw.githubusercontent.com/ancientsky/denguemap/main/public/data/summary.json",
   "manifest": {
     "schema": 1,
-    "generatedAt": "2026-10-17T01:02:06Z",
+    "generatedAt": "2026-10-17T04:30:24Z",
     "latestOnset": "2026-10-14",
     "sources": {
       "cases": {
-        "ok": true,
-        "stale": false,
+        "ok": false,
+        "stale": true,
         "fetchedAt": "2026-10-17T01:02:06Z"
       },
       "imported": {
-        "ok": true,
-        "stale": false,
+        "ok": false,
+        "stale": true,
         "fetchedAt": "2026-10-17T01:02:06Z"
       },
       "notices": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-10-17T01:02:06Z"
+        "fetchedAt": "2026-10-17T04:30:24Z"
       },
       "clusters": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-10-17T01:02:06Z"
+        "fetchedAt": "2026-10-17T04:30:24Z"
       },
       "vector": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-10-17T01:02:06Z"
+        "fetchedAt": "2026-10-17T04:30:24Z"
       },
       "ns1": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-10-17T01:02:06Z"
+        "fetchedAt": "2026-10-17T04:30:24Z"
       },
       "travel": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-10-17T01:02:06Z"
+        "fetchedAt": "2026-10-17T04:30:24Z"
       }
     },
     "warnings": []
