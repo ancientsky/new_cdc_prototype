@@ -3,6 +3,7 @@
 > 第三十二輪（2026-10-10）。起因是 Yulun 問：「智慧問答和全文搜尋使用的技術請整理比較；假如加上 LLM 的 API，要怎麼搭配目前使用的技術？還需要做 RAG 嗎？」
 > 這份文件寫給同事看，特別是資訊室；程式位置都有列出來，想核對的人可以直接翻。契約層的補充見 ARCHITECTURE §38，決策理由見 [architecture-decisions.md §25](architecture-decisions.md)。
 > 本輪**只做設計與文件，沒有改程式**。
+> 第五十八輪（2026-10-19）另有一份給同仁的說明 [ask-engine-explainer.md](ask-engine-explainer.md)：為什麼不用 embedding 也能快與準、限制在哪、以及第三十二輪之後引擎改了什麼。
 
 ## 0. 三句話結論
 
