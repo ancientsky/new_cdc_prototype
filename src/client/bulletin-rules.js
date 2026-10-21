@@ -296,7 +296,9 @@ export function splitManuscript(text, { categories = DEFAULT_CATEGORIES } = {}) 
   const meta = out.meta;
   const pagesSeen = [];
   // NFC：PDF 文字層常用相容漢字（「劉」U+F9C7），不正規化就不在 [一-鿿] 範圍、作者列會認不出來
-  const raw = String(text ?? '').normalize('NFC').replace(/\r\n?/g, '\n').split('\n').map((l) => l.replace(/　/g, ' ').replace(/[ \t]+$/g, '').trim());
+  // 行內連續空白收斂到 40 個、行尾空白交給 trim()（2026-10-21 資安檢查）：原本的 /[ \t]+$/ 與 DOI 的 \s{2,} 遇到行內幾萬個空白是 O(n²)，
+  // 5 萬個空白要好幾秒；欄位之間的空白只看「兩個以上」，真實稿件不會連續超過 40 個，收斂不影響切段
+  const raw = String(text ?? '').normalize('NFC').replace(/\r\n?/g, '\n').split('\n').map((l) => l.replace(/　/g, ' ').replace(/\s{41,}/g, ' '.repeat(40)).trim());
   // 1. 頁首頁尾與標籤型資訊
   const lines = [];
   for (let li = 0; li < raw.length; li++) {
