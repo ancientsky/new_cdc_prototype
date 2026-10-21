@@ -7,6 +7,54 @@
 // 連續多行且每行有兩個以上儲存格的區塊），splitManuscript 再把 | 開頭的行掛到那個表的 markdown。貼純文字時沒有座標，表格仍是文字。
 import { cnToNum } from '../bulletin-rules.js';
 
+// 每頁字塊上限與字塊內連續空白上限（2026-10-21 資安檢查：特製文字層可塞同列幾萬個字塊或幾萬個空白，讓後台頁面卡住好幾秒）。
+// 疫情報導一頁通常幾百到兩三千個字塊、空白不會連續超過一行寬，上限遠高於真實稿件。
+export const MAX_PAGE_ITEMS = 15000;
+export const MAX_ITEM_SPACES = 40;
+/** 字塊清單 → 去掉空字塊與座標不是數字的字塊、最多 MAX_PAGE_ITEMS 個、字塊內連續空白收斂到 MAX_ITEM_SPACES 個 */
+export function capItems(items) {
+  const out = [];
+  for (const t of items ?? []) {
+    if (!t || typeof t.str !== 'string' || t.str.trim() === '' || !Number.isFinite(t.x) || !Number.isFinite(t.y)) continue;
+    out.push(t.str.length > MAX_ITEM_SPACES ? { ...t, str: t.str.replace(/\s{41,}/g, ' '.repeat(MAX_ITEM_SPACES)) } : t);
+    if (out.length >= MAX_PAGE_ITEMS) break;
+  }
+  return out;
+}
+
+/**
+ * 同一列裡疊在別的字塊「裡面」的字塊（隱藏層或重印的字，像 42(17) 把側標「疫情描述」疊在單位名上）丟掉，留比較寬的那個。
+ * t 在 o 裡面＝o.x ≤ t.x + ¼ em 且 o 的右緣 ≥ t 的右緣 − ¼ em；o 要比 t 寬（同寬時留先出現的）。
+ * 原本每個字塊跟同列每個字塊比（O(n²)，同列兩萬塊要三秒）；改成依「t.x + ¼ em」由小到大掃，把 x 已經夠小的字塊依
+ * 「寬度由大到小、同寬先出現者優先」的名次放進樹狀陣列（存右緣最大值），查名次比 t 前面的字塊裡右緣最大的那個：O(n log n)，結果與原本相同。
+ * @template {{ x: number, w?: number, h?: number, size?: number }} T
+ * @param {T[]} items
+ * @returns {T[]}
+ */
+export function dropOverlaid(items) {
+  const n = items.length;
+  const em4 = (t) => (t.size || t.h || 10) * 0.25;
+  const w = (t) => t.w || 0;
+  const idx = () => Array.from({ length: n }, (_, i) => i);
+  const rankOf = new Int32Array(n);
+  idx().sort((a, b) => w(items[b]) - w(items[a]) || a - b).forEach((k, r) => { rankOf[k] = r; });
+  const byX = idx().sort((a, b) => items[a].x - items[b].x);
+  const tree = new Float64Array(n + 1).fill(-Infinity);
+  const keep = new Array(n).fill(true);
+  let p = 0;
+  for (const i of idx().sort((a, b) => items[a].x + em4(items[a]) - (items[b].x + em4(items[b])))) {
+    const t = items[i];
+    for (; p < n && items[byX[p]].x <= t.x + em4(t); p++) {
+      const o = items[byX[p]];
+      for (let r = rankOf[byX[p]] + 1; r <= n; r += r & -r) if (tree[r] < o.x + w(o)) tree[r] = o.x + w(o);
+    }
+    let right = -Infinity;
+    for (let r = rankOf[i]; r > 0; r -= r & -r) if (tree[r] > right) right = tree[r];
+    if (right >= t.x + w(t) - em4(t)) keep[i] = false;
+  }
+  return items.filter((_, i) => keep[i]);
+}
+
 /**
  * 一頁的字塊（pdf.js TextItem 經 pdf-read.js 轉成 { str, x, y, w, h, size }；y 以頁面「上緣」為 0，往下遞增）→ 行的清單
  * 規則：同一行＝基線 y 相差不到半個字高；同一行內依 x 排序；兩塊之間的間距超過 0.25 em 就補空白，超過 1 em 依距離補多個（模仿 -layout）。
@@ -16,19 +64,23 @@ import { cnToNum } from '../bulletin-rules.js';
  */
 export function linesFromItems(items) {
   const rows = [];
-  const sorted = [...(items ?? [])].filter((t) => t && typeof t.str === 'string' && t.str.trim() !== '').sort((a, b) => a.y - b.y || a.x - b.x);
+  const sorted = capItems(items).sort((a, b) => a.y - b.y || a.x - b.x);
+  // 字塊依 y 由小到大進來、列的 y 只會變大：y 已經比目前字塊小超過最大容差的列不可能再配到，從頭跳過（不然每頁上萬列時是 O(n²)）
+  const maxTol = sorted.reduce((m, t) => Math.max(m, 2, (t.size || t.h || 10) * 0.5), 2);
+  let live = 0;
   for (const t of sorted) {
     const size = t.size || t.h || 10;
-    const row = rows.find((r) => Math.abs(r.y - t.y) <= Math.max(2, size * 0.5));
+    while (live < rows.length && rows[live].y < t.y - maxTol) live++;
+    let row = null;
+    for (let k = live; k < rows.length && !row; k++) if (Math.abs(rows[k].y - t.y) <= Math.max(2, size * 0.5)) row = rows[k];
     if (row) { row.items.push(t); row.y = (row.y * row.items.length + t.y) / (row.items.length + 1); } else rows.push({ y: t.y, items: [t] });
   }
   rows.sort((a, b) => a.y - b.y);
   return rows.map((r) => {
-    // 疊在別的字塊「裡面」的字塊（隱藏層或重印的字，像 42(17) 把側標「疫情描述」疊在單位名上）丟掉，留比較寬的那個
-    const inside = (t, o) => o.x <= t.x + (t.size || t.h || 10) * 0.25 && o.x + (o.w || 0) >= t.x + (t.w || 0) - (t.size || t.h || 10) * 0.25;
-    const its = r.items.filter((t, i, arr) => !arr.some((o, k) => k !== i && inside(t, o) && ((o.w || 0) > (t.w || 0) || ((o.w || 0) === (t.w || 0) && k < i)))).sort((a, b) => a.x - b.x);
+    const its = dropOverlaid(r.items).sort((a, b) => a.x - b.x);
     let text = '';
     let cursor = null;
+    let latinEnd = false; // text 與最後一格都以上一個字塊結尾：看上一個字塊就好（對越拼越長的 text 跑 /…$/ 每次都要從頭掃）
     const cells = [];
     const pieces = []; // 每個字塊（表格還原時依欄位起點重新分格）
     for (const t of its) {
@@ -36,18 +88,19 @@ export function linesFromItems(items) {
       const gap = cursor == null ? 0 : t.x - cursor;
       if (cursor != null) {
         if (gap > size * 1.0) text += ' '.repeat(Math.min(40, Math.max(2, Math.round(gap / (size * 0.5)))));
-        else if (gap > size * 0.25 || (/[A-Za-z0-9]$/.test(text) && /^[A-Za-z0-9]/.test(t.str) && gap > size * 0.1)) text += ' ';
+        else if (gap > size * 0.25 || (latinEnd && /^[A-Za-z0-9]/.test(t.str) && gap > size * 0.1)) text += ' ';
       }
       text += t.str;
       const x1 = t.x + (t.w || 0);
       const last = cells[cells.length - 1];
       const piece = { text: t.str, x0: t.x, x1, size, gap };
-      if (last && gap <= size * 0.6) { last.text += (gap > size * 0.25 || (/[A-Za-z0-9]$/.test(last.text) && /^[A-Za-z0-9]/.test(t.str) && gap > size * 0.1) ? ' ' : '') + t.str; last.x1 = x1; last.items.push(piece); } else cells.push({ text: t.str, x0: t.x, x1, items: [piece] });
+      if (last && gap <= size * 0.6) { last.text += (gap > size * 0.25 || (latinEnd && /^[A-Za-z0-9]/.test(t.str) && gap > size * 0.1) ? ' ' : '') + t.str; last.x1 = x1; last.items.push(piece); } else cells.push({ text: t.str, x0: t.x, x1, items: [piece] });
       pieces.push(piece);
       cursor = x1;
+      latinEnd = /[A-Za-z0-9]$/.test(t.str);
     }
     for (const c of cells) c.text = c.text.trim();
-    return { y: r.y, x: its[0].x, text: text.replace(/\s+$/, ''), cells: cells.filter((c) => c.text), items: pieces };
+    return { y: r.y, x: its[0].x, text: text.trimEnd(), cells: cells.filter((c) => c.text), items: pieces };
   });
 }
 
