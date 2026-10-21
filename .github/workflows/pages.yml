@@ -33,6 +33,7 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: 22
+          check-latest: true
           cache: npm
       - run: npm ci
       # 第五十六輪（docs/deploy.md 第 28 節）：替 content-pr.yml 的程式 PR 存 Chromium 快取。PR 那邊只還原（actions/cache/restore）、不寫入，
