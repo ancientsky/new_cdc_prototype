@@ -48,7 +48,7 @@ export function render(ctx) {
   ${group(t('sitemap.policy'), [
     ...Object.entries(PAGE_PATHS).filter(([slug]) => slug !== 'about').map(([slug, p]) => li(url(p), t(`page.${slug}`))), li(url('/transparency/'), t('footer.transparency')), li(url('/guide/'), t('footer.guide')),
   ])}
-  ${group(t('sitemap.pro'), [li(url('/pro/'), t('nav.pro')), li(url('/developers/'), t('footer.api')), li(url('/openapi.json', { noLang: true }), 'openapi.json'), li(url('/llms.txt', { noLang: true }), 'llms.txt'), li(url('/admin/', { noLang: true }), t('footer.admin'))])}
+  ${group(t('sitemap.pro'), [li(url('/pro/'), t('nav.pro')), li(url('/research-media/'), t('nav.research')), li(url('/developers/'), t('footer.api')), li(url('/openapi.json', { noLang: true }), 'openapi.json'), li(url('/llms.txt', { noLang: true }), 'llms.txt'), li(url('/admin/', { noLang: true }), t('footer.admin'))])}
 </div>`;
 }
 

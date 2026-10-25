@@ -112,6 +112,10 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第六十一輪：「研究與媒體」身分入口不再是開發者入口
+
+同事反應（Yulun 轉述，2026-10-25）：首頁身分鈕「研究與媒體」點進去是 API 文件，不是記者與研究者要看的東西。做法：新入口頁 `/research-media/`（七語；給媒體／給研究者／資料與引用三組九卡，內容由新聞稿、《疫情報導》、資料集、單位主檔推導），身分鈕改連它；開發者入口不刪、退到該頁最後一張卡與頁尾，頁首加回連。理由與「身分鈕的落地頁要回答這種人來做什麼」的教訓在 [docs/navigation.md §7](docs/navigation.md)。
+
 ## 第六十輪：grokbot 第四批——發布鏈補強、節慶主題、security.txt；Azure 託管待決
 
 Yulun（2026-10-25）：「Grok Bot 對 prototype 有一些建議，寫在 issues，你研究評估一下，哪些可以採用，哪些可以反駁。」10 題（#124–#133）：5 題做了、5 題（Azure／Git 平台 ADR）等機關確認前提。做法在 [docs/deploy.md §29](docs/deploy.md)、§10.4，取捨在 [architecture-decisions §46–47](docs/architecture-decisions.md)，契約在 ARCHITECTURE §63–64。

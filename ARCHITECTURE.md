@@ -2668,3 +2668,16 @@ Issue #124、#125、#126、#128。取捨在 architecture-decisions §47；做法
 | 車道核對 | `content-pr.yml` 的 `lane` job「Validate results」：依 API 檔案清單，不是純內容、或改到 `content/governance/`、`content/master/` ⇒ 覆寫 `LANE=standard`、`AUTO=false`、`NEED≥1`、`DOWNGRADED=true`；「Decide merge」與留言只看這些環境變數。測試在 `round40-ci-isolation.test.mjs` 的 `#125` 兩題 |
 | 純內容合併 | `pages.yml`：`scope` job（compare API，不 checkout）判純內容 ⇒ `build` 只跑 `test:content` 就建置部署，`verify` job 平行跑 lint／格式／型別／`npm test` 不擋 `deploy`；排程、手動、新分支、≥300 檔、API 失敗 ⇒ 全跑 |
 | security.txt | `emit-seo.mjs` `buildSecurityTxt()` → `/.well-known/security.txt` 與 `/security.txt`（相同）；`site.config.mjs` `security.contact`（null ⇒ 退回 `/contact/`）、`Expires` 建置＋90 天、`Policy` `/policy/security/`。頁 `/about/official-site/`（`content/pages/official-site.json`），頁尾 `footer.officialSite`。測試 `tests/round60-security-txt.test.mjs` |
+
+## 65. 第六十一輪：「研究與媒體」身分入口（2026-10-25）
+
+起因與理由在 docs/navigation.md §7。
+
+| 機制 | 契約 |
+| --- | --- |
+| 入口頁 | `src/templates/public/research-media.mjs`，`PATH = '/research-media/'`，`lang: '*'`。三組（`#rm-press`、`#rm-research`、`#rm-data`）各三張 `c-card`；`latestPress(site, 5)` 只取 `newsType: press` 新到舊，`latestArticles(site, 3)` 依卷期發布日；資料集、出版品、研究計畫只算 `published`。該語言沒有的目標頁由 `ctx.url` 退回中文並以 `isFallbackLink` 標 `lang="zh-TW"`。 |
+| 身分鈕 | `layout.mjs`：第三顆連 `RESEARCH_MEDIA`；`onResearch` 時只有它 `aria-current="page"`，「民眾」不標。`ui.js` `applyView`：頁上已有非 `data-view-set` 的 current 鈕時，不把 view 鈕標回 current。 |
+| 開發者入口 | `/developers/` 不變，頁首加 `data-dev-backlink` 回連；頁尾「開放資料與開發者」欄、`/data/`、`/ask/`、`/situation/`、`/guide/`、網站導覽維持連結。 |
+| i18n | `rm.*`（ROWS_R61，七語；en 原型撰寫、其餘機器初稿待審）、`dev.backlink`（中英）。 |
+| 測試 | `tests/round61-research-media.test.mjs`：七語路由與鈕、aria-current 三頁各一顆、三組連結齊全、開發者連結在授權之後、英文頁標題無中文、回連、sitemap。 |
+
