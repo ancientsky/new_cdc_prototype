@@ -1932,7 +1932,7 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 
 **回寫快照的部署金鑰（匯入後要做）**：規則集禁止直接 push 後，`pages.yml` 每天 02 UTC 把 `data/snapshots/` 回寫 `main` 的那一步會被拒，網站會一直用舊快照（旅遊疫情、國家等級、CKAN 目錄；登革熱地圖每次建置另抓，不受影響）。GitHub Actions 本身不能列入繞過名單，**部署金鑰可以**：
 
-1. 本機產生一對金鑰：`ssh-keygen -t ed25519 -N '' -C snapshot-writer -f snapshot_key`（不要設密碼）。
+1. 本機產生一對金鑰：`ssh-keygen -t ed25519 -C snapshot-writer -f snapshot_key`，被問 passphrase 時按兩次 Enter（不要設密碼）。Windows PowerShell 不要寫 `-N ''`（會被傳成空參數，ssh-keygen 報 Too many arguments；2026-10-25 實測），要寫 `-N '""'` 或乾脆不帶。
 2. Settings → Deploy keys → Add deploy key：貼 `snapshot_key.pub`，勾 **Allow write access**。
 3. Settings → Secrets and variables → Actions → New repository secret：名稱 `SNAPSHOT_DEPLOY_KEY`，內容貼 `snapshot_key`（私鑰全文）。貼完把本機兩個檔刪掉。
 4. Settings → Rules → Rulesets → 這個規則集 → **Bypass list** → Add bypass → **Deploy keys**。
