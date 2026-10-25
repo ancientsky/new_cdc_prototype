@@ -1988,3 +1988,20 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 **為什麼用 compare API 而不是 `git diff HEAD^`**：`actions/checkout` 預設 `fetch-depth: 1` 沒有 `HEAD^`；多個 commit 一次 push 時 `HEAD^` 也不是 push 前的 `main`。compare API 直接比 push 前後兩個 SHA，不用 checkout、不執行程式，和 `content-pr.yml` 的 `lane` job 同一個原則。
 
 **量測**：`lane-sla.yml` 只量 PR 開啟到合併；「合併到上線」請在 Actions 看 `pages.yml` 的執行時間（純內容應為 Build 45 秒＋部署，不再有 2 分 18 秒的 Tests）。第一次純內容合併後請把實際數字補進 [ci-cd-overview.md](ci-cd-overview.md) §3。
+
+
+## 32. 動態弱點掃描工作流程（第六十二輪，Issue #142）
+
+背景與範圍見 [security-testing.md](security-testing.md)。這一節只寫操作。
+
+**觸發**：`.github/workflows/dast.yml` 每週一 03:00（台灣時間，cron `0 19 * * 0`）自動跑；手動：Actions → DAST (OWASP ZAP baseline, weekly) → Run workflow，可調 `spider_minutes`（預設 5）。不擋合併、不擋部署，ZAP 步驟設 `continue-on-error: true`，且用 `-I` 讓警告不算失敗。
+
+**產出**：job summary 直接貼 `report.md`；artifact `dast-report` 含 `report.html`、`report.json`、`report.md`，保留 30 天。
+
+**怎麼讀**：PASS／WARN／FAIL 的意思與預期的 WARN（GitHub Pages 不能設 CSP／HSTS，標頭在 `dist/headers/` 供正式主機使用，見 §10.3）寫在 security-testing.md 第 4 節。掃描對象是靜態站加模擬後端，模擬後端的發現要對照 §11、§13 的接收系統契約再判斷。
+
+**限制**：開發沙盒沒有 docker，第六十二輪沒有在本機實際執行 ZAP；第一次真正的執行是在 GitHub 上的排程或手動執行。
+
+**釘映像檔 digest**：原型用 `ghcr.io/zaproxy/zaproxy:stable`（浮動標籤）。正式 CI 請改成 `ghcr.io/zaproxy/zaproxy@sha256:<digest>`，並定期更新，理由與釘 action SHA 相同（供應鏈）。
+
+**搬到署內 CI（GitLab）**：用同樣的步驟——建置（`BASE_PATH=''`）、起 `scripts/serve.mjs`、跑 ZAP 容器、把三個報告檔存成 job artifact。runner 需要能執行容器；掃描目標限定為該 job 自己啟動的本機服務，不要指向正式或共用環境。
