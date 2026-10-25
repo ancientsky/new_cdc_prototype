@@ -11,7 +11,7 @@
 | 欄位 | 誰填 | 說明 |
 | --- | --- | --- |
 | `id` | 承辦 | 穩定、可讀、全站唯一，例：`disease.dengue`、`doc.mmr-recommendation.2025-04-16`。對外引用以它為準，取代現行官網的加密 ID |
-| `type` | 承辦 | `disease` `faq` `news` `letter` `clarification` `document` `vaccine` `dataset` `banner` `page`，以及第二輪起的 `media` `topic` `service` `publication` `labtest` `research`，第七輪的 `job` `tender` |
+| `type` | 承辦 | `disease` `faq` `news` `letter` `clarification` `document` `vaccine` `dataset` `banner` `page`，以及第二輪起的 `media` `topic` `service` `publication` `labtest` `research`，第七輪的 `job` `tender`，第六十輪的 `theme`（節慶主題） |
 | `owner` | 承辦 | 權責單位 id，必須存在於 `content/master/units.json`；對內容正確性負責 |
 | `publishedAt` / `reviewedAt` | 承辦 | 首次發布日／最後審閱日。**審閱日不是編輯日**，代表權責單位重新確認過內容仍正確 |
 | `reviewPeriodMonths` | 承辦 | 審閱週期（月）。預設見 `master/review-periods.json`；0 代表事件觸發 |
@@ -66,6 +66,14 @@
 
 兩者都是事件型內容，`reviewPeriodMonths` 預設 0。人事室的單位 id 為 `unit.personnel`（Data Steward：人才招募、甄選結果）。個資處理原則見 [careers-privacy.md](careers-privacy.md)。
 
+### 1.5 第六十輪新增型別：節慶主題（Issue #127）
+
+| 型別（路徑） | 權責單位（固定） | 必填專屬欄位 | 其他重要欄位 | 治理重點 |
+| --- | --- | --- | --- | --- |
+| `theme` 節慶主題（沒有頁面；只影響頁首） | `unit.pr` 公關室 | `publishAt`（開始，含）、`unpublishAt`（結束，不含）、`tokens`（只准 `--theme-header-bg`、`--theme-accent`、`--theme-accent-2`，值為 `#rgb`／`#rrggbb`） | `occasion`、`decoration.svg`（≤ 50 KB、無腳本／外部參照／動畫） | 規則 28；快車道；不進白名單、索引、sitemap、`v1/catalog.json` |
+
+`reviewPeriodMonths` 預設 0（事件型）。態勢層（`content/situation/current.json`）同輪新增選填 `alertLevel`（`normal`｜`elevated`｜`emergency`，疫情中心人工發布）。
+
 ## 2. 規則（寫死在引擎，不靠人記）
 
 1. **逾期**：今天 > `nextReviewAt` → 頁首黃色警示、退出白名單、開待辦。
@@ -108,7 +116,7 @@
 
 第九輪新增規則（發布車道、排程與緊急發布、自動轉換草稿）：
 
-25. **發布車道與自動合併（`content/governance/lanes.json`）**：內容依型別分三條車道，**由系統判定，承辦人不能自選**。`gov.lane`＝`laneOfItem`：`urgent: true` 且型別為 `news`／`letter`／`clarification` ⇒ `emergency`；否則依型別落在 `fast`（`news`、`letter`、`clarification`、`job`、`tender`、`banner`）或 `standard`（`disease`、`vaccine`、`document`、`faq`、`topic`、`service`、`page`、`publication`、`labtest`、`research`、`dataset`、`media`、`migration`）；未列入的型別一律一般車道。
+25. **發布車道與自動合併（`content/governance/lanes.json`）**：內容依型別分三條車道，**由系統判定，承辦人不能自選**。`gov.lane`＝`laneOfItem`：`urgent: true` 且型別為 `news`／`letter`／`clarification` ⇒ `emergency`；否則依型別落在 `fast`（`news`、`letter`、`clarification`、`job`、`tender`、`banner`、`theme`）或 `standard`（`disease`、`vaccine`、`document`、`faq`、`topic`、`service`、`page`、`publication`、`labtest`、`research`、`dataset`、`media`、`migration`）；未列入的型別一律一般車道。
     - `emergency`／`fast`：`autoMerge: true`、`requiredApprovals: 0`，CI 全過由工作流程自動 squash 合併；上線後 `postPublishReviewHours`（24 小時）內複核；SLA 分別為 10、180 分鐘。
     - `standard`：`autoMerge: false`、`requiredApprovals: 1`，審核人 `reviewers`（公關室），一級內容（疾病、疫苗，`site.config.tier1Types`）改用 `tier1Reviewers`（公關室＋OASIS）；SLA 2 個工作天。
     - **CI 是第一位審核者**（`rules.ciIsTheReviewer`）：自動合併的前提是 schema、治理規則、評估集、檔案資產、連結檢查全過；任一項失敗就不合併，與車道無關。**多語不擋中文**（`rules.translationsNeverBlock`）：機器翻譯只允許用於 `rules.machineTranslationAllowedFor`（`news`、`faq`、`topic`、`service`），一級內容的未審核語言仍不渲染，但不阻擋中文正本。
@@ -117,6 +125,10 @@
     - 調整車道＝改 `lanes.json`，須經資料治理委員會議定並走一般車道 PR；`lanes.json` 本身有形狀檢查（三條車道齊備、自動合併車道核准人數必為 0 且必須有上線後複核、一個型別只能歸屬一條車道、每個內容型別都有車道、`rules.urgentAllowedTypes` 必填）。PR 的 SLA 逾期由 CI 在 PR 上標 `sla:breach` 並留言，**不是**建置待辦。
 26. **排程發布與上線後複核**：（a）**排程**：`publishAt` 晚於建置當下真實時間 ⇒ `gov.scheduled`、`gov.publishScheduled`，生命週期「排程中」、`noindex`、退出 AI 白名單（原因 `scheduled`）、不計入已發布數；**不渲染、不進搜尋索引、sitemap、API、RSS、`llms.txt`，檔案資產也不複製**。主站每 2 小時重建一次，所以實際上線時間最多比 `publishAt` 晚 2 小時；`BUILD_TODAY` 只凍結治理日期，不影響排程判斷。（b）**上線後複核**：快車道與緊急發布的內容已上線（非排程中）且 `postPublishReview.status` 不是 `done` ⇒ 待辦 `post-publish-review`：owner 公關室（`lanes.json` 的 `postPublishReviewer`）、抄送原權責單位，期限＝上線時間（`publishAt`，否則 `publishedAt` 當天 00:00 臺灣時間）＋ 24 小時，中優先，**超過期限升為高優先並標逾期**；複核完成時在內容加 `postPublishReview: { status: 'done', reviewedBy, reviewedAt }`。`lanes.json` 的 `rules.postPublishReviewSince` 之前發布、且沒有宣告 `postPublishReview` 的舊內容不追溯。一般車道內容不開此待辦（已事先審核）。
 27. **自動轉換草稿的信心與人工檢視**：舊站匯出經 `scripts/import-legacy.mjs` 批次轉換出的草稿，一律 `status: 'review'`（不是 `published`），並帶 `conversion: { mode: 'auto', confidence, issues[], sourceUrl, convertedAt }`。**信心分數**由規則檔（`content/migration/import/_import-rules.json`）的權重計算：型別對應明確 +0.4、owner 對應 +0.2、Markdown 無轉換警告 +0.2、附件全部找到 +0.1、無重複 +0.1，滿分 1.0；**低於 0.6（`thresholds.reviewConfidence`）⇒ 一定要人工逐頁檢視**，不可批次通過；0.8 以上（`autoConfidence`）可抽樣檢視。草稿**不直接放進 `content/`**：由權責單位人工確認後，以一般上架流程（走該型別的車道）進入 repo。內文過短（`minBodyChars`）、圖片缺 alt（標 `needsAlt`）、表格複雜、未對應類別、重複標題都記入 `issues`，並反映在信心分數與報告的「建議動作」。PDF 不整批轉換（只宣告為附件，`machineReadable` 由偵測決定）。`--apply-migration` 只改移轉清單的 `status`／`target`／`note`，**不動 `verified`**（逐筆確認仍是權責單位的事，見 [guide-staff.md](guide-staff.md) 第 15 節）。細節見 [legacy-import.md](legacy-import.md)。
+
+第六十輪新增規則（節慶主題，Issue #127）：
+
+28. **節慶主題只動裝飾層、到期自動下架、疫情緊急不套用**：生效區間 `[publishAt, unpublishAt)` 以真實時間判斷（與規則 26 相同）；`gov.themeStatus` ∈ `upcoming`／`live`／`ended`。建置閘門：`tokens` 只能是白名單內的裝飾 token、值必須是色碼；`--theme-header-bg` 與疊在上面的文字色（`--ink`、`--ink-3`）對比 ≥ 4.5:1；`decoration.svg` ≤ 50 KB 且不含腳本、事件屬性、外部參照、動畫；已發布主題的區間不得重疊。`site.theme`（`themeState`）：恰好一個生效 ⇒ 套用（`<html data-theme>` ＋ `assets/styles/theme-<slug>.css`）；態勢層 `alertLevel: "emergency"` ⇒ 不套用並記錄原因（等級由疫情中心人工發布，引擎不推論）。
 
 ## 3. 白名單政策
 
