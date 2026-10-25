@@ -220,6 +220,7 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 8. **頁面**：在 `src/templates/public/` 新增 `guidelines.mjs`，匯出 `pages(site)`、`render`、`meta`、選用的 `markdown`。**不用改任何登錄檔**，`pages.mjs` 會自動掃描（底線開頭的檔名除外）。
 9. **JSON-LD**：`scripts/lib/jsonld.mjs` 的 `jsonLdFor` 加對應 `@type`。
 10. **測試**：`tests/` 補一個案例；`content/guidelines/` 放一筆範例，`npm run check` 通過。
+11. **車道與其他登錄（第六十輪補記，Issue #127 新增 `theme` 時發現缺漏）**：`content/governance/lanes.json` 把型別放進一條車道（`validateLanes` 要求每個型別都有車道，`tests/lanes.test.mjs` 會擋）、`scripts/lib/lanes.mjs` 的 `DIR_TYPE` 加目錄 → 型別、`src/templates/admin/_partials.mjs` 的 `TYPE_LABEL`、`tests/helpers.mjs` 的 `COLLECTION_OF`。**沒有頁面的型別**（如 `banner`、`theme`，`pathOf` 回 `/`）另要加進 `emit-seo.mjs` 的 `NO_PAGE_TYPES`，並考慮是否排除在 `v1/catalog.json` 之外。
 
 ## 4. 修改 schema
 

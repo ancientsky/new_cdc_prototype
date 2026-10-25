@@ -2636,3 +2636,24 @@ docs/ask-engine-explainer.md 回答「不用 embedding 為什麼又快又準、�
 ## 62. 第五十九輪（2026-10-19）：PageIndex 評估（只有文件）
 
 docs/pageindex-evaluation.md 回答「樹索引＋模型翻目錄」能不能用在本站。沒有新契約；結論是不換檢索引擎、不換 PDF 匯入工具，概念保留給 LLM 模式第二階段（§38、決策紀錄 §25 的 `retrieve` 之後多一個「選節」步驟，只在有後端代理的專業版）。若日後實作，依賴的既有契約：文件 JSON 的 `sections[].pages` 與 `#page-N` 錨點（§20 長文件版面）、答案單元的 `pdfPage`（docs/pdf-ingest.md §5）、`groundingGuard` 規則不變（§38）、挑戰集 dev／holdout 比較（§56）。本輪實測（10 份真實 PDF、不用模型的 Flash 建樹）的方法與輸出記在該文件 §3、§7。
+
+## 63. 第六十輪：節慶主題是有日期的內容
+
+Issue #127。取捨在 architecture-decisions §46；同仁操作在 guide-staff §58；欄位在 governance-model §1.5 與規則 28。萬聖節、耶誕、過年的頁首佈置從此是一筆 `content/themes/<slug>.json`（公關室、快車道），不再是程式 PR；上架與下架交給每 2 小時一次的排程重建，疫情緊急時由疫情中心的 `alertLevel` 一鍵關掉。
+
+| 機制 | 契約 |
+| --- | --- |
+| 型別 | `type: "theme"`，`schemas/theme.json`（`allOf` `_common.json`）；`id` `^theme\.[a-z0-9][a-z0-9-]*$`；`owner` 固定 `unit.pr`；必填 `publishAt`、`unpublishAt`、`tokens`；選填 `occasion`、`decoration.svg`。`load.mjs` → `site.collections.themes`；`validate.mjs` `typeToSchema.theme`；`review-periods.json` `theme: 0`；不在 AI 白名單、不進答案索引、沒有頁面、不進 sitemap 與 `v1/catalog.json` |
+| 生效區間 | `[publishAt, unpublishAt)`，兩者都用 `lanes.mjs` 的 `publishAtMs`／`nowOf`（真實時間、`BUILD_NOW` 可覆寫、不受 `BUILD_TODAY` 影響；只填日期＝當日 00:00 台灣時間）。`publishAt` 未到的主題照既有排程規則被 `publicView` 藏起來；`unpublishAt` 只對主題有意義。`item.gov.themeStatus` ∈ upcoming／live／ended |
+| 套用判斷 | `scripts/lib/theme.mjs` `themeState(site, now)` → `{ active, reason: active｜none｜emergency｜overlap, live[], alertLevel, message }`；`applyGovernance` 結尾寫到 `site.theme`，build 記錄 `message`（Actions 上 emergency 另發 `::notice`） |
+| 白名單 token | `THEME_TOKENS`：`--theme-header-bg`（背景；對 `--ink`、`--ink-3` 檢查對比 ≥ 4.5:1）、`--theme-accent`、`--theme-accent-2`（頁首上緣 4px 飾條，純裝飾）。`--theme-decoration` 只能由 `decoration.svg` 產生。值只收 `#rgb`／`#rrggbb`。預設值在 `src/styles/tokens.css`（＝沒有主題時的外觀），只在 `base.css` 的 `.site-header` 與 `html[data-theme] .brand::after` 使用 |
+| 對比 | `contrastRatio(a, b)`（WCAG 2.x 相對亮度）；文字色從 `tokens.css` 讀（`baseTokens()`，不另抄色碼） |
+| 裝飾圖 | `decoration.svg`：≤ 50 KB（UTF-8 位元組）、完整 `<svg xmlns=…>`、不得有 script／foreignObject／iframe／image／use、事件屬性、外部 href／url()、`<animate>`／`<set>`／`@keyframes`。轉成 CSS 背景圖（`url("data:image/svg+xml,…")`，`encodeURIComponent` 外再編 `'()`），掛在站名旁的 `::after`：不進無障礙樹、不改連結名稱（等同 `alt=""`）；≤ 380px 與列印不顯示 |
+| 驗證 | `validateSite`：每個主題 `themeProblems()`（白名單、色碼、對比、SVG、區間先後）；`overlappingThemes()`：已發布主題的區間重疊 ⇒ 建置失敗（首尾相接不算） |
+| 輸出 | 有 `site.theme.active` 時：layout 在 `<html>` 加 `data-theme="<slug>"`，在頁面樣式之後加 `<link rel="stylesheet" href="…/assets/styles/theme-<slug>.css" data-theme-css>`；build 只寫這一支 CSS（`themeCss()`：一條 `:root[data-theme="<slug>"]{…}`，只有白名單自訂屬性）。沒有主題 ⇒ HTML 與以前位元組相同。後台版面不套主題。不加任何瀏覽器 JS |
+| 疫情緊急 | `schemas/situation.json` 新增選填 `alertLevel`（`normal`｜`elevated`｜`emergency`，預設 normal），疫情中心人工發布（後台「疫情發布」有下拉選單，normal 不寫進檔案）；`emergency` ⇒ `reason: 'emergency'`、不套用任何主題，其他行為不變；`elevated` 目前只記錄 |
+| 車道 | `lanes.json` 快車道 `types` 加 `theme`；`lanes.mjs` `DIR_TYPE.themes = 'theme'`；上線後 24 小時內公關室複核（既有 `post-publish-review` 待辦） |
+| sitemap | `emit-seo.mjs` `normalizePages` 對照路徑時排除沒有頁面的型別（banner、theme）：它們的 `pathOf` 是 `/`，排程中（noindex）的主題原本會把首頁踢出 sitemap |
+| 測試 | `tests/round60-theme.test.mjs` |
+
+**教訓：** 「只准改裝飾」要做成結構上改不到，而不是靠審核時看得仔細：產生的 CSS 只有自訂屬性、沒有選擇器可寫，token 有白名單，背景色和疊在上面的文字由機器算對比。這樣快車道才放得心——公關室不必懂 CSS，審核的人也不必讀 CSS。

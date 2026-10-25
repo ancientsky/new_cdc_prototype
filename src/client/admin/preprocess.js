@@ -1077,7 +1077,7 @@ export const URGENT_TYPES = ['news', 'letter', 'clarification'];
 export const LANE_DEFAULTS = {
   lanes: {
     emergency: { label: '緊急發布', types: ['situation'], alsoWhen: { urgent: true }, autoMerge: true, requiredApprovals: 0, postPublishReviewHours: 24, slaMinutes: 10 },
-    fast: { label: '快車道', types: ['news', 'letter', 'clarification', 'job', 'tender', 'banner'], autoMerge: true, requiredApprovals: 0, postPublishReviewHours: 24, slaMinutes: 180 },
+    fast: { label: '快車道', types: ['news', 'letter', 'clarification', 'job', 'tender', 'banner', 'theme'], autoMerge: true, requiredApprovals: 0, postPublishReviewHours: 24, slaMinutes: 180 },
     standard: {
       label: '一般車道',
       types: ['disease', 'vaccine', 'document', 'faq', 'topic', 'service', 'page', 'publication', 'labtest', 'research', 'dataset', 'media', 'migration'],

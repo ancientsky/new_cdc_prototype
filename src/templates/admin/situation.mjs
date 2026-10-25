@@ -9,6 +9,8 @@ export function meta() { return adminMeta('疫情發布', 'situation', ['/assets
 
 const STATUS = { stable: '平穩', rising: '上升', peak: '高峰', declining: '下降' };
 const TREND = { up: '上升 ↑', flat: '持平 →', down: '下降 ↓' };
+// 第六十輪（Issue #127）：全站警戒等級（疫情中心人工發布，不由程式推論）。emergency ⇒ 不套用節慶主題
+const ALERT = { normal: '一般（normal）', elevated: '警戒（elevated）', emergency: '緊急（emergency）：關閉節慶佈置' };
 
 export function render(ctx) {
   const { site, url } = ctx;
@@ -41,6 +43,7 @@ ${pageHead({ title: '疫情發布', what: '疫情中心在這裡發布首頁的�
     <div class="adm-grid adm-grid--3"><div class="adm-field"><label for="s-data">資料日</label><input type="date" id="s-data"></div>
       <div class="adm-field"><label for="s-next">下次審閱</label><input type="date" id="s-next"></div>
       <div class="adm-field"><label for="s-approver">核定人（職稱）</label><input type="text" id="s-approver" placeholder="疫情中心狀態發布負責人"></div></div>
+    <div class="adm-field"><label for="s-alert">全站警戒等級（alertLevel）</label><select id="s-alert">${Object.entries(ALERT).map(([k, v]) => html`<option value="${k}" ${k === (sit.alertLevel ?? 'normal') ? 'selected' : ''}>${v}</option>`)}</select><span class="adm-hint">整份發布共用一個值，由疫情中心判定。選「緊急」時下次建置不套用任何節慶主題（萬聖節、過年佈置等），其他畫面不變。</span></div>
     <fieldset class="adm-fieldset"><legend>首頁卡樣版</legend>
       <div class="adm-pills adm-pills--col" role="radiogroup" aria-label="首頁卡樣版">${Object.entries(CARD_STYLES).map(([k, v]) => html`<label class="adm-pill adm-pill--desc"><input type="radio" name="s-style" value="${k}" ${k === 'standard' ? 'checked' : ''}><span><b>${v.label}</b><small>${v.desc}</small></span></label>`)}</div>
       <p class="adm-hint">四種樣版用同一份欄位，只改首頁卡的排版重點；每個疾病可以選不同樣版。右側預覽會即時切換，下方可並排比較。</p></fieldset>
@@ -60,7 +63,7 @@ ${pageHead({ title: '疫情發布', what: '疫情中心在這裡發布首頁的�
 </div></div>
 
 <section class="adm-card" aria-labelledby="sc-h"><h2 id="sc-h">目前 current.json</h2>
-  <p class="adm-card__sub">發布者：${site.unitById.get(sit.publisher)?.name ?? sit.publisher}；核定：${sit.approvedBy ?? '—'}；來源：${sit.source}${sit.note ? ` · ${sit.note}` : ''}</p>
+  <p class="adm-card__sub">發布者：${site.unitById.get(sit.publisher)?.name ?? sit.publisher}；核定：${sit.approvedBy ?? '—'}；警戒等級：${ALERT[sit.alertLevel ?? 'normal'] ?? sit.alertLevel}；來源：${sit.source}${sit.note ? ` · ${sit.note}` : ''}</p>
   <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><thead><tr><th scope="col">疾病</th><th scope="col">狀態</th><th scope="col">趨勢</th><th scope="col">指標</th><th scope="col">近週</th><th scope="col">建議</th><th scope="col">樣版</th><th scope="col">依據門檻</th></tr></thead>
   <tbody>${sit.items.map((it) => html`<tr><td><strong>${dn(it.disease)}</strong>${it.pinned ? html` <span class="adm-badge adm-badge--gray">首頁</span>` : ''}${it.illustrative ? html` <span class="adm-badge adm-badge--warn">示意</span>` : ''}</td>
     <td><span class="c-status-tag c-status-tag--${it.status}">${STATUS[it.status]}</span></td><td>${TREND[it.trend]}</td><td>${it.metricLabel}<div><strong>${it.metricValue}</strong>${it.deltaText ? ` · ${it.deltaText}` : ''}</div></td>

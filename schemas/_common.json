@@ -45,7 +45,8 @@
         "migration",
         "job",
         "tender",
-        "article"
+        "article",
+        "theme"
       ]
     },
     "title": {

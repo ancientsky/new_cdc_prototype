@@ -75,6 +75,8 @@ export function loadSite(config) {
     // 第七輪（ARCHITECTURE 15.1）：人才招募（人事室）與採購公告（秘書室）
     jobs: readDirJSON(path.join(CONTENT, 'jobs')),
     tenders: readDirJSON(path.join(CONTENT, 'tenders')),
+    // 第六十輪（Issue #127）：節慶主題（公關室；有生效區間的頁首裝飾，不是頁面：不進索引、sitemap、目錄。scripts/lib/theme.mjs）
+    themes: readDirJSON(path.join(CONTENT, 'themes')),
   };
   for (const list of Object.values(collections)) for (const item of list) item.sourceHash = sourceHashOf(item);
 

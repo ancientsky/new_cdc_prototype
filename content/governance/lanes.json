@@ -23,14 +23,15 @@
     },
     "fast": {
       "label": "快車道",
-      "description": "新聞稿、通函、澄清、職缺、採購、宣導 Banner：檢查通過即自動合併，送出後約 3 分鐘上線，公關室 24 小時內複核；僅限 allowedAuthors 名單內的承辦人（職缺另含人事室承辦人、採購另含秘書室承辦人：allowedAuthorsByType），其他人送的自動改走一般車道",
+      "description": "新聞稿、通函、澄清、職缺、採購、宣導 Banner、節慶主題（第六十輪）：檢查通過即自動合併，送出後約 3 分鐘上線，公關室 24 小時內複核；僅限 allowedAuthors 名單內的承辦人（職缺另含人事室承辦人、採購另含秘書室承辦人：allowedAuthorsByType），其他人送的自動改走一般車道",
       "types": [
         "news",
         "letter",
         "clarification",
         "job",
         "tender",
-        "banner"
+        "banner",
+        "theme"
       ],
       "autoMerge": true,
       "requiredApprovals": 0,
