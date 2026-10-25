@@ -27,12 +27,18 @@ test('#124 .github/rulesets/main.json：禁止直接 push／force push／刪除�
   const cp = read('.github/workflows/content-pr.yml');
   assert.match(cp, /^jobs:\n  test:\n/m, 'content-pr.yml 的第一個 job 叫 test');
   assert.ok(!checks.includes('lane'));
-  // 繞過名單留空：匯入時帶 GitHub Actions app（Integration 15368）會被拒「invalid actor」（2026-10-25 實測），要匯入後在介面加。
-  // 因此 pages.yml 回寫快照的 push 被規則集擋下時不能讓建置失敗（只警告，快照下次再回寫）。
+  // 繞過名單留空：匯入時帶 GitHub Actions app（Integration 15368）會被拒「invalid actor」，而且介面的繞過名單也沒有 GitHub Actions（2026-10-25 實測）。
+  // 回寫快照改走「部署金鑰」（可列入繞過）：有 SNAPSHOT_DEPLOY_KEY 就經 SSH 推；沒有就用 token 試推；兩條路失敗都只警告不讓建置失敗。
   assert.deepEqual(rs.bypass_actors, []);
   const pages = read('.github/workflows/pages.yml');
-  assert.ok(pages.includes('git push origin HEAD:main'));
-  assert.match(pages, /if git push origin HEAD:main; then[\s\S]*?else[\s\S]*?::warning::[\s\S]*?規則集/, 'pages.yml：快照 push 被擋只警告不失敗');
+  assert.ok(pages.includes('SNAPSHOT_DEPLOY_KEY: ${{ secrets.SNAPSHOT_DEPLOY_KEY }}'));
+  assert.ok(
+    pages.includes('git@github.com:${GITHUB_REPOSITORY}.git') && pages.includes('IdentitiesOnly=yes') && pages.includes('ssh-keyscan -t ed25519 github.com'),
+  );
+  assert.ok(pages.includes('rm -f "$RUNNER_TEMP/snapshot_key"'), '私鑰用完就刪');
+  assert.ok(pages.includes('elif git push origin HEAD:main; then'));
+  assert.equal((pages.match(/::warning::[^\n]*規則集/g) || []).length, 2, '兩條路失敗都只警告');
+  assert.ok(!/SNAPSHOT_DEPLOY_KEY/.test(read('.github/workflows/content-pr.yml')), 'PR 的工作流程不能拿到部署金鑰');
   // 文件有匯入步驟
   const deploy = read('docs/deploy.md');
   assert.ok(deploy.includes('.github/rulesets/main.json') && deploy.includes('Import a ruleset'));

@@ -135,6 +135,10 @@ jobs:
         continue-on-error: true
       - name: Commit refreshed snapshots back to main (02 UTC schedule / manual runs only)
         if: steps.refresh.outputs.refresh == 'true'
+        env:
+          # 第六十輪（Issue #124，docs/deploy.md §29.1）：main 的規則集禁止直接 push，而 GitHub Actions 不能列入繞過名單（介面沒有這個選項）；
+          # 「部署金鑰」可以。有設 SNAPSHOT_DEPLOY_KEY（有寫入權的部署金鑰私鑰）就用它經 SSH 推；沒設就用 GITHUB_TOKEN 試推。
+          SNAPSHOT_DEPLOY_KEY: ${{ secrets.SNAPSHOT_DEPLOY_KEY }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -142,12 +146,21 @@ jobs:
           if git diff --cached --quiet; then echo "快照無變更"; exit 0; fi
           git commit -m "data: 官方資料快照更新（$(date -u +%F)）"
           git pull --rebase origin main
-          # 第六十輪（Issue #124，docs/deploy.md §29.1）：main 的規則集若未把 GitHub Actions 放進繞過名單，這個直接 push 會被拒；
-          # 只警告、不讓建置失敗（這次建置仍用重抓到的資料；快照下次再回寫，或由維護者在規則集加繞過）。
-          if git push origin HEAD:main; then
+          if [ -n "$SNAPSHOT_DEPLOY_KEY" ]; then
+            umask 077
+            printf '%s\n' "$SNAPSHOT_DEPLOY_KEY" > "$RUNNER_TEMP/snapshot_key"
+            mkdir -p ~/.ssh && ssh-keyscan -t ed25519 github.com >> ~/.ssh/known_hosts 2>/dev/null
+            if GIT_SSH_COMMAND="ssh -i $RUNNER_TEMP/snapshot_key -o IdentitiesOnly=yes" git push "git@github.com:${GITHUB_REPOSITORY}.git" HEAD:main; then
+              echo "快照已以部署金鑰回寫 main"
+            else
+              echo "::warning::部署金鑰回寫 main 失敗：確認金鑰有寫入權、規則集的繞過名單含「Deploy keys」（docs/deploy.md §29.1）。建置照常進行"
+            fi
+            rm -f "$RUNNER_TEMP/snapshot_key"
+          elif git push origin HEAD:main; then
             echo "快照已回寫 main"
           else
-            echo "::warning::快照回寫 main 被拒（可能是規則集禁止直接 push）。建置照常進行；請在規則集的繞過名單加 GitHub Actions，或改成開 PR 回寫（docs/deploy.md §29.1）"
+            # 只警告、不讓建置失敗：這次建置仍用重抓到的資料，快照留到下次（或設定部署金鑰）
+            echo "::warning::快照回寫 main 被規則集拒絕（GITHUB_TOKEN 不能繞過）。建置照常進行；請設定部署金鑰 SNAPSHOT_DEPLOY_KEY（docs/deploy.md §29.1）"
           fi
       # 第三十八輪（deploy.md 2.1）：只放「還開著」的 PR 的預覽。previews 分支上已合併／關閉的 pr-N/ 在這裡就略過，
       # 不必等 preview-cleanup.yml 刪掉分支上的目錄再部署一次；人工合併時 push 觸發的這一次部署就是最終版，

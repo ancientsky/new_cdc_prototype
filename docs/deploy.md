@@ -1926,9 +1926,19 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 | 禁止刪除分支、禁止 force push | `deletion`、`non_fast_forward` | 歷史是稽核紀錄，不可改寫 |
 | 必須經 PR 合併 | `pull_request`，`required_approving_review_count: 0` | 直接 push 不經車道、不經檢查。核准人數**不用原生的**：快車道與緊急發布是 0 位、一般車道 1 位，由 `lane` job 數核准（§2「分支保護與自動合併互相牴觸」） |
 | 必要狀態檢查 | `test` | **不能用 `lane`**：`lane` job 自己呼叫 `gh pr merge` 時還在執行中，要求它成功就會把自己擋住。`test` 在 `lane` 之前完成，而且檢查沒過時它最後一步會失敗（§2.2） |
-| 繞過名單 | 匯入檔**留空** | 匯入時帶 GitHub Actions app（`Integration` 15368）會被拒「The ruleset you are importing contains an invalid actor」（2026-10-25 實測）。匯入後若要讓 `pages.yml` 的 02 UTC 排程繼續把官方資料快照直接 push 回 `main`，到規則集的 **Bypass list** 手動加 GitHub Actions（介面有列才加得了）。沒加也不會壞：那一步 push 被拒只會警告，建置與部署照常，快照留到下次（或改成開 PR 回寫） |
+| 繞過名單 | 匯入檔**留空**；匯入後手動加 **Deploy keys** | 匯入時帶 GitHub Actions app（`Integration` 15368）會被拒「The ruleset you are importing contains an invalid actor」，介面的 Bypass list 也沒有 GitHub Actions 可選（2026-10-25 實測，Yulun）。`pages.yml` 的 02 UTC 排程要把官方資料快照 push 回 `main`，改用**部署金鑰**（見下方「回寫快照的部署金鑰」）。沒設也不會壞：push 被拒只警告，建置與部署照常，只是快照留在舊版 |
 
-匯入：Settings → Rules → Rulesets → New ruleset 旁的「⋯」→ **Import a ruleset** → 選 `.github/rulesets/main.json` → Create。匯入後先用 `gh api repos/<owner>/<repo>/rulesets` 確認數量不是 0，再開一個純內容 PR 看自動合併是否仍成功。
+匯入：Settings → Rules → Rulesets → New ruleset 旁的「⋯」→ **Import a ruleset** → 選 `.github/rulesets/main.json` → Create（2026-10-25 已匯入）。匯入後先用 `gh api repos/<owner>/<repo>/rulesets` 確認數量不是 0，再開一個純內容 PR 看自動合併是否仍成功。
+
+**回寫快照的部署金鑰（匯入後要做）**：規則集禁止直接 push 後，`pages.yml` 每天 02 UTC 把 `data/snapshots/` 回寫 `main` 的那一步會被拒，網站會一直用舊快照（旅遊疫情、國家等級、CKAN 目錄；登革熱地圖每次建置另抓，不受影響）。GitHub Actions 本身不能列入繞過名單，**部署金鑰可以**：
+
+1. 本機產生一對金鑰：`ssh-keygen -t ed25519 -N '' -C snapshot-writer -f snapshot_key`（不要設密碼）。
+2. Settings → Deploy keys → Add deploy key：貼 `snapshot_key.pub`，勾 **Allow write access**。
+3. Settings → Secrets and variables → Actions → New repository secret：名稱 `SNAPSHOT_DEPLOY_KEY`，內容貼 `snapshot_key`（私鑰全文）。貼完把本機兩個檔刪掉。
+4. Settings → Rules → Rulesets → 這個規則集 → **Bypass list** → Add bypass → **Deploy keys**。
+5. 驗證：Actions → Build and deploy to GitHub Pages → Run workflow（`refresh` 保持 true），看「Commit refreshed snapshots」那一步印出「快照已以部署金鑰回寫 main」。
+
+為什麼可以接受：這把金鑰只在 `pages.yml` 的 `build` job 用到，PR 的工作流程（`content-pr.yml`）拿不到 secrets 也不引用它（測試 `round60-ruleset` 擋）；私鑰寫到 `$RUNNER_TEMP`、推完就刪；它推的只有 `data/snapshots/`（機器抓的官方資料），不是人寫的內容。換成機關 GitLab 時對應的是 project deploy key 或 project access token（§14.4）。
 
 **原型期沒做、留給正式環境的**：
 

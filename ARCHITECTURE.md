@@ -2664,7 +2664,7 @@ Issue #124、#125、#126、#128。取捨在 architecture-decisions §47；做法
 
 | 機制 | 契約 |
 | --- | --- |
-| `main` 規則集 | `.github/rulesets/main.json`（可匯入）：禁止直接 push／force push／刪除；必須經 PR；必要狀態檢查 `test`（不是 `lane`）；核准人數 0（由車道機器人數）；繞過名單留空（匯入時帶 Actions app 會被拒），`pages.yml` 回寫快照的 push 被擋只警告不失敗。測試 `tests/round60-ruleset.test.mjs` |
+| `main` 規則集 | `.github/rulesets/main.json`（可匯入）：禁止直接 push／force push／刪除；必須經 PR；必要狀態檢查 `test`（不是 `lane`）；核准人數 0（由車道機器人數）；繞過名單留空（匯入時帶 Actions app 會被拒，介面也沒有 GitHub Actions 可選），匯入後手動加 Deploy keys；`pages.yml` 回寫快照改用部署金鑰 `SNAPSHOT_DEPLOY_KEY`（SSH 推 `git@github.com:…`），沒設就用 token 試推，失敗只警告不失敗。測試 `tests/round60-ruleset.test.mjs` |
 | 車道核對 | `content-pr.yml` 的 `lane` job「Validate results」：依 API 檔案清單，不是純內容、或改到 `content/governance/`、`content/master/` ⇒ 覆寫 `LANE=standard`、`AUTO=false`、`NEED≥1`、`DOWNGRADED=true`；「Decide merge」與留言只看這些環境變數。測試在 `round40-ci-isolation.test.mjs` 的 `#125` 兩題 |
 | 純內容合併 | `pages.yml`：`scope` job（compare API，不 checkout）判純內容 ⇒ `build` 只跑 `test:content` 就建置部署，`verify` job 平行跑 lint／格式／型別／`npm test` 不擋 `deploy`；排程、手動、新分支、≥300 檔、API 失敗 ⇒ 全跑 |
 | security.txt | `emit-seo.mjs` `buildSecurityTxt()` → `/.well-known/security.txt` 與 `/security.txt`（相同）；`site.config.mjs` `security.contact`（null ⇒ 退回 `/contact/`）、`Expires` 建置＋90 天、`Policy` `/policy/security/`。頁 `/about/official-site/`（`content/pages/official-site.json`），頁尾 `footer.officialSite`。測試 `tests/round60-security-txt.test.mjs` |
