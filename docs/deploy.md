@@ -349,6 +349,10 @@ GitHub Pages 不能自訂回應標頭，所以原型站只有 `<meta name="robot
 5. **`Expires` 保持新鮮**：重建就會更新，不需手動改；但若正式站的建置排程停了，要有告警。
 6. **驗證：** `curl -s https://<網域>/.well-known/security.txt` 與 `curl -s https://<網域>/security.txt`，確認兩份都回 200、`Content-Type: text/plain`，且 `Contact`、`Expires` 為預期值。
 
+### 10.5 指紋標頭（第六十二輪，Issue #141）
+
+`Server`、`X-Powered-By`、`X-AspNet-Version`、`X-AspNetMvc-Version` 會說出伺服器軟體與版本，自動盤點工具拿來比對已知漏洞。`dist/headers/headers.json` 多了 `remove` 陣列（和 `headers` 同一層，`headers` 的形狀不變）；`nginx.conf` 有 `server_tokens off;` 與 `proxy_hide_header`（完全拿掉 `Server` 要 headers-more 的 `more_clear_headers`），`web.config.headers.xml` 有 `<remove name="X-Powered-By" />` 與 `removeServerHeader="true"`，`_headers` 格式不能刪標頭（只有註解）。Azure Front Door 的做法寫在 `dist/headers/README.md`。完整說明見 [attack-surface.md](attack-surface.md) §5 與本文件 §30。
+
 
 ## 11. 電子報寄信服務（第二十八輪）
 
@@ -1988,3 +1992,70 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 **為什麼用 compare API 而不是 `git diff HEAD^`**：`actions/checkout` 預設 `fetch-depth: 1` 沒有 `HEAD^`；多個 commit 一次 push 時 `HEAD^` 也不是 push 前的 `main`。compare API 直接比 push 前後兩個 SHA，不用 checkout、不執行程式，和 `content-pr.yml` 的 `lane` job 同一個原則。
 
 **量測**：`lane-sla.yml` 只量 PR 開啟到合併；「合併到上線」請在 Actions 看 `pages.yml` 的執行時間（純內容應為 Build 45 秒＋部署，不再有 2 分 18 秒的 Tests）。第一次純內容合併後請把實際數字補進 [ci-cd-overview.md](ci-cd-overview.md) §3。
+
+## 30. 正式部署產物白名單、內部站與指紋標頭（第六十二輪，Issue #141）
+
+**為什麼：** AI 滲透工具（ARTEX 一類）先盤點公開主機上的所有檔案與端點，再挑目標。原型的 `dist/` 什麼都放（後台頁、後台 JS、source map、標頭設定檔、PR 預覽），正式站的公開主機不該有這些。背景、規則表、對外資產清冊程序與「教訓」寫在 [attack-surface.md](attack-surface.md)；這一節只寫操作。
+
+### 30.1 環境變數
+
+| 變數 | 預設 | 作用 |
+| --- | --- | --- |
+| `SITE_MODE` | `prototype` | `production` ⇒ 不複製 PR 預覽、把只給同事的檔案搬到內部站目錄、用 `public` 規則稽核公開樹，有禁止檔就建置失敗 |
+| `DIST_INTERNAL_DIR` | 與 `dist` 同層的 `dist-internal/` | 內部站產物放哪裡（每次建置先清空） |
+| `ADMIN_ORIGIN` | 空字串 | 內部站網域（例 `https://staff.<機關網域>`，只寫網域，不帶路徑與結尾斜線；必須 https，本機可 `http://localhost`）。設定後公開頁所有 `/admin/…` 連結（頁尾「同事修改這頁」、後台入口、使用說明裡的後台連結）都改成 `ADMIN_ORIGIN` + basePath + 路徑的絕對網址；格式不對建置失敗 |
+
+### 30.2 指令
+
+```bash
+# 正式建置：公開站 → dist/，內部站 → dist-internal/
+SITE_MODE=production npm run build
+
+# 稽核任何目錄（CD 管線、或資訊室對實際部署的目錄跑）：有禁止檔 exit 1
+npm run audit:dist -- dist --profile public
+node scripts/audit-dist.mjs /srv/www/cdc --json > exposure-now.json
+
+# 原型站：後台等列為「預期」，只擋防禦性規則與副檔名白名單
+npm run audit:dist -- dist --profile prototype
+```
+
+注意 `npm run` 要加 `--` 才會把 `--profile` 傳給指令（不加的話 npm 當成自己的參數吃掉）。`--profile` 預設就是 `public`。
+
+### 30.3 `dist-internal/` 裡有什麼
+
+| 路徑 | 內容 |
+| --- | --- |
+| `admin/` | 後台頁（從公開樹搬來） |
+| `assets/` | 整份 CSS／JS 的副本，含 `assets/js/admin/`、`*.js.map`、`globals.d.ts`；JS 保留 `sourceMappingURL` 註解，方便除錯 |
+| `v1/` | 機讀 API 的副本（後台頁會讀） |
+| `vendor/` | 後台專用的 marked、pdf.js（從公開樹搬來，公開頁沒有用到） |
+| `headers/` | 公開主機的標頭設定檔（§10）；放這裡是為了交接，**不是給內部站當網頁提供** |
+| `exposure.json` | 對外資產清冊的機讀部分（拆分前的完整樣貌） |
+| `README.md` | 怎麼放、路由、存取控制 |
+
+公開樹的 JS 結尾 `//# sourceMappingURL=` 註解會被拿掉（map 已不在公開站）；`redirects/nginx.map` 是公開的舊網址對照，不受影響。
+
+### 30.4 部署方式
+
+- **公開站：** 部署 `dist/`。套 `dist-internal/headers/` 的標頭設定（§10、§10.5）。
+- **內部站：** 部署 `dist-internal/`，和寫入閘道放在同一台同事用的反向代理後面（§14.5），只開內網或 VPN；雲端環境加 Entra ID 條件式存取。不對網際網路開放。
+- **兩種接法擇一：**
+  1. 設 `ADMIN_ORIGIN`：公開頁的後台連結直接指向內部站網域。連結檢查會把這些連結當外部連結（不檢查目標），這是預期的。
+  2. 不設：同事用的反向代理把 `/admin/`、`/api/gateway/`（以及內部站需要的 `/assets/`、`/v1/`、`/vendor/`）轉到內部站，其他路徑轉到公開站。從網際網路直接連公開站的 `/admin/` 會是 404。
+- 公開頁上「編輯這頁」浮動按鈕（`ui.js` 的 `staffEditFab`）看的是瀏覽器裡的後台登入狀態；內部站和公開站不同網域時，公開站讀不到那個狀態，按鈕就不會出現。頁尾「同事修改這頁」連結不受影響。
+
+### 30.5 CI／CD
+
+正式環境的部署管線在 `SITE_MODE=production npm run build` 之後加一步：
+
+```bash
+npm run audit:dist -- dist --profile public   # 結束碼非 0 ⇒ 不部署
+```
+
+建置本身已經檢查過一次；這一步是對「真的要上傳的那一包」再確認（有人在建置後補檔、或同步工具多帶東西時會擋下來）。
+
+GitHub Pages 原型站照舊用原型模式建置（後台與 source map 是示範站刻意公開的），`dist/headers/exposure.json` 每次都會更新，資訊室可以直接看原型站有哪些資產。
+
+### 30.6 測試
+
+`tests/round62-attack-surface.test.mjs`：假 dist 的稽核（禁止檔帶規則與理由、原型規則把後台列為預期、防禦性規則先於預覽規則、副檔名白名單）、`splitForProduction`（公開樹乾淨、內部站齊全、`sourceMappingURL` 處理）、CLI 結束碼、`ADMIN_ORIGIN` 的連結、四種格式的指紋標頭。

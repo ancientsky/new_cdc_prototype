@@ -15,5 +15,5 @@
 // 並在啟動 scripts/serve.mjs 時明確傳 BASE_PATH（見 helpers.mjs 的 distBasePath／distEnv）。
 if (process.env.TEST_KEEP_ENV !== '1') {
   if ('BASE_PATH' in process.env && !('CALLER_BASE_PATH' in process.env)) process.env.CALLER_BASE_PATH = process.env.BASE_PATH;
-  for (const k of ['BASE_PATH', 'SITE_URL', 'SITE_MODE']) delete process.env[k];
+  for (const k of ['BASE_PATH', 'SITE_URL', 'SITE_MODE', 'ADMIN_ORIGIN']) delete process.env[k]; // 第六十二輪：ADMIN_ORIGIN 會把後台連結改成絕對網址
 }
