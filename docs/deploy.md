@@ -2059,3 +2059,20 @@ GitHub Pages 原型站照舊用原型模式建置（後台與 source map 是示�
 ### 30.6 測試
 
 `tests/round62-attack-surface.test.mjs`：假 dist 的稽核（禁止檔帶規則與理由、原型規則把後台列為預期、防禦性規則先於預覽規則、副檔名白名單）、`splitForProduction`（公開樹乾淨、內部站齊全、`sourceMappingURL` 處理）、CLI 結束碼、`ADMIN_ORIGIN` 的連結、四種格式的指紋標頭。
+
+
+## 32. 動態弱點掃描工作流程（第六十二輪，Issue #142）
+
+背景與範圍見 [security-testing.md](security-testing.md)。這一節只寫操作。
+
+**觸發**：`.github/workflows/dast.yml` 每週一 03:00（台灣時間，cron `0 19 * * 0`）自動跑；手動：Actions → DAST (OWASP ZAP baseline, weekly) → Run workflow，可調 `spider_minutes`（預設 5）。不擋合併、不擋部署，ZAP 步驟設 `continue-on-error: true`，且用 `-I` 讓警告不算失敗。
+
+**產出**：job summary 直接貼 `report.md`；artifact `dast-report` 含 `report.html`、`report.json`、`report.md`，保留 30 天。
+
+**怎麼讀**：PASS／WARN／FAIL 的意思與預期的 WARN（GitHub Pages 不能設 CSP／HSTS，標頭在 `dist/headers/` 供正式主機使用，見 §10.3）寫在 security-testing.md 第 4 節。掃描對象是靜態站加模擬後端，模擬後端的發現要對照 §11、§13 的接收系統契約再判斷。
+
+**限制**：開發沙盒沒有 docker，第六十二輪沒有在本機實際執行 ZAP；第一次真正的執行是在 GitHub 上的排程或手動執行。
+
+**釘映像檔 digest**：原型用 `ghcr.io/zaproxy/zaproxy:stable`（浮動標籤）。正式 CI 請改成 `ghcr.io/zaproxy/zaproxy@sha256:<digest>`，並定期更新，理由與釘 action SHA 相同（供應鏈）。
+
+**搬到署內 CI（GitLab）**：用同樣的步驟——建置（`BASE_PATH=''`）、起 `scripts/serve.mjs`、跑 ZAP 容器、把三個報告檔存成 job artifact。runner 需要能執行容器；掃描目標限定為該 job 自己啟動的本機服務，不要指向正式或共用環境。
