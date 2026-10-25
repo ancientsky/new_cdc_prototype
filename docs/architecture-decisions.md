@@ -908,3 +908,19 @@ AD 群組命名沿用 `CDC-WEB-<單位>-<角色>`（[admin-auth.md](admin-auth.m
 **代價：** 能做的效果很有限（沒有雪花動畫、不能換整頁配色）；想要更多就要先擴充白名單，並在 `THEME_TOKENS` 寫清楚它疊著哪些文字色——這是刻意的門檻。SVG 裡的動畫一律不收，因為背景圖的 SMIL 動畫不受 `prefers-reduced-motion` 管。`alertLevel` 目前只有 `emergency` 有作用；`elevated` 先只記錄，要用在別處時另外決定。
 
 **不做的：** 不讓主題改內文區、按鈕、狀態色；不加任何瀏覽器 JS；不由程式依疫情數字自動關主題。
+
+## 47. 發布鏈的防線放在「不執行 PR 程式的 job」與 GitHub 設定；純內容合併先部署再平行驗證；security.txt 與辨識官方網站頁（第六十輪，2026-10-25，Issue #124、#125、#126、#128）
+
+> 狀態：已做。做法見 [deploy.md §29](deploy.md)、§10.4。Issue #129–#133（Azure 託管、Git 平台、個資位置、OIDC 部署、轉址 Function）是改變正式環境規劃的決定，等 Yulun 與資訊室確認前提後另立節。
+
+**背景：** 外部審查（grokbot 第四批）指出：`main` 沒有規則集，有寫入權的帳號直接 push 約 4 分鐘上線；快車道的判定用 PR 自己的 `lane.mjs`＋`lanes.json`，惡意 PR 可以改規則讓自己免審；純內容合併後 `pages.yml` 再跑一次 2 分 18 秒的程式測試；沒有 `security.txt`，也沒有告訴民眾怎麼辨識官方網站、通報仿冒站。四件都成立。
+
+**決定 1：車道的最後判定權在 `lane` job，用 API 的檔案清單，不用 PR 的程式。** 選項有：A 在 `test` job 另外 checkout `origin/main` 的規則重算一次；B 在 `lane` job 執行 main 的 `lane.mjs`；C `lane` job 只用 `grep` 判「這個 PR 碰得到規則嗎」。選 C。A 要在同一個 job 裡混兩個版本的程式，B 違反「有寫入權的 job 不執行 repo 內程式」（§44）。C 的規則很鈍——不是純內容、或改到 `content/governance/`、`content/master/`，一律一般車道——但它剛好對：純內容 PR 動不到規則，所以它算的車道可以信；碰得到規則的本來就該人審。這也回答第四十輪留下的問題「改車道規則的 PR 走哪條路」：一般車道，OASIS 審。
+
+**決定 2：規則集放 repo 當正本，但原型期不要求簽章 commit。** 規則集是 GitHub 設定，repo 存一份可匯入的 JSON（`.github/rulesets/main.json`），讓「正式環境要設什麼」可審核、可追蹤。必要狀態檢查用 `test` 不用 `lane`（`lane` 自己合併時還在跑，會擋住自己）。簽章 commit 在原型期做不到（Claude 雲端工作階段無法簽章），列正式環境；2FA GitHub 已強制，不另設。
+
+**決定 3：純內容的合併先部署、完整測試平行跑不擋部署。** 這改掉第五十六輪「略過的測試在 main 補跑、失敗不部署」的安全網。理由：真正擋壞內容的是建置內的閘門（schema、參照、治理、評估、連結、索引召回），一個沒少；完整測試會被內容弄紅的，是斷言特定內容的測試，那是「該搬進 `test:content`」的訊號，不是內容壞了；緊急發布 10 分鐘的預算不該一半花在重複驗證。失敗仍在同一次執行看得到（job 紅、通知），只是不再延後上線。判定用 compare API 而不是 checkout 後 `git diff`，與 `lane` job 同一個原則。
+
+**決定 4：`security.txt` 兩個位置都輸出，`Contact` 先退回聯絡頁。** GitHub Pages 的打包會丟掉 `.well-known/`，所以根目錄的備援位置在原型站才讀得到；正式站兩份都有。資安通報信箱原型不知道，留設定欄位給資訊室，不編一個假信箱。辨識官方網站頁講三件事：只有 `*.cdc.gov.tw`、疾管署不會做什麼、怎麼通報（165、1922）。
+
+**反駁或暫緩的：** #131 要求「建置時驗證每筆轉址目標存在」——已經有（`tests/migration.test.mjs`、`v1/redirects.json` 由清單重算）；三種伺服器轉址檔已輸出，查表 Function 只是第四種格式，平台定了再加。#133 的 OIDC 原型已在用（`pages.yml` 的 `id-token: write`）；安全標頭的機讀正本 `dist/headers/headers.json` 本來就是給 CDN／主機讀的。#129／#130／#132 的前提（A 級、已取得 Azure Taiwan North）與「改 GHES 要多寫一個閘道 Git 轉接器」等代價，交 Yulun 與資訊室決定。

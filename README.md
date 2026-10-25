@@ -112,6 +112,17 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第六十輪：grokbot 第四批——發布鏈補強、節慶主題、security.txt；Azure 託管待決
+
+Yulun（2026-10-25）：「Grok Bot 對 prototype 有一些建議，寫在 issues，你研究評估一下，哪些可以採用，哪些可以反駁。」10 題（#124–#133）：5 題做了、5 題（Azure／Git 平台 ADR）等機關確認前提。做法在 [docs/deploy.md §29](docs/deploy.md)、§10.4，取捨在 [architecture-decisions §46–47](docs/architecture-decisions.md)，契約在 ARCHITECTURE §63–64。
+
+- **#124 `main` 沒有分支保護**：repo 放可匯入的規則集 `.github/rulesets/main.json`（只能經 PR、必過 `test` 檢查、核准人數交給車道機器人、Actions app 可繞過以回寫快照）。簽章 commit 原型期做不到（雲端工作階段無法簽章），列正式環境；2FA GitHub 已強制。
+- **#125 車道由 PR 自己算**：`lane` job 依 API 檔案清單核對——不是純內容、或改到治理設定／主檔，一律覆寫為一般車道、不自動合併。「改車道規則的 PR」從此有答案：一般車道、OASIS 審。
+- **#126 純內容合併又跑 2 分 18 秒程式測試**：`pages.yml` 純內容只跑內容測試（約 25 秒）就建置部署，完整測試平行跑、不擋部署（取捨見 deploy.md §29.3）。
+- **#127 節慶主題**：新內容型別 `theme`（公關室快車道、`publishAt`／`unpublishAt` 自動上下架、只准動三個裝飾 token＋一張 ≤50 KB 的內嵌 SVG、建置驗對比度）；疫情中心在態勢發布的 `alertLevel` 設 `emergency` 就全部關掉。示範：萬聖節（現在生效）、2027 農曆新年（排程）。
+- **#128 security.txt 與辨識官方網站**：建置輸出 `/.well-known/security.txt` 與 `/security.txt`；新頁 `/about/official-site/`（只有 `*.cdc.gov.tw`、疾管署不會做什麼、165／1922 怎麼通報）；資訊室待填通報信箱、DNSSEC、CAA、相似網域監控（deploy.md §10.4）。
+- **#129–#133 Azure 託管、Git 平台（GHES／GitLab）、個資位置、OIDC 部署、轉址 Function**：前提「A 級、已取得 Azure Taiwan North」與「改署內 GitLab 的規劃」要 Yulun 與資訊室確認；反駁 #131「驗證轉址目標存在」已有、#133 OIDC 已在用。
+
 ## 第五十九輪：PageIndex（樹索引＋模型翻目錄）對新架構有沒有幫助？
 
 Yulun 問（2026-10-19）：「有一個 pageindex 的技術，不知對新的架構有沒有幫助？」這一輪只有文件與一次實測，沒有改程式：[docs/pageindex-evaluation.md](docs/pageindex-evaluation.md)。

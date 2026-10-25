@@ -2657,3 +2657,14 @@ Issue #127。取捨在 architecture-decisions §46；同仁操作在 guide-staff
 | 測試 | `tests/round60-theme.test.mjs` |
 
 **教訓：** 「只准改裝飾」要做成結構上改不到，而不是靠審核時看得仔細：產生的 CSS 只有自訂屬性、沒有選擇器可寫，token 有白名單，背景色和疊在上面的文字由機器算對比。這樣快車道才放得心——公關室不必懂 CSS，審核的人也不必讀 CSS。
+
+## 64. 第六十輪：發布鏈補強（規則集、車道核對、純內容合併）與 security.txt
+
+Issue #124、#125、#126、#128。取捨在 architecture-decisions §47；做法與數字在 deploy.md §29、§10.4。
+
+| 機制 | 契約 |
+| --- | --- |
+| `main` 規則集 | `.github/rulesets/main.json`（可匯入）：禁止直接 push／force push／刪除；必須經 PR；必要狀態檢查 `test`（不是 `lane`）；核准人數 0（由車道機器人數）；GitHub Actions app 可繞過（排程回寫快照）。測試 `tests/round60-ruleset.test.mjs` |
+| 車道核對 | `content-pr.yml` 的 `lane` job「Validate results」：依 API 檔案清單，不是純內容、或改到 `content/governance/`、`content/master/` ⇒ 覆寫 `LANE=standard`、`AUTO=false`、`NEED≥1`、`DOWNGRADED=true`；「Decide merge」與留言只看這些環境變數。測試在 `round40-ci-isolation.test.mjs` 的 `#125` 兩題 |
+| 純內容合併 | `pages.yml`：`scope` job（compare API，不 checkout）判純內容 ⇒ `build` 只跑 `test:content` 就建置部署，`verify` job 平行跑 lint／格式／型別／`npm test` 不擋 `deploy`；排程、手動、新分支、≥300 檔、API 失敗 ⇒ 全跑 |
+| security.txt | `emit-seo.mjs` `buildSecurityTxt()` → `/.well-known/security.txt` 與 `/security.txt`（相同）；`site.config.mjs` `security.contact`（null ⇒ 退回 `/contact/`）、`Expires` 建置＋90 天、`Policy` `/policy/security/`。頁 `/about/official-site/`（`content/pages/official-site.json`），頁尾 `footer.officialSite`。測試 `tests/round60-security-txt.test.mjs` |
