@@ -415,6 +415,23 @@ export function buildPrototypeRobots() {
   ].join('\n');
 }
 
+/** 第六十輪（Issue #128）：security.txt（RFC 9116）。Expires = 建置時間 + 90 天（站台每 2 小時重建，永遠不會過期）；不簽章（RFC 允許）。 */
+export const SECURITY_TXT_DAYS = 90;
+export function buildSecurityTxt(site) {
+  const sec = config.security ?? {};
+  const contact = sec.contact || absUrl(sec.contactFallbackPath ?? '/contact/');
+  const expires = new Date(nowOf(site) + SECURITY_TXT_DAYS * 86400000).toISOString().replace(/\.\d{3}Z$/, 'Z');
+  return [
+    `# ${config.name}（${config.nameEn}）security.txt（RFC 9116）`,
+    ...(config.isPrototype ? ['# 本站為非官方原型，僅供示範；正式站上線前由資訊室填入資安通報信箱。'] : []),
+    `Contact: ${contact}`,
+    `Expires: ${expires}`,
+    `Policy: ${absUrl(sec.policyPath ?? '/policy/security/')}`,
+    'Preferred-Languages: zh-TW, en',
+    `Canonical: ${absUrl('/.well-known/security.txt')}`,
+  ].join('\n') + '\n';
+}
+
 export function emitSeo(site, write, opts = {}) {
   const maps = buildSitemaps(site, opts.pages);
   for (const [name, xml] of Object.entries(maps)) write(name, xml);
@@ -422,5 +439,8 @@ export function emitSeo(site, write, opts = {}) {
   else write('robots.txt', buildRobots(site));
   for (const l of config.langs) write(`${l.path.replace(/^\//, '')}${l.path ? '/' : ''}llms.txt`, buildLlms(site, l.code));
   for (const [name, xml] of Object.entries(buildFeeds(site))) write(name, xml);
+  // 兩處都輸出：GitHub Pages 的 upload-pages-artifact v4+ 不打包 dot 目錄，.well-known/ 會被丟掉，退回 RFC 9116 允許的根目錄位置
+  const secTxt = buildSecurityTxt(site);
+  write('.well-known/security.txt', secTxt); write('security.txt', secTxt);
   return Object.keys(maps);
 }
