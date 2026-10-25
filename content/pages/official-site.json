@@ -1,0 +1,61 @@
+{
+  "id": "page.official-site",
+  "type": "page",
+  "slug": "about/official-site",
+  "title": "辨識官方網站與通報仿冒網站",
+  "owner": "unit.it",
+  "publishedAt": "2026-10-25",
+  "reviewedAt": "2026-10-25",
+  "reviewPeriodMonths": 12,
+  "status": "published",
+  "audience": [
+    "public",
+    "professional"
+  ],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "aiWhitelist": {
+    "requested": false
+  },
+  "languages": {
+    "zh-TW": {
+      "status": "source"
+    },
+    "en": {
+      "status": "machine"
+    },
+    "ja": {
+      "status": "none"
+    },
+    "tl": {
+      "status": "none"
+    },
+    "vi": {
+      "status": "none"
+    },
+    "id": {
+      "status": "none"
+    },
+    "th": {
+      "status": "none"
+    }
+  },
+  "summary": "如何辨識疾管署官方網站（*.cdc.gov.tw）、疾管署不會做的事，以及仿冒網站與可疑訊息的通報管道。",
+  "keywords": [
+    "官方網站",
+    "仿冒網站",
+    "詐騙",
+    "165 反詐騙",
+    "cdc.gov.tw",
+    "網域",
+    "資安通報"
+  ],
+  "bodyMarkdown": "> **示意稿，待公關室與資訊室確認。** 本頁說明如何辨識疾管署的官方網站、疾管署不會做的事，以及遇到仿冒網站或可疑訊息時怎麼通報。\n\n## 一、怎麼確認是官方網站\n1. **看網域**：政府機關的官方網站網域結尾是 `.gov.tw`，疾管署的官方網站只會是 `*.cdc.gov.tw`（例如 `www.cdc.gov.tw`）。\n2. **`.gov.tw` 不是任何人都能註冊**：這個網域只有政府機關能透過財團法人台灣網路資訊中心（TWNIC）申請，一般公司或個人拿不到。因此網址結尾若是 `.com`、`.net`、`.tw` 或 `cdc-gov-tw.xxx` 這類長得很像的名稱，都不是官方網站。\n3. **看完整網址再點**：詐騙訊息常用相似的字母、多一個連字號或縮短網址。收到連結時，先看「第一個單斜線 `/` 之前」的網域是否真的以 `.cdc.gov.tw` 結尾。\n4. **自己輸入或用書籤**：不確定時，請自行輸入網址或從搜尋引擎、書籤進入，不要點訊息裡的連結。\n\n**本站提醒**：您目前看到的「新官網」是**非官方的原型**，只用於示範與內部測試，頁面頂端有「非官方原型」橫幅，內容不能當作正式公告，也不是官方網站。\n\n## 二、疾管署不會做的事\n- 不會要求您**匯款、轉帳**或支付任何費用來領取防疫物資、補助或疫苗。\n- 不會要求您提供**銀行帳號、信用卡號、提款卡密碼**或驗證碼。\n- 不會傳送連結要求您**安裝應用程式**或下載不明檔案。\n- 不會用私人通訊軟體帳號要求您「解除分期付款」或「配合查案」。\n\n## 三、遇到仿冒網站或可疑訊息怎麼辦\n1. **先不要點連結、不要輸入資料**；已經輸入個人資料或付款資訊，請立刻聯絡銀行與信用卡公司。\n2. **詐騙諮詢與通報**：撥打 **165 反詐騙諮詢專線**，或上[165 全民防騙網](https://165.npa.gov.tw/)。\n3. **防疫疑問確認**：撥打**防疫專線 1922**（國際來電 +886-800-001922）向疾管署確認訊息真偽。\n4. **通報仿冒本署的網站**：寄至本署資安通報信箱（待資訊室填入）；信中請附上網址、截圖與收到的時間，並請勿轉傳含惡意連結的原始訊息。\n5. 一般意見也可使用[聯絡我們](/contact/)。\n\n## 四、新網站上線時網址會改變\n新官網正式上線時，網址可能與現行不同。**公關室會在現行官網與官方管道（新聞稿、社群帳號）公告新的網址**。在看到這些公告之前，請不要相信自稱「新版官網」的陌生連結。\n\n## 五、相關頁面\n- [資訊安全政策](/policy/security/)\n- [聯絡我們](/contact/)\n",
+  "i18n": {
+    "en": {
+      "title": "Recognising the official website and reporting fake sites",
+      "summary": "How to recognise Taiwan CDC's official website (*.cdc.gov.tw), what the agency will never do, and how to report fake sites and suspicious messages.",
+      "bodyMarkdown": "> **Illustrative draft pending confirmation by the Public Relations Office and the IT Office.** This page explains how to recognise Taiwan CDC's official website, what the agency will never do, and how to report fake sites or suspicious messages.\n\n## 1. How to confirm an official site\n1. **Check the domain:** official government sites end in `.gov.tw`. Taiwan CDC's official sites are only ever `*.cdc.gov.tw` (for example `www.cdc.gov.tw`).\n2. **`.gov.tw` cannot be registered by just anyone:** only government agencies can apply for it through TWNIC. A name ending in `.com`, `.net` or `.tw`, or a look-alike such as `cdc-gov-tw.example`, is not an official site.\n3. **Read the full address before clicking:** scam messages use similar letters, extra hyphens or shortened links. Check that the domain before the first single `/` really ends in `.cdc.gov.tw`.\n4. **Type the address or use a bookmark** instead of clicking links in messages.\n\n**About this site:** the \"new website\" you are viewing is an **unofficial prototype** for demonstration and internal testing. It carries an \"unofficial prototype\" banner, its content is not an official announcement, and it is not the official site.\n\n## 2. What Taiwan CDC will never do\n- Ask you to **send money or transfer funds** to receive supplies, subsidies or vaccines.\n- Ask for your **bank account, credit card number, card PIN** or verification codes.\n- Send links asking you to **install an app** or download unknown files.\n- Use private messaging accounts to ask you to \"cancel instalments\" or \"assist an investigation\".\n\n## 3. If you meet a fake site or suspicious message\n1. **Do not click or enter data.** If you already did, contact your bank and card issuer immediately.\n2. **Fraud advice and reports:** call the **165 Anti-Fraud Hotline** or visit [165 Anti-Fraud](https://165.npa.gov.tw/).\n3. **Confirm with us:** call the **1922 epidemic hotline** (+886-800-001922 from abroad) to check whether a message is genuine.\n4. **Report a site impersonating Taiwan CDC:** email the agency's security reporting mailbox (to be filled in by the IT Office), with the address, a screenshot and the time received.\n5. For general feedback use [Contact us](/contact/).\n\n## 4. The site address will change at launch\nWhen the new website goes live its address may differ from today's. **The Public Relations Office will announce the new address on the current site and through official channels** (press releases, social media accounts). Until then, do not trust unfamiliar links that claim to be the \"new official site\".\n\n## 5. Related pages\n- [Information security policy](/policy/security/)\n- [Contact us](/contact/)\n"
+    }
+  }
+}

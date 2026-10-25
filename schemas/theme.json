@@ -1,0 +1,55 @@
+{
+  "$id": "https://cdc-prototype/schemas/theme.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "節慶主題（第六十輪，Issue #127）：有生效區間與權責的頁首裝飾，只准覆寫裝飾 token；到期自動下架、疫情緊急時不套用",
+  "allOf": [
+    {
+      "$ref": "_common.json"
+    }
+  ],
+  "type": "object",
+  "required": ["publishAt", "unpublishAt", "tokens"],
+  "properties": {
+    "type": {
+      "const": "theme"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^theme\\.[a-z0-9][a-z0-9-]*$",
+      "description": "theme.<slug>；slug 會成為 <html data-theme> 的值與 dist/assets/styles/theme-<slug>.css 檔名"
+    },
+    "owner": {
+      "const": "unit.pr",
+      "description": "節慶主題一律由公關室負責（走快車道，上線後 24 小時內複核）"
+    },
+    "publishAt": {
+      "description": "生效起點（含）。沿用共同欄位的排程發布：以建置當下真實時間判斷；只填日期＝當日 00:00 台灣時間"
+    },
+    "unpublishAt": {
+      "anyOf": [
+        { "type": "string", "format": "date-time" },
+        { "type": "string", "format": "date" }
+      ],
+      "description": "生效終點（不含）：到這個時間起不再套用。只填日期＝當日 00:00 台灣時間（例：萬聖節 10-31 整天要有 ⇒ 填 11-01）"
+    },
+    "occasion": {
+      "type": "string",
+      "description": "節慶名稱（後台列表與建置記錄用，例：萬聖節、農曆新年）"
+    },
+    "tokens": {
+      "type": "object",
+      "description": "要覆寫的裝飾 token（scripts/lib/theme.mjs THEME_TOKENS 白名單：--theme-header-bg、--theme-accent、--theme-accent-2）；值為 #rgb／#rrggbb。白名單、色碼與對比在 validate 檢查",
+      "propertyNames": { "pattern": "^--[a-z0-9-]+$" },
+      "additionalProperties": { "type": "string" }
+    },
+    "decoration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["svg"],
+      "description": "頁首裝飾圖：一段內嵌 SVG（≤ 50 KB、不得含腳本／外部參照／動畫）。建置時轉成 CSS 背景圖（--theme-decoration），輔助科技讀不到，等同 alt=\"\"",
+      "properties": {
+        "svg": { "type": "string", "minLength": 20 }
+      }
+    }
+  }
+}

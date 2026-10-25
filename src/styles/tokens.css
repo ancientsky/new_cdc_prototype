@@ -27,5 +27,8 @@
   --wrap: 1200px;
   --tabbar-h: 58px;
   --focus: 3px solid #e8a400;
+  /* 第六十輪（Issue #127）節慶主題可覆寫的裝飾層（白名單：scripts/lib/theme.mjs THEME_TOKENS）。這裡的預設值＝沒有主題時的外觀。
+     只用在頁首底色、頁首上緣飾條與站名旁的裝飾圖；狀態色、文字色、焦點框不在此列，主題改不到。 */
+  --theme-header-bg: #fff; --theme-accent: transparent; --theme-accent-2: transparent; --theme-decoration: none;
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }

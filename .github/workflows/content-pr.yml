@@ -361,6 +361,21 @@ jobs:
           [[ "$LABEL" =~ ^lane:(emergency|fast|standard)$ ]] || fail "ghLabel 不合法"
           [[ "$AUTO" =~ ^(true|false)$ ]] || fail "autoMerge 不是布林"
           [[ "$NEED" =~ ^[0-9]$ ]] || fail "requiredApprovals 不是 0 到 9 的整數"
+          # 第六十輪（Issue #125）：能不能免人審自動合併，由這一步依 API 的檔案清單判定，不採信 artifact 算出的車道。
+          # artifact 的 lane.json 是 test job 用 PR 自己的 scripts/lane.mjs＋content/governance/lanes.json 算的，惡意 PR 可以連規則一起改。
+          # 規則：不是純內容（改到程式、工作流程、文件、測試…），或改到治理設定（content/governance/，車道規則就在這裡）、主檔（content/master/），
+          # 一律覆寫成一般車道：不自動合併、至少 1 位核准。純內容 PR 動不到 lane.mjs 與 lanes.json，所以剩下的車道判定可以信 artifact。
+          # 這也回答了「改車道規則的 PR 走哪條路」：一般車道，由 codeReviewers（OASIS）審。
+          DOWNGRADED=false
+          RULES=false
+          if grep -E '^content/(governance|master)/' "$RUNNER_TEMP/real-files.txt" > /dev/null; then RULES=true; fi
+          if [ "$AUTO" = "true" ] || [ "$LANE" != "standard" ]; then
+            if [ "$CONTENT_ONLY" != "true" ] || [ "$RULES" = "true" ]; then
+              echo "::warning::artifact 的車道是 $LANE（autoMerge=$AUTO），但 PR 依 API 檔案清單$([ "$RULES" = "true" ] && echo '改到治理設定／主檔' || echo '不是純內容')：覆寫為一般車道、不自動合併、至少 1 位核准"
+              LANE=standard; LABEL=lane:standard; AUTO=false; DOWNGRADED=true
+              [ "$NEED" -ge 1 ] || NEED=1
+            fi
+          fi
           # 比對檔案清單：artifact 說的檔案必須涵蓋 PR 實際改到的每個檔（不能少報；real-files.txt 在上面由 API 取得）
           jq -r '.files[].file' "$D/lane.json" | sort -u > "$RUNNER_TEMP/lane-files.txt"
           MISSING="$(comm -23 "$RUNNER_TEMP/real-files.txt" "$RUNNER_TEMP/lane-files.txt" | head -n 3)"
@@ -377,6 +392,7 @@ jobs:
             echo "A11Y_WARN=$WARN"
             echo "A11Y_RULES=$RULES"
             echo "CONTENT_ONLY=$CONTENT_ONLY"
+            echo "DOWNGRADED=$DOWNGRADED"
             echo "GATE=$GATE"
           } >> "$RUNNER_TEMP/env.txt"
           # 全部驗證通過才一次寫進 GITHUB_ENV（中途 fail 的話後面的步驟看不到任何一個值，GATE 也不存在）
@@ -466,9 +482,14 @@ jobs:
           . as $L
           | $ENV as $e
           | ($e.APPROVALS // "0") as $ap
+          # 第六十輪（Issue #125）：車道、自動合併、核准人數以 Validate results 依 API 檔案清單核對後的環境變數為準，不直接用 lane.json
+          | ($e.AUTO == "true") as $auto
+          | ($e.NEED // ($L.requiredApprovals | tostring)) as $need
+          | ({"emergency": "緊急發布", "fast": "快車道", "standard": "一般車道"}[$e.LANE // ""] // $L.label) as $label
+          | ($e.DOWNGRADED == "true") as $downgraded
           | ({
-              "merge": (if $L.autoMerge then "✅ 檢查全數通過，" + $L.label + "自動合併（squash），約 3 分鐘後上線" else "✅ 已有核准且檢查通過，合併（squash）" end),
-              "wait": ("⏳ 等待審核：需 " + ($L.requiredApprovals | tostring) + " 位核准（目前 " + $ap + "）；SLA 至 " + $L.sla.dueAtLocal + "（台灣時間）"),
+              "merge": (if $auto then "✅ 檢查全數通過，" + $label + "自動合併（squash），約 3 分鐘後上線" else "✅ 已有核准且檢查通過，合併（squash）" end),
+              "wait": ("⏳ 等待審核：需 " + $need + " 位核准（目前 " + $ap + "）；SLA 至 " + $L.sla.dueAtLocal + "（台灣時間）"),
               "blocked": "❌ 檢查未通過，不合併：請看下方檢查與執行紀錄",
               "draft": "📝 草稿 PR：轉為 Ready for review 後才會合併",
               "closed": "PR 已關閉"
@@ -477,7 +498,7 @@ jobs:
           | (($e.A11Y_WARN // "0") | tonumber? // 0) as $warn
           | [
               "<!-- lane-bot -->",
-              "### 發布車道：" + $L.label + "（`" + $L.ghLabel + "`）",
+              "### 發布車道：" + $label + "（`" + ($e.LABEL // $L.ghLabel) + "`）",
               "",
               $action,
               "",
@@ -494,7 +515,8 @@ jobs:
               "| 個資掃描（身分證、居留證、手機、個人信箱、名單姓名） | " + icon($e.PII) + " |",
               "| 預覽建置 | " + icon($e.PREVIEW_BUILD) + " |",
               "| 預覽網址 | " + (if $previewOk then "[" + $e.PREVIEW_URL + "](" + $e.PREVIEW_URL + ")（主站重新部署後約 2–3 分鐘可開；含排程中內容）" else "未產生" end) + " |",
-              "| 自動合併 | " + (if $L.autoMerge then "是（不需人工核准）" else "否（需 " + ($L.requiredApprovals | tostring) + " 位核准）" end) + " |",
+              "| 自動合併 | " + (if $auto then "是（不需人工核准）" else "否（需 " + $need + " 位核准）" end) + " |",
+              "| 車道核對（API 檔案清單） | " + (if $downgraded then "⚠ PR 改到程式／文件／治理設定／主檔，不採信 PR 自己算的車道「" + $L.label + "」，覆寫為一般車道（需人審）" else "✅ 與 PR 算出的車道一致" end) + " |",
               "| 作者授權 | " + (if $L.authorGate then (if $L.authorGate.allowed then "✅ " + $L.authorGate.reason else "⚠ " + $L.authorGate.reason + "，降為一般車道" end) else "—（本車道本來就需人審）" end) + " |",
               "| 審核人 | " + (if ($L.reviewers | length) > 0 then ($L.reviewerNames | join("、")) + "（" + ([$L.reviewerAccounts[] | "@" + .] | join(" ")) + "）" else "無（CI 即審核者）" end) + " |",
               "| 上線後複核 | " + (if $L.postPublishReview then $L.postPublishReview.ownerName + " 於上線後 " + ($L.postPublishReview.hours | tostring) + " 小時內" else "—" end) + " |",

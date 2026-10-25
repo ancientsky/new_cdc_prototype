@@ -16,7 +16,7 @@ function fill(it) {
   const st = $(`input[name="s-style"][value="${it.cardStyle in STYLES ? it.cardStyle : 'standard'}"]`); if (st) st.checked = true;
 }
 function header() {
-  return { data: $('#s-data').value, next: $('#s-next').value, approver: $('#s-approver').value };
+  return { data: $('#s-data').value, next: $('#s-next').value, approver: $('#s-approver').value, alert: $('#s-alert')?.value || 'normal' };
 }
 function read() {
   const weekly = $('#s-weekly').value.split(/[,，\s]+/).map((x) => x.trim()).filter(Boolean).map(Number);
@@ -71,7 +71,8 @@ function doc(it) {
   const merged = [...keep.map(({ ...x }) => x), it];
   return {
     publishedAt: D.today, publisher: D.current.publisher ?? 'unit.epidemic-intelligence', approvedBy: h.approver || '（待填）', dataDate: h.data || D.today,
-    source: D.current.source ?? 'nidss', nextReviewAt: h.next || addDays(D.today, 7), ...(D.current.note ? { note: D.current.note } : {}), items: merged,
+    source: D.current.source ?? 'nidss', nextReviewAt: h.next || addDays(D.today, 7), ...(D.current.note ? { note: D.current.note } : {}),
+    ...(h.alert && h.alert !== 'normal' ? { alertLevel: h.alert } : {}), items: merged, // 第六十輪：normal 是預設，不寫進檔案
   };
 }
 function paint() {
@@ -96,6 +97,6 @@ $('#s-copy').addEventListener('click', (e) => copyText(`${$('#s-out').textConten
 $('#s-dl').addEventListener('click', () => downloadText($('input[name="s-scope"]:checked').value === 'item' ? 'situation-item.json' : 'current.json', `${$('#s-out').textContent}\n`));
 // 初始：還原本機表單，否則以第一筆釘選項目預填
 const saved = store.get(KEY);
-if (saved?.disease) { fill(saved); $('#s-data').value = saved.data ?? ''; $('#s-next').value = saved.next ?? ''; $('#s-approver').value = saved.approver ?? ''; }
+if (saved?.disease) { fill(saved); $('#s-data').value = saved.data ?? ''; $('#s-next').value = saved.next ?? ''; $('#s-approver').value = saved.approver ?? ''; if (saved.alert && $('#s-alert')) $('#s-alert').value = saved.alert; }
 else { fill(items.find((i) => i.pinned) ?? items[0] ?? {}); $('#s-data').value = D.today; $('#s-next').value = addDays(D.today, 7); $('#s-approver').value = D.current.approvedBy ?? ''; }
 paint();

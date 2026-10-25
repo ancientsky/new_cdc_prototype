@@ -33,6 +33,7 @@ import { publicView, scheduledItems, taipeiTime, taipeiDate, publishAtMs } from 
 import { piiErrors } from './lib/pii-scan.mjs';
 import { checkI18nQuality, summarizeI18nQuality } from './lib/i18n-quality.mjs';
 import { formErrors, askLogErrors } from './lib/forms.mjs';
+import { themeCss, themeCssPath } from './lib/theme.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v] = a.replace(/^--/, '').split('='); return [k, v ?? true]; }));
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
@@ -89,6 +90,9 @@ async function main() {
     console.warn('  ⚠ [審閱到期]', msg);
     if (process.env.GITHUB_ACTIONS) console.log(`::warning title=審閱到期（BUILD_TODAY 早於今天）::${msg}`);
   }
+  // 第六十輪（Issue #127）：節慶主題（套用哪一個、為什麼沒套用——疫情緊急、沒有生效中的主題）
+  log(site.theme.message);
+  if (site.theme.reason === 'emergency' && process.env.GITHUB_ACTIONS) console.log(`::notice title=節慶主題未套用::${site.theme.message}`);
   const scheduled = scheduledItems(site);
   log(`排程發布：now=${new Date(site.now).toISOString()}；排程中 ${scheduled.length} 筆${scheduled.length ? `（${scheduled.map((i) => `${i.id}＠${taipeiTime(publishAtMs(i.publishAt))}`).join('、')}）` : ''}，不輸出`);
 
@@ -117,6 +121,8 @@ async function main() {
   // 靜態資源
   copyDir(path.join(ROOT, 'src/styles'), path.join(DIST, 'assets/styles'));
   copyDir(path.join(ROOT, 'src/client'), path.join(DIST, 'assets/js'));
+  // 第六十輪：只輸出「這次建置生效」的主題 CSS（layout 只在同一條件下連它）；下架或疫情緊急時檔案也不存在
+  if (site.theme.active) writeOut(themeCssPath(site.theme.active).slice(1), themeCss(site.theme.active));
   // 介面字串依語言拆檔（issue #34）：i18n.<lang>.js 取代完整 i18n.js
   const i18nSizes = emitI18nBundles(DIST);
   log(`i18n 拆檔 → assets/js/i18n.<lang>.js：${Object.entries(i18nSizes).map(([l, b]) => `${l} ${(b / 1024).toFixed(0)}KB`).join('、')}`);

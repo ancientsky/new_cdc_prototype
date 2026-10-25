@@ -35,6 +35,9 @@ export const config = {
   get isPrototype() { return this.mode !== 'production'; },
   // 正式官網（原型橫幅導向用）
   officialUrl: 'https://www.cdc.gov.tw/',
+  // 第六十輪（Issue #128）：security.txt（RFC 9116）。contact 為機關資安通報信箱（mailto: 或 https:// 網址），
+  // 原型不知道實際信箱，故為 null；null 時 security.txt 退回聯絡頁網址，正式上線前須由資訊室填入（docs/deploy.md 10.4）。
+  security: { contact: null, policyPath: '/policy/security/', contactFallbackPath: '/contact/' },
   langs: [
     { code: 'zh-TW', label: '繁體中文', dir: 'ltr', path: '' },
     { code: 'en', label: 'English', dir: 'ltr', path: '/en' },

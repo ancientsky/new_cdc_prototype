@@ -23,11 +23,53 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # 第六十輪（Issue #126，docs/deploy.md 第 29 節）：這次 push 是不是「純內容」（只改 content/、data/snapshots/）。
+  # 用 GitHub API 比對 before…after 的檔案清單，不 checkout、不執行任何 repo 內的程式；排程、手動執行、新分支、檔數超過 API 上限（300）一律當程式變更（全跑）。
+  # 純內容 ⇒ build job 只跑內容測試（test:content，PR 階段就是這套）就建置、部署；完整程式測試改由 verify job 平行跑、不擋部署。
+  # 程式變更 ⇒ build job 照舊先跑 lint／格式／型別／完整測試再建置。
+  scope:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      content_only: ${{ steps.scope.outputs.content_only }}
+    steps:
+      - name: Classify this push (content-only or code) via the compare API
+        id: scope
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          CONTENT_ONLY=false
+          if [ "$EVENT" = "push" ] && [[ "$BEFORE" =~ ^[0-9a-f]{40}$ ]] && [[ ! "$BEFORE" =~ ^0{40}$ ]]; then
+            if gh api "repos/$GITHUB_REPOSITORY/compare/$BEFORE...$AFTER" > "$RUNNER_TEMP/compare.json" 2> "$RUNNER_TEMP/compare.err"; then
+              TOTAL="$(jq -r '.files | length' "$RUNNER_TEMP/compare.json")"
+              # compare API 最多列 300 個檔；達到上限就無法確認「全部都是內容」，當程式變更
+              if [ "$TOTAL" -gt 0 ] && [ "$TOTAL" -lt 300 ]; then
+                jq -r '.files[] | .filename, (.previous_filename // empty)' "$RUNNER_TEMP/compare.json" > "$RUNNER_TEMP/files.txt"
+                if ! grep -Ev '^(content|data/snapshots)/' "$RUNNER_TEMP/files.txt" > /dev/null; then CONTENT_ONLY=true; fi
+                echo "變更 $TOTAL 個檔；純內容＝$CONTENT_ONLY"
+              else
+                echo "變更檔數 $TOTAL（0 或達 API 上限）⇒ 當程式變更全跑"
+              fi
+            else
+              echo "::warning::compare API 失敗，當程式變更全跑：$(head -c 300 "$RUNNER_TEMP/compare.err")"
+            fi
+          else
+            echo "事件 $EVENT（非 push 或無 before）⇒ 全跑"
+          fi
+          echo "content_only=$CONTENT_ONLY" >> "$GITHUB_OUTPUT"
+
   build:
+    needs: scope
     runs-on: ubuntu-latest
     permissions:
       contents: write # 排程／手動執行時把官方資料快照 commit 回 main
       pull-requests: read # 取 previews 時查 PR 是否還開著（已合併／關閉的預覽不再放進 /preview/）
+    env:
+      CONTENT_ONLY: ${{ needs.scope.outputs.content_only }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
@@ -52,13 +94,19 @@ jobs:
       - name: Download Chromium into the cache (cache miss only)
         if: steps.pwcache.outputs.cache-hit != 'true'
         run: npx playwright install chromium
-      - name: Lint (eslint) + format check + type check
+      - name: Lint (eslint) + format check + type check (code pushes, schedule and manual runs)
+        if: env.CONTENT_ONLY != 'true'
         run: |
           npm run lint
           npm run format:check
           npm run typecheck
       - name: Tests (governance rules, on committed content)
+        if: env.CONTENT_ONLY != 'true'
         run: npm test
+      # 第六十輪（Issue #126）：純內容的合併只跑內容測試（與 PR 階段相同的 test:content），完整測試在下面的 verify job 平行跑
+      - name: Content tests only (content-only push; full npm test runs in the verify job in parallel)
+        if: env.CONTENT_ONLY == 'true'
+        run: npm run test:content
       - name: Decide whether to refresh official data (manual run, or the 02 UTC schedule)
         id: refresh
         env:
@@ -143,6 +191,32 @@ jobs:
       - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: dist # 含 dist/preview/pr-N/
+  # 第六十輪（Issue #126）：純內容合併時，完整程式測試（lint／格式／型別／npm test）平行跑、不擋部署。
+  # 內容不會改程式，這些測試在合併前的 PR 已跑過（程式 PR）或與內容無關；真正擋壞內容的是 build 內的 schema／治理／評估／連結閘門。
+  # 失敗時這個 job 紅、工作流程紅（通知送給維護者），但網站已照 build job 的結果部署；處理方式見 docs/deploy.md 第 29 節。
+  verify:
+    needs: scope
+    if: needs.scope.outputs.content_only == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          check-latest: true
+          cache: npm
+      - run: npm ci
+      - name: Lint (eslint) + format check + type check
+        run: |
+          npm run lint
+          npm run format:check
+          npm run typecheck
+      - name: Full tests (npm test; does not gate the deploy of a content-only push)
+        run: npm test
   deploy:
     needs: build
     runs-on: ubuntu-latest

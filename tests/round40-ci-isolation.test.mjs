@@ -338,7 +338,11 @@ test('#81 留言（jq 實跑）：表格有格式、型別列；a11y 警告數�
       blocked.includes('| 預覽網址 | 未產生 |'),
   );
   assert.ok(!blocked.includes('moderate／minor'), '沒有警告就不加括號');
-  const merge = commentWith({ ...base, ACTION: 'merge' }, { ...L, autoMerge: true, requiredApprovals: 0 }).stdout;
+  // 第六十輪（Issue #125）：自動合併與核准人數改看 Validate results 寫進環境的 AUTO／NEED／LANE，不直接信 lane.json
+  const merge = commentWith(
+    { ...base, ACTION: 'merge', AUTO: 'true', NEED: '0', LANE: 'fast', LABEL: 'lane:fast' },
+    { ...L, autoMerge: true, requiredApprovals: 0 },
+  ).stdout;
   assert.ok(merge.includes('自動合併（squash），約 3 分鐘後上線'));
 });
 
@@ -650,4 +654,75 @@ test('#56 test:content：清單裡的檔都存在、不含瀏覽器／伺服器�
     assert.ok(sec.includes(path.basename(f)), `docs/deploy.md 第 28 節要列出 ${path.basename(f)}`);
   }
   assert.equal(new Set(files).size, files.length, '不重複');
+});
+
+// ───────── 第六十輪（Issue #125）：車道由 lane job 依 API 檔案清單核對，不採信 PR 自己算的 ─────────
+test('#125 驗證步驟（實跑）：artifact 說快車道自動合併，但 PR 改到程式、工作流程、治理設定或主檔 ⇒ 覆寫為一般車道、不自動合併、至少 1 位核准', () => {
+  // 純內容、快車道：照 artifact
+  let r = runValidate({ lane: goodLane(), result: goodResult(), realFiles: ['content/news/x.json'] });
+  assert.equal(r.out.ok, 'true', r.stdout);
+  assert.deepEqual({ LANE: r.env.LANE, AUTO: r.env.AUTO, NEED: r.env.NEED, D: r.env.DOWNGRADED }, { LANE: 'fast', AUTO: 'true', NEED: '0', D: 'false' });
+  // 惡意 PR：改了 lanes.json（治理設定）＋ lane.mjs，而且 artifact 是用它自己改過的規則算出「快車道、自動合併」
+  for (const extra of [
+    'content/governance/lanes.json',
+    'scripts/lane.mjs',
+    'scripts/lib/lanes.mjs',
+    '.github/workflows/content-pr.yml',
+    'content/master/vaccine-schedule.json',
+    'docs/x.md',
+  ]) {
+    const files = ['content/news/x.json', extra];
+    r = runValidate({ lane: goodLane(files), result: goodResult(), realFiles: files });
+    assert.equal(r.out.ok, 'true', `${extra}: ${r.stdout}`);
+    assert.deepEqual(
+      { LANE: r.env.LANE, LABEL: r.env.LABEL, AUTO: r.env.AUTO, NEED: r.env.NEED, D: r.env.DOWNGRADED },
+      { LANE: 'standard', LABEL: 'lane:standard', AUTO: 'false', NEED: '1', D: 'true' },
+      extra,
+    );
+    assert.match(r.stdout, /覆寫為一般車道/);
+  }
+  // 只改 content/governance/（純內容的定義內，但那是規則本身）：緊急車道也不行
+  const emergency = { ...goodLane(['content/governance/lanes.json']), lane: 'emergency', ghLabel: 'lane:emergency' };
+  r = runValidate({ lane: emergency, result: goodResult(), realFiles: ['content/governance/lanes.json'] });
+  assert.equal(r.env.CONTENT_ONLY, 'true');
+  assert.deepEqual({ LANE: r.env.LANE, AUTO: r.env.AUTO, D: r.env.DOWNGRADED }, { LANE: 'standard', AUTO: 'false', D: 'true' });
+  // artifact 要求 3 位核准的一般車道（比預設更嚴）：不會被放寬
+  const strict = { ...goodLane(['scripts/lane.mjs']), lane: 'standard', ghLabel: 'lane:standard', autoMerge: false, requiredApprovals: 3 };
+  r = runValidate({ lane: strict, result: goodResult(), realFiles: ['scripts/lane.mjs'] });
+  assert.deepEqual({ LANE: r.env.LANE, NEED: r.env.NEED, D: r.env.DOWNGRADED }, { LANE: 'standard', NEED: '3', D: 'false' });
+  // Decide merge 看的是環境裡的 AUTO／NEED（不是 lane.json），留言也用環境值
+  const decide = runOf(stepNamed(cp.lane, 'Decide merge'));
+  assert.ok(decide.includes('"$AUTO" = "true"') && decide.includes('"$APPROVALS" -ge "$NEED"'));
+});
+
+test('#125 留言（jq 實跑）：被覆寫的 PR 留言標題是一般車道、自動合併為否、有「車道核對」列說明原因', { skip: !hasJq && '本機沒有 jq' }, () => {
+  const L = {
+    ...goodLane(['content/news/x.json', 'scripts/lane.mjs']),
+    label: '快車道',
+    reasons: ['x'],
+    sla: { label: '3 小時', dueAtLocal: '2026-10-25 12:00' },
+    reviewers: [],
+    reviewerNames: [],
+    reviewerAccounts: [],
+    authorGate: null,
+    postPublishReview: null,
+  };
+  const env = {
+    ACTION: 'wait',
+    APPROVALS: '0',
+    LANE: 'standard',
+    LABEL: 'lane:standard',
+    AUTO: 'false',
+    NEED: '1',
+    DOWNGRADED: 'true',
+    RUN_URL: 'https://x/run/1',
+    PREVIEW_PUSH: 'skipped',
+  };
+  const md = commentWith(env, L).stdout;
+  assert.ok(md.includes('### 發布車道：一般車道（`lane:standard`）'), md);
+  assert.ok(md.includes('| 自動合併 | 否（需 1 位核准） |'));
+  assert.ok(md.includes('| 車道核對（API 檔案清單） | ⚠ PR 改到程式／文件／治理設定／主檔，不採信 PR 自己算的車道「快車道」，覆寫為一般車道（需人審） |'));
+  assert.ok(md.includes('⏳ 等待審核：需 1 位核准（目前 0）'));
+  const ok = commentWith({ ...env, LANE: 'fast', LABEL: 'lane:fast', AUTO: 'true', NEED: '0', DOWNGRADED: 'false', ACTION: 'merge' }, L).stdout;
+  assert.ok(ok.includes('| 車道核對（API 檔案清單） | ✅ 與 PR 算出的車道一致 |') && ok.includes('快車道自動合併（squash）'));
 });

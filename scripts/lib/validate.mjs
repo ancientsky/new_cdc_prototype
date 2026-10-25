@@ -17,6 +17,7 @@ const Ajv2020 = Ajv2020Module.default ?? Ajv2020Module;
 const addFormats = addFormatsModule.default ?? addFormatsModule;
 import { ROOT } from './load.mjs';
 import { jobPiiErrors, jobResultProblems } from '../../src/client/careers-rules.js';
+import { themeProblems, overlappingThemes } from './theme.mjs';
 
 const SCHEMAS = path.join(ROOT, 'schemas');
 
@@ -34,7 +35,7 @@ const typeToSchema = {
   disease: 'disease.json', faq: 'faq.json', news: 'news.json', letter: 'news.json', clarification: 'clarification.json',
   document: 'document.json', vaccine: 'vaccine.json', dataset: 'dataset.json', banner: 'banner.json', page: 'page.json',
   media: 'media.json', topic: 'topic.json', service: 'service.json', publication: 'publication.json', labtest: 'labtest.json', research: 'research.json', article: 'article.json',
-  migration: 'migration.json', job: 'job.json', tender: 'tender.json',
+  migration: 'migration.json', job: 'job.json', tender: 'tender.json', theme: 'theme.json',
 };
 
 // ───────────────────────── 第二十五輪：相對日期檢查（Issue #37；規則與理由見 dates.mjs 的 RELATIVE_DATE_RE） ─────────────────────────
@@ -193,6 +194,12 @@ export function validateSite(site) {
       if (item.award?.date && item.openingAt && item.award.date < item.openingAt) push(item.__file, `award.date ${item.award.date} 早於開標日 ${item.openingAt}`);
     }
   }
+
+  // 2a'. 第六十輪（Issue #127）：節慶主題——只准覆寫白名單內的裝飾 token、背景色對文字對比 ≥ 4.5:1、裝飾 SVG ≤ 50 KB 且不含腳本／動畫、
+  //      已發布主題的生效區間不得重疊（同一時間只能有一個主題；重疊時不知道該套哪個，與其猜不如擋下）。規則在 scripts/lib/theme.mjs。
+  const themes = site.collections.themes ?? [];
+  for (const th of themes) for (const msg of themeProblems(th)) push(th.__file, `[節慶主題] ${msg}`);
+  for (const [a, b] of overlappingThemes(themes)) push(b.__file, `[節慶主題] 生效區間與 ${a.id}（${a.publishAt}～${a.unpublishAt}）重疊：同一時間只能有一個主題，請調整 publishAt／unpublishAt`);
 
   // 2b. 來源語言（ARCHITECTURE 14.2）：languages[sourceLang] 為 source、只有來源語言可標 source；
   //     sourceLang≠zh-TW ⇒ i18n['zh-TW'] 必須存在（含 title、summary）且 languages['zh-TW'] 為 reviewed／machine（中文官網不能沒有中文）。
