@@ -27,9 +27,12 @@ test('#124 .github/rulesets/main.json：禁止直接 push／force push／刪除�
   const cp = read('.github/workflows/content-pr.yml');
   assert.match(cp, /^jobs:\n  test:\n/m, 'content-pr.yml 的第一個 job 叫 test');
   assert.ok(!checks.includes('lane'));
-  // GitHub Actions app（id 15368）可繞過：pages.yml 的排程會把官方資料快照直接 push 回 main
-  assert.deepEqual(rs.bypass_actors, [{ actor_id: 15368, actor_type: 'Integration', bypass_mode: 'always' }]);
-  assert.ok(read('.github/workflows/pages.yml').includes('git push origin HEAD:main'));
+  // 繞過名單留空：匯入時帶 GitHub Actions app（Integration 15368）會被拒「invalid actor」（2026-10-25 實測），要匯入後在介面加。
+  // 因此 pages.yml 回寫快照的 push 被規則集擋下時不能讓建置失敗（只警告，快照下次再回寫）。
+  assert.deepEqual(rs.bypass_actors, []);
+  const pages = read('.github/workflows/pages.yml');
+  assert.ok(pages.includes('git push origin HEAD:main'));
+  assert.match(pages, /if git push origin HEAD:main; then[\s\S]*?else[\s\S]*?::warning::[\s\S]*?規則集/, 'pages.yml：快照 push 被擋只警告不失敗');
   // 文件有匯入步驟
   const deploy = read('docs/deploy.md');
   assert.ok(deploy.includes('.github/rulesets/main.json') && deploy.includes('Import a ruleset'));

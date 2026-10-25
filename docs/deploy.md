@@ -1926,7 +1926,7 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 | 禁止刪除分支、禁止 force push | `deletion`、`non_fast_forward` | 歷史是稽核紀錄，不可改寫 |
 | 必須經 PR 合併 | `pull_request`，`required_approving_review_count: 0` | 直接 push 不經車道、不經檢查。核准人數**不用原生的**：快車道與緊急發布是 0 位、一般車道 1 位，由 `lane` job 數核准（§2「分支保護與自動合併互相牴觸」） |
 | 必要狀態檢查 | `test` | **不能用 `lane`**：`lane` job 自己呼叫 `gh pr merge` 時還在執行中，要求它成功就會把自己擋住。`test` 在 `lane` 之前完成，而且檢查沒過時它最後一步會失敗（§2.2） |
-| 繞過名單 | GitHub Actions app（`actor_id` 15368，`always`） | `pages.yml` 的 02 UTC 排程把官方資料快照直接 push 回 `main`。不想給繞過權，就把那一步改成開 PR＋自動合併（多幾分鐘） |
+| 繞過名單 | 匯入檔**留空** | 匯入時帶 GitHub Actions app（`Integration` 15368）會被拒「The ruleset you are importing contains an invalid actor」（2026-10-25 實測）。匯入後若要讓 `pages.yml` 的 02 UTC 排程繼續把官方資料快照直接 push 回 `main`，到規則集的 **Bypass list** 手動加 GitHub Actions（介面有列才加得了）。沒加也不會壞：那一步 push 被拒只會警告，建置與部署照常，快照留到下次（或改成開 PR 回寫） |
 
 匯入：Settings → Rules → Rulesets → New ruleset 旁的「⋯」→ **Import a ruleset** → 選 `.github/rulesets/main.json` → Create。匯入後先用 `gh api repos/<owner>/<repo>/rulesets` 確認數量不是 0，再開一個純內容 PR 看自動合併是否仍成功。
 

@@ -142,7 +142,13 @@ jobs:
           if git diff --cached --quiet; then echo "快照無變更"; exit 0; fi
           git commit -m "data: 官方資料快照更新（$(date -u +%F)）"
           git pull --rebase origin main
-          git push origin HEAD:main
+          # 第六十輪（Issue #124，docs/deploy.md §29.1）：main 的規則集若未把 GitHub Actions 放進繞過名單，這個直接 push 會被拒；
+          # 只警告、不讓建置失敗（這次建置仍用重抓到的資料；快照下次再回寫，或由維護者在規則集加繞過）。
+          if git push origin HEAD:main; then
+            echo "快照已回寫 main"
+          else
+            echo "::warning::快照回寫 main 被拒（可能是規則集禁止直接 push）。建置照常進行；請在規則集的繞過名單加 GitHub Actions，或改成開 PR 回寫（docs/deploy.md §29.1）"
+          fi
       # 第三十八輪（deploy.md 2.1）：只放「還開著」的 PR 的預覽。previews 分支上已合併／關閉的 pr-N/ 在這裡就略過，
       # 不必等 preview-cleanup.yml 刪掉分支上的目錄再部署一次；人工合併時 push 觸發的這一次部署就是最終版，
       # 自動合併（GITHUB_TOKEN，不觸發 closed 事件）的預覽也會在合併後的第一次部署就消失，不用等每日排程。
