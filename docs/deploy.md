@@ -155,8 +155,8 @@ PR 關閉 ─▶ preview-cleanup.yml：刪 previews/pr-N/ →（只有沒合併�
 - **artifact 一律當不可信資料**。`lane` job 的「Validate results」先檢查：結果檔存在且是合法 JSON；每個步驟 outcome 只接受 `success|failure|skipped|cancelled`，其他值（含夾帶換行）一律變 `invalid`（`invalid` 不等於 `success`，所以擋合併）；車道、標籤、`autoMerge`、`requiredApprovals` 要符合固定格式；`lane.json` 的檔案清單必須涵蓋 PR 實際改到的每個檔（不能少報程式變更來走快車道；第五十六輪起清單改用檔案 API 取，含改名前的路徑）。第五十六輪起，「純內容 PR」與合併閘門 `GATE` 也在這一步由 lane job 自己判定，不採信 artifact（§28.3）。通過的值才寫進 `GITHUB_ENV`，所以 artifact 不可能夾帶額外的環境變數。驗證不過 ⇒ 留言「無法判定」、不合併、job 失敗。
 - **PR 留言改用 `jq` 產生**（以前是 `node --input-type=module -e`）：`jq` 程式寫在 workflow 裡，不來自 artifact，也不是 repo 的檔案。Node 只能執行 repo 內容，而 `lane` job 沒有 checkout，要用就得 checkout，等於把 PR（或 main）的程式放進有寫入權的 job；`jq`／`bash` 是 runner 內建，沒有這個問題。若將來真的需要 Node（例如更複雜的留言），只能 checkout **main**（`ref: main`）而不是 PR，並且在這裡說明理由；測試 `tests/round40-ci-isolation.test.mjs` 目前會擋掉 `lane` job 裡任何 `node`／`npm`／`checkout`，要放寬得同時改測試。
 - 預覽 dist 是 PR 建置出來的檔案，`lane` job 只複製進 `previews` 分支、不執行。這與拆分前相同：預覽內容本來就公開在 GitHub Pages，審核人看的就是 PR 作者能控制的輸出。
-- `test` job 失敗（檢查沒過）時，`lane` job 仍然執行（`if: ${{ !cancelled() }}`），這樣 PR 留言和 `lane:*` 標籤照常更新；`test` 與 `lane` 最後都有「Fail when checks failed」步驟，所以 Actions 上兩個 job 都紅，`main` 的必要狀態檢查名稱仍是 `lane`（沒改名）。
-- 殘留風險：`lane.json` 是 `test` job 用 PR 的 `scripts/lane.mjs` 與 `lanes.json` 算的，惡意 PR 可以在 `test` job 裡偽造「快車道、自動合併」。上面的檔案清單比對只擋「少報檔案」，擋不了「改規則本身」。真正的防線是分支保護（必要狀態檢查＋`CODEOWNERS` 審核）與 `allowedAuthors`；下一步可行的強化是讓 `test` job 另外取 `origin/main` 的 `scripts/lane.mjs`＋`lanes.json` 對 PR 的檔案清單重算一次，兩者不一致就降為一般車道（需要人審）。目前沒做，因為會讓「改車道規則的 PR」永遠被降級，需要先決定這種 PR 要走哪條路。
+- `test` job 失敗（檢查沒過）時，`lane` job 仍然執行（`if: ${{ !cancelled() }}`），這樣 PR 留言和 `lane:*` 標籤照常更新；`test` 與 `lane` 最後都有「Fail when checks failed」步驟，所以 Actions 上兩個 job 都紅。`main` 規則集的必要狀態檢查請用 `test`（第六十輪，§29.1：`lane` job 自己呼叫 `gh pr merge` 時還在執行中，要求 `lane` 成功會把自己擋住）。
+- ~~殘留風險：`lane.json` 是 `test` job 用 PR 的 `scripts/lane.mjs` 與 `lanes.json` 算的，惡意 PR 可以在 `test` job 裡偽造「快車道、自動合併」。~~ **第六十輪已補（Issue #125，§29.2）**：`lane` job 依 API 檔案清單核對——不是純內容、或改到 `content/governance/`、`content/master/` 的 PR，一律覆寫為一般車道、不自動合併、至少 1 位核准；artifact 說什麼都沒用。「改車道規則的 PR 走哪條路」的答案是：一般車道，由 OASIS 審。
 
 **若未來要接受 fork 的 PR**：
 
@@ -265,7 +265,7 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 
 ## 9. 權限與安全
 
-- 儲存庫分支保護：`main` 要求 PR、CI 綠燈才可合併；**核准人數由發布車道決定**（一般車道 1 位，快車道與緊急發布 0 位，見上方「PR 車道」注意事項，不要設原生的「需 N 位核准」）；`content/governance/` 目錄建議設 CODEOWNERS 為 OASIS，`content/situation/` 為疫情中心，避免跨單位誤改。
+- 儲存庫分支保護：`main` 要求 PR、CI 綠燈才可合併；**核准人數由發布車道決定**（一般車道 1 位，快車道與緊急發布 0 位，見上方「PR 車道」注意事項，不要設原生的「需 N 位核准」）；`content/governance/` 目錄建議設 CODEOWNERS 為 OASIS，`content/situation/` 為疫情中心，避免跨單位誤改。**原型目前沒設**（2026-10-25 查：規則集 0 個），可匯入的規則集在 `.github/rulesets/main.json`，步驟與取捨見 §29.1（第六十輪，Issue #124）。
 - 緊急暫停 AI 的 PR 可由資訊室與 OASIS 值班人直接合併，事後補審。
 - 前端不放任何伺服器金鑰。BYOK 只是同事示範功能（第二十三輪）：金鑰欄位只在有後台工作階段的瀏覽器出現，金鑰存 `sessionStorage`、關閉分頁即清除；正式站不提供民眾端 BYOK，生成式答案若要上線走機關後端代理。
 - 快車道與緊急發布除了看內容型別，還看 PR 作者是否在 `lanes.json` 的 `allowedAuthors`（第二十三輪）；不在名單自動降為一般車道。名單變更本身走一般車道。
@@ -1887,3 +1887,65 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 - **內文造成的無障礙問題在純內容 PR 上不掃。** 例如內文標題跳級；`build --check` 擋得到替代文字，擋不到標題層級。這類問題會在下一個程式 PR 的 axe 被看到。
 - **本機驗證（2026-10-15）**：以 CI 的預覽參數建置（`BASE_PATH=/new_cdc_prototype/preview/pr-999`、`PREVIEW_SCHEDULED=1`、`LINK_CHECK=warn`，本機 4 核 63 秒），再以相同 `BASE_PATH`、`DIST_DIR` 跑 `npm run a11y`：27 頁 × 3 種視窗共 81 次，阻擋 0、警告 0（約 226 秒），沒有任何頁被略過。故意把 `BASE_PATH` 設成空字串去掃同一份 dist ⇒ 檢測失敗（答案頁等不到內容逾時），不會假通過。電子報頁探測的 `/api/health` 在靜態主機本來就是 404（頁面退回模擬模式），不列入「同站資源 404」。`npm run test:content` 本機 4 核約 22 秒（21 個檔、248 個測試）。
 - **本機沒辦法跑 Actions。** `if:` 運算式、`actions/cache` 的實際命中、`gh api --paginate` 的分頁都只能在第一個 PR 上確認。第一個純內容 PR 與第一個程式 PR 請各看一次 Actions 紀錄與 PR 留言（純內容 PR 應該看到「⏭ 略過（純內容變更）」與內容測試 ✅；程式 PR 的 `Restore Chromium cache` 在 `pages.yml` 跑過一次之後應該顯示 cache hit）。
+
+## 29. 第六十輪（2026-10-25）：發布鏈的三道補強——規則集、車道核對、純內容合併不重跑程式測試
+
+外部審查（grokbot 第四批，Issue #124、#125、#126）指出三件事：`main` 沒有分支保護，有寫入權的帳號直接 push 約 4 分鐘就上線；快車道的判定用的是 PR 自己的 `scripts/lane.mjs`＋`lanes.json`（§2.2 原本就承認的殘留風險）；純內容的合併在 `pages.yml` 又跑了一次 2 分 18 秒的完整程式測試。三件都成立，本節記做法與取捨。
+
+### 29.1 `main` 規則集：只能經 PR 合併、合併前必過 `test`（Issue #124）
+
+規則集（ruleset）是 GitHub 的設定，不在 repo 裡生效；repo 放一份可匯入的正本 `.github/rulesets/main.json`，讓「正式環境要設什麼」可版本控制、可審核。內容：
+
+| 規則 | 設定 | 為什麼 |
+| --- | --- | --- |
+| 禁止刪除分支、禁止 force push | `deletion`、`non_fast_forward` | 歷史是稽核紀錄，不可改寫 |
+| 必須經 PR 合併 | `pull_request`，`required_approving_review_count: 0` | 直接 push 不經車道、不經檢查。核准人數**不用原生的**：快車道與緊急發布是 0 位、一般車道 1 位，由 `lane` job 數核准（§2「分支保護與自動合併互相牴觸」） |
+| 必要狀態檢查 | `test` | **不能用 `lane`**：`lane` job 自己呼叫 `gh pr merge` 時還在執行中，要求它成功就會把自己擋住。`test` 在 `lane` 之前完成，而且檢查沒過時它最後一步會失敗（§2.2） |
+| 繞過名單 | GitHub Actions app（`actor_id` 15368，`always`） | `pages.yml` 的 02 UTC 排程把官方資料快照直接 push 回 `main`。不想給繞過權，就把那一步改成開 PR＋自動合併（多幾分鐘） |
+
+匯入：Settings → Rules → Rulesets → New ruleset 旁的「⋯」→ **Import a ruleset** → 選 `.github/rulesets/main.json` → Create。匯入後先用 `gh api repos/<owner>/<repo>/rulesets` 確認數量不是 0，再開一個純內容 PR 看自動合併是否仍成功。
+
+**原型期沒做、留給正式環境的**：
+
+- **要求簽章 commit**：這個原型多數提交來自 Claude 的雲端工作階段，無法簽章（`git log --format=%G?` 的 `N`）；GitHub 網頁合併的提交由 GitHub 簽（`E`，本機沒有金鑰所以驗不了）。正式環境由同事與閘道服務帳號提交時再開，閘道的服務帳號要配 SSH 簽章金鑰。
+- **要求 2FA**：GitHub 自 2023 年起對所有有貢獻的帳號強制 2FA，不必另設；機關 GitLab／GHES 對應的是 Entra ID／AD 的 MFA（§14.2）。
+- **CODEOWNERS 審核**：`require_code_owner_review` 先關，因為原型的 CODEOWNERS 全是 `@ancientsky`（示範）；換成單位 team 後再開，而且只對一般車道有意義（快車道本來就不等人審）。
+
+### 29.2 車道由 `lane` job 核對，不採信 PR 自己算的（Issue #125）
+
+**問題**：`lane.json` 是 `test` job 用 PR 分支上的 `scripts/lane.mjs`、`scripts/lib/lanes.mjs`、`content/governance/lanes.json` 算的。惡意 PR 改一行規則（例如把 `scripts/` 判成快車道），artifact 就寫著「快車道、自動合併」，`lane` job 照單合併。§2.2 的檔案清單比對只擋「少報檔案」。
+
+**做法**：`lane` job 的「Validate results」在驗完格式之後、寫進 `GITHUB_ENV` 之前，用它自己從 API 取的檔案清單（`real-files.txt`，含改名前路徑）再判一次：
+
+- 不是純內容（§28.1 的定義：任何一個檔不在 `content/`、`data/snapshots/`），**或**改到 `content/governance/`（車道規則、白名單、評估集都在這裡）、`content/master/`（主檔）
+- ⇒ `LANE=standard`、`LABEL=lane:standard`、`AUTO=false`、`NEED` 至少 1，並記 `DOWNGRADED=true`；artifact 原本要求更多核准（例如 3 位）就保留，不放寬。
+
+「Decide merge」與 PR 留言只看這些環境變數，不再直接讀 `lane.json` 的 `autoMerge`／`requiredApprovals`／`label`；留言多一列「車道核對（API 檔案清單）」，被覆寫時寫出原因與原本的車道。
+
+**為什麼不是「用 main 的 lane.mjs 重算」**：那要在 `test` job 另外 checkout `origin/main` 再跑一次 Node，或在 `lane` job 執行程式——後者違反 §2.2「有寫入權的 job 不執行 repo 內任何程式」。現在的規則只用 `grep`，判的是「這個 PR 碰得到規則嗎」：純內容 PR 動不到 `lane.mjs`、`lanes.mjs`、`.github/`，所以它的車道可以信；碰得到的一律要人審。這也回答了 §2.2 留下的問題：**改車道規則的 PR 走一般車道，由 OASIS（`codeReviewers`）審**，和 `lanes.mjs` 本來對 `content/governance/` 的判定一致，只是現在由不執行 PR 程式的 job 強制。
+
+測試：`tests/round40-ci-isolation.test.mjs` 的 `#125` 兩題（實跑驗證步驟與留言的 jq）。
+
+### 29.3 純內容合併：`pages.yml` 只跑內容測試就部署，完整測試平行跑（Issue #126）
+
+**數字（2026-10-25 12:13 台北那次部署）**：push 到上線 4 分 2 秒，其中 Tests 2 分 18 秒、Build 45 秒、lint 11 秒。純內容的合併不會改程式，這 2 分半在 PR 階段（程式 PR）早跑過，或與內容無關。
+
+**做法**（`pages.yml`）：
+
+| job | 做什麼 | 什麼時候 |
+| --- | --- | --- |
+| `scope` | 不 checkout，用 compare API 比對 `github.event.before…sha` 的檔案清單，判定是否純內容（規則同 §28.1，改名兩個路徑都算）。排程、手動執行、新分支（before 全 0）、檔數 0 或達 API 上限 300、API 失敗 ⇒ 一律「程式變更」 | 每次 |
+| `build` | 純內容 ⇒ 跳過 lint／格式／型別，測試改跑 `npm run test:content`（本機 4 核 24 秒，與 PR 階段同一套），然後建置、部署。程式變更 ⇒ 照舊全跑 | 每次 |
+| `verify` | lint／格式／型別／完整 `npm test`，`contents: read`，不被 `deploy` 依賴 | 只在純內容時，與 `build` 平行 |
+
+**取捨（請維護者知道）**：第五十六輪說純內容 PR 略過的程式測試「合併後 `main` 上全跑，失敗就不部署」（§28.7）。現在改成**先部署、同一次執行裡平行驗證**：`verify` 失敗時工作流程紅、GitHub 通知維護者，但內容已上線。接受的理由：
+
+1. 真正擋壞內容的是 `build` 內的閘門——schema、跨檔參照、治理規則、評估集、連結檢查、全文索引召回——一個都沒少。
+2. 完整測試裡會被內容弄紅的，是斷言特定內容的測試（§28.7 第一點）；那是測試該搬進 `test:content` 的訊號，不是內容壞了。
+3. 緊急發布的 10 分鐘預算（`lanes.json` 的 `slaMinutes`）原本一半花在重複驗證。
+
+`verify` 紅了怎麼辦：看失敗的測試檔。若它其實在驗內容，把它加進 `test:content`（§28.4）並修內容；若是真的程式問題，那和這次合併無關，開程式 PR 修。
+
+**為什麼用 compare API 而不是 `git diff HEAD^`**：`actions/checkout` 預設 `fetch-depth: 1` 沒有 `HEAD^`；多個 commit 一次 push 時 `HEAD^` 也不是 push 前的 `main`。compare API 直接比 push 前後兩個 SHA，不用 checkout、不執行程式，和 `content-pr.yml` 的 `lane` job 同一個原則。
+
+**量測**：`lane-sla.yml` 只量 PR 開啟到合併；「合併到上線」請在 Actions 看 `pages.yml` 的執行時間（純內容應為 Build 45 秒＋部署，不再有 2 分 18 秒的 Tests）。第一次純內容合併後請把實際數字補進 [ci-cd-overview.md](ci-cd-overview.md) §3。

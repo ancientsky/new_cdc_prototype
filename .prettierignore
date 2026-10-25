@@ -108,3 +108,5 @@ eval/**/*.mjs
 !src/templates/public/_denguemap.mjs
 !tests/round57-denguemap.test.mjs
 !tests/pdf-split-perf.test.mjs
+# 第六十輪：規則集匯入檔、grokbot 第四批（docs/deploy.md §29）
+!tests/round60-ruleset.test.mjs
