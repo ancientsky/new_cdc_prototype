@@ -1937,6 +1937,7 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 3. Settings → Secrets and variables → Actions → New repository secret：名稱 `SNAPSHOT_DEPLOY_KEY`，內容貼 `snapshot_key`（私鑰全文）。貼完把本機兩個檔刪掉。
 4. Settings → Rules → Rulesets → 這個規則集 → **Bypass list** → Add bypass → **Deploy keys**。
 5. 驗證：Actions → Build and deploy to GitHub Pages → Run workflow（`refresh` 保持 true），看「Commit refreshed snapshots」那一步印出「快照已以部署金鑰回寫 main」。
+   回寫成功後，那個快照 commit 會再觸發一次 push 建置，而手動這一次會被它取消（`concurrency: pages`，後到的取消先到的）：Actions 頁上手動那次顯示「cancelled」是正常的，網站由後一次（標題「data: 官方資料快照更新」）部署。2026-10-25 第一次成功（commit 9735410，run #331 → #332）就是這樣。
    只有手動 Run workflow 或 02 UTC 排程會走到這一步；合併 PR 觸發的建置與 `content-pr.yml` 代發的建置（`refresh=false`）不重抓資料，這一步顯示 skipped、不印任何字，不是沒設好。
 
 **2026-10-25 第一次驗證就紅（run #328）的教訓**：金鑰本身沒問題，倒在前一行 `git pull --rebase`：「cannot pull with rebase: You have unstaged changes」。原因是 `npm run fetch` 除了 `data/snapshots/` 也會改 `content/datasets/`（登革熱地圖摘要與 CKAN 目錄的 `lastUpdated`／`provenance`，第五十七輪加的），而提交那一步只 `git add data/snapshots`，剩下的變更讓 rebase 拒絕執行，整個 build job 紅掉、當次也沒部署。修法：`git add -A data/snapshots content/datasets` 一起提交（本來就是這次抓取的結果）、`git pull --rebase --autostash`（其他未預期變更先暫存）、rebase 失敗只警告不讓建置失敗。為什麼之前沒發現：規則集匯入前這一步也會失敗，但沒人看 02 UTC 排程的紀錄；回寫從來沒成功過（`git log --grep=官方資料快照更新` 是空的）。所以**任何「排程才會跑」的步驟都要在合併當天手動 Run workflow 跑一次**，不要等排程。
