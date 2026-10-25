@@ -281,7 +281,7 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 - **升 action 的 PR 會紅燈是預期的**：`tests/lanes.test.mjs` 寫死 `checkout`、`setup-node`、`deploy-pages`、`upload-artifact`、`download-artifact` 的 SHA（確保沒人偷偷換回可移動的 tag），`tests/round40-ci-isolation.test.mjs` 另外寫死 lane job 唯一允許的 `download-artifact` SHA（沒有版本註解，grep 版本號找不到它，要用 SHA 搜）。升版時先 `grep -rn 舊SHA tests/ docs/` 找出所有釘死處，再換成 PR 裡的新值；SHA 格式另由 `tests/round23-security.test.mjs` 檢查。
 - **升 major 版要看什麼**：讀 release notes 的 breaking changes，跑 `npm test`、`node scripts/build.mjs --check`，再把升版前後的 `dist/` 逐檔比對（`diff -rq`），只剩時間戳差異才算安全。2026-10-10 升 `marked` 15→18 的差異只有 `&`→`&amp;` 與空白行。
 - **2026-10-12 `upload-artifact` v4.6.2→v7.0.2、`download-artifact` v4.3.0→v8.0.2（PR #86）**：紅燈正是上面那條釘死清單，PR 的 lint／格式／型別／治理閘門／無障礙／預覽建置全綠，只有 `npm test` 的 `content-pr.yml` 測試不過。release notes 裡會影響我們的只有三點，都不用改 workflow：(1) 兩個 action 改用 Node 24 執行，GitHub 代管 runner 已支援，自架 runner 要 2.327.1 以上；(2) `download-artifact` v8 起 SHA256 比對不符預設直接失敗（之前只警告），對 lane job 反而更安全，因為它下載的 `lane.json` 就是合併決策的依據；(3) v7／v8 新增「不壓縮直接上傳單檔」選項（`archive: false`），我們沒用，維持預設打包。驗證方式：`git ls-remote https://github.com/actions/upload-artifact refs/tags/v7.0.2` 確認 SHA 與 PR 一致，再把 `tests/lanes.test.mjs` 的兩行換新。
-- **已知的行為變化**：`actions/upload-pages-artifact` v4 起不打包點開頭的檔案與目錄（`.nojekyll`、`.well-known/`）。目前沒影響；若要上 `/.well-known/security.txt`，要改由正式站伺服器提供，或另找打包方式。
+- **已知的行為變化**：`actions/upload-pages-artifact` v4 起不打包點開頭的檔案與目錄（`.nojekyll`、`.well-known/`）。目前沒影響；`/.well-known/security.txt` 因此改為建置時同時輸出到根目錄 `/security.txt`（見 10.4）。
 - **前端 `src/public/vendor/marked.min.js` 不跟著升**：它是後台貼上轉換用的獨立副本，Dependabot 看不到。要升時手動換檔並測後台「貼上 Word／網頁」轉換。
 
 ## 10. 安全標頭基準（第二十三輪）
@@ -323,6 +323,30 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 ### 10.3 GitHub Pages 的限制
 
 GitHub Pages 不能自訂回應標頭，所以原型站只有 `<meta name="robots">` 與 `robots.txt`，沒有 CSP／HSTS；這也是原型模式用 meta 擋索引、不用 `X-Robots-Tag` 的原因。`dist/headers/` 要到機關自己的主機或 CDN 才生效。
+
+### 10.4 security.txt、DNSSEC、CAA 與相似網域監控（第六十輪，Issue #128）
+
+**為什麼要做：** 資安研究者或民眾發現漏洞、仿冒網站時，需要一個固定、機器可讀的地方知道「該通報給誰」。[RFC 9116](https://www.rfc-editor.org/rfc/rfc9116) 的 `security.txt` 就是這個約定；防詐騙上，網域本身的防護（DNSSEC、CAA）與仿冒網域監控也同樣重要。公民面的說明在 `/about/official-site/`（辨識官方網站與通報仿冒網站）。
+
+**建置輸出什麼、在哪裡：** `scripts/lib/emit-seo.mjs` 的 `buildSecurityTxt()` 在每次建置寫出兩份**內容相同**的純文字檔（UTF-8、LF）：
+
+| 路徑 | 說明 |
+| --- | --- |
+| `dist/.well-known/security.txt` | RFC 9116 的標準位置 |
+| `dist/security.txt` | RFC 允許的根目錄備援位置 |
+
+**為什麼兩份：** GitHub Pages 用的 `upload-pages-artifact` v4 起不打包點開頭的目錄（見 9.1），`.well-known/` 會被丟掉，原型站上只有根目錄那份可用。正式站（自有主機或 CDN）兩份都會被提供，檢測工具讀標準位置。
+
+欄位：`Contact`（見下）、`Expires`（建置時間＋90 天，ISO 8601、結尾 Z；站台每 2 小時重建，所以永遠不會過期，若部署停擺超過 90 天才會失效，這也是想要的警示）、`Policy`（`/policy/security/` 的絕對網址）、`Preferred-Languages: zh-TW, en`、`Canonical`（標準位置網址）。**不簽章**：PGP 簽章在 RFC 中是選用；簽章要有人管金鑰與到期，原型階段不值得，正式站若資安規範要求再加。
+
+**上線前資訊室要做的事：**
+
+1. **填 `security.contact`**（`site.config.mjs`，`mailto:資安通報信箱` 或 https 網址）。目前是 `null`，security.txt 的 `Contact` 退回聯絡頁 `/contact/` 的絕對網址，這只是占位；`/about/official-site/` 內文的「（待資訊室填入）」也要同步改成實際信箱。
+2. **在網域啟用 DNSSEC**：防止 DNS 回應被竄改而把民眾導到仿冒主機（向網域註冊管理單位或 DNS 代管方啟用並確認 DS 紀錄）。
+3. **發布 CAA 紀錄**：只允許機關實際使用的憑證機構簽發憑證，降低有人為本站網域偽造憑證的風險。
+4. **監控相似網域**：定期查 `cdc.gov.tw` 的錯字網域（typosquat）、同形字與 punycode（`xn--`）網域，可用憑證透明度紀錄（CT log）的訂閱或網域監控服務；並事先講好**下架流程**（向註冊商、主機商、`165` 與 TWCERT/CC 通報的窗口與格式）。
+5. **`Expires` 保持新鮮**：重建就會更新，不需手動改；但若正式站的建置排程停了，要有告警。
+6. **驗證：** `curl -s https://<網域>/.well-known/security.txt` 與 `curl -s https://<網域>/security.txt`，確認兩份都回 200、`Content-Type: text/plain`，且 `Contact`、`Expires` 為預期值。
 
 
 ## 11. 電子報寄信服務（第二十八輪）

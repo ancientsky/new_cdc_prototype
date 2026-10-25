@@ -216,6 +216,7 @@ const ROWS = {
   'footer.api': ['開發者 API', 'Developer API', '開発者API', 'Developer API', 'API cho nhà phát triển', 'API pengembang', 'API สำหรับนักพัฒนา'],
   'footer.a11y': ['無障礙 AA', 'Accessibility AA', 'アクセシビリティ AA', 'Accessibility AA', 'Hỗ trợ tiếp cận AA', 'Aksesibilitas AA', 'การเข้าถึง AA'],
   'footer.transparency': ['AI 透明報告', 'AI transparency report', 'AI透明性レポート', 'Ulat ng transparency ng AI', 'Báo cáo minh bạch AI', 'Laporan transparansi AI', 'รายงานความโปร่งใส AI'],
+  'footer.officialSite': ['辨識官方網站與通報仿冒', 'Spot the official site and report fakes', '公式サイトの見分け方と偽サイトの通報', 'Kilalanin ang opisyal na site at mag-ulat ng peke', 'Nhận biết trang chính thức và báo cáo giả mạo', 'Kenali situs resmi dan laporkan situs palsu', 'วิธีสังเกตเว็บไซต์ทางการและแจ้งเว็บปลอม'],
   'footer.leadership': ['首長簡介', 'Leadership', '幹部紹介', 'Pamunuan', 'Lãnh đạo', 'Pimpinan', 'ผู้บริหาร'],
   // 第四十四輪：首長簡介（只有中英文頁）
   'profile.since': ['就任', 'In office since'], 'profile.others': ['其他首長', 'Other leaders'], 'profile.none': ['尚未上架首長簡介。', 'No leadership profiles published yet.'],
