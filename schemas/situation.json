@@ -12,6 +12,11 @@
     "source": { "type": "string" },
     "nextReviewAt": { "type": "string", "format": "date" },
     "note": { "type": "string" },
+    "alertLevel": {
+      "enum": ["normal", "elevated", "emergency"],
+      "default": "normal",
+      "description": "第六十輪（Issue #127）：全站警戒等級，由疫情中心人工發布（不由程式依各疾病狀態推論，architecture-decisions §9）。沒填＝normal。emergency ⇒ 建置不套用任何節慶主題（scripts/lib/theme.mjs themeState），其他行為不變；elevated 目前只是記錄，不改畫面"
+    },
     "items": {
       "type": "array",
       "items": {

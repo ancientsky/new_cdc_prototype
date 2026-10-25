@@ -57,7 +57,9 @@ html[data-view="pro"] .c-public-only{display:none!important}
 .hotline{font-weight:700;color:var(--ink)!important}
 
 /* header */
-.site-header{border-bottom:1px solid var(--line);background:#fff;position:relative}
+.site-header{border-bottom:1px solid var(--line);background:linear-gradient(90deg,var(--theme-accent),var(--theme-accent-2)) top/100% 4px no-repeat var(--theme-header-bg);position:relative}
+/* 第六十輪：節慶主題的裝飾圖（CSS 背景圖：不進無障礙樹、不改連結名稱；只在 <html data-theme> 時出現，窄螢幕與列印不顯示） */
+html[data-theme] .brand::after{content:"";flex:none;width:36px;height:36px;background:var(--theme-decoration) center/contain no-repeat}
 .site-header__in{display:flex;align-items:center;justify-content:space-between;min-height:76px;gap:var(--sp-4);flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:var(--sp-3);text-decoration:none;color:var(--ink)}
 .brand__mark{color:var(--green-700);display:inline-flex;flex:none}
@@ -172,9 +174,12 @@ html[data-view="pro"] .c-public-only{display:none!important}
   .c-tabs__panel[hidden]{display:block!important}
   .c-tabs__list{display:none}
   .c-tabs__print{display:block!important;position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto;white-space:normal}
+  html[data-theme] .brand::after{display:none}
+  .site-header{background:#fff}
 }
 
 @media (max-width:480px){ .site-footer__in{grid-template-columns:1fr} }
+@media (max-width:380px){ html[data-theme] .brand::after{display:none} }
 
 /* 第四十八輪（#104 走查）：<main tabindex="-1"> 讓「跳到主要內容」把焦點真正移進 main（iOS VoiceOver 需要），程式聚焦不畫外框 */
 #main:focus{outline:none}

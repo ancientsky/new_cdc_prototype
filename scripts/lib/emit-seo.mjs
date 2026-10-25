@@ -84,9 +84,12 @@ function groupOf(path) {
   return m ? m[1] : 'pages';
 }
 
+const NO_PAGE_TYPES = new Set(['banner', 'theme']);
+
 function normalizePages(site, pages) {
   // 用完整 site 對照：排程中內容 gov.noindex=true ⇒ 即使頁面清單裡有也排除
-  const byPath = new Map((site.fullSite ?? site).all.map((i) => [pathOf(i), i]));
+  // 第六十輪：沒有自己頁面的型別（Banner、節慶主題）pathOf 是 '/'，不能拿來對照——否則排程中的主題（noindex）會把首頁踢出 sitemap
+  const byPath = new Map((site.fullSite ?? site).all.filter((i) => !NO_PAGE_TYPES.has(i.type)).map((i) => [pathOf(i), i]));
   const latest = maxDate(site.all.map((i) => i.reviewedAt)) ?? site.today;
   return pages
     .filter((p) => !p.noindex && !p.file && p.path.endsWith('/') && !EXCLUDE.some((re) => re.test(p.path)))

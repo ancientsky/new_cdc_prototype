@@ -231,6 +231,7 @@ export const DIR_TYPE = {
   diseases: 'disease', faq: 'faq', news: 'news', documents: 'document', clarifications: 'clarification', vaccines: 'vaccine', datasets: 'dataset',
   banners: 'banner', pages: 'page', media: 'media', topics: 'topic', services: 'service', publications: 'publication', labtests: 'labtest',
   research: 'research', jobs: 'job', tenders: 'tender', migration: 'migration', situation: 'situation', articles: 'article',
+  themes: 'theme', // 第六十輪（Issue #127）：節慶主題，公關室快車道
 };
 
 const readJSONSafe = (p) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return null; } };

@@ -8,6 +8,7 @@ import { pausedBanner, translationBadge, unitName } from './public/_partials.mjs
 import { pagefindFor, pagefindMarks } from './public/_pagefind.mjs';
 import { intlTopic } from './public/_international.mjs';
 import { PANEL_OF, navPanelHtml } from './public/_nav-panels.mjs';
+import { themeSlug, themeCssPath } from '../../scripts/lib/theme.mjs';
 
 // 介面（UI 字串）本身的翻譯審核狀態；內容頁則看 item.languages[lang]
 const UI_TRANSLATION = { en: { status: 'reviewed', date: '2026-09-10' } };
@@ -91,6 +92,9 @@ export function layout(ctx, { styles = [], title, description, body, jsonLd = []
     try { ld.push(JL.orgJsonLd(ctx)); } catch { /* optional */ }
   }
   const forcePro = path.startsWith('/pro/');
+  // 第六十輪（Issue #127）：節慶主題。只有治理引擎判定「恰好一個生效、且疫情中心沒發布 emergency」時 site.theme.active 才有值；
+  // 這時 <html data-theme> 加上主題 slug、多連一支建置產生的小 CSS（只覆寫裝飾 token）。沒有主題 ⇒ 輸出與以前完全相同
+  const theme = site?.theme?.active ?? null;
   const wide = /\bpage-wide\b|\bpage-home\b/.test(bodyClass);
   const navItems = [
     ['/diseases/', 'nav.diseases'], ['/vaccines/', 'nav.vaccines'], ['/travel/', 'nav.travel'], ['/situation/', 'nav.situation'],
@@ -125,7 +129,7 @@ export function layout(ctx, { styles = [], title, description, body, jsonLd = []
     return html`<a href="${href}" data-lang-path="${L.path}" data-same="${same ? '1' : '0'}" hreflang="${L.code}" lang="${L.code}" ${L.code === lang ? raw('aria-current="true"') : ''}${only ? raw(` title="${esc(only)}"`) : ''}>${L.label}${only ? html`<span class="langs__na">${only}</span>` : ''}</a>`;
   });
   return html`<!doctype html>
-<html lang="${lang}" dir="${langDef?.dir ?? 'ltr'}" data-base="${config.basePath}" data-lang-path="${langDef?.path ?? ''}" data-view="${forcePro ? 'pro' : 'public'}"${forcePro ? raw(' data-force-view="pro"') : ''}>
+<html lang="${lang}" dir="${langDef?.dir ?? 'ltr'}" data-base="${config.basePath}" data-lang-path="${langDef?.path ?? ''}" data-view="${forcePro ? 'pro' : 'public'}"${forcePro ? raw(' data-force-view="pro"') : ''}${theme ? html` data-theme="${themeSlug(theme)}"` : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -143,6 +147,7 @@ ${config.isPrototype ? raw('<meta name="robots" content="noindex, nofollow">') :
 <link rel="stylesheet" href="${url('/assets/styles/base.css', { noLang: true })}">
 <link rel="stylesheet" href="${url('/assets/styles/components.css', { noLang: true })}">
 ${(styles ?? []).map((s) => html`<link rel="stylesheet" href="${url(s, { noLang: true })}">`)}
+${theme ? html`<link rel="stylesheet" href="${url(themeCssPath(theme), { noLang: true })}" data-theme-css>` : ''}
 ${ld.map((j) => raw(`<script type="application/ld+json">${jsonScript(j)}</script>`))}
 </head>
 <body class="${bodyClass}">

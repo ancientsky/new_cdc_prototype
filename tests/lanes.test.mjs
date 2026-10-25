@@ -47,7 +47,7 @@ test('lanes.json：形狀正確、三條車道、每個內容型別恰好一條�
   assert.deepEqual(standard.codeReviewers, ['unit.oasis']); // 第五十六輪：程式／文件變更由 OASIS 審
   assert.equal(emergency.codeReviewers, undefined); assert.equal(fast.codeReviewers, undefined);
   assert.equal(fast.postPublishReviewHours, 24); assert.equal(emergency.postPublishReviewHours, 24);
-  assert.deepEqual(fast.types, ['news', 'letter', 'clarification', 'job', 'tender', 'banner']);
+  assert.deepEqual(fast.types, ['news', 'letter', 'clarification', 'job', 'tender', 'banner', 'theme']);
   assert.equal(cfg.rules.translationsNeverBlock, true);
   assert.equal(cfg.rules.ciIsTheReviewer, true);
   assert.deepEqual(cfg.rules.machineTranslationAllowedFor, ['news', 'faq', 'topic', 'service']);
@@ -251,9 +251,17 @@ test('publishAt 時間判斷：只有日期 ⇒ 台灣 00:00；以注入的 now 
 });
 
 /** 合成站：排程中新聞、已到點新聞、緊急澄清（逾期未複核）、已複核、車道上線前的舊新聞、一般車道 Q&A */
+// 第六十輪：示範節慶主題（content/themes/，publishAt 2026-10-24、2027-01-25）在 NOW 時也是排程中；這裡只測合成內容，先拿掉
+function dropThemes(s) {
+  for (const t of s.collections.themes ?? []) s.byId.delete(t.id);
+  s.all = s.all.filter((i) => i.type !== 'theme');
+  s.collections.themes = [];
+}
+
 function scheduledSite() {
   return govern(TODAY, (s) => {
     s.now = NOW;
+    dropThemes(s);
     addItem(s, mk({ type: 'news', id: 'news.2026-10-05-embargo', title: '排程中的禁發新聞稿', publishedAt: '2026-10-05', reviewedAt: '2026-10-04', publishAt: '2026-10-05T09:00:00+08:00', diseases: ['disease.dengue'], tasks: ['situation'], summary: '禁發摘要禁發摘要' }));
     addItem(s, mk({ type: 'news', id: 'news.2026-10-04-released', title: '已到點的排程新聞稿', publishedAt: '2026-10-04', reviewedAt: '2026-10-04', publishAt: '2026-10-04T08:00:00+08:00' }));
     addItem(s, mk({ type: 'clarification', id: 'clarification.test-urgent', title: '緊急澄清', publishedAt: '2026-10-02', reviewedAt: '2026-10-02', reviewPeriodMonths: 12, urgent: true, postPublishReview: { status: 'pending' } }));
@@ -283,7 +291,7 @@ test('治理：gov.lane、gov.scheduled（publishAt > now）⇒ 排程中、noin
   const totalPublished = site.all.filter((i) => i.status === 'published').length;
   assert.equal(site.gov.totalPublished, totalPublished - 1);
   // 時間到了（重建）⇒ 自動上線
-  const later = govern(TODAY, (s) => { s.now = Date.parse('2026-10-05T01:00:00Z'); addItem(s, mk({ type: 'news', id: 'news.2026-10-05-embargo', publishedAt: '2026-10-05', publishAt: '2026-10-05T09:00:00+08:00' })); });
+  const later = govern(TODAY, (s) => { s.now = Date.parse('2026-10-05T01:00:00Z'); dropThemes(s); addItem(s, mk({ type: 'news', id: 'news.2026-10-05-embargo', publishedAt: '2026-10-05', publishAt: '2026-10-05T09:00:00+08:00' })); });
   assert.equal(later.byId.get('news.2026-10-05-embargo').gov.scheduled, false);
   assert.equal(later.byId.get('news.2026-10-05-embargo').gov.whitelist.effective, true);
 });
@@ -323,7 +331,7 @@ test('排程中不輸出：publicView、API（news／catalog／tasks／whitelist
   assert.equal(view.byId.has(E), false); assert.equal(view.byId.has(R), true);
   assert.ok(!view.all.includes(embargo)); assert.ok(!view.collections.news.includes(embargo));
   assert.equal(publicView(view), view, '冪等');
-  const plain = govern(TODAY, (s) => { s.now = NOW; });
+  const plain = govern(TODAY, (s) => { s.now = NOW; dropThemes(s); });
   assert.equal(publicView(plain), plain, '沒有排程中內容 ⇒ 原樣回傳');
 
   // API

@@ -15,6 +15,7 @@
   "include": [
     "scripts/lib/lanes.mjs",
     "scripts/lib/validate.mjs",
+    "scripts/lib/theme.mjs",
     "scripts/lib/gateway/*.mjs",
     "src/client/globals.d.ts",
     "src/client/answer/inline.js",

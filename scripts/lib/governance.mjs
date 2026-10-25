@@ -73,6 +73,7 @@ import { articlePath } from '../../src/client/bulletin-rules.js';
 import { assetRegistryOf, assetUrl, imageLicenseProblems, needsAccessibleVersion } from './assets.mjs';
 import { siteOrigin } from '../../site.config.mjs';
 import { loadLanes, laneOfItem, isScheduled, isPublic, nowOf, publishAtMs, taipeiDate, taipeiTime } from './lanes.mjs';
+import { themeState, windowOf } from './theme.mjs';
 
 // ───────────────────────── 常數與對照表 ─────────────────────────
 
@@ -437,6 +438,11 @@ export function applyGovernance(site) {
     // 宣導 Banner 檔期
     if (item.type === 'banner') {
       gov.campaignStatus = item.startAt && item.startAt > today ? 'upcoming' : item.endAt && item.endAt < today ? 'ended' : 'active';
+    }
+    // 第六十輪（Issue #127）：節慶主題的檔期（真實現在時間；與排程發布同一個 now）。是否真的套用另看 site.theme（疫情緊急時不套用）
+    if (item.type === 'theme') {
+      const w = windowOf(item);
+      gov.themeStatus = !w ? 'invalid' : now < w.from ? 'upcoming' : now >= w.to ? 'ended' : 'live';
     }
     // R9 影音：逐字稿
     if (item.type === 'media') {
@@ -933,6 +939,8 @@ export function applyGovernance(site) {
   };
   site.gov.byOwner = computeByOwner(site);
   site.gov.summary = computeSummary(site);
+  // 第六十輪（Issue #127）：這次建置要套用的節慶主題（layout 讀 site.theme.active；疫情中心 alertLevel=emergency ⇒ 不套用）
+  site.theme = themeState(site, now);
   // KPI 依賴 site.searchIndex 與 site.evalReport（建置後段才有）→ 每次讀取時計算
   Object.defineProperty(site.gov, 'kpi', { enumerable: true, configurable: true, get: () => computeKpi(site) });
   Object.defineProperty(site.gov, 'kpiByKey', { enumerable: false, configurable: true, get: () => Object.fromEntries(computeKpi(site).map((k) => [k.key, k])) });

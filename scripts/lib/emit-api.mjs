@@ -499,7 +499,8 @@ export function emitApi(fullSite, write) {
   put('v1/banners.json', (c.banners ?? []).filter((b) => isPublic(b, now) && b.startAt <= site.today && b.endAt >= site.today).sort((a, b) => (a.priority ?? 99) - (b.priority ?? 99)).map(strip), {}, {}, '目前上架中的首頁 Banner');
 
   // 五類資產總目錄
-  const catalog = site.all.filter((i) => isPublic(i, now)).map((i) => ({
+  // 第六十輪：節慶主題不是資產（沒有頁面、只是頁首裝飾），不進總目錄
+  const catalog = site.all.filter((i) => isPublic(i, now) && i.type !== 'theme').map((i) => ({
     // tender.category（財物／勞務／工程）不是資產類別 ⇒ 只採用七類資產內的 category
     id: i.id, type: i.type, category: (ASSET_CATEGORIES[i.category] ? i.category : null) ?? CATEGORY_OF[i.type] ?? 'content-page', title: i.title, owner: i.owner, ownerName: i.gov.ownerName,
     canonicalUrl: i.canonicalUrl ?? absUrl(pathOf(i)), page: absUrl(pathOf(i)), md: mdPathOf(i) ? absUrl(mdPathOf(i)) : null,
