@@ -9,6 +9,7 @@ import { pagefindFor, pagefindMarks } from './public/_pagefind.mjs';
 import { intlTopic } from './public/_international.mjs';
 import { PANEL_OF, navPanelHtml } from './public/_nav-panels.mjs';
 import { themeSlug, themeCssPath } from '../../scripts/lib/theme.mjs';
+import { PATH as RESEARCH_MEDIA } from './public/research-media.mjs';
 
 // 介面（UI 字串）本身的翻譯審核狀態；內容頁則看 item.languages[lang]
 const UI_TRANSLATION = { en: { status: 'reviewed', date: '2026-09-10' } };
@@ -92,6 +93,7 @@ export function layout(ctx, { styles = [], title, description, body, jsonLd = []
     try { ld.push(JL.orgJsonLd(ctx)); } catch { /* optional */ }
   }
   const forcePro = path.startsWith('/pro/');
+  const onResearch = path.startsWith(RESEARCH_MEDIA); // 第六十一輪：研究與媒體入口是第三種身分，頁上只有它標 aria-current
   // 第六十輪（Issue #127）：節慶主題。只有治理引擎判定「恰好一個生效、且疫情中心沒發布 emergency」時 site.theme.active 才有值；
   // 這時 <html data-theme> 加上主題 slug、多連一支建置產生的小 CSS（只覆寫裝飾 token）。沒有主題 ⇒ 輸出與以前完全相同
   const theme = site?.theme?.active ?? null;
@@ -164,9 +166,9 @@ ${protoBanner(ctx)}
 <header class="site-header"><div class="wrap site-header__in">
   <a class="brand" href="${url('/')}"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="40" height="40"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z" fill="#fff"/></svg></span><span class="brand__text"><span class="brand__name">${t('site.name')}</span><span class="brand__sub">${lang === 'zh-TW' ? config.nameEn : t('site.parent')}</span></span></a>
   <div class="audience" role="group" aria-label="${t('nav.audience')}">
-    <a class="audience__btn" href="${url('/')}?view=public" data-view-set="public" ${forcePro ? '' : raw('aria-current="page"')}>${t('nav.public')}</a>
+    <a class="audience__btn" href="${url('/')}?view=public" data-view-set="public" ${forcePro || onResearch ? '' : raw('aria-current="page"')}>${t('nav.public')}</a>
     <a class="audience__btn" href="${url('/pro/')}?view=pro" data-view-set="pro" ${forcePro ? raw('aria-current="page"') : ''}>${t('nav.pro')}</a>
-    <a class="audience__btn" href="${url('/developers/')}">${t('nav.research')}</a>
+    <a class="audience__btn" href="${url(RESEARCH_MEDIA)}" ${onResearch ? raw('aria-current="page"') : ''}>${t('nav.research')}</a>
   </div>
   <button type="button" class="c-nav__toggle" aria-expanded="false" aria-controls="main-nav">${t('nav.menu')}</button>
 </div>

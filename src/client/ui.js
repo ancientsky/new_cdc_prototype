@@ -26,7 +26,9 @@ function applyView(v) {
   root.dataset.view = v;
   qsa('[data-view-set][aria-pressed]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.viewSet === v)));
   // 頂端「民眾／醫事人員」是連結，連結不可用 aria-pressed（ARIA 規範），改以 aria-current 表示目前身分
-  qsa('a.audience__btn[data-view-set]').forEach((a) => { if (a.dataset.viewSet === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  // 第六十一輪：在「研究與媒體」入口頁（第三顆鈕、無 data-view-set、伺服器已標 aria-current）時，民眾／專業鈕都不標，同一組只有一個 current
+  const onOther = !!document.querySelector('a.audience__btn[aria-current="page"]:not([data-view-set])');
+  qsa('a.audience__btn[data-view-set]').forEach((a) => { if (a.dataset.viewSet === v && !onOther) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
   // 專業層：來源卡預設展開
   qsa('.c-source-card').forEach((d) => { if (v === 'pro') d.open = true; else if (d.dataset.autoOpened) { d.open = false; } if (v === 'pro') d.dataset.autoOpened = '1'; else delete d.dataset.autoOpened; });
 }
