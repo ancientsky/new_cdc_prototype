@@ -142,10 +142,17 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/snapshots
+          # npm run fetch 除了 data/snapshots/ 也會改 content/datasets/（登革熱地圖摘要與 CKAN 目錄的 lastUpdated／provenance，第五十七輪），
+          # 一起提交；其他未預期的變更列出來但不提交。rebase 前先把它們 stash（--autostash），否則 git 會以「You have unstaged changes」拒絕（2026-10-25 實測，run #328）。
+          git add -A data/snapshots content/datasets
           if git diff --cached --quiet; then echo "快照無變更"; exit 0; fi
+          if [ -n "$(git status --porcelain)" ]; then echo "::notice::快照之外還有未提交的變更（不提交）："; git status --porcelain | grep -v '^[MADR] ' || true; fi
           git commit -m "data: 官方資料快照更新（$(date -u +%F)）"
-          git pull --rebase origin main
+          if ! git pull --rebase --autostash origin main; then
+            echo "::warning::快照 rebase 到最新 main 失敗，這次不回寫。建置照常進行"
+            git rebase --abort 2>/dev/null || true
+            exit 0
+          fi
           if [ -n "$SNAPSHOT_DEPLOY_KEY" ]; then
             umask 077
             printf '%s\n' "$SNAPSHOT_DEPLOY_KEY" > "$RUNNER_TEMP/snapshot_key"

@@ -37,6 +37,10 @@ test('#124 .github/rulesets/main.json：禁止直接 push／force push／刪除�
   );
   assert.ok(pages.includes('rm -f "$RUNNER_TEMP/snapshot_key"'), '私鑰用完就刪');
   assert.ok(pages.includes('elif git push origin HEAD:main; then'));
+  // 2026-10-25 run #328：fetch 也改 content/datasets/，沒 add 進去 ⇒ git pull --rebase 以「You have unstaged changes」失敗、整個建置紅掉。
+  assert.ok(pages.includes('git add -A data/snapshots content/datasets'), '快照與 fetch 改到的資料目錄一起提交');
+  assert.ok(pages.includes('git pull --rebase --autostash origin main'), 'rebase 前自動 stash 其他未提交變更');
+  assert.match(pages, /if ! git pull --rebase --autostash origin main; then\n\s+echo "::warning::/, 'rebase 失敗只警告、不讓建置失敗');
   assert.equal((pages.match(/::warning::[^\n]*規則集/g) || []).length, 2, '兩條路失敗都只警告');
   assert.ok(!/SNAPSHOT_DEPLOY_KEY/.test(read('.github/workflows/content-pr.yml')), 'PR 的工作流程不能拿到部署金鑰');
   // 文件有匯入步驟
