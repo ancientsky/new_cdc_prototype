@@ -1,34 +1,43 @@
 {
   "version": 1,
   "lastRun": {
-    "at": "2026-10-13T07:38:59.297Z",
+    "at": "2026-10-25T10:44:59.915Z",
     "source": "official-export",
-    "by": "第四十三輪初次轉換",
+    "by": "ci",
     "shape": "legacy",
     "mode": "full",
     "producer": "現行官網 TravelEpidemic/ExportJSON",
     "generatedAt": null,
-    "received": 76,
-    "accepted": 76,
+    "received": 60,
+    "accepted": 60,
     "counts": {
-      "new": 0,
+      "new": 43,
       "updated": 0,
-      "withdrawn": 0,
-      "unchanged": 76,
+      "withdrawn": 59,
+      "unchanged": 17,
       "rejected": 0,
-      "upgraded": 76
+      "upgraded": 0
     },
     "total": 76,
-    "held": null,
+    "held": {
+      "reasons": [
+        "這批會讓現行清單從 76 則變成 60 則（少掉 59 則，一半以上）：請確認是否真的要撤下這麼多"
+      ]
+    },
     "rejected": [],
     "unmapped": [
       {
         "kind": "disease",
+        "value": "病毒性腸胃炎",
+        "ids": [
+          "sQlZM5yGhWGA3ZLhD9FrCA"
+        ]
+      },
+      {
+        "kind": "disease",
         "value": "沙門氏菌感染症",
         "ids": [
-          "0cESbNbpYyJtuodHwEBVqA",
-          "h5BWyHp6unSxLoPpskILog",
-          "wSD_nn6ZbqArLd50cMPytA"
+          "0cESbNbpYyJtuodHwEBVqA"
         ]
       },
       {
@@ -44,41 +53,273 @@
         "ids": [
           "dAT_vx9BRnU-7cTwcLwW-A"
         ]
-      },
-      {
-        "kind": "disease",
-        "value": "病毒性腸胃炎",
-        "ids": [
-          "jOkzESsmwIgQuN7OXjbyaQ"
-        ]
-      },
-      {
-        "kind": "disease",
-        "value": "發熱伴血小板減少綜合症",
-        "ids": [
-          "KWa4JGmWbq2uVRtozoAMYg"
-        ]
-      },
-      {
-        "kind": "disease",
-        "value": "環孢⼦蟲病",
-        "ids": [
-          "Izt40JwE0k2ay1DjeH1l9g"
-        ]
-      },
-      {
-        "kind": "disease",
-        "value": "亞洲⻑⾓⾎蜱正內羅病毒(ALTNV)感染",
-        "ids": [
-          "9xAeGHOJfzumw0CK2bK83g"
-        ]
       }
     ],
-    "withdrawn": [],
+    "withdrawn": [
+      {
+        "id": "4S8ZzNn3n5OnS1vzzA2WdA",
+        "reason": "missing"
+      },
+      {
+        "id": "jOkzESsmwIgQuN7OXjbyaQ",
+        "reason": "missing"
+      },
+      {
+        "id": "Gzg-DJv5NkZ9ozYHBjINHQ",
+        "reason": "missing"
+      },
+      {
+        "id": "0MvKFXu1kyWbQ2xf8thXcw",
+        "reason": "missing"
+      },
+      {
+        "id": "l5eaNCYVnh2c6_RbaX5JSQ",
+        "reason": "missing"
+      },
+      {
+        "id": "iTifhSV3YPdPp3P4VQcmgg",
+        "reason": "missing"
+      },
+      {
+        "id": "d14HJLgUrMu7aAlZBkLaUA",
+        "reason": "missing"
+      },
+      {
+        "id": "KWa4JGmWbq2uVRtozoAMYg",
+        "reason": "missing"
+      },
+      {
+        "id": "Y1rWSPKbWxuqS0UWdvP1XA",
+        "reason": "missing"
+      },
+      {
+        "id": "j4iuKXFIJjwREzU4OchdxQ",
+        "reason": "missing"
+      },
+      {
+        "id": "52a5DA39mJv_7ng_kfl-mw",
+        "reason": "missing"
+      },
+      {
+        "id": "1uS7eMtPWYzJ7_YScRfZ9w",
+        "reason": "missing"
+      },
+      {
+        "id": "HefhdoFebEJxnvTPJklPoA",
+        "reason": "missing"
+      },
+      {
+        "id": "x71z5bkUYAvBjn_WDGlGPA",
+        "reason": "missing"
+      },
+      {
+        "id": "7rQ64Xuf1U5Sfk5fb55s6Q",
+        "reason": "missing"
+      },
+      {
+        "id": "GJ2pmGbe40GTkGuB9yUZ_w",
+        "reason": "missing"
+      },
+      {
+        "id": "Izt40JwE0k2ay1DjeH1l9g",
+        "reason": "missing"
+      },
+      {
+        "id": "h5BWyHp6unSxLoPpskILog",
+        "reason": "missing"
+      },
+      {
+        "id": "Z3CDVLBOgCwhmH0ZoYQQKw",
+        "reason": "missing"
+      },
+      {
+        "id": "V_taC8E7Ipo9TmVFVGAKNA",
+        "reason": "missing"
+      },
+      {
+        "id": "TdykG3EA33FC2dl-P1a4wg",
+        "reason": "missing"
+      },
+      {
+        "id": "mirHTm2T4qYv2kXJY5zaEw",
+        "reason": "missing"
+      },
+      {
+        "id": "Aa78Szc_xOu9_A7y8rWKIw",
+        "reason": "missing"
+      },
+      {
+        "id": "xDTyh6KXKhAKngDhlHrBsg",
+        "reason": "missing"
+      },
+      {
+        "id": "j_x2zPRkh8cOf741DvK8rA",
+        "reason": "missing"
+      },
+      {
+        "id": "yJt6amxeRZIX2j9dFz75DA",
+        "reason": "missing"
+      },
+      {
+        "id": "qG0UNyp69sqlCZM1_AtArQ",
+        "reason": "missing"
+      },
+      {
+        "id": "9PNGBxUuMmUlyoPgohS5KA",
+        "reason": "missing"
+      },
+      {
+        "id": "iw1z7K0j7F6qPHRAhx-a2A",
+        "reason": "missing"
+      },
+      {
+        "id": "YPNDKRsWCW3Z5DghDGQCZQ",
+        "reason": "missing"
+      },
+      {
+        "id": "kWabf47cUMKQRR4M7JSgUg",
+        "reason": "missing"
+      },
+      {
+        "id": "ScZAGFPo_ySS-pBfp9W2cw",
+        "reason": "missing"
+      },
+      {
+        "id": "B4SFoNS4pCWJvBzAufW9UA",
+        "reason": "missing"
+      },
+      {
+        "id": "a4aZxtvR4nf9XY3uC7aeig",
+        "reason": "missing"
+      },
+      {
+        "id": "9u_kD0dhcYkoEoBa0xIZWw",
+        "reason": "missing"
+      },
+      {
+        "id": "M1TmZZyze8xsupBqN9S2cA",
+        "reason": "missing"
+      },
+      {
+        "id": "238OUg77XvIu1IqF8ETrxQ",
+        "reason": "missing"
+      },
+      {
+        "id": "ZpLo28nUUzvIG9KZjxzTLw",
+        "reason": "missing"
+      },
+      {
+        "id": "8idOITmT_BJiRhpkM540RA",
+        "reason": "missing"
+      },
+      {
+        "id": "97ggNQ2Zg923CL4wNf6COg",
+        "reason": "missing"
+      },
+      {
+        "id": "vrk1a9WOaMByOER4SfBNEw",
+        "reason": "missing"
+      },
+      {
+        "id": "0D0a0Xks_etsZoVfRFRQLw",
+        "reason": "missing"
+      },
+      {
+        "id": "_GZaZMttbdb5rHkT_udkZw",
+        "reason": "missing"
+      },
+      {
+        "id": "IZsSj8HZN75li16hnRULWA",
+        "reason": "missing"
+      },
+      {
+        "id": "wSD_nn6ZbqArLd50cMPytA",
+        "reason": "missing"
+      },
+      {
+        "id": "kSPwMnbJgjQliamvY9cOlQ",
+        "reason": "missing"
+      },
+      {
+        "id": "7yMN-jOd35iTXdFWUmiaMw",
+        "reason": "missing"
+      },
+      {
+        "id": "QkWx_T6ZifDX1nNOfpTTGw",
+        "reason": "missing"
+      },
+      {
+        "id": "BAaH0svth5bz8cMjEeaSfA",
+        "reason": "missing"
+      },
+      {
+        "id": "9xAeGHOJfzumw0CK2bK83g",
+        "reason": "missing"
+      },
+      {
+        "id": "Y4E-BQz4OUIQU10UFCSlrg",
+        "reason": "missing"
+      },
+      {
+        "id": "ua3I0YsyPZq0ug3w3Cf1qg",
+        "reason": "missing"
+      },
+      {
+        "id": "_O23ZrgT4z3_SBc_TIlw-Q",
+        "reason": "missing"
+      },
+      {
+        "id": "pCGtCiCnsZaxzj6-A8LWWA",
+        "reason": "missing"
+      },
+      {
+        "id": "wjhpbjHU_XWySmMUf2wu6A",
+        "reason": "missing"
+      },
+      {
+        "id": "LVVl-jPbZNLNaQuFQXkfuw",
+        "reason": "missing"
+      },
+      {
+        "id": "dFMj7vj2uLjNHpNAdcZ_kg",
+        "reason": "missing"
+      },
+      {
+        "id": "Kr4I6Iy2m7ZWnQCN6LzP-g",
+        "reason": "missing"
+      },
+      {
+        "id": "nhf7qHHvUe4-LhxOp5vd1Q",
+        "reason": "missing"
+      }
+    ],
     "warnings": [],
-    "wroteSnapshot": true
+    "wroteSnapshot": false
   },
   "history": [
+    {
+      "at": "2026-10-25T10:44:59.915Z",
+      "source": "official-export",
+      "producer": "現行官網 TravelEpidemic/ExportJSON",
+      "by": "ci",
+      "mode": "full",
+      "received": 60,
+      "accepted": 60,
+      "total": 76,
+      "counts": {
+        "new": 43,
+        "updated": 0,
+        "withdrawn": 59,
+        "unchanged": 17,
+        "rejected": 0,
+        "upgraded": 0
+      },
+      "unmapped": 4,
+      "held": [
+        "這批會讓現行清單從 76 則變成 60 則（少掉 59 則，一半以上）：請確認是否真的要撤下這麼多"
+      ],
+      "wroteSnapshot": false
+    },
     {
       "at": "2026-10-13T07:38:59.297Z",
       "source": "official-export",

@@ -1,8 +1,8 @@
 {
   "meta": {
     "mode": "live",
-    "fetchedAt": "2026-10-04T09:11:44.151Z",
-    "dataDate": "2026-10-04",
+    "fetchedAt": "2026-10-25T10:45:05.576Z",
+    "dataDate": "2026-10-25",
     "sourceUrl": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON",
     "sourcePage": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
     "label": "國際旅遊疫情建議等級表",
@@ -12,7 +12,7 @@
       "level2": 29,
       "level1": 215,
       "none": 1,
-      "entries": 508,
+      "entries": 509,
       "targeted": {
         "level3": 1,
         "level2": 29,
@@ -52,7 +52,7 @@
         "color": "warning"
       }
     ],
-    "rawCount": 2503,
+    "rawCount": 2504,
     "rawFields": [
       "source",
       "effective",
@@ -70,6 +70,22 @@
       "ISO3166_2"
     ],
     "rawSample": [
+      {
+        "source": "CDC",
+        "effective": "2026-10-06T00:00:00+08:00",
+        "senderName": "疾病管制署",
+        "instruction": "提醒遵守當地的一般預防措施",
+        "web": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
+        "alert_title": "國際間旅遊疫情建議",
+        "severity_level": "第一級:注意(Watch)",
+        "alert_disease": "登革熱",
+        "areaDesc": "緬甸",
+        "areaDesc_EN": "Myanmar",
+        "circle": "96.41,21.20",
+        "ISO3166": "MM",
+        "areaDetail": "",
+        "ISO3166_2": ""
+      },
       {
         "source": "CDC",
         "effective": "2026-09-08T00:00:00+08:00",
@@ -101,22 +117,6 @@
         "ISO3166": "CN",
         "areaDetail": "北京市",
         "ISO3166_2": "CN-11"
-      },
-      {
-        "source": "CDC",
-        "effective": "2026-09-01T00:00:00+08:00",
-        "senderName": "疾病管制署",
-        "instruction": "提醒遵守當地的一般預防措施",
-        "web": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-        "alert_title": "國際間旅遊疫情建議",
-        "severity_level": "第一級:注意(Watch)",
-        "alert_disease": "M痘",
-        "areaDesc": "柬埔寨",
-        "areaDesc_EN": "Cambodia",
-        "circle": "105.07,12.74",
-        "ISO3166": "KH",
-        "areaDetail": "",
-        "ISO3166_2": ""
       }
     ],
     "filterNote": "已排除歷史紀錄：有結束日／已解除者、2023-05-01 前的 COVID-19 建議、第三級逾 365 天未更新者",
@@ -144,7 +144,7 @@
       "lifted": 0,
       "renewed": 0
     },
-    "changeSummaryAsOf": "2026-10-04",
+    "changeSummaryAsOf": "2026-10-25",
     "changeSummaryMode": "live"
   },
   "data": [
@@ -947,14 +947,22 @@
       "Region": "東南亞",
       "Level": "第一級：注意(Watch)",
       "LevelCode": 1,
-      "Disease": "新冠併發重症、茲卡病毒感染症",
-      "StartDate": "2023-11-01",
+      "Disease": "登革熱、新冠併發重症、茲卡病毒感染症",
+      "StartDate": "2026-10-06",
       "TargetedLevelCode": 1,
       "TargetedLevel": "第一級：注意(Watch)",
-      "TargetedDisease": "茲卡病毒感染症",
-      "TargetedStartDate": "2020-11-06",
-      "Summary": "新冠併發重症、茲卡病毒感染症為第一級：注意。提醒遵守當地的一般預防措施",
+      "TargetedDisease": "登革熱、茲卡病毒感染症",
+      "TargetedStartDate": "2026-10-06",
+      "Summary": "登革熱、新冠併發重症、茲卡病毒感染症為第一級：注意。提醒遵守當地的一般預防措施",
       "Diseases": [
+        {
+          "Disease": "登革熱",
+          "Level": "第一級：注意(Watch)",
+          "LevelCode": 1,
+          "StartDate": "2026-10-06",
+          "Summary": "提醒遵守當地的一般預防措施",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
         {
           "Disease": "新冠併發重症",
           "Level": "第一級：注意(Watch)",
@@ -973,7 +981,16 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
+      "RecentChanges": [
+        {
+          "date": "2026-10-06",
+          "Disease": "登革熱",
+          "kind": "new",
+          "from": 0,
+          "to": 1
+        }
+      ]
     },
     {
       "ISO2": "BN",
