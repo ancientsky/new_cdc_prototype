@@ -17,7 +17,7 @@
 //   - 伺服器端重新驗證所有欄位（src/client/subscribe-rules.js，與前端同一份規則）；token 必須是 UUID 形狀才查表
 //   - 蜜罐欄位 website：有值就假裝成功、什麼都不存
 //   - 簡易節流：每個來源 IP 與每個信箱各自的滑動視窗（超過回 429 + Retry-After），避免被拿來對別人信箱灌確認信
-//   - HTTP 層速率限制（第六十二輪，Issue #140）：每個來源 IP 每 60 秒 5 次（與 docs/deploy.md §13.4 的數字一致），
+//   - HTTP 層速率限制（第六十三輪，Issue #140）：每個來源 IP 每 60 秒 5 次（與 docs/deploy.md §13.4 的數字一致），
 //     在讀本體之前判斷，涵蓋 POST /api/subscriptions、/manage-link、/update 與 GET /confirm、/status；
 //     不含 GET /api/health（前端偵測用、不碰資料）與退訂（RFC 8058 一鍵退訂由信箱業者的伺服器代送，許多人共用少數 IP，
 //     限流會讓退訂失敗；退訂 token 是隨機 UUID，猜不到）。錯誤碼沿用狀態機的 'rate'＋retryAfter，前端顯示「請 N 秒後再試」。
@@ -40,7 +40,7 @@ export const DEFAULT_DATA_FILE = path.join(ROOT, '.local', 'subscriptions.json')
 export const DEFAULT_OUTBOX = path.join(ROOT, '.local', 'outbox');
 const MAX_BODY = 8 * 1024;
 const MAX_OUTBOX_FILES = 5000;
-/** HTTP 層：每個來源 IP 每 60 秒 5 次（第六十二輪；狀態機另有每 IP 10 分鐘 10 次、每信箱 10 分鐘 3 次） */
+/** HTTP 層：每個來源 IP 每 60 秒 5 次（第六十三輪；狀態機另有每 IP 10 分鐘 10 次、每信箱 10 分鐘 3 次） */
 export const HTTP_RATE = { windowMs: 60_000, max: 5 };
 
 /* ───────── 儲存 ───────── */
@@ -161,7 +161,7 @@ export function createSubscriptionApi({
 
     if (!pathname.startsWith('/api/subscriptions')) return json(404, { error: 'notfound' });
 
-    // 第六十二輪：讀本體、查表、寄信之前先限流（最便宜的地方先擋）。退訂不限（理由見檔頭）
+    // 第六十三輪：讀本體、查表、寄信之前先限流（最便宜的地方先擋）。退訂不限（理由見檔頭）
     if (httpLimiter && pathname !== '/api/subscriptions/unsubscribe') {
       const r = httpLimiter.hit(clientKey(req, { trustedProxies }));
       if (!r.ok) return tooMany(res, r.retryAfterSec, { req, error: 'rate', extra: { retryAfter: r.retryAfterSec } });

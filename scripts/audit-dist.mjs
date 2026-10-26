@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 第六十二輪（Issue #141）：部署產物稽核 CLI。資訊室對「實際要部署（或已部署）的目錄」執行，CD 管線在正式建置後執行。
+// 第六十三輪（Issue #141）：部署產物稽核 CLI。資訊室對「實際要部署（或已部署）的目錄」執行，CD 管線在正式建置後執行。
 //
 // 用法：node scripts/audit-dist.mjs [目錄，預設 dist] [--profile public|prototype（預設 public）] [--json]
 //       npm run audit:dist -- dist --profile public

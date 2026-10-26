@@ -1,6 +1,6 @@
 name: DAST (OWASP ZAP baseline, weekly)
 
-# 第六十二輪（Issue #142，docs/security-testing.md）：對「建置出來的靜態站」做被動式動態弱點掃描。
+# 第六十三輪（Issue #142，docs/security-testing.md）：對「建置出來的靜態站」做被動式動態弱點掃描。
 # 為什麼不是每個 PR 都跑：要 docker、要爬站、耗時，原型階段先每週一次＋手動；而且這一關「不擋」，只產報告（先看基準線，乾淨後再考慮升級成閘門）。
 # 為什麼不接 content-pr.yml：該工作流程的 test job 有 PR 程式碼的執行權，掃描需要的 docker 與網路行為不該混進去（docs/deploy.md §2.2）。
 on:

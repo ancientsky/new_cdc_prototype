@@ -1,5 +1,5 @@
 // @ts-check
-// 第六十二輪（Issue #141「縮小可被自動盤點的攻擊面」）：正式部署產物白名單、內部站拆分、對外資產清冊。
+// 第六十三輪（Issue #141「縮小可被自動盤點的攻擊面」）：正式部署產物白名單、內部站拆分、對外資產清冊。
 //
 // 為什麼：ARTEX 一類的 AI 滲透工具第一步不是攻擊，是「盤點」——把子網域、端點、可下載的檔案全部列成資產地圖，再挑最軟的目標。
 // 原型的 dist/ 是給 GitHub Pages 示範用的，什麼都放：後台頁（9 MB）、後台 JS、source map（含原始碼與註解）、伺服器標頭設定檔、
@@ -388,7 +388,7 @@ export function splitForProduction(dist, internalDir, { inventory } = {}) {
 function internalReadme(inv) {
   return `# 內部站（dist-internal/）：只給同事，不對外
 
-由 \`SITE_MODE=production npm run build\` 產生（scripts/lib/dist-profile.mjs，第六十二輪，Issue #141）。建置日 ${inv.generatedAt.slice(0, 10)}。
+由 \`SITE_MODE=production npm run build\` 產生（scripts/lib/dist-profile.mjs，第六十三輪，Issue #141）。建置日 ${inv.generatedAt.slice(0, 10)}。
 
 ## 這是什麼
 

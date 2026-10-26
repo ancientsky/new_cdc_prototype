@@ -1,0 +1,44 @@
+{
+  "id": "interactive.kids-quiz",
+  "type": "interactive",
+  "kind": "kids-quiz",
+  "title": "防疫小勇士：衛教小測驗",
+  "owner": "unit.pr",
+  "publishedAt": "2026-10-26",
+  "reviewedAt": "2026-10-26",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "enabled": true,
+  "placements": ["home-bottom", "play-hub"],
+  "audience": ["public"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "languages": {
+    "zh-TW": { "status": "source" },
+    "en": { "status": "none" },
+    "ja": { "status": "none" },
+    "tl": { "status": "none" },
+    "vi": { "status": "none" },
+    "id": { "status": "none" },
+    "th": { "status": "none" }
+  },
+  "summary": "給小學生的 8 題選擇題：洗手、蚊子、咳嗽禮節、生病在家休息。每題都連回疾病頁或 Q&A，答錯會看到為什麼。",
+  "note": "示範內容：題目由原型依站內既有疾病頁與 Q&A 改寫成兒童用語，待公關室衛教承辦人確認。",
+  "disclaimer": "題目依站內疾病頁與常見問答改寫成兒童用語；每題都標出依據的頁面。",
+  "questions": [
+    { "q": "洗手的時候要用什麼才洗得乾淨？", "choices": ["只用水沖一下", "肥皂和清水", "用衣服擦一擦"], "answer": 1, "explain": "肥皂加清水搓洗至少 20 秒，才能把腸病毒、流感病毒洗掉；只用水沖或乾洗手對腸病毒效果不好。", "basedOn": "disease.enterovirus", "emoji": "🧼" },
+    { "q": "登革熱是被什麼咬到才會得？", "choices": ["蚊子", "蟑螂", "小狗"], "answer": 0, "explain": "登革熱由埃及斑蚊和白線斑蚊傳播，人和人之間不會直接傳染。", "basedOn": "disease.dengue", "emoji": "🦟" },
+    { "q": "家裡花盆底盤積了水，應該怎麼做？", "choices": ["放著沒關係", "再加一點水", "每週倒掉、刷乾淨"], "answer": 2, "explain": "蚊子在積水裡長大，每週「巡、倒、清、刷」一次，蚊子就沒地方生寶寶。", "basedOn": "faq.dengue-container-check", "emoji": "🪴" },
+    { "q": "咳嗽或打噴嚏的時候要怎麼做？", "choices": ["用衛生紙或手肘遮住", "對著旁邊的同學", "用手遮住，然後摸門把"], "answer": 0, "explain": "用衛生紙或手肘遮住口鼻，再去洗手，病毒才不會飛到別人身上或留在門把上。", "basedOn": "disease.influenza", "emoji": "🤧" },
+    { "q": "發燒、不舒服的時候，應該？", "choices": ["照常去上學", "在家休息，告訴大人", "自己去買糖果吃"], "answer": 1, "explain": "生病在家休息、告訴大人帶你看醫生，才不會把病毒帶給同學。", "basedOn": "faq.ev-stay-home", "emoji": "🤒" },
+    { "q": "流感疫苗多久要打一次？", "choices": ["一輩子打一次就好", "每年打一次", "不用打"], "answer": 1, "explain": "流感病毒每年都會變，所以疫苗每年都要重新打一次。", "basedOn": "faq.flu-vaccine-every-year", "emoji": "💉" },
+    { "q": "得腸病毒的小朋友，哪一個是要趕快看醫生的「重症前兆」？", "choices": ["一直想睡、叫不太醒", "肚子餓想吃飯", "很想出去玩"], "answer": 0, "explain": "嗜睡、意識不清、手腳無力、肌躍型抽搐、持續嘔吐、呼吸急促，都要立刻送大醫院。", "basedOn": "faq.ev-severe-signs", "emoji": "🏥" },
+    { "q": "洗手口訣「濕、搓、沖、捧、擦」，「搓」至少要搓多久？", "choices": ["2 秒", "至少 20 秒", "不用搓"], "answer": 1, "explain": "搓 20 秒大約是唱兩次生日快樂歌的時間，手心、手背、指縫、指甲都要搓到。", "basedOn": "disease.enterovirus", "emoji": "⏱️" }
+  ],
+  "postPublishReview": {
+    "status": "done",
+    "reviewedBy": "公關室承辦人",
+    "reviewedAt": "2026-10-26",
+    "note": "示範假設：上線後複核視為已完成（與節慶主題示範檔相同），正式環境由公關室在 24 小時內實際複核"
+  }
+}

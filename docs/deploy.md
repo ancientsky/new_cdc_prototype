@@ -220,7 +220,7 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 8. **頁面**：在 `src/templates/public/` 新增 `guidelines.mjs`，匯出 `pages(site)`、`render`、`meta`、選用的 `markdown`。**不用改任何登錄檔**，`pages.mjs` 會自動掃描（底線開頭的檔名除外）。
 9. **JSON-LD**：`scripts/lib/jsonld.mjs` 的 `jsonLdFor` 加對應 `@type`。
 10. **測試**：`tests/` 補一個案例；`content/guidelines/` 放一筆範例，`npm run check` 通過。
-11. **車道與其他登錄（第六十輪補記，Issue #127 新增 `theme` 時發現缺漏）**：`content/governance/lanes.json` 把型別放進一條車道（`validateLanes` 要求每個型別都有車道，`tests/lanes.test.mjs` 會擋）、`scripts/lib/lanes.mjs` 的 `DIR_TYPE` 加目錄 → 型別、`src/templates/admin/_partials.mjs` 的 `TYPE_LABEL`、`tests/helpers.mjs` 的 `COLLECTION_OF`。**沒有頁面的型別**（如 `banner`、`theme`，`pathOf` 回 `/`）另要加進 `emit-seo.mjs` 的 `NO_PAGE_TYPES`，並考慮是否排除在 `v1/catalog.json` 之外。
+11. **車道與其他登錄（第六十輪補記，Issue #127 新增 `theme` 時發現缺漏）**：`content/governance/lanes.json` 把型別放進一條車道（`validateLanes` 要求每個型別都有車道，`tests/lanes.test.mjs` 會擋）、`scripts/lib/lanes.mjs` 的 `DIR_TYPE` 加目錄 → 型別、`src/templates/admin/_partials.mjs` 的 `TYPE_LABEL`、`tests/helpers.mjs` 的 `COLLECTION_OF`。**沒有頁面的型別**（如 `banner`、`theme`，`pathOf` 回 `/`）另要加進 `emit-seo.mjs` 的 `NO_PAGE_TYPES`，並考慮是否排除在 `v1/catalog.json` 之外。第六十二輪新增 `interactive` 時另補：`scripts/lib/gateway/validate-item.mjs` 的 `TYPE_DIR`（閘道才收得到）、`src/templates/public/_partials.mjs` `itemPath` 與 `governance.mjs` `pathOf`（有頁面的型別）、`src/templates/admin/_partials.mjs` `frontPath`、`scripts/a11y.mjs` 的代表頁，以及 `package.json` `test:content` 的測試檔清單。
 
 ## 4. 修改 schema
 
@@ -349,7 +349,7 @@ GitHub Pages 不能自訂回應標頭，所以原型站只有 `<meta name="robot
 5. **`Expires` 保持新鮮**：重建就會更新，不需手動改；但若正式站的建置排程停了，要有告警。
 6. **驗證：** `curl -s https://<網域>/.well-known/security.txt` 與 `curl -s https://<網域>/security.txt`，確認兩份都回 200、`Content-Type: text/plain`，且 `Contact`、`Expires` 為預期值。
 
-### 10.5 指紋標頭（第六十二輪，Issue #141）
+### 10.5 指紋標頭（第六十三輪，Issue #141）
 
 `Server`、`X-Powered-By`、`X-AspNet-Version`、`X-AspNetMvc-Version` 會說出伺服器軟體與版本，自動盤點工具拿來比對已知漏洞。`dist/headers/headers.json` 多了 `remove` 陣列（和 `headers` 同一層，`headers` 的形狀不變）；`nginx.conf` 有 `server_tokens off;` 與 `proxy_hide_header`（完全拿掉 `Server` 要 headers-more 的 `more_clear_headers`），`web.config.headers.xml` 有 `<remove name="X-Powered-By" />` 與 `removeServerHeader="true"`，`_headers` 格式不能刪標頭（只有註解）。Azure Front Door 的做法寫在 `dist/headers/README.md`。完整說明見 [attack-surface.md](attack-surface.md) §5 與本文件 §30。
 
@@ -369,9 +369,9 @@ GitHub Pages 不能自訂回應標頭，所以原型站只有 `<meta name="robot
 | `POST /api/subscriptions/update` | `{token, topics[], frequency, lang}`；不可改信箱 |
 | `POST /api/subscriptions/unsubscribe` | token 可在 JSON、form 或網址 `?token=`；**必須接受 RFC 8058 一鍵退訂**（`Content-Type: application/x-www-form-urlencoded`、本體 `List-Unsubscribe=One-Click`、不需 Cookie／登入、不需同源 `Origin`）；冪等；只保留「信箱＋已退訂」 |
 | `POST /api/subscriptions/manage-link` | `{email}`；一律 `202` |
-| `429 Too Many Requests`（第六十二輪） | 任何端點過頻：`{error:'rate', retryAfter, message}`＋`Retry-After`（秒）＋`Cache-Control: no-store`。模擬後端：每來源 IP 每 60 秒 5 次，**在讀本體之前**判斷；`GET /api/health` 與退訂不限（一鍵退訂由信箱業者的伺服器代送，許多人共用少數 IP）。狀態機另有每信箱 10 分鐘 3 次、每 IP 10 分鐘 10 次。前端依 `rate`＋`retryAfter` 顯示「請 N 秒後再試」 |
+| `429 Too Many Requests`（第六十三輪） | 任何端點過頻：`{error:'rate', retryAfter, message}`＋`Retry-After`（秒）＋`Cache-Control: no-store`。模擬後端：每來源 IP 每 60 秒 5 次，**在讀本體之前**判斷；`GET /api/health` 與退訂不限（一鍵退訂由信箱業者的伺服器代送，許多人共用少數 IP）。狀態機另有每信箱 10 分鐘 3 次、每 IP 10 分鐘 10 次。前端依 `rate`＋`retryAfter` 顯示「請 N 秒後再試」 |
 | `413 Payload Too Large` | 本體 > 8 KB：`{error:'too_large'}`。本體有上限才擋得住「一次塞很大的請求」耗資源 |
-| 錯誤本體（第六十二輪） | 一律只有 `error`（代碼）＋必要時 `message`（白話）／`fields`／`retryAfter`：**不帶堆疊、伺服器版本、檔案路徑、SQL 或框架錯誤**；`Server`／`X-Powered-By` 標頭拿掉或改成不含版本。未預期錯誤回 `500 {error:'server'}`，細節只進伺服器 log。見 [abuse-protection.md](abuse-protection.md) |
+| 錯誤本體（第六十三輪） | 一律只有 `error`（代碼）＋必要時 `message`（白話）／`fields`／`retryAfter`：**不帶堆疊、伺服器版本、檔案路徑、SQL 或框架錯誤**；`Server`／`X-Powered-By` 標頭拿掉或改成不含版本。未預期錯誤回 `500 {error:'server'}`，細節只進伺服器 log。見 [abuse-protection.md](abuse-protection.md) |
 
 主題 id 只有 `news`、`documents`、`situation`、`publications`、`notices`、`careers`、`procurement`（＝RSS 頻道，見 `src/client/subscribe-rules.js` 的 `TOPIC_IDS`，測試保證與 `feeds/*.xml` 一致）。
 
@@ -503,7 +503,7 @@ location ~ ^/pagefind/pagefind\..*\.pf_meta$ { add_header Cache-Control "public,
 | 去重 | `submissionId`（UUID）是冪等鍵，同一 id 只能收一次——瀏覽器送不出 fetch（網路錯誤、CORS 尚未設定）時會改用一般表單 POST 帶同一個 id 再送 |
 | 一般表單 POST | 欄位同上加 `submissionId`；端點回自己的 HTML 收件頁（沒有 JS 的瀏覽器也走這條） |
 | CORS | 允許本站來源、`POST`、`Content-Type` 標頭；不需要 cookie（前端 `credentials: 'omit'`） |
-| 過頻（第六十二輪） | `429 Too Many Requests`＋`Retry-After`（秒）＋`{ ok: false, message }`；頁面顯示專用訊息「送出太頻繁，請稍候再試」（`form.err.rate`），保留填寫內容、不自動重送。門檻見 13.4 |
+| 過頻（第六十三輪） | `429 Too Many Requests`＋`Retry-After`（秒）＋`{ ok: false, message }`；頁面顯示專用訊息「送出太頻繁，請稍候再試」（`form.err.rate`），保留填寫內容、不自動重送。門檻見 13.4 |
 | 本體太大 | `413 Payload Too Large`＋`{ ok: false, message }`；上限由收件系統定（建議沒有附件 ≤ 64 KB、附件依表單規定），超過就不讀完、不存 |
 | 錯誤本體 | 只有 `ok:false` 與白話 `message`（可加代碼）：**不帶堆疊、版本、內部路徑、資料庫訊息**；5xx 一律通用訊息，細節只進收件系統自己的 log（且不含個資，見 13.4） |
 
@@ -778,7 +778,7 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
    - 疫情中心的匯出端點放在哪個網段？CI（GitHub Actions 或機關 GitLab Runner）連得到嗎？連不到時，是把 Runner 放進同網段，還是由中心把匯出檔放到 CI 連得到的位置？
    - 端點要不要權杖？權杖由誰發、多久換一次、放在 CI 的哪個祕密設定（`INTL_FEED_URL`、`INTL_FEED_TOKEN`）？
 9. **GitLab 保護分支：** 推送端點與後台匯入會由服務帳號把 `data/snapshots/travel-epidemic.json`、`intl-epidemic-import.json` **直接提交到目標分支**（不開合併請求）。保護分支是否允許這個服務帳號直接推送？若不允許，要改成「開合併請求＋CI 通過自動合併」（多幾分鐘延遲），或限定服務帳號只能改 `data/snapshots/` 底下（Premium 的 push rules／CODEOWNERS）。
-10. **推送 webhook 的來源 IP：** 中心系統呼叫 `POST /api/intl-epidemic` 時從哪個 IP 或網段出來？能否在反向代理或防火牆只允許這些來源（端點本身另有 Bearer 權杖、每 IP 每分鐘 30 次的限流（第六十二輪由 10 調為 30，且在檢查權杖之前判斷，見 §31）、2 MB 上限）？這支端點要不要和後台放在同一個對外網址？
+10. **推送 webhook 的來源 IP：** 中心系統呼叫 `POST /api/intl-epidemic` 時從哪個 IP 或網段出來？能否在反向代理或防火牆只允許這些來源（端點本身另有 Bearer 權杖、每 IP 每分鐘 30 次的限流（第六十三輪由 10 調為 30，且在檢查權杖之前判斷，見 §31）、2 MB 上限）？這支端點要不要和後台放在同一個對外網址？
 
 ### 14.9 附件上限（第四十五輪）
 
@@ -828,7 +828,7 @@ ASK_PERF=1 node --test tests/round40-ask-perf.test.mjs      # 當成測試：TBT
 
 - 設定矛盾（post 沒端點、端點不是 https、mock／off 卻有端點、保存天數不是正整數）**建置時報錯**，與第 13 節表單端點同一套規則（`scripts/lib/forms.mjs` 的 `askLogErrors`）。
 - 生效中的 post 端點來源自動加進 CSP `connect-src`（只有這一項），重新套用 `dist/headers/`（第 10 節）。
-- 收件端必須：欄位白名單、伺服器端再遮蔽個資、不記 IP／User-Agent／Referer／cookie、每來源每分鐘 30 筆節流（第六十二輪由 60 降為 30，見 §31）、成功回 204、原始紀錄 90 天到期刪除。參考實作：`scripts/lib/ask-log-mock.mjs`。
+- 收件端必須：欄位白名單、伺服器端再遮蔽個資、不記 IP／User-Agent／Referer／cookie、每來源每分鐘 30 筆節流（第六十三輪由 60 降為 30，見 §31）、成功回 204、原始紀錄 90 天到期刪除。參考實作：`scripts/lib/ask-log-mock.mjs`。
 - 報表：`npm run ask-log:report`（讀 NDJSON 日檔，寫 `.local/ask-log/report.json`）；後台 `/admin/ask-log/` 可載入該檔。原始紀錄與報表都不得進 Git。
 
 ### 15.3 專業版資料預算與 `perf:ask`（第四十八輪，Issue #103）
@@ -1889,6 +1889,7 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 | `round33-consistency.test.mjs` | 跨內容說法不一致的偵測與判定檔 |
 | `round44-leadership.test.mjs` | 首長簡介內容與 schema |
 | `round49-challenge.test.mjs` | `content/governance/eval-challenge.json` 的格式與引用 |
+| `round62-interactives.test.mjs` | `content/interactives/` 互動模組：schema、位置白名單、`basedOn` 參照、開關／檔期／緊急關閉、首頁與 /play/ 渲染、後台開關頁 |
 | `sourcelang.test.mjs` | 來源語言與譯文欄位 |
 | `travel.test.mjs`、`travel-data.test.mjs` | 旅遊疫情快照的等級分布與資料契約 |
 | `units.test.mjs` | 單位主檔 |
@@ -2002,7 +2003,7 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 
 **量測**：`lane-sla.yml` 只量 PR 開啟到合併；「合併到上線」請在 Actions 看 `pages.yml` 的執行時間（純內容應為 Build 45 秒＋部署，不再有 2 分 18 秒的 Tests）。第一次純內容合併後請把實際數字補進 [ci-cd-overview.md](ci-cd-overview.md) §3。
 
-## 30. 正式部署產物白名單、內部站與指紋標頭（第六十二輪，Issue #141）
+## 30. 正式部署產物白名單、內部站與指紋標頭（第六十三輪，Issue #141）
 
 **為什麼：** AI 滲透工具（ARTEX 一類）先盤點公開主機上的所有檔案與端點，再挑目標。原型的 `dist/` 什麼都放（後台頁、後台 JS、source map、標頭設定檔、PR 預覽），正式站的公開主機不該有這些。背景、規則表、對外資產清冊程序與「教訓」寫在 [attack-surface.md](attack-surface.md)；這一節只寫操作。
 
@@ -2067,10 +2068,10 @@ GitHub Pages 原型站照舊用原型模式建置（後台與 source map 是示�
 
 ### 30.6 測試
 
-`tests/round62-attack-surface.test.mjs`：假 dist 的稽核（禁止檔帶規則與理由、原型規則把後台列為預期、防禦性規則先於預覽規則、副檔名白名單）、`splitForProduction`（公開樹乾淨、內部站齊全、`sourceMappingURL` 處理）、CLI 結束碼、`ADMIN_ORIGIN` 的連結、四種格式的指紋標頭。
+`tests/round63-attack-surface.test.mjs`：假 dist 的稽核（禁止檔帶規則與理由、原型規則把後台列為預期、防禦性規則先於預覽規則、副檔名白名單）、`splitForProduction`（公開樹乾淨、內部站齊全、`sourceMappingURL` 處理）、CLI 結束碼、`ADMIN_ORIGIN` 的連結、四種格式的指紋標頭。
 
 
-## 31. 閘道與模擬後端的速率限制（第六十二輪，Issue #140）
+## 31. 閘道與模擬後端的速率限制（第六十三輪，Issue #140）
 
 **為什麼：** ARTEX 這類 AI 自動化滲透工具會 24 小時、平行地列舉端點並串連弱點，成本很低。第一個 `429` 要盡量早、盡量便宜地出現。正式環境的第一層是 WAF／CDN（[abuse-protection.md](abuse-protection.md) §4，資訊室的要求）；這裡是應用程式自己的最後一道，也是收件系統的參考行為。四個後端共用 `scripts/lib/rate-limit.mjs`（滑動記錄、記憶體有上限、**不會整個清空**——舊版三份各自的實作在 key 太多時整個清空，等於灌假 IP 就能重設所有人的計數）。
 
@@ -2112,9 +2113,9 @@ GitHub Pages 原型站照舊用原型模式建置（後台與 source map 是示�
 3. 外部來源被擋 ⇒ 不要調高，改在 WAF 封鎖該來源（[abuse-protection.md](abuse-protection.md) §4）。
 4. 健康檢查探針太密（每秒一次 ⇒ 60 次／分鐘）會吃掉 `ip` 額度：把探針間隔調到 10 秒以上，或探針走內網另一個來源 IP。
 
-測試：`tests/round62-rate-limit.test.mjs`（限流數學、`clientKey` 的代理信任、閘道三個範圍與稽核、三個模擬後端的 429）。
+測試：`tests/round63-rate-limit.test.mjs`（限流數學、`clientKey` 的代理信任、閘道三個範圍與稽核、三個模擬後端的 429）。
 
-## 32. 動態弱點掃描工作流程（第六十二輪，Issue #142）
+## 32. 動態弱點掃描工作流程（第六十三輪，Issue #142）
 
 背景與範圍見 [security-testing.md](security-testing.md)。這一節只寫操作。
 
@@ -2124,7 +2125,7 @@ GitHub Pages 原型站照舊用原型模式建置（後台與 source map 是示�
 
 **怎麼讀**：PASS／WARN／FAIL 的意思與預期的 WARN（GitHub Pages 不能設 CSP／HSTS，標頭在 `dist/headers/` 供正式主機使用，見 §10.3）寫在 security-testing.md 第 4 節。掃描對象是靜態站加模擬後端，模擬後端的發現要對照 §11、§13 的接收系統契約再判斷。
 
-**限制**：開發沙盒沒有 docker，第六十二輪沒有在本機實際執行 ZAP；第一次真正的執行是在 GitHub 上的排程或手動執行。
+**限制**：開發沙盒沒有 docker，第六十三輪沒有在本機實際執行 ZAP；第一次真正的執行是在 GitHub 上的排程或手動執行。
 
 **釘映像檔 digest**：原型用 `ghcr.io/zaproxy/zaproxy:stable`（浮動標籤）。正式 CI 請改成 `ghcr.io/zaproxy/zaproxy@sha256:<digest>`，並定期更新，理由與釘 action SHA 相同（供應鏈）。
 

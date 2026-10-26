@@ -1,5 +1,5 @@
 // @ts-check
-// 自動化探測的特徵（第六十二輪，Issue #140「防 AI 自動化攻擊探測」；說明見 docs/abuse-protection.md）。
+// 自動化探測的特徵（第六十三輪，Issue #140「防 AI 自動化攻擊探測」；說明見 docs/abuse-protection.md）。
 //
 // 為什麼放在 repo 裡、寫成資料：SOC 的告警規則與開發者的分析工具（scripts/analyze-404-log.mjs）要看「同一份清單」。
 // 規則散在 SIEM 主控台裡，開發者改了網址結構不會知道要通知誰；放在這裡，改網址的 PR 就會碰到這份清單和它的測試。

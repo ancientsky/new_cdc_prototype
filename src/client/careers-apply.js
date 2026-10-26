@@ -270,7 +270,7 @@ function init(root) {
     submit.disabled = false;
     if (r.ok === false && r.error === 'network') { msg.textContent = T('form.fallback'); nativePost(form, endpoint, r.submissionId); return; }
     if (r.ok === false) {
-      // 429：第六十二輪（Issue #140），收件系統的速率限制 ⇒ 專用訊息
+      // 429：第六十三輪（Issue #140），收件系統的速率限制 ⇒ 專用訊息
       errBox.textContent = r.status === 429 ? T('form.err.rate') : T('japply.live.err', { status: r.status, msg: r.message }); errBox.hidden = false; errBox.focus(); msg.textContent = '';
       return;
     }

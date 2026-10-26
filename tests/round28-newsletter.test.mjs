@@ -233,7 +233,7 @@ test('狀態機：節流（同一信箱 10 分鐘 3 次、同一來源 10 次，
 /* ───────── HTTP 模擬後端 ───────── */
 async function withApi(fn, opts = {}) {
   const dir = tmp();
-  // httpRate: null：這裡驗的是狀態機自己的節流（每信箱 3 次、每 IP 10 次），HTTP 層每 IP 每分鐘 5 次的限流另由 tests/round62-rate-limit.test.mjs 驗
+  // httpRate: null：這裡驗的是狀態機自己的節流（每信箱 3 次、每 IP 10 次），HTTP 層每 IP 每分鐘 5 次的限流另由 tests/round63-rate-limit.test.mjs 驗
   const api = createSubscriptionApi({ dataFile: path.join(dir, 'subs.json'), outboxDir: path.join(dir, 'outbox'), basePath: '', httpRate: null, ...opts });
   const srv = http.createServer(async (req, res) => {
     const u = new URL(req.url, 'http://localhost');

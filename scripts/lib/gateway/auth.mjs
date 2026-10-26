@@ -11,7 +11,7 @@
 import fs from 'node:fs';
 import { parseAdGroup, sessionProblem, adGroupsOf, CROSS_UNIT_ROLES, GATEWAY_ROLE_OF, ROLES } from '../../../src/client/admin/auth-rules.js';
 import { verifyJwt } from './jwt.mjs';
-// 信任代理的位址比對（含 CIDR）與速率限制共用一份（第六十二輪）：認人與限流必須對「誰是我們的代理」有同一個答案
+// 信任代理的位址比對（含 CIDR）與速率限制共用一份（第六十三輪）：認人與限流必須對「誰是我們的代理」有同一個答案
 import { ipMatcher } from '../rate-limit.mjs';
 
 export const DEV_SESSION_HEADER = 'x-cdc-dev-session';

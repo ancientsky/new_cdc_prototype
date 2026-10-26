@@ -1,6 +1,6 @@
 # 防自動化濫用：速率限制、Bot 防護、探測偵測與告警
 
-> 第六十二輪（2026-10-25），回應 Issue #140「防 AI 自動化攻擊探測」。讀者：資訊室（WAF、收件系統、SOC）、維護本 repo 的同事。
+> 第六十三輪（2026-10-25），回應 Issue #140「防 AI 自動化攻擊探測」。讀者：資訊室（WAF、收件系統、SOC）、維護本 repo 的同事。
 > 相關：[deploy.md](deploy.md) §10.4（security.txt 與通報管道）、§11（電子報）、§13（個資表單）、§14（寫入閘道）、§31（速率限制設定）；[a11y.md](a11y.md)（WCAG 2.2 AA）。
 
 ## 1. 威脅：AI 代理便宜、平行、會串連
@@ -32,11 +32,11 @@ ARTEX 一類的 AI 自動化滲透工具是「多個 LLM 代理分工」：一�
 | 國際疫情推送 `POST /api/intl-epidemic` | 資訊室（只給疫情中心系統） | 每 IP 30／分，**在權杖檢查之前**（已實作） | Bearer 權杖；建議來源 IP 允許清單 | 2 MB | `{error, message}` |
 | 電子報 `/api/subscriptions*` | 公關室委外或資訊室的寄信服務 | 每 IP 5／分（模擬後端已實作；退訂不限）＋每信箱 10 分鐘 3 次 | 蜜罐＋確認信（double opt-in）；正式版建議加隱形挑戰 | 8 KB | `{error, retryAfter?}` |
 
-**共同的錯誤契約：** 錯誤本體只有 `error`（機器看的代碼）與 `message`（人看的白話）、必要時 `fields`／`retryAfter`。**不帶**堆疊、伺服器或框架版本、檔案路徑、SQL 訊息、內部主機名稱；`Server`、`X-Powered-By` 標頭拿掉或不含版本。未預期的錯誤一律 500＋通用訊息，細節只進伺服器 log。429 的訊息也不說門檻（不給調速度的線索）。`tests/round62-rate-limit.test.mjs` 驗閘道的 500 不洩漏路徑。
+**共同的錯誤契約：** 錯誤本體只有 `error`（機器看的代碼）與 `message`（人看的白話）、必要時 `fields`／`retryAfter`。**不帶**堆疊、伺服器或框架版本、檔案路徑、SQL 訊息、內部主機名稱；`Server`、`X-Powered-By` 標頭拿掉或不含版本。未預期的錯誤一律 500＋通用訊息，細節只進伺服器 log。429 的訊息也不說門檻（不給調速度的線索）。`tests/round63-rate-limit.test.mjs` 驗閘道的 500 不洩漏路徑。
 
 ## 4. 誰擋什麼：程式裡做了什麼、WAF 與收件系統要做什麼
 
-### 4.1 本原型已在程式裡做到（第六十二輪）
+### 4.1 本原型已在程式裡做到（第六十三輪）
 
 - `scripts/lib/rate-limit.mjs`：共用的限流（滑動記錄、記憶體有上限、不會被灌假 key 重設）與 `clientKey()`（只在連線來自信任的代理時採信 `X-Forwarded-For`）。
 - 寫入閘道三個範圍的限流、`rate_limited` 稽核事件（deploy.md §31）。
@@ -73,7 +73,7 @@ ARTEX 一類的 AI 自動化滲透工具是「多個 LLM 代理分工」：一�
 
 `SUSPICIOUS_UAS`：`python-requests`、`aiohttp`、`Go-http-client`、`curl/`、`libwww`、`sqlmap`、`nikto`、`nuclei`、`zgrab`、`masscan`、`httpx`、`dirbuster`、`gobuster`、`ffuf`，以及空白 UA。**UA 是弱訊號**：AI 代理常直接用一般 HTTP 程式庫，也能把 UA 改成任何瀏覽器字串；而開放資料的正當使用者也用 curl 與 python。所以程式庫 UA 單獨不告警，明確的掃描器（sqlmap、nuclei…）才加重。**強訊號是爆量與特徵路徑。**
 
-為什麼放 repo：SOC 的規則與開發者的工具要看**同一份清單**。改了網址結構的 PR 會碰到這份清單與它的測試（`tests/round62-probes.test.mjs`，含「本站正當路徑不得命中」）；下面的 KQL 路徑清單從這裡抄，改清單時一併改。
+為什麼放 repo：SOC 的規則與開發者的工具要看**同一份清單**。改了網址結構的 PR 會碰到這份清單與它的測試（`tests/round63-probes.test.mjs`，含「本站正當路徑不得命中」）；下面的 KQL 路徑清單從這裡抄，改清單時一併改。
 
 ### 5.2 用 log 檢查：`analyze-404-log.mjs`
 

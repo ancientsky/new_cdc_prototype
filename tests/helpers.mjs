@@ -6,7 +6,7 @@ import { config } from '../site.config.mjs';
 import { loadSite, sourceHashOf } from '../scripts/lib/load.mjs';
 import { applyGovernance } from '../scripts/lib/governance.mjs';
 
-const COLLECTION_OF = { disease: 'diseases', faq: 'faq', news: 'news', letter: 'news', document: 'documents', clarification: 'clarifications', vaccine: 'vaccines', dataset: 'datasets', banner: 'banners', page: 'pages', media: 'media', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', research: 'research', job: 'jobs', tender: 'tenders', article: 'articles', theme: 'themes' };
+const COLLECTION_OF = { disease: 'diseases', faq: 'faq', news: 'news', letter: 'news', document: 'documents', clarification: 'clarifications', vaccine: 'vaccines', dataset: 'datasets', banner: 'banners', page: 'pages', media: 'media', topic: 'topics', service: 'services', publication: 'publications', labtest: 'labtests', research: 'research', job: 'jobs', tender: 'tenders', article: 'articles', theme: 'themes', interactive: 'interactives' };
 const ID_PREFIX = { document: 'doc', publication: 'pub', labtest: 'lab', article: 'article' };
 const LONG_TRANSCRIPT = '（旁白）出現發燒、頭痛、後眼窩痛、肌肉關節痛等症狀，請儘速就醫並告知醫師旅遊史。清除積水容器，落實巡、倒、清、刷，是預防登革熱最有效的方法。';
 
@@ -74,6 +74,6 @@ export function distBasePath(distDir) {
 
 /** 啟動 scripts/serve.mjs 等子行程用的環境：明確帶 dist 的 BASE_PATH，不靠被釘選過的 process.env */
 export function distEnv(distDir, extra = {}) {
-  // 第六十二輪：端到端測試關掉閘道與模擬後端的速率限制——Playwright 一分鐘內點的次數遠超過真人，限流本身由 tests/round62-rate-limit.test.mjs 驗
+  // 第六十三輪：端到端測試關掉閘道與模擬後端的速率限制——Playwright 一分鐘內點的次數遠超過真人，限流本身由 tests/round63-rate-limit.test.mjs 驗
   return { ...process.env, DIST_DIR: distDir, BASE_PATH: distBasePath(distDir), GATEWAY_RATE_LIMIT: 'off', MOCK_RATE_LIMIT: 'off', ...extra };
 }

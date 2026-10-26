@@ -1318,3 +1318,83 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .c-sit-card__dm{margin:var(--sp-2) 0 0;font-size:var(--fs-sm)}
 .c-sit-card__dmlink{font-weight:700}
 .c-dmcard__kept{margin:0 0 var(--sp-2);padding:var(--sp-1) var(--sp-3);background:var(--warn-bg);color:var(--warn);border-radius:var(--radius-sm);font-size:var(--fs-sm)}
+
+/* ───── 第六十二輪：互動與彩蛋（/play/、首頁「歷史上的今天」小卡、「互動與遊戲」、站名圖示彩蛋）。只加新類別，不改既有元件 ───── */
+.c-playgrid{list-style:none;margin:0 0 var(--sp-5);padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-3)}
+.c-playcard{border:1px solid var(--line);border-radius:var(--radius);background:#fff;transition:border-color .15s,box-shadow .15s}
+.c-playcard:hover,.c-playcard:focus-within{border-color:var(--green-700);box-shadow:var(--shadow)}
+.c-playcard__a{display:flex;gap:var(--sp-3);align-items:flex-start;padding:var(--sp-4);text-decoration:none;color:var(--ink);height:100%}
+.c-playcard__icon{flex:none;width:48px;height:48px;display:grid;place-items:center;font-size:1.6rem;border-radius:var(--radius-sm);background:var(--green-100)}
+.c-playcard__body{display:flex;flex-direction:column;gap:4px;min-width:0}
+.c-playcard__t{color:var(--green-900)}
+.c-playcard__s{font-size:var(--fs-sm);color:var(--ink-2)}
+.c-playcard__meta{font-size:var(--fs-xs);color:var(--ink-3)}
+.c-home__play{margin-top:var(--sp-5)}
+.c-play__tags{display:flex;gap:var(--sp-3);align-items:center;flex-wrap:wrap;margin:0;font-size:var(--fs-sm);color:var(--ink-3)}
+.c-play__demo{display:flex;gap:var(--sp-2);align-items:baseline;flex-wrap:wrap;font-size:var(--fs-sm);color:var(--ink-3);margin:0 0 var(--sp-4)}
+.c-play__disclaimer,.c-play__foot{font-size:var(--fs-sm);color:var(--ink-3);border-top:1px solid var(--line-2);padding-top:var(--sp-3);margin-top:var(--sp-5)}
+.c-play__nojs{font-size:var(--fs-sm);color:var(--ink-3)}
+.c-play__based{font-size:var(--fs-sm);font-weight:700}
+/* 歷史上的今天 */
+.c-otd{border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-4);background:#fff}
+.c-otd--card{margin-top:var(--sp-4)}
+.c-otd--card h2,.c-otd--today h2{font-size:var(--fs-lg);margin:0 0 var(--sp-2)}
+.c-otd--today{background:var(--green-50);border-color:#cfe3d8;margin-bottom:var(--sp-5)}
+.c-otd__todaydate,.c-otd__near{font-size:var(--fs-sm);color:var(--ink-3);font-weight:400;margin:0 0 var(--sp-2)}
+.c-otd__list{list-style:none;margin:0;padding:0}
+.c-otd__item{padding:var(--sp-2) 0;border-bottom:1px solid var(--line-2);line-height:1.6}
+.c-otd__item:last-child{border-bottom:0}
+.c-otd__date{display:inline-block;min-width:5.5em;color:var(--ink-3);font-size:var(--fs-sm)}
+.c-otd__year{color:var(--green-700);margin-right:var(--sp-2);font-variant-numeric:tabular-nums}
+.c-otd__src{display:block;color:var(--ink-3);font-size:var(--fs-xs);margin-top:2px}
+.c-otd__all,.c-otd__link{font-weight:700;font-size:var(--fs-sm)}
+.c-otd__all{display:inline-block;margin-top:var(--sp-3)}
+.c-otd__months ul{list-style:none;margin:0 0 var(--sp-4);padding:0;display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.c-otd__months a{display:inline-block;padding:2px 10px;border:1px solid var(--line);border-radius:var(--radius-pill);text-decoration:none;font-size:var(--fs-sm)}
+.c-otd__months a:hover{border-color:var(--green-700)}
+.c-otd__month h2{font-size:var(--fs-lg);margin:var(--sp-5) 0 var(--sp-2);padding-bottom:var(--sp-1);border-bottom:2px solid var(--green-100)}
+/* 兒童衛教小測驗 */
+.c-quiz__stage,.c-sim__stage{border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-5);background:#fff}
+.c-quiz__progress,.c-quiz__n,.c-sim__n{font-size:var(--fs-sm);color:var(--ink-3);font-weight:400}
+.c-quiz__h,.c-sim__h{font-size:var(--fs-xl);margin:var(--sp-2) 0 var(--sp-4)}
+.c-quiz__btns{display:grid;gap:var(--sp-2);margin-bottom:var(--sp-4)}
+.c-quiz__choice,.c-sim__opt{display:block;width:100%;text-align:left;padding:var(--sp-3) var(--sp-4);border:2px solid var(--line);border-radius:var(--radius);background:#fff;font:inherit;font-size:var(--fs-lg);color:var(--ink);cursor:pointer}
+.c-quiz__choice:hover,.c-sim__opt:hover{border-color:var(--green-700)}
+.c-quiz__choice:disabled,.c-sim__opt:disabled{cursor:default;color:var(--ink-2)}
+.c-quiz__choice.is-answer{border-color:var(--ok);background:var(--ok-bg)}
+.c-quiz__choice.is-wrong{border-color:var(--status-peak);background:var(--status-peak-bg)}
+.c-sim__opt.is-chosen{border-color:var(--green-700);background:var(--green-50)}
+.c-quiz__verdict{font-weight:700;margin:0 0 var(--sp-2)}
+.c-quiz__verdict.is-right{color:var(--ok)} .c-quiz__verdict.is-wrong{color:var(--status-peak)}
+.c-quiz__explain,.c-sim__feedback{margin:0 0 var(--sp-2);line-height:1.7}
+.c-quiz__live{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.c-quiz__list{padding-left:1.5em}
+.c-quiz__q summary{cursor:pointer;font-weight:700;padding:var(--sp-2) 0}
+.c-quiz__choices li.is-answer{font-weight:700;color:var(--ok)}
+.c-quiz__msg{font-size:var(--fs-lg)}
+/* 防疫決策模擬 */
+.c-sim__role{background:var(--paper);border-radius:var(--radius-sm);padding:var(--sp-3) var(--sp-4);line-height:1.7}
+.c-sim__meters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-3);margin-bottom:var(--sp-4)}
+.c-sim__meter{font-size:var(--fs-sm)}
+.c-sim__mlabel{display:block;margin-bottom:4px;color:var(--ink-2)}
+.c-sim__bar{height:10px;border-radius:var(--radius-pill);background:var(--line-2);overflow:hidden}
+.c-sim__fill{display:block;height:100%;background:var(--neutral)}
+.c-sim__meter.is-good .c-sim__fill{background:var(--ok)} .c-sim__meter.is-bad .c-sim__fill{background:var(--status-peak)}
+.c-sim__prompt{font-size:var(--fs-lg);line-height:1.7}
+.c-sim__opts{display:grid;gap:var(--sp-2);margin-bottom:var(--sp-4)}
+.c-sim__deltas{font-size:var(--fs-sm);color:var(--ink-3);margin:0 0 var(--sp-2)}
+.c-sim__ending{font-size:var(--fs-lg);line-height:1.7;padding:var(--sp-3) var(--sp-4);background:var(--green-50);border-radius:var(--radius-sm)}
+.c-sim__round summary{cursor:pointer;font-weight:700;padding:var(--sp-2) 0}
+.c-sim__fallback .c-sim__opts{list-style:none;padding:0}
+.c-sim__fallback .c-sim__opts li{padding:var(--sp-2) 0;border-bottom:1px solid var(--line-2);line-height:1.6}
+/* 彩蛋對話框（無動畫） */
+.c-egg{position:fixed;inset:0;z-index:60;background:rgba(27,31,35,.55);display:grid;place-items:center;padding:var(--sp-4)}
+.c-egg__box{background:#fff;border-radius:var(--radius-lg);padding:var(--sp-5);max-width:420px;width:100%;box-shadow:var(--shadow-lg);text-align:center}
+.c-egg__h{margin:0 0 var(--sp-3);font-size:var(--fs-xl)}
+.c-egg__text{line-height:1.7;margin:0 0 var(--sp-3)}
+.c-egg__timer{font-size:var(--fs-3xl);font-weight:700;color:var(--green-700);margin:0 0 var(--sp-2);font-variant-numeric:tabular-nums}
+.c-egg__status{color:var(--ok);font-weight:700;min-height:1.5em;margin:var(--sp-2) 0}
+.c-egg__foot{display:flex;gap:var(--sp-3);justify-content:center;align-items:center;margin:var(--sp-3) 0 0}
+.c-egg__owner{font-size:var(--fs-xs);color:var(--ink-3);margin:var(--sp-3) 0 0}
+@media (max-width:900px){.c-playgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.c-playgrid,.c-sim__meters{grid-template-columns:1fr}}

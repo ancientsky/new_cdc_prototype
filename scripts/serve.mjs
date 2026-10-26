@@ -14,7 +14,7 @@ const port = Number(process.argv[2] || process.env.PORT || 4173);
 const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.mjs': 'text/javascript', '.json': 'application/json', '.md': 'text/markdown; charset=utf-8', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.webmanifest': 'application/manifest+json' };
 
 // 第二十八輪：電子報訂閱的 HTTP 模擬後端（/api/*，資料與模擬信件寫在 .local/，見 scripts/lib/subscribe-mock.mjs）
-// 第六十二輪（Issue #140）：三個模擬後端的速率限制（docs/deploy.md §31）。MOCK_RATE_LIMIT=off 關閉（端到端測試用：Playwright 一分鐘內點很多下）；
+// 第六十三輪（Issue #140）：三個模擬後端的速率限制（docs/deploy.md §31）。MOCK_RATE_LIMIT=off 關閉（端到端測試用：Playwright 一分鐘內點很多下）；
 // 放在反向代理後面試跑時，代理位址與閘道共用 GATEWAY_TRUSTED_PROXIES（才採信 X-Forwarded-For）
 const mockRateOff = process.env.MOCK_RATE_LIMIT === 'off';
 const trustedProxies = String(process.env.GATEWAY_TRUSTED_PROXIES ?? '').split(/[,\s]+/).filter(Boolean);

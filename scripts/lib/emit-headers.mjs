@@ -19,7 +19,7 @@ import crypto from 'node:crypto';
 import { config } from '../../site.config.mjs';
 import { formOrigins, askLogOrigins } from './forms.mjs';
 
-// 第六十二輪（Issue #141）：要「拿掉」的指紋標頭。Server／X-Powered-By／X-AspNet-Version 等標頭說出伺服器軟體與版本，
+// 第六十三輪（Issue #141）：要「拿掉」的指紋標頭。Server／X-Powered-By／X-AspNet-Version 等標頭說出伺服器軟體與版本，
 // 自動盤點工具（ARTEX 一類）拿來直接比對已知漏洞清單。拿掉它們不會讓伺服器更安全（真正的防線是更新修補），
 // 但會讓「先挑版本最舊的打」這一步變慢、變難。headers.json 的 remove 陣列是機讀正本；各格式的做法不同，見 render* 與 README。
 export const REMOVE_HEADERS = ['Server', 'X-Powered-By', 'X-AspNet-Version', 'X-AspNetMvc-Version'];
@@ -103,7 +103,7 @@ export function renderNginx(h, remove = REMOVE_HEADERS) {
     '# 注意：nginx 的 add_header 在子 location 另有 add_header 時會整組不繼承，請統一放在同一層。',
     ...Object.entries(h).map(([k, v]) => `add_header ${k} "${v.replace(/"/g, '\\"')}" always;`),
     '',
-    `# 第六十二輪（Issue #141）：指紋標頭（${remove.join('、')}）。server_tokens off 只把 Server 的版本號拿掉，仍會送出「Server: nginx」。`,
+    `# 第六十三輪（Issue #141）：指紋標頭（${remove.join('、')}）。server_tokens off 只把 Server 的版本號拿掉，仍會送出「Server: nginx」。`,
     '# 完全拿掉 Server 需要 headers-more 模組：more_clear_headers Server;（放在 http{} 或 server{}）；',
     '# nginx 當反向代理時，上游（IIS、Node、應用伺服器）送來的標頭用 proxy_hide_header 擋掉。',
     'server_tokens off;',
@@ -117,7 +117,7 @@ export function renderWebConfig(h, remove = REMOVE_HEADERS) {
   return [
     '<?xml version="1.0" encoding="UTF-8"?>',
     '<!-- 由 scripts/lib/emit-headers.mjs 自動產生（docs/deploy.md §10）。放進 web.config 的 <system.webServer> 內；請勿手改。 -->',
-    '<!-- 第六十二輪（Issue #141）：拿掉指紋標頭。X-Powered-By 由 customHeaders 的 remove 拿掉；Server 要 IIS 10（Windows Server 2016）以上的 removeServerHeader；',
+    '<!-- 第六十三輪（Issue #141）：拿掉指紋標頭。X-Powered-By 由 customHeaders 的 remove 拿掉；Server 要 IIS 10（Windows Server 2016）以上的 removeServerHeader；',
     '     X-AspNet-Version 另在 <system.web><httpRuntime enableVersionHeader="false" /> 關閉，X-AspNetMvc-Version 在 Application_Start 設 MvcHandler.DisableMvcResponseHeader = true。 -->',
     '<configuration><system.webServer><httpProtocol><customHeaders>',
     ...remove.filter((k) => k !== 'Server').map((k) => `  <remove name="${esc(k)}" />`),
@@ -132,7 +132,7 @@ export function renderWebConfig(h, remove = REMOVE_HEADERS) {
 export function renderNetlify(h, remove = REMOVE_HEADERS) {
   return [
     '# 由 scripts/lib/emit-headers.mjs 自動產生（Netlify／Cloudflare Pages 格式）',
-    `# 第六十二輪（Issue #141）：_headers 只能「加」標頭，不能拿掉 ${remove.join('、')}；這兩個平台本身不送 X-Powered-By，Server 由平台決定。`,
+    `# 第六十三輪（Issue #141）：_headers 只能「加」標頭，不能拿掉 ${remove.join('、')}；這兩個平台本身不送 X-Powered-By，Server 由平台決定。`,
     '# 要拿掉請在前面的 CDN 設定（例如 Azure Front Door 規則引擎「刪除回應標頭」，見 README.md）。',
     '/*',
     ...Object.entries(h).map(([k, v]) => `  ${k}: ${v}`),
@@ -167,7 +167,7 @@ export function renderReadme(h, info) {
 - **HSTS** 一年含子網域；**nosniff**、**Referrer-Policy**、**Permissions-Policy** 為 OWASP Secure Headers 建議值。
 - \`style-src\` 暫留 \`'unsafe-inline'\`：後台頁有少量 \`style=""\` 屬性；清掉後可改為 \`'self'\`。
 
-## 拿掉指紋標頭（第六十二輪，Issue #141）
+## 拿掉指紋標頭（第六十三輪，Issue #141）
 
 要拿掉：${REMOVE_HEADERS.map((k) => `\`${k}\``).join('、')}（\`headers.json\` 的 \`remove\` 陣列）。這些標頭說出伺服器軟體與版本，自動盤點工具用來比對已知漏洞。拿掉不能取代修補，但讓「挑最舊的版本打」變難。
 
@@ -191,7 +191,7 @@ ${Object.entries(info.firstSeen).map(([h, f]) => `- \`${h}\` ← ${f}`).join('\n
 export function emitHeaders(dist, write) {
   const info = collectInlineHashes(dist);
   const headers = securityHeaders({ hashes: info.hashes });
-  // 第六十二輪：remove 與 headers 同層（tests/round23-security.test.mjs 讀 j.headers[...]，形狀不變，只多一個鍵）
+  // 第六十三輪：remove 與 headers 同層（tests/round23-security.test.mjs 讀 j.headers[...]，形狀不變，只多一個鍵）
   write('headers/headers.json', JSON.stringify({ generatedAt: new Date().toISOString(), mode: config.mode, inlineScripts: info.count, headers, remove: REMOVE_HEADERS }, null, 2) + '\n');
   write('headers/nginx.conf', renderNginx(headers));
   write('headers/web.config.headers.xml', renderWebConfig(headers));

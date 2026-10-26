@@ -35,10 +35,11 @@ import { checkI18nQuality, summarizeI18nQuality } from './lib/i18n-quality.mjs';
 import { formErrors, askLogErrors } from './lib/forms.mjs';
 import { themeCss, themeCssPath } from './lib/theme.mjs';
 import { auditDist, splitForProduction, adminOriginErrors } from './lib/dist-profile.mjs';
+import { emitInteractives } from './lib/interactives.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v] = a.replace(/^--/, '').split('='); return [k, v ?? true]; }));
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
-// 第六十二輪（Issue #141）：正式建置（SITE_MODE=production）把後台、source map、標頭設定檔搬到這裡（預設與 dist 同層的 dist-internal/）
+// 第六十三輪（Issue #141）：正式建置（SITE_MODE=production）把後台、source map、標頭設定檔搬到這裡（預設與 dist 同層的 dist-internal/）
 const DIST_INTERNAL = process.env.DIST_INTERNAL_DIR ? path.resolve(process.env.DIST_INTERNAL_DIR) : path.join(path.dirname(DIST), 'dist-internal');
 const t0 = Date.now();
 const log = (...m) => console.log('[build]', ...m);
@@ -95,6 +96,9 @@ async function main() {
   }
   // 第六十輪（Issue #127）：節慶主題（套用哪一個、為什麼沒套用——疫情緊急、沒有生效中的主題）
   log(site.theme.message);
+  // 第六十二輪：互動模組（哪些顯示、為什麼沒顯示——疫情緊急、都關著）
+  log(site.interactives.message);
+  if (site.interactives.reason === 'emergency' && process.env.GITHUB_ACTIONS) console.log(`::notice title=互動模組未顯示::${site.interactives.message}`);
   if (site.theme.reason === 'emergency' && process.env.GITHUB_ACTIONS) console.log(`::notice title=節慶主題未套用::${site.theme.message}`);
   const scheduled = scheduledItems(site);
   log(`排程發布：now=${new Date(site.now).toISOString()}；排程中 ${scheduled.length} 筆${scheduled.length ? `（${scheduled.map((i) => `${i.id}＠${taipeiTime(publishAtMs(i.publishAt))}`).join('、')}）` : ''}，不輸出`);
@@ -126,6 +130,8 @@ async function main() {
   copyDir(path.join(ROOT, 'src/client'), path.join(DIST, 'assets/js'));
   // 第六十輪：只輸出「這次建置生效」的主題 CSS（layout 只在同一條件下連它）；下架或疫情緊急時檔案也不存在
   if (site.theme.active) writeOut(themeCssPath(site.theme.active).slice(1), themeCss(site.theme.active));
+  // 第六十二輪：顯示中的「歷史上的今天」條目 → v1/interactives/<slug>.json（首頁小卡依瀏覽器日期換條目）
+  emitInteractives(site, writeOut);
   // 介面字串依語言拆檔（issue #34）：i18n.<lang>.js 取代完整 i18n.js
   const i18nSizes = emitI18nBundles(DIST);
   log(`i18n 拆檔 → assets/js/i18n.<lang>.js：${Object.entries(i18nSizes).map(([l, b]) => `${l} ${(b / 1024).toFixed(0)}KB`).join('、')}`);
@@ -209,7 +215,7 @@ async function main() {
 
   // PR 預覽（17.2）：連結檢查之後才複製，預覽站不影響主站閘門
   const previews = process.env.PREVIEWS_DIR ? path.resolve(process.env.PREVIEWS_DIR) : null;
-  // 第六十二輪：正式站不放 PR 預覽（未審核的內容與程式，每個預覽又是一整套含後台的站）
+  // 第六十三輪：正式站不放 PR 預覽（未審核的內容與程式，每個預覽又是一整套含後台的站）
   if (previews && !config.isPrototype) log(`SITE_MODE=production：略過 PR 預覽（PREVIEWS_DIR=${previews}）`);
   else if (previews && fs.existsSync(previews)) {
     const dirs = fs.readdirSync(previews, { withFileTypes: true }).filter((e) => e.isDirectory() && /^pr-\d+$/.test(e.name)).map((e) => e.name);
@@ -217,7 +223,7 @@ async function main() {
     log(`PR 預覽 → dist/preview/：${dirs.length} 個（${dirs.join('、') || '無'}）`);
   } else if (previews) log(`PREVIEWS_DIR=${previews} 不存在，略過 PR 預覽`);
 
-  // 第六十二輪（Issue #141）：部署產物白名單與對外資產清冊。放在最後：前面每一步（含複製預覽）都可能多放檔案，檢查的是「真正要部署的那一包」。
+  // 第六十三輪（Issue #141）：部署產物白名單與對外資產清冊。放在最後：前面每一步（含複製預覽）都可能多放檔案，檢查的是「真正要部署的那一包」。
   //   原型：只盤點、不擋——後台、source map 等是示範站刻意公開的；清冊寫到 dist/headers/exposure.json 給資訊室看。
   //   正式：把只給同事的東西搬到 dist-internal/，再用 public 規則稽核一次公開樹；還有任何一個禁止路徑就建置失敗。
   const audit = auditDist(DIST, { profile: config.isPrototype ? 'prototype' : 'public' });

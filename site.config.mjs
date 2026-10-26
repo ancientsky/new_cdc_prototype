@@ -15,7 +15,7 @@ export const config = {
   // 第二十三輪（ARCHITECTURE 26.1）：站台模式。prototype（預設）＝公開示範站：每頁 noindex、robots.txt 全擋、每頁頂端「非官方原型」橫幅；
   // production＝正式站：SITE_MODE=production 建置才拿掉上述三項，robots.txt 改用 AI 政策版（附錄 H）。原型版 robots 另輸出 robots.production.txt 供對照。
   mode: process.env.SITE_MODE === 'production' ? 'production' : 'prototype',
-  // 第六十二輪（Issue #141）：內部站（後台頁＋寫入閘道）的網域，例 https://staff.example.gov.tw（只寫網域，不帶路徑與結尾斜線）。
+  // 第六十三輪（Issue #141）：內部站（後台頁＋寫入閘道）的網域，例 https://staff.example.gov.tw（只寫網域，不帶路徑與結尾斜線）。
   // 預設空字串＝後台與公開頁同一個網域（原型、或正式站由同事用的反向代理把 /admin/ 與 /api/gateway/ 轉到內部站）。
   // 有設定 ⇒ 公開頁上所有 /admin/… 連結（頁尾「同事修改這頁」、後台入口）都改成這個網域的絕對網址（scripts/lib/render.mjs 的 url()）。
   // 正式建置會把 admin/ 從公開產物搬到 dist-internal/（scripts/lib/dist-profile.mjs；docs/attack-surface.md、docs/deploy.md §30）。

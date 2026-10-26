@@ -2,10 +2,43 @@
 import { html, raw, makeUrl } from '../../../scripts/lib/render.mjs';
 import { config } from '../../../site.config.mjs';
 import { travelStats } from './travel.mjs';
-import { ldFor, askBox, sitCard, statusTag, taskCard, dated, unitName, diseaseName, sitField, publishedOf, byDateDesc, verdictPill, isExternal, link, langOk, imgSrc, mediaCard, topicCard, isMediaOutdated, isTopicEnded, HOME_NEWS_TYPES, titleLink, localText, langSpan, itemPath } from './_partials.mjs';
+import { interactivesAt, pickOnThisDay, interactivePath, interactiveSlug, EGG_DEFAULTS } from '../../../scripts/lib/interactives.mjs';
+import { playCard, moduleLangOk } from './play.mjs';
+import { ldFor, pill, askBox, sitCard, statusTag, taskCard, dated, unitName, diseaseName, sitField, publishedOf, byDateDesc, verdictPill, isExternal, link, langOk, imgSrc, mediaCard, topicCard, isMediaOutdated, isTopicEnded, HOME_NEWS_TYPES, titleLink, localText, langSpan, itemPath } from './_partials.mjs';
 
 export function meta(ctx) {
-  return { title: null, description: ctx.t('home.desc'), bodyClass: 'page-home', jsonLd: ldFor(ctx, null, null), item: null };
+  // 第六十二輪：首頁只在有「歷史上的今天」小卡或彩蛋時多載一支小腳本（依瀏覽器日期換條目、彩蛋觸發）；都關著時 HTML 與以前相同
+  const extras = homeOtd(ctx) || homeEgg(ctx) ? ['/assets/js/interactives-home.js'] : [];
+  return { title: null, description: ctx.t('home.desc'), bodyClass: 'page-home', jsonLd: ldFor(ctx, null, null), item: null, scripts: extras };
+}
+
+/* ───── 第六十二輪：互動模組（content/interactives/；開關、檔期、疫情緊急關閉都在 site.interactives） ───── */
+/** 右側欄「歷史上的今天」小卡要用的模組（只在這個語言有文字時） */
+export const homeOtd = (ctx) => interactivesAt(ctx.site, 'home-side').find((i) => i.kind === 'on-this-day' && moduleLangOk(i, ctx.lang)) ?? null;
+/** 站名圖示彩蛋（只在首頁；外語首頁沒有譯文就沒有彩蛋） */
+export const homeEgg = (ctx) => interactivesAt(ctx.site, 'brand').find((i) => i.kind === 'easter-egg' && moduleLangOk(i, ctx.lang)) ?? null;
+/** 首頁最下方「互動與遊戲」的模組 */
+export const homePlay = (ctx) => interactivesAt(ctx.site, 'home-bottom').filter((i) => moduleLangOk(i, ctx.lang));
+
+/** 右側欄小卡：建置時先放 site.today 的條目（沒有 JS 也有內容）；interactives-home.js 再依瀏覽器日期從 /v1/interactives/<slug>.json 換成真正的「今天」 */
+function otdCard(ctx, item) {
+  const { t, url } = ctx;
+  const mmdd = ctx.site.today.slice(5);
+  const pick = pickOnThisDay(item.entries, mmdd);
+  const li = (e) => html`<li class="c-otd__item${e.verified ? '' : ' c-otd__item--unverified'}"><b class="c-otd__year">${e.year}</b> <span class="c-otd__text">${e.text}</span>${e.verified ? '' : html` ${pill(t('otd.unverified'), 'warn')}`}${e.link ? html` <a class="c-otd__link" href="${url(e.link)}">${t('otd.more')} →</a>` : ''}</li>`;
+  return html`<section class="c-otd c-otd--card" data-otd data-otd-src="${url(`/v1/interactives/${interactiveSlug(item)}.json`, { noLang: true })}" data-today="${mmdd}" aria-labelledby="otd-h">
+    <h2 id="otd-h">${t('otd.title')}</h2>
+    <p class="c-otd__near" data-otd-date${pick.exact ? raw(' hidden') : ''}>${pick.exact ? '' : t('otd.near', { date: pick.mmdd.replace('-', '/') })}</p>
+    <ul class="c-otd__list" data-otd-pick>${pick.entries.map(li)}</ul>
+    <a class="c-otd__all" href="${url(interactivePath(item))}">${t('otd.all')} →</a>
+  </section>`;
+}
+
+/** 彩蛋：一個 hidden 的設定節點，interactives-home.js 讀它的 data 屬性；沒有 JS 就什麼都沒有（本來就是彩蛋） */
+function eggNode(ctx, item) {
+  const { t, url } = ctx;
+  const e = item.egg;
+  return html`<div data-egg hidden data-egg-triggers="${(e.triggers ?? []).join(',')}" data-egg-taps="${e.taps ?? EGG_DEFAULTS.taps}" data-egg-keys="${e.keys ?? EGG_DEFAULTS.keys}" data-egg-title="${e.title}" data-egg-text="${e.text}" data-egg-timer="${e.timerSeconds ?? ''}" data-egg-link="${e.link ? url(e.link) : ''}" data-egg-more="${t('egg.more')}" data-egg-close="${t('egg.close')}" data-egg-start="${t('egg.start')}" data-egg-done="${t('egg.done')}" data-egg-owner="${unitName(ctx, item.owner)}"></div>`;
 }
 
 export function activeBanners(site) {
@@ -213,6 +246,14 @@ export function render(ctx) {
     <div class="c-sechead"><h2 id="topics-h">${t('home.topics')}</h2><span class="c-sechead__note">${t('home.topics.note')}</span></div>
     <ul class="c-topicrow">${topics.map((x) => topicCard(ctx, x))}</ul>
   </section>` : '';
+  // 第六十二輪：互動模組——右側欄「歷史上的今天」、最下方「互動與遊戲」（只在至少一個模組開啟時出現）、站名圖示彩蛋
+  const otd = homeOtd(ctx);
+  const egg = homeEgg(ctx);
+  const play = homePlay(ctx);
+  const playSec = play.length ? html`<section class="c-home__play" aria-labelledby="play-h">
+    <div class="c-sechead"><h2 id="play-h">${t('play.title')}</h2><span class="c-sechead__note">${t('home.play.note')}</span><a class="c-sechead__more" href="${url('/play/')}">${t('home.play.all')} →</a></div>
+    <ul class="c-playgrid">${play.map((i) => playCard(ctx, i))}</ul>
+  </section>` : '';
   return html`${fromHint(ctx)}${previewBar(ctx, auto)}
 ${ver('A', heroA(ctx, banners, pinned, { eager: auto === 'A' }))}
 ${bSubject ? ver('B', heroB(ctx, bSubject, banners, { eager: auto === 'B' })) : ''}
@@ -233,11 +274,13 @@ ${bSubject ? ver('B', heroB(ctx, bSubject, banners, { eager: auto === 'B' })) : 
         <ul class="c-clar__list">${clars.map((c) => html`<li>${verdictPill(ctx, c.verdict, { outdated: c.gov?.stale?.length > 0 })}${titleLink(ctx, c)}</li>`)}</ul>
         <a class="c-btn c-btn--ghost c-btn--block" href="${url('/factcheck/')}">${t('home.clar.cta')} →</a>
       </section>
+      ${otd ? otdCard(ctx, otd) : ''}
     </aside>
   </div>
   ${mediaSec}
   ${topicsSec}
-</div>`;
+  ${playSec}
+</div>${egg ? eggNode(ctx, egg) : ''}`;
 }
 
 export function pages() { return [{ path: '/', lang: '*', props: {} }]; }

@@ -20,7 +20,7 @@
 //         --public（分析的是對外入口的 log：打到 /admin/、/api/gateway/ 也算探測——正式環境這兩個路徑不應從網際網路連得到）
 //         --burst <n>、--window <秒>（自動化探測的爆量門檻：同一來源 window 秒內 404 達 n 次；預設 30 次／60 秒）
 //         --trusted-proxy <IP 或 CIDR，可逗號分隔>（log 的來源 IP 是 CDN／反向代理時：改看行尾的 X-Forwarded-For，取最後一個不是代理的位址）
-//   第六十二輪（Issue #140）：報表多一節「自動化探測跡象」（detectProbes；特徵清單在 scripts/lib/probe-signatures.mjs，說明見 docs/abuse-protection.md）
+//   第六十三輪（Issue #140）：報表多一節「自動化探測跡象」（detectProbes；特徵清單在 scripts/lib/probe-signatures.mjs，說明見 docs/abuse-protection.md）
 //   範例：node scripts/analyze-404-log.mjs tests/fixtures/access-404.log
 // 匯出（測試用）：parseLog、detectFormat、analyze、detectProbes、toMarkdown、loadMigrationLists、OLD_SITE_PATTERNS
 import fs from 'node:fs';
@@ -58,7 +58,7 @@ export function detectFormat(text) {
   return 'unknown';
 }
 
-/** 解析 log → [{ path（含 query）, status, time, referer, ua, method, ip, xff }]（無法解析的行略過）。ip／xff 是第六十二輪為探測偵測加的 */
+/** 解析 log → [{ path（含 query）, status, time, referer, ua, method, ip, xff }]（無法解析的行略過）。ip／xff 是第六十三輪為探測偵測加的 */
 export function parseLog(text) {
   const fmt = detectFormat(text);
   const out = [];
@@ -178,7 +178,7 @@ export function timeOf(t) {
 }
 
 /**
- * 自動化探測偵測（第六十二輪，Issue #140）：依來源 IP 彙整，找出「在列舉」的用戶端。
+ * 自動化探測偵測（第六十三輪，Issue #140）：依來源 IP 彙整，找出「在列舉」的用戶端。
  * 訊號與分數（≥ 3 分才列出；說明見 docs/abuse-protection.md §5）：
  *   - 爆量：windowSec 秒內 404 次數 ≥ burst ⇒ +3（強訊號：真人迷路不會一分鐘撞 30 次牆）
  *   - 特徵路徑：打到 probe-signatures.mjs 的路徑（.env、.git/、wp-login.php、../ …）⇒ +3（強訊號：本站一定沒有這些）
@@ -273,7 +273,7 @@ export function toMarkdown(report, { sources = [], format = null, mapSource = nu
   return out.join('\n');
 }
 
-/** 「自動化探測跡象」一節（第六十二輪） */
+/** 「自動化探測跡象」一節（第六十三輪） */
 function probesMarkdown(probes, cell) {
   const s = probes.summary;
   const out = ['## 4. 自動化探測跡象', ''];

@@ -41,7 +41,7 @@
 //
 // 安全：POST 一律要 (1) Content-Type: application/json、(2) Origin 與 Host 同源（Sec-Fetch-Site 若有須為 same-origin）、
 // (3) X-CSRF-Token（GET /session 取得，HMAC 綁帳號）；本體 ≤ 512 KB；回應 no-store＋nosniff＋CSP default-src 'none'。
-// 速率限制（第六十二輪，Issue #140）：每 IP 全部端點、每 IP 登入與認證失敗、每帳號寫入，超過 ⇒ 429 rate_limited＋Retry-After（GATEWAY_RATE_LIMIT）。
+// 速率限制（第六十三輪，Issue #140）：每 IP 全部端點、每 IP 登入與認證失敗、每帳號寫入，超過 ⇒ 429 rate_limited＋Retry-After（GATEWAY_RATE_LIMIT）。
 // 錯誤回應一律是 { error, message }：不帶堆疊、版本、檔案路徑（500 只回白話訊息，細節只進伺服器 log）。
 import fs from 'node:fs';
 import path from 'node:path';
@@ -76,7 +76,7 @@ const INTL_DENIED = '國際疫情匯入只開放給疫情中心的承辦人與�
 const split = (s) => String(s ?? '').split(/[,\s]+/).map((x) => x.trim()).filter(Boolean);
 
 /**
- * 速率限制（第六十二輪，Issue #140；docs/deploy.md §31、docs/abuse-protection.md）。三個範圍、各自計數：
+ * 速率限制（第六十三輪，Issue #140；docs/deploy.md §31、docs/abuse-protection.md）。三個範圍、各自計數：
  *   ip    每個來源 IP，/api/gateway/ 底下的所有請求（含 GET /health：掃描器最常打的就是健康檢查這類固定路徑，而且它很便宜，限了不痛）
  *   auth  每個來源 IP，/login、/login/callback、/logout 與「認證失敗」——猜帳號、重放回呼、灌 OIDC 驗章都落在這裡
  *   write 每個帳號，POST 寫入（存草稿、送審、核准…）：已登入的帳號被盜或腳本失控時，限制它一分鐘能改多少東西
@@ -133,7 +133,7 @@ export function configFromEnv(env = process.env) {
     requireBaseHash: env.GATEWAY_REQUIRE_BASE_HASH === '1',
     // 第五十四輪：另指一份車道設定（預設 content/governance/lanes.json，與 CI 同一份）。給測試站或演練用，例：先關掉型別授權看審核流程
     lanesFile: env.GATEWAY_LANES_FILE ? path.resolve(ROOT, env.GATEWAY_LANES_FILE) : '',
-    // 第六十二輪（Issue #140）：速率限制。GATEWAY_RATE_LIMIT＝空白（預設：ip 120/60 秒、auth 10/60 秒、write 每帳號 60/60 秒）｜off｜
+    // 第六十三輪（Issue #140）：速率限制。GATEWAY_RATE_LIMIT＝空白（預設：ip 120/60 秒、auth 10/60 秒、write 每帳號 60/60 秒）｜off｜
     // 「ip:240/60,auth:20/60,write:60/60」逐項覆寫。來源 IP 只在連線來自 GATEWAY_TRUSTED_PROXIES 時才採信 X-Forwarded-For（rate-limit.mjs clientKey）。
     // 被擋 ⇒ 429 { error:'rate_limited' }＋Retry-After，稽核記 rate_limited { ip, path, scope }（每次開始被擋記一筆，不記本體）。
     rateLimit: rateLimitFromEnv(env.GATEWAY_RATE_LIMIT),
@@ -290,7 +290,7 @@ export function createGatewayApi(opts = {}) {
     if (pathname !== '/api/gateway' && !pathname.startsWith('/api/gateway/')) return false;
     const method = req.method ?? 'GET';
     const sub = pathname.slice('/api/gateway'.length) || '/';
-    // 第六十二輪：先限流再做任何事（含 /health）。來源 IP 只在連線來自信任的代理時才看 X-Forwarded-For，否則攻擊者能自己挑 key
+    // 第六十三輪：先限流再做任何事（含 /health）。來源 IP 只在連線來自信任的代理時才看 X-Forwarded-For，否則攻擊者能自己挑 key
     const ip = clientKey(req, { trustedProxies: trustedProxy });
     if (limited('ip', ip, ip, req, res, sub)) return true;
     if ((sub === '/login' || sub === '/login/callback' || sub === '/logout') && limited('auth', ip, ip, req, res, sub)) return true;

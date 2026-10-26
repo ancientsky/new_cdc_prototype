@@ -1,4 +1,4 @@
-// 第六十二輪（Issue #140「防 AI 自動化攻擊探測」）：access log 的自動化探測偵測。
+// 第六十三輪（Issue #140「防 AI 自動化攻擊探測」）：access log 的自動化探測偵測。
 //   - 特徵清單是資料（scripts/lib/probe-signatures.mjs），SOC 告警與開發者工具看同一份
 //   - 夾具 tests/fixtures/access-probe.log（文件用 IP 203.0.113.x／198.51.100.x）：正常民眾、開放資料介接（python-requests）不能被列出；
 //     爆量列舉、特徵路徑、掃描器 UA 要列出；/admin/、/api/gateway/ 只有 --public 才算

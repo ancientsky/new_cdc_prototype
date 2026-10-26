@@ -1,4 +1,4 @@
-// 第六十二輪（Issue #141）：縮小可被自動盤點的攻擊面——部署產物白名單、內部站拆分、ADMIN_ORIGIN、指紋標頭。
+// 第六十三輪（Issue #141）：縮小可被自動盤點的攻擊面——部署產物白名單、內部站拆分、ADMIN_ORIGIN、指紋標頭。
 import './pin-env.mjs';
 import { test } from 'node:test';
 import assert from 'node:assert/strict';

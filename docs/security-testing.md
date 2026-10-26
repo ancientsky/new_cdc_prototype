@@ -1,6 +1,6 @@
 # 資安測試：滲透測試、動態弱點掃描、AI 輔助自我檢測與修補時限
 
-> 第六十二輪，回應 Issue #142（上線前與定期滲透測試、CI 動態弱點掃描及修補時限，含 AI 輔助自我檢測評估）。
+> 第六十三輪，回應 Issue #142（上線前與定期滲透測試、CI 動態弱點掃描及修補時限，含 AI 輔助自我檢測評估）。
 > 給誰看：資訊室、OASIS（AI推動辦公室）、要和資安廠商談範圍的同事。
 > 狀態：**示意稿**。時限與頻率須由資訊室依本署資通安全責任等級與現行規範確認；本文件不取代正式的資安管理文件。
 > 相關：[deploy.md](deploy.md) §9（權限與安全）、§10（安全標頭）、§10.4（security.txt）、§32（DAST 操作）、[a11y.md](a11y.md)、[ci-cd-overview.md](ci-cd-overview.md)、[careers-privacy.md](careers-privacy.md)、[attack-surface.md](attack-surface.md)（對外暴露面清單，另一分支撰寫中）。
