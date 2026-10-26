@@ -365,6 +365,9 @@ GitHub Pages 不能自訂回應標頭，所以原型站只有 `<meta name="robot
 | `POST /api/subscriptions/update` | `{token, topics[], frequency, lang}`；不可改信箱 |
 | `POST /api/subscriptions/unsubscribe` | token 可在 JSON、form 或網址 `?token=`；**必須接受 RFC 8058 一鍵退訂**（`Content-Type: application/x-www-form-urlencoded`、本體 `List-Unsubscribe=One-Click`、不需 Cookie／登入、不需同源 `Origin`）；冪等；只保留「信箱＋已退訂」 |
 | `POST /api/subscriptions/manage-link` | `{email}`；一律 `202` |
+| `429 Too Many Requests`（第六十二輪） | 任何端點過頻：`{error:'rate', retryAfter, message}`＋`Retry-After`（秒）＋`Cache-Control: no-store`。模擬後端：每來源 IP 每 60 秒 5 次，**在讀本體之前**判斷；`GET /api/health` 與退訂不限（一鍵退訂由信箱業者的伺服器代送，許多人共用少數 IP）。狀態機另有每信箱 10 分鐘 3 次、每 IP 10 分鐘 10 次。前端依 `rate`＋`retryAfter` 顯示「請 N 秒後再試」 |
+| `413 Payload Too Large` | 本體 > 8 KB：`{error:'too_large'}`。本體有上限才擋得住「一次塞很大的請求」耗資源 |
+| 錯誤本體（第六十二輪） | 一律只有 `error`（代碼）＋必要時 `message`（白話）／`fields`／`retryAfter`：**不帶堆疊、伺服器版本、檔案路徑、SQL 或框架錯誤**；`Server`／`X-Powered-By` 標頭拿掉或改成不含版本。未預期錯誤回 `500 {error:'server'}`，細節只進伺服器 log。見 [abuse-protection.md](abuse-protection.md) |
 
 主題 id 只有 `news`、`documents`、`situation`、`publications`、`notices`、`careers`、`procurement`（＝RSS 頻道，見 `src/client/subscribe-rules.js` 的 `TOPIC_IDS`，測試保證與 `feeds/*.xml` 一致）。
 
@@ -496,6 +499,9 @@ location ~ ^/pagefind/pagefind\..*\.pf_meta$ { add_header Cache-Control "public,
 | 去重 | `submissionId`（UUID）是冪等鍵，同一 id 只能收一次——瀏覽器送不出 fetch（網路錯誤、CORS 尚未設定）時會改用一般表單 POST 帶同一個 id 再送 |
 | 一般表單 POST | 欄位同上加 `submissionId`；端點回自己的 HTML 收件頁（沒有 JS 的瀏覽器也走這條） |
 | CORS | 允許本站來源、`POST`、`Content-Type` 標頭；不需要 cookie（前端 `credentials: 'omit'`） |
+| 過頻（第六十二輪） | `429 Too Many Requests`＋`Retry-After`（秒）＋`{ ok: false, message }`；頁面顯示專用訊息「送出太頻繁，請稍候再試」（`form.err.rate`），保留填寫內容、不自動重送。門檻見 13.4 |
+| 本體太大 | `413 Payload Too Large`＋`{ ok: false, message }`；上限由收件系統定（建議沒有附件 ≤ 64 KB、附件依表單規定），超過就不讀完、不存 |
+| 錯誤本體 | 只有 `ok:false` 與白話 `message`（可加代碼）：**不帶堆疊、版本、內部路徑、資料庫訊息**；5xx 一律通用訊息，細節只進收件系統自己的 log（且不含個資，見 13.4） |
 
 **電子報**：沿用第 11 節的 `/api/subscriptions*` 契約，`endpoint` 是這些路徑的前綴（例：`https://mail.cdc.gov.tw/newsletter` ⇒ `https://mail.cdc.gov.tw/newsletter/api/subscriptions`），另需 CORS。
 
@@ -509,7 +515,10 @@ location ~ ^/pagefind/pagefind\..*\.pf_meta$ { add_header Cache-Control "public,
 | --- | --- | --- |
 | 存取控管 | 以 AD 群組控管：例如「人事室報名承辦」只看報名、「秘書室信箱承辦」只看信箱、「公關室電子報」只看訂閱；系統管理者與資料讀者分開；每次查看與匯出留紀錄 | 個資只給需要的人看，出事查得到是誰 |
 | 保存期限 | 報名資料依人事資料保存規定（甄選結束後多久刪除）；信箱來信依檔案法與陳情處理規定；訂閱者退訂後多久刪除。到期自動刪除並留紀錄，備份一併處理 | 頁面上的「保存期限」要寫得出具體數字 |
-| 防濫用 | CAPTCHA 或等效機制（建議用無障礙、免圖形辨識的方案，例如隱形挑戰或工作量證明）；以 IP 與 email 做速率限制（例：同一來源每分鐘 5 次）；附件限制類型與大小並做病毒掃描 | 公開表單一定會被灌；附件是最常見的惡意程式入口 |
+| 防濫用：反自動化 | 必須有 CAPTCHA 或等效機制，而且**必須無障礙**：不得用圖形辨識、扭曲文字、聲音辨識這類要使用者「解題」的 CAPTCHA（本站目標 WCAG 2.2 AA，見 [a11y.md](a11y.md)；2.2 新增的 3.3.8「無障礙驗證」不允許認知測驗）。可用：隱形挑戰（瀏覽器端自動完成、不需互動）、工作量證明（PoW，瀏覽器算幾百毫秒）、蜜罐欄位＋最短填寫時間；挑戰失敗時要有替代管道（電話 1922、臨櫃）。驗證結果由**收件系統在伺服器端**檢查，不能只靠前端 | 公開表單一定會被灌；AI 代理會讀表單、自動填寫，蜜罐單獨已不夠 |
+| 防濫用：速率限制 | 以來源 IP **與** email（或身分欄位）各自限流，例：同一來源每分鐘 5 次（與本原型模擬後端的數字一致，`scripts/lib/subscribe-mock.mjs`）；超過回 `429`＋`Retry-After`（13.2）。來源 IP 只採信自己代理（WAF／反向代理）加上的 `X-Forwarded-For` 最後一段，**不可直接信任請求自帶的標頭**（攻擊者會自己填） | key 若是攻擊者能選的東西，限流形同虛設 |
+| 防濫用：本體與欄位 | 限制本體大小（13.2）；**欄位白名單**：只收該表單定義的欄位，未知欄位整筆拒絕（`400`）而不是默默存下；每欄檢查型別、長度、格式（email、電話、身分證檢查碼）；附件限制類型（以內容判斷，不只看副檔名）與大小並做病毒掃描 | 白名單擋住「多塞欄位探測後端行為」；附件是最常見的惡意程式入口 |
+| 防濫用：錯誤與記錄 | 錯誤回應通用（13.2）；被擋的請求（429、反自動化失敗、白名單拒絕）留**不含個資**的紀錄（時間、來源 IP、端點、原因）並送資訊室的 Log Analytics／SOC，告警規則見 [abuse-protection.md](abuse-protection.md) §5 | 被擋的紀錄就是探測的證據 |
 | 傳輸與儲存 | 全程 HTTPS；靜態加密；不把個資寫進系統日誌 | 日誌常被忽略，也常被大量存取 |
 | 通知 | 收件後寄回執（含收件編號）；不在信裡重複敏感欄位 | 讓民眾知道送到了，又不擴大個資流動 |
 | 事故 | 依機關個資事故通報流程 | — |
@@ -765,7 +774,7 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
    - 疫情中心的匯出端點放在哪個網段？CI（GitHub Actions 或機關 GitLab Runner）連得到嗎？連不到時，是把 Runner 放進同網段，還是由中心把匯出檔放到 CI 連得到的位置？
    - 端點要不要權杖？權杖由誰發、多久換一次、放在 CI 的哪個祕密設定（`INTL_FEED_URL`、`INTL_FEED_TOKEN`）？
 9. **GitLab 保護分支：** 推送端點與後台匯入會由服務帳號把 `data/snapshots/travel-epidemic.json`、`intl-epidemic-import.json` **直接提交到目標分支**（不開合併請求）。保護分支是否允許這個服務帳號直接推送？若不允許，要改成「開合併請求＋CI 通過自動合併」（多幾分鐘延遲），或限定服務帳號只能改 `data/snapshots/` 底下（Premium 的 push rules／CODEOWNERS）。
-10. **推送 webhook 的來源 IP：** 中心系統呼叫 `POST /api/intl-epidemic` 時從哪個 IP 或網段出來？能否在反向代理或防火牆只允許這些來源（端點本身另有 Bearer 權杖、每 IP 每分鐘 10 次的限流、2 MB 上限）？這支端點要不要和後台放在同一個對外網址？
+10. **推送 webhook 的來源 IP：** 中心系統呼叫 `POST /api/intl-epidemic` 時從哪個 IP 或網段出來？能否在反向代理或防火牆只允許這些來源（端點本身另有 Bearer 權杖、每 IP 每分鐘 30 次的限流（第六十二輪由 10 調為 30，且在檢查權杖之前判斷，見 §31）、2 MB 上限）？這支端點要不要和後台放在同一個對外網址？
 
 ### 14.9 附件上限（第四十五輪）
 
@@ -815,7 +824,7 @@ ASK_PERF=1 node --test tests/round40-ask-perf.test.mjs      # 當成測試：TBT
 
 - 設定矛盾（post 沒端點、端點不是 https、mock／off 卻有端點、保存天數不是正整數）**建置時報錯**，與第 13 節表單端點同一套規則（`scripts/lib/forms.mjs` 的 `askLogErrors`）。
 - 生效中的 post 端點來源自動加進 CSP `connect-src`（只有這一項），重新套用 `dist/headers/`（第 10 節）。
-- 收件端必須：欄位白名單、伺服器端再遮蔽個資、不記 IP／User-Agent／Referer／cookie、每分鐘 60 筆節流、成功回 204、原始紀錄 90 天到期刪除。參考實作：`scripts/lib/ask-log-mock.mjs`。
+- 收件端必須：欄位白名單、伺服器端再遮蔽個資、不記 IP／User-Agent／Referer／cookie、每來源每分鐘 30 筆節流（第六十二輪由 60 降為 30，見 §31）、成功回 204、原始紀錄 90 天到期刪除。參考實作：`scripts/lib/ask-log-mock.mjs`。
 - 報表：`npm run ask-log:report`（讀 NDJSON 日檔，寫 `.local/ask-log/report.json`）；後台 `/admin/ask-log/` 可載入該檔。原始紀錄與報表都不得進 Git。
 
 ### 15.3 專業版資料預算與 `perf:ask`（第四十八輪，Issue #103）
@@ -1988,3 +1997,47 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 **為什麼用 compare API 而不是 `git diff HEAD^`**：`actions/checkout` 預設 `fetch-depth: 1` 沒有 `HEAD^`；多個 commit 一次 push 時 `HEAD^` 也不是 push 前的 `main`。compare API 直接比 push 前後兩個 SHA，不用 checkout、不執行程式，和 `content-pr.yml` 的 `lane` job 同一個原則。
 
 **量測**：`lane-sla.yml` 只量 PR 開啟到合併；「合併到上線」請在 Actions 看 `pages.yml` 的執行時間（純內容應為 Build 45 秒＋部署，不再有 2 分 18 秒的 Tests）。第一次純內容合併後請把實際數字補進 [ci-cd-overview.md](ci-cd-overview.md) §3。
+
+## 31. 閘道與模擬後端的速率限制（第六十二輪，Issue #140）
+
+**為什麼：** ARTEX 這類 AI 自動化滲透工具會 24 小時、平行地列舉端點並串連弱點，成本很低。第一個 `429` 要盡量早、盡量便宜地出現。正式環境的第一層是 WAF／CDN（[abuse-protection.md](abuse-protection.md) §4，資訊室的要求）；這裡是應用程式自己的最後一道，也是收件系統的參考行為。四個後端共用 `scripts/lib/rate-limit.mjs`（滑動記錄、記憶體有上限、**不會整個清空**——舊版三份各自的實作在 key 太多時整個清空，等於灌假 IP 就能重設所有人的計數）。
+
+### 31.1 設定與預設值
+
+| 後端 | 範圍（key） | 預設 | 設定 | 被擋時 |
+| --- | --- | --- | --- | --- |
+| 寫入閘道 `/api/gateway/*` | `ip`：每來源 IP，所有端點（含 `GET /health`） | 120 次／60 秒 | `GATEWAY_RATE_LIMIT` | `429 {error:'rate_limited', message:'操作太頻繁，請稍後再試'}` |
+| 〃 | `auth`：每來源 IP，`/login`、`/login/callback`、`/logout` 與**認證失敗** | 10 次／60 秒 | 〃 | 〃 |
+| 〃 | `write`：每帳號，所有 POST 寫入（在 CSRF 檢查與讀本體之前） | 60 次／60 秒 | 〃 | 〃 |
+| 電子報模擬 `/api/subscriptions*` | 每來源 IP（health、退訂除外） | 5 次／60 秒 | `createSubscriptionApi({ httpRate })` | `429 {error:'rate', retryAfter, message}` |
+| 問答紀錄信標 `POST /api/ask-log` | 每來源 IP | 30 次／60 秒（原 60） | `createAskLogApi({ rate })` | `429 {error:'rate', message}` |
+| 國際疫情推送 `POST /api/intl-epidemic` | 每來源 IP，**在權杖檢查之前** | 30 次／60 秒（原 10） | `createIntlFeedApi({ rate })` | `429 {error:'rate', message}` |
+
+全部附 `Retry-After`（秒，最舊那筆離開視窗的真實時間）與 `Cache-Control: no-store`，訊息不說門檻。被擋的請求**不讀本體**（只放掉），所以不花解析 24 MB 本體的成本。國際疫情推送原本 10 次是為了擋猜權杖；改到權杖檢查之前、並與其他端點同一套後，每分鐘最多試 30 次仍猜不到 32 位元組的隨機權杖，疫情中心系統偶爾補送也不會撞牆。
+
+**`GATEWAY_RATE_LIMIT` 的寫法：**
+
+- 不設或空白：上表預設。
+- `off`：關閉（只給本機除錯；**正式環境不要關**）。
+- 逐項覆寫：`GATEWAY_RATE_LIMIT=ip:240/60,auth:20/60,write:60/60`（`範圍:次數/秒數`，逗號分隔，沒寫的範圍用預設）。格式不對閘道**不啟動**，錯誤訊息會說哪一段不對——寧可起不來，也不要默默用錯的數字。
+
+開發伺服器 `scripts/serve.mjs` 的三個模擬後端：`MOCK_RATE_LIMIT=off` 關閉（端到端測試由 `tests/helpers.mjs` 的 `distEnv()` 一併設 `GATEWAY_RATE_LIMIT=off` 與 `MOCK_RATE_LIMIT=off`：Playwright 一分鐘內點的次數遠超過真人）；試跑時放在反向代理後面，代理位址與閘道共用 `GATEWAY_TRUSTED_PROXIES`。
+
+### 31.2 來源 IP：一定要設 `GATEWAY_TRUSTED_PROXIES`
+
+限流的 key 必須是攻擊者選不了的東西。`X-Forwarded-For` 是請求自己帶的標頭，誰都能寫；所以只有 TCP 連線的對端在 `GATEWAY_TRUSTED_PROXIES`（逗號分隔，可用 CIDR，與 header 登入模式同一個設定）裡時，閘道才看 `X-Forwarded-For`，而且從右往左跳過信任的代理，取第一個不是代理的位址。
+
+**部署陷阱：** 閘道放在反向代理（IIS ARR、nginx、Application Gateway）後面卻沒設 `GATEWAY_TRUSTED_PROXIES` ⇒ 所有人都是代理的那一個 IP，**全機關共用 120 次／分鐘**，上班尖峰就會互相擋。症狀：同事陸續看到「操作太頻繁」，稽核裡 `rate_limited` 的 `ip` 都是代理位址。修法：把代理的位址加進 `GATEWAY_TRUSTED_PROXIES`，並確認代理有**覆寫**（不是附加使用者送來的）或附加 `X-Forwarded-For`。
+
+### 31.3 稽核事件
+
+被擋時寫一筆 `rate_limited`（`result: 'denied'`，欄位 `ip`、`path`（最多 120 字）、`scope`：`ip`／`auth`／`write`；`write` 另有 `actor`）。**只在「開始被擋」那一次寫**（同一個 key 連續被拒只記第一筆，下次被放行後才會再記），不記本體、不記標頭——否則被灌的時候每個 429 都寫一筆，攻擊者就能拿稽核檔塞爆磁碟。同一個 IP 在一小時內反覆出現 `rate_limited`、或 `scope: auth` 出現，就是 [abuse-protection.md](abuse-protection.md) §5 告警規則 3 的訊號。
+
+### 31.4 怎麼調
+
+1. 先看稽核：`grep '"action":"rate_limited"' .local/gateway-audit.jsonl`（正式環境為 `GATEWAY_AUDIT_FILE`）。是同事被擋（`ip` 是機關內網、`scope: write`）還是外部來源？
+2. 同事被擋 ⇒ 先確認 31.2 的代理設定；確定是正常大量作業（例如一次核准很多則）才把 `write` 調高，例：`write:120/60`。
+3. 外部來源被擋 ⇒ 不要調高，改在 WAF 封鎖該來源（[abuse-protection.md](abuse-protection.md) §4）。
+4. 健康檢查探針太密（每秒一次 ⇒ 60 次／分鐘）會吃掉 `ip` 額度：把探針間隔調到 10 秒以上，或探針走內網另一個來源 IP。
+
+測試：`tests/round62-rate-limit.test.mjs`（限流數學、`clientKey` 的代理信任、閘道三個範圍與稽核、三個模擬後端的 429）。

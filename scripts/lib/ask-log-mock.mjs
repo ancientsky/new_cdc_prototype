@@ -16,7 +16,9 @@
 //   - 欄位白名單（ALLOWED）：其他鍵一律丟掉；每個欄位檢查型別、格式與長度，不合格的設成 null。
 //   - 問句：maskPII（與引擎同一份規則，src/client/answer/text.js）、去控制字元、空白合併、截到 200 字。
 //   - 時間：用伺服器自己的時間、只到分鐘（不採信前端的 t，避免時鐘偏差，也少一個可指認個人的細節）。
-//   - 不存 IP、User-Agent、Referer、cookie。IP 只在記憶體裡做節流（每分鐘 60 筆），不寫檔。
+//   - 不存 IP、User-Agent、Referer、cookie。IP 只在記憶體裡做節流（每分鐘 30 筆），不寫檔。
+//     第六十二輪（Issue #140）：改用共用的 rate-limit.mjs（記憶體有上限但不會「整個清空」——舊版超過一萬個 IP 就清空，等於讓灌假 IP 的人重設所有計數），
+//     門檻由 60 降為 30：一位民眾一分鐘問不到 30 題，這支信標是匿名、免登入的寫入端點，最容易被拿來灌假紀錄、污染「查無結果」報表。
 // 保存期限：每次寫入時順手刪掉超過 retentionDays（預設 90，ASK_LOG_RETENTION_DAYS）天的日檔。
 // 儲存：.local/ask-log/YYYY-MM-DD.ndjson（臺灣日期；.local/ 已在 .gitignore，絕不進版控）。
 import fs from 'node:fs';
@@ -26,10 +28,11 @@ import { maskPII } from '../../src/client/answer/text.js';
 import { askLogSetting } from './forms.mjs';
 import { MOCK_COOKIE } from '../../src/client/answer/log.js';
 import { DEFAULT_DIR, reportFromDir, taipeiDate } from './ask-log-report.mjs';
+import { createRateLimiter, clientKey, tooMany } from './rate-limit.mjs';
 
 export const MAX_BODY = 2 * 1024;
 export const MAX_DAY_BYTES = 20 * 1024 * 1024;
-export const RATE = { windowMs: 60_000, max: 60 };
+export const RATE = { windowMs: 60_000, max: 30 };
 const OUTCOMES = new Set(['answered', 'low-relevance', 'stats', 'no-match', 'no-source', 'refused', 'paused']);
 const LOOPBACK = /^(::1|127\.\d+\.\d+\.\d+|::ffff:127\.\d+\.\d+\.\d+)$/;
 
@@ -91,17 +94,11 @@ export function createAskLogApi({
   rate = RATE,
   devReport = true,
   contentDir,
+  trustedProxies = [],
 } = {}) {
-  const hits = new Map(); // ip → [時間戳]，只在記憶體
+  // ip → 時間戳，只在記憶體（rate-limit.mjs）；rate: null ⇒ 不限流（只給測試）
+  const limiter = rate ? createRateLimiter({ ...rate, now: () => now().getTime() }) : null;
   let lastPrune = '';
-
-  function limited(ip, t) {
-    const list = (hits.get(ip) ?? []).filter((x) => t - x < rate.windowMs);
-    list.push(t);
-    hits.set(ip, list);
-    if (hits.size > 10_000) hits.clear(); // 防記憶體被灌爆：最壞只是暫時放寬節流
-    return list.length > rate.max;
-  }
 
   async function readBody(req) {
     const chunks = [];
@@ -168,7 +165,9 @@ export function createAskLogApi({
       if (host !== req.headers.host) return json(403, { error: 'forbidden' });
     }
     const t = now();
-    if (limited(ip, t.getTime())) return json(429, { error: 'rate' }, { 'Retry-After': String(Math.ceil(rate.windowMs / 1000)) });
+    // 讀本體之前限流；放在反向代理後面時，只有連線來自 trustedProxies 才採信 X-Forwarded-For（否則攻擊者自己選 key）
+    const r = limiter?.hit(clientKey(req, { trustedProxies }));
+    if (r && !r.ok) return tooMany(res, r.retryAfterSec, { req, error: 'rate' });
     try {
       const ev = sanitizeEvent(await readBody(req), t);
       if (!ev) return json(400, { error: 'invalid' });

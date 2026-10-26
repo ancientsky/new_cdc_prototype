@@ -11,6 +11,8 @@
 import fs from 'node:fs';
 import { parseAdGroup, sessionProblem, adGroupsOf, CROSS_UNIT_ROLES, GATEWAY_ROLE_OF, ROLES } from '../../../src/client/admin/auth-rules.js';
 import { verifyJwt } from './jwt.mjs';
+// 信任代理的位址比對（含 CIDR）與速率限制共用一份（第六十二輪）：認人與限流必須對「誰是我們的代理」有同一個答案
+import { ipMatcher } from '../rate-limit.mjs';
 
 export const DEV_SESSION_HEADER = 'x-cdc-dev-session';
 const LOOPBACK = /^(::1|127\.\d+\.\d+\.\d+)$/;
@@ -71,18 +73,6 @@ export function createDevAuth({ now = () => Date.now() } = {}) {
 }
 
 /* ───────── header（信任的反向代理） ───────── */
-function ipMatcher(list) {
-  const rules = (list ?? []).map((x) => String(x).trim()).filter(Boolean).map((r) => {
-    const m = /^(\d+\.\d+\.\d+\.\d+)\/(\d{1,2})$/.exec(r);
-    if (!m) return (ip) => ip === r;
-    const toInt = (a) => a.split('.').reduce((n, o) => n * 256 + Number(o), 0);
-    const bits = Number(m[2]);
-    const mask = bits === 0 ? 0 : (~0 << (32 - bits)) >>> 0;
-    const net = (toInt(m[1]) & mask) >>> 0;
-    return (ip) => /^\d+\.\d+\.\d+\.\d+$/.test(ip) && ((toInt(ip) & mask) >>> 0) === net;
-  });
-  return (ip) => rules.some((f) => f(normIp(ip)));
-}
 const hdr = (req, name) => { const v = req.headers[String(name).toLowerCase()]; return Array.isArray(v) ? v[0] : v; };
 /** 名字可能是中文：代理以 percent-encoding（UTF-8）放進標頭（HTTP 標頭本身只保證 ASCII） */
 function decodeHeaderText(v) { if (v == null) return undefined; try { return decodeURIComponent(String(v)); } catch { return String(v); } }
