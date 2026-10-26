@@ -2,7 +2,7 @@
 // 開關本身是內容 JSON 的一個欄位：這頁產生改好的整筆 JSON（下載／複製），有寫入閘道時直接存檔、送審（快車道，公關室 24 小時內複核）。
 import { html } from '../../../scripts/lib/render.mjs';
 import { pageHead, adminMeta, dataScript, gatewayPanel } from './_partials.mjs';
-import { KINDS, PLACEMENTS, INTERACTIVE_STATUS_LABEL, interactivePath, hasPage } from '../../../scripts/lib/interactives.mjs';
+import { KINDS, PLACEMENTS, INTERACTIVE_STATUS_LABEL, interactivePath, hasPage, isQuizKind } from '../../../scripts/lib/interactives.mjs';
 export { layout } from './_layout.mjs';
 
 export function pages() { return [{ path: '/admin/interactives/', props: {}, noindex: true }]; }
@@ -20,7 +20,7 @@ export function render(ctx) {
   const live = (id) => { const it = site.byId.get(id); return it && it.status === 'published' && !it.gov?.noindex; };
   const extra = (it) => {
     if (it.kind === 'on-this-day') { const n = (it.entries ?? []).filter((e) => !e.verified).length; return n ? `${n}／${it.entries.length} 條待確認` : `${it.entries.length} 條，全部已核對`; }
-    if (it.kind === 'kids-quiz') { const hid = (it.questions ?? []).filter((q) => !live(q.basedOn)).length; return `${it.questions.length} 題${hid ? `，${hid} 題因依據不在線上而隱藏` : ''}`; }
+    if (isQuizKind(it.kind)) { const hid = (it.questions ?? []).filter((q) => !live(q.basedOn)).length; return `${it.questions.length} 題${hid ? `，${hid} 題因依據不在線上而隱藏` : ''}`; }
     if (it.kind === 'policy-sim') return `${it.scenario?.rounds?.length ?? 0} 回合、${it.scenario?.meters?.length ?? 0} 個量表`;
     if (it.kind === 'easter-egg') return `觸發：${(it.egg?.triggers ?? []).map((t) => (t === 'brand-taps' ? `連點站名圖示 ${it.egg.taps ?? 5} 下` : `輸入 ${it.egg.keys ?? '1922'}`)).join('、')}`;
     return '';

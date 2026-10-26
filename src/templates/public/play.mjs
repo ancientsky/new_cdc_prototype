@@ -6,7 +6,7 @@
 //   - 模組頁目前只有中文（pages() 不給 lang），外語頁尾的連結由 makeUrl 退回中文正本。
 import { html, raw, jsonScript } from '../../../scripts/lib/render.mjs';
 import { ldFor, pageHead, unitName, pill, hrefFor } from './_partials.mjs';
-import { KINDS, hasPage, interactiveSlug, interactivePath, interactivesAt, liveQuestions, pickOnThisDay } from '../../../scripts/lib/interactives.mjs';
+import { KINDS, isQuizKind, hasPage, interactiveSlug, interactivePath, interactivesAt, liveQuestions, pickOnThisDay } from '../../../scripts/lib/interactives.mjs';
 
 /** 模組在這個語言有沒有可顯示的文字（目前只有中文正本；有 i18n[lang].title 的語言也算） */
 export const moduleLangOk = (item, lang) => lang === 'zh-TW' || !!item?.i18n?.[lang]?.title;
@@ -23,7 +23,7 @@ export function meta(ctx, props = {}) {
   return { title: item.title, description: item.summary, bodyClass: 'page-play', scripts: ['/assets/js/play.js'], item, jsonLd: ldFor(ctx, item, [{ label: t('play.title'), href: '/play/' }, { label: item.title }]), pagefind: { type: 'page', audience: ['public'] } };
 }
 
-const KIND_ICON = { 'on-this-day': '📅', 'kids-quiz': '🧼', 'policy-sim': '🗺️', 'easter-egg': '🥚' };
+const KIND_ICON = { 'on-this-day': '📅', 'kids-quiz': '🧼', quiz: '🧠', 'policy-sim': '🗺️', 'easter-egg': '🥚' };
 
 /** /play/ 與首頁「互動與遊戲」共用的卡 */
 export function playCard(ctx, item) {
@@ -115,7 +115,7 @@ export function render(ctx, props = {}) {
   const { t, site } = ctx;
   const item = props?.id ? site.byId.get(props.id) : null;
   if (!item) return hub(ctx);
-  const body = item.kind === 'on-this-day' ? onThisDayPage(ctx, item) : item.kind === 'kids-quiz' ? quizPage(ctx, item) : item.kind === 'policy-sim' ? simPage(ctx, item) : '';
+  const body = item.kind === 'on-this-day' ? onThisDayPage(ctx, item) : isQuizKind(item.kind) ? quizPage(ctx, item) : item.kind === 'policy-sim' ? simPage(ctx, item) : '';
   return html`${pageHead(ctx, { trail: [{ label: t('play.title'), href: '/play/' }, { label: item.title }], h1: item.title, lead: item.summary, tags: html`<p class="c-play__tags">${pill(KINDS[item.kind]?.label ?? item.kind, 'info')} <span class="c-play__owner">${t('play.owner')}：${unitName(ctx, item.owner)}</span></p>` })}
 ${demoNote(ctx, item)}
 <div class="c-play c-play--${item.kind}" data-play-kind="${item.kind}" data-play-id="${interactiveSlug(item)}">${body}</div>`;

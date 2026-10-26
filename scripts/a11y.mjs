@@ -31,6 +31,7 @@ export const PAGES = [
   '/en/search/?q=dengue', '/id/search/?q=demam%20berdarah',
   // 第六十二輪：互動與彩蛋（測驗與模擬是動態產生的按鈕；後台開關頁）
   '/play/', '/play/kids-quiz/', '/play/policy-sim-dengue/', '/play/on-this-day/', '/admin/interactives/',
+  '/play/hiv-myths/', // 第六十四輪：一般民眾衛教測驗（quiz 種類，真的／假的兩選項）
 ];
 // 第四十八輪（#98）：新增「文字 200%／390」——390 px 寬、根字級放大到 200%（WCAG 1.4.4 放大文字＋1.4.10 Reflow 的實際合併情境）；
 // 這個模式與 320 px 一樣要檢查橫向捲動，並列為阻擋項。

@@ -1,0 +1,87 @@
+{
+  "id": "interactive.policy-sim-antibiotics",
+  "type": "interactive",
+  "kind": "policy-sim",
+  "title": "抗生素保衛戰：換你當基層診所醫師",
+  "owner": "unit.infection-control",
+  "publishedAt": "2026-10-26",
+  "reviewedAt": "2026-10-26",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "enabled": true,
+  "placements": ["home-bottom", "play-hub"],
+  "audience": ["public"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "languages": {
+    "zh-TW": { "status": "source" },
+    "en": { "status": "none" },
+    "ja": { "status": "none" },
+    "tl": { "status": "none" },
+    "vi": { "status": "none" },
+    "id": { "status": "none" },
+    "th": { "status": "none" }
+  },
+  "summary": "四個回合的選擇：感冒病人要抗生素、吃三天好了想停藥、家長拿大人的藥給小孩……你怎麼做，抗藥性壓力、病人安全和信任會怎麼變？每個選擇都回到站內的抗藥性專區與流感頁。",
+  "note": "示範內容：情境與量表變化是教學用的相對值，由原型依站內「抗生素抗藥性：防疫一體行動」專區、流感頁與抗藥性結核病問答設計，待感染管制及生物安全組確認措辭與方向。",
+  "disclaimer": "教學用簡化模型：量表只表示方向與相對變化，不是臨床指引，也不能取代醫師對個別病人的判斷。",
+  "scenario": {
+    "role": "你是一間社區診所的醫師",
+    "intro": "11 月，世界抗微生物製劑認知週。接下來四週，每週有一個病人（或家長）帶著關於抗生素的要求來找你。看看抗藥性壓力、病人安全和民眾信任怎麼變化——然後想一想，為什麼「感冒不吵抗生素、吃藥吃完不分人」會是全國一起推的事。",
+    "meters": [
+      { "key": "resistance", "label": "抗藥性壓力（越低越好）", "start": 45, "lowerIsBetter": true },
+      { "key": "safety", "label": "病人安全", "start": 50 },
+      { "key": "trust", "label": "民眾信任", "start": 50 }
+    ],
+    "rounds": [
+      {
+        "title": "第 1 週：感冒病人要抗生素",
+        "prompt": "一位上班族流鼻水、喉嚨痛兩天，沒有發燒。他說：「醫生，開個抗生素給我，比較快好。」你怎麼做？",
+        "options": [
+          { "label": "說明感冒多為病毒引起、抗生素無效，開症狀治療藥，並約好什麼情況要回診", "effects": { "resistance": -10, "safety": 5, "trust": 5 }, "feedback": "對。感冒多半是病毒，抗生素殺不了病毒，只會淘汰掉身上「怕藥」的細菌、留下抗藥的。說清楚回診條件，病人才會安心。", "basedOn": "topic.amr-one-health" },
+          { "label": "開三天抗生素「保險」，病人高興就好", "effects": { "resistance": 15, "safety": -5, "trust": 5 }, "feedback": "病人當下滿意，但沒有適應症的抗生素只有副作用與抗藥性，沒有好處；而且他下次感冒還會再來要。", "basedOn": "topic.amr-one-health" },
+          { "label": "不解釋，直接說「不用」請他離開", "effects": { "resistance": -5, "trust": -15 }, "feedback": "沒開是對的，但沒有說明，病人會去下一間診所拿到藥——抗藥性沒少，只是不在你這裡發生。", "basedOn": "topic.amr-one-health" }
+        ]
+      },
+      {
+        "title": "第 2 週：吃三天覺得好了，想停藥",
+        "prompt": "上週確診細菌性扁桃腺炎、開了 10 天抗生素的病人回來說：「我已經不痛了，剩下的藥可以不吃了吧？留著下次用。」",
+        "options": [
+          { "label": "說明症狀消失不代表細菌清光，請依醫囑服完；剩藥不留、不分給別人", "effects": { "resistance": -10, "safety": 10, "trust": 5 }, "feedback": "對。療程沒吃完，活下來的常是最耐藥的那一批細菌。「依醫囑服完、不自行停藥、不分給他人」是民眾可以做的三件事之一。", "basedOn": "topic.amr-one-health" },
+          { "label": "「好了就停吧」，隨病人意思", "effects": { "resistance": 15, "safety": -10 }, "feedback": "治療不完整正是抗藥性最常見的來源——結核病的多重抗藥性，多半就來自過去治療不完整、自行停藥。", "basedOn": "faq.mdr-tb" },
+          { "label": "叫他把剩的藥收好，下次喉嚨痛自己先吃", "effects": { "resistance": 15, "safety": -15, "trust": 5 }, "feedback": "下次的喉嚨痛八成是病毒；自己吃剩藥既沒效，也讓細菌多一次練習抗藥的機會，還可能延誤真正需要的診斷。", "basedOn": "topic.amr-one-health" }
+        ]
+      },
+      {
+        "title": "第 3 週：家長拿大人的藥給小孩",
+        "prompt": "一位媽媽帶發燒的 5 歲孩子來，說家裡還有爸爸上次沒吃完的抗生素，問：「可以先給他吃半顆嗎？」",
+        "options": [
+          { "label": "不可以。先評估孩子是病毒還是細菌感染，再決定是否用藥、用哪一種、用多少；順便說明剩藥為什麼不能共用", "effects": { "resistance": -5, "safety": 10, "trust": 5 }, "feedback": "對。兒童劑量、藥物種類與適應症都和成人不同；而且孩子的發燒多半是病毒（流感、腸病毒），抗生素幫不上忙。", "basedOn": "topic.amr-one-health" },
+          { "label": "「少量應該沒關係」", "effects": { "resistance": 10, "safety": -15 }, "feedback": "劑量不足是培養抗藥菌的好方法，而且沒有診斷就用藥可能蓋住真正的問題。", "basedOn": "topic.amr-one-health" },
+          { "label": "只說「不行」，沒有解釋，也沒有評估", "effects": { "safety": -5, "trust": -10 }, "feedback": "家長聽不到理由，回家還是可能餵。花一分鐘說「為什麼」，比一句「不行」有效。", "basedOn": "topic.amr-one-health" }
+        ]
+      },
+      {
+        "title": "第 4 週：流感季來了",
+        "prompt": "診所候診室開始出現發燒、全身痠痛的病人。護理師問：「這一季我們要怎麼做，才能少開一點抗生素？」",
+        "options": [
+          { "label": "推流感疫苗、提醒洗手與咳嗽禮節；分清流感與感冒，符合條件的用抗病毒藥，而不是抗生素", "effects": { "resistance": -10, "safety": 10, "trust": 5 }, "feedback": "對。少一個人感染就少一次用藥；流感是病毒，該用的是抗病毒藥（發病 48 小時內最好），不是抗生素。", "basedOn": "disease.influenza" },
+          { "label": "慢性病人一來就先開抗生素「預防併發症」", "effects": { "resistance": 15, "safety": -5 }, "feedback": "預防性抗生素不會預防病毒性流感的併發症，只會增加抗藥性與副作用。真正該做的是疫苗與早期抗病毒治療。", "basedOn": "faq.flu-vs-cold" },
+          { "label": "什麼都不特別做，照舊", "effects": { "safety": -5, "resistance": 5 }, "feedback": "流感季的候診室是最容易「順手開抗生素」的地方；沒有事先約定作法，用量通常會往上走。", "basedOn": "topic.amr-one-health" }
+        ]
+      }
+    ],
+    "endings": [
+      { "when": { "resistance": { "max": 20 }, "trust": { "min": 55 } }, "text": "抗藥性壓力壓得很低，而且病人還是信任你——這正是「防疫一體」要的：不是不給藥，而是把「為什麼」說到病人願意配合。" },
+      { "when": { "resistance": { "max": 30 } }, "text": "抗生素用得很節制。如果再多花一分鐘解釋，病人就不會去別家拿藥，整個社區的抗藥性才會一起降。" },
+      { "when": { "trust": { "max": 35 } }, "text": "藥是少開了，但病人不太信任你了。下一次，他們可能連該吃的藥也不吃、該回診的也不回。" },
+      { "text": "抗藥性壓力上升了。回頭看：哪一週你為了讓病人滿意、或省一分鐘解釋，而多開了一次不必要的抗生素？" }
+    ]
+  },
+  "postPublishReview": {
+    "status": "done",
+    "reviewedBy": "公關室承辦人",
+    "reviewedAt": "2026-10-26",
+    "note": "示範假設：上線後複核視為已完成（與節慶主題示範檔相同），正式環境由公關室在 24 小時內實際複核"
+  }
+}
