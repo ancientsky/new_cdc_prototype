@@ -34,10 +34,13 @@ import { piiErrors } from './lib/pii-scan.mjs';
 import { checkI18nQuality, summarizeI18nQuality } from './lib/i18n-quality.mjs';
 import { formErrors, askLogErrors } from './lib/forms.mjs';
 import { themeCss, themeCssPath } from './lib/theme.mjs';
+import { auditDist, splitForProduction, adminOriginErrors } from './lib/dist-profile.mjs';
 import { emitInteractives } from './lib/interactives.mjs';
 
 const args = Object.fromEntries(process.argv.slice(2).map((a) => { const [k, v] = a.replace(/^--/, '').split('='); return [k, v ?? true]; }));
 const DIST = process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist');
+// 第六十三輪（Issue #141）：正式建置（SITE_MODE=production）把後台、source map、標頭設定檔搬到這裡（預設與 dist 同層的 dist-internal/）
+const DIST_INTERNAL = process.env.DIST_INTERNAL_DIR ? path.resolve(process.env.DIST_INTERNAL_DIR) : path.join(path.dirname(DIST), 'dist-internal');
 const t0 = Date.now();
 const log = (...m) => console.log('[build]', ...m);
 
@@ -72,7 +75,7 @@ async function main() {
   for (const w of contentWarnings(site)) console.warn('  ⚠ [內容]', w);
   for (const w of pendingReviewWarnings(site)) console.warn('  ⚠ [待確認]', w); // 第四十八輪（issue #93）：只警告
   // 第三十輪（#55）：個資掃描（content/、data/snapshots/、會複製到 dist 的內容附件）。命中就是治理門檻錯誤，--check 與正式建置都會失敗；表單端點設定矛盾（post 沒端點等）也一樣
-  const errors = [...validateSite(site), ...assetReport.errors.map((e) => `[assets] ${e}`), ...piiErrors(ROOT), ...formErrors(config), ...askLogErrors(config)];
+  const errors = [...validateSite(site), ...assetReport.errors.map((e) => `[assets] ${e}`), ...piiErrors(ROOT), ...formErrors(config), ...askLogErrors(config), ...adminOriginErrors(config)];
   if (errors.length) {
     console.error(`\n❌ 治理門檻未通過（${errors.length} 項）：`);
     for (const e of errors) console.error('  -', e);
@@ -212,11 +215,33 @@ async function main() {
 
   // PR 預覽（17.2）：連結檢查之後才複製，預覽站不影響主站閘門
   const previews = process.env.PREVIEWS_DIR ? path.resolve(process.env.PREVIEWS_DIR) : null;
-  if (previews && fs.existsSync(previews)) {
+  // 第六十三輪：正式站不放 PR 預覽（未審核的內容與程式，每個預覽又是一整套含後台的站）
+  if (previews && !config.isPrototype) log(`SITE_MODE=production：略過 PR 預覽（PREVIEWS_DIR=${previews}）`);
+  else if (previews && fs.existsSync(previews)) {
     const dirs = fs.readdirSync(previews, { withFileTypes: true }).filter((e) => e.isDirectory() && /^pr-\d+$/.test(e.name)).map((e) => e.name);
     for (const d of dirs) copyDir(path.join(previews, d), path.join(DIST, 'preview', d));
     log(`PR 預覽 → dist/preview/：${dirs.length} 個（${dirs.join('、') || '無'}）`);
   } else if (previews) log(`PREVIEWS_DIR=${previews} 不存在，略過 PR 預覽`);
+
+  // 第六十三輪（Issue #141）：部署產物白名單與對外資產清冊。放在最後：前面每一步（含複製預覽）都可能多放檔案，檢查的是「真正要部署的那一包」。
+  //   原型：只盤點、不擋——後台、source map 等是示範站刻意公開的；清冊寫到 dist/headers/exposure.json 給資訊室看。
+  //   正式：把只給同事的東西搬到 dist-internal/，再用 public 規則稽核一次公開樹；還有任何一個禁止路徑就建置失敗。
+  const audit = auditDist(DIST, { profile: config.isPrototype ? 'prototype' : 'public' });
+  if (config.isPrototype) {
+    writeOut('headers/exposure.json', JSON.stringify(audit.inventory, null, 2) + '\n');
+    log(`部署產物盤點（原型）：${audit.files} 檔；原型限定 ${audit.expected.map((e) => `${e.rule} ${e.count}`).join('、') || '無'}；防禦性規則命中 ${audit.forbidden.length}${audit.forbidden.length ? `（${audit.forbidden.slice(0, 5).map((f) => f.path).join('、')}）` : ''} → headers/exposure.json`);
+    if (audit.forbidden.length) console.warn(`⚠ dist 有不該出現的檔案（正式建置會失敗）：${audit.forbidden.slice(0, 10).map((f) => `${f.path}［${f.rule}］`).join('；')}`);
+  } else {
+    const sp = splitForProduction(DIST, DIST_INTERNAL, { inventory: audit.inventory });
+    log(`正式部署產物拆分 → ${DIST_INTERNAL.startsWith(ROOT + path.sep) ? path.relative(ROOT, DIST_INTERNAL) : DIST_INTERNAL}/：後台頁 ${sp.moved.admin} 檔、後台 JS ${sp.moved.assetsAdmin} 檔、vendor ${sp.moved.vendor} 檔、標頭設定 ${sp.moved.headers} 檔、source map ${sp.moved.maps} 個；刪除預覽 ${sp.deleted.previews} 檔、robots.production.txt ${sp.deleted.robotsProduction}；拿掉 ${sp.strippedSourceMapComments} 個 JS 的 sourceMappingURL；內部站共 ${sp.internalFiles} 檔`);
+    const after = auditDist(DIST, { profile: 'public' });
+    if (!after.ok) {
+      console.error(`❌ 公開站產物仍有 ${after.forbidden.length} 個不得公開的檔案（docs/attack-surface.md）：`);
+      for (const f of after.forbidden.slice(0, 30)) console.error(`  - ${f.path}［${f.rule}］${f.reason}`);
+      process.exit(1);
+    }
+    log(`公開站產物稽核通過（profile public）：${after.files} 檔，無禁止路徑`);
+  }
 }
 
 function copyDir(src, dst) {

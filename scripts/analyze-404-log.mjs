@@ -17,13 +17,19 @@
 //   選項：--map <檔>（預設 dist/v1/legacy-map.json；不存在時由 content/ 即時建置對照）
 //         --migration <目錄或檔>（預設 content/migration）
 //         --min <n>（只列 404 次數 ≥ n 的路徑，預設 1）
+//         --public（分析的是對外入口的 log：打到 /admin/、/api/gateway/ 也算探測——正式環境這兩個路徑不應從網際網路連得到）
+//         --burst <n>、--window <秒>（自動化探測的爆量門檻：同一來源 window 秒內 404 達 n 次；預設 30 次／60 秒）
+//         --trusted-proxy <IP 或 CIDR，可逗號分隔>（log 的來源 IP 是 CDN／反向代理時：改看行尾的 X-Forwarded-For，取最後一個不是代理的位址）
+//   第六十三輪（Issue #140）：報表多一節「自動化探測跡象」（detectProbes；特徵清單在 scripts/lib/probe-signatures.mjs，說明見 docs/abuse-protection.md）
 //   範例：node scripts/analyze-404-log.mjs tests/fixtures/access-404.log
-// 匯出（測試用）：parseLog、detectFormat、analyze、toMarkdown、loadMigrationLists、OLD_SITE_PATTERNS
+// 匯出（測試用）：parseLog、detectFormat、analyze、detectProbes、toMarkdown、loadMigrationLists、OLD_SITE_PATTERNS
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { legacyKey } from './lib/emit-api.mjs';
 import { legacyPathOf } from './lib/governance.mjs';
+import { matchSignature, suspiciousUa, SCANNER_UA_IDS } from './lib/probe-signatures.mjs';
+import { clientKey, ipMatcher } from './lib/rate-limit.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LEGACY_ORIGIN = 'https://www.cdc.gov.tw';
@@ -41,7 +47,8 @@ export const OLD_SITE_PATTERNS = [
   { re: /^\/en(?:\/|$)/i, kind: 'english', oldType: 'page', label: '英文網站 /En' },
 ];
 
-const NGINX_RE = /^(\S+) \S+ \S+ \[([^\]]+)\] "(?:([A-Z]+) )?([^" ]*)(?: [^"]*)?" (\d{3}) (\S+)(?: "([^"]*)" "([^"]*)")?/;
+// 行尾可再多一個引號欄位：常見的 log_format 會把 "$http_x_forwarded_for" 接在 UA 後面（CDN／反向代理後面時才有真正的用戶端 IP）
+const NGINX_RE = /^(\S+) \S+ \S+ \[([^\]]+)\] "(?:([A-Z]+) )?([^" ]*)(?: [^"]*)?" (\d{3}) (\S+)(?: "([^"]*)" "([^"]*)"(?: "([^"]*)")?)?/;
 
 /** 自動判斷 log 格式：'iis'｜'nginx'｜'unknown' */
 export function detectFormat(text) {
@@ -51,7 +58,7 @@ export function detectFormat(text) {
   return 'unknown';
 }
 
-/** 解析 log → [{ path（含 query）, status, time, referer, ua, method }]（無法解析的行略過） */
+/** 解析 log → [{ path（含 query）, status, time, referer, ua, method, ip, xff }]（無法解析的行略過）。ip／xff 是第六十三輪為探測偵測加的 */
 export function parseLog(text) {
   const fmt = detectFormat(text);
   const out = [];
@@ -69,13 +76,13 @@ export function parseLog(text) {
       const q = get('cs-uri-query');
       const ref = get('cs(Referer)');
       out.push({ path: q && q !== '-' ? `${stem}?${q}` : stem, status: Number(get('sc-status')), time: [get('date'), get('time')].filter(Boolean).join('T') || null,
-        method: get('cs-method'), referer: ref && ref !== '-' ? ref : null, ua: get('cs(User-Agent)') });
+        method: get('cs-method'), referer: ref && ref !== '-' ? ref : null, ua: get('cs(User-Agent)'), ip: get('c-ip'), xff: ((x) => (x && x !== '-' ? x : null))(get('X-Forwarded-For') ?? get('x-forwarded-for')) });
     }
   } else {
     for (const line of lines) {
       const m = NGINX_RE.exec(line);
       if (!m) continue;
-      out.push({ path: m[4], status: Number(m[5]), time: m[2], method: m[3] ?? null, referer: m[7] && m[7] !== '-' ? m[7] : null, ua: m[8] ?? null });
+      out.push({ path: m[4], status: Number(m[5]), time: m[2], method: m[3] ?? null, referer: m[7] && m[7] !== '-' ? m[7] : null, ua: m[8] ?? null, ip: m[1], xff: m[9] && m[9] !== '-' ? m[9] : null });
     }
   }
   return { format: fmt, entries: out };
@@ -155,6 +162,88 @@ export function analyze(entries, { map = {}, migrationLists = [], min = 1 } = {}
   return { total: entries.length, notFound: notFound.length, unique: rows.length, categories, drafts };
 }
 
+const MONTHS = { jan: 0, feb: 1, mar: 2, apr: 3, may: 4, jun: 5, jul: 6, aug: 7, sep: 8, oct: 9, nov: 10, dec: 11 };
+/** log 的時間字串 → 毫秒（nginx「01/Oct/2026:08:00:01 +0800」；IIS「2026-10-01T08:00:01」為 UTC）；看不懂回 null */
+export function timeOf(t) {
+  if (!t) return null;
+  const m = /^(\d{2})\/([A-Za-z]{3})\/(\d{4}):(\d{2}):(\d{2}):(\d{2})(?: ([+-])(\d{2})(\d{2}))?$/.exec(String(t));
+  if (m) {
+    const off = m[7] ? (m[7] === '-' ? -1 : 1) * (Number(m[8]) * 60 + Number(m[9])) : 0;
+    const mon = MONTHS[m[2].toLowerCase()];
+    if (mon == null) return null;
+    return Date.UTC(Number(m[3]), mon, Number(m[1]), Number(m[4]), Number(m[5]), Number(m[6])) - off * 60_000;
+  }
+  const ms = Date.parse(/Z$|[+-]\d{2}:?\d{2}$/.test(String(t)) ? String(t) : `${t}Z`);
+  return Number.isFinite(ms) ? ms : null;
+}
+
+/**
+ * 自動化探測偵測（第六十三輪，Issue #140）：依來源 IP 彙整，找出「在列舉」的用戶端。
+ * 訊號與分數（≥ 3 分才列出；說明見 docs/abuse-protection.md §5）：
+ *   - 爆量：windowSec 秒內 404 次數 ≥ burst ⇒ +3（強訊號：真人迷路不會一分鐘撞 30 次牆）
+ *   - 特徵路徑：打到 probe-signatures.mjs 的路徑（.env、.git/、wp-login.php、../ …）⇒ +3（強訊號：本站一定沒有這些）
+ *   - 路徑列舉：不重複的 404 路徑 ≥ 20 ⇒ +2（慢慢掃、避開爆量門檻的工具）
+ *   - 401／403 ≥ 10 ⇒ +1（試後台、試權杖）
+ *   - 特徵路徑回 2xx ⇒ 再 +3，建議「立即通報」（escalate）
+ *   - UA：掃描器（sqlmap、nuclei…）⇒ +3；通用程式庫或空白 ⇒ +1（弱訊號：AI 代理常用一般 HTTP 程式庫，UA 也能隨便改；
+ *     開放資料的正當使用者也用 curl——所以程式庫 UA 單獨不會被列出）
+ * trustedProxies：log 的來源是 CDN／反向代理時，改用 X-Forwarded-For 的最後一個非代理位址（同 rate-limit.mjs clientKey 的規則）。
+ * @param {Array<{ path: string, status: number, time?: string | null, ua?: string | null, ip?: string | null, xff?: string | null }>} entries
+ * @param {{ windowSec?: number, burst?: number, public?: boolean, trustedProxies?: string[], minScore?: number }} [opts]
+ */
+export function detectProbes(entries, { windowSec = 60, burst = 30, public: pub = false, trustedProxies = [], minScore = 3 } = {}) {
+  const trusted = ipMatcher(trustedProxies);
+  const by = new Map();
+  for (const e of entries) {
+    const ip = clientKey({ socket: { remoteAddress: e.ip ?? 'unknown' }, headers: e.xff ? { 'x-forwarded-for': e.xff } : {} }, { trustedProxies: trusted });
+    if (!by.has(ip)) by.set(ip, { ip, total: 0, notFound: 0, denied: 0, times404: [], paths404: new Set(), sigs: new Map(), uas: new Set(), firstMs: null, lastMs: null, firstAt: null, lastAt: null });
+    const c = by.get(ip);
+    c.total++;
+    const ms = timeOf(e.time);
+    if (ms != null && (c.firstMs == null || ms < c.firstMs)) { c.firstMs = ms; c.firstAt = new Date(ms).toISOString(); }
+    if (ms != null && (c.lastMs == null || ms > c.lastMs)) { c.lastMs = ms; c.lastAt = new Date(ms).toISOString(); }
+    if (c.uas.size < 5) c.uas.add(String(e.ua ?? '').slice(0, 200) || '(空白)');
+    if (e.status === 404) { c.notFound++; c.times404.push(ms ?? 0); c.paths404.add(legacyKey(e.path)); }
+    if (e.status === 401 || e.status === 403) c.denied++;
+    const sig = matchSignature(e.path, { public: pub });
+    if (sig && !c.sigs.has(e.path) && c.sigs.size < 20) c.sigs.set(e.path, { ...sig, status: e.status });
+  }
+  const winMs = windowSec * 1000;
+  const clients = [];
+  for (const c of by.values()) {
+    // 滑動視窗內最多幾次 404（雙指標）
+    const ts = c.times404.sort((a, b) => a - b);
+    let burstMax = 0;
+    for (let i = 0, j = 0; j < ts.length; j++) { while (ts[j] - ts[i] >= winMs) i++; burstMax = Math.max(burstMax, j - i + 1); }
+    const reasons = [];
+    let score = 0;
+    if (burstMax >= burst) { score += 3; reasons.push(`${windowSec} 秒內 404 達 ${burstMax} 次（門檻 ${burst}）`); }
+    const sigIds = [...new Set([...c.sigs.values()].map((s) => s.label))];
+    if (sigIds.length) { score += 3; reasons.push(`打到探測特徵路徑：${sigIds.slice(0, 4).join('、')}${sigIds.length > 4 ? ` 等 ${sigIds.length} 種` : ''}`); }
+    if (c.paths404.size >= 20) { score += 2; reasons.push(`不重複的 404 路徑 ${c.paths404.size} 個（路徑列舉）`); }
+    if (c.denied >= 10) { score += 1; reasons.push(`401／403 共 ${c.denied} 次`); }
+    const uaHits = [...new Set([...c.uas].map((u) => suspiciousUa(u === '(空白)' ? '' : u)).filter(Boolean))];
+    const scanner = uaHits.filter((u) => SCANNER_UA_IDS.has(u));
+    // 特徵路徑竟然回 2xx：不是「有人在找」，而是「可能真的找到了」（.env、.git 真的被放上去）⇒ 立即通報
+    const exposed = [...c.sigs.entries()].filter(([, v]) => v.status >= 200 && v.status < 300).map(([p]) => p);
+    if (exposed.length) { score += 3; reasons.push(`特徵路徑回 2xx（可能真的外洩）：${exposed.slice(0, 3).join('、')}`); }
+    if (scanner.length) { score += 3; reasons.push(`掃描器 User-Agent：${scanner.join('、')}`); }
+    else if (uaHits.length) { score += 1; reasons.push(`程式庫或空白 User-Agent：${uaHits.join('、')}（弱訊號）`); }
+    if (score < minScore) continue;
+    clients.push({
+      ip: c.ip, total: c.total, notFound: c.notFound, denied: c.denied, burstMax,
+      signatureHits: [...c.sigs.entries()].map(([p, s]) => ({ path: p, signature: s.id, status: s.status })),
+      userAgents: [...c.uas], firstAt: c.firstAt, lastAt: c.lastAt, score, reasons,
+      action: exposed.length ? 'escalate' : scanner.length || sigIds.length || score >= 5 ? 'block' : 'review',
+    });
+  }
+  clients.sort((a, b) => b.score - a.score || b.notFound - a.notFound || a.ip.localeCompare(b.ip));
+  return {
+    clients,
+    summary: { entries: entries.length, clientsSeen: by.size, flagged: clients.length, signatureHits: clients.reduce((n, c) => n + c.signatureHits.length, 0), windowSec, burst, public: pub },
+  };
+}
+
 /** Markdown 報表 */
 export function toMarkdown(report, { sources = [], format = null, mapSource = null } = {}) {
   const { categories: c } = report;
@@ -180,7 +269,28 @@ export function toMarkdown(report, { sources = [], format = null, mapSource = nu
   out.push('', '## 3. 真的不存在（建議 410）', '');
   if (c.gone.length) { out.push('| 次數 | 路徑 | 原因 |', '| ---: | --- | --- |'); for (const g of c.gone) out.push(`| ${g.count} | \`${cell(g.path)}\` | ${cell(g.reason)} |`); } else out.push('（無）');
   out.push('');
+  if (report.probes) out.push(...probesMarkdown(report.probes, cell));
   return out.join('\n');
+}
+
+/** 「自動化探測跡象」一節（第六十三輪） */
+function probesMarkdown(probes, cell) {
+  const s = probes.summary;
+  const out = ['## 4. 自動化探測跡象', ''];
+  out.push(`- 來源 ${s.clientsSeen} 個，列出 ${s.flagged} 個（分數 ≥ 3；爆量門檻 ${s.windowSec} 秒內 404 達 ${s.burst} 次${s.public ? '；--public：/admin/、/api/gateway/ 也算探測' : ''}）`);
+  out.push('- 判讀：爆量與特徵路徑是強訊號；User-Agent 是弱訊號（AI 代理常用一般 HTTP 程式庫，UA 也能偽造）。規則與 KQL 範例見 docs/abuse-protection.md。', '');
+  if (!probes.clients.length) { out.push('（無）', ''); return out; }
+  out.push('| 分數 | 來源 IP | 請求 | 404 | 最大爆量 | 特徵路徑（例） | 理由 | 建議 |', '| ---: | --- | ---: | ---: | ---: | --- | --- | --- |');
+  for (const c of probes.clients.slice(0, 20)) {
+    const ex = c.signatureHits.slice(0, 2).map((h) => `\`${cell(h.path.slice(0, 60))}\``).join('、') || '—';
+    const act = { escalate: '**立即通報資訊室**（特徵路徑有回應），並在 WAF 封鎖', block: '在 WAF 封鎖此來源；先確認不是機關委託的弱點掃描', review: '觀察；持續出現就在 WAF 加速率限制或封鎖' }[c.action];
+    out.push(`| ${c.score} | ${cell(c.ip)} | ${c.total} | ${c.notFound} | ${c.burstMax} | ${ex} | ${cell(c.reasons.join('；'))} | ${act} |`);
+  }
+  out.push('', '處置：', '');
+  out.push('1. **封鎖**：在 WAF（Azure Front Door／Application Gateway 的自訂規則）封鎖上表「建議封鎖」的來源，設期限（例如 24 小時）並記錄理由。');
+  out.push('2. **查是不是已知的掃描**：機關委託的弱點掃描、資安院或 TWCERT/CC 的掃描、搜尋引擎爬蟲——是的話加註、不封鎖；問不到的一律當未授權。');
+  out.push('3. **通報資訊室**：特徵路徑回 2xx（上表「立即通報」）、或 /admin/、/api/gateway/ 從網際網路連得到（回 2xx）⇒ 依資安事件通報流程立即通報（docs/deploy.md §10.4、docs/abuse-protection.md §6）。', '');
+  return out;
 }
 
 /** 沒有 dist/v1/legacy-map.json 時，由 content/ 即時建置對照（load → govern → buildRedirects） */
@@ -197,7 +307,7 @@ async function buildMapFromContent() {
 
 async function main(argv) {
   const files = [];
-  const opts = { json: false, map: null, migration: path.join(ROOT, 'content/migration'), min: 1 };
+  const opts = { json: false, map: null, migration: path.join(ROOT, 'content/migration'), min: 1, public: false, burst: 30, window: 60, trustedProxies: [] };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
     const val = () => (a.includes('=') ? a.split('=').slice(1).join('=') : argv[++i]);
@@ -205,10 +315,14 @@ async function main(argv) {
     else if (a.startsWith('--map')) opts.map = val();
     else if (a.startsWith('--migration')) opts.migration = val();
     else if (a.startsWith('--min')) opts.min = Number(val()) || 1;
+    else if (a === '--public') opts.public = true;
+    else if (a.startsWith('--burst')) opts.burst = Number(val()) || 30;
+    else if (a.startsWith('--window')) opts.window = Number(val()) || 60;
+    else if (a.startsWith('--trusted-proxy')) opts.trustedProxies.push(...String(val() ?? '').split(',').map((x) => x.trim()).filter(Boolean));
     else if (a === '-h' || a === '--help') { console.log(fs.readFileSync(fileURLToPath(import.meta.url), 'utf8').split('\n').filter((l) => l.startsWith('//')).map((l) => l.slice(3)).join('\n')); return; }
     else files.push(a);
   }
-  if (!files.length) { console.error('用法：node scripts/analyze-404-log.mjs <access.log> [--json] [--map dist/v1/legacy-map.json] [--migration content/migration]'); process.exit(2); }
+  if (!files.length) { console.error('用法：node scripts/analyze-404-log.mjs <access.log> [--json] [--map dist/v1/legacy-map.json] [--migration content/migration] [--public] [--burst 30] [--window 60] [--trusted-proxy IP]'); process.exit(2); }
   const text = files.map((f) => (f === '-' ? fs.readFileSync(0, 'utf8') : fs.readFileSync(f, 'utf8'))).join('\n');
   const { format, entries } = parseLog(text);
   let map, mapSource;
@@ -218,6 +332,7 @@ async function main(argv) {
   else { map = await buildMapFromContent(); mapSource = 'content/（即時建置；建議先 npm run build 再用 --map dist/v1/legacy-map.json）'; }
   const migrationLists = loadMigrationLists(opts.migration);
   const report = analyze(entries, { map, migrationLists, min: opts.min });
+  report.probes = detectProbes(entries, { windowSec: opts.window, burst: opts.burst, public: opts.public, trustedProxies: opts.trustedProxies });
   if (opts.json) console.log(JSON.stringify({ format, sources: files, map: mapSource, ...report }, null, 2));
   else console.log(toMarkdown(report, { sources: files, format, mapSource }));
 }

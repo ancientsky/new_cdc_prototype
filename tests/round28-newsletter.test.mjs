@@ -233,7 +233,8 @@ test('狀態機：節流（同一信箱 10 分鐘 3 次、同一來源 10 次，
 /* ───────── HTTP 模擬後端 ───────── */
 async function withApi(fn, opts = {}) {
   const dir = tmp();
-  const api = createSubscriptionApi({ dataFile: path.join(dir, 'subs.json'), outboxDir: path.join(dir, 'outbox'), basePath: '', ...opts });
+  // httpRate: null：這裡驗的是狀態機自己的節流（每信箱 3 次、每 IP 10 次），HTTP 層每 IP 每分鐘 5 次的限流另由 tests/round63-rate-limit.test.mjs 驗
+  const api = createSubscriptionApi({ dataFile: path.join(dir, 'subs.json'), outboxDir: path.join(dir, 'outbox'), basePath: '', httpRate: null, ...opts });
   const srv = http.createServer(async (req, res) => {
     const u = new URL(req.url, 'http://localhost');
     if (!(await api.handle(req, res, u.pathname, u.searchParams))) { res.statusCode = 404; res.end('static'); }
@@ -344,7 +345,7 @@ test('serve.mjs 掛載 /api（不影響靜態檔）：真的啟動、health 回�
   fs.writeFileSync(path.join(dir, 'index.html'), '<h1>ok</h1>'); fs.writeFileSync(path.join(dir, '404.html'), 'nf');
   const port = 40000 + Math.floor(Math.random() * 2000);
   const { spawn } = await import('node:child_process');
-  const srv = spawn(process.execPath, [path.join(ROOT, 'scripts/serve.mjs'), String(port)], { cwd: ROOT, stdio: 'ignore', env: { ...process.env, DIST_DIR: dir, BASE_PATH: '', SUBSCRIPTIONS_FILE: path.join(dir, 's.json'), OUTBOX_DIR: path.join(dir, 'o') } });
+  const srv = spawn(process.execPath, [path.join(ROOT, 'scripts/serve.mjs'), String(port)], { cwd: ROOT, stdio: 'ignore', env: { ...process.env, DIST_DIR: dir, BASE_PATH: '', SUBSCRIPTIONS_FILE: path.join(dir, 's.json'), OUTBOX_DIR: path.join(dir, 'o'), MOCK_RATE_LIMIT: 'off', GATEWAY_RATE_LIMIT: 'off' } });
   try {
     let h;
     for (let i = 0; i < 40 && !h; i++) { try { h = await fetch(`http://127.0.0.1:${port}/api/health`); } catch { await new Promise((r) => setTimeout(r, 150)); } }

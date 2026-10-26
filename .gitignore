@@ -2,6 +2,8 @@
 # 符號連結不是資料夾，`node_modules/` 擋不住它，會變成未追蹤檔案被 git add . 誤收（第四十九輪）。
 node_modules
 dist/
+# 第六十三輪：正式建置拆出的內部站產物（scripts/lib/dist-profile.mjs）
+dist-internal/
 .DS_Store
 *.log
 .playwright/

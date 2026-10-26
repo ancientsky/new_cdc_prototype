@@ -5,7 +5,8 @@
 //   - 請求：POST endpoint，Accept: application/json。沒有附件 ⇒ Content-Type: application/json，本文
 //     { form, submissionId, submittedAt, lang, page, ...extra, fields: { 欄位名: 值 } }；有附件 ⇒ multipart/form-data（同名欄位＋檔案，_meta 欄放上述 JSON）。
 //   - submissionId（UUID）是冪等鍵：同一個 id 重送只能收一次（下面的「一般表單 POST 備援」可能讓同一筆送兩次）。
-//   - 回應：2xx＋JSON { ok: true, receiptNo?: string, message?: string }；驗證失敗回 4xx＋{ ok:false, message }。
+//   - 回應：2xx＋JSON { ok: true, receiptNo?: string, message?: string }；驗證失敗回 4xx＋{ ok:false, message }；
+//     送太頻繁回 429＋Retry-After（第六十三輪；頁面顯示 form.err.rate）。
 //   - CORS：允許本站來源、POST、Content-Type 標頭；不需要 cookie（credentials: 'omit'）。
 // 備援：fetch 根本送不出去（網路錯誤、CORS 尚未設定、舊瀏覽器）⇒ 改用一般表單 POST（瀏覽器整頁送到端點，由端點回它自己的收件頁）。
 //       端點回 4xx／5xx 不備援（那是端點明確拒絕，再送一次只會重複）。
@@ -70,7 +71,8 @@ function init(form) {
     if (btn) btn.disabled = false;
     if (r.ok) { form.reset(); say(r.receiptNo ? 'form.sent.no' : 'form.sent', { no: r.receiptNo }); status?.focus?.(); return; }
     if (r.error === 'network') { say('form.fallback'); nativePost(form, form.dataset.endpoint, r.submissionId); return; }
-    say('form.err', { status: r.status, msg: r.message }, true); status?.focus?.();
+    // 第六十三輪（Issue #140）：收件系統的速率限制回 429 ⇒ 專用訊息（不是「送出失敗」，資料也還在表單上，等一下再按就好）
+    say(r.status === 429 ? 'form.err.rate' : 'form.err', { status: r.status, msg: r.message }, true); status?.focus?.();
   });
 }
 

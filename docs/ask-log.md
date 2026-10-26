@@ -108,7 +108,7 @@ npm run ask-log:report -- --dir=/path/to/export --out=/secure/place/report.json
 3. **再遮蔽一次問句**（同 `PII_RULES`）、去控制字元、截 200 字；沒有問句回 400。
 4. 時間用**收件端自己的時鐘**、只到分鐘，不採信前端的 `t`。
 5. **不記錄** IP、User-Agent、Referer、cookie；伺服器或負載平衡器的存取紀錄對這個路徑也要關掉或去識別（至少不記 query string 與 IP）。
-6. 節流：同一來源每分鐘 60 筆，超過回 429 並附 `Retry-After`；IP 只在記憶體計數。
+6. 節流：同一來源每分鐘 30 筆（第六十三輪由 60 降為 30，共用 `scripts/lib/rate-limit.mjs`；見 [abuse-protection.md](abuse-protection.md)），超過回 429 並附 `Retry-After`；IP 只在記憶體計數。
 7. 成功回 **204**（無內容）。跨網域部署時回應可不帶 CORS 標頭（前端用 `no-cors`，不讀回應）。
 8. **保存期限**：原始紀錄保存 90 天（`ASK_LOG_RETENTION_DAYS`），到期自動刪除；彙整後的報表（只含達門檻的問句與總數）可長期保留，作為補詞彙、補內容的依據。
 9. 匯出格式：每天一個 `YYYY-MM-DD.ndjson`（臺灣日期），一行一筆 JSON；放進任一目錄後 `npm run ask-log:report -- --dir=<目錄>` 即可產生報表。

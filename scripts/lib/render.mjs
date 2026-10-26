@@ -51,6 +51,8 @@ export function makeUrl(lang = config.defaultLang) {
     const p = path.startsWith('/') ? path : `/${path}`;
     const langPrefix = noLang || p.startsWith('/files/') ? '' : langPrefixFor(p, lang, langDef); // /files/ 七語共用，不加語言前綴
     const rel = `${config.basePath}${langPrefix}${p}`.replace(/\/{2,}/g, '/');
+    // 第六十三輪（Issue #141）：設了 ADMIN_ORIGIN（內部站網域）⇒ 後台連結一律指向內部站（同一個 basePath），公開站上不再有 /admin/ 這條路徑
+    if (config.adminOrigin && /^\/admin(\/|$|[?#])/.test(p)) return `${config.adminOrigin}${rel}`;
     return absolute ? `${config.siteUrl}${rel}` : rel;
   };
 }

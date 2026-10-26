@@ -41,6 +41,8 @@
 //
 // 安全：POST 一律要 (1) Content-Type: application/json、(2) Origin 與 Host 同源（Sec-Fetch-Site 若有須為 same-origin）、
 // (3) X-CSRF-Token（GET /session 取得，HMAC 綁帳號）；本體 ≤ 512 KB；回應 no-store＋nosniff＋CSP default-src 'none'。
+// 速率限制（第六十三輪，Issue #140）：每 IP 全部端點、每 IP 登入與認證失敗、每帳號寫入，超過 ⇒ 429 rate_limited＋Retry-After（GATEWAY_RATE_LIMIT）。
+// 錯誤回應一律是 { error, message }：不帶堆疊、版本、檔案路徑（500 只回白話訊息，細節只進伺服器 log）。
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
@@ -59,6 +61,7 @@ import { createNotifier } from './notify.mjs';
 import { createWorkflow, GatewayError } from './workflow.mjs';
 import { loadLanes, validateLanes } from '../lanes.mjs';
 import { publishFeed, readImportRecord, canImportIntl, PublishError } from '../intl-epidemic-publish.mjs';
+import { createRateLimiter, clientKey, tooMany, ipMatcher } from '../rate-limit.mjs';
 
 export const SERVICE_NAME = 'cdc-web-gateway';
 export const MAX_BODY = 512 * 1024;
@@ -71,6 +74,36 @@ const FILE_NAME_RE = /^[a-z0-9][a-z0-9._-]{0,99}$/i;
 export const INTL_MAX_BODY = 2 * 1024 * 1024;
 const INTL_DENIED = '國際疫情匯入只開放給疫情中心的承辦人與複核者，或總編輯、治理幕僚、平台管理；如需權限請洽資訊室';
 const split = (s) => String(s ?? '').split(/[,\s]+/).map((x) => x.trim()).filter(Boolean);
+
+/**
+ * 速率限制（第六十三輪，Issue #140；docs/deploy.md §31、docs/abuse-protection.md）。三個範圍、各自計數：
+ *   ip    每個來源 IP，/api/gateway/ 底下的所有請求（含 GET /health：掃描器最常打的就是健康檢查這類固定路徑，而且它很便宜，限了不痛）
+ *   auth  每個來源 IP，/login、/login/callback、/logout 與「認證失敗」——猜帳號、重放回呼、灌 OIDC 驗章都落在這裡
+ *   write 每個帳號，POST 寫入（存草稿、送審、核准…）：已登入的帳號被盜或腳本失控時，限制它一分鐘能改多少東西
+ * 全部在讀本體之前判斷：被擋的請求不花解析 24 MB 本體的成本。
+ */
+export const DEFAULT_RATE_LIMIT = Object.freeze({
+  ip: Object.freeze({ max: 120, windowMs: 60_000 }),
+  auth: Object.freeze({ max: 10, windowMs: 60_000 }),
+  write: Object.freeze({ max: 60, windowMs: 60_000 }),
+});
+/**
+ * GATEWAY_RATE_LIMIT → 設定。空白＝預設；off＝關閉（只給本機除錯，正式環境不要關）；
+ * 也可逐項覆寫：「ip:240/60,auth:20/60」＝ ip 每 60 秒 240 次、auth 每 60 秒 20 次，沒寫的範圍用預設。格式不對就不啟動（不要默默用錯的數字）。
+ * @returns {null | { ip: {max:number,windowMs:number}, auth: {max:number,windowMs:number}, write: {max:number,windowMs:number} }}
+ */
+export function rateLimitFromEnv(v) {
+  const s = String(v ?? '').trim();
+  if (s === 'off') return null;
+  const out = { ip: { ...DEFAULT_RATE_LIMIT.ip }, auth: { ...DEFAULT_RATE_LIMIT.auth }, write: { ...DEFAULT_RATE_LIMIT.write } };
+  if (!s || s === 'on') return out;
+  for (const part of s.split(',').map((x) => x.trim()).filter(Boolean)) {
+    const m = /^(ip|auth|write):(\d{1,6})\/(\d{1,5})$/.exec(part);
+    if (!m || Number(m[2]) < 1 || Number(m[3]) < 1) throw new Error(`GATEWAY_RATE_LIMIT 格式不對：「${part}」。請寫 off，或「範圍:次數/秒數」以逗號分隔（範圍：ip、auth、write），例：ip:120/60,auth:10/60,write:60/60`);
+    out[m[1]] = { max: Number(m[2]), windowMs: Number(m[3]) * 1000 };
+  }
+  return out;
+}
 
 /** 環境變數 → 設定（祕密只從環境變數來，不進設定檔、不進 Git） */
 export function configFromEnv(env = process.env) {
@@ -100,6 +133,10 @@ export function configFromEnv(env = process.env) {
     requireBaseHash: env.GATEWAY_REQUIRE_BASE_HASH === '1',
     // 第五十四輪：另指一份車道設定（預設 content/governance/lanes.json，與 CI 同一份）。給測試站或演練用，例：先關掉型別授權看審核流程
     lanesFile: env.GATEWAY_LANES_FILE ? path.resolve(ROOT, env.GATEWAY_LANES_FILE) : '',
+    // 第六十三輪（Issue #140）：速率限制。GATEWAY_RATE_LIMIT＝空白（預設：ip 120/60 秒、auth 10/60 秒、write 每帳號 60/60 秒）｜off｜
+    // 「ip:240/60,auth:20/60,write:60/60」逐項覆寫。來源 IP 只在連線來自 GATEWAY_TRUSTED_PROXIES 時才採信 X-Forwarded-For（rate-limit.mjs clientKey）。
+    // 被擋 ⇒ 429 { error:'rate_limited' }＋Retry-After，稽核記 rate_limited { ip, path, scope }（每次開始被擋記一筆，不記本體）。
+    rateLimit: rateLimitFromEnv(env.GATEWAY_RATE_LIMIT),
   };
 }
 
@@ -139,6 +176,18 @@ export function createGatewayApi(opts = {}) {
   // 第五十三輪：接種時程主檔的差異寫疫苗名稱（審核人看「B 型肝炎疫苗」而不是 vaccine.hepatitis-b）
   const vaccineNames = Object.fromEntries(readJSON(path.join(ROOT, 'content/master/vaccines.json'), []).map((v) => [v.id, v.name]));
   const workflow = createWorkflow({ git, validator, store, audit, notifier, unitNames, vaccineNames, now, requireBaseHash: cfg.requireBaseHash === true, ...(opts.directory ? { directory: opts.directory } : {}), ...(opts.lanesCfg ? { lanesCfg: opts.lanesCfg } : cfg.lanesFile ? { lanesCfg: lanesFrom(cfg.lanesFile) } : {}) });
+  // 速率限制：opts.rateLimit 可整個換掉（測試用 null 關閉或給小數字），否則用環境變數的設定
+  const rl = cfg.rateLimit ? { ...DEFAULT_RATE_LIMIT, ...cfg.rateLimit } : null;
+  const limiters = rl ? { ip: createRateLimiter({ ...rl.ip, now }), auth: createRateLimiter({ ...rl.auth, now }), write: createRateLimiter({ ...rl.write, now }) } : null;
+  const trustedProxy = ipMatcher(cfg.auth?.header?.trustedProxies ?? []);
+  /** 記一次；超過就寫稽核（只在「剛開始被擋」那一次，避免被灌時稽核檔跟著被灌）並回 429。回傳 true＝已回應 */
+  function limited(scope, key, ip, req, res, sub, actor) {
+    if (!limiters) return false;
+    const r = limiters[scope].hit(key);
+    if (r.ok) return false;
+    if (r.denied === 1) audit.write('rate_limited', { actor: actor ?? null, result: 'denied', detail: { ip, path: sub.slice(0, 120), scope } });
+    return tooMany(res, r.retryAfterSec, { req, headers: { 'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'" } });
+  }
   const secret = cfg.csrfSecret ? Buffer.from(cfg.csrfSecret) : crypto.randomBytes(32);
   const csrfFor = (p) => crypto.createHmac('sha256', secret).update(`${p.authMode}|${p.account}`).digest('base64url');
 
@@ -241,6 +290,10 @@ export function createGatewayApi(opts = {}) {
     if (pathname !== '/api/gateway' && !pathname.startsWith('/api/gateway/')) return false;
     const method = req.method ?? 'GET';
     const sub = pathname.slice('/api/gateway'.length) || '/';
+    // 第六十三輪：先限流再做任何事（含 /health）。來源 IP 只在連線來自信任的代理時才看 X-Forwarded-For，否則攻擊者能自己挑 key
+    const ip = clientKey(req, { trustedProxies: trustedProxy });
+    if (limited('ip', ip, ip, req, res, sub)) return true;
+    if ((sub === '/login' || sub === '/login/callback' || sub === '/logout') && limited('auth', ip, ip, req, res, sub)) return true;
     if (sub === '/health' && method === 'GET') return send(res, 200, { ok: true, service: SERVICE_NAME, auth: auth.mode });
     // Google（或其他需要閘道自己跑授權碼流程的轉接器）：登入、回呼、登出
     if (auth.loginRedirect && method === 'GET' && sub === '/login') {
@@ -264,12 +317,16 @@ export function createGatewayApi(opts = {}) {
       } else if (method !== 'GET') return err(res, 405, 'method', '不支援的操作', undefined);
       const a = await auth.authenticate(req, res);
       if (!a.ok) {
+        // 認證失敗也算進 auth 範圍：一直拿假 token／假 session 來試的人，十次以後就只拿到 429
+        if (limited('auth', ip, ip, req, res, sub)) return true;
         if (a.code === 'untrusted_proxy') audit.write('auth', { result: 'denied', detail: { reason: a.code, ip: String(req.socket?.remoteAddress ?? '') } });
         return send(res, a.status, { error: a.code, message: a.message, ...(a.loginUrl ? { loginUrl: `${config.basePath}${a.loginUrl}` } : {}) });
       }
       const p = a.principal;
       if (!p.roles.length) return err(res, 403, 'no_role', '你的帳號沒有網站內容的角色（需要 CDC-WEB- 開頭的 AD 群組），請洽資訊室');
       if (method === 'POST') {
+        // 每個帳號的寫入上限：在檢查 CSRF、讀本體之前（被擋的請求不讀本體）
+        if (limited('write', `acct:${p.authMode}:${p.account}`, ip, req, res, sub, p)) return true;
         const t = String(req.headers['x-csrf-token'] ?? '');
         const want = csrfFor(p);
         if (t.length !== want.length || !crypto.timingSafeEqual(Buffer.from(t), Buffer.from(want))) { audit.write('csrf-token', { actor: p, result: 'denied', detail: { path: sub } }); return err(res, 403, 'csrf', '頁面已過期，請重新整理後再試'); }

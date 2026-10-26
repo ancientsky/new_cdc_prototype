@@ -19,6 +19,11 @@ import crypto from 'node:crypto';
 import { config } from '../../site.config.mjs';
 import { formOrigins, askLogOrigins } from './forms.mjs';
 
+// 第六十三輪（Issue #141）：要「拿掉」的指紋標頭。Server／X-Powered-By／X-AspNet-Version 等標頭說出伺服器軟體與版本，
+// 自動盤點工具（ARTEX 一類）拿來直接比對已知漏洞清單。拿掉它們不會讓伺服器更安全（真正的防線是更新修補），
+// 但會讓「先挑版本最舊的打」這一步變慢、變難。headers.json 的 remove 陣列是機讀正本；各格式的做法不同，見 render* 與 README。
+export const REMOVE_HEADERS = ['Server', 'X-Powered-By', 'X-AspNet-Version', 'X-AspNetMvc-Version'];
+
 const EXEC_SCRIPT_RE = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
 
 /** 掃一段 HTML，回傳會被瀏覽器執行的 inline script 內容（排除 src=、ld+json、application/json、module 以外的資料型 type） */
@@ -92,28 +97,47 @@ export function securityHeaders({ hashes = [], llmOrigin = 'https://api.anthropi
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
-export function renderNginx(h) {
+export function renderNginx(h, remove = REMOVE_HEADERS) {
   return [
     '# 由 scripts/lib/emit-headers.mjs 自動產生（docs/deploy.md §10）。include 進 server{} 或 location / {}；請勿手改，改程式重建。',
     '# 注意：nginx 的 add_header 在子 location 另有 add_header 時會整組不繼承，請統一放在同一層。',
     ...Object.entries(h).map(([k, v]) => `add_header ${k} "${v.replace(/"/g, '\\"')}" always;`),
     '',
-  ].join('\n');
-}
-
-export function renderWebConfig(h) {
-  return [
-    '<?xml version="1.0" encoding="UTF-8"?>',
-    '<!-- 由 scripts/lib/emit-headers.mjs 自動產生（docs/deploy.md §10）。放進 web.config 的 <system.webServer> 內；請勿手改。 -->',
-    '<configuration><system.webServer><httpProtocol><customHeaders>',
-    ...Object.entries(h).map(([k, v]) => `  <remove name="${esc(k)}" /><add name="${esc(k)}" value="${esc(v)}" />`),
-    '</customHeaders></httpProtocol></system.webServer></configuration>',
+    `# 第六十三輪（Issue #141）：指紋標頭（${remove.join('、')}）。server_tokens off 只把 Server 的版本號拿掉，仍會送出「Server: nginx」。`,
+    '# 完全拿掉 Server 需要 headers-more 模組：more_clear_headers Server;（放在 http{} 或 server{}）；',
+    '# nginx 當反向代理時，上游（IIS、Node、應用伺服器）送來的標頭用 proxy_hide_header 擋掉。',
+    'server_tokens off;',
+    ...remove.filter((k) => k !== 'Server').map((k) => `proxy_hide_header ${k};`),
+    `# more_clear_headers ${remove.join(' ')};`,
     '',
   ].join('\n');
 }
 
-export function renderNetlify(h) {
-  return ['# 由 scripts/lib/emit-headers.mjs 自動產生（Netlify／Cloudflare Pages 格式）', '/*', ...Object.entries(h).map(([k, v]) => `  ${k}: ${v}`), ''].join('\n');
+export function renderWebConfig(h, remove = REMOVE_HEADERS) {
+  return [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<!-- 由 scripts/lib/emit-headers.mjs 自動產生（docs/deploy.md §10）。放進 web.config 的 <system.webServer> 內；請勿手改。 -->',
+    '<!-- 第六十三輪（Issue #141）：拿掉指紋標頭。X-Powered-By 由 customHeaders 的 remove 拿掉；Server 要 IIS 10（Windows Server 2016）以上的 removeServerHeader；',
+    '     X-AspNet-Version 另在 <system.web><httpRuntime enableVersionHeader="false" /> 關閉，X-AspNetMvc-Version 在 Application_Start 設 MvcHandler.DisableMvcResponseHeader = true。 -->',
+    '<configuration><system.webServer><httpProtocol><customHeaders>',
+    ...remove.filter((k) => k !== 'Server').map((k) => `  <remove name="${esc(k)}" />`),
+    ...Object.entries(h).map(([k, v]) => `  <remove name="${esc(k)}" /><add name="${esc(k)}" value="${esc(v)}" />`),
+    '</customHeaders></httpProtocol>',
+    '<security><requestFiltering removeServerHeader="true" /></security>',
+    '</system.webServer></configuration>',
+    '',
+  ].join('\n');
+}
+
+export function renderNetlify(h, remove = REMOVE_HEADERS) {
+  return [
+    '# 由 scripts/lib/emit-headers.mjs 自動產生（Netlify／Cloudflare Pages 格式）',
+    `# 第六十三輪（Issue #141）：_headers 只能「加」標頭，不能拿掉 ${remove.join('、')}；這兩個平台本身不送 X-Powered-By，Server 由平台決定。`,
+    '# 要拿掉請在前面的 CDN 設定（例如 Azure Front Door 規則引擎「刪除回應標頭」，見 README.md）。',
+    '/*',
+    ...Object.entries(h).map(([k, v]) => `  ${k}: ${v}`),
+    '',
+  ].join('\n');
 }
 
 export function renderReadme(h, info) {
@@ -143,6 +167,20 @@ export function renderReadme(h, info) {
 - **HSTS** 一年含子網域；**nosniff**、**Referrer-Policy**、**Permissions-Policy** 為 OWASP Secure Headers 建議值。
 - \`style-src\` 暫留 \`'unsafe-inline'\`：後台頁有少量 \`style=""\` 屬性；清掉後可改為 \`'self'\`。
 
+## 拿掉指紋標頭（第六十三輪，Issue #141）
+
+要拿掉：${REMOVE_HEADERS.map((k) => `\`${k}\``).join('、')}（\`headers.json\` 的 \`remove\` 陣列）。這些標頭說出伺服器軟體與版本，自動盤點工具用來比對已知漏洞。拿掉不能取代修補，但讓「挑最舊的版本打」變難。
+
+| 環境 | 做法 |
+| --- | --- |
+| nginx | \`nginx.conf\` 已含 \`server_tokens off;\`（只拿掉版本號）；完全拿掉 \`Server\` 要 headers-more 模組 \`more_clear_headers Server;\`；當反向代理時用 \`proxy_hide_header X-Powered-By;\` 等擋掉上游送來的 |
+| IIS | \`web.config.headers.xml\` 已含 \`<remove name="X-Powered-By" />\` 與 \`<security><requestFiltering removeServerHeader="true" /></security>\`（IIS 10 以上）；\`X-AspNet-Version\` 用 \`<httpRuntime enableVersionHeader="false" />\` 關 |
+| Azure Front Door | 規則引擎（Rule set）新增規則：條件留空（全部請求）、動作「修改回應標頭」→ 運算子「刪除」，標頭名稱逐一填 ${REMOVE_HEADERS.join('、')}；套用到公開站的路由 |
+| Netlify／Cloudflare Pages | \`_headers\` 只能加不能刪；平台本身不送 \`X-Powered-By\`，\`Server\` 由平台決定，若要拿掉需在前面的 CDN 處理 |
+| 其他 CDN | 依 \`headers.json\` 的 \`remove\` 逐項設定「刪除回應標頭」 |
+
+驗證：\`curl -sI https://<網域>/ | grep -iE '^(server|x-powered-by|x-aspnet)'\` 應該沒有輸出（或只剩不含版本的 \`Server\`）。
+
 ## 雜湊首次出現頁面（除錯用）
 
 ${Object.entries(info.firstSeen).map(([h, f]) => `- \`${h}\` ← ${f}`).join('\n')}
@@ -153,7 +191,8 @@ ${Object.entries(info.firstSeen).map(([h, f]) => `- \`${h}\` ← ${f}`).join('\n
 export function emitHeaders(dist, write) {
   const info = collectInlineHashes(dist);
   const headers = securityHeaders({ hashes: info.hashes });
-  write('headers/headers.json', JSON.stringify({ generatedAt: new Date().toISOString(), mode: config.mode, inlineScripts: info.count, headers }, null, 2) + '\n');
+  // 第六十三輪：remove 與 headers 同層（tests/round23-security.test.mjs 讀 j.headers[...]，形狀不變，只多一個鍵）
+  write('headers/headers.json', JSON.stringify({ generatedAt: new Date().toISOString(), mode: config.mode, inlineScripts: info.count, headers, remove: REMOVE_HEADERS }, null, 2) + '\n');
   write('headers/nginx.conf', renderNginx(headers));
   write('headers/web.config.headers.xml', renderWebConfig(headers));
   write('headers/_headers', renderNetlify(headers));

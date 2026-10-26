@@ -2,6 +2,7 @@
 # 新增模組時，把它加在檔尾的放行清單；既有檔案改到哪就用編輯器的 Prettier 套哪裡，不必整檔重排。
 # 注意：只忽略「檔案」而非目錄（gitignore 規則：父目錄被排除時無法再用 ! 放行）。
 dist/
+dist-internal/
 node_modules/
 previews/
 data/
@@ -110,3 +111,13 @@ eval/**/*.mjs
 !tests/pdf-split-perf.test.mjs
 # 第六十輪：規則集匯入檔、grokbot 第四批（docs/deploy.md §29）
 !tests/round60-ruleset.test.mjs
+# 第六十三輪：部署產物白名單、內部站拆分（docs/attack-surface.md）
+!scripts/lib/dist-profile.mjs
+!scripts/audit-dist.mjs
+!tests/round63-attack-surface.test.mjs
+
+# 第六十三輪：防自動化濫用（docs/abuse-protection.md、docs/deploy.md §31）
+!scripts/lib/rate-limit.mjs
+!scripts/lib/probe-signatures.mjs
+!tests/round63-rate-limit.test.mjs
+!tests/round63-probes.test.mjs

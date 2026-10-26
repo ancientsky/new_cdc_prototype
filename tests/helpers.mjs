@@ -74,5 +74,6 @@ export function distBasePath(distDir) {
 
 /** 啟動 scripts/serve.mjs 等子行程用的環境：明確帶 dist 的 BASE_PATH，不靠被釘選過的 process.env */
 export function distEnv(distDir, extra = {}) {
-  return { ...process.env, DIST_DIR: distDir, BASE_PATH: distBasePath(distDir), ...extra };
+  // 第六十三輪：端到端測試關掉閘道與模擬後端的速率限制——Playwright 一分鐘內點的次數遠超過真人，限流本身由 tests/round63-rate-limit.test.mjs 驗
+  return { ...process.env, DIST_DIR: distDir, BASE_PATH: distBasePath(distDir), GATEWAY_RATE_LIMIT: 'off', MOCK_RATE_LIMIT: 'off', ...extra };
 }

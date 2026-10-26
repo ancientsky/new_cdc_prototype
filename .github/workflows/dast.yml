@@ -1,0 +1,78 @@
+name: DAST (OWASP ZAP baseline, weekly)
+
+# 第六十三輪（Issue #142，docs/security-testing.md）：對「建置出來的靜態站」做被動式動態弱點掃描。
+# 為什麼不是每個 PR 都跑：要 docker、要爬站、耗時，原型階段先每週一次＋手動；而且這一關「不擋」，只產報告（先看基準線，乾淨後再考慮升級成閘門）。
+# 為什麼不接 content-pr.yml：該工作流程的 test job 有 PR 程式碼的執行權，掃描需要的 docker 與網路行為不該混進去（docs/deploy.md §2.2）。
+on:
+  schedule:
+    # 每週一 03:00 台灣時間 ＝ 週日 19:00 UTC
+    - cron: '0 19 * * 0'
+  workflow_dispatch:
+    inputs:
+      spider_minutes:
+        description: 'ZAP 爬站分鐘數（-m）'
+        type: string
+        default: '5'
+
+# 只讀：這個工作流程不寫回任何東西，結果走 artifact 與 job summary。
+permissions:
+  contents: read
+
+concurrency:
+  group: dast
+  cancel-in-progress: false
+
+jobs:
+  zap-baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Build the site for root path
+        # BASE_PATH=''：本機伺服器直接在根路徑 / 提供，ZAP 才爬得到所有頁面（原型預設的 /new_cdc_prototype/ 前綴會讓 / 變 404）。
+        # LINK_CHECK、PAGEFIND_VERIFY 關掉：這兩關在 pages.yml 已做過，這裡只要有站可掃，省時間。
+        run: BASE_PATH='' LINK_CHECK=off PAGEFIND_VERIFY=off npm run build
+      - name: Start the local server
+        # GATEWAY=off：不啟動寫入閘道，掃描範圍就是靜態站＋模擬後端；閘道（需驗證）不在這次範圍，見 security-testing.md 第 4 節。
+        env:
+          GATEWAY: 'off'
+        run: |
+          node scripts/serve.mjs 4173 > server.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -sf http://localhost:4173/ > /dev/null; then echo "server up after ${i}s"; exit 0; fi
+            sleep 1
+          done
+          echo "::error::server did not start"; cat server.log; exit 1
+      - name: ZAP baseline scan
+        id: zap
+        # -I：警告（WARN）不讓這一步失敗；這次掃描不擋合併、不擋部署，只當資訊。
+        # 資訊室在正式 CI 請把映像檔釘到 digest（image@sha256:…），不要用 :stable 浮動標籤。
+        # 掃的是建置後的靜態站＋模擬後端：關於模擬後端的發現，要對照真實接收系統的契約（docs/deploy.md §11、§13）再判讀。
+        continue-on-error: true
+        run: |
+          mkdir -p dast && chmod 777 dast
+          docker run --rm --network host -v "$PWD/dast:/zap/wrk:rw" ghcr.io/zaproxy/zaproxy:stable \
+            zap-baseline.py -t http://localhost:4173/ -m ${{ inputs.spider_minutes || 5 }} -I \
+            -r report.html -J report.json -w report.md
+      - name: Print report to job summary
+        if: always()
+        run: |
+          if [ -f dast/report.md ]; then cat dast/report.md >> "$GITHUB_STEP_SUMMARY"; else echo "ZAP 沒有產出報告（看上一步的日誌）" >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: Upload DAST report
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: dast-report
+          path: |
+            dast/report.html
+            dast/report.json
+            dast/report.md
+          retention-days: 30
+          if-no-files-found: warn

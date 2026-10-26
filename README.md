@@ -112,6 +112,13 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第六十三輪：grokbot 第五批——ARTEX 之後的產物白名單、速率限制與探測偵測、資安測試流程
+
+Yulun（2026-10-25）：「Grokbot 有針對最近一連串的 ARTEX 攻擊手法給網站一些建議，寫在 issue 中。」三題（#140–#142）都成立，拆成「程式做」「規格給資訊室」「已經有」三類；評估表在專案檔案 `grokbot-batch5/assessment.md`，取捨在 [architecture-decisions §49](docs/architecture-decisions.md)，契約在 ARCHITECTURE §67。
+
+- **#141 攻擊面**：`SITE_MODE=production` 建置把後台、後台 JS、source map、標頭設定檔、第三方函式庫搬進自足的 `dist-internal/`，公開樹再過禁止路徑＋副檔名白名單稽核，違規就建置失敗；`npm run audit:dist` 給 CD 與資訊室對部署產物再跑一次；`ADMIN_ORIGIN` 讓「同事修改這頁」指到內部站；標頭檔多了 Server／X-Powered-By 移除指令。對外資產清冊的可機讀一半由建置產出（`exposure.json`），網域、憑證那一半的每月比對流程在 [docs/attack-surface.md](docs/attack-surface.md)。
+- **#140 自動化探測**：共用限流器（鍵是信任代理後的 IP 與帳號，記憶體滿了淘汰不清空）接進閘道與三個模擬後端，429 通用訊息＋`Retry-After`、稽核只記開始被擋那一筆；前端 429 有專屬訊息；`analyze-404-log.mjs` 新增「自動化探測跡象」（爆量、掃描器路徑特徵、可疑 UA 為弱訊號），特徵清單與告警 KQL 在 [docs/abuse-protection.md](docs/abuse-protection.md)，WAF 需求表留給 #130 的決定。
+- **#142 測試流程**：每週一＋手動的 OWASP ZAP baseline 工作流程（不擋、報告進 artifact；沙盒無 docker，第一次要在 GitHub 上觸發）；[docs/security-testing.md](docs/security-testing.md) 定滲透測試範圍與頻率、AI 輔助滲透的條件、修補時限（示意），`/policy/security/` 加「弱點通報與修補」節。
 ## 第六十二輪：彩蛋與互動模組——歷史上的今天、兒童衛教小測驗、防疫決策模擬，後台一鍵開關
 
 Yulun 問（2026-10-26）：網站要有彩蛋或民眾覺得好玩的互動（歷史上的今天、給小孩的衛教遊戲、像「政策島」那種互動）會建議怎麼做？放哪裡不破壞版面？後台要有開關。做法：新內容型別 `interactive`（`content/interactives/`），一個模組一筆，`enabled` 開關＋選填檔期＋放置位置白名單＋權責單位；疫情中心 `alertLevel=emergency` 時全部隱藏（與節慶主題同一條規則）。四個示範模組：首頁右側欄「歷史上的今天」小卡（每條有出處，未核對標「待確認」）、`/play/kids-quiz/` 兒童衛教小測驗（每題綁站內疾病頁／Q&A，依據下架就隱藏）、`/play/policy-sim-dengue/` 登革熱防疫決策模擬（四回合、三個量表，標「教學用簡化模型」）、站名圖示連點 5 下或輸入 1922 的洗手 20 秒計時彩蛋。首頁最下方多一區「互動與遊戲」，沒有模組開著時整區不存在；外語首頁沒有譯文就完全不出現。後台 `/admin/interactives/` 切開關、排檔期、送審（快車道）。沒有 JS 也有純文字版；沒有動畫；axe 代表頁已加。說明與教訓：`docs/interactives.md`；`ARCHITECTURE.md` §66；`docs/architecture-decisions.md` §48；`docs/guide-staff.md` §59。
