@@ -55,7 +55,7 @@ export const THAI_RE = /^[฀-๿]+$/;
 export const EN_STOP = new Set('a an the of to in on for and or is are was were be been do does did i me my you your we our it its this that these those what which who whom how when where why can could should would will shall may might must have has had with by at from as about if than then so not no yes there here any some please tell know want need get go going am im i\'m into out up'.split(' '));
 export const VI_STOP = new Set('tôi bạn có không là và của cho với thì mà này đó những các một được khi nào gì ai'.split(' '));
 // 查詢端的高頻功能 bigram（不影響文件端）
-export const STOP_BIGRAMS = new Set(['什麼', '怎麼', '可以', '要不', '不要', '是不', '不是', '有沒', '沒有', '請問', '一下', '如果', '這個', '那個', '哪些', '是否', '會不', '不會', '應該', '我們', '你們', '他們', '我的', '我要', '我想', '想問', '問一', '知道', '告訴', '訴我', '的人', '了嗎', '是真', '真的', '的嗎', '嗎？', '一個', '多少', '還是', '或是', '還有', '到底', '需不', '不需', '能不', '不能', '這樣', '那樣', '怎樣', '如何', '哪裡', '為什', '的話', '現在', '目前', '最近', '要怎', '麼辦', '怎麼辦', '哪一', '哪個']);
+export const STOP_BIGRAMS = new Set(['什麼', '怎麼', '可以', '要不', '不要', '是不', '不是', '有沒', '沒有', '請問', '一下', '如果', '這個', '那個', '哪些', '是否', '會不', '不會', '應該', '我們', '你們', '他們', '我的', '我要', '我想', '想問', '問一', '知道', '告訴', '訴我', '的人', '了嗎', '是真', '真的', '的嗎', '嗎？', '一個', '多少', '還是', '或是', '還有', '到底', '需不', '不需', '能不', '不能', '這樣', '那樣', '怎樣', '如何', '哪裡', '為什', '的話', '現在', '目前', '最近', '要怎', '麼辦', '怎麼辦', '哪一', '哪個', '麼時', '時候']);
 
 const QWORD_RE = /什/;
 

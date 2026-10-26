@@ -79,7 +79,7 @@ export const DISEASE_FACETS = {
 };
 export const facetsOf = (q) => Object.keys(DISEASE_FACETS).filter((k) => DISEASE_FACETS[k].test(q));
 /** 問句去掉功能詞後才斷詞，避免「苗哪」「裡打」這種跨功能詞的雜訊雙字拉低涵蓋率 */
-export const QUERY_FUNC_RE = /(請問|想問|我想知道|可以|怎麼辦|怎麼|怎樣|如何|什麼|哪裡|哪些|哪個|哪一|是否|有沒有|能不能|會不會|需不需要|應該|是不是|告訴我|知道|幫我|一下|的話|為什麼|為何|多少|有哪|[的了嗎呢吧啊是在有沒不也都就還和與及或我你他她它們這那哪要會能請問想誰幾])/g;
+export const QUERY_FUNC_RE = /(請問|想問|我想知道|可以|怎麼辦|怎麼|怎樣|如何|什麼時候|時候|什麼|哪裡|哪些|哪個|哪一|是否|有沒有|能不能|會不會|需不需要|應該|是不是|告訴我|知道|幫我|一下|的話|為什麼|為何|多少|有哪|[的了嗎呢吧啊是在有沒不也都就還和與及或我你他她它們這那哪要會能請問想誰幾])/g;
 
 /** 旅遊疫情建議「變化」問句（最近哪些國家解除／調升…）；trv.change 意圖規則與 travelChanges 共用 */
 export const TRAVEL_CHANGE_KINDS = { lifted: /(解除|取消|撤銷|撤除|\blift(ed)?\b)/i, raised: /(調升|升級|提高|\braised?\b)/i, lowered: /(調降|降級|降低|\blowered\b)/i, new: /(新增|新發布|新列)/ };

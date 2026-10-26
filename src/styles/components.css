@@ -508,7 +508,9 @@ html:not(.js) .c-tabs__print{position:static;width:auto;height:auto;margin:0 0 v
   .c-sitemap{columns:1} .c-v1list{columns:1}
   .c-travelpick__form{flex-direction:column}
   .c-provfull,.c-deflist--row{grid-template-columns:1fr}
-  .c-advanced__body{position:static;width:auto}
+  /* 第六十六輪：手機版 details 原本 flex:0 0 auto（寬度＝內容的 max-content），揭露表的長句把整塊撐出畫面；改佔滿一列、允許縮小，1fr 欄才會換行 */
+  .c-advanced{flex:1 1 100%;min-width:0;max-width:100%}
+  .c-advanced__body{position:static;width:auto;max-width:100%}
   .c-feedback__id{margin-left:0;flex-basis:100%}
 }
 @media (max-width:959px) and (min-width:721px){ .c-sit-grid{grid-template-columns:repeat(2,1fr)} }
