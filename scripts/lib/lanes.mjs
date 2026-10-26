@@ -81,7 +81,7 @@ export function validateLanes(cfg, allTypes = []) {
 }
 
 /**
- * 第六十六輪：發布名單裡的個人帳號（不是 team: 開頭）⇒ 建置警告，不擋建置。
+ * 第六十七輪：發布名單裡的個人帳號（不是 team: 開頭）⇒ 建置警告，不擋建置。
  * 名單寫個人帳號，人一離職或調動名單就過時（離職的人仍能免審上線、審核請求寄給已不在的人）；
  * 寫 team:<AD 群組>，人員異動只要在 AD 改群組成員，名單不用改（docs/publishing-lanes.md、guide-staff §61）。
  * 檢查各車道的 allowedAuthors、allowedAuthorsByType，以及 rules.urgentAllowedAuthors、reviewerAccounts 的值（codeReviewers 等寫的是單位 id，不檢查）。

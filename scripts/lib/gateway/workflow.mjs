@@ -25,7 +25,7 @@
 //     路徑寫死、以列的 id 三方合併到網站上的主檔（master-merge.js；不同列、同一列的不同欄位都不算衝突），同一列同一欄兩邊改得不一樣 ⇒ 409 stale（kind: master）。
 //     一律一般車道（主檔變更需審核）；審核人看到逐筆、逐欄的差異；送審期間網站上的主檔變了 ⇒ 不能核准（409 outdated），重新開啟時併入。
 //   - requireBaseHash（設定開關，預設關）：開了之後沒帶版本碼的寫入一律 428，不再「照舊接受」。
-// 第六十六輪（docs/deploy.md §33、guide-staff §61）：交接。
+// 第六十七輪（docs/deploy.md §33、guide-staff §61）：交接。
 //   - 同單位的編輯（或跨單位角色）可以「接手」進行中的送審件（草稿／退回／審核中）：自己加進承辦人、成為聯絡人；
 //     原承辦人標 handedOver（仍留在 editors：提交訊息照記 Edited-by，四眼原則照樣擋他核准），之後的退回／核准通知只寄給沒交接出去的承辦人。
 //   - 已上線的內容不用交接：owner 是單位，待辦與審閱到期也按單位；單位改組用 scripts/reassign-owner.mjs。
@@ -172,7 +172,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     return null;
   }
 
-  /** 第六十六輪：目前的聯絡承辦人（沒有交接出去的）；全部都交接出去了（不該發生）就退回全部，通知不會沒人收 */
+  /** 第六十七輪：目前的聯絡承辦人（沒有交接出去的）；全部都交接出去了（不該發生）就退回全部，通知不會沒人收 */
   function contactsOf(sub) { const a = sub.editors.filter((e) => !e.handedOver); return a.length ? a : sub.editors; }
   const isSoleContact = (sub, p) => { const c = sub.editors.filter((e) => !e.handedOver); return c.length === 1 && c[0].account === p.account; };
 
@@ -806,7 +806,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
   const EDIT_PAGE = { article: 'bulletin/edit', job: 'jobs/edit', tender: 'tenders/edit', [MASTER_TYPE]: 'vaccines/schedule' };
   const link = (ctx, page, sid, sub = store.get(sid)) => `${ctx.origin ?? ''}${ctx.basePath ?? config.basePath}/admin/${page === 'publish' ? (EDIT_PAGE[sub?.type] ?? 'publish') : page}/${page === 'due' ? '' : `?${page === 'review' ? 'item' : 'gw'}=${encodeURIComponent(sid)}`}`;
 
-  /* ───────── 交接（第六十六輪） ───────── */
+  /* ───────── 交接（第六十七輪） ───────── */
   /**
    * 接手一個進行中的送審件：同單位的編輯（或跨單位角色）把自己設為承辦人。
    * 原承辦人留在 editors（Edited-by 照記、四眼原則照擋），標 handedOver，之後的通知不再寄給他。內容不動、分支不動。
@@ -840,7 +840,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
   /**
    * @param {any} p
    * @param {{ view?: string, contentId?: string, editor?: string }} [o]
-   *   editor（第六十六輪）：只列這個帳號目前承辦（沒有交接出去）的送審件；給「單位送審件」的承辦人篩選用
+   *   editor（第六十七輪）：只列這個帳號目前承辦（沒有交接出去）的送審件；給「單位送審件」的承辦人篩選用
    */
   function list(p, { view: v = 'mine', contentId, editor } = {}) {
     let subs = store.all();

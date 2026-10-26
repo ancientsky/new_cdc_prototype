@@ -112,7 +112,7 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
-## 第六十六輪：同事離職或調動怎麼交接；上架與審核能不能同一人；誰做了什麼記在哪
+## 第六十七輪：同事離職或調動怎麼交接；上架與審核能不能同一人；誰做了什麼記在哪
 
 同事問：「上架者與審核者可以是同一人嗎？」「誰改了什麼、誰核准的記在哪？」「承辦人離職或調單位，手上幾百筆內容要怎麼交接？」
 
@@ -122,7 +122,7 @@
 - **上架與審核同一人**：一般車道不行，閘道直接擋（四眼原則）；快車道是「授權名單＋先上線、公關室 24 小時內複核」。
 - **誰做了什麼**：公開 JSON 只有單位與審閱日；`postPublishReview.reviewedBy` 新增建置檢查，只能寫單位或職稱（「公關室承辦人」），寫人名或帳號建置失敗（規則 30）。姓名與 AD 帳號只在機關 GitLab 的提交訊息（`Edited-by:`／`Approved-by:`）與閘道稽核紀錄。
 - **發布名單的個人帳號**：`lanes.json` 的 `allowedAuthors` 等名單有不是 `team:` 開頭的帳號 ⇒ 建置印一行警告「發布名單含個人帳號，正式環境請改用 team:<AD 群組>」（原型的 `ancientsky` 會一直觸發，正式環境換成群組後消失）。
-- 文件：[docs/guide-staff.md](docs/guide-staff.md) §61（同事版）、[docs/admin-auth.md](docs/admin-auth.md) §5 第 6 點（離職／調動清單）、[docs/deploy.md](docs/deploy.md) §33、[docs/publishing-lanes.md](docs/publishing-lanes.md) §3.0.2、[docs/governance-model.md](docs/governance-model.md) §1.6 與規則 30、31、ARCHITECTURE §70、[architecture-decisions](docs/architecture-decisions.md) §52。測試 `tests/round66-handover.test.mjs`。
+- 文件：[docs/guide-staff.md](docs/guide-staff.md) §61（同事版）、[docs/admin-auth.md](docs/admin-auth.md) §5 第 6 點（離職／調動清單）、[docs/deploy.md](docs/deploy.md) §33、[docs/publishing-lanes.md](docs/publishing-lanes.md) §3.0.2、[docs/governance-model.md](docs/governance-model.md) §1.6 與規則 30、31、ARCHITECTURE §70、[architecture-decisions](docs/architecture-decisions.md) §52。測試 `tests/round67-handover.test.mjs`。
 
 ## 第六十六輪：「什麼時候要戴保險套」為什麼拒答；「進階」揭露表手機跑版
 

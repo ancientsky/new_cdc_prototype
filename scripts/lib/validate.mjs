@@ -86,7 +86,7 @@ export function pendingReviewWarnings(site) {
   return out;
 }
 
-// ───────────────────────── 第六十六輪：內容屬單位不屬個人 ─────────────────────────
+// ───────────────────────── 第六十七輪：內容屬單位不屬個人 ─────────────────────────
 
 /**
  * postPublishReview.reviewedBy 只能寫單位或職稱，不能寫人名（規則 30）。
@@ -163,7 +163,7 @@ export function validateSite(site) {
   const units = new Set(site.master.units.map((u) => u.id));
   const unitById = new Map((site.master.units ?? []).map((u) => [u.id, u]));
   const diseaseIds = new Set(site.master.diseases.map((d) => d.id));
-  // 第六十六輪：單位裁撤（retiredAt）要寫承接單位（successor），承接單位要存在、不能也已裁撤；主檔裡指到裁撤單位的 owner 也要改
+  // 第六十七輪：單位裁撤（retiredAt）要寫承接單位（successor），承接單位要存在、不能也已裁撤；主檔裡指到裁撤單位的 owner 也要改
   for (const u of site.master.units ?? []) {
     if (u.successor && !u.retiredAt) push('content/master/units.json', `${u.id}：有 successor 就要有 retiredAt（裁撤日）`);
     if (!u.retiredAt) continue;

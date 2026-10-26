@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 第六十六輪：單位改組時整批改內容的權責單位（owner）。說明見 scripts/lib/reassign-owner.mjs、docs/guide-staff.md §61、docs/deploy.md §33。
+// 第六十七輪：單位改組時整批改內容的權責單位（owner）。說明見 scripts/lib/reassign-owner.mjs、docs/guide-staff.md §61、docs/deploy.md §33。
 // 用法：
 //   npm run reassign-owner -- --from unit.a --to unit.b [--type disease,faq] [--dry-run] [--report 路徑]
 //   --dry-run   只列出會改哪些，不寫檔（先跑這個，把報告貼給單位確認）

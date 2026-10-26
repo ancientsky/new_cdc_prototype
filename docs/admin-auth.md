@@ -102,7 +102,7 @@ IdP 回傳 id_token（OIDC）：sub（員編）、name、groups（AD 群組）�
 3. 後台與 PR 預覽目錄放到閘道後面（反向代理 + OIDC 外掛，或雲端主機的身分驗證功能）；GitHub Pages 公開版只放前台。
 4. 「代承辦人送出」服務（[git-as-cms.md](git-as-cms.md) §3.3）讀閘道傳來的身分，PR 的 author 帶承辦人姓名與單位，用服務帳號推送。
 5. 稽核日誌集中收（登入、登出、拒絕、暫停 AI、疫情發布、送出 PR），保存一年以上，資訊室與政風室可調閱。
-6. **離職／調動清單**（第六十六輪；同事版說明在 [guide-staff.md](guide-staff.md) 第 61 節）。內容屬單位不屬個人（`owner` 是單位 id），所以清單很短：
+6. **離職／調動清單**（第六十七輪；同事版說明在 [guide-staff.md](guide-staff.md) 第 61 節）。內容屬單位不屬個人（`owner` 是單位 id），所以清單很短：
    - **停 AD（離職）或改群組（調動）**：離職停帳號即停後台；調單位由人事把他從 `CDC-WEB-<舊單位>-*` 移到 `CDC-WEB-<新單位>-*`。已上線的內容、審閱到期提醒、待辦都按單位，一筆都不用改。
    - **接手進行中的送審件**：離職前（或之後由單位主管指派）同單位的編輯在「我的內容 → 單位進行中的送審件」依承辦人篩選，逐件按「接手」（`POST /api/gateway/items/:id/handover`，[deploy.md](deploy.md) 第 33 節）。原承辦人留在紀錄裡、仍受四眼原則限制，之後的通知只寄新承辦人。
    - **檢查發布名單**：`content/governance/lanes.json` 的 `allowedAuthors`、`allowedAuthorsByType`、`rules.urgentAllowedAuthors`、`reviewerAccounts` 應該都是 `team:<AD 群組>`；若寫的是個人帳號，人一走名單就過時（離職的人仍能免審上線、審核請求寄給已不在的人）。建置會對個人帳號印警告「發布名單含個人帳號，正式環境請改用 team:<AD 群組>」（[publishing-lanes.md](publishing-lanes.md) 第 3.0.2 節）。名單變更走一般車道。

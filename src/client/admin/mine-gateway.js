@@ -1,4 +1,4 @@
-// /admin/mine/ 的「單位進行中的送審件」（第六十六輪，guide-staff §61、docs/deploy.md §33）。
+// /admin/mine/ 的「單位進行中的送審件」（第六十七輪，guide-staff §61、docs/deploy.md §33）。
 // 有寫入閘道時才出現：列出自己單位的草稿／退回／審核中送審件，可依承辦人篩選；同事離職或調動時按「接手」把自己設為承辦人。
 // 沒有閘道（GitHub Pages、?gateway=off）時這一塊不出現，頁面照舊只有單位內容清單。畫面文字一律走 textContent。
 import { $ } from './common.js';

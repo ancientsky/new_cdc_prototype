@@ -1,5 +1,5 @@
 // /admin/mine/ 我的內容：依示範身分（單位）列出該單位內容、生命週期與白名單狀態
-// 第六十六輪：有寫入閘道時多一塊「單位進行中的送審件」（#gw-unit，mine-gateway.js）：依承辦人篩選、「接手」離職或調動同事的送審件（guide-staff §61）。
+// 第六十七輪：有寫入閘道時多一塊「單位進行中的送審件」（#gw-unit，mine-gateway.js）：依承辦人篩選、「接手」離職或調動同事的送審件（guide-staff §61）。
 import { html } from '../../../scripts/lib/render.mjs';
 import { pageHead, adminMeta, catalogRows, lifecycleBadges, wlCell, TYPE_LABEL, STATUS_LABEL, daysText } from './_partials.mjs';
 export { layout } from './_layout.mjs';

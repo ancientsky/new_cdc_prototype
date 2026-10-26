@@ -2748,7 +2748,7 @@ Yulun 問盲測弱項（錯字、長輩說法、情境題、外語）有沒有�
 **教訓：** 「站內查無」要先分「缺內容」與「斷詞雜訊」（印 `relevanceInfo.tokens` 與前三個片段）；疑問詞要整組拿，看剩下什麼而不是拿掉什麼；沒拒答不等於答對。詳見 docs/ask-search-llm.md §20。
 
 
-## 70. 第六十六輪：交接——內容屬單位、接手進行中送審件、單位改組（2026-10-26）
+## 70. 第六十七輪：交接——內容屬單位、接手進行中送審件、單位改組（2026-10-26）
 
 同事問：上架的人跟審核的人能不能是同一個人？誰做了什麼記在哪？承辦人離職或調動，幾百筆內容怎麼交接？答案與操作在 `docs/guide-staff.md` §61；資訊室清單在 `docs/admin-auth.md` §5 第 6 點；端點與工具在 `docs/deploy.md` §33；取捨在 architecture-decisions §52；規則 30、31 在 `docs/governance-model.md`。
 
@@ -2761,6 +2761,6 @@ Yulun 問盲測弱項（錯字、長輩說法、情境題、外語）有沒有�
 | 單位裁撤 | `schemas/master.json` `unit.retiredAt`（date）、`unit.successor`（`^unit\.`）；`validateSite`：`retiredAt ≤ today` 的單位當 `owner`（內容、移轉清單與其項目、疾病主檔）⇒ 錯誤；`successor` 必須成對、存在、未裁撤（規則 31） |
 | reviewedBy | `validate.mjs` `reviewedByProblem(value, units)`：去掉單位 id／名稱／`stewardTitle`／`REVIEWER_TITLE_WORDS` 後只能剩空白與標點（規則 30） |
 | 個人帳號警告 | `lanes.mjs` `personalAccountEntries(cfg)`、`personalAccountWarnings(cfg)`；`build.mjs` 印一行 `⚠ [發布名單]`，不擋建置 |
-| 測試 | `tests/round66-handover.test.mjs` |
+| 測試 | `tests/round67-handover.test.mjs` |
 
 **教訓：** 「怎麼交接」的最好答案是讓大部分東西不需要交接——把所有權放在不會離職的單位、把權限放在人事本來就維護的 AD 群組；剩下真的綁著人的（等通知的送審件），才做交接功能，而且交接不能抹掉「誰做過」的事實。

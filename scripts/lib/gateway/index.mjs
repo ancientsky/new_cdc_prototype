@@ -9,7 +9,7 @@
 // 端點（皆 JSON；錯誤格式 { error: 代碼, message: 白話中文, fields?: [{ field, label, message }] }）
 //   GET  /api/gateway/health                 → { ok, service:'cdc-web-gateway', auth }（前端用它判斷「有沒有閘道」）
 //   GET  /api/gateway/session                → { user: { account, name, unit, roles[] }, csrfToken }
-//   GET  /api/gateway/items?view=mine|queue|all&contentId=&editor=   → { items: [...] }（editor：第六十六輪，只列這個帳號目前承辦的）
+//   GET  /api/gateway/items?view=mine|queue|all&contentId=&editor=   → { items: [...] }（editor：第六十七輪，只列這個帳號目前承辦的）
 //   GET  /api/gateway/items/:id              → 送審件（狀態、歷程、意見、能做什麼）
 //   GET  /api/gateway/items/:id/diff         → 白話欄位差異
 //   GET  /api/gateway/items/:id/content      → { item, contentHash, update?, companions?, categories? } 目前這版的內容（承辦人被退回後重新開啟用）；
@@ -35,7 +35,7 @@
 //        /submit 另收 reReview: true（修改到期內容時一併標為重新審閱）
 //   POST /api/gateway/items/:id/return       { comment }              退回修改（意見必填）
 //   POST /api/gateway/items/:id/approve      { comment? }             核准上線（送審期間網站版本變了 ⇒ 409 outdated，不記核准）
-//   POST /api/gateway/items/:id/handover     { note? }                接手（第六十六輪）：同單位的編輯把自己設為承辦人；原承辦人不再收通知、仍不能核准
+//   POST /api/gateway/items/:id/handover     { note? }                接手（第六十七輪）：同單位的編輯把自己設為承辦人；原承辦人不再收通知、仍不能核准
 //   GET  /api/gateway/intl-epidemic/status   → { lastRun, history }   國際疫情匯入紀錄（第四十三輪；docs/intl-epidemic.md）
 //   POST /api/gateway/intl-epidemic/import   { feed, mode?, dry? }    後台手動匯入（feed：v1 物件、舊官網匯出列或 CSV 字串；本體 ≤ 2 MB）
 //        只有疫情中心的編輯／審核或跨單位角色可用；與推送端點同一段上架流程（scripts/lib/intl-epidemic-publish.mjs），held → 202

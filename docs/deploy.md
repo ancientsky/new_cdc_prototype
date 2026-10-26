@@ -2130,7 +2130,7 @@ GitHub Pages 原型站照舊用原型模式建置（後台與 source map 是示�
 **釘映像檔 digest**：原型用 `ghcr.io/zaproxy/zaproxy:stable`（浮動標籤）。正式 CI 請改成 `ghcr.io/zaproxy/zaproxy@sha256:<digest>`，並定期更新，理由與釘 action SHA 相同（供應鏈）。
 
 **搬到署內 CI（GitLab）**：用同樣的步驟——建置（`BASE_PATH=''`）、起 `scripts/serve.mjs`、跑 ZAP 容器、把三個報告檔存成 job artifact。runner 需要能執行容器；掃描目標限定為該 job 自己啟動的本機服務，不要指向正式或共用環境。
-## 33. 交接：閘道的「接手」與單位改組的 reassign-owner（第六十六輪）
+## 33. 交接：閘道的「接手」與單位改組的 reassign-owner（第六十七輪）
 
 同事版說明在 [guide-staff.md](guide-staff.md) 第 61 節；取捨在 [architecture-decisions.md](architecture-decisions.md) 第 52 節。前提：內容的 `owner` 是單位 id，後台權限來自 AD 群組，所以人事異動本身不需要動內容，只有下面兩件事要做。
 
@@ -2165,4 +2165,4 @@ npm run reassign-owner -- --from unit.a --to unit.b [--type disease,faq] [--dry-
 - PR：動到內容檔，走一般車道；請 OASIS 與公關室審核。
 - 收尾：舊單位在 `content/master/units.json` 加 `retiredAt`（裁撤日，`YYYY-MM-DD`）與 `successor`（承接單位）。建置從裁撤日起把「owner 仍是裁撤單位」的內容、移轉清單、疾病主檔當錯誤（訊息附上要跑的指令），`successor` 必須存在、不能也已裁撤（governance-model 規則 31）。裁撤日可以先寫未來日期，到那天才生效。
 
-測試：`tests/round66-handover.test.mjs`。
+測試：`tests/round67-handover.test.mjs`。

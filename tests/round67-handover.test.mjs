@@ -1,4 +1,4 @@
-// 第六十六輪：同事離職或調動時怎麼交接（guide-staff §61、docs/deploy.md §33、architecture-decisions §52）。
+// 第六十七輪：同事離職或調動時怎麼交接（guide-staff §61、docs/deploy.md §33、architecture-decisions §52）。
 //   1. 寫入閘道「接手」：同單位的編輯接手進行中的送審件；別單位 403；之後的通知只寄新承辦人；原承辦人仍受四眼原則；稽核有紀錄；
 //      清單可依承辦人篩選（view=all&editor=）。
 //   2. scripts/reassign-owner.mjs：試算不改檔、改寫只動 owner；不上架的單位不能當新單位；裁撤單位（retiredAt）的內容建置失敗。
