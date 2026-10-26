@@ -1183,7 +1183,7 @@ Result = {ok:true, …body} | {ok:false, error:'invalid'|'rate'|'expired'|'notfo
 | `POST /api/subscriptions/manage-link` | `{email}` | `202` | 已訂閱者收到 manage 信；其餘同樣 202 不寄信 |
 | `GET /api/dev/outbox[/檔名]` | — | 列出／讀取 `.eml` | 只給 loopback；開發輔助，正式版沒有 |
 
-防護：同源檢查（POST 帶 `Origin` 必須等於 `Host`）、本體 ≤ 8 KB、`Content-Type` 只收 JSON／form、儲存筆數（2000）與 outbox 檔數（5000）上限、節流（每信箱 10 分鐘 3 次、每來源 10 次）、未確認超過 7 天自動清除、token 一律 `crypto.randomUUID()` 且只接受 UUID 形狀才查表、連結的主機名稱只取通過字元檢查的 `Host`（可用 `PUBLIC_ORIGIN` 固定）。注意這是模擬：token 以明碼存檔方便檢視，**正式版只存雜湊**。
+防護：同源檢查（POST 帶 `Origin` 必須等於 `Host`）、本體 ≤ 8 KB、`Content-Type` 只收 JSON／form、儲存筆數（2000）與 outbox 檔數（5000）上限、節流（每信箱 10 分鐘 3 次、每來源 10 次；第六十二輪再加 HTTP 層每 IP 每分鐘 5 次，退訂與 health 不限）、未確認超過 7 天自動清除、token 一律 `crypto.randomUUID()` 且只接受 UUID 形狀才查表、連結的主機名稱只取通過字元檢查的 `Host`（可用 `PUBLIC_ORIGIN` 固定）。注意這是模擬：token 以明碼存檔方便檢視，**正式版只存雜湊**。
 
 ### 30.4 `.eml` 長什麼樣子
 
@@ -2033,7 +2033,7 @@ README 第四十一輪有逐項說明；這裡只記工程契約。詳細設計�
 | 評估集 | r12：BD009–BD016（covid／Covid／新冠病毒；做愛／上床／性交／做愛會得什麼病；專業模式「性交」不得引登革熱教材） | `content/governance/eval-set.json`、`tests/round41-synonyms.test.mjs` |
 | 查詢紀錄：前端 | `log.js` 在答案畫完後 `import()`（不計入引擎 240 KB 預算；測試檢查沒有靜態 import）；事件欄位白名單 `askLogEvent()`；`fetch keepalive + credentials:'omit' + referrerPolicy:'no-referrer'`，sendBeacon 只在無 fetch 且跨網域時；DNT／GPC 不送；`mock` 只在 loopback 且有標記 cookie `cdc_ask_log_mock=1`（`serve.mjs` 設）才送 | `src/client/answer/log.js`、`ui.js`（一行掛點）、`src/templates/public/ask.mjs`（`data-ask-log*`） |
 | 查詢紀錄：設定 | `askLog`：`ASK_LOG_MODE`（mock／post／off）、`ASK_LOG_ENDPOINT`（https）、`ASK_LOG_RETENTION_DAYS`（90）；矛盾設定建置失敗；post 端點只加進 CSP `connect-src` | `site.config.mjs`、`scripts/lib/forms.mjs`（`askLogSetting/Errors/Origins`）、`emit-headers.mjs`、`build.mjs` |
-| 查詢紀錄：收件端契約 | `POST /api/ask-log`（text/plain 或 JSON，≤2 KB，白名單欄位、再遮蔽、收件端時鐘到分鐘、每來源每分鐘 60 筆、204）；`GET /api/dev/ask-log/report` 只限 loopback；`.local/ask-log/YYYY-MM-DD.ndjson`，到期自動刪 | `scripts/lib/ask-log-mock.mjs`（正式端的參考實作）、docs/ask-log.md §7 |
+| 查詢紀錄：收件端契約 | `POST /api/ask-log`（text/plain 或 JSON，≤2 KB，白名單欄位、再遮蔽、收件端時鐘到分鐘、每來源每分鐘 30 筆（第六十二輪由 60 降為 30）、204）；`GET /api/dev/ask-log/report` 只限 loopback；`.local/ask-log/YYYY-MM-DD.ndjson`，到期自動刪 | `scripts/lib/ask-log-mock.mjs`（正式端的參考實作）、docs/ask-log.md §7 |
 | 查詢紀錄：報表 | `npm run ask-log:report`：`normalizeQuery`（NFKC、小寫、空白、結尾標點）；k-匿名 `--min`（預設 3 次或 3 天）未達門檻只計數不列文字；`UNANSWERED = no-match、no-source`；疑似同義詞候選（相同／前綴／後綴／包含／編輯距離，整句無候選再拆單字）；`llmPass` 掛點未實作 | `scripts/lib/ask-log-report.mjs`、`scripts/ask-log-report.mjs` |
 | 後台 | `/admin/ask-log/`（讀本機報表或上傳 report.json）；`/admin/glossary/#new-term?alias=&canon=` 預填新增表單 | `src/templates/admin/ask-log.mjs`、`src/client/admin/{ask-log,glossary}.js` |
 | 個資 | 原始紀錄與報表只在 `.local/`（git 忽略）或機關儲存；`npm run pii` 範圍不變；隱私權政策頁待法務文字 | docs/ask-log.md §8 |
@@ -2142,7 +2142,7 @@ travel-epidemic.json ＋ intl-epidemic-import.json → commit（B：github-actio
 | 認證 | `Authorization: Bearer <INTL_FEED_TOKEN>`；比對用 `timingSafeEqual`（先各自 SHA-256）；權杖、`Authorization` 標頭與本文都不寫進 log 或稽核。不吃 cookie、不看 Origin（不是給瀏覽器用的，所以沒有 CSRF 問題） |
 | 本文 | `application/json`（v1 或舊官網匯出列）或 `text/csv`；≤ 2 MB（超過時讀完再回 413，避免連線被重設） |
 | 參數 | 選填 `?mode=full|delta`（覆寫 feed 本身的 mode；急件建議 delta）、`?dry=1`（只檢查不寫） |
-| 回應 | 200 `{ ok, held:false, noop, changes, rejected, unmapped, message, report }`；**整批保留 ⇒ 202**（同形狀、`held:true`，快照沒改、只記匯入紀錄、待辦會產生）；400 `bad_feed`／`bad_json`、401 `unauthorized`、413 `too_large`、415 `unsupported`、429 `rate`（每 IP 每分鐘 10 次，含認證失敗，附 `Retry-After`）、503 `disabled`（伺服器沒設 `INTL_FEED_TOKEN`） |
+| 回應 | 200 `{ ok, held:false, noop, changes, rejected, unmapped, message, report }`；**整批保留 ⇒ 202**（同形狀、`held:true`，快照沒改、只記匯入紀錄、待辦會產生）；400 `bad_feed`／`bad_json`、401 `unauthorized`、413 `too_large`、415 `unsupported`、429 `rate`（每 IP 每分鐘 30 次，在權杖檢查之前判斷，含認證失敗，附 `Retry-After`；第六十二輪由 10 改為 30 並共用 `rate-limit.mjs`）、503 `disabled`（伺服器沒設 `INTL_FEED_TOKEN`） |
 | 健康檢查 | `GET /api/intl-epidemic/health` → `{ ok: true, enabled }` |
 | 寫入 | 先 `applyImport()` 寫本機兩個快照檔；有閘道的 git provider 時，把 `data/snapshots/travel-epidemic.json` 與 `intl-epidemic-import.json` **直接 commit 到目標分支**（`GITLAB_TARGET_BRANCH`，作者是服務帳號），不開合併請求、不經人審。提交訊息首行 `data: 國際重要疫情資訊（推送）新增 N、更新 N、撤下 N`（整批保留時為「整批保留，只更新匯入紀錄」），尾端記 `Source: push`、`Producer: <feed.producer>` |
 | 失敗 | 寫檔成功但提交失敗 ⇒ 500 `version_failed`（「同一批再送不會重複上架」，因為下一次會是 noop 或同樣的變更） |
@@ -2681,3 +2681,18 @@ Issue #124、#125、#126、#128。取捨在 architecture-decisions §47；做法
 | i18n | `rm.*`（ROWS_R61，七語；en 原型撰寫、其餘機器初稿待審）、`dev.backlink`（中英）。 |
 | 測試 | `tests/round61-research-media.test.mjs`：七語路由與鈕、aria-current 三頁各一顆、三組連結齊全、開發者連結在授權之後、英文頁標題無中文、回連、sitemap。 |
 
+## 66. 第六十二輪：ARTEX 之後的三道防線——產物白名單、速率限制與探測偵測、資安測試流程（2026-10-26）
+
+Issue #140、#141、#142（grokbot 第五批）。取捨在 architecture-decisions §48；做法在 deploy.md §30–§32、docs/attack-surface.md、docs/abuse-protection.md、docs/security-testing.md。
+
+| 機制 | 契約 |
+| --- | --- |
+| 產物白名單 | `scripts/lib/dist-profile.mjs`：`FORBIDDEN_PUBLIC`（`admin/**`、`assets/js/admin/**`、`**/*.map`（`redirects/nginx.map` 例外）、`headers/**`、`preview/**`、`vendor/**`、`globals.d.ts`、`robots.production.txt`＋防禦性規則）與副檔名白名單 `PUBLIC_EXTENSIONS`；`auditDist(dist, { profile })` 回 `{ ok, forbidden, expected, inventory }`；原型模式只盤點（`dist/headers/exposure.json`），`SITE_MODE=production` ⇒ `splitForProduction` 搬到 `dist-internal/`（自足：含 `assets/`、`v1/`、README、`exposure.json`）、刪預覽與 `robots.production.txt`、去掉公開 JS 的 `sourceMappingURL`、再稽核公開樹，有違規建置失敗。CLI `npm run audit:dist -- <dir> --profile public` |
+| 內部站連結 | `site.config.mjs` `adminOrigin`（`ADMIN_ORIGIN`，須為 https 來源）：`render.mjs` `url()` 把所有 `/admin…` 路徑改成絕對網址；沒設則靠同事側反向代理路由 `/admin/` 與 `/api/gateway/` |
+| 指紋標頭 | `emit-headers.mjs` `REMOVE_HEADERS`（Server、X-Powered-By、X-AspNet-Version、X-AspNetMvc-Version）：`headers.json.remove`、nginx `server_tokens off`、IIS `removeServerHeader`＋`<remove>`、Front Door 規則引擎寫在 README |
+| 速率限制 | `scripts/lib/rate-limit.mjs`：`createRateLimiter({ windowMs, max })` 滑動記錄、記憶體有上限但絕不整個清空；`clientKey(req, { trustedProxies })` 只在對端是信任代理時讀 `X-Forwarded-For`；`ipMatcher` 支援 CIDR，`gateway/auth.mjs` 共用。閘道 `GATEWAY_RATE_LIMIT`（預設 `ip:120/60,auth:10/60,write:60/60`，`off` 關閉），429 `rate_limited` 通用訊息＋`Retry-After`，稽核 `rate_limited { ip, path, scope }` 只在開始被擋時寫一筆；電子報每 IP 5／分（退訂、health 除外）、查詢紀錄 30／分、國際疫情推送 30／分（在權杖檢查之前）；`MOCK_RATE_LIMIT=off`；測試 `distEnv()` 預設關閉 |
+| 前端 | `form-post.js`、`careers-apply.js` 收到 429 顯示 `form.err.rate`（七語；ja/tl/vi/id/th 機器初稿） |
+| 探測偵測 | `scripts/lib/probe-signatures.mjs`（`PROBE_SIGNATURES`、`SUSPICIOUS_UAS`；`/admin/`、`/api/gateway/` 只在 `--public` 算；`/openapi.json` 不算）；`analyze-404-log.mjs` `detectProbes()` 每來源 `{ burstMax, signatureHits, userAgents, score, reasons, action: escalate｜block｜review }`，報表第 4 節「自動化探測跡象」、JSON `probes`；`parseLog` 帶 `ip`、`xff` |
+| DAST | `.github/workflows/dast.yml`：每週一 03:00（台灣）＋手動，`BASE_PATH=''` 建置、`serve.mjs`（`GATEWAY=off`）、ZAP baseline（docker `ghcr.io/zaproxy/zaproxy:stable`，`-I` 不擋）、報告進 job summary 與 artifact `dast-report`（30 天）；沙盒無 docker，第一次執行要在 GitHub 上觸發 |
+| 修補時限 | `/policy/security/` 第七節「弱點通報與修補」（示意，待資訊室）：嚴重 48 小時緩解／7 日修補、高 7 日、中 30 日、低 90 日；流程 security.txt → 資訊室分級 → 私有追蹤 → 一般車道 PR（OASIS 審）→ 複測 |
+| 測試 | `tests/round62-attack-surface.test.mjs`、`round62-rate-limit.test.mjs`、`round62-probes.test.mjs`；fixture `tests/fixtures/access-probe.log` |

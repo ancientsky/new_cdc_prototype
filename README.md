@@ -112,6 +112,14 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第六十二輪：grokbot 第五批——ARTEX 之後的產物白名單、速率限制與探測偵測、資安測試流程
+
+Yulun（2026-10-25）：「Grokbot 有針對最近一連串的 ARTEX 攻擊手法給網站一些建議，寫在 issue 中。」三題（#140–#142）都成立，拆成「程式做」「規格給資訊室」「已經有」三類；評估表在專案檔案 `grokbot-batch5/assessment.md`，取捨在 [architecture-decisions §48](docs/architecture-decisions.md)，契約在 ARCHITECTURE §66。
+
+- **#141 攻擊面**：`SITE_MODE=production` 建置把後台、後台 JS、source map、標頭設定檔、第三方函式庫搬進自足的 `dist-internal/`，公開樹再過禁止路徑＋副檔名白名單稽核，違規就建置失敗；`npm run audit:dist` 給 CD 與資訊室對部署產物再跑一次；`ADMIN_ORIGIN` 讓「同事修改這頁」指到內部站；標頭檔多了 Server／X-Powered-By 移除指令。對外資產清冊的可機讀一半由建置產出（`exposure.json`），網域、憑證那一半的每月比對流程在 [docs/attack-surface.md](docs/attack-surface.md)。
+- **#140 自動化探測**：共用限流器（鍵是信任代理後的 IP 與帳號，記憶體滿了淘汰不清空）接進閘道與三個模擬後端，429 通用訊息＋`Retry-After`、稽核只記開始被擋那一筆；前端 429 有專屬訊息；`analyze-404-log.mjs` 新增「自動化探測跡象」（爆量、掃描器路徑特徵、可疑 UA 為弱訊號），特徵清單與告警 KQL 在 [docs/abuse-protection.md](docs/abuse-protection.md)，WAF 需求表留給 #130 的決定。
+- **#142 測試流程**：每週一＋手動的 OWASP ZAP baseline 工作流程（不擋、報告進 artifact；沙盒無 docker，第一次要在 GitHub 上觸發）；[docs/security-testing.md](docs/security-testing.md) 定滲透測試範圍與頻率、AI 輔助滲透的條件、修補時限（示意），`/policy/security/` 加「弱點通報與修補」節。
+
 ## 第六十一輪：「研究與媒體」身分入口不再是開發者入口
 
 同事反應（Yulun 轉述，2026-10-25）：首頁身分鈕「研究與媒體」點進去是 API 文件，不是記者與研究者要看的東西。做法：新入口頁 `/research-media/`（七語；給媒體／給研究者／資料與引用三組九卡，內容由新聞稿、《疫情報導》、資料集、單位主檔推導），身分鈕改連它；開發者入口不刪、退到該頁最後一張卡與頁尾，頁首加回連。理由與「身分鈕的落地頁要回答這種人來做什麼」的教訓在 [docs/navigation.md §7](docs/navigation.md)。
