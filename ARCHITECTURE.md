@@ -2735,3 +2735,15 @@ Yulun 問盲測弱項（錯字、長輩說法、情境題、外語）有沒有�
 | 測試 | `tests/round65-ask-weakspots.test.mjs` |
 
 **教訓：** 量得到才留（外語十組對照 0 變化就拿掉）；別名不是零風險（候選詞放進索引端就少對一題），確認前只放問句端；錯字的補法要跟著民眾的輸入法走（注音輸入的錯字是同音字，不是形近字）。
+
+## 69. 第六十六輪：「什麼時候」是疑問詞；「進階」區塊手機版尺寸（2026-10-26）
+
+| 項目 | 契約 |
+| --- | --- |
+| 問句端功能詞 | `text.js` `STOP_BIGRAMS` 多「麼時」「時候」；`rules.js` `QUERY_FUNC_RE` 多「什麼時候｜時候」。只影響 `tokenize(q, { query: true })` 與相關度分母；文件端斷詞不變。「何時」「多久」「幾天」仍是主題詞（對得到答案句）。 |
+| 評估 | 評估集 r14 +1 題（R66-01，boundary，`mustNotCite` 資料申請 FAQ 與 B 肝新生兒 FAQ）。 |
+| 手機版「進階」 | `components.css` ≤720px：`.c-advanced{flex:1 1 100%;min-width:0;max-width:100%}`、`.c-advanced__body{max-width:100%}`。原因：`details` 原本 `flex:0 0 auto`，寬度＝內容 max-content，`dd` 的 `min-width:0` 擋不住外層撐開。 |
+| 測試 | `tests/round66-ask-when.test.mjs` |
+
+**教訓：** 「站內查無」要先分「缺內容」與「斷詞雜訊」（印 `relevanceInfo.tokens` 與前三個片段）；疑問詞要整組拿，看剩下什麼而不是拿掉什麼；沒拒答不等於答對。詳見 docs/ask-search-llm.md §20。
+
