@@ -142,6 +142,20 @@
     "locked": true,
     "refs": [
       "disease.measles"
+    ],
+    "folk": [
+      {
+        "text": "出麻",
+        "variety": "台語",
+        "status": "candidate",
+        "source": "教育部臺灣台語常用詞辭典（台語漢字寫法）；OASIS 第六十五輪提案"
+      },
+      {
+        "text": "出痲",
+        "variety": "台語",
+        "status": "candidate",
+        "source": "教育部臺灣台語常用詞辭典（台語漢字寫法）；OASIS 第六十五輪提案"
+      }
     ]
   },
   {
@@ -287,6 +301,14 @@
     "locked": true,
     "refs": [
       "disease.tuberculosis"
+    ],
+    "folk": [
+      {
+        "text": "癆病",
+        "variety": "長輩說法",
+        "status": "candidate",
+        "source": "長輩常用舊稱；OASIS 第六十五輪提案"
+      }
     ]
   },
   {
@@ -407,6 +429,14 @@
     ],
     "machineTranslated": [
       "tl"
+    ],
+    "folk": [
+      {
+        "text": "百日嗽",
+        "variety": "台語",
+        "status": "candidate",
+        "source": "教育部臺灣台語常用詞辭典（台語漢字寫法）；OASIS 第六十五輪提案"
+      }
     ]
   },
   {
@@ -524,6 +554,14 @@
     "locked": true,
     "refs": [
       "disease.malaria"
+    ],
+    "folk": [
+      {
+        "text": "寒熱仔",
+        "variety": "台語",
+        "status": "candidate",
+        "source": "教育部臺灣台語常用詞辭典（台語漢字寫法）；OASIS 第六十五輪提案"
+      }
     ]
   },
   {
@@ -543,6 +581,20 @@
     "locked": true,
     "refs": [
       "disease.rabies"
+    ],
+    "folk": [
+      {
+        "text": "瘋狗病",
+        "variety": "長輩說法",
+        "status": "candidate",
+        "source": "長輩常用舊稱；OASIS 第六十五輪提案"
+      },
+      {
+        "text": "痟狗病",
+        "variety": "台語",
+        "status": "candidate",
+        "source": "教育部臺灣台語常用詞辭典（台語漢字寫法）；OASIS 第六十五輪提案"
+      }
     ]
   },
   {
@@ -580,6 +632,14 @@
     "locked": true,
     "refs": [
       "disease.cholera"
+    ],
+    "folk": [
+      {
+        "text": "虎列拉",
+        "variety": "長輩說法",
+        "status": "candidate",
+        "source": "日治時期音譯舊稱；OASIS 第六十五輪提案"
+      }
     ]
   },
   {
@@ -926,7 +986,33 @@
     "refs": [
       "disease.leprosy"
     ],
-    "note": "官方用語為漢生病，避免使用帶有歧視意涵之舊稱"
+    "note": "官方用語為漢生病，避免使用帶有歧視意涵之舊稱",
+    "folk": [
+      {
+        "text": "癩病",
+        "variety": "長輩說法",
+        "status": "candidate",
+        "source": "長輩常用舊稱；OASIS 第六十五輪提案"
+      },
+      {
+        "text": "痲瘋",
+        "variety": "長輩說法",
+        "status": "candidate",
+        "source": "長輩常用舊稱；OASIS 第六十五輪提案"
+      },
+      {
+        "text": "麻瘋",
+        "variety": "長輩說法",
+        "status": "candidate",
+        "source": "長輩常用舊稱；OASIS 第六十五輪提案"
+      },
+      {
+        "text": "癩哥",
+        "variety": "台語",
+        "status": "candidate",
+        "source": "教育部臺灣台語常用詞辭典（台語漢字寫法）；OASIS 第六十五輪提案"
+      }
+    ]
   },
   {
     "id": "term.mers",

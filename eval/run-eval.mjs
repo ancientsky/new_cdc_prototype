@@ -70,10 +70,12 @@ function contentExists(site, ref) {
 }
 
 // 第四十九輪：set 可換成別份題庫（eval/run-challenge.mjs 用來跑不擋建置的換句話說挑戰集）；預設仍是 eval-set.json。
-export async function runEval(site, { category = null, set = null } = {}) {
+// 第六十五輪：wrapEngine(engine) 可包一層（eval/run-rewrite.mjs 用來比較「有無模型改寫問句」），預設不包。
+export async function runEval(site, { category = null, set = null, wrapEngine = null } = {}) {
   // 固定亂數，讓稽核編號在報告中可重現
   let seed = 7; const random = () => ((seed = (seed * 9301 + 49297) % 233280) / 233280);
-  const engine = engineFromSite(site, { random });
+  const base = engineFromSite(site, { random });
+  const engine = wrapEngine ? wrapEngine(base) : base;
   return scoreEvalSet(engine, set ?? site.governance.evalSet ?? {}, { exists: (r) => contentExists(site, r), category, today: site.today });
 }
 

@@ -28,9 +28,9 @@ ${pageHead({ title: '詞彙主檔', what: '七語詞彙主檔：同一個概念�
   <div class="adm-filters"><div class="adm-field adm-field--grow"><label for="g-q">搜尋（任何語言、別名、舊名）</label><input type="search" id="g-q"></div>
     <label class="adm-pill" style="align-self:end"><input type="checkbox" id="g-locked"><span>只看鎖定詞</span></label><span class="adm-count-note" id="g-count" aria-live="polite"></span></div>
   <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table" id="g-table"><thead><tr><th scope="col">繁中正名</th><th scope="col">別名／舊名</th>${cols.map((l) => html`<th scope="col" lang="${l.code}">${l.label}</th>`)}<th scope="col">鎖定</th><th scope="col">引用內容</th></tr></thead>
-  <tbody>${gl.map((g) => { const u = usage(g); return html`<tr data-locked="${g.locked ? 1 : 0}" data-q="${[g['zh-TW'], ...(g.aliases ?? []), ...(g.deprecated ?? []), ...LANGS.map((l) => tr(g, l.code)), g.id].join(' ').toLowerCase()}">
+  <tbody>${gl.map((g) => { const u = usage(g); return html`<tr data-locked="${g.locked ? 1 : 0}" data-q="${[g['zh-TW'], ...(g.aliases ?? []), ...(g.folk ?? []).map((f) => f.text), ...(g.deprecated ?? []), ...LANGS.map((l) => tr(g, l.code)), g.id].join(' ').toLowerCase()}">
     <td><strong>${g['zh-TW']}</strong><div class="adm-muted"><code>${g.id}</code>${g.domain ? ` · ${g.domain}` : ''}</div>${g.note ? html`<div class="adm-muted">${g.note}</div>` : ''}</td>
-    <td>${(g.aliases ?? []).map((a) => html`<span class="adm-chip adm-chip--plain">${a}</span> `)}${(g.deprecated ?? []).map((a) => html`<span class="adm-chip adm-chip--warn" title="舊名，不再使用"><span class="adm-term-del">${a}</span>（停用）</span> `)}</td>
+    <td>${(g.aliases ?? []).map((a) => html`<span class="adm-chip adm-chip--plain">${a}</span> `)}${(g.deprecated ?? []).map((a) => html`<span class="adm-chip adm-chip--warn" title="舊名，不再使用"><span class="adm-term-del">${a}</span>（停用）</span> `)}${(g.folk ?? []).map((f) => html`<span class="adm-chip ${f.status === 'confirmed' ? 'adm-chip--plain' : 'adm-chip--warn'}" title="${f.source ?? ''}">${f.text}（${f.variety}${f.status === 'confirmed' ? '' : '・待確認'}）</span> `)}</td>
     ${cols.map((l) => html`<td lang="${l.code}">${tr(g, l.code) || html`<span class="adm-muted">—</span>`}${isMachine(g, l.code) ? html` <span class="adm-chip adm-chip--warn" title="機器翻譯初稿，待多語審核人確認後移除 machineTranslated" lang="zh-TW">機翻待審</span>` : ''}</td>`)}
     <td>${g.locked ? html`<span class="adm-badge adm-badge--info">鎖定</span>` : html`<span class="adm-muted">否</span>`}</td>
     <td>${u.length ? html`${u.length} 筆<div class="adm-muted">${u.slice(0, 3).map((i) => { const p = frontPath(i); return p ? html`<a href="${url(p)}">${i.id}</a> ` : html`${i.id} `; })}${u.length > 3 ? '…' : ''}</div>` : html`<span class="adm-muted">0</span>`}</td></tr>`; })}</tbody></table></div></section>
@@ -53,5 +53,5 @@ ${pageHead({ title: '詞彙主檔', what: '七語詞彙主檔：同一個概念�
     <pre class="adm-pre" id="n-out" tabindex="0">{ }</pre>
     <div class="adm-actions"><button type="button" class="adm-btn" id="n-copy">複製 JSON</button><button type="button" class="adm-btn adm-btn--ghost" id="n-dl">下載 .json</button></div>
   </form></section>
-${dataScript('adm-glossary-data', gl.map((g) => ({ id: g.id, zh: g['zh-TW'], aliases: g.aliases ?? [], deprecated: g.deprecated ?? [] })))}`;
+${dataScript('adm-glossary-data', gl.map((g) => ({ id: g.id, zh: g['zh-TW'], aliases: [...(g.aliases ?? []), ...(g.folk ?? []).map((f) => f.text)], deprecated: g.deprecated ?? [] })))}`;
 }

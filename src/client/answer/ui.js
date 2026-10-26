@@ -82,6 +82,31 @@ async function run(q) {
   await render(result, deps);
   renderSide(result, deps);
   logAsk(result); // 抽取式結果畫完才記錄；LLM 重組不另記（同一題只記一筆）
+  // 第六十五輪：抽取式答不好（查無、依據不足、勉強相關）時，請模型把問題改寫成站內用語、加進檢索再算一次（docs/ask-search-llm.md §19.4）。
+  // 模型只給詞、不回答；詞先過 engine.vetTerms（站上真的有的詞才用），改寫後也答不好就維持原結果
+  if (llmEnabled() && !result.paused && !result.injection && engine.isWeak(result)) {
+    let note = null;
+    try {
+      const llm = await import('./llm.js');
+      note = document.createElement('p');
+      note.className = 'c-answer__llm-status'; note.setAttribute('role', 'status'); note.textContent = llm.rewriteText(LANG, 'working');
+      answerEl.prepend(note);
+      const rw = await llm.llmRewriteQuery(result.query, { lang: LANG, diseaseNames: (deps.diseases ?? []).map((d) => d.name) });
+      const terms = engine.vetTerms(rw.terms);
+      if (my !== runId) return;
+      if (terms.length) {
+        const r2 = await engine.answerAsync(q, { lang: LANG, view, disease, extraTerms: terms });
+        if (my !== runId) return;
+        if (!engine.isWeak(r2)) {
+          r2.rewrite = { terms, model: rw.model ?? null, note: llm.rewriteText(LANG, 'note', terms) };
+          result = r2; current = r2;
+          await render(r2, deps);
+          renderSide(r2, deps);
+        }
+      }
+    } catch (e) { console.error('[answer] rewrite', e); }
+    note?.remove();
+  }
   // LLM（BYOK）：重組或翻譯；任何失敗都保留抽取式結果
   if (llmEnabled() && !result.paused && !result.refused) {
     const canAnswer = !result.stats && !result.notify?.structured && result.intent !== 'rumor' && result.retrieved?.length;
@@ -109,6 +134,7 @@ async function render(r, deps) {
     return paint(parts, r);
   }
   for (const n of r.termNotes ?? []) parts.push(`<p class="c-answer__termnote">${esc(L(n.kind === 'typo' ? 'termTypo' : 'termNote', n))}</p>`);
+  if (r.rewrite?.note) parts.push(`<p class="c-answer__termnote">${esc(r.rewrite.note)}</p>`);
   if (r.llmError) parts.push(`<p class="c-alert c-alert--overdue c-answer__llm-status">${esc(L('llmError', { m: r.llmError.message }))}</p>`);
   else if (r.fallback === 'extractive') parts.push(`<p class="c-alert c-alert--overdue c-answer__llm-status">${esc(L('llmFallback'))}</p>`);
 

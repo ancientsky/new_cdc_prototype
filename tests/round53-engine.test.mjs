@@ -106,7 +106,8 @@ test('近似字修正的界線：兩個字不同、首尾字不同、真的字�
   for (const q of ['流行姓腮線炎', '咬到舌頭怎麼辦', '舌頭被咬破要擦藥嗎', '被喉嚨卡到魚刺', '自費流感疫苗多少錢', '日本腦炎疫情', '人類免疫缺乏病毒傳染防治條例', '肉毒桿菌抗毒素']) {
     const r = await ask(q);
     assert.equal(guard(r, 'near-miss'), undefined, q);
-    assert.ok(!(r.termNotes ?? []).some((n) => n.kind === 'typo'), q);
+    // 第六十五輪：兩個同音字都錯（流行姓腮線炎）改由讀音容錯處理（route-phonetic.js，tests/round65-ask-weakspots.test.mjs），不是近似字修正
+    if (!guard(r, 'phonetic')) assert.ok(!(r.termNotes ?? []).some((n) => n.kind === 'typo'), q);
   }
   // 只在中文提問時做
   const en = await ask('mumps vacine', 'en');
