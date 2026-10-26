@@ -1183,7 +1183,7 @@ Result = {ok:true, …body} | {ok:false, error:'invalid'|'rate'|'expired'|'notfo
 | `POST /api/subscriptions/manage-link` | `{email}` | `202` | 已訂閱者收到 manage 信；其餘同樣 202 不寄信 |
 | `GET /api/dev/outbox[/檔名]` | — | 列出／讀取 `.eml` | 只給 loopback；開發輔助，正式版沒有 |
 
-防護：同源檢查（POST 帶 `Origin` 必須等於 `Host`）、本體 ≤ 8 KB、`Content-Type` 只收 JSON／form、儲存筆數（2000）與 outbox 檔數（5000）上限、節流（每信箱 10 分鐘 3 次、每來源 10 次；第六十二輪再加 HTTP 層每 IP 每分鐘 5 次，退訂與 health 不限）、未確認超過 7 天自動清除、token 一律 `crypto.randomUUID()` 且只接受 UUID 形狀才查表、連結的主機名稱只取通過字元檢查的 `Host`（可用 `PUBLIC_ORIGIN` 固定）。注意這是模擬：token 以明碼存檔方便檢視，**正式版只存雜湊**。
+防護：同源檢查（POST 帶 `Origin` 必須等於 `Host`）、本體 ≤ 8 KB、`Content-Type` 只收 JSON／form、儲存筆數（2000）與 outbox 檔數（5000）上限、節流（每信箱 10 分鐘 3 次、每來源 10 次；第六十三輪再加 HTTP 層每 IP 每分鐘 5 次，退訂與 health 不限）、未確認超過 7 天自動清除、token 一律 `crypto.randomUUID()` 且只接受 UUID 形狀才查表、連結的主機名稱只取通過字元檢查的 `Host`（可用 `PUBLIC_ORIGIN` 固定）。注意這是模擬：token 以明碼存檔方便檢視，**正式版只存雜湊**。
 
 ### 30.4 `.eml` 長什麼樣子
 
@@ -2033,7 +2033,7 @@ README 第四十一輪有逐項說明；這裡只記工程契約。詳細設計�
 | 評估集 | r12：BD009–BD016（covid／Covid／新冠病毒；做愛／上床／性交／做愛會得什麼病；專業模式「性交」不得引登革熱教材） | `content/governance/eval-set.json`、`tests/round41-synonyms.test.mjs` |
 | 查詢紀錄：前端 | `log.js` 在答案畫完後 `import()`（不計入引擎 240 KB 預算；測試檢查沒有靜態 import）；事件欄位白名單 `askLogEvent()`；`fetch keepalive + credentials:'omit' + referrerPolicy:'no-referrer'`，sendBeacon 只在無 fetch 且跨網域時；DNT／GPC 不送；`mock` 只在 loopback 且有標記 cookie `cdc_ask_log_mock=1`（`serve.mjs` 設）才送 | `src/client/answer/log.js`、`ui.js`（一行掛點）、`src/templates/public/ask.mjs`（`data-ask-log*`） |
 | 查詢紀錄：設定 | `askLog`：`ASK_LOG_MODE`（mock／post／off）、`ASK_LOG_ENDPOINT`（https）、`ASK_LOG_RETENTION_DAYS`（90）；矛盾設定建置失敗；post 端點只加進 CSP `connect-src` | `site.config.mjs`、`scripts/lib/forms.mjs`（`askLogSetting/Errors/Origins`）、`emit-headers.mjs`、`build.mjs` |
-| 查詢紀錄：收件端契約 | `POST /api/ask-log`（text/plain 或 JSON，≤2 KB，白名單欄位、再遮蔽、收件端時鐘到分鐘、每來源每分鐘 30 筆（第六十二輪由 60 降為 30）、204）；`GET /api/dev/ask-log/report` 只限 loopback；`.local/ask-log/YYYY-MM-DD.ndjson`，到期自動刪 | `scripts/lib/ask-log-mock.mjs`（正式端的參考實作）、docs/ask-log.md §7 |
+| 查詢紀錄：收件端契約 | `POST /api/ask-log`（text/plain 或 JSON，≤2 KB，白名單欄位、再遮蔽、收件端時鐘到分鐘、每來源每分鐘 30 筆（第六十三輪由 60 降為 30）、204）；`GET /api/dev/ask-log/report` 只限 loopback；`.local/ask-log/YYYY-MM-DD.ndjson`，到期自動刪 | `scripts/lib/ask-log-mock.mjs`（正式端的參考實作）、docs/ask-log.md §7 |
 | 查詢紀錄：報表 | `npm run ask-log:report`：`normalizeQuery`（NFKC、小寫、空白、結尾標點）；k-匿名 `--min`（預設 3 次或 3 天）未達門檻只計數不列文字；`UNANSWERED = no-match、no-source`；疑似同義詞候選（相同／前綴／後綴／包含／編輯距離，整句無候選再拆單字）；`llmPass` 掛點未實作 | `scripts/lib/ask-log-report.mjs`、`scripts/ask-log-report.mjs` |
 | 後台 | `/admin/ask-log/`（讀本機報表或上傳 report.json）；`/admin/glossary/#new-term?alias=&canon=` 預填新增表單 | `src/templates/admin/ask-log.mjs`、`src/client/admin/{ask-log,glossary}.js` |
 | 個資 | 原始紀錄與報表只在 `.local/`（git 忽略）或機關儲存；`npm run pii` 範圍不變；隱私權政策頁待法務文字 | docs/ask-log.md §8 |
@@ -2142,7 +2142,7 @@ travel-epidemic.json ＋ intl-epidemic-import.json → commit（B：github-actio
 | 認證 | `Authorization: Bearer <INTL_FEED_TOKEN>`；比對用 `timingSafeEqual`（先各自 SHA-256）；權杖、`Authorization` 標頭與本文都不寫進 log 或稽核。不吃 cookie、不看 Origin（不是給瀏覽器用的，所以沒有 CSRF 問題） |
 | 本文 | `application/json`（v1 或舊官網匯出列）或 `text/csv`；≤ 2 MB（超過時讀完再回 413，避免連線被重設） |
 | 參數 | 選填 `?mode=full|delta`（覆寫 feed 本身的 mode；急件建議 delta）、`?dry=1`（只檢查不寫） |
-| 回應 | 200 `{ ok, held:false, noop, changes, rejected, unmapped, message, report }`；**整批保留 ⇒ 202**（同形狀、`held:true`，快照沒改、只記匯入紀錄、待辦會產生）；400 `bad_feed`／`bad_json`、401 `unauthorized`、413 `too_large`、415 `unsupported`、429 `rate`（每 IP 每分鐘 30 次，在權杖檢查之前判斷，含認證失敗，附 `Retry-After`；第六十二輪由 10 改為 30 並共用 `rate-limit.mjs`）、503 `disabled`（伺服器沒設 `INTL_FEED_TOKEN`） |
+| 回應 | 200 `{ ok, held:false, noop, changes, rejected, unmapped, message, report }`；**整批保留 ⇒ 202**（同形狀、`held:true`，快照沒改、只記匯入紀錄、待辦會產生）；400 `bad_feed`／`bad_json`、401 `unauthorized`、413 `too_large`、415 `unsupported`、429 `rate`（每 IP 每分鐘 30 次，在權杖檢查之前判斷，含認證失敗，附 `Retry-After`；第六十三輪由 10 改為 30 並共用 `rate-limit.mjs`）、503 `disabled`（伺服器沒設 `INTL_FEED_TOKEN`） |
 | 健康檢查 | `GET /api/intl-epidemic/health` → `{ ok: true, enabled }` |
 | 寫入 | 先 `applyImport()` 寫本機兩個快照檔；有閘道的 git provider 時，把 `data/snapshots/travel-epidemic.json` 與 `intl-epidemic-import.json` **直接 commit 到目標分支**（`GITLAB_TARGET_BRANCH`，作者是服務帳號），不開合併請求、不經人審。提交訊息首行 `data: 國際重要疫情資訊（推送）新增 N、更新 N、撤下 N`（整批保留時為「整批保留，只更新匯入紀錄」），尾端記 `Source: push`、`Producer: <feed.producer>` |
 | 失敗 | 寫檔成功但提交失敗 ⇒ 500 `version_failed`（「同一批再送不會重複上架」，因為下一次會是 noop 或同樣的變更） |
