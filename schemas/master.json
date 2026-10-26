@@ -83,6 +83,16 @@
         "dutiesSource": {
           "type": "string",
           "description": "主要業務的出處（例：處務規程）"
+        },
+        "retiredAt": {
+          "type": "string",
+          "format": "date",
+          "description": "第六十六輪：裁撤（改組）日。這一天起 owner 還是這個單位的內容、移轉清單與疾病主檔一律建置失敗，請用 npm run reassign-owner 改成 successor"
+        },
+        "successor": {
+          "type": "string",
+          "pattern": "^unit\\.",
+          "description": "第六十六輪：業務由哪個單位承接（retiredAt 有填就必填）"
         }
       }
     },

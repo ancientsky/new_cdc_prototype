@@ -21,6 +21,7 @@
     "a11y": "node scripts/a11y.mjs",
     "perf:ask": "node scripts/perf-ask.mjs",
     "pii": "node scripts/pii-scan.mjs",
+    "reassign-owner": "node scripts/reassign-owner.mjs",
     "audit:dist": "node scripts/audit-dist.mjs",
     "ask-log:report": "node scripts/ask-log-report.mjs",
     "gen:map": "node scripts/gen-world-map.mjs",

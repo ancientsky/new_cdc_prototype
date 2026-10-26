@@ -86,6 +86,33 @@ export function pendingReviewWarnings(site) {
   return out;
 }
 
+// ───────────────────────── 第六十六輪：內容屬單位不屬個人 ─────────────────────────
+
+/**
+ * postPublishReview.reviewedBy 只能寫單位或職稱，不能寫人名（規則 30）。
+ * 做法：把字串裡的單位 id、單位名稱、職稱詞拿掉，剩下的只能是空白與標點；剩下中文或英文字母（多半是姓名或帳號）⇒ 錯誤。
+ * 例：「公關室承辦人」「unit.pr」「公關室 內容總編輯」可以；「王小明」「公關室王小明」「wang.an」不行。
+ */
+export const REVIEWER_TITLE_WORDS = ['內容總編輯', '總編輯', '治理幕僚', '平台管理', '副組長', '組長', '副主任', '主任', '副處長', '處長', '科長', '審核人', '複核人', '承辦人', '承辦', '值班人員', '值班', '專員', '技正', '科員'];
+/** @param {unknown} value @param {{ id: string, name?: string, stewardTitle?: string }[]} units @returns {string|null} */
+export function reviewedByProblem(value, units = []) {
+  if (value == null) return null;
+  const v = String(value).trim();
+  if (!v) return 'postPublishReview.reviewedBy 不可為空字串（不填就刪掉這個欄位）';
+  const words = [...units.map((u) => u.id), ...units.map((u) => u.name), ...units.map((u) => u.stewardTitle), ...REVIEWER_TITLE_WORDS].filter((w) => typeof w === 'string' && w).sort((a, b) => b.length - a.length);
+  let rest = v;
+  for (const w of words) rest = rest.split(w).join(' ');
+  if (/[\p{L}\p{N}]/u.test(rest)) return `postPublishReview.reviewedBy「${v}」看起來不是單位或職稱：只能寫單位（例：unit.pr、公關室）加職稱（例：承辦人、科長、內容總編輯），不寫人名或帳號；誰複核記在機關 GitLab 的提交訊息與閘道稽核紀錄（governance-model 規則 30）`;
+  return null;
+}
+
+/** 單位已裁撤（retiredAt 已到）⇒ 該單位不能再當 owner（規則 31） */
+export function retiredUnitOf(unitId, unitById, today) {
+  const u = unitById.get(unitId);
+  return u?.retiredAt && (!today || u.retiredAt <= today) ? u : null;
+}
+export const retiredOwnerMsg = (field, u) => `${field} ${u.id}（${u.name}）已於 ${u.retiredAt} 裁撤${u.successor ? `，業務由 ${u.successor} 承接` : ''}：請執行 npm run reassign-owner -- --from ${u.id} --to ${u.successor ?? '<新單位>'}（改組不能只做一半，見 governance-model 規則 31）`;
+
 export function validateSite(site) {
   const ajv = loadSchemas();
   const errors = [];
@@ -136,6 +163,15 @@ export function validateSite(site) {
   const units = new Set(site.master.units.map((u) => u.id));
   const unitById = new Map((site.master.units ?? []).map((u) => [u.id, u]));
   const diseaseIds = new Set(site.master.diseases.map((d) => d.id));
+  // 第六十六輪：單位裁撤（retiredAt）要寫承接單位（successor），承接單位要存在、不能也已裁撤；主檔裡指到裁撤單位的 owner 也要改
+  for (const u of site.master.units ?? []) {
+    if (u.successor && !u.retiredAt) push('content/master/units.json', `${u.id}：有 successor 就要有 retiredAt（裁撤日）`);
+    if (!u.retiredAt) continue;
+    if (!u.successor) push('content/master/units.json', `${u.id}：retiredAt 已填，請一併填 successor（業務由哪個單位承接）`);
+    else if (!units.has(u.successor) || u.successor === u.id) push('content/master/units.json', `${u.id}：successor ${u.successor} 不在 units 主檔`);
+    else if (unitById.get(u.successor)?.retiredAt) push('content/master/units.json', `${u.id}：successor ${u.successor} 也已裁撤，請直接指向現存單位`);
+  }
+  for (const d of site.master.diseases ?? []) { const ru = d.owner && retiredUnitOf(d.owner, unitById, site.today); if (ru) push('content/master/diseases.json', `${d.id}：${retiredOwnerMsg('owner', ru)}`); }
   // 疫苗接種時程表：疫苗 id 必須在疫苗主檔；年齡上限不得小於下限（ARCHITECTURE 18.1）
   const vaccineIds = new Set((site.master.vaccines ?? []).map((v) => v.id));
   for (const s of site.master.immunizationSchedule ?? []) {
@@ -148,6 +184,8 @@ export function validateSite(site) {
   for (const item of site.all) {
     if (!units.has(item.owner)) push(item.__file, `owner ${item.owner} 不在 units 主檔`);
     else if (unitById.get(item.owner)?.publishes === false) push(item.__file, `owner ${item.owner}（${unitById.get(item.owner).name}）不上架內容，請改為實際承辦單位`);
+    else if (retiredUnitOf(item.owner, unitById, site.today)) push(item.__file, retiredOwnerMsg('owner', retiredUnitOf(item.owner, unitById, site.today)));
+    { const why = reviewedByProblem(item.postPublishReview?.reviewedBy, site.master.units); if (why) push(item.__file, why); }
     for (const ref of item.basedOn ?? []) if (!ids.has(ref) && !site.collections.documents.some((d) => d.family === ref)) push(item.__file, `basedOn ${ref} 不存在（可填內容 id 或文件 family）`);
     for (const ref of item.diseases ?? []) if (!diseaseIds.has(ref)) push(item.__file, `diseases ${ref} 不在傳染病主檔`);
     if (item.type === 'document' && item.supersedes && !ids.has(item.supersedes)) push(item.__file, `supersedes ${item.supersedes} 不存在`);
@@ -237,6 +275,7 @@ export function validateSite(site) {
     if (migIds.has(list.id) || ids.has(list.id)) push(file, `重複 id：${list.id}`);
     migIds.add(list.id);
     if (!units.has(list.owner)) push(file, `owner ${list.owner} 不在 units 主檔`);
+    else if (retiredUnitOf(list.owner, unitById, site.today)) push(file, retiredOwnerMsg('owner', retiredUnitOf(list.owner, unitById, site.today)));
     if (list.scope?.disease && !diseaseIds.has(list.scope.disease)) push(file, `scope.disease ${list.scope.disease} 不在傳染病主檔`);
     if (list.scope?.disease) {
       if (migByDisease.has(list.scope.disease)) push(file, `scope.disease ${list.scope.disease} 已有人工清單 ${migByDisease.get(list.scope.disease)}（同一疾病只能一份，例外請寫在同一份）`);
@@ -253,6 +292,7 @@ export function validateSite(site) {
       if (keys.has(it.key)) push(file, `${at} key 重複：${it.key}`);
       keys.add(it.key);
       if (it.owner && !units.has(it.owner)) push(file, `${at} owner ${it.owner} 不在 units 主檔`);
+      else if (it.owner && retiredUnitOf(it.owner, unitById, site.today)) push(file, `${at} ${retiredOwnerMsg('owner', retiredUnitOf(it.owner, unitById, site.today))}`);
       const needTarget = !['pending', 'dropped'].includes(it.status);
       if (it.target && !ids.has(it.target)) push(file, `${at} target ${it.target} 不存在`);
       else if (needTarget && !it.target && !it.newPath) push(file, `${at} status ${it.status} 必須填 target（新站內容 id）或 newPath（系統產生頁／功能頁路徑）`);

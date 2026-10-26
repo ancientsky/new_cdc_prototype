@@ -75,6 +75,17 @@
 
 `reviewPeriodMonths` 預設 0（事件型）。態勢層（`content/situation/current.json`）同輪新增選填 `alertLevel`（`normal`｜`elevated`｜`emergency`，疫情中心人工發布）。
 
+### 1.6 單位主檔（`content/master/units.json`）：內容屬單位不屬個人（第六十六輪）
+
+`owner` 寫單位 id，全站沒有任何欄位把內容掛在個人名下：同事離職或調動只要改 AD 群組，內容不用改（交接見 [guide-staff.md](guide-staff.md) 第 61 節）。單位本身改組時，單位主檔多兩個選填欄位：
+
+| 欄位 | 說明 |
+| --- | --- |
+| `retiredAt` | 裁撤（改組、合併）日，`YYYY-MM-DD`。這一天起，`owner` 仍指向此單位的內容、移轉清單與疾病主檔**建置失敗**（規則 31）。可以先填未來日期 |
+| `successor` | 業務由哪個單位承接；`retiredAt` 有填就必填，必須存在且未裁撤。錯誤訊息直接附上 `npm run reassign-owner -- --from <本單位> --to <successor>` |
+
+`publishes: false`（例：署長室）的單位不能當 `owner`，也不能當 reassign-owner 的 `--to`。
+
 ## 2. 規則（寫死在引擎，不靠人記）
 
 1. **逾期**：今天 > `nextReviewAt` → 頁首黃色警示、退出白名單、開待辦。
@@ -131,6 +142,8 @@
 
 28. **節慶主題只動裝飾層、到期自動下架、疫情緊急不套用**：生效區間 `[publishAt, unpublishAt)` 以真實時間判斷（與規則 26 相同）；`gov.themeStatus` ∈ `upcoming`／`live`／`ended`。建置閘門：`tokens` 只能是白名單內的裝飾 token、值必須是色碼；`--theme-header-bg` 與疊在上面的文字色（`--ink`、`--ink-3`）對比 ≥ 4.5:1；`decoration.svg` ≤ 50 KB 且不含腳本、事件屬性、外部參照、動畫；已發布主題的區間不得重疊。`site.theme`（`themeState`）：恰好一個生效 ⇒ 套用（`<html data-theme>` ＋ `assets/styles/theme-<slug>.css`）；態勢層 `alertLevel: "emergency"` ⇒ 不套用並記錄原因（等級由疫情中心人工發布，引擎不推論）。
 29. **互動模組三層顯示條件、位置白名單、依據不在線上就隱藏**（第六十二輪）：顯示＝`status: published` 且不在排程中 ∧ `enabled: true` ∧ 在檔期內（`[publishAt, unpublishAt)`，沒填＝一直，與規則 26／28 同一套真實時間）；態勢層 `alertLevel: "emergency"` ⇒ 全部不顯示（`site.interactives.reason = 'emergency'`）。`gov.interactiveStatus` ∈ `on`／`off`／`upcoming`／`ended`／`draft`／`archived`。建置閘門：`placements` 只能是該 `kind` 允許的位置；`kids-quiz`／`quiz`（第六十四輪：一般民眾衛教測驗，同一套規則）每題 `basedOn` 必須存在、`answer` 在選項範圍內；`policy-sim` 的效果與結局只能用 `meters` 的 key、要有預設結局；`on-this-day` 每條要有 `source`，`verified: true` 須填 `verifiedBy`。前台：`basedOn` 不在線上的題自動隱藏；未核對的歷史條目標「待確認」；語言沒有譯文的模組不顯示。
+30. **公開欄位不寫人名：`postPublishReview.reviewedBy` 只能是單位或職稱**（第六十六輪）：把值裡的單位 id（`unit.pr`）、單位名稱（公關室）、單位的 `stewardTitle` 與職稱詞（承辦人、承辦、科長、組長、副組長、主任、副主任、處長、副處長、審核人、複核人、內容總編輯、總編輯、治理幕僚、平台管理、值班、值班人員、專員、技正、科員）拿掉後，**剩下的只能是空白與標點**；還剩中文或英數字（多半是姓名或帳號）⇒ 建置失敗（`scripts/lib/validate.mjs` 的 `reviewedByProblem`）。例：「公關室承辦人」「unit.pr」「公關室 內容總編輯」可以；「王小明」「公關室王小明」「wang.an」不行。為什麼不直接用個資掃描（`pii-scan.mjs`）的姓名規則：那套規則要有「錄取」「姓名」等語境詞才判斷，單獨一個欄位抓不到；反過來只允許已知的單位與職稱，簡單、不會漏。誰複核的記在機關 GitLab 的提交訊息（`Edited-by:`、`Approved-by:`）與寫入服務的稽核紀錄，不在公開 JSON。
+31. **裁撤單位不能再當權責單位**（第六十六輪）：`units.json` 的單位有 `retiredAt` 且已到（≤ 建置的 today）⇒ 內容的 `owner`、移轉清單的 `owner` 與 `items[].owner`、疾病主檔的 `owner` 指到它都是建置錯誤，訊息指向 `successor` 與 `npm run reassign-owner`。單位主檔本身：有 `successor` 就要有 `retiredAt`、有 `retiredAt` 就要有 `successor`、`successor` 要存在且未裁撤。為什麼是錯誤不是警告：改組只做一半時，沒搬到的內容的到期提醒與待辦會寄到已不存在的單位，沒有人會發現。
 
 ## 3. 白名單政策
 

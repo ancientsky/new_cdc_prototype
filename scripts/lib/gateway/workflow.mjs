@@ -25,6 +25,10 @@
 //     路徑寫死、以列的 id 三方合併到網站上的主檔（master-merge.js；不同列、同一列的不同欄位都不算衝突），同一列同一欄兩邊改得不一樣 ⇒ 409 stale（kind: master）。
 //     一律一般車道（主檔變更需審核）；審核人看到逐筆、逐欄的差異；送審期間網站上的主檔變了 ⇒ 不能核准（409 outdated），重新開啟時併入。
 //   - requireBaseHash（設定開關，預設關）：開了之後沒帶版本碼的寫入一律 428，不再「照舊接受」。
+// 第六十六輪（docs/deploy.md §33、guide-staff §61）：交接。
+//   - 同單位的編輯（或跨單位角色）可以「接手」進行中的送審件（草稿／退回／審核中）：自己加進承辦人、成為聯絡人；
+//     原承辦人標 handedOver（仍留在 editors：提交訊息照記 Edited-by，四眼原則照樣擋他核准），之後的退回／核准通知只寄給沒交接出去的承辦人。
+//   - 已上線的內容不用交接：owner 是單位，待辦與審閱到期也按單位；單位改組用 scripts/reassign-owner.mjs。
 // 規則：
 //   - 角色由 AD 群組來（編輯／審核／管理）；只能動自己單位的內容，跨單位角色（總編輯、治理幕僚、平台管理）與車道指定審核單位例外。
 //   - 四眼原則：只要在這個送審件存過任何一版，就不能核准或退回它（即使同時有審核角色）。
@@ -168,6 +172,10 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     return null;
   }
 
+  /** 第六十六輪：目前的聯絡承辦人（沒有交接出去的）；全部都交接出去了（不該發生）就退回全部，通知不會沒人收 */
+  function contactsOf(sub) { const a = sub.editors.filter((e) => !e.handedOver); return a.length ? a : sub.editors; }
+  const isSoleContact = (sub, p) => { const c = sub.editors.filter((e) => !e.handedOver); return c.length === 1 && c[0].account === p.account; };
+
   /* ───────── 對外呈現（不含任何 Git 字眼） ───────── */
   function effectiveStatus(sub) {
     if (sub.status === 'approved' && sub.publishAt && (publishAtMs(sub.publishAt) ?? 0) <= now()) return 'published';
@@ -180,7 +188,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     return {
       id: sub.id, contentId: sub.contentId, type: sub.type, title: sub.title, owner: sub.owner, ownerName: unitName(sub.owner), isNew: sub.isNew,
       status: st, statusLabel: STATUS[st], createdAt: sub.createdAt, updatedAt: sub.updatedAt, submittedAt: sub.submittedAt ?? null,
-      editors: sub.editors.map(({ account, name }) => ({ account, name })), approvals: sub.approvals.map(({ account, name, at }) => ({ account, name, at })),
+      editors: sub.editors.map(({ account, name, handedOver }) => ({ account, name, ...(handedOver ? { handedOver: true } : {}) })), contacts: contactsOf(sub).map(({ account, name }) => ({ account, name })), approvals: sub.approvals.map(({ account, name, at }) => ({ account, name, at })),
       requiredApprovals: sub.lane?.requiredApprovals ?? 1, laneLabel: sub.lane?.label ?? null, laneNotes: sub.lane?.reasons ?? [],
       comments: sub.comments, history: sub.history, publishAt: sub.publishAt ?? null, scheduledFor: sub.publishAt ? taipeiTime(publishAtMs(sub.publishAt) ?? 0) : null,
       files: sub.files ?? [], companions: (sub.companions ?? []).map(({ id, title }) => ({ id, title })), categories: !!sub.categories, master: sub.master ?? null,
@@ -189,6 +197,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
         can: {
           edit: !eb && ['draft', 'returned'].includes(st), submit: !eb && ['draft', 'returned'].includes(st),
           approve: !rb && st === 'in_review', return: !rb && st === 'in_review',
+          handover: !eb && OPEN.includes(st) && !isSoleContact(sub, p),
         },
         why: { edit: eb, review: st === 'in_review' ? rb : '目前不在審核中' },
       } : {}),
@@ -364,7 +373,11 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     for (const name of sub?.files ?? []) { const buf = await git.readFile(sub.branch, `content/assets/${sub.contentId}/${name}`, { raw: true }); if (buf) out[name] = Buffer.from(buf); }
     return out;
   }
-  function addEditor(sub, p) { if (!sub.editors.some((e) => e.account === p.account)) sub.editors.push({ account: p.account, name: p.name, email: p.email ?? null }); }
+  function addEditor(sub, p) {
+    const e = sub.editors.find((x) => x.account === p.account);
+    if (!e) sub.editors.push({ account: p.account, name: p.name, email: p.email ?? null });
+    else if (e.handedOver) { delete e.handedOver; delete e.handedOverAt; } // 交接出去的人又存了一版：他又是承辦人之一
+  }
 
   /**
    * 存一版到分支（儲存草稿與送審共用）。
@@ -654,7 +667,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
         sub.history.push({ at: iso(), action: 'return', label: '退回修改', account: p.account, name: p.name });
         store.put(sub);
         audit.write('return', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, review: sub.reviewId, commentChars: text.length, ...(sub.kind === 'rereview' ? { kind: 'rereview' } : {}) } });
-        notifier.send('returned', { to: sub.editors, title: sub.title, unitName: unitName(sub.owner), actorName: p.name, comment: text, link: link(ctx, 'publish', sub.id) });
+        notifier.send('returned', { to: contactsOf(sub), title: sub.title, unitName: unitName(sub.owner), actorName: p.name, comment: text, link: link(ctx, 'publish', sub.id) });
         return view(sub, p);
       } catch (e) { auditFail('return', p, e, { submission: submissionId }); throw e; }
     });
@@ -676,7 +689,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
         if (sub.approvals.length >= sub.lane.requiredApprovals) await publish(sub, p, sub.approvals, ctx);
         else {
           sub.updatedAt = iso();
-          notifier.send('partial', { to: sub.editors, title: sub.title, actorName: p.name, approvals: sub.approvals.length, required: sub.lane.requiredApprovals, link: link(ctx, 'publish', sub.id) });
+          notifier.send('partial', { to: contactsOf(sub), title: sub.title, actorName: p.name, approvals: sub.approvals.length, required: sub.lane.requiredApprovals, link: link(ctx, 'publish', sub.id) });
         }
         store.put(sub);
         return view(sub, p);
@@ -748,7 +761,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     sub.published = { at: iso(), before: contentVersion(before), after: contentVersion(final), fields: fieldsOf(before, final) };
     sub.history.push({ at: iso(), action: 'publish', label: scheduled ? `已核准，排程 ${taipeiTime(publishAtMs(final.publishAt) ?? 0)} 上線` : rr ? `已重新審閱，最後審閱日更新為 ${today}` : '已上線', account: p.account, name: p.name });
     audit.write('publish', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, path, commit: c.sha, merge: merged.sha, approvedBy: approvals.map((a) => a.account), lane: sub.lane.id, ...(rr ? { kind: 'rereview', reviewedAtBefore: cur.reviewedAt ?? null, reviewedAt: today, contentChanged } : {}) } });
-    notifier.send('approved', { to: sub.editors, title: sub.title, unitName: unitName(sub.owner), actorName: approvals.length ? p.name : '系統（快速上線）', scheduled: scheduled ? taipeiTime(publishAtMs(final.publishAt) ?? 0) : null, reReview: rr, reviewedAt: today, link: link(ctx, rr ? 'due' : 'publish', sub.id) });
+    notifier.send('approved', { to: contactsOf(sub), title: sub.title, unitName: unitName(sub.owner), actorName: approvals.length ? p.name : '系統（快速上線）', scheduled: scheduled ? taipeiTime(publishAtMs(final.publishAt) ?? 0) : null, reReview: rr, reviewedAt: today, link: link(ctx, rr ? 'due' : 'publish', sub.id) });
   }
 
   /**
@@ -773,7 +786,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     sub.published = { at: iso(), before: contentVersion(before), after: contentVersion(rows), fields: masterFields(sub.master, before, rows) };
     sub.history.push({ at: iso(), action: 'publish', label: '已上線', account: p.account, name: p.name });
     audit.write('publish', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, path: sub.path, commit: null, merge: merged.sha, approvedBy: approvals.map((a) => a.account), lane: sub.lane.id, master: sub.master, rows: sub.published.fields.length } });
-    notifier.send('approved', { to: sub.editors, title: sub.title, unitName: unitName(sub.owner), actorName: approvals.length ? p.name : '系統（快速上線）', scheduled: null, reReview: false, reviewedAt: today, link: link(ctx, 'publish', sub.id, sub) });
+    notifier.send('approved', { to: contactsOf(sub), title: sub.title, unitName: unitName(sub.owner), actorName: approvals.length ? p.name : '系統（快速上線）', scheduled: null, reReview: false, reviewedAt: today, link: link(ctx, 'publish', sub.id, sub) });
   }
 
   function mustReview(p, sid) {
@@ -788,19 +801,51 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     if (e instanceof GatewayError) audit.write(action, { actor: p, result: e.status === 422 ? 'rejected' : 'denied', detail: { ...detail, reason: e.code, fields: e.fields?.map((f) => f.field) } });
     else audit.write(action, { actor: p, result: 'error', detail: { ...detail, reason: String(e?.message ?? e).slice(0, 200) } });
   }
-  const reviewDescription = (sub) => [...(sub.kind === 'rereview' ? ['重新審閱：權責單位確認內容仍正確（審閱期限到了）；核准後只把「最後審閱日」更新為核准當天。', ...(sub.reReviewNote ? [`說明：${sub.reReviewNote}`] : []), ''] : []), `權責單位：${unitName(sub.owner)}`, `承辦：${sub.editors.map((e) => e.name).join('、')}`, `車道：${sub.lane.label}（需 ${sub.lane.requiredApprovals} 位核准）`, ...sub.lane.reasons, '', '本合併請求由網站內容管理系統（寫入閘道）代為建立；請在後台「複核區」審核，不要直接在 GitLab 合併。'].join('\n');
+  const reviewDescription = (sub) => [...(sub.kind === 'rereview' ? ['重新審閱：權責單位確認內容仍正確（審閱期限到了）；核准後只把「最後審閱日」更新為核准當天。', ...(sub.reReviewNote ? [`說明：${sub.reReviewNote}`] : []), ''] : []), `權責單位：${unitName(sub.owner)}`, `承辦：${contactsOf(sub).map((e) => e.name).join('、')}`, `車道：${sub.lane.label}（需 ${sub.lane.requiredApprovals} 位核准）`, ...sub.lane.reasons, '', '本合併請求由網站內容管理系統（寫入閘道）代為建立；請在後台「複核區」審核，不要直接在 GitLab 合併。'].join('\n');
   /** 第五十三輪：「開啟修改」的連結開在那一種內容自己的編輯頁（疫情報導、職缺、採購、接種時程各有編輯頁；其他用上架頁） */
   const EDIT_PAGE = { article: 'bulletin/edit', job: 'jobs/edit', tender: 'tenders/edit', [MASTER_TYPE]: 'vaccines/schedule' };
   const link = (ctx, page, sid, sub = store.get(sid)) => `${ctx.origin ?? ''}${ctx.basePath ?? config.basePath}/admin/${page === 'publish' ? (EDIT_PAGE[sub?.type] ?? 'publish') : page}/${page === 'due' ? '' : `?${page === 'review' ? 'item' : 'gw'}=${encodeURIComponent(sid)}`}`;
 
+  /* ───────── 交接（第六十六輪） ───────── */
+  /**
+   * 接手一個進行中的送審件：同單位的編輯（或跨單位角色）把自己設為承辦人。
+   * 原承辦人留在 editors（Edited-by 照記、四眼原則照擋），標 handedOver，之後的通知不再寄給他。內容不動、分支不動。
+   * @param {any} p @param {{ submissionId: string, note?: string }} args
+   */
+  async function handover(p, { submissionId, note } = /** @type {any} */ ({})) {
+    return queue(async () => {
+      try {
+        const sub = typeof submissionId === 'string' ? store.get(submissionId) : null;
+        if (!sub) throw new GatewayError(404, 'notfound', '找不到這筆送審件');
+        const eb = editBlock(p, sub.owner);
+        if (eb) throw new GatewayError(403, 'forbidden', `${eb}；交接只能由同單位的同事接手`);
+        if (!OPEN.includes(sub.status)) throw new GatewayError(409, 'state', `這筆送審件目前是「${STATUS[effectiveStatus(sub)]}」，已經結束，不需要接手；已上線的內容屬於單位，直接開啟修改即可`);
+        if (isSoleContact(sub, p)) throw new GatewayError(409, 'already', '你已經是這筆送審件的承辦人');
+        const text = typeof note === 'string' ? note.trim().slice(0, 500) : '';
+        const from = sub.editors.filter((e) => !e.handedOver && e.account !== p.account);
+        const at = iso();
+        for (const e of sub.editors) if (e.account !== p.account && !e.handedOver) { e.handedOver = true; e.handedOverAt = at; }
+        const me = sub.editors.find((e) => e.account === p.account);
+        if (me) { delete me.handedOver; delete me.handedOverAt; } else sub.editors.push({ account: p.account, name: p.name, email: p.email ?? null, via: 'handover' });
+        sub.history.push({ at, action: 'handover', label: `改由 ${p.name} 承辦${from.length ? `（接手 ${namesOf(from)}）` : ''}${text ? `：${text}` : ''}`, account: p.account, name: p.name });
+        sub.updatedAt = at;
+        store.put(sub);
+        audit.write('handover', { actor: p, detail: { submission: sub.id, contentId: sub.contentId, status: sub.status, from: from.map((e) => e.account), to: p.account, ...(text ? { noteChars: text.length } : {}) } });
+        return view(sub, p);
+      } catch (e) { auditFail('handover', p, e, { submission: typeof submissionId === 'string' ? submissionId.slice(0, 40) : null }); throw e; }
+    });
+  }
+
   /* ───────── 查詢 ───────── */
   /**
    * @param {any} p
-   * @param {{ view?: string, contentId?: string }} [o]
+   * @param {{ view?: string, contentId?: string, editor?: string }} [o]
+   *   editor（第六十六輪）：只列這個帳號目前承辦（沒有交接出去）的送審件；給「單位送審件」的承辦人篩選用
    */
-  function list(p, { view: v = 'mine', contentId } = {}) {
+  function list(p, { view: v = 'mine', contentId, editor } = {}) {
     let subs = store.all();
     if (contentId) subs = subs.filter((s) => s.contentId === contentId);
+    if (editor) subs = subs.filter((s) => s.editors.some((e) => e.account === editor && !e.handedOver));
     if (v === 'queue') subs = subs.filter((s) => s.status === 'in_review' && isReviewer(p) && (inUnit(p, s.owner) || p.units.some((u) => (s.lane?.reviewers ?? []).includes(u))));
     else if (v === 'mine') subs = subs.filter((s) => s.editors.some((e) => e.account === p.account) || (contentId && inUnit(p, s.owner)));
     else if (v === 'all') subs = subs.filter((s) => inUnit(p, s.owner) || (isReviewer(p) && p.units.some((u) => (s.lane?.reviewers ?? []).includes(u))));
@@ -952,5 +997,5 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     return d;
   }
 
-  return { saveDraft, submit, reReview, returnForChanges, approve, list, detail, content, contentFor, current, diff, laneFor, reviewBlock, ensureReady, STATUS };
+  return { saveDraft, submit, reReview, returnForChanges, approve, handover, list, detail, content, contentFor, current, diff, laneFor, reviewBlock, ensureReady, STATUS };
 }
