@@ -2213,6 +2213,48 @@ const ROWS_R61 = {
 for (const [key, vals] of Object.entries(ROWS_R61)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
 STRINGS.en['denguemap.unit'] = ''; // 英文不加單位（「Local cases in 2026」已說是病例數；空字串不能走上面的迴圈，否則會退回中文「例」）
 
+/* ───── 第六十二輪：互動與彩蛋（/play/、首頁「歷史上的今天」小卡、「互動與遊戲」一區）。頁尾連結七語；模組頁面只有中文，其他鍵 zh／en ───── */
+const ROWS_R62 = {
+  'play.title': ['互動與遊戲', 'Games & interactives', 'ゲーム・インタラクティブ', 'Mga laro at interaktibo', 'Trò chơi & tương tác', 'Permainan & interaktif', 'เกมและกิจกรรมโต้ตอบ'],
+  'play.desc': ['歷史上的今天、兒童衛教小測驗、防疫決策模擬：每一個都連回站內的疾病頁與常見問答，由權責單位維護、後台可隨時關閉。', 'On this day in outbreak history, a kids’ quiz and a policy simulation. Each links back to disease pages and FAQs; the owning unit can switch any of them off.'],
+  'play.lead': ['玩一玩，順便把防疫知識記起來。每個模組的題目與說明都標出依據的頁面；內容由權責單位維護。', 'Learn while you play. Every question and tip cites the page it is based on.'],
+  'play.owner': ['維護單位', 'Maintained by'],
+  'play.basedOn': ['依據', 'Based on'],
+  'play.open': ['開始', 'Start'],
+  'play.again': ['再玩一次', 'Play again'],
+  'play.next': ['下一題', 'Next'],
+  'play.nojs': ['這個互動需要 JavaScript；下方是沒有 JavaScript 時的純文字版。', 'This interactive needs JavaScript; a text version follows.'],
+  'play.demo': ['示範內容，待權責單位確認', 'Demo content pending review by the owning unit'],
+  'home.play.note': ['小遊戲與互動內容，都連回站內的疾病頁與問答', 'Games and interactives that link back to disease pages and FAQs'],
+  'home.play.all': ['全部互動', 'All interactives'],
+  'otd.title': ['歷史上的今天', 'On this day'],
+  'otd.unverified': ['待確認', 'Unverified'],
+  'otd.all': ['看全年大事', 'All dates'],
+  'otd.near': ['今天沒有紀錄，最近的一條是 {date}：', 'Nothing recorded for today; the nearest entry is {date}:'],
+  'otd.source': ['出處', 'Source'],
+  'otd.more': ['延伸閱讀', 'Read more'],
+  'otd.month': ['{m} 月', 'Month {m}'],
+  'quiz.score': ['答對 {n}／{total} 題', '{n} of {total} correct'],
+  'quiz.correct': ['答對了！', 'Correct!'],
+  'quiz.wrong': ['再想想。正確答案是：{a}', 'Not quite. The answer is: {a}'],
+  'quiz.done.high': ['太棒了，你是防疫小勇士！', 'Brilliant! You are a disease-prevention hero.'],
+  'quiz.done.mid': ['很不錯，再看看答錯的那幾題。', 'Nice work. Have another look at the ones you missed.'],
+  'quiz.done.low': ['沒關係，點每題下面的「依據」再看一次。', 'No worries. Open the “Based on” link under each question.'],
+  'quiz.q': ['第 {i} 題', 'Question {i}'],
+  'sim.round': ['第 {i}／{total} 回合', 'Round {i} of {total}'],
+  'sim.meters': ['目前量表', 'Current meters'],
+  'sim.choose': ['你的決定', 'Your decision'],
+  'sim.result': ['結果', 'Outcome'],
+  'sim.ending': ['四週後', 'After four weeks'],
+  'sim.change': ['{label}：{delta}', '{label}: {delta}'],
+  'egg.close': ['關閉', 'Close'],
+  'egg.start': ['開始計時', 'Start timer'],
+  'egg.done': ['搓滿了！沖水、擦乾，完成。', 'Done! Rinse, dry, and you are finished.'],
+  'egg.seconds': ['{n} 秒', '{n} s'],
+  'egg.more': ['為什麼要洗 20 秒？', 'Why 20 seconds?'],
+};
+for (const [key, vals] of Object.entries(ROWS_R62)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
+
 // translation.bar.reviewed 的 {lang} 佔位：zh 版用語言名稱
 STRINGS['zh-TW']['translation.bar.reviewed'] = STRINGS['zh-TW']['translation.bar.reviewed'].replace('{lang}', '翻譯');
 

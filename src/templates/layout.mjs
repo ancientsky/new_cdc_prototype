@@ -22,7 +22,7 @@ export const EARLY_JS = `try{var d=document.documentElement;d.classList.add('js'
 const FOOT_SERVICES = [
   ['/publications/', 'more.publications'], ['/apply/', 'more.apply'], ['/lab/', 'more.lab'], ['/report/', 'more.report'], ['/research/', 'more.research'],
   ['/search/', 'footer.search'],
-  ['/careers/', 'more.careers'], ['/procurement/', 'more.procurement'], ['/notices/', 'more.notices'], ['/media/', 'services.media'], ['/campaigns/', 'campaigns.title'], ['/services/', 'services.title'],
+  ['/careers/', 'more.careers'], ['/procurement/', 'more.procurement'], ['/notices/', 'more.notices'], ['/media/', 'services.media'], ['/campaigns/', 'campaigns.title'], ['/play/', 'play.title'], ['/services/', 'services.title'],
 ];
 
 function translationBar(ctx, item, hide) {

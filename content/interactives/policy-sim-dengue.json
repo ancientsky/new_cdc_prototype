@@ -1,0 +1,87 @@
+{
+  "id": "interactive.policy-sim-dengue",
+  "type": "interactive",
+  "kind": "policy-sim",
+  "title": "防疫決策模擬：登革熱季節，換你當防疫科長",
+  "owner": "unit.acute-infectious",
+  "publishedAt": "2026-10-26",
+  "reviewedAt": "2026-10-26",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "enabled": true,
+  "placements": ["home-bottom", "play-hub"],
+  "audience": ["public"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "languages": {
+    "zh-TW": { "status": "source" },
+    "en": { "status": "none" },
+    "ja": { "status": "none" },
+    "tl": { "status": "none" },
+    "vi": { "status": "none" },
+    "id": { "status": "none" },
+    "th": { "status": "none" }
+  },
+  "summary": "四個回合的選擇：社區出現本土登革熱病例，你會先噴藥、先動員孳清，還是先說明？每個選擇都回到站內的登革熱頁與 Q&A。",
+  "note": "示範內容：情境與量表變化是教學用的相對值，由原型依站內登革熱內容設計，待急性傳染病組確認措辭與方向。",
+  "disclaimer": "教學用簡化模型：量表只表示方向與相對變化，不是疫情預測，也不代表任何縣市的真實決策。",
+  "scenario": {
+    "role": "你是某縣市衛生局的防疫科長",
+    "intro": "9 月，社區出現 3 例本土登革熱病例。接下來四週，每週你要做一個決定。看看孳生源、社區參與和民眾信任怎麼變化——然後想一想，為什麼疾管署的建議長那樣。",
+    "meters": [
+      { "key": "breeding", "label": "孳生源指數（越低越好）", "start": 55, "lowerIsBetter": true },
+      { "key": "community", "label": "社區參與", "start": 30 },
+      { "key": "trust", "label": "民眾信任", "start": 50 }
+    ],
+    "rounds": [
+      {
+        "title": "第 1 週：出現 3 例本土病例",
+        "prompt": "病例集中在同一個里。里長打電話來問：「要不要趕快噴藥？」你第一步要做什麼？",
+        "options": [
+          { "label": "動員里長、志工挨家挨戶巡倒清刷，同時規劃噴藥", "effects": { "breeding": -15, "community": 15, "trust": 5 }, "feedback": "對。孳生源清除是登革熱防治的核心：沒有積水就沒有幼蟲，噴藥只殺得到飛著的成蚊。", "basedOn": "faq.dengue-community-mobilize" },
+          { "label": "只派噴藥車繞一圈，先讓大家安心", "effects": { "breeding": -5, "community": -5, "trust": -5 }, "feedback": "噴藥只殺成蚊、藥效只有幾小時；積水容器還在，一週後蚊子又長出來。民眾也會以為「噴過就沒事」。", "basedOn": "faq.dengue-spraying-refuse" },
+          { "label": "先觀察一週再說", "effects": { "breeding": 10, "trust": -10 }, "feedback": "登革熱一週可以多一代蚊子。等待讓孳生源持續累積，民眾也覺得政府沒反應。", "basedOn": "disease.dengue" }
+        ]
+      },
+      {
+        "title": "第 2 週：民眾抱怨噴藥",
+        "prompt": "有住戶拒絕讓噴藥人員進屋，網路上有人說「噴藥有毒、比登革熱可怕」。你怎麼回應？",
+        "options": [
+          { "label": "公開說明噴藥時機、配合事項與安全資訊，同時持續孳清", "effects": { "breeding": -10, "trust": 10, "community": 5 }, "feedback": "說清楚「什麼時候噴、為什麼、怎麼配合」比強制有效；噴藥是搭配孳清的工具，不是主角。", "basedOn": "faq.dengue-spraying-refuse" },
+          { "label": "停止所有噴藥，避免爭議", "effects": { "breeding": 10, "trust": 5 }, "feedback": "少了成蚊防治，病例周邊的帶病毒成蚊沒被處理，傳播風險上升。信任短期上升，但疫情拉長後會掉回來。", "basedOn": "disease.dengue" },
+          { "label": "依法強制進入，不多解釋", "effects": { "breeding": -10, "trust": -15, "community": -10 }, "feedback": "法規確實允許，但沒有說明的強制會失去社區配合——而孳清最需要的就是每一戶自己動手。", "basedOn": "faq.dengue-community-mobilize" }
+        ]
+      },
+      {
+        "title": "第 3 週：學校出現病例",
+        "prompt": "一所國小有學生確診。家長群組吵著要停課。你怎麼做？",
+        "options": [
+          { "label": "校園孳清＋衛教課，請每位學生回家檢查積水容器", "effects": { "breeding": -15, "community": 15, "trust": 5 }, "feedback": "登革熱不會人傳人，停課防不了；讓孩子把「巡倒清刷」帶回家，反而讓整個學區動起來。", "basedOn": "faq.dengue-container-check" },
+          { "label": "全校停課一週", "effects": { "breeding": 5, "trust": -5 }, "feedback": "登革熱靠蚊子傳播，不是人傳人；停課不減少蚊子，孩子在家附近一樣可能被咬。", "basedOn": "disease.dengue" },
+          { "label": "只在校園噴藥，其他照常", "effects": { "breeding": -5 }, "feedback": "校園的成蚊少了，但孩子家裡和上學路上的孳生源沒動，效果有限。", "basedOn": "faq.dengue-spraying-refuse" }
+        ]
+      },
+      {
+        "title": "第 4 週：病例趨緩、天氣轉涼",
+        "prompt": "本週只有 1 例新病例。同事說「可以收了」。你怎麼決定？",
+        "options": [
+          { "label": "持續每週巡倒清刷，並提醒診所留意發燒病人的警示徵象", "effects": { "breeding": -10, "trust": 5 }, "feedback": "病例少不代表蚊子少；維持孳清到季節結束，加上醫師警覺，才不會隔週又冒出一群。", "basedOn": "faq.dengue-fever-when-to-see-doctor" },
+          { "label": "宣布疫情結束，停止所有作為", "effects": { "breeding": 15, "trust": -5 }, "feedback": "潛伏期最長兩週，現在的病例反映的是兩週前的蚊子。太早收手常常是第二波的開始。", "basedOn": "disease.dengue" },
+          { "label": "把人力轉去宣導「發燒就醫要主動說旅遊史與居住地」", "effects": { "trust": 10 }, "feedback": "早期診斷確實重要，但孳清不能停；兩者要一起做。", "basedOn": "faq.dengue-fever-when-to-see-doctor" }
+        ]
+      }
+    ],
+    "endings": [
+      { "when": { "breeding": { "max": 25 }, "community": { "min": 55 } }, "text": "孳生源壓得很低、社區自己動起來了——這正是疾管署反覆強調「孳清為主、噴藥為輔、全民參與」的原因。" },
+      { "when": { "breeding": { "max": 35 } }, "text": "孳生源控制住了。如果社區參與再高一點，明年就不必從頭動員。" },
+      { "when": { "trust": { "max": 35 } }, "text": "蚊子可能少了，但民眾不太信任你了。下一次疫情，開門讓你巡倒清刷的人會更少。" },
+      { "text": "疫情拖了一陣子。回頭看：哪一週你選了噴藥或等待，而不是清孳生源？" }
+    ]
+  },
+  "postPublishReview": {
+    "status": "done",
+    "reviewedBy": "公關室承辦人",
+    "reviewedAt": "2026-10-26",
+    "note": "示範假設：上線後複核視為已完成（與節慶主題示範檔相同），正式環境由公關室在 24 小時內實際複核"
+  }
+}

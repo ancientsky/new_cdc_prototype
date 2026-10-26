@@ -1,0 +1,42 @@
+{
+  "id": "interactive.easter-egg-handwash",
+  "type": "interactive",
+  "kind": "easter-egg",
+  "title": "首頁彩蛋：洗手 20 秒計時",
+  "owner": "unit.pr",
+  "publishedAt": "2026-10-26",
+  "reviewedAt": "2026-10-26",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "enabled": true,
+  "placements": ["brand"],
+  "audience": ["public"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "languages": {
+    "zh-TW": { "status": "source" },
+    "en": { "status": "none" },
+    "ja": { "status": "none" },
+    "tl": { "status": "none" },
+    "vi": { "status": "none" },
+    "id": { "status": "none" },
+    "th": { "status": "none" }
+  },
+  "summary": "在首頁連點站名圖示 5 下，或用鍵盤輸入 1922，會跳出一個洗手 20 秒的計時器。不改任何版面，關掉就完全消失。",
+  "note": "示範內容：彩蛋文字待公關室確認。",
+  "egg": {
+    "triggers": ["brand-taps", "keys"],
+    "taps": 5,
+    "keys": "1922",
+    "title": "你發現了彩蛋！",
+    "text": "洗手要搓滿 20 秒，大約是唱兩次生日快樂歌。按「開始」一起計時：手心、手背、指縫、指甲都要搓到。",
+    "timerSeconds": 20,
+    "link": "/diseases/enterovirus/"
+  },
+  "postPublishReview": {
+    "status": "done",
+    "reviewedBy": "公關室承辦人",
+    "reviewedAt": "2026-10-26",
+    "note": "示範假設：上線後複核視為已完成（與節慶主題示範檔相同），正式環境由公關室在 24 小時內實際複核"
+  }
+}

@@ -22,6 +22,7 @@ export const TYPE_DIR = {
   faq: 'faq', disease: 'diseases', news: 'news', letter: 'news', document: 'documents', clarification: 'clarifications', vaccine: 'vaccines',
   dataset: 'datasets', banner: 'banners', page: 'pages', media: 'media', topic: 'topics', service: 'services', publication: 'publications',
   labtest: 'labtests', research: 'research', job: 'jobs', tender: 'tenders', article: 'articles',
+  interactive: 'interactives', // 第六十二輪：互動模組（後台 /admin/interactives/ 的開關經閘道送審）
 };
 const COLLECTION_OF = { ...TYPE_DIR, letter: 'news' };
 /**

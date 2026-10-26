@@ -47,7 +47,7 @@ test('lanes.json：形狀正確、三條車道、每個內容型別恰好一條�
   assert.deepEqual(standard.codeReviewers, ['unit.oasis']); // 第五十六輪：程式／文件變更由 OASIS 審
   assert.equal(emergency.codeReviewers, undefined); assert.equal(fast.codeReviewers, undefined);
   assert.equal(fast.postPublishReviewHours, 24); assert.equal(emergency.postPublishReviewHours, 24);
-  assert.deepEqual(fast.types, ['news', 'letter', 'clarification', 'job', 'tender', 'banner', 'theme']);
+  assert.deepEqual(fast.types, ['news', 'letter', 'clarification', 'job', 'tender', 'banner', 'theme', 'interactive']);
   assert.equal(cfg.rules.translationsNeverBlock, true);
   assert.equal(cfg.rules.ciIsTheReviewer, true);
   assert.deepEqual(cfg.rules.machineTranslationAllowedFor, ['news', 'faq', 'topic', 'service']);

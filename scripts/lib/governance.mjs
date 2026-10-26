@@ -74,6 +74,7 @@ import { assetRegistryOf, assetUrl, imageLicenseProblems, needsAccessibleVersion
 import { siteOrigin } from '../../site.config.mjs';
 import { loadLanes, laneOfItem, isScheduled, isPublic, nowOf, publishAtMs, taipeiDate, taipeiTime } from './lanes.mjs';
 import { themeState, windowOf } from './theme.mjs';
+import { interactivesState, interactiveStatus } from './interactives.mjs';
 
 // ───────────────────────── 常數與對照表 ─────────────────────────
 
@@ -290,6 +291,7 @@ export function pathOf(item) {
     // 第七輪：id job.{yyyy-mm-dd}-{slug} → /careers/{slug}/；tender 同理 → /procurement/{slug}/
     case 'job': return `/careers/${item.slug ?? slugOf(item).replace(/^\d{4}-\d{2}-\d{2}-/, '')}/`;
     case 'tender': return `/procurement/${item.slug ?? slugOf(item).replace(/^\d{4}-\d{2}-\d{2}-/, '')}/`;
+    case 'interactive': return item.kind === 'easter-egg' ? '/' : `/play/${slugOf(item)}/`;
     default: return '/';
   }
 }
@@ -444,6 +446,8 @@ export function applyGovernance(site) {
       const w = windowOf(item);
       gov.themeStatus = !w ? 'invalid' : now < w.from ? 'upcoming' : now >= w.to ? 'ended' : 'live';
     }
+    // 第六十二輪：互動模組的開關與檔期狀態（on／off／upcoming／ended；是否真的顯示另看 site.interactives：疫情緊急時全部不顯示）
+    if (item.type === 'interactive') gov.interactiveStatus = interactiveStatus(item, now);
     // R9 影音：逐字稿
     if (item.type === 'media') {
       gov.transcriptChars = (item.transcriptMarkdown ?? '').trim().length;
@@ -941,6 +945,8 @@ export function applyGovernance(site) {
   site.gov.summary = computeSummary(site);
   // 第六十輪（Issue #127）：這次建置要套用的節慶主題（layout 讀 site.theme.active；疫情中心 alertLevel=emergency ⇒ 不套用）
   site.theme = themeState(site, now);
+  // 第六十二輪：這次建置顯示的互動模組（首頁、/play/ 讀 site.interactives.list；alertLevel=emergency ⇒ 全部不顯示）
+  site.interactives = interactivesState(site, now);
   // KPI 依賴 site.searchIndex 與 site.evalReport（建置後段才有）→ 每次讀取時計算
   Object.defineProperty(site.gov, 'kpi', { enumerable: true, configurable: true, get: () => computeKpi(site) });
   Object.defineProperty(site.gov, 'kpiByKey', { enumerable: false, configurable: true, get: () => Object.fromEntries(computeKpi(site).map((k) => [k.key, k])) });

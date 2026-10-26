@@ -18,6 +18,7 @@ const addFormats = addFormatsModule.default ?? addFormatsModule;
 import { ROOT } from './load.mjs';
 import { jobPiiErrors, jobResultProblems } from '../../src/client/careers-rules.js';
 import { themeProblems, overlappingThemes } from './theme.mjs';
+import { interactiveProblems } from './interactives.mjs';
 
 const SCHEMAS = path.join(ROOT, 'schemas');
 
@@ -35,7 +36,7 @@ const typeToSchema = {
   disease: 'disease.json', faq: 'faq.json', news: 'news.json', letter: 'news.json', clarification: 'clarification.json',
   document: 'document.json', vaccine: 'vaccine.json', dataset: 'dataset.json', banner: 'banner.json', page: 'page.json',
   media: 'media.json', topic: 'topic.json', service: 'service.json', publication: 'publication.json', labtest: 'labtest.json', research: 'research.json', article: 'article.json',
-  migration: 'migration.json', job: 'job.json', tender: 'tender.json', theme: 'theme.json',
+  migration: 'migration.json', job: 'job.json', tender: 'tender.json', theme: 'theme.json', interactive: 'interactive.json',
 };
 
 // ───────────────────────── 第二十五輪：相對日期檢查（Issue #37；規則與理由見 dates.mjs 的 RELATIVE_DATE_RE） ─────────────────────────
@@ -200,6 +201,8 @@ export function validateSite(site) {
   const themes = site.collections.themes ?? [];
   for (const th of themes) for (const msg of themeProblems(th)) push(th.__file, `[節慶主題] ${msg}`);
   for (const [a, b] of overlappingThemes(themes)) push(b.__file, `[節慶主題] 生效區間與 ${a.id}（${a.publishAt}～${a.unpublishAt}）重疊：同一時間只能有一個主題，請調整 publishAt／unpublishAt`);
+  // 2a''. 第六十二輪：互動模組——放置位置白名單、檔期先後、測驗題答案序號與 basedOn 參照、模擬量表 key；規則在 scripts/lib/interactives.mjs
+  for (const it of site.collections.interactives ?? []) for (const msg of interactiveProblems(it, site)) push(it.__file, `[互動模組] ${msg}`);
 
   // 2b. 來源語言（ARCHITECTURE 14.2）：languages[sourceLang] 為 source、只有來源語言可標 source；
   //     sourceLang≠zh-TW ⇒ i18n['zh-TW'] 必須存在（含 title、summary）且 languages['zh-TW'] 為 reviewed／machine（中文官網不能沒有中文）。
