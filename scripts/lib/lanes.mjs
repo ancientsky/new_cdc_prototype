@@ -80,6 +80,32 @@ export function validateLanes(cfg, allTypes = []) {
   return errs;
 }
 
+/**
+ * 第六十七輪：發布名單裡的個人帳號（不是 team: 開頭）⇒ 建置警告，不擋建置。
+ * 名單寫個人帳號，人一離職或調動名單就過時（離職的人仍能免審上線、審核請求寄給已不在的人）；
+ * 寫 team:<AD 群組>，人員異動只要在 AD 改群組成員，名單不用改（docs/publishing-lanes.md、guide-staff §61）。
+ * 檢查各車道的 allowedAuthors、allowedAuthorsByType，以及 rules.urgentAllowedAuthors、reviewerAccounts 的值（codeReviewers 等寫的是單位 id，不檢查）。
+ * @returns {{ where: string, account: string }[]}
+ */
+export function personalAccountEntries(cfg) {
+  const out = [];
+  const look = (where, list) => { for (const a of Array.isArray(list) ? list : []) if (typeof a === 'string' && a.trim() && !/^team:/i.test(a.trim())) out.push({ where, account: a.trim() }); };
+  for (const [k, l] of Object.entries(cfg?.lanes ?? {})) {
+    look(`lanes.${k}.allowedAuthors`, l.allowedAuthors);
+    for (const [t, list] of Object.entries(l.allowedAuthorsByType ?? {})) look(`lanes.${k}.allowedAuthorsByType.${t}`, list);
+  }
+  look('rules.urgentAllowedAuthors', cfg?.rules?.urgentAllowedAuthors);
+  for (const [u, a] of Object.entries(cfg?.reviewerAccounts ?? {})) look(`reviewerAccounts.${u}`, [a].flat());
+  return out;
+}
+export const PERSONAL_ACCOUNT_MSG = '發布名單含個人帳號，正式環境請改用 team:<AD 群組>';
+/** 建置用：一行警告（沒有個人帳號 ⇒ 空陣列） */
+export function personalAccountWarnings(cfg = loadLanes()) {
+  const hits = personalAccountEntries(cfg);
+  if (!hits.length) return [];
+  return [`${PERSONAL_ACCOUNT_MSG}（content/governance/lanes.json：${hits.map((h) => `${h.where}=${h.account}`).join('、')}；人員離職或調動時名單會過時，見 docs/publishing-lanes.md）`];
+}
+
 // ───────────────────────── 時間 ─────────────────────────
 
 /** publishAt（date-time 或 date）→ 毫秒；只有日期 ⇒ 當日 00:00 台灣時間；無效 ⇒ null */

@@ -121,3 +121,9 @@ eval/**/*.mjs
 !scripts/lib/probe-signatures.mjs
 !tests/round63-rate-limit.test.mjs
 !tests/round63-probes.test.mjs
+
+# 第六十七輪：交接（docs/deploy.md §33）
+!scripts/lib/reassign-owner.mjs
+!scripts/reassign-owner.mjs
+!src/client/admin/mine-gateway.js
+!tests/round67-handover.test.mjs

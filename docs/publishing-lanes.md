@@ -69,6 +69,12 @@ CI 把 PR 作者（`github.event.pull_request.user.login`）傳給 `scripts/lane
 
 人事室承辦人的職缺、秘書室承辦人的採購公告免審上線。設定在快車道的 `allowedAuthorsByType`（型別 → 名單），不是加進 `allowedAuthors`：後者對整條快車道有效，會讓人事室也能免審發新聞稿、澄清稿。判斷規則（`scripts/lib/lanes.mjs` 的 `laneAuthorGate`，寫入閘道與 CI 共用）：作者在 `allowedAuthors` ⇒ 可以；否則這次變更的**每一個**型別都要有自己的名單、作者都在裡面才可以。名單寫 `team:<AD 群組>`（寫入閘道）或 `team:<org>/<slug>`（GitHub PR）。機器檢查與上線後複核照舊。細節：docs/deploy.md §26.1。
 
+### 3.0.2 名單寫 AD 群組，不寫個人帳號（第六十七輪）
+
+`allowedAuthors`、`allowedAuthorsByType`、`rules.urgentAllowedAuthors`、`reviewerAccounts` 只要有一筆不是 `team:` 開頭，建置就印一行警告：「**發布名單含個人帳號，正式環境請改用 team:<AD 群組>**」，並列出是哪幾筆（`scripts/lib/lanes.mjs` 的 `personalAccountWarnings`）。**只警告、不擋建置**：原型的名單刻意只放倉庫擁有者（`ancientsky`）示範，正式環境換成群組後警告自然消失。為什麼要提醒：名單寫個人帳號，同事離職或調動時名單就過時——離職的人仍在免審名單上、審核請求寄給已不在的人，而且沒有人會記得來改這個檔；寫 `team:<AD 群組>`，人事異動只要在 AD 調整群組成員，名單本身不用動（交接流程見 [guide-staff.md](guide-staff.md) 第 61 節）。
+
+`content/` 底下的內容檔改權責單位（單位改組，`npm run reassign-owner`）跟其他內容變更一樣走**一般車道**；這類 PR 同時動到很多單位的內容，請 OASIS 與公關室一起審（報告會列出每一筆，[deploy.md](deploy.md) 第 33 節）。
+
 ### 3.1 哪些內容不可以標緊急
 
 `urgent` 只能用於 `news`、`letter`、`clarification`（`lanes.json` 的 `rules.urgentAllowedTypes`）。理由：疾病、疫苗、文件、Q&A 會被 AI 引用，不能跳過人工審核；疫情態勢本來就走緊急車道，不需要再標。違反時：後台預檢直接擋下、schema 驗證失敗（CI 也擋）。

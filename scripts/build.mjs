@@ -29,7 +29,7 @@ import { runEval } from '../eval/run-eval.mjs';
 import { todayISO } from './lib/render.mjs';
 import { checkInternalLinks, summarize as summarizeLinks } from './lib/check-internal-links.mjs';
 import { validateAssets, fixAssets, copyAssets, normalizeFileLinks } from './lib/assets.mjs';
-import { publicView, scheduledItems, taipeiTime, taipeiDate, publishAtMs } from './lib/lanes.mjs';
+import { publicView, scheduledItems, taipeiTime, taipeiDate, publishAtMs, personalAccountWarnings } from './lib/lanes.mjs';
 import { piiErrors } from './lib/pii-scan.mjs';
 import { checkI18nQuality, summarizeI18nQuality } from './lib/i18n-quality.mjs';
 import { formErrors, askLogErrors } from './lib/forms.mjs';
@@ -74,6 +74,7 @@ async function main() {
   for (const w of assetReport.warnings) console.warn('  ⚠ [assets]', w);
   for (const w of contentWarnings(site)) console.warn('  ⚠ [內容]', w);
   for (const w of pendingReviewWarnings(site)) console.warn('  ⚠ [待確認]', w); // 第四十八輪（issue #93）：只警告
+  for (const w of personalAccountWarnings()) console.warn('  ⚠ [發布名單]', w); // 第六十七輪：名單寫個人帳號，人員異動就過時；只警告
   // 第三十輪（#55）：個資掃描（content/、data/snapshots/、會複製到 dist 的內容附件）。命中就是治理門檻錯誤，--check 與正式建置都會失敗；表單端點設定矛盾（post 沒端點等）也一樣
   const errors = [...validateSite(site), ...assetReport.errors.map((e) => `[assets] ${e}`), ...piiErrors(ROOT), ...formErrors(config), ...askLogErrors(config), ...adminOriginErrors(config)];
   if (errors.length) {

@@ -9,7 +9,7 @@
 // 端點（皆 JSON；錯誤格式 { error: 代碼, message: 白話中文, fields?: [{ field, label, message }] }）
 //   GET  /api/gateway/health                 → { ok, service:'cdc-web-gateway', auth }（前端用它判斷「有沒有閘道」）
 //   GET  /api/gateway/session                → { user: { account, name, unit, roles[] }, csrfToken }
-//   GET  /api/gateway/items?view=mine|queue|all&contentId=   → { items: [...] }
+//   GET  /api/gateway/items?view=mine|queue|all&contentId=&editor=   → { items: [...] }（editor：第六十七輪，只列這個帳號目前承辦的）
 //   GET  /api/gateway/items/:id              → 送審件（狀態、歷程、意見、能做什麼）
 //   GET  /api/gateway/items/:id/diff         → 白話欄位差異
 //   GET  /api/gateway/items/:id/content      → { item, contentHash, update?, companions?, categories? } 目前這版的內容（承辦人被退回後重新開啟用）；
@@ -35,6 +35,7 @@
 //        /submit 另收 reReview: true（修改到期內容時一併標為重新審閱）
 //   POST /api/gateway/items/:id/return       { comment }              退回修改（意見必填）
 //   POST /api/gateway/items/:id/approve      { comment? }             核准上線（送審期間網站版本變了 ⇒ 409 outdated，不記核准）
+//   POST /api/gateway/items/:id/handover     { note? }                接手（第六十七輪）：同單位的編輯把自己設為承辦人；原承辦人不再收通知、仍不能核准
 //   GET  /api/gateway/intl-epidemic/status   → { lastRun, history }   國際疫情匯入紀錄（第四十三輪；docs/intl-epidemic.md）
 //   POST /api/gateway/intl-epidemic/import   { feed, mode?, dry? }    後台手動匯入（feed：v1 物件、舊官網匯出列或 CSV 字串；本體 ≤ 2 MB）
 //        只有疫情中心的編輯／審核或跨單位角色可用；與推送端點同一段上架流程（scripts/lib/intl-epidemic-publish.mjs），held → 202
@@ -347,7 +348,8 @@ export function createGatewayApi(opts = {}) {
         if (sub === '/items') {
           const v = ['mine', 'queue', 'all'].includes(String(searchParams.get('view'))) ? String(searchParams.get('view')) : 'mine';
           const cid = searchParams.get('contentId');
-          return send(res, 200, { items: workflow.list(p, { view: v, contentId: cid && /^[a-z]+\.[a-z0-9.-]{1,120}$/.test(cid) ? cid : undefined }) });
+          const ed = String(searchParams.get('editor') ?? '');
+          return send(res, 200, { items: workflow.list(p, { view: v, contentId: cid && /^[a-z]+\.[a-z0-9.-]{1,120}$/.test(cid) ? cid : undefined, editor: /^[a-z0-9._-]{1,64}$/.test(ed) ? ed : undefined }) });
         }
         const m = /^\/items\/(gw-\d{8}-[0-9a-f]{6})(\/diff|\/content|\/preview)?$/.exec(sub);
         if (m) {
@@ -402,9 +404,10 @@ export function createGatewayApi(opts = {}) {
         const contentId = typeof body.contentId === 'string' ? body.contentId : '', type = typeof body.type === 'string' ? body.type : '';
         return send(res, 200, await workflow.reReview(p, { contentId, type, note: typeof body.note === 'string' ? body.note : undefined }, ctx));
       }
-      const m = /^\/items\/(gw-\d{8}-[0-9a-f]{6})\/(return|approve)$/.exec(sub);
+      const m = /^\/items\/(gw-\d{8}-[0-9a-f]{6})\/(return|approve|handover)$/.exec(sub);
       if (m && m[2] === 'return') return send(res, 200, await workflow.returnForChanges(p, { submissionId: m[1], comment: body.comment }, ctx));
       if (m && m[2] === 'approve') return send(res, 200, await workflow.approve(p, { submissionId: m[1], comment: body.comment }, ctx));
+      if (m && m[2] === 'handover') return send(res, 200, await workflow.handover(p, { submissionId: m[1], note: typeof body.note === 'string' ? body.note : undefined }));
       return err(res, 404, 'notfound', '找不到');
     } catch (e) {
       if (e instanceof GatewayError) return err(res, e.status, e.code, e.message, e.fields, e.extra);

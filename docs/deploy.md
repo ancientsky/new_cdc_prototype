@@ -2130,3 +2130,39 @@ GitHub Pages 原型站照舊用原型模式建置（後台與 source map 是示�
 **釘映像檔 digest**：原型用 `ghcr.io/zaproxy/zaproxy:stable`（浮動標籤）。正式 CI 請改成 `ghcr.io/zaproxy/zaproxy@sha256:<digest>`，並定期更新，理由與釘 action SHA 相同（供應鏈）。
 
 **搬到署內 CI（GitLab）**：用同樣的步驟——建置（`BASE_PATH=''`）、起 `scripts/serve.mjs`、跑 ZAP 容器、把三個報告檔存成 job artifact。runner 需要能執行容器；掃描目標限定為該 job 自己啟動的本機服務，不要指向正式或共用環境。
+## 33. 交接：閘道的「接手」與單位改組的 reassign-owner（第六十七輪）
+
+同事版說明在 [guide-staff.md](guide-staff.md) 第 61 節；取捨在 [architecture-decisions.md](architecture-decisions.md) 第 52 節。前提：內容的 `owner` 是單位 id，後台權限來自 AD 群組，所以人事異動本身不需要動內容，只有下面兩件事要做。
+
+### 33.1 閘道：接手進行中的送審件
+
+| 端點 | 參數 | 說明 |
+| --- | --- | --- |
+| `POST /api/gateway/items/:id/handover` | `{ note? }`（≤ 500 字，選填） | 呼叫者把自己設為這個送審件的承辦人。條件：有「編輯」角色、是內容權責單位的人（或跨單位角色），送審件在草稿／退回／審核中。別單位 403、已結束 409 `state`、已經是唯一承辦人 409 `already` |
+| `GET /api/gateway/items?view=all&editor=<帳號>` | `editor` 為 AD 帳號（`[a-z0-9._-]{1,64}`，不合格就當沒篩） | 只列這個帳號**目前**承辦（沒交接出去）的送審件，給「我的內容」的承辦人篩選用 |
+
+接手後送審件的變化（`scripts/lib/gateway/workflow.mjs` 的 `handover()`）：
+
+- `editors[]`：原承辦人**不移除**，加 `handedOver: true`、`handedOverAt`；接手的人加進來（已在名單裡就取消他的 `handedOver`）。
+  不移除是刻意的：四眼原則（`reviewBlock`）看的是「改過這件的人」，交接出去的人仍不能核准或退回；上線提交訊息的 `Edited-by:` 也照樣列出每一位改過的人。
+- 通知：退回、部分核准、核准上線只寄給沒交接出去的承辦人（`contactsOf`）；送審通知照舊排除所有改過的人（他們不能審）。
+- `history[]` 加一筆「改由 ○○ 承辦（接手 ○○）」；稽核加一筆 `handover`（`from`：原承辦人帳號、`to`：接手的人、`status`；說明只記字數）。被拒絕的嘗試也記（`result: denied`）。
+- 內容、分支、審核請求都不動；交接出去的人又存了一版 ⇒ 自動回到承辦人（兩位都收通知）。
+- 送審件的回應多了 `contacts[]`（目前承辦人）、`editors[].handedOver`、`can.handover`。
+
+後台：「我的內容」（`/admin/mine/`）有閘道時多一塊「單位進行中的送審件（線上）」（`src/client/admin/mine-gateway.js`），依承辦人篩選、每列一個「接手」鈕；沒有閘道（GitHub Pages、`?gateway=off`）時這一塊隱藏，頁面照舊。
+
+### 33.2 單位改組：`npm run reassign-owner`
+
+```
+npm run reassign-owner -- --from unit.a --to unit.b [--type disease,faq] [--dry-run] [--report 路徑]
+```
+
+- 範圍：`content/**/*.json`（不含 `content/assets/` 附件；不含 `units.json` 本身），包括內容檔、疾病主檔、移轉清單的 `owner`。
+- 只把 `"owner": "unit.a"` 文字替換成 `"owner": "unit.b"`，其餘格式一字不動；替換後自我檢查「除了 owner 以外與原檔相同」，不同就停止。`reviewedAt`、`publishedAt`、`steward` 都不動。
+- 拒絕：兩個單位任一不在主檔、`--to` 為 `publishes: false`（例：署長室）或已裁撤。
+- 輸出：終端機一張表（id、型別、標題、檔案），以及 Markdown 報告（預設 `.local/reassign-owner/<日期>-<from>-to-<to>.md`，不進版控；可貼進 PR 說明）。報告另列「owner 以外提到舊單位的地方」（`requestingUnit`、`hiringUnit` 等，不自動改）與「steward 還寫著舊單位」的內容。
+- PR：動到內容檔，走一般車道；請 OASIS 與公關室審核。
+- 收尾：舊單位在 `content/master/units.json` 加 `retiredAt`（裁撤日，`YYYY-MM-DD`）與 `successor`（承接單位）。建置從裁撤日起把「owner 仍是裁撤單位」的內容、移轉清單、疾病主檔當錯誤（訊息附上要跑的指令），`successor` 必須存在、不能也已裁撤（governance-model 規則 31）。裁撤日可以先寫未來日期，到那天才生效。
+
+測試：`tests/round67-handover.test.mjs`。

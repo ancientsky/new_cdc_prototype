@@ -2747,3 +2747,20 @@ Yulun 問盲測弱項（錯字、長輩說法、情境題、外語）有沒有�
 
 **教訓：** 「站內查無」要先分「缺內容」與「斷詞雜訊」（印 `relevanceInfo.tokens` 與前三個片段）；疑問詞要整組拿，看剩下什麼而不是拿掉什麼；沒拒答不等於答對。詳見 docs/ask-search-llm.md §20。
 
+
+## 70. 第六十七輪：交接——內容屬單位、接手進行中送審件、單位改組（2026-10-26）
+
+同事問：上架的人跟審核的人能不能是同一個人？誰做了什麼記在哪？承辦人離職或調動，幾百筆內容怎麼交接？答案與操作在 `docs/guide-staff.md` §61；資訊室清單在 `docs/admin-auth.md` §5 第 6 點；端點與工具在 `docs/deploy.md` §33；取捨在 architecture-decisions §52；規則 30、31 在 `docs/governance-model.md`。
+
+| 項目 | 契約 |
+| --- | --- |
+| 接手 | `workflow.handover(p, { submissionId, note? })`；`POST /api/gateway/items/:id/handover`。條件 `editBlock`（編輯角色＋同單位或跨單位角色）、狀態 `draft`／`returned`／`in_review`；403 別單位、404、409 `state`／`already`。原承辦人 `editors[].handedOver = true`（不移除：四眼與 `Edited-by:` 照舊）；`contactsOf(sub)` ＝ 沒交接出去的承辦人，`returned`／`partial`／`approved` 通知只寄他們；`history` 加 `handover`；稽核 `handover { from[], to, status }`。交接出去的人再存檔（`addEditor`）⇒ 取消 `handedOver` |
+| 清單 | `list(p, { view, contentId, editor })`：`editor` 只列該帳號目前承辦的；`GET /items?view=all&editor=`。送審件回應加 `contacts[]`、`editors[].handedOver`、`can.handover` |
+| 後台 | `/admin/mine/` 的 `#gw-unit`（`src/client/admin/mine-gateway.js`）：有閘道才顯示；承辦人下拉、「接手」鈕；沒閘道時隱藏 |
+| 單位改組 | `scripts/reassign-owner.mjs`（`npm run reassign-owner`）＋ `scripts/lib/reassign-owner.mjs`（`reassignOwner`、`formatTable`、`formatReport`）：`content/**/*.json`（排除 `content/assets/`、`units.json`）的 `"owner": "<from>"` 文字替換；`--type`、`--dry-run`、`--report`；拒絕不存在、`publishes:false`、已裁撤的 `--to` |
+| 單位裁撤 | `schemas/master.json` `unit.retiredAt`（date）、`unit.successor`（`^unit\.`）；`validateSite`：`retiredAt ≤ today` 的單位當 `owner`（內容、移轉清單與其項目、疾病主檔）⇒ 錯誤；`successor` 必須成對、存在、未裁撤（規則 31） |
+| reviewedBy | `validate.mjs` `reviewedByProblem(value, units)`：去掉單位 id／名稱／`stewardTitle`／`REVIEWER_TITLE_WORDS` 後只能剩空白與標點（規則 30） |
+| 個人帳號警告 | `lanes.mjs` `personalAccountEntries(cfg)`、`personalAccountWarnings(cfg)`；`build.mjs` 印一行 `⚠ [發布名單]`，不擋建置 |
+| 測試 | `tests/round67-handover.test.mjs` |
+
+**教訓：** 「怎麼交接」的最好答案是讓大部分東西不需要交接——把所有權放在不會離職的單位、把權限放在人事本來就維護的 AD 群組；剩下真的綁著人的（等通知的送審件），才做交接功能，而且交接不能抹掉「誰做過」的事實。

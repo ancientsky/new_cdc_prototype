@@ -112,6 +112,18 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第六十七輪：同事離職或調動怎麼交接；上架與審核能不能同一人；誰做了什麼記在哪
+
+同事問：「上架者與審核者可以是同一人嗎？」「誰改了什麼、誰核准的記在哪？」「承辦人離職或調單位，手上幾百筆內容要怎麼交接？」
+
+- **已上線的內容不用交接**：`owner` 是單位 id，不是人；審閱到期、待辦、上線後複核都按單位；後台權限來自 AD 群組。離職停 AD、調動改群組就完成了，一筆內容都不用改。比「內容掛在個人名下」好：那種做法每次人事異動都要整批改，漏改的就沒人收提醒。
+- **進行中的送審件按「接手」**：寫入閘道新增 `POST /api/gateway/items/:id/handover`。同單位的編輯接手草稿／退回／審核中的送審件，之後的退回與核准通知只寄給新承辦人；原承辦人留在紀錄裡（`Edited-by:` 照記），**仍不能核准這一件**（四眼原則不因交接失效）；稽核記 `handover`（從誰、到誰）。後台「我的內容」多一塊「單位進行中的送審件」，可依承辦人篩選（`view=all&editor=`）；沒有閘道（GitHub Pages）時隱藏。
+- **單位改組用 `npm run reassign-owner`**：`--from unit.a --to unit.b [--type …] [--dry-run] [--report …]`，只改 `owner`（不碰審閱日、發布日），印表並寫 Markdown 報告；拒絕不上架或已裁撤的新單位。`units.json` 新增選填 `retiredAt`／`successor`：裁撤日起還指到舊單位的內容建置失敗，改組不會只做一半。這類 PR 走一般車道，OASIS 與公關室審。
+- **上架與審核同一人**：一般車道不行，閘道直接擋（四眼原則）；快車道是「授權名單＋先上線、公關室 24 小時內複核」。
+- **誰做了什麼**：公開 JSON 只有單位與審閱日；`postPublishReview.reviewedBy` 新增建置檢查，只能寫單位或職稱（「公關室承辦人」），寫人名或帳號建置失敗（規則 30）。姓名與 AD 帳號只在機關 GitLab 的提交訊息（`Edited-by:`／`Approved-by:`）與閘道稽核紀錄。
+- **發布名單的個人帳號**：`lanes.json` 的 `allowedAuthors` 等名單有不是 `team:` 開頭的帳號 ⇒ 建置印一行警告「發布名單含個人帳號，正式環境請改用 team:<AD 群組>」（原型的 `ancientsky` 會一直觸發，正式環境換成群組後消失）。
+- 文件：[docs/guide-staff.md](docs/guide-staff.md) §61（同事版）、[docs/admin-auth.md](docs/admin-auth.md) §5 第 6 點（離職／調動清單）、[docs/deploy.md](docs/deploy.md) §33、[docs/publishing-lanes.md](docs/publishing-lanes.md) §3.0.2、[docs/governance-model.md](docs/governance-model.md) §1.6 與規則 30、31、ARCHITECTURE §70、[architecture-decisions](docs/architecture-decisions.md) §52。測試 `tests/round67-handover.test.mjs`。
+
 ## 第六十六輪：「什麼時候要戴保險套」為什麼拒答；「進階」揭露表手機跑版
 
 Yulun（2026-10-26）手機實測：「這題看看為什麼不能回答？另外，下面說明模型的部分，手機會跑版。」
