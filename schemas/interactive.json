@@ -1,0 +1,160 @@
+{
+  "$id": "https://cdc-prototype/schemas/interactive.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "互動模組（第六十二輪）：彩蛋與民眾互動——歷史上的今天、兒童衛教小遊戲、防疫決策模擬、彩蛋。每個模組一筆內容，有 enabled 開關、選填檔期與權責單位；疫情中心 alertLevel=emergency 時全部不顯示",
+  "allOf": [
+    {
+      "$ref": "_common.json"
+    }
+  ],
+  "type": "object",
+  "required": ["kind", "enabled", "placements"],
+  "properties": {
+    "type": {
+      "const": "interactive"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^interactive\\.[a-z0-9][a-z0-9-]*$",
+      "description": "interactive.<slug>；slug 成為 /play/<slug>/ 的網址與後台開關的名稱"
+    },
+    "kind": {
+      "enum": ["on-this-day", "kids-quiz", "policy-sim", "easter-egg"],
+      "description": "模組種類（程式只認這四種；新種類要先寫程式與測試，不是加內容就會出現）"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "後台開關。false ＝ 內容留著但前台不顯示（與 status 無關：承辦人可以不下架就先關掉）"
+    },
+    "placements": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": ["home-side", "home-bottom", "play-hub", "brand"]
+      },
+      "description": "放在哪裡：home-side（首頁右側欄「澄清專區」下方小卡，只給 on-this-day）、home-bottom（首頁最下方「互動與遊戲」一區的卡）、play-hub（/play/ 專頁與自己的 /play/<slug>/）、brand（站名圖示彩蛋，只給 easter-egg）"
+    },
+    "publishAt": {
+      "description": "選填：檔期起點（含）。沿用排程發布：以建置當下真實時間判斷"
+    },
+    "unpublishAt": {
+      "anyOf": [
+        { "type": "string", "format": "date-time" },
+        { "type": "string", "format": "date" }
+      ],
+      "description": "選填：檔期終點（不含）。到期自動不顯示，不必有人去關"
+    },
+    "disclaimer": {
+      "type": "string",
+      "maxLength": 200,
+      "description": "顯示在模組下方的一句說明（例：教學用簡化模型，不是疫情預測）"
+    },
+    "entries": {
+      "type": "array",
+      "description": "on-this-day：每一條歷史事件。month／day 為當日；verified=false 前台標「待確認」",
+      "items": {
+        "type": "object",
+        "required": ["month", "day", "year", "text", "source", "verified"],
+        "additionalProperties": false,
+        "properties": {
+          "month": { "type": "integer", "minimum": 1, "maximum": 12 },
+          "day": { "type": "integer", "minimum": 1, "maximum": 31 },
+          "year": { "type": "integer", "minimum": 1000, "maximum": 2100 },
+          "text": { "type": "string", "minLength": 4, "maxLength": 160 },
+          "source": { "type": "string", "minLength": 2, "description": "出處（機構與文件名；有網址填 sourceUrl）" },
+          "sourceUrl": { "type": "string", "pattern": "^https://" },
+          "verified": { "type": "boolean", "description": "權責單位已逐條核對出處 ⇒ true；否則前台顯示「待確認」" },
+          "verifiedBy": { "type": "string" },
+          "link": { "type": "string", "pattern": "^/", "description": "站內延伸閱讀（如 /diseases/dengue/）" },
+          "i18n": { "type": "object", "additionalProperties": { "type": "object", "properties": { "text": { "type": "string" } } } }
+        }
+      }
+    },
+    "questions": {
+      "type": "array",
+      "description": "kids-quiz：選擇題。每題綁 basedOn（既有疾病頁／Q&A 的 id）；來源不在線上時該題自動隱藏",
+      "items": {
+        "type": "object",
+        "required": ["q", "choices", "answer", "explain", "basedOn"],
+        "additionalProperties": false,
+        "properties": {
+          "q": { "type": "string", "minLength": 4, "maxLength": 80 },
+          "choices": { "type": "array", "minItems": 2, "maxItems": 4, "items": { "type": "string", "minLength": 1, "maxLength": 40 } },
+          "answer": { "type": "integer", "minimum": 0, "maximum": 3, "description": "正確選項的序號（從 0 起）" },
+          "explain": { "type": "string", "minLength": 4, "maxLength": 160 },
+          "basedOn": { "type": "string", "pattern": "^(disease|faq|vaccine|topic)\\." },
+          "emoji": { "type": "string", "maxLength": 4 }
+        }
+      }
+    },
+    "scenario": {
+      "type": "object",
+      "description": "policy-sim：角色、幾個量表、每回合的選項與效果；數值是教學用的相對變化，不是預測",
+      "required": ["role", "intro", "meters", "rounds", "endings"],
+      "additionalProperties": false,
+      "properties": {
+        "role": { "type": "string", "maxLength": 60 },
+        "intro": { "type": "string", "maxLength": 400 },
+        "meters": {
+          "type": "array", "minItems": 1, "maxItems": 4,
+          "items": {
+            "type": "object", "required": ["key", "label", "start"], "additionalProperties": false,
+            "properties": {
+              "key": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+              "label": { "type": "string", "maxLength": 40 },
+              "start": { "type": "integer", "minimum": 0, "maximum": 100 },
+              "lowerIsBetter": { "type": "boolean" }
+            }
+          }
+        },
+        "rounds": {
+          "type": "array", "minItems": 1, "maxItems": 8,
+          "items": {
+            "type": "object", "required": ["title", "prompt", "options"], "additionalProperties": false,
+            "properties": {
+              "title": { "type": "string", "maxLength": 60 },
+              "prompt": { "type": "string", "maxLength": 400 },
+              "options": {
+                "type": "array", "minItems": 2, "maxItems": 4,
+                "items": {
+                  "type": "object", "required": ["label", "effects", "feedback"], "additionalProperties": false,
+                  "properties": {
+                    "label": { "type": "string", "maxLength": 60 },
+                    "effects": { "type": "object", "additionalProperties": { "type": "integer", "minimum": -40, "maximum": 40 } },
+                    "feedback": { "type": "string", "maxLength": 300 },
+                    "basedOn": { "type": "string", "pattern": "^(disease|faq|vaccine|topic|document)\\." }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "endings": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "required": ["text"], "additionalProperties": false,
+            "properties": {
+              "when": { "type": "object", "additionalProperties": { "type": "object", "properties": { "min": { "type": "integer" }, "max": { "type": "integer" } } } },
+              "text": { "type": "string", "maxLength": 300 }
+            }
+          }
+        }
+      }
+    },
+    "egg": {
+      "type": "object",
+      "description": "easter-egg：觸發方式與訊息。只在首頁；不改任何版面",
+      "required": ["triggers", "title", "text"],
+      "additionalProperties": false,
+      "properties": {
+        "triggers": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["brand-taps", "keys"] } },
+        "taps": { "type": "integer", "minimum": 3, "maximum": 10, "description": "brand-taps：連點站名圖示幾下（預設 5）" },
+        "keys": { "type": "string", "pattern": "^[0-9a-z]{3,8}$", "description": "keys：在頁面上依序輸入的字（預設 1922）" },
+        "title": { "type": "string", "maxLength": 40 },
+        "text": { "type": "string", "maxLength": 160 },
+        "timerSeconds": { "type": "integer", "minimum": 5, "maximum": 60, "description": "顯示一個倒數計時（例：洗手 20 秒）；不填就沒有" },
+        "link": { "type": "string", "pattern": "^/" }
+      }
+    }
+  }
+}

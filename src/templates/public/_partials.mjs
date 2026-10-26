@@ -34,6 +34,7 @@ export function itemPath(item) {
     case 'job': return `/careers/${item.slug ?? slugOf(item)}/`;
     case 'tender': return `/procurement/${item.slug ?? slugOf(item)}/`;
     case 'banner': return `/campaigns/#${item.id}`;
+    case 'interactive': return item.kind === 'easter-egg' ? '/' : `/play/${slugOf(item)}/`;
     default: return '/';
   }
 }

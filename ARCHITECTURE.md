@@ -2681,3 +2681,22 @@ Issue #124、#125、#126、#128。取捨在 architecture-decisions §47；做法
 | i18n | `rm.*`（ROWS_R61，七語；en 原型撰寫、其餘機器初稿待審）、`dev.backlink`（中英）。 |
 | 測試 | `tests/round61-research-media.test.mjs`：七語路由與鈕、aria-current 三頁各一顆、三組連結齊全、開發者連結在授權之後、英文頁標題無中文、回連、sitemap。 |
 
+## 66. 第六十二輪：彩蛋與互動模組是有開關的內容（2026-10-26）
+
+Yulun 問怎麼做彩蛋與民眾覺得好玩的互動（歷史上的今天、兒童衛教遊戲、政策島式互動）、放哪裡不破壞版面、後台要有開關。做法與第六十輪的節慶主題同一個模式：新內容型別 `interactive`，一個模組一筆，`enabled` 開關＋選填檔期＋放置位置白名單，疫情緊急時全部隱藏。說明與教訓在 `docs/interactives.md`；取捨在 architecture-decisions §48；同仁操作在 guide-staff §59；規則 29。
+
+| 機制 | 契約 |
+| --- | --- |
+| 型別 | `type: "interactive"`，`schemas/interactive.json`（`allOf` `_common.json`）；`id` `^interactive\.[a-z0-9][a-z0-9-]*$`；必填 `kind`（`on-this-day`｜`kids-quiz`｜`policy-sim`｜`easter-egg`）、`enabled`、`placements`；選填 `publishAt`／`unpublishAt`、`disclaimer`；各 kind 的區塊 `entries[]`／`questions[]`／`scenario`／`egg`。`load.mjs` → `site.collections.interactives`；`validate.mjs` `typeToSchema.interactive`；`review-periods.json` `interactive: 6`；不在 AI 白名單、不進答案索引 |
+| 放置位置 | `PLACEMENTS`：`home-side`（首頁右側欄澄清卡下方，只給 on-this-day）、`home-bottom`（首頁最下方「互動與遊戲」）、`play-hub`（`/play/` 與 `/play/<slug>/`）、`brand`（站名圖示，只給 easter-egg）。`KINDS[kind].placements` 白名單，`interactiveProblems` 擋 |
+| 顯示判斷 | `scripts/lib/interactives.mjs` `isInteractiveOn(item, now)`＝published 且不在排程中（`isPublic`）∧ `enabled` ∧ 在檔期內（`windowOf`，沒填＝一直）；`interactivesState(site, now)` → `{ list, reason: active｜none｜emergency, alertLevel, message }`，`alertLevel === 'emergency'` ⇒ `list: []`。`applyGovernance` 寫 `site.interactives` 與每筆 `gov.interactiveStatus`（on／off／upcoming／ended／draft／archived）；build 記錄 message |
+| 驗證 | `interactiveProblems(item, site)`：位置白名單、檔期先後、on-this-day 的日期有效與 `verified:true` 須有 `verifiedBy`、kids-quiz 的 `answer` 在範圍內／選項不重複／`basedOn` 存在、policy-sim 的 `effects` 與 `endings.when` 只用 `meters` 的 key、要有一個沒有 `when` 的預設結局 |
+| 首頁 | `home.mjs`：`homeOtd`／`homeEgg`／`homePlay`（都先過 `moduleLangOk`：zh-TW 或有 `i18n[lang].title`）。右側欄 `otdCard`（`data-otd` ＋ `data-otd-src=/v1/interactives/<slug>.json`，建置時放 `site.today` 的 `pickOnThisDay`）、最下方 `c-home__play`（`playCard`）、`eggNode`（hidden 的 `data-egg-*` 設定節點）。`meta.scripts` 只在有小卡或彩蛋時加 `interactives-home.js`；都關著 ⇒ HTML 與以前相同 |
+| /play/ | `src/templates/public/play.mjs`：`pages(site)` 永遠有 `/play/`，加每個開著、有頁面、放在 `play-hub` 的模組（只有中文）。模組頁內嵌 `application/json` 資料＋`<details>` 純文字版（`data-*-fallback`）；`play.js` 載入後藏純文字版、換成互動。`liveQuestions` 只留 `basedOn` 在線上的題。`itemPath`／`pathOf`／`frontPath`：`/play/<slug>/`，彩蛋 `/`（`emit-seo` 視為沒有頁面） |
+| 前端 | `src/client/play.js`（測驗：選項洗牌、焦點移到新題、`aria-live`；模擬：`role="meter"`、結局比對 `when`；歷史：依瀏覽器日期在 DOM 重挑）、`src/client/interactives-home.js`（小卡抓 JSON 重挑；彩蛋 brand-taps 3 秒內 N 下／keys 序列不在輸入框、`role="dialog" aria-modal`、Esc、焦點還原、`window.__cdcEgg` 供測試）。都不用 innerHTML、沒有動畫 |
+| 輸出 | `emitInteractives(site, writeOut)` → `v1/interactives/<slug>.json`（只有顯示中的 on-this-day）；樣式在 `components.css` 末段 `.c-play*`／`.c-otd*`／`.c-quiz*`／`.c-sim*`／`.c-egg*`；頁尾「服務」欄加 `/play/`（`play.title` 七語） |
+| 後台 | `/admin/interactives/`（`src/templates/admin/interactives.mjs`、`src/client/admin/interactives.js`）：清單＋開關／檔期／位置／說明表單，只改這四欄；`initPublishGateway`（`contentVersion` 版本碼、`reloadLatest` 以最新版為底套回四欄）；閘道 `TYPE_DIR.interactive = 'interactives'`；NAV「互動與彩蛋」 |
+| 車道 | `lanes.json` 快車道 `types` 加 `interactive`；`lanes.mjs` `DIR_TYPE.interactives`；上線後 24 小時內公關室複核 |
+| 測試 | `tests/round62-interactives.test.mjs`（列入 `test:content`）；`scripts/a11y.mjs` 代表頁加 `/play/`、三個模組頁、後台開關頁 |
+
+**教訓：** 「好玩的東西」也做成內容而不是程式——開關、檔期、緊急關閉、外語不出現、依據下架就隱藏，這五條先寫成建置判斷，放置位置才敢放進首頁。原型產生的歷史條目與題目一律標「待確認」／「示範內容」，不假裝已核對。

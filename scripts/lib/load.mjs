@@ -77,6 +77,8 @@ export function loadSite(config) {
     tenders: readDirJSON(path.join(CONTENT, 'tenders')),
     // 第六十輪（Issue #127）：節慶主題（公關室；有生效區間的頁首裝飾，不是頁面：不進索引、sitemap、目錄。scripts/lib/theme.mjs）
     themes: readDirJSON(path.join(CONTENT, 'themes')),
+    // 第六十二輪：互動模組（彩蛋、歷史上的今天、兒童測驗、決策模擬；有 enabled 開關與選填檔期。scripts/lib/interactives.mjs）
+    interactives: readDirJSON(path.join(CONTENT, 'interactives')),
   };
   for (const list of Object.values(collections)) for (const item of list) item.sourceHash = sourceHashOf(item);
 

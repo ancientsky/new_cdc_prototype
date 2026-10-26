@@ -13,7 +13,7 @@
     "build": "node scripts/build.mjs",
     "check": "node scripts/build.mjs --check",
     "test": "node --test --import ./tests/pin-env.mjs tests/*.test.mjs",
-    "test:content": "node --test --import ./tests/pin-env.mjs tests/api.test.mjs tests/assets.test.mjs tests/governance.test.mjs tests/governance-r2.test.mjs tests/intl-epidemic.test.mjs tests/jobs.test.mjs tests/jsonld.test.mjs tests/lanes.test.mjs tests/links.test.mjs tests/migration.test.mjs tests/migration-scale.test.mjs tests/round25-dates.test.mjs tests/round30-pii.test.mjs tests/round33-consistency.test.mjs tests/round44-leadership.test.mjs tests/round49-challenge.test.mjs tests/seo.test.mjs tests/sourcelang.test.mjs tests/travel.test.mjs tests/travel-data.test.mjs tests/units.test.mjs",
+    "test:content": "node --test --import ./tests/pin-env.mjs tests/api.test.mjs tests/assets.test.mjs tests/governance.test.mjs tests/governance-r2.test.mjs tests/intl-epidemic.test.mjs tests/jobs.test.mjs tests/jsonld.test.mjs tests/lanes.test.mjs tests/links.test.mjs tests/migration.test.mjs tests/migration-scale.test.mjs tests/round25-dates.test.mjs tests/round30-pii.test.mjs tests/round33-consistency.test.mjs tests/round44-leadership.test.mjs tests/round49-challenge.test.mjs tests/round62-interactives.test.mjs tests/seo.test.mjs tests/sourcelang.test.mjs tests/travel.test.mjs tests/travel-data.test.mjs tests/units.test.mjs",
     "eval": "node eval/run-eval.mjs",
     "dev": "node scripts/build.mjs && node scripts/serve.mjs",
     "gateway:pull": "node scripts/gateway-pull.mjs",

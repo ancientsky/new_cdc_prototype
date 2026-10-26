@@ -232,6 +232,7 @@ export const DIR_TYPE = {
   banners: 'banner', pages: 'page', media: 'media', topics: 'topic', services: 'service', publications: 'publication', labtests: 'labtest',
   research: 'research', jobs: 'job', tenders: 'tender', migration: 'migration', situation: 'situation', articles: 'article',
   themes: 'theme', // 第六十輪（Issue #127）：節慶主題，公關室快車道
+  interactives: 'interactive', // 第六十二輪：互動模組（彩蛋等），快車道、各權責單位
 };
 
 const readJSONSafe = (p) => { try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return null; } };
