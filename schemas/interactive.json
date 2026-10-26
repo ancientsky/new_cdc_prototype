@@ -19,8 +19,8 @@
       "description": "interactive.<slug>；slug 成為 /play/<slug>/ 的網址與後台開關的名稱"
     },
     "kind": {
-      "enum": ["on-this-day", "kids-quiz", "policy-sim", "easter-egg"],
-      "description": "模組種類（程式只認這四種；新種類要先寫程式與測試，不是加內容就會出現）"
+      "enum": ["on-this-day", "kids-quiz", "quiz", "policy-sim", "easter-egg"],
+      "description": "模組種類（程式只認這五種；新種類要先寫程式與測試，不是加內容就會出現）。quiz 與 kids-quiz 同一套題目格式與互動，差別只在對象（一般民眾／兒童）與後台標籤"
     },
     "enabled": {
       "type": "boolean",
@@ -72,7 +72,7 @@
     },
     "questions": {
       "type": "array",
-      "description": "kids-quiz：選擇題。每題綁 basedOn（既有疾病頁／Q&A 的 id）；來源不在線上時該題自動隱藏",
+      "description": "kids-quiz／quiz：選擇題。每題綁 basedOn（既有疾病頁／Q&A 的 id）；來源不在線上時該題自動隱藏",
       "items": {
         "type": "object",
         "required": ["q", "choices", "answer", "explain", "basedOn"],

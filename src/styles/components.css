@@ -1320,7 +1320,7 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .c-dmcard__kept{margin:0 0 var(--sp-2);padding:var(--sp-1) var(--sp-3);background:var(--warn-bg);color:var(--warn);border-radius:var(--radius-sm);font-size:var(--fs-sm)}
 
 /* ───── 第六十二輪：互動與彩蛋（/play/、首頁「歷史上的今天」小卡、「互動與遊戲」、站名圖示彩蛋）。只加新類別，不改既有元件 ───── */
-.c-playgrid{list-style:none;margin:0 0 var(--sp-5);padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-3)}
+.c-playgrid{list-style:none;margin:0 0 var(--sp-5);padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--sp-3)}
 .c-playcard{border:1px solid var(--line);border-radius:var(--radius);background:#fff;transition:border-color .15s,box-shadow .15s}
 .c-playcard:hover,.c-playcard:focus-within{border-color:var(--green-700);box-shadow:var(--shadow)}
 .c-playcard__a{display:flex;gap:var(--sp-3);align-items:flex-start;padding:var(--sp-4);text-decoration:none;color:var(--ink);height:100%}

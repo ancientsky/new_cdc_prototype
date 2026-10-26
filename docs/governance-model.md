@@ -71,7 +71,7 @@
 | 型別（路徑） | 權責單位（固定） | 必填專屬欄位 | 其他重要欄位 | 治理重點 |
 | --- | --- | --- | --- | --- |
 | `theme` 節慶主題（沒有頁面；只影響頁首） | `unit.pr` 公關室 | `publishAt`（開始，含）、`unpublishAt`（結束，不含）、`tokens`（只准 `--theme-header-bg`、`--theme-accent`、`--theme-accent-2`，值為 `#rgb`／`#rrggbb`） | `occasion`、`decoration.svg`（≤ 50 KB、無腳本／外部參照／動畫） | 規則 28；快車道；不進白名單、索引、sitemap、`v1/catalog.json` |
-| `interactive` 互動模組（第六十二輪：歷史上的今天、兒童衛教小測驗、防疫決策模擬、首頁彩蛋） | 各權責單位（示範：企劃組、公關室、急性傳染病組） | `kind`、`enabled`（開關）、`placements`（位置白名單） | `publishAt`／`unpublishAt`（檔期）、`disclaimer`、各 kind 的 `entries`／`questions`／`scenario`／`egg` | 規則 29；快車道；不進白名單、索引；彩蛋沒有頁面，其餘 `/play/<slug>/`；`docs/interactives.md` |
+| `interactive` 互動模組（第六十二輪：歷史上的今天、兒童衛教小測驗、防疫決策模擬、首頁彩蛋；第六十四輪：一般民眾衛教測驗 `quiz`、抗生素抗藥性模擬、愛滋迷思測驗） | 各權責單位（示範：企劃組、公關室、急性傳染病組、慢性傳染病組、感染管制及生物安全組） | `kind`、`enabled`（開關）、`placements`（位置白名單） | `publishAt`／`unpublishAt`（檔期）、`disclaimer`、各 kind 的 `entries`／`questions`／`scenario`／`egg` | 規則 29；快車道；不進白名單、索引；彩蛋沒有頁面，其餘 `/play/<slug>/`；`docs/interactives.md` |
 
 `reviewPeriodMonths` 預設 0（事件型）。態勢層（`content/situation/current.json`）同輪新增選填 `alertLevel`（`normal`｜`elevated`｜`emergency`，疫情中心人工發布）。
 
@@ -130,7 +130,7 @@
 第六十輪新增規則（節慶主題，Issue #127）：
 
 28. **節慶主題只動裝飾層、到期自動下架、疫情緊急不套用**：生效區間 `[publishAt, unpublishAt)` 以真實時間判斷（與規則 26 相同）；`gov.themeStatus` ∈ `upcoming`／`live`／`ended`。建置閘門：`tokens` 只能是白名單內的裝飾 token、值必須是色碼；`--theme-header-bg` 與疊在上面的文字色（`--ink`、`--ink-3`）對比 ≥ 4.5:1；`decoration.svg` ≤ 50 KB 且不含腳本、事件屬性、外部參照、動畫；已發布主題的區間不得重疊。`site.theme`（`themeState`）：恰好一個生效 ⇒ 套用（`<html data-theme>` ＋ `assets/styles/theme-<slug>.css`）；態勢層 `alertLevel: "emergency"` ⇒ 不套用並記錄原因（等級由疫情中心人工發布，引擎不推論）。
-29. **互動模組三層顯示條件、位置白名單、依據不在線上就隱藏**（第六十二輪）：顯示＝`status: published` 且不在排程中 ∧ `enabled: true` ∧ 在檔期內（`[publishAt, unpublishAt)`，沒填＝一直，與規則 26／28 同一套真實時間）；態勢層 `alertLevel: "emergency"` ⇒ 全部不顯示（`site.interactives.reason = 'emergency'`）。`gov.interactiveStatus` ∈ `on`／`off`／`upcoming`／`ended`／`draft`／`archived`。建置閘門：`placements` 只能是該 `kind` 允許的位置；`kids-quiz` 每題 `basedOn` 必須存在、`answer` 在選項範圍內；`policy-sim` 的效果與結局只能用 `meters` 的 key、要有預設結局；`on-this-day` 每條要有 `source`，`verified: true` 須填 `verifiedBy`。前台：`basedOn` 不在線上的題自動隱藏；未核對的歷史條目標「待確認」；語言沒有譯文的模組不顯示。
+29. **互動模組三層顯示條件、位置白名單、依據不在線上就隱藏**（第六十二輪）：顯示＝`status: published` 且不在排程中 ∧ `enabled: true` ∧ 在檔期內（`[publishAt, unpublishAt)`，沒填＝一直，與規則 26／28 同一套真實時間）；態勢層 `alertLevel: "emergency"` ⇒ 全部不顯示（`site.interactives.reason = 'emergency'`）。`gov.interactiveStatus` ∈ `on`／`off`／`upcoming`／`ended`／`draft`／`archived`。建置閘門：`placements` 只能是該 `kind` 允許的位置；`kids-quiz`／`quiz`（第六十四輪：一般民眾衛教測驗，同一套規則）每題 `basedOn` 必須存在、`answer` 在選項範圍內；`policy-sim` 的效果與結局只能用 `meters` 的 key、要有預設結局；`on-this-day` 每條要有 `source`，`verified: true` 須填 `verifiedBy`。前台：`basedOn` 不在線上的題自動隱藏；未核對的歷史條目標「待確認」；語言沒有譯文的模組不顯示。
 
 ## 3. 白名單政策
 

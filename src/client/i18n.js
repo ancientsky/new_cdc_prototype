@@ -2240,6 +2240,7 @@ const ROWS_R62 = {
   'quiz.correct': ['答對了！', 'Correct!'],
   'quiz.wrong': ['再想想。正確答案是：{a}', 'Not quite. The answer is: {a}'],
   'quiz.done.high': ['太棒了，你是防疫小勇士！', 'Brilliant! You are a disease-prevention hero.'],
+  'quiz.done.adult.high': ['答對很多——迷思都破解了，分享給身邊的人吧。', 'Excellent — myths busted. Share it with someone.'],
   'quiz.done.mid': ['很不錯，再看看答錯的那幾題。', 'Nice work. Have another look at the ones you missed.'],
   'quiz.done.low': ['沒關係，點每題下面的「依據」再看一次。', 'No worries. Open the “Based on” link under each question.'],
   'quiz.q': ['第 {i} 題', 'Question {i}'],

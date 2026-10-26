@@ -9,7 +9,7 @@ import { loadSite, ROOT } from '../scripts/lib/load.mjs';
 import { validateSite } from '../scripts/lib/validate.mjs';
 import { makeCtx } from '../scripts/lib/pages.mjs';
 import { classifyFile, publishAtMs } from '../scripts/lib/lanes.mjs';
-import { KINDS, PLACEMENTS, interactiveProblems, interactivesState, interactiveStatus, pickOnThisDay, liveQuestions, emitInteractives, interactivePath, isInteractiveOn } from '../scripts/lib/interactives.mjs';
+import { KINDS, PLACEMENTS, isQuizKind, interactiveProblems, interactivesState, interactiveStatus, pickOnThisDay, liveQuestions, emitInteractives, interactivePath, isInteractiveOn } from '../scripts/lib/interactives.mjs';
 import * as home from '../src/templates/public/home.mjs';
 import * as play from '../src/templates/public/play.mjs';
 import * as admin from '../src/templates/admin/interactives.mjs';
@@ -17,7 +17,8 @@ import { layout } from '../src/templates/layout.mjs';
 
 const readJSON = (rel) => JSON.parse(fs.readFileSync(path.join(ROOT, rel), 'utf8'));
 const str = (x) => String(x);
-const IDS = ['interactive.easter-egg-handwash', 'interactive.kids-quiz', 'interactive.on-this-day', 'interactive.policy-sim-dengue'];
+const IDS = ['interactive.easter-egg-handwash', 'interactive.hiv-myths', 'interactive.kids-quiz', 'interactive.on-this-day', 'interactive.policy-sim-antibiotics', 'interactive.policy-sim-dengue'];
+const PAGES = ['/play/', '/play/hiv-myths/', '/play/kids-quiz/', '/play/on-this-day/', '/play/policy-sim-antibiotics/', '/play/policy-sim-dengue/'];
 
 function mkIx(over = {}) {
   return mk({
@@ -27,7 +28,7 @@ function mkIx(over = {}) {
 }
 const render = (site, mod, pathStr, props) => str(mod.render(makeCtx(site, 'zh-TW', { path: pathStr, alternates: ['zh-TW'] }), props));
 
-test('schema：四個示範模組通過；型別、審閱週期、車道、後台標籤都登記了；不進 AI 白名單', () => {
+test('schema：六個示範模組通過；型別、審閱週期、車道、後台標籤都登記了；不進 AI 白名單', () => {
   const site = loadSite(config);
   assert.deepEqual(site.collections.interactives.map((i) => i.id).sort(), IDS);
   assert.deepEqual(validateSite(site).filter((e) => e.includes('content/interactives/')), []);
@@ -154,7 +155,7 @@ test('首頁（中文）：右側欄小卡、最下方「互動與遊戲」、�
 test('/play/：專頁列出有頁面且開著的模組；模組頁有純文字版與資料 JSON、依據連結、示範標示；彩蛋沒有頁面；頁尾有連結', () => {
   const site = govern('2026-10-25');
   const pages = play.pages(site);
-  assert.deepEqual(pages.map((p) => p.path).sort(), ['/play/', '/play/kids-quiz/', '/play/on-this-day/', '/play/policy-sim-dengue/']);
+  assert.deepEqual(pages.map((p) => p.path).sort(), PAGES);
   assert.ok(pages.every((p) => !p.lang), '模組頁目前只有中文');
   assert.equal(interactivePath(site.byId.get('interactive.easter-egg-handwash')), '/');
   const hub = render(site, play, '/play/', {});
@@ -197,14 +198,15 @@ test('v1/interactives/<slug>.json：只輸出顯示中的「歷史上的今天�
   assert.equal(emitInteractives(off, () => {}), 0);
 });
 
-test('後台 /admin/interactives/：清單列出四個模組與狀態、嵌入資料不含建置欄位、有開關表單與送審面板；導覽列有入口', () => {
+test('後台 /admin/interactives/：清單列出六個模組與狀態、嵌入資料不含建置欄位、有開關表單與送審面板；導覽列有入口', () => {
   const site = govern('2026-10-25');
   const h = render(site, admin, '/admin/interactives/');
   for (const id of IDS) assert.ok(h.includes(`data-ix-row="${id}"`), id);
-  assert.ok(h.includes('目前顯示 4 個模組') && h.includes('開啟中・顯示中'));
+  assert.ok(h.includes('目前顯示 6 個模組') && h.includes('開啟中・顯示中'));
   assert.ok(h.includes('條待確認'), '歷史條目待確認數');
   const data = JSON.parse(h.match(/<script type="application\/json" id="adm-ix-data">([\s\S]*?)<\/script>/)[1]);
-  assert.equal(data.items.length, 4);
+  assert.equal(data.items.length, 6);
+  assert.ok(data.items.some((r) => r.item.kind === 'quiz' && /12 題/.test(r.extra)), '一般民眾測驗的題數摘要與兒童測驗同一套');
   for (const r of data.items) { assert.ok(!('gov' in r.item) && !('__file' in r.item) && !('sourceHash' in r.item)); assert.equal(r.status, 'on'); }
   assert.ok(h.includes('id="ix-enabled"') && h.includes('id="gw-panel"') && h.includes('id="ix-from"'));
   const em = govern('2026-10-25', (s) => { s.situation.alertLevel = 'emergency'; });
@@ -222,4 +224,37 @@ test('前端：play.js 與 interactives-home.js 存在、不塞 innerHTML、只�
   assert.match(hme, /aria-modal/);
   assert.match(p, /role: 'meter'/);
   assert.ok(!/animation|transition/.test(fs.readFileSync(path.join(ROOT, 'src/styles/components.css'), 'utf8').split('第六十二輪')[1].replace(/transition:border-color \.15s,box-shadow \.15s/g, '')), '互動元件沒有動畫');
+});
+
+test('第六十四輪：quiz（一般民眾衛教測驗）與 kids-quiz 共用題目格式、驗證與互動；愛滋迷思測驗與抗生素模擬綁站內依據', () => {
+  assert.ok(isQuizKind('quiz') && isQuizKind('kids-quiz') && !isQuizKind('policy-sim'));
+  assert.deepEqual(KINDS.quiz.placements, KINDS['kids-quiz'].placements);
+  assert.ok(readJSON('schemas/interactive.json').properties.kind.enum.includes('quiz'));
+  const site = govern('2026-10-25');
+  // quiz 的驗證與 kids-quiz 相同：答案序號、重複選項、basedOn
+  const p = interactiveProblems(mkIx({ kind: 'quiz', questions: [{ q: '測試題目？', choices: ['甲', '甲'], answer: 5, explain: '測試說明。', basedOn: 'faq.nope' }] }), site);
+  assert.ok(p.some((m) => m.includes('超出選項範圍')) && p.some((m) => m.includes('選項重複')) && p.some((m) => m.includes('basedOn faq.nope 不存在')), p.join('；'));
+  assert.deepEqual(interactiveProblems(mkIx({ kind: 'quiz' }), site), []);
+  // 愛滋迷思：每題依據都是 HIV 相關且在線上；真的／假的題至少佔多數
+  const hiv = site.byId.get('interactive.hiv-myths');
+  assert.equal(hiv.kind, 'quiz'); assert.equal(hiv.owner, 'unit.chronic-infectious');
+  assert.equal(liveQuestions(site, hiv).length, hiv.questions.length);
+  for (const q of hiv.questions) assert.match(q.basedOn, /^(disease\.hiv|faq\.hiv-|topic\.(prep|anonymous-testing|sti-resources))/);
+  assert.ok(hiv.questions.filter((q) => q.choices.join() === '真的,假的').length >= 8);
+  // 抗生素模擬：每個選項都有依據、每回合三個選項、量表三個、預設結局
+  const amr = site.byId.get('interactive.policy-sim-antibiotics');
+  assert.equal(amr.owner, 'unit.infection-control');
+  assert.deepEqual(interactiveProblems(amr, site), []);
+  assert.equal(amr.scenario.rounds.length, 4);
+  for (const r of amr.scenario.rounds) for (const o of r.options) assert.ok(site.byId.has(o.basedOn), o.basedOn);
+  // 頁面：quiz 用同一個測驗模板與腳本；首頁「互動與遊戲」列出兩個新模組
+  const page = render(site, play, '/play/hiv-myths/', { id: 'interactive.hiv-myths' });
+  assert.match(page, /data-play-kind="quiz"/); assert.match(page, /data-quiz-data/);
+  assert.ok((page.match(/<details class="c-quiz__q">/g) ?? []).length === hiv.questions.length);
+  assert.ok(page.includes('衛教測驗（一般民眾）') && page.includes('/diseases/hiv/') && page.includes('/faq/hiv-pep/'));
+  const sim = render(site, play, '/play/policy-sim-antibiotics/', { id: 'interactive.policy-sim-antibiotics' });
+  assert.ok(sim.includes('/topics/amr-one-health/') && sim.includes('/faq/mdr-tb/'));
+  const h = render(site, home, '/');
+  assert.ok(h.includes('/play/hiv-myths/') && h.includes('/play/policy-sim-antibiotics/'));
+  assert.match(fs.readFileSync(path.join(ROOT, 'src/client/play.js'), 'utf8'), /kind === 'kids-quiz' \|\| kind === 'quiz'/);
 });

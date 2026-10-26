@@ -2687,7 +2687,7 @@ Yulun 問怎麼做彩蛋與民眾覺得好玩的互動（歷史上的今天、�
 
 | 機制 | 契約 |
 | --- | --- |
-| 型別 | `type: "interactive"`，`schemas/interactive.json`（`allOf` `_common.json`）；`id` `^interactive\.[a-z0-9][a-z0-9-]*$`；必填 `kind`（`on-this-day`｜`kids-quiz`｜`policy-sim`｜`easter-egg`）、`enabled`、`placements`；選填 `publishAt`／`unpublishAt`、`disclaimer`；各 kind 的區塊 `entries[]`／`questions[]`／`scenario`／`egg`。`load.mjs` → `site.collections.interactives`；`validate.mjs` `typeToSchema.interactive`；`review-periods.json` `interactive: 6`；不在 AI 白名單、不進答案索引 |
+| 型別 | `type: "interactive"`，`schemas/interactive.json`（`allOf` `_common.json`）；`id` `^interactive\.[a-z0-9][a-z0-9-]*$`；必填 `kind`（`on-this-day`｜`kids-quiz`｜`quiz`（第六十四輪，一般民眾衛教測驗，與 `kids-quiz` 共用 `isQuizKind` 的驗證、模板與腳本）｜`policy-sim`｜`easter-egg`）、`enabled`、`placements`；選填 `publishAt`／`unpublishAt`、`disclaimer`；各 kind 的區塊 `entries[]`／`questions[]`／`scenario`／`egg`。`load.mjs` → `site.collections.interactives`；`validate.mjs` `typeToSchema.interactive`；`review-periods.json` `interactive: 6`；不在 AI 白名單、不進答案索引 |
 | 放置位置 | `PLACEMENTS`：`home-side`（首頁右側欄澄清卡下方，只給 on-this-day）、`home-bottom`（首頁最下方「互動與遊戲」）、`play-hub`（`/play/` 與 `/play/<slug>/`）、`brand`（站名圖示，只給 easter-egg）。`KINDS[kind].placements` 白名單，`interactiveProblems` 擋 |
 | 顯示判斷 | `scripts/lib/interactives.mjs` `isInteractiveOn(item, now)`＝published 且不在排程中（`isPublic`）∧ `enabled` ∧ 在檔期內（`windowOf`，沒填＝一直）；`interactivesState(site, now)` → `{ list, reason: active｜none｜emergency, alertLevel, message }`，`alertLevel === 'emergency'` ⇒ `list: []`。`applyGovernance` 寫 `site.interactives` 與每筆 `gov.interactiveStatus`（on／off／upcoming／ended／draft／archived）；build 記錄 message |
 | 驗證 | `interactiveProblems(item, site)`：位置白名單、檔期先後、on-this-day 的日期有效與 `verified:true` 須有 `verifiedBy`、kids-quiz 的 `answer` 在範圍內／選項不重複／`basedOn` 存在、policy-sim 的 `effects` 與 `endings.when` 只用 `meters` 的 key、要有一個沒有 `when` 的預設結局 |
@@ -2700,6 +2700,10 @@ Yulun 問怎麼做彩蛋與民眾覺得好玩的互動（歷史上的今天、�
 | 測試 | `tests/round62-interactives.test.mjs`（列入 `test:content`）；`scripts/a11y.mjs` 代表頁加 `/play/`、三個模組頁、後台開關頁 |
 
 **教訓：** 「好玩的東西」也做成內容而不是程式——開關、檔期、緊急關閉、外語不出現、依據下架就隱藏，這五條先寫成建置判斷，放置位置才敢放進首頁。原型產生的歷史條目與題目一律標「待確認」／「示範內容」，不假裝已核對。
+### 66.1 第六十四輪補充：抗生素抗藥性與愛滋防治模組（2026-10-26）
+
+再加兩個模組，程式只多一個 `kind`：`quiz`（一般民眾衛教測驗，`KINDS.quiz` 位置同 `kids-quiz`；`isQuizKind(kind)` 讓 `interactiveProblems`、`play.mjs`、`play.js`、後台摘要共用同一段；滿分結語改用 `quiz.done.adult.high`）。內容：`content/interactives/hiv-myths.json`（慢性傳染病組，12 題真的／假的，依據 `disease.hiv`、`faq.hiv-pep`、`faq.hiv-test-where`、`topic.prep`、`topic.anonymous-testing`）、`content/interactives/policy-sim-antibiotics.json`（感染管制及生物安全組，四回合三量表，依據 `topic.amr-one-health`、`faq.mdr-tb`、`disease.influenza`、`faq.flu-vs-cold`）。`.c-playgrid` 改 `auto-fill`（首頁最下方四張卡不再 3＋1）。測試加在 `tests/round62-interactives.test.mjs`；axe 代表頁加 `/play/hiv-myths/`。
+
 ## 67. 第六十三輪：ARTEX 之後的三道防線——產物白名單、速率限制與探測偵測、資安測試流程（2026-10-26）
 
 Issue #140、#141、#142（grokbot 第五批）。取捨在 architecture-decisions §49；做法在 deploy.md §30–§32、docs/attack-surface.md、docs/abuse-protection.md、docs/security-testing.md。

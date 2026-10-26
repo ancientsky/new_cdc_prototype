@@ -2,8 +2,8 @@
 // 第六十二輪：互動模組（content/interactives/<slug>.json）——彩蛋與民眾互動是「有開關、有權責、有檔期的內容」，不是程式變更。
 //
 // 契約（細節與理由見 docs/interactives.md、ARCHITECTURE 64、architecture-decisions §47）：
-//   - 四種 kind：on-this-day（歷史上的今天）、kids-quiz（兒童衛教小測驗）、policy-sim（防疫決策模擬）、easter-egg（首頁彩蛋）。
-//     程式只認這四種；新種類要先寫程式與測試。
+//   - 五種 kind：on-this-day（歷史上的今天）、kids-quiz（兒童衛教小測驗）、quiz（一般民眾衛教測驗，第六十四輪：同一套題目格式，對象與後台標籤不同）、
+//     policy-sim（防疫決策模擬）、easter-egg（首頁彩蛋）。程式只認這五種；新種類要先寫程式與測試。
 //   - 顯示條件（activeInteractives）：status=published、不在排程中、enabled=true、在檔期內（選填的 publishAt／unpublishAt，與節慶主題同一套真實時間判斷）、
 //     而且疫情中心沒有發布 alertLevel=emergency。緊急時全部關閉，與節慶主題同一條規則（疫情嚴峻時網站不該在玩）。
 //   - 放置位置（placements）是白名單：home-side 只給 on-this-day、brand 只給 easter-egg；版面只在這幾個「空位」長出卡片，其他地方不動。
@@ -16,6 +16,7 @@ import { publishAtMs, nowOf, taipeiTime, isPublic } from './lanes.mjs';
 export const KINDS = {
   'on-this-day': { label: '歷史上的今天', placements: ['home-side', 'play-hub'] },
   'kids-quiz': { label: '兒童衛教小測驗', placements: ['home-bottom', 'play-hub'] },
+  quiz: { label: '衛教測驗（一般民眾）', placements: ['home-bottom', 'play-hub'] },
   'policy-sim': { label: '防疫決策模擬', placements: ['home-bottom', 'play-hub'] },
   'easter-egg': { label: '首頁彩蛋', placements: ['brand'] },
 };
@@ -25,6 +26,8 @@ export const PLACEMENTS = {
   'play-hub': '/play/ 專頁',
   brand: '站名圖示（彩蛋）',
 };
+/** 兩種測驗共用題目格式、驗證與互動 */
+export const isQuizKind = (kind) => kind === 'kids-quiz' || kind === 'quiz';
 /** 彩蛋預設值 */
 export const EGG_DEFAULTS = { taps: 5, keys: '1922' };
 
@@ -70,8 +73,8 @@ export function interactiveProblems(item, site = {}) {
       if (e.verified && !e.verifiedBy) out.push(`entries[${i}] verified:true 但沒填 verifiedBy（誰核對的）`);
     }
   }
-  if (item.kind === 'kids-quiz') {
-    if (!item.questions?.length) out.push('kids-quiz 必須有 questions（至少一題）');
+  if (isQuizKind(item.kind)) {
+    if (!item.questions?.length) out.push(`${item.kind} 必須有 questions（至少一題）`);
     for (const [i, q] of (item.questions ?? []).entries()) {
       if (!(q.answer >= 0 && q.answer < (q.choices?.length ?? 0))) out.push(`questions[${i}] answer ${q.answer} 超出選項範圍（0–${(q.choices?.length ?? 1) - 1}）`);
       if (new Set(q.choices ?? []).size !== (q.choices?.length ?? 0)) out.push(`questions[${i}] 選項重複`);

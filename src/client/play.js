@@ -1,4 +1,4 @@
-// /play/<slug>/ 的互動（第六十二輪）：兒童衛教小測驗、防疫決策模擬、歷史上的今天「真正的今天」。
+// /play/<slug>/ 的互動（第六十二輪）：兒童衛教小測驗（與一般民眾衛教測驗共用）、防疫決策模擬、歷史上的今天「真正的今天」。
 // 原則：
 //   - 漸進增強：頁面已有純文字版（<details>）；本檔載入後才把它藏起來、換成一題一題／一回合一回合的互動。沒有 JS 一樣能讀完。
 //   - 所有文字用 textContent／建節點，不把內容塞進 innerHTML（內容雖來自站內 JSON，仍照全站規則）。
@@ -15,7 +15,7 @@ const readJson = (sel, root = document) => { try { return JSON.parse(root.queryS
 const basedOn = (b) => (b?.href ? el('a', { class: 'c-play__based', href: b.href, text: `${T('play.basedOn')}：${b.title}` }) : null);
 
 /* ───── 兒童衛教小測驗 ───── */
-function initQuiz(root) {
+function initQuiz(root, { kids = true } = {}) {
   const data = readJson('[data-quiz-data]', root);
   const stage = root.querySelector('[data-quiz-stage]');
   const fallback = root.querySelector('[data-quiz-fallback]');
@@ -29,7 +29,8 @@ function initQuiz(root) {
     stage.replaceChildren();
     if (idx >= data.length) {
       const ratio = score / data.length;
-      const msg = ratio >= 0.8 ? T('quiz.done.high') : ratio >= 0.5 ? T('quiz.done.mid') : T('quiz.done.low');
+      // 一般民眾版的滿分語氣不是「防疫小勇士」
+      const msg = ratio >= 0.8 ? (kids ? T('quiz.done.high') : T('quiz.done.adult.high')) : ratio >= 0.5 ? T('quiz.done.mid') : T('quiz.done.low');
       const h = el('h2', { class: 'c-quiz__h', tabindex: '-1', text: T('quiz.score', { n: score, total: data.length }) });
       stage.append(h, el('p', { class: 'c-quiz__msg', text: msg }), el('button', { type: 'button', class: 'c-btn', text: T('play.again') }));
       stage.querySelector('button').addEventListener('click', () => { idx = 0; score = 0; show(); });
@@ -142,7 +143,7 @@ function initOtd(root) {
 const root = document.querySelector('[data-play-kind]');
 if (root) {
   const kind = root.dataset.playKind;
-  if (kind === 'kids-quiz') initQuiz(root);
+  if (kind === 'kids-quiz' || kind === 'quiz') initQuiz(root, { kids: kind === 'kids-quiz' });
   else if (kind === 'policy-sim') initSim(root);
   else if (kind === 'on-this-day') initOtd(root);
 }

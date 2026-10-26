@@ -1,0 +1,48 @@
+{
+  "id": "interactive.hiv-myths",
+  "type": "interactive",
+  "kind": "quiz",
+  "title": "愛滋真的假的？12 題破解迷思",
+  "owner": "unit.chronic-infectious",
+  "publishedAt": "2026-10-26",
+  "reviewedAt": "2026-10-26",
+  "reviewPeriodMonths": 6,
+  "status": "published",
+  "enabled": true,
+  "placements": ["home-bottom", "play-hub"],
+  "audience": ["public"],
+  "sensitivity": "public",
+  "license": "OGDL-1.0",
+  "languages": {
+    "zh-TW": { "status": "source" },
+    "en": { "status": "none" },
+    "ja": { "status": "none" },
+    "tl": { "status": "none" },
+    "vi": { "status": "none" },
+    "id": { "status": "none" },
+    "th": { "status": "none" }
+  },
+  "summary": "握手會不會傳染？篩檢要不要健保卡？U=U 是什麼？12 題「真的／假的」帶你破解愛滋迷思，每一題都連回站內的 HIV 疾病頁、PrEP／PEP 與匿名篩檢說明。",
+  "note": "示範內容：題目由原型依站內 HIV 疾病頁、PrEP／PEP 問答與匿名篩檢專區改寫，待慢性傳染病組確認措辭。",
+  "disclaimer": "題目依站內 HIV 疾病頁與常見問答改寫；每題都標出依據的頁面。想知道自己的狀態，唯一的方法是篩檢。",
+  "questions": [
+    { "q": "和 HIV 感染者握手、擁抱、一起吃飯、共用馬桶會被傳染。", "choices": ["真的", "假的"], "answer": 1, "explain": "假的。HIV 只經由性行為、血液（共用針具、輸血）與母子垂直三種途徑傳染；握手、擁抱、共餐、共用馬桶都不會。", "basedOn": "disease.hiv", "emoji": "🤝" },
+    { "q": "被叮過感染者的蚊子咬到，也可能感染 HIV。", "choices": ["真的", "假的"], "answer": 1, "explain": "假的。蚊蟲叮咬不會傳染 HIV；HIV 不像登革熱病毒，無法在蚊子體內存活並傳給下一個人。", "basedOn": "disease.hiv", "emoji": "🦟" },
+    { "q": "感染者規則服藥、血中病毒量測不到，就不會經由性行為傳染給伴侶。", "choices": ["真的", "假的"], "answer": 0, "explain": "真的。這叫 U=U（Undetectable = Untransmittable，測不到＝不具傳染力）：持續服用抗病毒藥物讓病毒量測不到，就不會經性行為傳給他人。", "basedOn": "disease.hiv", "emoji": "💊" },
+    { "q": "發生沒有保護的性行為之後，如果擔心感染，72 小時內就醫還來得及預防。", "choices": ["真的", "假的"], "answer": 0, "explain": "真的。暴露後 72 小時內（越早越好）到 PEP 指定醫院評估「暴露後預防性投藥」，需連續服藥 28 天並回診追蹤。", "basedOn": "faq.hiv-pep", "emoji": "⏰" },
+    { "q": "暴露後預防性投藥（PEP）要連續吃幾天？", "choices": ["1 天", "7 天", "28 天", "一輩子"], "answer": 2, "explain": "PEP 需連續服藥 28 天，並依醫囑回診追蹤檢驗；它是緊急措施，不是常態的預防方法。", "basedOn": "faq.hiv-pep", "emoji": "📅" },
+    { "q": "PrEP 是感染 HIV 之後才開始吃的藥。", "choices": ["真的", "假的"], "answer": 1, "explain": "假的。PrEP 是在可能暴露 HIV「之前」服用抗病毒藥物，正確使用可大幅降低經性行為感染的風險；開始前要先抽血確認 HIV 陰性。", "basedOn": "topic.prep", "emoji": "🛡️" },
+    { "q": "做匿名篩檢要帶健保卡，而且要登記真實姓名。", "choices": ["真的", "假的"], "answer": 1, "explain": "假的。全國匿名篩檢醫院不需健保卡、不留真實姓名，以代號登記，同時提供諮詢。", "basedOn": "topic.anonymous-testing", "emoji": "🏥" },
+    { "q": "上週有危險行為，今天自我篩檢結果陰性，就可以確定沒有感染。", "choices": ["真的", "假的"], "answer": 1, "explain": "假的。感染後有「空窗期」，依檢驗方法約 2 週到 3 個月；距離可能感染不到 3 個月時陰性不代表沒事，請依說明再篩一次。", "basedOn": "faq.hiv-test-where", "emoji": "🧪" },
+    { "q": "自我篩檢試劑結果陽性，就等於確診。", "choices": ["真的", "假的"], "answer": 1, "explain": "假的。自我篩檢是初篩，陽性要到醫院做確認檢驗；個案管理師會協助轉介，及早治療就能達到 U=U。", "basedOn": "faq.hiv-test-where", "emoji": "✅" },
+    { "q": "感染 HIV 之後一定很快就會有明顯症狀，所以沒症狀就不用篩檢。", "choices": ["真的", "假的"], "answer": 1, "explain": "假的。急性期症狀像感冒，幾週就消失，之後可能長達數年沒有症狀，但病毒持續破壞免疫系統。唯一能確定是否感染的方法是篩檢。", "basedOn": "disease.hiv", "emoji": "🩺" },
+    { "q": "使用保險套時，應該搭配哪一種潤滑液？", "choices": ["水性潤滑液", "凡士林或乳液", "不需要潤滑液"], "answer": 0, "explain": "保險套要全程正確使用，並搭配水性潤滑液；油性產品（凡士林、乳液、嬰兒油）會讓乳膠保險套變脆、容易破。", "basedOn": "disease.hiv", "emoji": "💧" },
+    { "q": "現在已經有可以預防 HIV 的疫苗。", "choices": ["真的", "假的"], "answer": 1, "explain": "假的。目前沒有預防 HIV 的疫苗；預防方法是保險套、PrEP、定期篩檢與不共用針具。感染者可依醫師建議接種 B 型肝炎、肺炎鏈球菌、M痘等疫苗。", "basedOn": "disease.hiv", "emoji": "💉" }
+  ],
+  "postPublishReview": {
+    "status": "done",
+    "reviewedBy": "公關室承辦人",
+    "reviewedAt": "2026-10-26",
+    "note": "示範假設：上線後複核視為已完成（與節慶主題示範檔相同），正式環境由公關室在 24 小時內實際複核"
+  }
+}
