@@ -14,22 +14,34 @@
 // 安全
 //   - 權杖比對用 timingSafeEqual（先各自做 SHA-256，長度不同也不會提早結束）；權杖、Authorization 標頭與本文都不寫進 log 或稽核。
 //   - 每個來源 IP 每分鐘最多 RATE.max 次（含認證失敗的嘗試，擋暴力猜測）；只在記憶體計數。
+//     第六十二輪（Issue #140）：改用共用的 rate-limit.mjs，門檻 30／分鐘；而且在「有沒有設定權杖」與「權杖對不對」之前判斷——
+//     猜權杖的人先碰到 429，每分鐘最多試 30 次；未啟用時也不讓人用 503 的回應來高速確認端點存在。
 //   - 本體超過上限時「讀完再回 413」：中途中斷讀取會毀掉請求串流，客戶端只看到連線被重設（ARCHITECTURE §36、gateway/index.mjs readBody 的註解）。
 //   - 這支端點不吃 cookie、不看 Origin：它不是給瀏覽器用的，認證只靠 Bearer 權杖（因此也沒有 CSRF 問題）。
 import crypto from 'node:crypto';
 import { publishFeed, PublishError } from './intl-epidemic-publish.mjs';
+import { createRateLimiter, clientKey, tooMany } from './rate-limit.mjs';
 
 export const MAX_BODY = 2 * 1024 * 1024;
-export const RATE = { windowMs: 60_000, max: 10 };
+export const RATE = { windowMs: 60_000, max: 30 };
 const PATH = '/api/intl-epidemic';
 const digest = (s) => crypto.createHash('sha256').update(String(s)).digest();
 
 /**
- * @param {{ token?: string, gitProvider?: any, audit?: any, snapshotsDir?: string, now?: () => number, rate?: {windowMs:number,max:number}, today?: string }} [opts]
+ * @param {{ token?: string, gitProvider?: any, audit?: any, snapshotsDir?: string, now?: () => number, rate?: {windowMs:number,max:number} | null, today?: string, trustedProxies?: string[] }} [opts]
  */
-export function createIntlFeedApi({ token = process.env.INTL_FEED_TOKEN, gitProvider, audit, snapshotsDir, now = () => Date.now(), rate = RATE, today } = {}) {
+export function createIntlFeedApi({
+  token = process.env.INTL_FEED_TOKEN,
+  gitProvider,
+  audit,
+  snapshotsDir,
+  now = () => Date.now(),
+  rate = RATE,
+  today,
+  trustedProxies = [],
+} = {}) {
   const secret = typeof token === 'string' && token.trim() ? digest(token.trim()) : null;
-  const hits = new Map(); // ip → [時間戳]
+  const limiter = rate ? createRateLimiter({ ...rate, now }) : null; // ip → 時間戳，只在記憶體
 
   const send = (res, status, body, headers = {}) => {
     res.statusCode = status;
@@ -46,19 +58,6 @@ export function createIntlFeedApi({ token = process.env.INTL_FEED_TOKEN, gitProv
     req.resume();
     return send(res, status, { error, message }, headers);
   };
-
-  function limited(ip) {
-    const t = now();
-    const list = (hits.get(ip) ?? []).filter((x) => t - x < rate.windowMs);
-    if (hits.size > 5000) hits.clear(); // 防止記憶體被灌爆
-    if (list.length >= rate.max) {
-      hits.set(ip, list);
-      return Math.ceil((rate.windowMs - (t - list[0])) / 1000);
-    }
-    list.push(t);
-    hits.set(ip, list);
-    return 0;
-  }
 
   function authorized(req) {
     const m = /^Bearer\s+(\S+)\s*$/i.exec(String(req.headers.authorization ?? ''));
@@ -87,6 +86,11 @@ export function createIntlFeedApi({ token = process.env.INTL_FEED_TOKEN, gitProv
     }
     if (pathname !== PATH) return reject(req, res, 404, 'notfound', '找不到');
     if (method !== 'POST') return reject(req, res, 405, 'method', '請用 POST 送資料', { Allow: 'POST' });
+    // 先限流，再看有沒有啟用、權杖對不對（理由見檔頭）。訊息不說門檻，避免給猜權杖的人調整速度的線索
+    const ip = clientKey(req, { trustedProxies });
+    const r = limiter?.hit(ip);
+    if (r && !r.ok)
+      return tooMany(res, r.retryAfterSec, { req, error: 'rate', headers: { 'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'" } });
     if (!secret)
       return reject(
         req,
@@ -95,9 +99,6 @@ export function createIntlFeedApi({ token = process.env.INTL_FEED_TOKEN, gitProv
         'disabled',
         '推送端點尚未啟用：伺服器沒有設定 INTL_FEED_TOKEN 環境變數。請資訊室設定一組長隨機字串（例：openssl rand -hex 32）後重啟服務，並把同一組交給疫情中心的系統。',
       );
-    const ip = String(req.socket?.remoteAddress ?? '');
-    const wait = limited(ip);
-    if (wait) return reject(req, res, 429, 'rate', `送得太頻繁：每分鐘最多 ${rate.max} 次，請 ${wait} 秒後再試`, { 'Retry-After': String(wait) });
     if (!authorized(req)) {
       audit?.write?.('intl-push-auth', { result: 'denied', detail: { ip } });
       return reject(req, res, 401, 'unauthorized', '權杖不對或沒有帶：請在 Authorization 標頭帶 Bearer <INTL_FEED_TOKEN>', {

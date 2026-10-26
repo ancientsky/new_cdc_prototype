@@ -115,3 +115,9 @@ eval/**/*.mjs
 !scripts/lib/dist-profile.mjs
 !scripts/audit-dist.mjs
 !tests/round62-attack-surface.test.mjs
+
+# 第六十二輪：防自動化濫用（docs/abuse-protection.md、docs/deploy.md §31）
+!scripts/lib/rate-limit.mjs
+!scripts/lib/probe-signatures.mjs
+!tests/round62-rate-limit.test.mjs
+!tests/round62-probes.test.mjs
