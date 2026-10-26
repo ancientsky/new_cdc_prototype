@@ -120,14 +120,14 @@ export function failureKind(reasons = []) {
  * opts.split／category／lang：只跑子集合；opts.showHoldout：報告裡列出 holdout 失敗題目文字。
  * 封存題組（set.sealed）：預設 failures 為空陣列（只留 byFailureKind 計數與 failuresHidden）；opts.showSealed 才列明細。
  */
-export async function runChallenge(site, set, { split = null, category = null, lang = null, showHoldout = false, showSealed = false } = {}) {
+export async function runChallenge(site, set, { split = null, category = null, lang = null, showHoldout = false, showSealed = false, wrapEngine = null } = {}) {
   const sealed = set.sealed === true;
   let questions = set.questions ?? [];
   if (split) questions = questions.filter((q) => q.split === split);
   if (category) questions = questions.filter((q) => q.category === category);
   if (lang) questions = questions.filter((q) => (q.lang ?? 'zh-TW') === lang);
   const byId = new Map(questions.map((q) => [q.id, q]));
-  const r = await runEval(site, { set: { ...set, questions } });
+  const r = await runEval(site, { set: { ...set, questions }, wrapEngine });
 
   const rows = r.results.map((x) => {
     const q = byId.get(x.id);

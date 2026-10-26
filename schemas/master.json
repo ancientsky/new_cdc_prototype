@@ -248,6 +248,23 @@
             "enum": ["en", "ja", "tl", "vi", "id", "th"]
           },
           "description": "第四十輪：哪些語言的譯名是機器翻譯初稿、尚待多語審核人確認（語言碼用頁面語言碼，印尼文寫 id 不是 id_）；審核後把該語言移出"
+        },
+        "folk": {
+          "type": "array",
+          "description": "第六十五輪：長輩說法、台語、口語寫法（出麻、漏屎、瘋狗病）。智慧問答與索引當別名用，公開詞彙頁不列出。status candidate＝OASIS 提案、待權責單位確認；confirmed＝已確認（確認後可再決定要不要移進 aliases 對外公開）",
+          "items": {
+            "type": "object",
+            "required": ["text", "variety", "status"],
+            "additionalProperties": false,
+            "properties": {
+              "text": { "type": "string", "minLength": 2 },
+              "variety": { "enum": ["台語", "客語", "長輩說法", "口語"] },
+              "status": { "enum": ["candidate", "confirmed"] },
+              "source": { "type": "string" },
+              "confirmedBy": { "type": "string", "pattern": "^unit\\." },
+              "confirmedAt": { "type": "string", "format": "date" }
+            }
+          }
         }
       }
     },

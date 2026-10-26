@@ -28,7 +28,8 @@
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "eval:challenge": "node eval/run-challenge.mjs",
-    "eval:holdout2": "node eval/run-challenge.mjs --file=content/governance/eval-holdout2.json"
+    "eval:holdout2": "node eval/run-challenge.mjs --file=content/governance/eval-holdout2.json",
+    "eval:rewrite": "node eval/run-rewrite.mjs"
   },
   "dependencies": {
     "ajv": "^8.17.1",

@@ -1,8 +1,8 @@
 {
-  "version": "2026.10-r12",
+  "version": "2026.10-r13",
   "updatedAt": "2026-10-11",
   "owner": "unit.oasis",
-  "note": "答案引擎評估集（原型 140+ 題；規格目標 500 題）。每次正本修訂或換模型都重跑；version 類別（曾因修訂而改變答案的題目）須全對才能上線。requires 列出該題依賴的內容 id／前綴，內容尚未建置時該題略過不計分。 r3（2026-10-02）：新增申請（apply）、檢驗（lab，專業）、通報時限（notify，主檔結構化回答）、公告（notice）類別，與影片版本題（過時影片不得被引用）。 r4（2026-10-02 第六輪）：新增國際合作 3 題（英文來源 sourceLang:en 內容進英文索引、中文譯文進中文索引）。 r5（2026-10-04 第七輪）：人才招募改 careers 意圖（結構化列開放中職缺、問「誰錄取」只給結果頁連結不唸名單）、採購改 procurement 意圖；NC001／NC002 改依職缺與標案內容，新增 NC003–NC006（含「誰錄取」不得出現遮罩姓名與報名編號、錄取者個資拒答）。 r6（2026-10-05）：新增 VA011–VA014 年齡／身分跨疫苗彙整題（由疫苗接種時程主檔結構化回答，行動須連到疫苗接種時程地圖並帶 #age）。 r9（2026-10-10 第二十五輪）：新增 nomatch 類別 NM001–NM005（站內沒有的主題須拒答為 no-match）。 r10（2026-10-10 第二十八輪，Issue #38）：新增抗蛇毒血清內容（topic.antivenom 與 4 則 Q&A），NM001「抗蛇毒血清」與 NM005「蛇咬怎麼辦」改為站內仍沒有的咬螫傷主題（虎頭蜂、水母），並要求不得引用蛇傷內容充數；新增 AV001–AV005（抗蛇毒血清事實題與安全題：答案須引用蛇傷內容、含 119 或血清名，且不得出現冰敷、切開、止血帶、吸毒等錯誤處置的肯定說法）。 r10 第二十八輪 核心教材（2026-10-10）：新增 CUR001–CUR005 專業題，引用登革熱、麻疹核心教材（示範匯入版）的章節與學習目標；第六章（治療）整章待補，不得被當成內容回答。 r11（2026-10-11 第四十輪，Issue #70／#75／#77／#78）：新增 HP001–HP035（首頁 chip1–4 與語言頁移工卡片問句 × 七語；preset 欄位記 i18n key，tests/round40-presets 會比對題目與介面字串一致）、SVC001–SVC003（服務意圖、逐字稿旁白與謠言原文不得被引）、FG001–FG004（外語 where 問句、來臺問句須引用來臺專區、移工主題）、NP001–NP005（新手爸媽 4 則 FAQ）。 r12（2026-10-11 第四十一輪）：新增 BD009–BD016（民眾用語 vs 官方用語：covid／Covid／新冠病毒須答新冠；做愛／上床／性交／做愛會得什麼病須答出性行為相關疾病或性傳染病專區；專業模式「性交」不得因「短暫性交叉免疫」答出登革熱教材）。",
+  "note": "答案引擎評估集（原型 140+ 題；規格目標 500 題）。每次正本修訂或換模型都重跑；version 類別（曾因修訂而改變答案的題目）須全對才能上線。requires 列出該題依賴的內容 id／前綴，內容尚未建置時該題略過不計分。 r3（2026-10-02）：新增申請（apply）、檢驗（lab，專業）、通報時限（notify，主檔結構化回答）、公告（notice）類別，與影片版本題（過時影片不得被引用）。 r4（2026-10-02 第六輪）：新增國際合作 3 題（英文來源 sourceLang:en 內容進英文索引、中文譯文進中文索引）。 r5（2026-10-04 第七輪）：人才招募改 careers 意圖（結構化列開放中職缺、問「誰錄取」只給結果頁連結不唸名單）、採購改 procurement 意圖；NC001／NC002 改依職缺與標案內容，新增 NC003–NC006（含「誰錄取」不得出現遮罩姓名與報名編號、錄取者個資拒答）。 r6（2026-10-05）：新增 VA011–VA014 年齡／身分跨疫苗彙整題（由疫苗接種時程主檔結構化回答，行動須連到疫苗接種時程地圖並帶 #age）。 r9（2026-10-10 第二十五輪）：新增 nomatch 類別 NM001–NM005（站內沒有的主題須拒答為 no-match）。 r10（2026-10-10 第二十八輪，Issue #38）：新增抗蛇毒血清內容（topic.antivenom 與 4 則 Q&A），NM001「抗蛇毒血清」與 NM005「蛇咬怎麼辦」改為站內仍沒有的咬螫傷主題（虎頭蜂、水母），並要求不得引用蛇傷內容充數；新增 AV001–AV005（抗蛇毒血清事實題與安全題：答案須引用蛇傷內容、含 119 或血清名，且不得出現冰敷、切開、止血帶、吸毒等錯誤處置的肯定說法）。 r10 第二十八輪 核心教材（2026-10-10）：新增 CUR001–CUR005 專業題，引用登革熱、麻疹核心教材（示範匯入版）的章節與學習目標；第六章（治療）整章待補，不得被當成內容回答。 r11（2026-10-11 第四十輪，Issue #70／#75／#77／#78）：新增 HP001–HP035（首頁 chip1–4 與語言頁移工卡片問句 × 七語；preset 欄位記 i18n key，tests/round40-presets 會比對題目與介面字串一致）、SVC001–SVC003（服務意圖、逐字稿旁白與謠言原文不得被引）、FG001–FG004（外語 where 問句、來臺問句須引用來臺專區、移工主題）、NP001–NP005（新手爸媽 4 則 FAQ）。 r12（2026-10-11 第四十一輪）：新增 BD009–BD016（民眾用語 vs 官方用語：covid／Covid／新冠病毒須答新冠；做愛／上床／性交／做愛會得什麼病須答出性行為相關疾病或性傳染病專區；專業模式「性交」不得因「短暫性交叉免疫」答出登革熱教材）。 r13（2026-10-26 第六十五輪）：讀音容錯（同音字、注音、鍵盤亂碼）與詞彙主檔 folk（長輩說法、台語）10 題（R65-*，boundary 類）。",
   "categories": {
     "version": "版本題：曾因正本修訂而改變答案，引到失效版或過時衍生內容即失敗",
     "fact": "事實題：答案須含關鍵事實並引用正確來源",
@@ -7116,6 +7116,144 @@
         "lowRelevance": false
       },
       "note": "第五十三輪：換句話說挑戰集 dev 題 CH-ML-flu-vaccine-vi-2（口語）修好後收進評估集，防止退步（依失敗類型修，見 docs/eval-challenge.md §12）"
+    },
+    {
+      "id": "R65-01",
+      "category": "boundary",
+      "q": "登格熱的症狀有哪些",
+      "expect": {
+        "refuse": false,
+        "disease": "disease.dengue",
+        "mustCiteAny": [
+          "disease.dengue",
+          "faq.dengue"
+        ]
+      },
+      "note": "第六十五輪：讀音容錯（同音字、注音文、大千鍵盤亂碼），見 docs/ask-search-llm.md §19；同音字"
+    },
+    {
+      "id": "R65-02",
+      "category": "boundary",
+      "q": "麻診會傳染嗎",
+      "expect": {
+        "refuse": false,
+        "disease": "disease.measles",
+        "mustCiteAny": [
+          "disease.measles",
+          "faq.measles-symptoms"
+        ]
+      },
+      "note": "第六十五輪：讀音容錯（同音字、注音文、大千鍵盤亂碼），見 docs/ask-search-llm.md §19；同音字（二字病名，站上沒寫過「麻診」才改）"
+    },
+    {
+      "id": "R65-03",
+      "category": "boundary",
+      "q": "屈公並是什麼",
+      "expect": {
+        "refuse": false,
+        "disease": "disease.chikungunya",
+        "mustCiteAny": [
+          "disease.chikungunya"
+        ]
+      },
+      "note": "第六十五輪：讀音容錯（同音字、注音文、大千鍵盤亂碼），見 docs/ask-search-llm.md §19；同音字"
+    },
+    {
+      "id": "R65-04",
+      "category": "boundary",
+      "q": "ㄉㄥ革熱怎麼預防",
+      "expect": {
+        "refuse": false,
+        "disease": "disease.dengue",
+        "mustCiteAny": [
+          "disease.dengue",
+          "faq.dengue"
+        ]
+      },
+      "note": "第六十五輪：讀音容錯（同音字、注音文、大千鍵盤亂碼），見 docs/ask-search-llm.md §19；注音夾在病名裡"
+    },
+    {
+      "id": "R65-05",
+      "category": "boundary",
+      "q": "ㄉㄥ ㄍㄜˊ ㄖㄜˋ",
+      "expect": {
+        "refuse": false,
+        "disease": "disease.dengue",
+        "mustCiteAny": [
+          "disease.dengue",
+          "faq.dengue"
+        ]
+      },
+      "note": "第六十五輪：讀音容錯（同音字、注音文、大千鍵盤亂碼），見 docs/ask-search-llm.md §19；整個病名打注音"
+    },
+    {
+      "id": "R65-06",
+      "category": "boundary",
+      "q": "2/ ek6bk4",
+      "expect": {
+        "refuse": false,
+        "disease": "disease.dengue",
+        "mustCiteAny": [
+          "disease.dengue",
+          "faq.dengue"
+        ]
+      },
+      "note": "第六十五輪：讀音容錯（同音字、注音文、大千鍵盤亂碼），見 docs/ask-search-llm.md §19；忘了切中文輸入法（大千鍵盤：2/ ek6bk4＝ㄉㄥ ㄍㄜˊ ㄖㄜˋ）"
+    },
+    {
+      "id": "R65-07",
+      "category": "boundary",
+      "q": "出麻會傳染嗎",
+      "expect": {
+        "refuse": false,
+        "disease": "disease.measles",
+        "mustCiteAny": [
+          "disease.measles",
+          "faq.measles-symptoms"
+        ]
+      },
+      "note": "第六十五輪：詞彙主檔 folk（長輩說法、台語候選詞，待權責單位確認），見 docs/ask-search-llm.md §19.3；台語「出麻」＝麻疹"
+    },
+    {
+      "id": "R65-08",
+      "category": "boundary",
+      "q": "被狗咬會得瘋狗病嗎",
+      "expect": {
+        "refuse": false,
+        "disease": "disease.rabies",
+        "mustCiteAny": [
+          "disease.rabies",
+          "faq.rabies-bite"
+        ]
+      },
+      "note": "第六十五輪：詞彙主檔 folk（長輩說法、台語候選詞，待權責單位確認），見 docs/ask-search-llm.md §19.3；長輩說法「瘋狗病」＝狂犬病"
+    },
+    {
+      "id": "R65-09",
+      "category": "boundary",
+      "q": "寒熱仔是什麼病",
+      "expect": {
+        "refuse": false,
+        "disease": "disease.malaria",
+        "mustCiteAny": [
+          "disease.malaria"
+        ]
+      },
+      "note": "第六十五輪：詞彙主檔 folk（長輩說法、台語候選詞，待權責單位確認），見 docs/ask-search-llm.md §19.3；台語「寒熱仔」＝瘧疾"
+    },
+    {
+      "id": "R65-10",
+      "category": "boundary",
+      "q": "百日嗽要打疫苗嗎",
+      "expect": {
+        "refuse": false,
+        "disease": "disease.pertussis",
+        "mustCiteAny": [
+          "disease.pertussis",
+          "faq.pregnant-tdap"
+        ]
+      },
+      "note": "第六十五輪：詞彙主檔 folk（長輩說法、台語候選詞，待權責單位確認），見 docs/ask-search-llm.md §19.3；台語「百日嗽」＝百日咳"
     }
   ]
 }

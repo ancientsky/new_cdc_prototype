@@ -2719,3 +2719,19 @@ Issue #140、#141、#142（grokbot 第五批）。取捨在 architecture-decisio
 | DAST | `.github/workflows/dast.yml`：每週一 03:00（台灣）＋手動，`BASE_PATH=''` 建置、`serve.mjs`（`GATEWAY=off`）、ZAP baseline（docker `ghcr.io/zaproxy/zaproxy:stable`，`-I` 不擋）、報告進 job summary 與 artifact `dast-report`（30 天）；沙盒無 docker，第一次執行要在 GitHub 上觸發 |
 | 修補時限 | `/policy/security/` 第七節「弱點通報與修補」（示意，待資訊室）：嚴重 48 小時緩解／7 日修補、高 7 日、中 30 日、低 90 日；流程 security.txt → 資訊室分級 → 私有追蹤 → 一般車道 PR（OASIS 審）→ 複測 |
 | 測試 | `tests/round63-attack-surface.test.mjs`、`round63-rate-limit.test.mjs`、`round63-probes.test.mjs`；fixture `tests/fixtures/access-probe.log` |
+
+## 68. 第六十五輪：智慧問答四個弱項的補法（2026-10-26）
+
+Yulun 問盲測弱項（錯字、長輩說法、情境題、外語）有沒有解、能不能用 JavaScript 處理同音字與注音文、能不能用詞庫補台語說法，看完評估後要求全部實作。說明、成本與教訓在 `docs/ask-search-llm.md` §19；前後分數在 `docs/eval-challenge.md` §14；取捨在 architecture-decisions §51；同仁操作在 guide-staff §60。
+
+| 機制 | 契約 |
+| --- | --- |
+| 讀音容錯 | `src/client/answer/route-phonetic.js`（`ROUTES.phonetic`，route context 加 `lex`、`seen`）：`fix(q)` → `{ text, fixes[{ from, to, how, canon?, kind? }] }`｜null；`decodeKeyboard(s)`（大千鍵位，每段須為合法音節）。讀音表 `zhuyin-data.js`（`scripts/tools/gen-zhuyin-table.py` 產生，pypinyin／Unihan，5,419 字、407 個無聲調讀音）以 top-level `await import()` 載入 |
+| 引擎外殼 | `core.js` `answer()` = 中文問句的讀音容錯外殼，內層 `answerOnce()`。觸發：問句含注音或像鍵盤亂碼（先改）、或 `isWeak`（no-match／no-source／低相關）且不是結構化回答（`travel`／`situation`／`stats`；改完比原本好才採用）。答得出來的問句不載入（第四十九輪契約）。採用時 `query` 保留原字、`termNotes` 加 `typo`、`guards` 加 `phonetic`；`opts.phonetic === false` 關閉 |
+| folk | `schemas/master.json` `glossaryTerm.folk[{ text, variety, status, source?, confirmedBy?, confirmedAt? }]`；`lexicon.js` `withFolk()` 只在 `createEngine` 用（問句端）；`index-builder`、公開詞彙頁、JSON-LD 不讀；`ask-log-report` 視為已知寫法；後台詞彙表顯示「（variety・待確認）」 |
+| 口語改寫 | `PARAPHRASE`：打／拍／注射預防針 → 接種疫苗；蠓仔 → 病媒蚊；漏屎／落屎／烙賽 → 腹瀉 |
+| 改寫問句 | `answer(q, { extraTerms })`：`expandQuery` 第三參數，權重 0.7，相關度問句也加上；`result.rewrite`、`guards: query-rewrite`。`engine.vetTerms()`（詞典名稱或站上中文出現過、2–12 字、最多 8 個）、`engine.isWeak()`。`llm.js` `llmRewriteQuery()`、`REWRITE_PROMPT`、`rewriteText()`；`callClaude({ apiUrl })`。`ui.js`：BYOK 模式且答不好時才叫 |
+| 評估 | 評估集 r13 +10 題（R65-*）；`npm run eval:rewrite`（`eval/run-rewrite.mjs`，有無改寫兩次的總分，快取 `.local/rewrite-cache.json`，不進 CI）；`runEval`／`runChallenge` 多 `wrapEngine` |
+| 測試 | `tests/round65-ask-weakspots.test.mjs` |
+
+**教訓：** 量得到才留（外語十組對照 0 變化就拿掉）；別名不是零風險（候選詞放進索引端就少對一題），確認前只放問句端；錯字的補法要跟著民眾的輸入法走（注音輸入的錯字是同音字，不是形近字）。

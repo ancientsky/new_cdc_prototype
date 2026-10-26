@@ -79,8 +79,20 @@ export function loadVocabulary(contentDir = CONTENT) {
     const list = [...new Set(forms.filter((x) => typeof x === 'string' && x.trim()))];
     if (canon && list.length) out.push({ source, id, canon, forms: list, norms: list.map(normalizeQuery) });
   };
+  // 第六十五輪：folk（長輩說法、台語候選詞）也算已知寫法，不再列為同義詞候選
   for (const g of read('glossary'))
-    add('glossary', g.id, g['zh-TW'], [g['zh-TW'], ...(g.aliases ?? []), ...(g.deprecated ?? []), g.en, g.ja, g.tl, g.vi, g.id_, g.th]);
+    add('glossary', g.id, g['zh-TW'], [
+      g['zh-TW'],
+      ...(g.aliases ?? []),
+      ...(g.folk ?? []).map((f) => f.text),
+      ...(g.deprecated ?? []),
+      g.en,
+      g.ja,
+      g.tl,
+      g.vi,
+      g.id_,
+      g.th,
+    ]);
   for (const d of read('diseases')) add('disease', d.id, d.name, [d.name, d.nameEn, ...(d.aliases ?? []), ...Object.values(d.i18n ?? {}).map((x) => x?.name)]);
   for (const v of read('vaccines')) add('vaccine', v.id, v.name, [v.name, v.nameEn, ...(v.aliases ?? []), ...Object.values(v.i18n ?? {}).map((x) => x?.name)]);
   return out;

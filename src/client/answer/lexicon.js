@@ -59,7 +59,7 @@ export const CLUSTER_DESC_RE = /(好幾(個|位)|幾個人|多個人|多位|多�
 // 中文常見口語 → 正式用語（只做檢索展開）
 export const PARAPHRASE = [
   [/人傳人/, '人直接傳給人 傳染 傳播'], [/怎麼傳染|如何傳染|怎麼傳播|傳染途徑/, '傳染 傳播 傳染途徑'], [/看醫生|看病|去醫院/, '就醫'],
-  [/打針|打疫苗|施打/, '接種 疫苗'], [/危險徵兆|警訊|嚴重的徵兆|重症徵兆/, '警示徵象 重症前兆 危險徵兆'], [/警示徵象/, '警示徵象 重症前兆'],
+  [/打針|打疫苗|施打|(打|拍|注射)預防針/, '接種 疫苗'], [/危險徵兆|警訊|嚴重的徵兆|重症徵兆/, '警示徵象 重症前兆 危險徵兆'], [/警示徵象/, '警示徵象 重症前兆'],
   [/自己好|會好嗎|自癒/, '自行康復'], [/特效藥|吃藥會好/, '特效 抗病毒藥物 支持性療法'], [/打幾劑|幾劑/, '劑'], [/多快|多久內|幾天內|幾小時內/, '小時內 天內'],
   [/開打|什麼時候打/, '接種 開始 起'], [/哪裡打|哪裡可以打|接種地點/, '接種地點 合約院所'],
   [/要驗什麼|驗什麼|怎麼驗|怎麼檢查|做什麼檢查|要檢查什麼|如何診斷|怎麼診斷/, '診斷 檢驗 治療'],
@@ -86,6 +86,11 @@ export const PARAPHRASE = [
   // 「體檢」「健檢」＝健康檢查。不寫進詞彙主檔：站上「抗體檢驗」「檢體檢驗」「人體檢體」都含「體檢」兩字，
   // 主檔別名會讓索引端把這些片段標上「健康檢查」（第三十一輪「性病」同一種詞界問題）；只在問句端換，並擋掉抗體／檢體
   [/(?<![抗檢人])體檢(?!體)|健檢/, '健康檢查', true],
+  // 第六十五輪：台語「蠓仔」＝蚊子。不進詞彙主檔：主檔沒有「蚊子」這個詞條，病媒蚊是一般用語，放這裡只做問句端展開
+  [/蠓仔|蠓子/, '病媒蚊 防蚊 蚊子', true],
+  // 台語「漏屎／落屎」（網路常寫「烙賽」）＝腹瀉。同樣只在問句端換：詞彙主檔沒有「腹瀉」詞條，新增一般詞條會讓索引端替站上十幾份
+  // 寫到腹瀉的內容都加標籤、改變詞界，影響面比這幾個說法大得多（與上面「體檢」同一種考量）
+  [/漏屎|落屎|烙賽/, '腹瀉 拉肚子', true],
 ];
 
 export function lc(s) { return String(s ?? '').toLowerCase(); }
@@ -101,6 +106,17 @@ export function isLatin(s) { return /^[\x00-\x7fÀ-ɏḀ-ỿ\s.\-']+$/.test(s); 
  * 已知名詞 P 若在一段文字裡只出現在另一個「指不同東西」的更長已知名詞 L 裡面，就不算出現。
  * 同一個東西的長短形式（愛滋／愛滋病）不互相遮蔽。索引端（index-builder 的 glossaryHits）與查詢端（retrieve／relevanceOf）共用。
  */
+/**
+ * 第六十五輪：詞彙主檔的 folk（長輩說法、台語、口語：出麻、漏屎、瘋狗病）。
+ * 只在**問句端**當別名用（認出疾病實體、展開成正名），索引端不加標籤；公開的 /glossary/ 頁與 JSON-LD 也不列出。
+ * 為什麼不直接寫進 aliases：（1）folk 多半還是候選詞（status: candidate），權責單位確認前不該對外宣稱「這是官方別名」；
+ * （2）aliases 會被 index-builder 加進每塊講到該病的片段的檢索詞，改變 BM25 的文件長度與排序——實測把候選詞放進索引端，
+ * 盲測整體少對 1 題（通報類），只放問句端則 0 題變動。候選詞確認後，再由權責單位決定要不要移進 aliases。
+ */
+export function withFolk(glossary) {
+  return (Array.isArray(glossary) ? glossary : []).map((g) => (g?.folk?.length ? { ...g, aliases: [...(g.aliases ?? []), ...g.folk.map((f) => f.text).filter(Boolean)] } : g));
+}
+
 export function buildLexicon({ diseases = [], glossary = [], vaccines = [], units = [] } = {}) {
   const lexicon = new Map(); // 小寫名稱 → { canon, kind }；kind：disease／vaccine／unit／term
   const termCanon = new Map(); // 小寫名稱 → 詞彙主檔正名（同義形式查詢用）
@@ -204,7 +220,7 @@ export function buildLexicon({ diseases = [], glossary = [], vaccines = [], unit
     if (hits.length && hits.every((h) => h.canon === hits[0].canon)) { fixes.push({ from: hits[0].from, to: hits[0].to }); text = text.replace(hits[0].from, hits[0].to); }
     return fixes.length ? { text, fixes } : null;
   }
-  return { names, wholeHit, phrasesIn, falseTokensFor, expandable, segment, chunkHay, nearMiss, size: lexicon.size };
+  return { names, wholeHit, phrasesIn, falseTokensFor, expandable, segment, chunkHay, nearMiss, info: (n) => lexicon.get(lc(n)), size: lexicon.size };
 }
 
 // 第四十輪（Issue #80）：名稱比對器加「必要子字串」預篩。

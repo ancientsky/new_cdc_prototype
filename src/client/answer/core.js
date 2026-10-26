@@ -23,7 +23,7 @@
 
 // 第三十四輪（ARCHITECTURE 第 40 章）：規則表、斷詞、詞典、結構化資料拆到同目錄四個模組；本檔只留 createEngine。
 // 下面的 re-export 讓既有呼叫端（render.js、llm.js、scripts/lib/*、tests）照舊從 core.js import，不必改。
-import { CLUSTER_DESC_RE, CROSS_LANG, PARAPHRASE, topicAnchorsOf, buildLexicon, latinStems, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
+import { CLUSTER_DESC_RE, CROSS_LANG, PARAPHRASE, topicAnchorsOf, buildLexicon, withFolk, latinStems, lc, matcherFor, ownerNameOf, tr, unwrap } from './lexicon.js';
 import { ANTIVIRAL_RE, CLOSED_MARK, NOTICE_TYPES, SCHEDULE_VACCINE_RE, VAXMAP_GROUP_OF, VAXMAP_GROUP_OF_DISEASE, WHICH_VACCINE_RE, ageHashOf, ageProfileOf, mmssOf, normTravel, normalizeNotifyTable, vaxmapHref, denguemapHref } from './structured.js';
 import { EN_STOP, VI_STOP, bigrams, detectInjection, maskPII, maskPIIDetailed, parseTimeRange, rocDate, tokenize } from './text.js';
 import { ANIMAL_RE, BITE_RE, CAREERS_DETAIL_RE, DRUGS, EXPLAIN_RE, HISTORICAL_WEIGHT, LAB_DETAIL_RE, LAB_PROCESS_RE, LAB_PUBLIC_RE, MEDIA_CUE, NEWS_CUE, OPEN_CUE, PROCUREMENT_CUE, PROCUREMENT_DETAIL_RE, PUB_CUE, QUERY_FACETS, QUERY_FUNC_RE, DISEASE_FACETS, facetsOf, RECORD_RE, RECRUIT_CUE, REFUSAL_RULES, RELEVANCE, VAX_WHERE_RE, RESEARCH_CUE, TRAVEL_CHANGE_RE, classifyIntent, focusOf, isLowRelevance, refusalCopy, titleHits } from './rules.js';
@@ -56,6 +56,8 @@ const ROUTES = {
   procurement: () => import('./route-procurement.js'),
   notice: () => import('./route-notice.js'),
   'travel-changes': () => import('./route-travel-changes.js'),
+  // 第六十五輪：同音字／注音文／鍵盤亂碼（docs/ask-search-llm.md §19）。不是意圖分支，是「照原字查不到」或問句帶注音時才載入的容錯層
+  phonetic: () => import('./route-phonetic.js'),
 };
 const ROUTE_MODS = {};
 const importRoute = async (name) => (ROUTE_MODS[name] ??= await ROUTES[name]());
@@ -64,6 +66,8 @@ class RouteNotLoaded extends Error {
 }
 if (globalThis.process?.versions?.node) await Promise.all(Object.keys(ROUTES).map(importRoute));
 
+/** 第六十五輪：像大千鍵盤亂碼（只有鍵位字元、至少一個聲調數字 3467）⇒ 先載入讀音容錯再查；真正的判定在 route-phonetic.js decodeKeyboard */
+const KEYBOARD_HINT = /^(?=.*[3467])[a-z0-9,./; -]{3,40}$/;
 /** 第四十九輪：有官方 FAQ／服務頁正面回答時可改答的拒答種類（急症等其他拒答永不改答） */
 const OFFICIAL_KINDS = new Set(['medication', 'legal', 'media']);
 /** 第四十九輪：外語問句判意圖時可借用的跨語言對應詞（疾病面向） */
@@ -77,10 +81,11 @@ const FACET_CUE = /^(症狀|警示徵象|潛伏期)$/;
 export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
   const deps = Object.fromEntries(Object.entries(rawDeps).map(([k, v]) => [k, unwrap(v)]));
   const {
-    index = [], indexPro = [], situation = null, clarifications = [], glossary = [], diseases = [], vaccines = [], countries = [],
+    index = [], indexPro = [], situation = null, clarifications = [], glossary: rawGlossary = [], diseases = [], vaccines = [], countries = [],
     datasets = [], faq = [], units = [], aiStatus = {}, today, random = Math.random, now = () => new Date(), travel = [],
     services = [], notifyTable = null, media = [], schedule = [],
   } = deps;
+  const glossary = withFolk(rawGlossary); // 第六十五輪：長輩說法、台語（folk）檢索時當別名用，見 lexicon.js withFolk
   // 疫苗接種時程主檔（site.master.immunizationSchedule／v1/immunization-schedule.json）：跨疫苗年齡查詢用
   const scheduleItems = Array.isArray(schedule) ? schedule : [];
   // 第二輪 deps：services（申請頁 actions）、notifyTable（通報時限表，補病例定義與檢驗連結）、media（影片海報等，可選）
@@ -250,8 +255,11 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
   }
   function detectDisease(q) { const e = detectEntities(q); return diseaseById.get(e.diseases[0]?.id) ?? null; }
 
-  /** 同義詞展開：回傳 { text, added[], notes[] }（notes：deprecated 詞的正名提示） */
-  function expandQuery(q, lang = 'zh-TW') {
+  /**
+   * 同義詞展開：回傳 { text, added[], notes[] }（notes：deprecated 詞的正名提示）。
+   * extra：第六十五輪模型改寫問句（llm.js llmRewriteQuery）給的站內用語，已經過 vetTerms；與同義詞一樣只「加詞」（權重 0.7），不取代原問句
+   */
+  function expandQuery(q, lang = 'zh-TW', extra = []) {
     const added = new Set(); const notes = []; const groups = [];
     for (const t of termMatchers) {
       if (!t.re.test(q)) continue;
@@ -264,6 +272,7 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     }
     for (const [re, zh] of PARAPHRASE) if (re.test(q)) for (const w of zh.split(' ')) if (!q.includes(w)) added.add(w);
     if (lang !== 'zh-TW' || !/[一-鿿]/.test(q)) for (const [re, zh] of CROSS_LANG) if (re.test(q)) { for (const w of zh.split(' ')) added.add(w); groups.push(zh.split(' ')); }
+    for (const w of extra ?? []) if (!lc(q).includes(lc(w))) { added.add(w); groups.push([w]); }
     // groups：同一個來源（同一個詞條、同一條外語對應）展開出來的幾種寫法＝同一件事（外語問句的相關度以「組」計，見 relevanceOf）
     return { text: [q, ...added].join(' '), added: [...added], notes, groups };
   }
@@ -1174,6 +1183,7 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     api = ROUTE_MODS[name].default({
       clarifications, datasets, diseases, diseaseById, notifyRows, scheduleItems, travelItems, today, now, units, vaccines,
       actionsFor, closedNow, finalizeSentences, jobStageNow, overviewChunks, poolFor, relatedQuestions, setRefusal, sourceOf, tenderStageNow, todayRt,
+      lex, seen: seenZh,
     });
     routeApis.set(name, api);
     return api;
@@ -1191,7 +1201,49 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     }
   }
 
+  /**
+   * 第六十五輪：讀音容錯（同音字、注音文、鍵盤沒切中文）。照原字回答；查無（no-match）、依據不足或只勉強相關時，
+   * 才載入 route-phonetic.js 用讀音找詞典名稱再算一次；問句帶注音符號或像大千鍵盤亂碼時直接先改再算。
+   * 改過的那一次也只在「比原本好」時採用（原本勉強相關、改完查無 ⇒ 用原本的）。規則與護欄見 route-phonetic.js 檔頭。
+   */
+  /**
+   * 第六十五輪：模型改寫問句給的詞只留「站上真的用得到」的：詞典裡的名稱（疾病、疫苗、詞彙主檔、單位），或站上中文內容裡出現過的字串。
+   * 模型自己編的詞（站上沒有）留著也撈不到東西，只會讓相關度門檻失準；最多 8 個、每個 2–12 字
+   */
+  function vetTerms(terms) {
+    const out = [];
+    for (const t of terms ?? []) {
+      const w = String(t ?? '').trim();
+      if (w.length < 2 || w.length > 12 || out.includes(w) || /[<>{}]/.test(w)) continue;
+      if (lex.info(w) || seenZh(w)) out.push(w);
+      if (out.length >= 8) break;
+    }
+    return out;
+  }
+  const weak = (r) => (r.refused && ['no-match', 'no-source'].includes(r.refusal?.kind)) || (!r.refused && isLowRelevance(r));
   function answer(rawQuery, opts = {}) {
+    if ((opts.lang ?? 'zh-TW') !== 'zh-TW' || opts.phonetic === false) return answerOnce(rawQuery, opts);
+    const raw = String(rawQuery ?? '').trim().slice(0, 500);
+    const pre = /[ㄅ-ㄩ]/.test(raw) || KEYBOARD_HINT.test(raw.toLowerCase());
+    const first = pre ? null : answerOnce(rawQuery, opts);
+    // 原本答得出來的不試（即使問句裡沒認出病名）：「被狗咬怎麼辦」「去泰國要注意什麼」這類常見問題不該為了少數錯字多下載讀音表（第四十九輪：常見問題不需要任何分支）
+    // 有結構化回答（旅遊建議、疫情態勢、統計）的也不試：這些不靠檢索，相關度門檻本來就不套用，「勉強相關」對它們沒有意義
+    //（「去泰國要注意什麼」是常見問題，不該為此下載讀音表）
+    if (first && (first.paused || first.injection || !weak(first) || first.travel || first.situation || first.stats)) return first;
+    const masked = maskPIIDetailed(raw).text;
+    const fx = route('phonetic').fix(masked);
+    if (!fx) return first ?? answerOnce(rawQuery, opts);
+    const r = answerOnce(fx.text, { ...opts, phonetic: false });
+    if (first && weak(r)) return first;
+    const kb = fx.fixes.find((f) => f.how === 'keyboard');
+    const notes = kb ? [{ from: masked, to: fx.text, kind: 'typo' }] : fx.fixes.filter((f) => f.how === 'homophone' || f.how === 'zhuyin').map(({ from, to }) => ({ from, to, kind: 'typo' }));
+    r.query = masked;
+    r.termNotes.unshift(...notes);
+    r.guards.push({ kind: 'phonetic', fixes: fx.fixes });
+    return r;
+  }
+
+  function answerOnce(rawQuery, opts = {}) {
     const { lang = 'zh-TW', view = 'public', disease: presetDisease = null, mode, forceIntent = null } = opts;
     const LL = lang;
     const pii = maskPIIDetailed(String(rawQuery ?? '').trim().slice(0, 500));
@@ -1272,8 +1324,9 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
       result.intentReasons.push(hits[0].id); return setRefusal(result, hits[0].kind, hits[0].id);
     }
 
-    const expanded = expandQuery(q, lang);
+    const expanded = expandQuery(q, lang, opts.extraTerms);
     result.termNotes.push(...expanded.notes);
+    if (opts.extraTerms?.length) { result.rewrite = { terms: [...opts.extraTerms] }; result.guards.push({ kind: 'query-rewrite', terms: [...opts.extraTerms] }); }
 
     // 7 謠言
     if (result.intent === 'rumor' && !opts._noRumor) {
@@ -1513,7 +1566,9 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
     // 第二十五輪：相關度閘門。態勢／旅遊有結構化資料可答時不套用（它們不靠檢索片段）
     // 第四十輪：外語問句改用中文片段回答時，問句原文的詞在中文語料裡本來就找不到；相關度改用「對應出來的中文詞」計算。
     // 對應不出任何中文詞 ＝ 引擎根本不知道在問什麼主題 ⇒ 查無，不拿碰巧撞到的片段回答。
-    const relQ = result.translationNote === 'showing-source' ? crossZh : PARAPHRASE.reduce((x, [re, zh, sub]) => (sub ? x.replace(re, ` ${zh} `) : x), q);
+    // 第六十五輪：模型改寫問句給的站內用語也算進涵蓋率（分母分子都加）：片段要真的講到這些詞才過門檻，民眾原句的「懷孕」對不到「孕婦」不再單獨拉低涵蓋率
+    const rwQ = opts.extraTerms?.length ? ` ${opts.extraTerms.join(' ')}` : '';
+    const relQ = result.translationNote === 'showing-source' ? crossZh : PARAPHRASE.reduce((x, [re, zh, sub]) => (sub ? x.replace(re, ` ${zh} `) : x), q) + rwQ;
     const structuredOk = (result.intent === 'situation' && situationFor(entities, result.intent)) || (result.intent === 'travel' && (entities.countries.length || TRAVEL_CHANGE_RE.test(q)));
     if (result.translationNote === 'showing-source' && !crossZh.trim() && !structuredOk) {
       result.relevance = 0; result.guards.push({ kind: 'no-match', reason: 'no-cross-terms' });
@@ -1651,7 +1706,7 @@ export function createEngine(rawDeps = {}, { lazyRoutes = false } = {}) {
   }
 
   return {
-    answer, answerAsync, loadRoute, loadAllRoutes, retrieve, detectEntities, detectDisease, expandQuery, relatedQuestions, traditionalList,
+    answer, answerAsync, vetTerms, isWeak: (r) => weak(r), loadRoute, loadAllRoutes, retrieve, detectEntities, detectDisease, expandQuery, relatedQuestions, traditionalList,
     classifyIntent: (q, o) => classifyIntent(q, o), maskPII, detectInjection, statsAnswer: (...a) => route('stats').statsAnswer(...a), situationFor, citeLabelOf, notifyRows,
     get diseaseById() { return diseaseById; },
   };
