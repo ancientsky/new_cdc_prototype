@@ -18,9 +18,13 @@ on:
 permissions:
   contents: read
 
+# 第六十八輪（docs/deploy.md 第 34 節）：cancel-in-progress 改 false。以前「新的來就取消舊的」：多個 PR 在幾分鐘內陸續合併，每次合併都把
+# 前一次建置取消，只要每隔不到一次建置的時間（約 4 分鐘）就有人合併，部署永遠跑不完。現在同一時間最多「一個在跑＋一個排隊」：
+# 正在跑的做完，排隊的那次從當時的 main 建站（期間所有合併都包含在內）；再來的觸發只會取代排隊中的那次（GitHub 只保留最新一個 pending）。
+# 任何人從合併到上線最多等兩次建置（約 9–10 分鐘），而且不論合併多密集都會收斂。
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   # 第六十輪（Issue #126，docs/deploy.md 第 29 節）：這次 push 是不是「純內容」（只改 content/、data/snapshots/）。
