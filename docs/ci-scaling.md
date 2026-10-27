@@ -189,6 +189,8 @@
 3. **快取 Chromium。** `playwright install` 每次 16 秒，用 `actions/cache` 快取 `~/.cache/ms-playwright`。
 4. **axe 只掃改到的版型。** 內容 PR 不掃；程式 PR 掃全部 24 頁。
 
+第六十八輪（2026-10-27）補兩項，起因是「多人同時上架，最晚的要等多久」：`pages.yml` 的 concurrency 改為排隊不取消（連續合併不再可能把建置無限取消），審核後沿用同一 commit 的檢查結果（省掉 Approve 後 2.5–6 分鐘的重跑）。計算與實測見 deploy.md §34。
+
 ### 6.2 上線前做（試點期）
 
 1. **PR 車道改淺層 checkout。** `content-pr.yml` 的 `fetch-depth: 0` 是為了 `git diff` 找變更檔；改用平台 API 的 PR 檔案清單（GitHub `pulls/{n}/files`、GitLab `merge_requests/{iid}/changes`），就可以 `fetch-depth: 1`。歷史再長也不影響。

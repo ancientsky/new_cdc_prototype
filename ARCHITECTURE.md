@@ -2764,3 +2764,17 @@ Yulun 問盲測弱項（錯字、長輩說法、情境題、外語）有沒有�
 | 測試 | `tests/round67-handover.test.mjs` |
 
 **教訓：** 「怎麼交接」的最好答案是讓大部分東西不需要交接——把所有權放在不會離職的單位、把權限放在人事本來就維護的 AD 群組；剩下真的綁著人的（等通知的送審件），才做交接功能，而且交接不能抹掉「誰做過」的事實。
+
+## 71. 第六十八輪：部署排隊不取消；審核後沿用同一 commit 的檢查結果（2026-10-27）
+
+問題：多個組室同時上架、審核都很快通過時，最晚送出的人等多久？計算與實測在 `docs/deploy.md` §34：各 PR 檢查平行、`main` 不要求分支更新到最新，所以不排隊；唯一的風險是 `pages.yml` 的 `cancel-in-progress: true` 在連續合併下會把建置無限取消。
+
+| 項目 | 契約 |
+| --- | --- |
+| `pages.yml` concurrency | `group: pages`、`cancel-in-progress: false`：最多一個在跑＋一個排隊，新觸發取代排隊中的那次；任何合併到上線最多兩次建置 |
+| `content-pr.yml` `reuse` job | 只在 `pull_request_review` 事件跑；`permissions: actions: read`；不 checkout、只 `gh api`；找同 workflow、同 `head_sha`、事件 `pull_request`、結論 `success`、`lane-result` 未過期的執行；輸出 `run_id`（整數或空） |
+| `test` job | `needs: reuse`，`if: !cancelled() && needs.reuse.outputs.run_id == ''` |
+| `lane` job | `needs: [reuse, test]`；Download results 用 `run-id: needs.reuse.outputs.run_id || github.run_id` 與 `github-token`；驗證、API 檔案清單判定、GATE 不變；留言加「檢查結果來源」列 |
+| 不變的事 | 審核事件不推預覽；`--match-head-commit`；規則集的必要檢查 `test`（略過的 job 視為通過） |
+
+教訓：並發問題先把每個 group 的取消／排隊語意寫出來再算等待時間；「取消舊的」在低頻時最省，在高頻時會餓死，而靜態站的部署只要「最後一次包含全部」，排隊一個就夠。

@@ -25,7 +25,8 @@ test('#124 .github/rulesets/main.json：禁止直接 push／force push／刪除�
   // 必要狀態檢查要用 test job，不能用 lane job：lane job 自己呼叫 gh pr merge 時還在執行中，要求它成功會把自己擋住
   assert.deepEqual(checks, ['test']);
   const cp = read('.github/workflows/content-pr.yml');
-  assert.match(cp, /^jobs:\n  test:\n/m, 'content-pr.yml 的第一個 job 叫 test');
+  // 第六十八輪：jobs 前面多了只在審核事件跑的 reuse job；必要檢查仍是 test（它被略過時 GitHub 視為通過，同一 commit 先前的 test 已成功）
+  assert.match(cp, /^  test:\n/m, 'content-pr.yml 有叫 test 的 job');
   assert.ok(!checks.includes('lane'));
   // 繞過名單留空：匯入時帶 GitHub Actions app（Integration 15368）會被拒「invalid actor」，而且介面的繞過名單也沒有 GitHub Actions（2026-10-25 實測）。
   // 回寫快照改走「部署金鑰」（可列入繞過）：有 SNAPSHOT_DEPLOY_KEY 就經 SSH 推；沒有就用 token 試推；兩條路失敗都只警告不讓建置失敗。

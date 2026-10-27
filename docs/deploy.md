@@ -115,7 +115,8 @@ PR 關閉 ─▶ preview-cleanup.yml：刪 previews/pr-N/ →（只有沒合併�
 為什麼不乾脆拿掉其中一個工作流程：
 
 - 檢查在 PR 上跑一次（第 1 列）、合併後在 `main` 上再跑一次（第 3／5 列的 `npm test`），**不是重複**。PR 上測的是分支當時的內容，合併後 `main` 是「分支＋別人後來合併的東西」，兩者可能不同；2026-10-11 PR #63 合併後主站建置 #189 就在 `main` 上失敗過一次（`tests/round28-newsletter.test.mjs` 啟動本機伺服器逾時，屬偶發），PR 上並沒有看到。
-- 審核人按 Approve 會讓第 1 列整個重跑一次（`pull_request_review` 事件）：這是為了「核准＋檢查都過才合併」必須再確認一次檢查結果；若覺得太慢，可以把這一次改成只讀上一輪的結論，列在待辦。
+- 審核人按 Approve 會讓第 1 列整個重跑一次（`pull_request_review` 事件）：這是為了「核准＋檢查都過才合併」必須再確認一次檢查結果；若覺得太慢，可以把這一次改成只讀上一輪的結論，列在待辦。**第六十八輪做了**（§34.3）：同一個 commit 已有成功的執行就沿用它的結果，不重跑 `test` job。
+- 「取消」那一列（第 3 列）自第六十八輪起不會再出現：`pages.yml` 改成排隊不取消，兩次部署都會跑完（§34.2）。
 - 每 2 小時的排程部署（偶數整點）與這些無關，是讓排程發布與逾期狀態跟著時間更新（見上一節）。
 
 改完之後一個人工合併的 PR 應該看到四列：PR lane、預覽部署、合併部署、Preview cleanup（不再有「取消」那一列）。若之後又看到同一個 commit 連續兩次「Build and deploy」，先看第二次是誰觸發的（`Manually run by github-actions` 代表是其他工作流程用 `gh workflow run` 叫的），再對照這張表。
@@ -1951,7 +1952,7 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 3. Settings → Secrets and variables → Actions → New repository secret：名稱 `SNAPSHOT_DEPLOY_KEY`，內容貼 `snapshot_key`（私鑰全文）。貼完把本機兩個檔刪掉。
 4. Settings → Rules → Rulesets → 這個規則集 → **Bypass list** → Add bypass → **Deploy keys**。
 5. 驗證：Actions → Build and deploy to GitHub Pages → Run workflow（`refresh` 保持 true），看「Commit refreshed snapshots」那一步印出「快照已以部署金鑰回寫 main」。
-   回寫成功後，那個快照 commit 會再觸發一次 push 建置，而手動這一次會被它取消（`concurrency: pages`，後到的取消先到的）：Actions 頁上手動那次顯示「cancelled」是正常的，網站由後一次（標題「data: 官方資料快照更新」）部署。2026-10-25 第一次成功（commit 9735410，run #331 → #332）就是這樣。
+   回寫成功後，那個快照 commit 會再觸發一次 push 建置。第六十八輪以前（`cancel-in-progress: true`）手動這一次會被它取消，Actions 頁上顯示「cancelled」（2026-10-25 第一次成功，commit 9735410，run #331 → #332 就是這樣）；第六十八輪起改為排隊不取消（§34.2），手動那次跑完，快照 commit 那次（標題「data: 官方資料快照更新」）排在後面跑，兩次都成功。
    只有手動 Run workflow 或 02 UTC 排程會走到這一步；合併 PR 觸發的建置與 `content-pr.yml` 代發的建置（`refresh=false`）不重抓資料，這一步顯示 skipped、不印任何字，不是沒設好。
 
 **2026-10-25 第一次驗證就紅（run #328）的教訓**：金鑰本身沒問題，倒在前一行 `git pull --rebase`：「cannot pull with rebase: You have unstaged changes」。原因是 `npm run fetch` 除了 `data/snapshots/` 也會改 `content/datasets/`（登革熱地圖摘要與 CKAN 目錄的 `lastUpdated`／`provenance`，第五十七輪加的），而提交那一步只 `git add data/snapshots`，剩下的變更讓 rebase 拒絕執行，整個 build job 紅掉、當次也沒部署。修法：`git add -A data/snapshots content/datasets` 一起提交（本來就是這次抓取的結果）、`git pull --rebase --autostash`（其他未預期變更先暫存）、rebase 失敗只警告不讓建置失敗。為什麼之前沒發現：規則集匯入前這一步也會失敗，但沒人看 02 UTC 排程的紀錄；回寫從來沒成功過（`git log --grep=官方資料快照更新` 是空的）。所以**任何「排程才會跑」的步驟都要在合併當天手動 Run workflow 跑一次**，不要等排程。
@@ -2166,3 +2167,55 @@ npm run reassign-owner -- --from unit.a --to unit.b [--type disease,faq] [--dry-
 - 收尾：舊單位在 `content/master/units.json` 加 `retiredAt`（裁撤日，`YYYY-MM-DD`）與 `successor`（承接單位）。建置從裁撤日起把「owner 仍是裁撤單位」的內容、移轉清單、疾病主檔當錯誤（訊息附上要跑的指令），`successor` 必須存在、不能也已裁撤（governance-model 規則 31）。裁撤日可以先寫未來日期，到那天才生效。
 
 測試：`tests/round67-handover.test.mjs`。
+
+## 34. 第六十八輪（2026-10-27）：多人同時上架時要等多久——部署排隊不取消、審核後沿用檢查結果
+
+**問題（Yulun，2026-10-27）**：好幾個組室的同事同時各上架一筆、審核人也很快都審過，照現在的流程，最晚送出的那位會不會等到一小時才看到內容上線？
+
+### 34.1 先算清楚現況（改之前）
+
+| 階段 | 時間 | 來源 |
+| --- | --- | --- |
+| 審核人按 Approve 後，`content-pr.yml` 以 `pull_request_review` 事件整套重跑 | 純內容 PR 約 2.5 分鐘（test 1 分 47 秒＋lane 40 秒）；程式 PR 約 6 分鐘 | 探針 PR #116、PR #115（§28.7） |
+| 合併 → `lane` job `gh workflow run pages.yml` → 建置、部署 | 3.0–4.8 分鐘 | 2026-10-21 至 10-27 的 80 次 `pages.yml` 執行，無一例外 |
+| GitHub Pages 的 CDN 快取 | 最多再 10 分鐘 | GitHub 文件（`Cache-Control: max-age=600`）；本開發環境連不到 Pages，未實測 |
+
+多個 PR **不會互相排隊**：`content-pr.yml` 的 concurrency group 是 `content-pr-<PR 編號>`，幾個 PR 同時送就幾個同時跑；`main` 的規則集（§29.1）沒有開「分支必須更新到最新」（`strict_required_status_checks_policy: false`），所以 A 合併之後 B 不必重新同步、重跑檢查。
+
+部署只有一個 group（`pages`），改之前設 `cancel-in-progress: true`（新的來就取消舊的）。五個 PR 三分鐘內陸續合併，前四次建置被取消，最後一次從當時的 `main` 建站，五個人的內容一起上線——**最晚送出的人等的時間和他獨自送一樣**，反而是最早送的人多等幾分鐘。2026-10-25 10:40 就是這樣：兩次被取消，10:45 那次成功，從第一次合併到上線約 9 分鐘。
+
+所以正常情況下，最晚那位同事從審核通過到看到內容大約 7–8 分鐘（CDN 快取最壞再加 10 分鐘），不是一小時。
+
+### 34.2 真正的風險：連續合併讓建置永遠跑不完
+
+「取消舊的」有一個邊界情況：只要每隔不到一次建置的時間（約 4 分鐘）就有人合併，正在跑的永遠被取消，直到出現空檔為止。今天的量碰不到，但 20 多個組室同一時段上架、或機器人批次匯入時可能。這是唯一會接近「一小時沒人看到內容」的路。
+
+**修法**：`pages.yml` 的 `cancel-in-progress` 改 `false`。GitHub 對同一個 concurrency group 的行為是「最多一個在跑＋一個排隊」：正在跑的做完，排隊的那次從**當時的** `main` 建站（期間所有合併都包含在內）；再來的觸發只會**取代排隊中的那次**（GitHub 只保留最新一個 pending，舊的 pending 顯示 cancelled）。於是任何人從合併到上線最多等兩次建置（約 9–10 分鐘），而且不論合併多密集都保證收斂。
+
+代價：以前「預覽部署」與「合併部署」幾分鐘內接連觸發時，前者會被取消；現在兩次都會跑完（約多 4 分鐘的 runner 時間，網站結果相同）。§2.1 與 §29.1 提到「手動那次顯示 cancelled 是正常的」，自本輪起改為「手動那次跑完，快照回寫觸發的那次排在後面跑」。
+
+### 34.3 審核後不重跑：沿用同一 commit 的檢查結果
+
+一般車道的 PR 在審核人按 Approve 後，`content-pr.yml` 以 `pull_request_review` 事件再跑一次，純內容 PR 約 2.5 分鐘、程式 PR 約 6 分鐘，而這次跑的 commit 和幾分鐘前 `pull_request` 事件跑過的是同一個。§2.1 早已把「改成只讀上一輪的結論」列為待辦，本輪做掉：
+
+| job | 做什麼 | 權限 |
+| --- | --- | --- |
+| `reuse`（新；只在 `pull_request_review` 事件跑） | 不 checkout，只用 `gh api` 找同一個 workflow、`head_sha` 相同、事件 `pull_request`、結論 `success`、`lane-result` artifact 未過期（保留 1 天）的執行，輸出其 `run_id`（必須是整數，否則視為沒有） | `actions: read` |
+| `test` | `needs: reuse`，`if: !cancelled() && needs.reuse.outputs.run_id == ''`：`pull_request` 事件（`reuse` 被略過、輸出為空）照常跑；審核事件只在找不到可沿用的執行時跑；`reuse` 失敗也照常跑 | 不變 |
+| `lane` | `needs: [reuse, test]`；「Download results」加 `run-id: ${{ needs.reuse.outputs.run_id || github.run_id }}` 與 `github-token`；驗證步驟、API 檔案清單判定、GATE 計算**完全不變**；留言多一列「檢查結果來源」指向沿用的執行 | 不變（本來就有 `actions: write`） |
+
+**為什麼安全**：artifact 綁定 head SHA——同一個 commit 重跑一次會得到相同的 artifact；`lane` job 從第四十輪起就把 artifact 當不可信資料驗證格式、用 API 的檔案清單自己判定範圍、車道與閘門（§2.2、§28.6、§29.2），沿用舊 artifact 走的是同一條驗證路徑。審核期間作者又推了新 commit，`head_sha` 就不同，`reuse` 找不到、照舊全跑；`--match-head-commit` 也仍只合併這次檢查的那個 head（§28）。規則集要求的狀態檢查 `test` 在審核事件是 `skipped`，GitHub 把 `if:` 略過的 job 視為通過（同一 commit 上先前的 `test` 本來就是 success）。
+
+**不做的**：`pull_request` 事件還在跑時審核進來，`content-pr-<PR>` 的 `cancel-in-progress: true` 會取消它、`reuse` 找不到成功的執行而全跑——和改之前相同，不另外處理。
+
+### 34.4 改之後，最晚送出的同事要等多久
+
+| 階段 | 改之前 | 改之後 |
+| --- | --- | --- |
+| Approve 後到合併 | 純內容約 2.5 分鐘 | `reuse`＋`lane` 約 1 分鐘（第一次實跑數字補在 [ci-cd-overview.md](ci-cd-overview.md) §3） |
+| 合併到上線 | 一次建置 3–4.8 分鐘；連續合併時可能被無限取消 | 最多兩次建置約 9–10 分鐘；保證收斂 |
+| CDN | 最多 10 分鐘 | 不變；正式環境部署完成時清快取（§7） |
+
+**正式環境**（署內 GitLab＋自架 runner）對應的設定是 pipeline 的 `resource_group`（同一資源一次只跑一條，排隊不取消）或 `interruptible: false`；部署腳本最後一步呼叫反向代理／CDN 的清快取 API，否則民眾還可能看到 10 分鐘舊頁。
+
+測試：`tests/round40-ci-isolation.test.mjs` 的 `#68` 兩題（`reuse` job 的權限與條件、`test`／`lane` 的 `needs` 與下載來源、`pages.yml` 的 concurrency 與本節）。

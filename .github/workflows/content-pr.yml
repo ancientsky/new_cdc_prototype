@@ -24,10 +24,14 @@ name: Content PR lane (checks, preview, auto-merge)
 #   只有 lane job 判定為純內容時，被略過的程式檢查才算通過（留言顯示「略過（純內容變更）」），artifact 怎麼寫都不能讓程式 PR 免檢。
 # 為什麼不用 pull_request_target：它在 base 分支的脈絡執行並預設帶寫入權杖，一旦 checkout PR 的程式碼就等於把寫入權杖交給 PR 作者
 # （GitHub Security Lab 稱 "pwn request"）。目前只接受同 repo 分支的 PR（SAME_REPO）；若未來接受 fork，見 docs/deploy.md 第四十輪。
+#
+# 第六十八輪（docs/deploy.md 第 34 節）：審核人按 Approve（pull_request_review）時不再整套重跑。reuse job 用 API 找同一個 head commit
+#   在 pull_request 事件已經跑完且成功的那次執行，lane job 直接下載它的 lane-result artifact；找不到（還在跑、被取消、失敗、artifact 過期）
+#   才跑 test job。artifact 綁定 head SHA，內容和重跑一次相同；lane job 本來就把它當不可信資料驗證、用 API 檔案清單自己算範圍與閘門。
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-  # 一般車道：審核人按下 Approve 後重跑一次，核准＋檢查通過即合併
+  # 一般車道：審核人按下 Approve 後再跑一次，核准＋檢查通過即合併（第六十八輪起沿用同一 commit 的檢查結果，不重跑 test job）
   pull_request_review:
     types: [submitted]
 
@@ -41,7 +45,46 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # 第六十八輪：審核事件才跑。不 checkout、不執行 repo 內任何程式，只用 gh 查 API；權限只有 actions: read（讀執行紀錄與 artifact 清單）。
+  # 條件：同一個 workflow、head_sha 相同、事件是 pull_request、結論 success、lane-result artifact 還在（保留 1 天；超過就重跑）。
+  # 輸出 run_id 只能是整數（下面會驗），空字串代表「沒有可沿用的執行」。
+  reuse:
+    if: github.event_name == 'pull_request_review'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+    outputs:
+      run_id: ${{ steps.find.outputs.run_id }}
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      REPO: ${{ github.repository }}
+      HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - name: Find a successful run of this workflow for the same head commit (gh only)
+        id: find
+        run: |
+          RUN_ID=""
+          if [[ "$HEAD_SHA" =~ ^[0-9a-f]{40}$ ]]; then
+            for id in $(gh api "repos/$REPO/actions/workflows/content-pr.yml/runs?head_sha=$HEAD_SHA&event=pull_request&status=success&per_page=5" \
+                --jq '.workflow_runs[] | select(.head_sha == env.HEAD_SHA and .conclusion == "success") | .id' 2>/dev/null); do
+              [[ "$id" =~ ^[0-9]+$ ]] || continue
+              if [ -n "$(gh api "repos/$REPO/actions/runs/$id/artifacts" --jq '.artifacts[] | select(.name == "lane-result" and .expired == false) | .id' 2>/dev/null)" ]; then
+                RUN_ID="$id"
+                break
+              fi
+            done
+          fi
+          if [ -n "$RUN_ID" ]; then
+            echo "沿用執行 $RUN_ID 的檢查結果（同一 head commit ${HEAD_SHA::7}，pull_request 事件、結論 success、artifact 未過期）；test job 不重跑"
+          else
+            echo "找不到可沿用的執行（還在跑、被取消、失敗或 artifact 已過期）：test job 照舊全跑"
+          fi
+          echo "run_id=$RUN_ID" >> "$GITHUB_OUTPUT"
+
   test:
+    # 第六十八輪：pull_request 事件 reuse 被略過（輸出為空）照常跑；審核事件只在找不到可沿用的執行時跑。!cancelled() 讓 reuse 失敗時也照常跑。
+    needs: reuse
+    if: ${{ !cancelled() && needs.reuse.outputs.run_id == '' }}
     runs-on: ubuntu-latest
     # 執行 PR 程式碼的 job：只有唯讀權杖，而且步驟都不把 GITHUB_TOKEN 放進環境變數（唯一例外是查 team 那一步，只跑 gh 指令）
     permissions:
@@ -275,8 +318,8 @@ jobs:
           exit 1
 
   lane:
-    needs: test
-    # test 失敗（檢查沒過）時 lane 仍要跑：留言、貼標籤、把「擋合併」的原因寫出來。只有整個工作流程被取消才跳過。
+    needs: [reuse, test]
+    # test 失敗（檢查沒過）時 lane 仍要跑：留言、貼標籤、把「擋合併」的原因寫出來；test 因沿用而略過時也要跑。只有整個工作流程被取消才跳過。
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     permissions:
@@ -291,6 +334,8 @@ jobs:
       # 分叉來的 PR 拿不到寫入權杖：只跑檢查，不推預覽、不留言、不合併
       SAME_REPO: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
       PREVIEW_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/preview/pr-${{ github.event.pull_request.number }}/
+      # 第六十八輪：沿用的執行 id（空＝這次自己跑的 test job）。只在留言裡標示；artifact 的驗證與閘門計算不因此放寬
+      REUSE_RUN: ${{ needs.reuse.outputs.run_id }}
     # 這個 job 沒有 checkout、沒有 setup-node、沒有 npm：能執行的只有 runner 內建的 bash／jq／git／gh 和下面釘住 SHA 的 download-artifact。
     steps:
       - name: Download results
@@ -300,6 +345,9 @@ jobs:
         with:
           name: lane-result
           path: ${{ runner.temp }}/result
+          # 第六十八輪：審核事件沿用同一 head commit 上一次執行的 artifact（reuse job 驗過是整數）；平常就是這次執行
+          run-id: ${{ needs.reuse.outputs.run_id || github.run_id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
       # artifact 是 PR 程式碼產生的，一律當資料：每個值都過列舉／格式檢查才寫進 GITHUB_ENV（所以不可能夾帶換行或其他變數），
       # lane.json 的檔案清單必須涵蓋 PR 實際變更的每個檔（用 API 查，不信 artifact），否則不採用。
@@ -505,6 +553,7 @@ jobs:
               "| 項目 | 結果 |",
               "| --- | --- |",
               "| 變更範圍 | " + (if $e.CONTENT_ONLY == "true" then "純內容（content/、data/snapshots/）：只跑內容閘門，程式檢查略過（合併後 main 上全跑）" else "含程式／文件：全部檢查" end) + " |",
+              "| 檢查結果來源 | " + (if ($e.REUSE_RUN // "") != "" then "沿用同一 commit 的[上一次執行](" + ($e.RUN_URL | sub("/runs/[0-9]+$"; "/runs/" + $e.REUSE_RUN)) + ")（審核後不重跑）" else "本次執行" end) + " |",
               "| 測試（npm test） | " + icon($e.TEST) + " |",
               "| 內容測試（npm run test:content） | " + icon($e.CONTENT_TEST) + " |",
               "| Lint（eslint） | " + icon($e.LINT) + " |",

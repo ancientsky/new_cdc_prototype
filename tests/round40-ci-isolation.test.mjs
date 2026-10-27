@@ -68,7 +68,7 @@ const cp = jobsOf(read(`${WF_DIR}/content-pr.yml`));
 const cpText = read(`${WF_DIR}/content-pr.yml`);
 
 test('#81 content-pr：test job 只有 contents: read，lane job 才有寫入權限；PR 程式碼只在 test job 執行', () => {
-  assert.deepEqual(Object.keys(cp), ['test', 'lane']);
+  assert.deepEqual(Object.keys(cp), ['reuse', 'test', 'lane']);
   const t = cp.test;
   assert.match(t, /\n {4}permissions:\n {6}contents: read\n/);
   assert.ok(!/: write/.test(t), 'test job 不得有任何 write 權限');
@@ -94,7 +94,7 @@ test('#81 content-pr：test job 只有 contents: read，lane job 才有寫入權
     assert.ok(t.includes(needle), `test job 缺 ${needle}`);
   }
   const l = cp.lane;
-  assert.match(l, /(^|\n) {4}needs: test\n/);
+  assert.match(l, /(^|\n) {4}needs: \[reuse, test\]\n/);
   for (const p of ['contents: write', 'pull-requests: write', 'issues: write', 'actions: write']) assert.ok(l.includes(p), `lane job 缺 ${p}`);
   // 工作流程層級仍然唯讀
   assert.match(cpText.split(/\njobs:\n/)[0], /\npermissions:\n {2}contents: read\n/);
@@ -725,4 +725,52 @@ test('#125 留言（jq 實跑）：被覆寫的 PR 留言標題是一般車道�
   assert.ok(md.includes('⏳ 等待審核：需 1 位核准（目前 0）'));
   const ok = commentWith({ ...env, LANE: 'fast', LABEL: 'lane:fast', AUTO: 'true', NEED: '0', DOWNGRADED: 'false', ACTION: 'merge' }, L).stdout;
   assert.ok(ok.includes('| 車道核對（API 檔案清單） | ✅ 與 PR 算出的車道一致 |') && ok.includes('快車道自動合併（squash）'));
+});
+
+// ───────── 第六十八輪：審核後沿用檢查結果；部署排隊不取消 ─────────
+
+test('#68 content-pr：reuse job 只在審核事件跑、只有 actions: read、只跑 gh；test job 在找不到可沿用的執行時才跑；lane 從指定 run 下載', () => {
+  const r = cp.reuse;
+  assert.match(r, /(^|\n) {4}if: github\.event_name == 'pull_request_review'\n/);
+  assert.match(r, /\n {4}permissions:\n {6}actions: read\n/);
+  assert.ok(!/: write/.test(r), 'reuse job 不得有任何 write 權限');
+  const code = allRuns(r)
+    .join('\n')
+    .split('\n')
+    .filter((x) => !x.trim().startsWith('#'))
+    .join('\n');
+  assert.ok(
+    !/uses:/.test(
+      r
+        .split('\n')
+        .filter((x) => !x.trim().startsWith('#'))
+        .join('\n'),
+    ),
+    'reuse job 沒有任何 action（不 checkout）',
+  );
+  assert.ok(!/\bnpm\b|\bnpx\b|\bnode\b|scripts\//.test(code), 'reuse job 不執行 repo 內程式');
+  // 只採用同一 head SHA、pull_request 事件、結論 success、artifact 未過期的執行；run_id 必須是整數
+  assert.ok(code.includes('event=pull_request&status=success'));
+  assert.ok(code.includes('.head_sha == env.HEAD_SHA and .conclusion == "success"'));
+  assert.ok(code.includes('.name == "lane-result" and .expired == false'));
+  assert.ok(code.includes('[[ "$id" =~ ^[0-9]+$ ]] || continue'));
+  assert.ok(code.includes('[[ "$HEAD_SHA" =~ ^[0-9a-f]{40}$ ]]'));
+  // test job：reuse 略過（pull_request）或找不到 ⇒ 跑；reuse 失敗也要跑
+  assert.match(cp.test, /\n {4}needs: reuse\n {4}if: \$\{\{ !cancelled\(\) && needs\.reuse\.outputs\.run_id == '' \}\}\n/);
+  // lane：下載 artifact 用 reuse 的 run_id（沒有就用這次），帶權杖；驗證步驟不因沿用而放寬（仍是同一步）
+  const dl = stepNamed(cp.lane, 'Download results');
+  assert.ok(dl.includes('run-id: ${{ needs.reuse.outputs.run_id || github.run_id }}'));
+  assert.ok(dl.includes('github-token: ${{ secrets.GITHUB_TOKEN }}'));
+  assert.ok(cp.lane.includes('REUSE_RUN: ${{ needs.reuse.outputs.run_id }}'));
+  assert.ok(cp.lane.includes('"| 檢查結果來源 | "'), '留言要標示結果沿用自哪一次執行');
+  // 審核事件不推預覽（沒有這次的 preview-dist）
+  assert.ok(stepNamed(cp.lane, 'Download preview dist').includes("github.event_name == 'pull_request'"));
+});
+
+test('#68 pages.yml：部署 concurrency 排隊不取消（cancel-in-progress: false），避免連續合併讓建置永遠跑不完', () => {
+  const pg = read(`${WF_DIR}/pages.yml`);
+  assert.match(pg, /\nconcurrency:\n {2}group: pages\n {2}cancel-in-progress: false\n/);
+  // 文件要說明「一個在跑＋一個排隊」的行為與最多等兩次建置
+  const dep = read('docs/deploy.md');
+  assert.ok(dep.includes('cancel-in-progress') && dep.includes('一個排隊'), 'deploy.md 第 34 節要寫排隊行為');
 });
