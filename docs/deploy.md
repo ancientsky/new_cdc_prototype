@@ -2212,7 +2212,7 @@ npm run reassign-owner -- --from unit.a --to unit.b [--type disease,faq] [--dry-
 
 | 階段 | 改之前 | 改之後 |
 | --- | --- | --- |
-| Approve 後到合併 | 純內容約 2.5 分鐘 | `reuse`＋`lane` 約 1 分鐘（第一次實跑數字補在 [ci-cd-overview.md](ci-cd-overview.md) §3） |
+| Approve 後到合併 | 純內容約 2.5 分鐘、程式 PR 6–9 分鐘 | `reuse`＋`lane` **24 秒**（PR #151 的 review 事件實測：reuse 3 秒、test skipped、lane 14 秒，整個執行 08:23:29 → 08:23:53；同一 PR 的 pull_request 事件跑了 9 分 32 秒） |
 | 合併到上線 | 一次建置 3–4.8 分鐘；連續合併時可能被無限取消 | 最多兩次建置約 9–10 分鐘；保證收斂 |
 | CDN | 最多 10 分鐘 | 不變；正式環境部署完成時清快取（§7） |
 
