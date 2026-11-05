@@ -1,61 +1,115 @@
 {
   "version": 1,
   "lastRun": {
-    "at": "2026-10-25T10:44:59.915Z",
+    "at": "2026-11-05T02:10:55.507Z",
     "source": "official-export",
     "by": "ci",
     "shape": "legacy",
     "mode": "full",
     "producer": "現行官網 TravelEpidemic/ExportJSON",
     "generatedAt": null,
-    "received": 60,
-    "accepted": 60,
+    "received": 65,
+    "accepted": 65,
     "counts": {
-      "new": 43,
+      "new": 65,
       "updated": 0,
-      "withdrawn": 59,
-      "unchanged": 17,
+      "withdrawn": 76,
+      "unchanged": 0,
       "rejected": 0,
       "upgraded": 0
     },
     "total": 76,
     "held": {
       "reasons": [
-        "這批會讓現行清單從 76 則變成 60 則（少掉 59 則，一半以上）：請確認是否真的要撤下這麼多"
+        "這批會讓現行清單從 76 則變成 65 則（少掉 76 則，一半以上）：請確認是否真的要撤下這麼多"
       ]
     },
     "rejected": [],
     "unmapped": [
       {
         "kind": "disease",
+        "value": "沙門氏菌感染症",
+        "ids": [
+          "L7_pDO4KPHNK98c3mZ5Dhg"
+        ]
+      },
+      {
+        "kind": "disease",
         "value": "病毒性腸胃炎",
         "ids": [
           "sQlZM5yGhWGA3ZLhD9FrCA"
         ]
-      },
-      {
-        "kind": "disease",
-        "value": "沙門氏菌感染症",
-        "ids": [
-          "0cESbNbpYyJtuodHwEBVqA"
-        ]
-      },
-      {
-        "kind": "disease",
-        "value": "細菌性腸胃炎",
-        "ids": [
-          "vIHr6595karpNpyRi7SO-g"
-        ]
-      },
-      {
-        "kind": "disease",
-        "value": "呼吸道疾病",
-        "ids": [
-          "dAT_vx9BRnU-7cTwcLwW-A"
-        ]
       }
     ],
     "withdrawn": [
+      {
+        "id": "lQu-5iNul8z5h5Up_56VCQ",
+        "reason": "missing"
+      },
+      {
+        "id": "dXPqHYtwQIWPpv5ovAiLZQ",
+        "reason": "missing"
+      },
+      {
+        "id": "UOzAU0hoIFzQ4fTrDTmsgA",
+        "reason": "missing"
+      },
+      {
+        "id": "pJcqAZS5vsPtIZYEssagKQ",
+        "reason": "missing"
+      },
+      {
+        "id": "2irBI1-wUSwavFrgqpj5_g",
+        "reason": "missing"
+      },
+      {
+        "id": "0cESbNbpYyJtuodHwEBVqA",
+        "reason": "missing"
+      },
+      {
+        "id": "Vr0SYNlkLZUapzZA_Ghn6w",
+        "reason": "missing"
+      },
+      {
+        "id": "vIHr6595karpNpyRi7SO-g",
+        "reason": "missing"
+      },
+      {
+        "id": "hwxNPIlYE0lMcqSs78p8eQ",
+        "reason": "missing"
+      },
+      {
+        "id": "oVG2ymNW-1_iEFfCW4jDuQ",
+        "reason": "missing"
+      },
+      {
+        "id": "ifynwbcjkqJ-AGIl9IpV6w",
+        "reason": "missing"
+      },
+      {
+        "id": "dAT_vx9BRnU-7cTwcLwW-A",
+        "reason": "missing"
+      },
+      {
+        "id": "IUfr-X-q7QH4MZOcAp4cUg",
+        "reason": "missing"
+      },
+      {
+        "id": "yuLXJ8H3-kvzJjJ26Or4aw",
+        "reason": "missing"
+      },
+      {
+        "id": "DAqX4O2HjsfzJesbSDg7Jw",
+        "reason": "missing"
+      },
+      {
+        "id": "sFqMkxpiUWE_5fyFPYyrTw",
+        "reason": "missing"
+      },
+      {
+        "id": "iED63-vUv7KNn5hzPSKZ4w",
+        "reason": "missing"
+      },
       {
         "id": "4S8ZzNn3n5OnS1vzzA2WdA",
         "reason": "missing"
@@ -297,6 +351,29 @@
     "wroteSnapshot": false
   },
   "history": [
+    {
+      "at": "2026-11-05T02:10:55.507Z",
+      "source": "official-export",
+      "producer": "現行官網 TravelEpidemic/ExportJSON",
+      "by": "ci",
+      "mode": "full",
+      "received": 65,
+      "accepted": 65,
+      "total": 76,
+      "counts": {
+        "new": 65,
+        "updated": 0,
+        "withdrawn": 76,
+        "unchanged": 0,
+        "rejected": 0,
+        "upgraded": 0
+      },
+      "unmapped": 2,
+      "held": [
+        "這批會讓現行清單從 76 則變成 65 則（少掉 76 則，一半以上）：請確認是否真的要撤下這麼多"
+      ],
+      "wroteSnapshot": false
+    },
     {
       "at": "2026-10-25T10:44:59.915Z",
       "source": "official-export",

@@ -1,8 +1,8 @@
 {
   "meta": {
     "mode": "live",
-    "fetchedAt": "2026-10-25T10:45:05.576Z",
-    "dataDate": "2026-10-25",
+    "fetchedAt": "2026-11-05T02:11:02.501Z",
+    "dataDate": "2026-11-05",
     "sourceUrl": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON",
     "sourcePage": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
     "label": "國際旅遊疫情建議等級表",
@@ -52,7 +52,7 @@
         "color": "warning"
       }
     ],
-    "rawCount": 2504,
+    "rawCount": 2505,
     "rawFields": [
       "source",
       "effective",
@@ -70,6 +70,22 @@
       "ISO3166_2"
     ],
     "rawSample": [
+      {
+        "source": "CDC",
+        "effective": "2026-10-27T00:00:00+08:00",
+        "senderName": "疾病管制署",
+        "instruction": "對當地採取加強防護",
+        "web": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
+        "alert_title": "國際間旅遊疫情建議",
+        "severity_level": "第二級:警示(Alert)",
+        "alert_disease": "新型A型流感",
+        "areaDesc": "中國大陸",
+        "areaDesc_EN": "China",
+        "circle": "103.974609,34.307144",
+        "ISO3166": "CN",
+        "areaDetail": "遼寧省",
+        "ISO3166_2": "CN-21"
+      },
       {
         "source": "CDC",
         "effective": "2026-10-06T00:00:00+08:00",
@@ -101,22 +117,6 @@
         "ISO3166": "MY",
         "areaDetail": "",
         "ISO3166_2": ""
-      },
-      {
-        "source": "CDC",
-        "effective": "2026-09-01T00:00:00+08:00",
-        "senderName": "疾病管制署",
-        "instruction": "對當地採取加強防護",
-        "web": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-        "alert_title": "國際間旅遊疫情建議",
-        "severity_level": "第二級:警示(Alert)",
-        "alert_disease": "新型A型流感",
-        "areaDesc": "中國大陸",
-        "areaDesc_EN": "China",
-        "circle": "103.974609,34.307144",
-        "ISO3166": "CN",
-        "areaDetail": "北京市",
-        "ISO3166_2": "CN-11"
       }
     ],
     "filterNote": "已排除歷史紀錄：有結束日／已解除者、2023-05-01 前的 COVID-19 建議、第三級逾 365 天未更新者",
@@ -139,12 +139,12 @@
     },
     "changeSummary30": {
       "new": 1,
-      "raised": 0,
+      "raised": 1,
       "lowered": 0,
       "lifted": 0,
       "renewed": 0
     },
-    "changeSummaryAsOf": "2026-10-25",
+    "changeSummaryAsOf": "2026-11-05",
     "changeSummaryMode": "live"
   },
   "data": [
@@ -218,19 +218,19 @@
       "Level": "第二級：警示(Alert)",
       "LevelCode": 2,
       "Disease": "新型A型流感、M痘、麻疹、瘧疾、新冠併發重症",
-      "StartDate": "2026-09-01",
+      "StartDate": "2026-10-27",
       "TargetedLevelCode": 2,
       "TargetedLevel": "第二級：警示(Alert)",
       "TargetedDisease": "新型A型流感、M痘、麻疹、瘧疾",
-      "TargetedStartDate": "2026-09-01",
+      "TargetedStartDate": "2026-10-27",
       "Summary": "新型A型流感為第二級：警示；M痘、麻疹、瘧疾、新冠併發重症為第一級：注意。對當地採取加強防護",
       "Diseases": [
         {
           "Disease": "新型A型流感",
           "Level": "第二級：警示(Alert)",
           "LevelCode": 2,
-          "StartDate": "2026-09-01",
-          "Area": "北京市",
+          "StartDate": "2026-10-27",
+          "Area": "遼寧省",
           "Summary": "對當地採取加強防護",
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         },
@@ -271,6 +271,14 @@
       "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
       "RecentChanges": [
         {
+          "date": "2026-10-27",
+          "Disease": "新型A型流感",
+          "Area": "遼寧省",
+          "kind": "raised",
+          "from": 1,
+          "to": 2
+        },
+        {
           "date": "2026-09-01",
           "Disease": "新型A型流感",
           "Area": "北京市",
@@ -285,14 +293,6 @@
           "kind": "lowered",
           "from": 2,
           "to": 1
-        },
-        {
-          "date": "2026-07-28",
-          "Disease": "新型A型流感",
-          "Area": "甘肅省",
-          "kind": "raised",
-          "from": 1,
-          "to": 2
         }
       ]
     },

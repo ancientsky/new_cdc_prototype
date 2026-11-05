@@ -58,12 +58,12 @@
     "manifest.json"
   ],
   "provenance": {
-    "fetchedAt": "2026-10-25",
+    "fetchedAt": "2026-11-05",
     "mode": "snapshot",
     "sourceUrl": "https://cdcdengue.azurewebsites.net/"
   },
   "updateFrequency": "daily",
-  "lastUpdated": "2026-10-25",
+  "lastUpdated": "2026-11-05",
   "formats": [
     "JSON"
   ],
