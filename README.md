@@ -112,6 +112,16 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第七十輪：Gitea 是不是比 GitLab 更輕量更好
+
+同事問（2026-11-06）：正式環境的 Git 平台，Gitea 是不是比 GitLab 更輕量、更好？
+
+- **更輕量是真的**：單一 Go 執行檔對 Omnibus 的十多個元件與 8 GB 起跳的記憶體建議。但「更好」取決於資訊室已經在維運什麼：已有 GitLab／GHES 就沿用（兩套輕量加起來不會比一套重的輕）；什麼都沒有時 Gitea 或 Forgejo 可選；要搬 Azure 並考慮 GitHub 時併入 #130 一起評估。
+- **為什麼平台不重要**：四眼原則、單位權限、稽核都在寫入閘道與建置，平台只要 API、保護分支、CI；換平台只是閘道多一個轉接器（`git-gitea.mjs`／`git-github.mjs`），CI 三個平台都要移植一次。
+- **要留紀錄的兩點**：Gitea／Forgejo 社群版沒有平台管理操作的稽核紀錄（企業版才有），A 級機關要用管理員人數與日誌補；廠牌認定依「各機關對危害國家資通安全產品限制使用原則」由機關自行做，Gitea Ltd 的登記地本輪查不到官方資料。
+- **Actions 相容性被高估**：原型工作流程的 YAML 骨架可搬，但車道判斷、沿用檢查結果、自動合併都是 GitHub API 呼叫，Gitea 一樣要重寫；Gitea 的 `concurrency` 等同「取消進行中」，第六十八輪的部署排隊會倒退，要在部署腳本加鎖。
+- 文件：[docs/git-platform-choice.md](docs/git-platform-choice.md)（需求對照、相容性表、稽核差異、資安與採購核對清單、資訊室要回答的四題）；[docs/deploy.md](docs/deploy.md) §14.8 第 5 題、[docs/ci-cd-overview.md](docs/ci-cd-overview.md) §5、[architecture-decisions](docs/architecture-decisions.md) §55。本輪只有文件，沒有程式變更。
+
 ## 第六十九輪：國際疫情上架，用 API 還是 MCP
 
 同事（2026-11-06）：國際疫情系統（疫情中心資料庫）把資料上架到新官網，用 API 還是 MCP 比較好？
