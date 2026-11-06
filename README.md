@@ -112,7 +112,7 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
-## 第六十九輪：Gitea 是不是比 GitLab 更輕量更好
+## 第七十輪：Gitea 是不是比 GitLab 更輕量更好
 
 同事問（2026-11-06）：正式環境的 Git 平台，Gitea 是不是比 GitLab 更輕量、更好？
 
@@ -120,7 +120,16 @@
 - **為什麼平台不重要**：四眼原則、單位權限、稽核都在寫入閘道與建置，平台只要 API、保護分支、CI；換平台只是閘道多一個轉接器（`git-gitea.mjs`／`git-github.mjs`），CI 三個平台都要移植一次。
 - **要留紀錄的兩點**：Gitea／Forgejo 社群版沒有平台管理操作的稽核紀錄（企業版才有），A 級機關要用管理員人數與日誌補；廠牌認定依「各機關對危害國家資通安全產品限制使用原則」由機關自行做，Gitea Ltd 的登記地本輪查不到官方資料。
 - **Actions 相容性被高估**：原型工作流程的 YAML 骨架可搬，但車道判斷、沿用檢查結果、自動合併都是 GitHub API 呼叫，Gitea 一樣要重寫；Gitea 的 `concurrency` 等同「取消進行中」，第六十八輪的部署排隊會倒退，要在部署腳本加鎖。
-- 文件：[docs/git-platform-choice.md](docs/git-platform-choice.md)（需求對照、相容性表、稽核差異、資安與採購核對清單、資訊室要回答的四題）；[docs/deploy.md](docs/deploy.md) §14.8 第 5 題、[docs/ci-cd-overview.md](docs/ci-cd-overview.md) §5、[architecture-decisions](docs/architecture-decisions.md) §54。本輪只有文件，沒有程式變更。
+- 文件：[docs/git-platform-choice.md](docs/git-platform-choice.md)（需求對照、相容性表、稽核差異、資安與採購核對清單、資訊室要回答的四題）；[docs/deploy.md](docs/deploy.md) §14.8 第 5 題、[docs/ci-cd-overview.md](docs/ci-cd-overview.md) §5、[architecture-decisions](docs/architecture-decisions.md) §55。本輪只有文件，沒有程式變更。
+## 第六十九輪：國際疫情上架，用 API 還是 MCP
+
+同事（2026-11-06）：國際疫情系統（疫情中心資料庫）把資料上架到新官網，用 API 還是 MCP 比較好？
+
+- **用 API，就是第四十三輪已經做好的三條路**（排程拉、核定時推、後台貼上），同一個匯入器、同一套機器把關。
+- **MCP 不是 API 的替代品**：它是讓語言模型代理人「找到並呼叫工具」的協定，工具內部幾乎都還是在呼叫 API。上架這條路沒有模型、全是確定性規則，放進模型只會把可測試變成大概會對，還在正本與網站之間多一個轉述版本。
+- **MCP 什麼時候才有意義**：有人要讓 AI 助理替自己用本站——值班同事問「今天哪些被退回」（唯讀）、請助理把 WHO 公告代擬成本站格式後**由人在後台送出**（dry-run）、外部 AI 助理查公開警示（開發者入口）。都在人與 API 之間，不在系統與系統之間；寫入永遠不經模型。
+- **若將來要做**：只包既有 API、放閘道後面用同一套登入稽核、工具描述從 `openapi.json` 產生、沒有 `publish` 工具。招標規格該寫的是交換契約與把關規則，不是「提供 MCP 介面」。
+- 文件：[docs/intl-epidemic.md](docs/intl-epidemic.md) §9、[architecture-decisions](docs/architecture-decisions.md) §54。
 
 ## 第六十八輪：幾個組室同時上架，最晚的那位要等多久
 

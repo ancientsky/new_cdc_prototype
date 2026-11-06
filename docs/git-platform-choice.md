@@ -1,4 +1,4 @@
-# Git 平台怎麼選：Gitea／Forgejo、GitLab、GitHub Enterprise（第六十九輪，2026-11-06）
+# Git 平台怎麼選：Gitea／Forgejo、GitLab、GitHub Enterprise（第七十輪，2026-11-06）
 
 > 給資訊室與問這個問題的同事。起因：有同事問「Gitea 是不是比 GitLab 更輕量、更好？」
 > 依據：[deploy.md](deploy.md) §14（寫入閘道與自架 GitLab 的設計）、[ci-cd-overview.md](ci-cd-overview.md)（原型現在的 CI／CD）、[git-as-cms.md](git-as-cms.md) §3.4（資訊室要維運的清單）、Issue #130（Azure 託管與 GHES／GitLab 的討論）。

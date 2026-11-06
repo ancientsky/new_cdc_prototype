@@ -769,7 +769,7 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
    - 資安政策是否允許後台以外部雲端 IdP 登入？
 4. **主機位置：** 閘道放哪裡（和 GitLab 同一區段？DMZ 還是內網？），同事從哪些網段連後台，在家能否透過 VPN 使用？
 5. **GitLab：**
-   - 機關是否已在維運 GitLab（或 GHES、Gitea）？給哪些系統用？若沒有任何平台，選型見 [git-platform-choice.md](git-platform-choice.md)（第六十九輪：Gitea／Forgejo 較輕量但社群版沒有平台稽核紀錄，且 Actions 的 `concurrency` 語意不同；有現成平台就用現成的）。
+   - 機關是否已在維運 GitLab（或 GHES、Gitea）？給哪些系統用？若沒有任何平台，選型見 [git-platform-choice.md](git-platform-choice.md)（第七十輪：Gitea／Forgejo 較輕量但社群版沒有平台稽核紀錄，且 Actions 的 `concurrency` 語意不同；有現成平台就用現成的）。
    - 版本、Free 或 Premium？
    - 服務帳號用 bot 使用者還是 Project Access Token？
    - token 換發由誰負責？
