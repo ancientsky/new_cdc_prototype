@@ -121,6 +121,7 @@
 - **要留紀錄的兩點**：Gitea／Forgejo 社群版沒有平台管理操作的稽核紀錄（企業版才有），A 級機關要用管理員人數與日誌補；廠牌認定依「各機關對危害國家資通安全產品限制使用原則」由機關自行做，Gitea Ltd 的登記地本輪查不到官方資料。
 - **Actions 相容性被高估**：原型工作流程的 YAML 骨架可搬，但車道判斷、沿用檢查結果、自動合併都是 GitHub API 呼叫，Gitea 一樣要重寫；Gitea 的 `concurrency` 等同「取消進行中」，第六十八輪的部署排隊會倒退，要在部署腳本加鎖。
 - 文件：[docs/git-platform-choice.md](docs/git-platform-choice.md)（需求對照、相容性表、稽核差異、資安與採購核對清單、資訊室要回答的四題）；[docs/deploy.md](docs/deploy.md) §14.8 第 5 題、[docs/ci-cd-overview.md](docs/ci-cd-overview.md) §5、[architecture-decisions](docs/architecture-decisions.md) §55。本輪只有文件，沒有程式變更。
+
 ## 第六十九輪：國際疫情上架，用 API 還是 MCP
 
 同事（2026-11-06）：國際疫情系統（疫情中心資料庫）把資料上架到新官網，用 API 還是 MCP 比較好？
