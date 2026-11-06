@@ -90,7 +90,7 @@ Git＋CI（本原型）
 
 | 不再需要 | 新增或改為 |
 | --- | --- |
-| CMS 應用程式與其升級、外掛 | Git 代管平台（GitHub／GitLab／Gitea，可用機關現有的） |
+| CMS 應用程式與其升級、外掛 | Git 代管平台（GitHub／GitLab／Gitea，可用機關現有的；怎麼選見 [git-platform-choice.md](git-platform-choice.md)） |
 | 內容資料庫（備份、調校、修補） | CI 執行器（雲端代管或自建 runner） |
 | 動態網站主機（應用伺服器） | 靜態網站主機或 CDN（Pages、S3＋CloudFront、機關現有 web server 放靜態檔都可） |
 | CMS 帳號系統 | Git 平台帳號接 SSO；`CODEOWNERS` 維護 |

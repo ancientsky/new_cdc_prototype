@@ -249,7 +249,7 @@
 ## 7. 這份文件沒有回答的事
 
 - 現行官網的真實頁數、附件數、CMS 產品與版本、現行維運合約：要請資訊室提供，第 1 與第 5 題的推論與時程估算都應該在拿到後重算。
-- 署內 GitLab、AD／Workspace 登入、主機位置：[deploy.md](deploy.md) §14.8 的七個問題仍待資訊室回答。
+- 署內 GitLab、AD／Workspace 登入、主機位置：[deploy.md](deploy.md) §14.8 的七個問題仍待資訊室回答。同事問「Gitea 是不是比 GitLab 輕量又好」：是較輕量，但該用哪個取決於資訊室已經在維運什麼，見 [git-platform-choice.md](git-platform-choice.md)。
 - KPI 目標值、治理欄位清單、發布車道範圍：待委員會核定。
 - 七語的範圍與供應方式、無障礙標章的申請時點：待公關室與資訊室決定。
 - 疾管家現在是純選單、關鍵字規則還是已接語言模型，以及原廠商合約的範圍：待公關室提供，見 [line-chatbot.md](line-chatbot.md) §6。
