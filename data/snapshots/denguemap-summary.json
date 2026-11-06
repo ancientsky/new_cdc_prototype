@@ -2,61 +2,61 @@
   "schema": 1,
   "label": "登革熱地圖疫情摘要（summary.json＋manifest.json）",
   "mode": "live",
-  "fetchedAt": "2026-11-05T02:10:55.502Z",
+  "fetchedAt": "2026-11-06T02:11:49.175Z",
   "sourceUrl": "https://ancientsky.github.io/denguemap/data/summary.json",
   "manifest": {
     "schema": 1,
-    "generatedAt": "2026-11-04T17:19:14Z",
-    "latestOnset": "2026-11-02",
+    "generatedAt": "2026-11-05T17:27:48Z",
+    "latestOnset": "2026-11-03",
     "sources": {
       "cases": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-04T17:19:14Z"
+        "fetchedAt": "2026-11-05T17:27:48Z"
       },
       "imported": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-04T17:19:14Z"
+        "fetchedAt": "2026-11-05T17:27:48Z"
       },
       "notices": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-04T17:19:14Z"
+        "fetchedAt": "2026-11-05T17:27:48Z"
       },
       "clusters": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-04T17:19:14Z"
+        "fetchedAt": "2026-11-05T17:27:48Z"
       },
       "vector": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-04T17:19:14Z"
+        "fetchedAt": "2026-11-05T17:27:48Z"
       },
       "ns1": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-04T17:19:14Z"
+        "fetchedAt": "2026-11-05T17:27:48Z"
       },
       "travel": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-04T17:19:14Z"
+        "fetchedAt": "2026-11-05T17:27:48Z"
       }
     },
     "warnings": []
   },
   "summary": {
-    "asOf": "2026-11-05",
-    "latestOnset": "2026-11-02",
+    "asOf": "2026-11-06",
+    "latestOnset": "2026-11-03",
     "year": 2026,
     "ytd": {
       "local": 16,
-      "imported": 214
+      "imported": 215
     },
     "last7": {
-      "local": 2,
+      "local": 1,
       "imported": 2
     },
     "last14": {
@@ -65,10 +65,10 @@
     },
     "last30": {
       "local": 3,
-      "imported": 42
+      "imported": 41
     },
     "prevYtd": {
-      "local": 27,
+      "local": 28,
       "imported": 188
     },
     "byCounty": {
@@ -126,7 +126,7 @@
       },
       "64000": {
         "local": 12,
-        "imported": 38
+        "imported": 39
       },
       "65000": {
         "local": 0,
@@ -157,11 +157,6 @@
         2
       ],
       [
-        "10004010",
-        0,
-        1
-      ],
-      [
         "10013190",
         0,
         1
@@ -178,6 +173,11 @@
       ],
       [
         "63000100",
+        0,
+        1
+      ],
+      [
+        "64000030",
         0,
         1
       ],
@@ -218,13 +218,6 @@
       ]
     ],
     "townNames": {
-      "10004010": {
-        "county": "10004",
-        "countyZh": "新竹縣",
-        "countyEn": "Hsinchu County",
-        "zh": "竹北市",
-        "en": "Zhubei City"
-      },
       "10013190": {
         "county": "10013",
         "countyZh": "屏東縣",
@@ -259,6 +252,13 @@
         "countyEn": "Taipei City",
         "zh": "內湖區",
         "en": "Neihu District"
+      },
+      "64000030": {
+        "county": "64000",
+        "countyZh": "高雄市",
+        "countyEn": "Kaohsiung City",
+        "zh": "左營區",
+        "en": "Zuoying District"
       },
       "64000040": {
         "county": "64000",

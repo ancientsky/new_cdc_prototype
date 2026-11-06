@@ -1,8 +1,8 @@
 {
   "meta": {
     "mode": "live",
-    "fetchedAt": "2026-11-05T02:11:02.501Z",
-    "dataDate": "2026-11-05",
+    "fetchedAt": "2026-11-06T02:11:58.331Z",
+    "dataDate": "2026-11-06",
     "sourceUrl": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON",
     "sourcePage": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
     "label": "國際旅遊疫情建議等級表",
@@ -138,13 +138,13 @@
       "note": "同一疾病同一等級涵蓋 50% 以上國家／地區者視為全球背景提醒（遵守一般預防措施），不逐國列出；各國排序、卡片、地圖與等級表改用排除背景提醒後的針對性等級（Targeted*）。"
     },
     "changeSummary30": {
-      "new": 1,
+      "new": 0,
       "raised": 1,
       "lowered": 0,
       "lifted": 0,
       "renewed": 0
     },
-    "changeSummaryAsOf": "2026-11-05",
+    "changeSummaryAsOf": "2026-11-06",
     "changeSummaryMode": "live"
   },
   "data": [
