@@ -52,13 +52,15 @@ export function chromePath() {
       .filter((x) => /^chromium-\d+$/.test(x))
       .sort()
       .pop();
-    if (d) return path.join(root, d, 'chrome-linux/chrome');
+    // 第七十二輪：新版 Playwright 的 Chromium 放在 chrome-linux64/（舊版是 chrome-linux/），兩個都找；都沒有就交給 Playwright 自己找
+    if (d) for (const sub of ['chrome-linux64/chrome', 'chrome-linux/chrome']) if (fs.existsSync(path.join(root, d, sub))) return path.join(root, d, sub);
   }
   return undefined;
 }
 
 /** 靜態伺服器（含 gzip，接近 GitHub Pages 的傳輸量） */
-export function serveDist(dist = DIST) {
+// 第七十二輪：cacheControl 可指定（perf-lighthouse.mjs 用 GitHub Pages 的 max-age=600，讓 Lighthouse 的快取稽核看到與線上相同的標頭）
+export function serveDist(dist = DIST, { cacheControl = 'no-store' } = {}) {
   const server = http.createServer((req, res) => {
     let url = decodeURIComponent(req.url.split('?')[0]);
     if (BASE && url.startsWith(BASE)) url = url.slice(BASE.length) || '/';
@@ -70,7 +72,7 @@ export function serveDist(dist = DIST) {
     }
     const ext = path.extname(file);
     res.setHeader('Content-Type', TYPES[ext] ?? 'application/octet-stream');
-    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('Cache-Control', cacheControl);
     if (GZIP.has(ext) && /\bgzip\b/.test(req.headers['accept-encoding'] ?? '')) {
       res.setHeader('Content-Encoding', 'gzip');
       fs.createReadStream(file)

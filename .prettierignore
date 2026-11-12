@@ -127,3 +127,6 @@ eval/**/*.mjs
 !scripts/reassign-owner.mjs
 !src/client/admin/mine-gateway.js
 !tests/round67-handover.test.mjs
+# 第七十二輪
+!scripts/perf-lighthouse.mjs
+!tests/round72-lighthouse.test.mjs

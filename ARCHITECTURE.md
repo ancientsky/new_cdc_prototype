@@ -2778,3 +2778,20 @@ Yulun 問盲測弱項（錯字、長輩說法、情境題、外語）有沒有�
 | 不變的事 | 審核事件不推預覽；`--match-head-commit`；規則集的必要檢查 `test`（略過的 job 視為通過） |
 
 教訓：並發問題先把每個 group 的取消／排隊語意寫出來再算等待時間；「取消舊的」在低頻時最省，在高頻時會餓死，而靜態站的部署只要「最後一次包含全部」，排隊一個就夠。
+
+## 73. 第七十二輪：Lighthouse 檢測後的四項修正與量測工具（2026-11-12）
+
+同事請我們用 Chrome Lighthouse 檢測全站效能。完整數字、處置與理由在 `docs/performance-lighthouse.md`；取捨在 architecture-decisions §57。（章號 73：§72 由同日平行進行的第七十一輪架構與 UI/UX 檢視使用。）
+
+| 項目 | 契約 |
+| --- | --- |
+| CSS 壓縮 | `scripts/lib/minify.mjs` `minifyCssDir(dir, { enabled })`：esbuild `transform`（`loader: 'css'`、`minify`、`charset: 'utf8'`、`legalComments: 'none'`），就地覆寫，不輸出 source map；回傳 `{ skipped, files, before, after }`。`build.mjs` 在 JS 壓縮之後、主題 CSS 寫入之後呼叫（`dist/assets/styles`），印 `[build] CSS 壓縮 → assets/styles：…`。`MINIFY=off` 與 JS 一起關。`src/styles` 不變（註解留給人看）；正式建置 `dist-profile.mjs` 把整包 `assets/` 複製到 `dist-internal/` 在最後，拿到的也是壓縮後的檔。沒有任何程式讀 dist 的 CSS 原文（主題 CSS 讀的是 `src/styles/tokens.css`） |
+| 首頁提示連結 | `home.mjs` `fromHint()`：每個 `data-from-alt` 連結帶 `href="${basePath}${L.path}/"`（該語言首頁），仍 `hidden`；`ui.js` 驗證 `?from=` 後照舊覆寫 `href` 為該語言同一頁 |
+| 快取規則 | `emit-headers.mjs` `CACHE_RULES`（`no-cache`／`revalidate-hour`／`immutable`，各有 `paths`、`why`）；`headers.json` 多 `cache` 鍵（`headers`、`remove` 形狀不變）。`renderNginx(h, remove, { prefix })`：伺服器層 `add_header Cache-Control "no-cache"`，`^~ /assets/`、`/img/`、`/files/`、`/pagefind/{index,fragment,filter}/` 與 `pf_meta` regex 共 7 個 `location`，**每個都重列全部安全標頭**（`add_header` 子層不繼承）；檔案須 include 在 `server{}`。`renderNetlify(h, remove, { prefix })` 只列與平台預設不同、彼此不重疊的 7 條路徑。`renderIisCache({ prefix })`：`DisableCache` 預設＋`<location path>` 覆寫，嵌在 README。`prefix` 預設 `config.basePath` |
+| 量測 | `scripts/perf-lighthouse.mjs`（`npm run perf:lighthouse`）：需根路徑建置；沿用 `perf-ask.mjs` 的 `serveDist`（新參數 `cacheControl`，此處 `max-age=600`）與 `chromePath`（第七十二輪改為同時找 `chrome-linux64/`）；環境變數 `LH_RUNS`、`LH_PAGES`、`LH_FORMS`、`LH_OUT`（預設 `.local/lighthouse/`）、`LH_JSON`、`LH_MIN_PERF`；輸出中位數 markdown 表。`lighthouse` 為 devDependency（^13.6.0，chrome-launcher 隨附） |
+| 工作流程 | `.github/workflows/lighthouse.yml`：`workflow_dispatch`（`runs`、`pages`）＋每月排程；`permissions: contents: read`；`concurrency: lighthouse`；SHA 與 `dast.yml` 相同；輸入經 `env` 傳入；表格寫 `$GITHUB_STEP_SUMMARY`、報告上傳 artifact。**不是必要檢查**，不在 PR／push 觸發 |
+| 版面跳動 | `layout.mjs` `EARLY_JS`：網址帶 `?q=` 時在 `<html>` 標 `data-q`（首次繪製前執行；inline script 雜湊由建置重算）。`components.css`：`html[data-q] .c-answer[aria-busy="true"]`、`html[data-q] #search-results:empty` 的 `min-height:100vh`——深連結的答案區／搜尋結果區在載入中先撐一個視窗高，下方區塊從一開始就在視窗外。`answer/ui.js` `busy(on)` 同步切 `style.minHeight`（頁內再問時也適用）；`search.js` 查無結果時把預留高度放掉（`minHeight:'0'`），查無提示才不會被推到畫面外。沒有 `?q=` 的頁面不受影響 |
+| 測試 | `tests/round72-lighthouse.test.mjs` |
+
+教訓：Lighthouse 只算到 TTI，延後到 `import()` 的工作（答案頁）只會被算到一部分；答案頁以 `perf:ask` 為準。量測腳本要能重跑、參數要能讀：基準量測時臨時腳本把 `名稱=路徑` 依每個 `=` 切開，`/ask/?q=登革熱` 變成 `/ask/?q`，答案頁因而「100 分」——寫成正式腳本、輸出實際量的網址，才抓得到這種錯。
+

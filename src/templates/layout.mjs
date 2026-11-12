@@ -16,7 +16,8 @@ const UI_TRANSLATION = { en: { status: 'reviewed', date: '2026-09-10' } };
 
 const FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231b5e3f'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='%23fff'/%3E%3C/svg%3E";
 
-export const EARLY_JS = `try{var d=document.documentElement;d.classList.add('js');var v=new URLSearchParams(location.search).get('view')||localStorage.getItem('cdc.view');if(v==='pro')d.dataset.view='pro'}catch(e){document.documentElement.classList.add('js')}`;
+// 第七十二輪（docs/performance-lighthouse.md §4.9）：網址帶 ?q= 時在 <html> 標 data-q，CSS 用它在首次繪製前就把答案區／搜尋結果區撐到一個視窗高
+export const EARLY_JS = `try{var d=document.documentElement;d.classList.add('js');var v=new URLSearchParams(location.search).get('view')||localStorage.getItem('cdc.view');if(v==='pro')d.dataset.view='pro';if(new URLSearchParams(location.search).has('q'))d.dataset.q='1'}catch(e){document.documentElement.classList.add('js')}`;
 
 // 頁尾分組（第十七輪 fat footer）：服務／關於與政策／開發者與開放資料／聯絡。民眾主選單不放機關型入口，全站地圖集中在頁尾；首頁不再另放「更多服務」。
 const FOOT_SERVICES = [

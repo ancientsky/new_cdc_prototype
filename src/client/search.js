@@ -303,6 +303,9 @@ function init() {
       console.error('[search]', e);
       statusEl.textContent = bestStatus + T('search.status.err');
       emptyEl.hidden = false;
+    } finally {
+      // 第七十二輪（components.css html[data-q] #search-results:empty）：查無結果時清單仍是空的，把預留的一個視窗高放掉，查無提示才不會被推到畫面外
+      if (my === runId) list.style.minHeight = list.childElementCount ? '' : '0';
     }
   }
 

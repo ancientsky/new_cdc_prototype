@@ -47,8 +47,12 @@ if (answerEl) {
   run(params.get('q') ?? '');
 }
 
+// 第七十二輪（docs/performance-lighthouse.md §4.9）：載入中先把答案區撐到一個視窗高，答案畫出來再放開。
+// 為什麼：深連結 /ask/?q=… 的答案常比預留的 260px 高很多，答案一出現，下面的「三個管道」整段被往下推（桌機 CLS 0.15，Lighthouse 扣到 93 分）。
+// 撐到 100vh 後，下面的區塊一開始就在視窗外，答案畫出來時它在畫面外移動，讀者看不到跳動。
 function busy(on, text = L('loading')) {
   answerEl.setAttribute('aria-busy', String(on));
+  answerEl.style.minHeight = on ? '100vh' : '';
   if (on) answerEl.innerHTML = `<div class="c-skeleton" aria-hidden="true"><span></span><span></span><span class="short"></span><span></span></div><p class="sr-only">${esc(text)}</p>`;
 }
 
@@ -56,7 +60,7 @@ async function run(q) {
   const my = ++runId;
   lastQ = q;
   if (!q) {
-    answerEl.setAttribute('aria-busy', 'false');
+    busy(false);
     answerEl.innerHTML = `<p class="muted">${esc(L('empty'))}</p>`;
     if (sideEl) sideEl.innerHTML = '';
     return;
@@ -67,7 +71,7 @@ async function run(q) {
     // 第四十輪：引擎程式改成用到才載入，多了一個可能失敗的網路請求；失敗時不要卡在骨架畫面，給全文搜尋與 1922 的出路（下次提問會重試）
     console.error('[answer]', e);
     if (my !== runId) return;
-    answerEl.setAttribute('aria-busy', 'false');
+    busy(false);
     answerEl.innerHTML = `<p class="c-alert c-alert--overdue">${esc(LANG === 'zh-TW' ? '智慧問答暫時無法載入，請稍後再試，或用全文搜尋、撥打 1922。' : 'Smart Search could not be loaded. Please try again later, use full-text search, or call 1922.')}</p>${fullTextLink(q)}`;
     return;
   }
@@ -180,7 +184,7 @@ async function render(r, deps) {
 function paint(parts, r) {
   parts.push(fullTextLink(lastQ)); // 第二十八輪：每個答案最後都附「用全文搜尋找『…』」（相關頁面清單之後；查無時尤其重要）
   answerEl.innerHTML = `<div class="c-answer__inner" data-intent="${esc(r.intent)}" data-mode="${esc(r.disclosure?.mode ?? 'extractive')}">${parts.join('\n')}</div>`;
-  answerEl.setAttribute('aria-busy', 'false');
+  busy(false);
   window.CDC?.subscriptions?.refresh?.();
   // 相關問題：站內直接重問（保留 URL 同步）
   answerEl.querySelectorAll('[data-ask]').forEach((a) => a.addEventListener('click', (e) => {

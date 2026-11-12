@@ -54,3 +54,51 @@ export async function minifyDir(dir, { enabled = process.env.MINIFY !== 'off' } 
   }
   return { skipped: false, files: files.length, before, after };
 }
+
+// 第七十二輪（docs/performance-lighthouse.md）：建置時壓縮 CSS。
+//
+// 為什麼：Lighthouse 每一頁都指出 tokens.css＋base.css＋components.css 擋住首次繪製（render-blocking，手機估 410–590 ms）。
+// CSS 一定要在畫面出來前下載完（否則會先閃一下沒樣式的頁面），所以能做的是「讓它變小」。src/styles 的註解是寫給同事看的
+//（每一條規則是哪一輪、為什麼），不能刪；跟 JS 一樣，原始碼留註解，dist 才壓縮。實測三支擋畫面的 CSS gzip 後合計 30.4 KB → 22.9 KB（−25%）。
+// 為什麼用 esbuild：JS 壓縮已經用它（同一個 devDependency，不新增套件）；它只做安全的轉換——去註解與空白、合併同值寫法，
+// 不重排規則順序、不刪「看起來沒用到」的規則（那需要知道每一頁的 HTML，見文件「不改的理由」）。
+// 不輸出 source map：CSS 壓縮後選擇器與屬性仍可讀，DevTools 看得懂；正式站拆分（dist-profile.mjs）也不必多處理一種 .map。
+// 關掉：與 JS 共用 MINIFY=off。
+
+function walkCss(dir, out = []) {
+  if (!fs.existsSync(dir)) return out;
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) walkCss(p, out);
+    else if (e.name.endsWith('.css')) out.push(p);
+  }
+  return out;
+}
+
+/**
+ * 壓縮 dir 底下所有 .css（就地覆寫）。
+ * @param {string} dir 例：dist/assets/styles
+ * @param {{ enabled?: boolean }} [opts] enabled：預設為 MINIFY 環境變數不是 off
+ * @returns {Promise<{ skipped: boolean, files: number, before: number, after: number }>}
+ */
+export async function minifyCssDir(dir, { enabled = process.env.MINIFY !== 'off' } = {}) {
+  const files = walkCss(dir);
+  if (!enabled) return { skipped: true, files: files.length, before: 0, after: 0 };
+  const { transform } = await import('esbuild');
+  let before = 0,
+    after = 0;
+  for (const f of files) {
+    const src = fs.readFileSync(f, 'utf8');
+    const r = await transform(src, {
+      loader: 'css',
+      minify: true,
+      charset: 'utf8', // content:"…" 裡的中文維持 UTF-8，不轉成 \XXXX 跳脫
+      legalComments: 'none',
+      sourcefile: path.relative(dir, f).split(path.sep).join('/'),
+    });
+    fs.writeFileSync(f, r.code);
+    before += Buffer.byteLength(src);
+    after += Buffer.byteLength(r.code);
+  }
+  return { skipped: false, files: files.length, before, after };
+}

@@ -1003,3 +1003,21 @@ AD 群組命名沿用 `CDC-WEB-<單位>-<角色>`（[admin-auth.md](admin-auth.m
 **為什麼**：同事問「Gitea 是不是更輕量更好」。輕量是事實（單一執行檔對十多個元件），但這個架構把四眼原則、單位權限、稽核都放在閘道與建置，對平台只要求 API、保護分支與 CI，三個平台都夠；所以平台選錯的代價很低，不值得為它換掉機關已有的系統。真正要留紀錄的兩點是：Gitea／Forgejo 社群版沒有平台管理操作的稽核（A 級機關要用管理員人數與日誌補）、廠牌認定要由機關依限制使用原則自行做。Actions 相容性則被高估：相容的是 YAML 語法，原型 CI 最花心思的車道判斷、沿用檢查結果、排隊部署都是平台 API 與 `concurrency` 語意，搬 Gitea 一樣要重寫，而且 Gitea 的 concurrency 等同「取消進行中」，第六十八輪的排隊會倒退。
 
 **沒選的做法**：直接改 deploy.md §14 為 Gitea（資訊室第 5 題還沒回答，改了只是換一個假設）；現在就寫 `git-gitea.mjs`（平台未定前多一支沒人實跑的轉接器，和 `git-gitlab.mjs` 一樣只能用假 fetch 測）。
+
+## 57. Lighthouse 分數不進必要 CI；CSS 在建置時壓縮；快取規則由建置輸出、暫不做檔名雜湊；深連結先撐高度（第七十二輪，2026-11-12）
+
+**狀態**：已做。數字與逐項處置見 [performance-lighthouse.md](performance-lighthouse.md)。
+
+**決定**：（1）新增 `npm run perf:lighthouse` 與手動＋每月的 `lighthouse.yml`，只產報告，**不進必要 CI**，也不在 PR 觸發。（2）`dist/assets/styles` 在建置時用 esbuild 壓縮，原始 CSS 與註解留在 `src/styles`，`MINIFY=off` 可關。（3）快取規則寫成 `emit-headers.mjs` 的 `CACHE_RULES`，建置輸出到 `dist/headers/`（`headers.json` 的 `cache`、nginx、`_headers`、IIS 片段）：HTML、`.md`、`/v1`、Pagefind 入口 `no-cache`；`/assets`、`/img`、`/files` 1 小時＋`stale-while-revalidate` 1 天；Pagefind 雜湊檔一年 `immutable`。（4）檔名含內容雜湊（fingerprinting）暫不做。（5）`components.css` 不依頁或依區塊拆分。（6）帶 `?q=` 的答案頁與搜尋頁在結果載入中先把結果區撐到一個視窗高（`html[data-q]`），避免結果出現時把下方內容往下推（CLS）；不帶 `?q=` 的頁面不變。（編號 57：§56 由同日平行的第七十一輪使用。）
+
+**為什麼**：
+- 不進必要 CI：與第四十八輪決策七（#103）同一個理由——GitHub 代管 runner 的 CPU 忙閒差，效能分數與 TBT 會跳 ±30%，擋 PR 會隨機紅燈、讓大家學會「紅燈重跑」。Lighthouse 也有盲點：TBT 只算到 TTI，答案頁延後載入的重活只算到一部分，所以答案頁另以 `perf:ask` 為準。
+- CSS 壓縮：每一頁 Lighthouse 都指出三支擋畫面的 CSS；CSS 不能延後，只能變小。與 JS 同一套做法（原始碼留註解、dist 才壓縮）、同一個套件、同一個開關，沒有新的維運面。
+- 快取規則由建置輸出：哪些檔名有雜湊是建置決定的，就像 CSP 雜湊一樣由建置寫成伺服器設定；寫在文件裡要資訊室自己翻成三種語法，nginx 子 `location` 的 `add_header` 不繼承這種陷阱很容易讓安全標頭整組消失。`no-cache` 而不是短 `max-age`：每次驗證只多一次 304 往返，換來緊急發布立刻可見（GitHub Pages 現在最多晚 10 分鐘）。
+- 不做檔名雜湊：要改名每個檔並改寫每個 ES module 內的 `import` 路徑與模板的資源網址，牽動 JS 預算計算（依 import 關係）與正式拆分；GitHub Pages 不吃自訂標頭，現在做看不到效果。等正式主機（Azure／nginx，#129–#133 待資訊室確認）定案再做，到時 `/assets` 改為一年 `immutable`。
+- 不拆 `components.css`：讀者通常看不只一頁，一支共用檔快取後全站免下載；每頁裁剪容易誤刪前端動態加上的 class。
+
+**取捨**：`/assets` 只快取 1 小時，回訪讀者每小時多一次驗證（`stale-while-revalidate` 讓這次驗證不擋畫面）；改版後一小時內少數讀者可能看到前一版樣式。CSS 壓縮後 dist 的 CSS 不好讀，除錯用 `MINIFY=off` 或直接看 `src/styles`。
+
+**沒選的做法**：critical CSS 內嵌（每頁一份、讓 CSP `style-src` 更難收緊，而且實測擋畫面的成本主要是往返次數不是位元組）；用 PurgeCSS 一類工具刪未使用規則（動態 class 誤刪風險）；`LH_MIN_PERF` 門檻放進 `pages.yml`（同「不進必要 CI」的理由）。
+

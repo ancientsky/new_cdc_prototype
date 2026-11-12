@@ -191,13 +191,16 @@ function travelSplitCard(ctx, topic) {
  * 為什麼「建置時預留區塊＋前端只填網址」而不是全部交給前端：提示文字要七語，放前端就得把字串塞進 i18n.<lang>.js（每頁都載）；
  * 預先渲染成 hidden 區塊，文字在 HTML 裡、零額外字串，前端只驗證 from 是站內路徑、填 href、取消 hidden（十幾行）。
  * 沒有 JS 時區塊維持 hidden——讀者在語言選單上已看過「此頁僅有…」的標示，不會毫無預警。
+ * 第七十二輪（docs/performance-lighthouse.md）：連結預先帶 href＝該語言首頁。以前沒有 href，Lighthouse SEO「連結無法檢索」（crawlable-anchors）
+ * 在首頁扣分（正式模式首頁 92 分的唯一原因），而且 <a> 沒有 href 不算連結（鍵盤 Tab 不到、輔助科技也不唸成連結）。
+ * 預設值選「該語言首頁」：即使前端沒跑（或 from 不合法被擋），點下去也是有意義的目的地；ui.js 驗證 from 後照舊覆寫成該語言的同一頁。
  */
 function fromHint(ctx) {
   const { t, lang } = ctx;
   const order = ['en', 'zh-TW', ...config.langs.map((l) => l.code).filter((c) => c !== 'en' && c !== 'zh-TW')].filter((c) => c !== lang);
   return html`<div class="wrap"><aside class="c-alert c-alert--info c-fromhint" data-from-hint hidden aria-label="${t('home.fromHint.label')}">
   <p><strong>${t('home.fromHint.t', { lang: t(`langname.${lang}`) })}</strong></p>
-  <p class="c-fromhint__go">${order.map((c) => { const L = config.langs.find((x) => x.code === c); return html`<a class="c-btn c-btn--sm c-btn--ghost" data-from-alt="${c}" data-lang-path="${L.path}" hreflang="${c}" hidden>${t('home.fromHint.go', { lang: t(`langname.${c}`) })}</a> `; })}</p>
+  <p class="c-fromhint__go">${order.map((c) => { const L = config.langs.find((x) => x.code === c); return html`<a class="c-btn c-btn--sm c-btn--ghost" href="${config.basePath}${L.path}/" data-from-alt="${c}" data-lang-path="${L.path}" hreflang="${c}" hidden>${t('home.fromHint.go', { lang: t(`langname.${c}`) })}</a> `; })}</p>
 </aside></div>`;
 }
 
