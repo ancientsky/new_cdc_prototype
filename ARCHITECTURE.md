@@ -15,6 +15,34 @@
 
 ---
 
+## 0.5 現況地圖（第七十一輪新增：要知道「現在怎樣」先看這張表）
+
+§1–§10 是原始契約；§11 起每一節是一輪的變更。同一個子系統常在好幾輪各改一次，下表把「現在的規則散在哪幾節」與程式、測試、文件的位置收在一起。「最後一次大改」是查 `## N.` 章節標題與章節內容得出的輪次，不含只動文字或只加測試的小修。檔案路徑都是相對於 repo 根目錄；測試檔都在 `tests/`，完整對照見 [tests/README.md](tests/README.md)；文件都在 `docs/`，索引見 [docs/README.md](docs/README.md)。
+
+| 子系統 | 現在的規則在哪一節 | 主要程式檔 | 主要測試檔 | 相關 docs | 最後一次大改 |
+| --- | --- | --- | --- | --- | --- |
+| 內容模型 | §2；§11（第二輪新型別）、§15（`job`／`tender`）、§63（`theme`）、§66（`interactive`）、§70（單位裁撤） | `schemas/*.json`（共用欄位 `_common.json`）、`scripts/lib/load.mjs`、`scripts/lib/validate.mjs` | `governance.test.mjs`、`units.test.mjs`、`sourcelang.test.mjs`、`round67-handover.test.mjs` | governance-model.md、deploy.md §3–§4 | 第六十七輪（§70：`unit.retiredAt`／`successor`） |
+| 治理引擎 | §3；§11、§13、§17、§39、§53、§70（規則 30、31） | `scripts/lib/governance.mjs`、`scripts/lib/consistency.mjs`、`scripts/lib/dates.mjs` | `governance.test.mjs`、`governance-r2.test.mjs`、`round33-consistency.test.mjs`、`round50-rereview.test.mjs` | governance-model.md | 第六十七輪（§70） |
+| 建置與輸出 | §4；§29（JS 預算）、§40（拆檔壓縮）、§52（精簡副本）、§58（成長曲線）、§67（產物白名單） | `scripts/build.mjs`、`scripts/lib/emit-api.mjs`、`emit-seo.mjs`、`emit-headers.mjs`、`js-budget.mjs`、`dist-profile.mjs` | `api.test.mjs`、`emit-r2.test.mjs`、`seo.test.mjs`、`links.test.mjs`、`round49-answer-slim.test.mjs`、`round63-attack-surface.test.mjs` | deploy.md、ci-scaling.md、attack-surface.md | 第六十三輪（§67） |
+| 答案引擎 | §5；§28、§37、§40、§45、§46、§51、§52、§55、§56、§68、§69 | `src/client/answer/core.js`、`rules.js`、`text.js`、`lexicon.js`、`route-*.js`、`scripts/lib/index-builder.mjs`、`eval/` | `answer.test.mjs`、`round49-engine.test.mjs`～`round53-engine.test.mjs`、`round65-ask-weakspots.test.mjs`、`round66-ask-when.test.mjs` | ask-engine-explainer.md、ask-search-llm.md、eval-challenge.md、ask-log.md | 第六十六輪（§69） |
+| 全文搜尋 | §31；§45（召回自我檢查）、§54（精選結果） | `scripts/lib/pagefind.mjs`、`src/templates/public/_pagefind.mjs`、`_bestbet.mjs`、`src/client/search.js`、`search-bestbet.js` | `round28-search.test.mjs`、`round40-search-recall.test.mjs`、`round51-search-bestbet.test.mjs` | ask-search-llm.md §16、deploy.md §12 | 第五十一輪（§54） |
+| 多語 | §29（依語言拆檔）；§45、§51、§52 | `src/client/i18n.js`、`i18n.runtime.js`、`scripts/lib/i18n-split.mjs`、`i18n-quality.mjs` | `round26-i18n.test.mjs`、`round40-i18n.test.mjs`、`round49-i18n.test.mjs`、`round48-ask-i18n.test.mjs`、`sourcelang.test.mjs` | i18n.md | 第四十九輪（§52） |
+| 後台與登入 | §6；§16、§21（登入與角色）、§25（TinaCMS 式編輯）、§36、§54、§67（`ADMIN_ORIGIN`）、§70 | `src/templates/admin/`、`src/client/admin/`（`auth-rules.js`、`login.js`、`common.js`、`publish.js`、`edit-merge.js`、`mine-gateway.js`） | `round18-ui.test.mjs`、`round22-ui.test.mjs`、`admin-edit.test.mjs`、`admin-editor.test.mjs`、`round51-edit-preserve.test.mjs` | admin-auth.md、guide-staff.md | 第六十七輪（§70） |
+| 寫入閘道與車道 | §17（車道）、§36（閘道）；§53、§55、§56、§57、§59、§70 | `scripts/lib/gateway/`（`workflow.mjs`、`auth.mjs`、`store.mjs`、`git-gitlab.mjs`）、`scripts/lib/lanes.mjs`、`content/governance/lanes.json` | `round30-gateway.test.mjs`、`lanes.test.mjs`、`admin-lanes.test.mjs`、`round52-concurrent-edit.test.mjs`、`round53-editors-gateway.test.mjs`、`round54-decisions.test.mjs`、`round67-handover.test.mjs` | deploy.md §14、§21–§26、§33；publishing-lanes.md；git-as-cms.md；git-platform-choice.md | 第六十七輪（§70） |
+| 發布與 CI | §9；§17、§44、§45、§58、§59、§64、§71 | `.github/workflows/`（`pages.yml`、`content-pr.yml`、`lane-sla.yml`、`preview-cleanup.yml`、`dast.yml`）、`.github/rulesets/main.json` | `round40-ci-isolation.test.mjs`、`round60-ruleset.test.mjs`、`lanes.test.mjs` | ci-cd-overview.md、ci-scaling.md、deploy.md §2、§28、§29、§34 | 第六十八輪（§71） |
+| 資安模式 | §26（原型模式、安全標頭）；§35（個資不進 Git）、§64（security.txt）、§67（三道防線） | `scripts/lib/emit-headers.mjs`、`dist-profile.mjs`、`rate-limit.mjs`、`probe-signatures.mjs`、`pii-scan.mjs`、`site.config.mjs` | `round23-security.test.mjs`、`round30-pii.test.mjs`、`round60-security-txt.test.mjs`、`round63-attack-surface.test.mjs`、`round63-rate-limit.test.mjs`、`round63-probes.test.mjs`、`pdf-split-perf.test.mjs` | attack-surface.md、abuse-protection.md、security-testing.md、deploy.md §9–§10、§30–§32 | 第六十三輪（§67） |
+| 檔案資產 | §16；§41（圖片上架）、§49（送審件帶附件） | `scripts/lib/assets.mjs`、`src/client/admin/assets-panel.js`、`content/assets/` | `assets.test.mjs`、`round45-pdf-gateway.test.mjs` | assets-policy.md、pdf-ingest.md | 第四十五輪（§49） |
+| 國際疫情 | §12（出國與入境）；§47（國際重要疫情資訊） | `scripts/lib/intl-epidemic.mjs`、`intl-feed-api.mjs`、`travel-alerts.mjs`、`src/templates/public/travel.mjs`、`travel-alert.mjs` | `travel.test.mjs`、`travel-data.test.mjs`、`travel-ui.test.mjs`、`travel-alert-ui.test.mjs`、`intl-epidemic.test.mjs`、`intl-epidemic-api.test.mjs` | intl-epidemic.md（§9 為第六十九輪 API／MCP 評估，只有文件） | 第四十三輪（§47） |
+| 疫情報導 | §34；§41、§49（含 §49.4 第四十六輪）、§55 | `src/templates/public/bulletin.mjs`、`_bulletin.mjs`、`src/client/admin/bulletin-edit.js`、`pdf-manuscript.js`、`src/client/bulletin-rules.js` | `round29-bulletin.test.mjs`、`round35-bulletin.test.mjs`、`round45-pdf-gateway.test.mjs`、`round46-pdf-parse.test.mjs`、`round52-bulletin-gateway.test.mjs` | bulletin.md | 第五十二輪（§55） |
+| 互動與主題 | §63（節慶主題）、§66（互動模組，含 §66.1 第六十四輪） | `scripts/lib/theme.mjs`、`scripts/lib/interactives.mjs`、`src/templates/public/play.mjs`、`src/client/play.js` | `round60-theme.test.mjs`、`round62-interactives.test.mjs` | interactives.md | 第六十四輪（§66.1） |
+| 導覽與版面 | §7、§8；§20（頁尾分組）、§27（無障礙）、§50（主選單面板）、§65（研究與媒體入口）、§72 | `src/templates/layout.mjs`、`src/templates/public/_nav-panels.mjs`、`_partials.mjs`、`src/styles/{tokens,base,components}.css`、`src/client/ui.js` | `round24-a11y.test.mjs`、`round47-nav-panels.test.mjs`、`round48-ui.test.mjs`、`round61-research-media.test.mjs` | navigation.md、a11y.md | 第六十一輪（§65）；第七十一輪（§72）再調 skip link、頁尾服務欄與字級 token |
+
+- **§11 起的輪次章節是變更脈絡**：記的是「為什麼當時這樣做」、當時的數字與教訓，不會回頭改寫；同一件事後來又改過，以較晚的章節為準。
+- **要知道「現在怎樣」**：先看這張表找到子系統，再依「現在的規則在哪一節」由大到小跳章節（最大的節號通常就是現況），程式與測試以表中檔案為準。
+- **每一輪結束時更新這張表**：有動到哪個子系統，就改該列的節號與「最後一次大改」；新增子系統就加一列。
+
+---
+
 ## 1. 目錄配置
 
 ```
@@ -2778,3 +2806,35 @@ Yulun 問盲測弱項（錯字、長輩說法、情境題、外語）有沒有�
 | 不變的事 | 審核事件不推預覽；`--match-head-commit`；規則集的必要檢查 `test`（略過的 job 視為通過） |
 
 教訓：並發問題先把每個 group 的取消／排隊語意寫出來再算等待時間；「取消舊的」在低頻時最省，在高頻時會餓死，而靜態站的部署只要「最後一次包含全部」，排隊一個就夠。
+
+## 72. 第七十一輪：架構與 UI/UX 全面檢視（2026-11-12）
+
+Yulun 要求對整個原型的架構設計與 UI/UX 做完整檢視。量測方法、數字與完整發現表在 `docs/architecture-ux-review.md`（§2 架構、§3 UI/UX、§4 本輪實作、§5 沒做與待決定）；取捨在 architecture-decisions §56；無障礙量測在 `docs/a11y.md` §11。同日另有三個平行檢視，各自有文件：Lighthouse 效能（第七十二輪，`docs/performance-lighthouse.md`）、資安與弱點（第七十三輪）、Node.js 26 升級（第七十四輪）。
+
+**做了什麼**（對應 review §4 的八項）：
+
+1. 手機首屏外框（§4.1）：原型橫幅手機版兩行、加凍結日期；「做法 A/B 預覽列」只在 `?hero=` 時顯示。
+2. 鍵盤捷徑（§4.2）：第二個 skip link「跳到主選單」。
+3. 首頁影音卡（§4.3）：沒有縮圖時改文字卡，不輸出灰底佔位。
+4. 傳染病索引（§4.4）：民眾版預設分頁改為「有完整疾病頁」，法定類別留在第二個分頁並為專業版預設；列高至少 44 px。
+5. 旅遊頁 chip（§4.5）：內距與字級放大，手機最小高度 44 px。
+6. 字級下限與 CSS 預算（§4.6）：`--fs-xs` 改 13 px；新增 CSS 預算測試。
+7. 頁尾與儀表板（§4.7）：頁尾「服務」欄分兩小組；KPI 表上方標示凍結日。
+8. 文件與測試可找性（§4.8）：本文件 §0.5 現況地圖、`docs/README.md`、`tests/README.md`。
+
+| 項目 | 契約 |
+| --- | --- |
+| 字級 token | `src/styles/tokens.css` `--fs-xs` 由 `.78rem` 改為 `.8125rem`（13 px）；只動 token，不逐元件改；專業版原本小於 12 px 的地方改用 `var(--fs-xs)` |
+| CSS 預算 | 本輪不拆現有 `components.css`（與第七十二輪一致：全站共用一份快取，建置時改為壓縮），只加預算與「新專區元件另開檔」規則。`tests/css-budget.test.mjs`：`components.css` 不得超過 120 KB（現值約 116 KB）；媒體查詢斷點只能用 token 註解表列出的值；`font-size` 不得出現小於 `--fs-xs` 的硬編碼。新元件只給一個專區用時，放專頁 CSS（由模板 `styles[]` 帶入，如 `answer.css`、`careers.css`、`search.css`），不進 `components.css` |
+| 測試檔命名 | 新測試檔以主題命名（例：`css-budget.test.mjs`），輪次寫在檔頭第一行註解；既有 `roundNN-*.test.mjs` 不改名（`package.json` `test:content` 清單與文件連結引用檔名）。對照表在 `tests/README.md` |
+| 頁尾服務欄 | `layout.mjs` 頁尾「服務」欄內分「民眾申辦」「機關資訊」兩個小標；欄數與連結數不變（第十七輪 §20 的四欄分組維持） |
+| 第二個 skip link | `layout.mjs` 在「跳到主要內容」（`#main`）後加 `<a class="skip-link skip-link--nav" href="#main-nav" data-skip-nav>`，字串鍵 `skip.nav`（七語）；`#main-nav` 加 `tabindex="-1"` 讓焦點落得到。到主選單的 Tab 停留點由 22 個降為 2 個 |
+| 原型橫幅 | 原型模式的橫幅文字加「示範資料凍結於 {BUILD_TODAY}」；手機版（≤ 640 px）兩行。`SITE_MODE=production` 不輸出橫幅（第二十三輪 §26 的規則不變）；儀表板凍結說明同樣只在原型模式出現 |
+
+**沒做的**（review §5）：
+
+- **資產檔名雜湊**（§5.1）：`assets/**` 仍是固定檔名；會動到建置、所有模板的資產路徑、CSP 雜湊與 `headers/`，獨立一輪做。在那之前依第七十二輪的過渡做法：`headers/` 對 `assets/**` 用短快取加 1 小時 `stale-while-revalidate`，不套 immutable，見 `docs/deploy.md` §12.2。
+- **答案句去重**（§5.2，U7）：引擎變更，要跑挑戰集與封存盲測，與智慧問答的下一輪一起做。
+- **四個待 Yulun 決定**（§5.3）：桌機語言列折成一鍵；「民眾」身分鈕在民眾頁改為不可點的狀態；首頁六任務手機版改 3×2；i18n 原始檔改為每語 JSON。
+
+**教訓：** 每頁都載的資產要有數字門檻（JS 有預算被拆了三次，CSS 沒有就長到 116 KB 沒人注意；門檻先擋住變大，要不要拆再依快取與效能量測決定）；按輪次寫的文件保留了「為什麼」，但一定要另給一張「現在」的地圖，兩者缺一不可。

@@ -112,6 +112,16 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第七十一輪：架構與 UI/UX 全面檢視——哪裡穩、接手會卡在哪、介面改了什麼
+
+Yulun 要求（2026-11-12）：對整個原型的架構設計做完整檢視，包含詳細的 UI/UX 建議。同日另有 Lighthouse 效能（第七十二輪）、資安與弱點（第七十三輪）、Node.js 26 升級（第七十四輪）三個平行檢視。
+
+- **結論**：架構方向正確、落實程度高（內容只存一份、治理由建置計算、答案只轉述不創作都已經做成可以動的東西，axe 21 頁 × 兩種螢幕 0 違規）；主要風險不在設計，而在**可接手性**——文件按輪次而不是按現況組織、CSS 與測試檔沒有預算與命名規則、前端資產沒有檔名雜湊。
+- **介面改了什麼**：手機首屏的原型橫幅壓成兩行並標「示範資料凍結於 2026-10-01」、開發者用的預覽列預設隱藏；第二個 skip link「跳到主選單」，鍵盤到主選單由 22 個 Tab 停留點降為 2 個；首頁影音卡沒有縮圖時改文字卡；傳染病索引民眾版預設先列有完整頁的 16 種疾病，法定類別留給專業版；旅遊頁國家 chip 放大到手機 44 px；最小字級 token 由 12.5 px 改為 13 px；頁尾「服務」欄分「民眾申辦」「機關資訊」兩小組。
+- **架構與文件**：加 CSS 預算測試（不拆現有 `components.css`，與第七十二輪一致）；ARCHITECTURE 頂部加 §0.5「現況地圖」（15 個子系統的規則、程式、測試、文件位置與最後修改輪次），輪次章節保留作為變更脈絡；新增 [docs/README.md](docs/README.md)（39 份文件索引）與 [tests/README.md](tests/README.md)（測試檔主題對照），新測試檔改以主題命名。
+- **沒做、待決定**：資產檔名雜湊與答案句去重留到之後的獨立一輪；桌機語言列折疊、「民眾」鈕改狀態標示、首頁六任務手機兩欄、i18n 原始檔改每語 JSON 四項等 Yulun 決定。
+- 文件：[docs/architecture-ux-review.md](docs/architecture-ux-review.md)（量測方法、發現表 U1–U12、本輪八項實作與理由、教訓）、[docs/a11y.md](docs/a11y.md) §11、[docs/deploy.md](docs/deploy.md) §12.2（自家資產不要設 immutable）、ARCHITECTURE §0.5 與 §72、[architecture-decisions](docs/architecture-decisions.md) §56。
+
 ## 第七十輪：Gitea 是不是比 GitLab 更輕量更好
 
 同事問（2026-11-06）：正式環境的 Git 平台，Gitea 是不是比 GitLab 更輕量、更好？
@@ -1019,6 +1029,8 @@ docs/                使用說明與治理文件
 網站內容與 API 資料預設採**政府資料開放授權條款第 1 版（OGDL-1.0）**，個別資料集另有標示（CC0-1.0、CC BY 4.0）。引用請附頁面網址與最後審閱日，格式見[開發者入口](https://ancientsky.github.io/new_cdc_prototype/developers/#license)。
 
 ## 文件
+
+**全部 39 份文件的分組索引在 [docs/README.md](docs/README.md)**（依「給誰看」與主題兩種方式找）；系統現況先看 [ARCHITECTURE.md](ARCHITECTURE.md) §0.5「現況地圖」；測試檔對照在 [tests/README.md](tests/README.md)。下表是最常用的幾份。
 
 | 文件 | 內容 |
 | --- | --- |
