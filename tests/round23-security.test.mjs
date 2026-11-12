@@ -115,7 +115,9 @@ test('BYOK：金鑰只進 sessionStorage，載入時清掉舊 localStorage 金�
   const mem = () => { const m = new Map(); return { getItem: (k) => (m.has(k) ? m.get(k) : null), setItem: (k, v) => m.set(k, String(v)), removeItem: (k) => m.delete(k), m }; };
   const ss = mem(), ls = mem();
   ls.setItem('cdc.llmKey', 'sk-ant-legacy');
-  const g = globalThis; const o = { ss: g.sessionStorage, ls: g.localStorage, doc: g.document };
+  const g = globalThis;
+  // 用描述子存原值、不直接讀 g.localStorage：Node 26 起 localStorage 是全域 getter，沒給 --localstorage-file 就讀一次印一次 ExperimentalWarning（docs/node-upgrade.md §4）
+  const o = Object.fromEntries(['sessionStorage', 'localStorage', 'document'].map((k) => [k, Object.getOwnPropertyDescriptor(g, k)]));
   try {
     Object.defineProperty(g, 'sessionStorage', { value: ss, configurable: true, writable: true });
     Object.defineProperty(g, 'localStorage', { value: ls, configurable: true, writable: true });
@@ -131,7 +133,7 @@ test('BYOK：金鑰只進 sessionStorage，載入時清掉舊 localStorage 金�
     Object.defineProperty(g, 'document', { value: { getElementById: (id) => (id === 'ask-advanced' ? { dataset: { llmModel: 'm-default', llmModels: 'm-default,m-big' } } : null) }, configurable: true, writable: true });
     assert.equal(LLM.llmDefaultModel(), 'm-default'); assert.deepEqual(LLM.llmModels(), ['m-default', 'm-big']); assert.equal(LLM.getModel(), 'm-default');
   } finally {
-    for (const [k, v] of [['sessionStorage', o.ss], ['localStorage', o.ls], ['document', o.doc]]) { if (v === undefined) delete g[k]; else Object.defineProperty(g, k, { value: v, configurable: true, writable: true }); }
+    for (const [k, d] of Object.entries(o)) { if (d === undefined) delete g[k]; else Object.defineProperty(g, k, d); }
   }
   const ask = read('src/templates/public/ask.mjs');
   assert.ok(ask.includes('data-llm-model="${ai.llmModel}"') && ask.includes('<div data-llm-staff hidden>'), '金鑰欄位預設隱藏，由 ui.js 在同事登入時顯示');

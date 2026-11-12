@@ -1,7 +1,7 @@
 # 部署與維運
 
 > 給誰看：資訊室、OASIS，以及要擴充內容型別或修改 schema 的工程同事。
-> 需求：Node.js 22 以上（CI 使用 22；`.nvmrc`、`.node-version` 也是 22。pdfjs-dist 需要 `Promise.withResolvers`，Node 20 跑不了 PDF 閘道測試，見 Issue #105）。依賴只有 `ajv`、`ajv-formats`、`marked`。
+> 需求：Node.js 22.13 以上（CI 使用 26；`.nvmrc`、`.node-version` 也是 26，見 [node-upgrade.md](node-upgrade.md)。pdfjs-dist 需要 `Promise.withResolvers`，Node 20 跑不了 PDF 閘道測試，見 Issue #105）。依賴只有 `ajv`、`ajv-formats`、`marked`。
 
 ## 1. 本機預覽
 
@@ -50,7 +50,7 @@ BASE_PATH='' npm run build && node scripts/serve.mjs
 檔案：`.github/workflows/pages.yml`。
 
 - **觸發：** push 到 `main`、**每 2 小時排程**（偶數整點 UTC；第九輪起，讓 `publishAt` 排程發布到點上線）、手動 `workflow_dispatch`（輸入 `refresh`，預設 true）。
-- **build 工作：** checkout → Node 22 → `npm ci` → 還原 Chromium 快取（沒命中才下載一次；給 `content-pr.yml` 的程式 PR 用，§28.5）→ lint、format、typecheck → `npm test`（只驗 repo 內的內容與快照）→ **只在 02:00 UTC（台灣 10:00）那一次排程與手動執行（`refresh` 不是 false）時**跑 `npm run fetch`（失敗不中斷）並把快照 commit 回 `main` → 取出 `previews` 分支（PR 預覽，不存在就略過）→ `npm run build`（`BASE_PATH` 取自儲存庫名稱、`SITE_URL` 取自擁有者；建置把預覽複製到 `dist/preview/`）→ 上傳 `dist/`。
+- **build 工作：** checkout → Node 26 → `npm ci` → 還原 Chromium 快取（沒命中才下載一次；給 `content-pr.yml` 的程式 PR 用，§28.5）→ lint、format、typecheck → `npm test`（只驗 repo 內的內容與快照）→ **只在 02:00 UTC（台灣 10:00）那一次排程與手動執行（`refresh` 不是 false）時**跑 `npm run fetch`（失敗不中斷）並把快照 commit 回 `main` → 取出 `previews` 分支（PR 預覽，不存在就略過）→ `npm run build`（`BASE_PATH` 取自儲存庫名稱、`SITE_URL` 取自擁有者；建置把預覽複製到 `dist/preview/`）→ 上傳 `dist/`。
 - **deploy 工作：** `actions/deploy-pages` 發布，網址 `https://ancientsky.github.io/new_cdc_prototype/`。
 - **併發：** 同一時間只保留最新一次部署，舊的會被取消。
 
@@ -286,7 +286,14 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 - **已知的行為變化**：`actions/upload-pages-artifact` v4 起不打包點開頭的檔案與目錄（`.nojekyll`、`.well-known/`）。目前沒影響；`/.well-known/security.txt` 因此改為建置時同時輸出到根目錄 `/security.txt`（見 10.4）。
 - **前端 `src/public/vendor/marked.min.js` 不跟著升**：它是後台貼上轉換用的獨立副本，Dependabot 看不到。要升時手動換檔並測後台「貼上 Word／網頁」轉換。
 
-### 9.2 部署用的秘密放進 `production` 環境（第七十三輪）
+### 9.2 Node.js 大版升級（第七十四輪）
+
+- **誰升**：人，不是 Dependabot（它只管 action SHA 與 npm 依賴）。每年 10 月底 Node 把新版升為 Active LTS 後一個月內做。
+- **改哪裡**：四個 workflow 的 `node-version`、`tests/lanes.test.mjs` 釘住的那一行、`.nvmrc`／`.node-version`、本文開頭與 §14 圖、`line-chatbot.md`、`README.md` 快速開始；`engines.node` 只在最舊的 LTS 結束支援時才提高。
+- **怎麼驗**：`npm ci`、lint／format／typecheck、`npm test`（先 `npm run build`，否則 49 項「dist 若已建置」會略過，比對不準）、`--check`、`audit:dist`，再用新舊兩版各建一次 `dist/` 做 `diff -rq`，只剩時間戳才算安全。
+- **完整紀錄與每次看到的新警告**：[node-upgrade.md](node-upgrade.md)。2026-11-12 升 22→26：測試 1278 項與 24 相同、dist 零內容差異；新事物是 npm 11.20 的 `install-scripts` 允許清單（不要 approve）與 `localStorage` 全域 getter 的 ExperimentalWarning（測試改存描述子）。
+
+### 9.3 部署用的秘密放進 `production` 環境（第七十三輪）
 
 **一句話：** `pages.yml` 的 `build` job 現在宣告 `environment: production`，而且只在 `main` 上跑（`if: github.ref == 'refs/heads/main'`）。請 Yulun 在 GitHub 上建立這個環境、限定只有 `main` 能用，再把兩個秘密搬進去。
 
@@ -302,7 +309,7 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 
 搬之前也不會壞：環境不存在時 GitHub 會在第一次執行時自動建立一個沒有限制的 `production`，repo 層級的秘密照樣讀得到，建置與回寫都照常。測試 `tests/round40-ci-isolation.test.mjs`（第七十三輪那一條）擋「用到 `GITHUB_TOKEN` 以外秘密的 job 沒有宣告 `environment: production`」，也擋手動執行的輸入直接展開進 `run`（`dast.yml` 的爬站分鐘數因此改成下拉選單、經環境變數傳入）。
 
-### 9.3 沙盒驗不到、請在 GitHub 上確認的設定（第七十三輪資安檢查）
+### 9.4 沙盒驗不到、請在 GitHub 上確認的設定（第七十三輪資安檢查）
 
 這一輪的檢查在沒有 repo 管理權的環境裡做，下面幾項看不到實際設定，只能列出建議。請 Yulun 逐項確認：
 
@@ -312,7 +319,7 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 | 必要狀態檢查綁定來源 | `required_status_checks` 的 `test` 綁 GitHub Actions（`integration_id: 15368`，`.github/rulesets/main.json` 已加；介面上是該檢查的「Select source → GitHub Actions」） | 沒綁來源時，任何有 `statuses: write` 的權杖或 App 都能自己發一個叫 `test` 的成功狀態，讓沒跑過檢查的 PR 合併。若重新匯入時被拒，先拿掉這個欄位匯入，再到介面上選來源 |
 | 繞過名單的 Deploy keys | 目前是「Deploy keys：`bypass_mode: always`」，等於**所有**有寫入權的部署金鑰都能直接推 `main`。只留一把有寫入權的部署金鑰（`snapshot-writer`），其他的刪掉或改唯讀；長期改用只授權本 repo、只給 `contents: write` 的 **GitHub App**（app 可以單獨列入繞過名單，不必放行所有部署金鑰） | 繞過名單是以「類別」放行；之後誰加了一把有寫入權的部署金鑰，就自動能繞過規則集 |
 | 部署金鑰輪替 | `SNAPSHOT_DEPLOY_KEY` 每 6–12 個月、或有人離開專案時重產（§29.1 步驟 1–3），舊的公鑰從 Deploy keys 刪掉 | 私鑰曾經存在建立者的電腦上；輪替限制外洩後能用多久 |
-| 環境 `production` | 見 §9.2：部署分支只准 `main`、兩個秘密搬進去、repo 層級的刪掉 | 擋「從別的分支手動執行讀秘密」 |
+| 環境 `production` | 見 §9.3：部署分支只准 `main`、兩個秘密搬進去、repo 層級的刪掉 | 擋「從別的分支手動執行讀秘密」 |
 
 ## 10. 安全標頭基準（第二十三輪）
 
@@ -579,7 +586,7 @@ location ~ ^/pagefind/pagefind\..*\.pf_meta$ { add_header Cache-Control "public,
 - 同事怎麼操作：見 guide-staff §34。
 
 ```
-同事瀏覽器 ──443──▶ 反向代理（IIS／nginx／Keycloak 前的 oauth2-proxy）──▶ 閘道（Node 22，只聽內網或本機）
+同事瀏覽器 ──443──▶ 反向代理（IIS／nginx／Keycloak 前的 oauth2-proxy）──▶ 閘道（Node 26，只聽內網或本機）
                      │ 負責登入（三選一，見 14.3）                         │
                      └ /admin/* 靜態頁                                      ├──443──▶ 自架 GitLab（REST v4，服務帳號 token）
                                                                             ├─ .local/gateway-state.json、gateway-audit.jsonl
@@ -2003,7 +2010,7 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 
 **2026-10-25 第一次驗證就紅（run #328）的教訓**：金鑰本身沒問題，倒在前一行 `git pull --rebase`：「cannot pull with rebase: You have unstaged changes」。原因是 `npm run fetch` 除了 `data/snapshots/` 也會改 `content/datasets/`（登革熱地圖摘要與 CKAN 目錄的 `lastUpdated`／`provenance`，第五十七輪加的），而提交那一步只 `git add data/snapshots`，剩下的變更讓 rebase 拒絕執行，整個 build job 紅掉、當次也沒部署。修法：`git add -A data/snapshots content/datasets` 一起提交（本來就是這次抓取的結果）、`git pull --rebase --autostash`（其他未預期變更先暫存）、rebase 失敗只警告不讓建置失敗。為什麼之前沒發現：規則集匯入前這一步也會失敗，但沒人看 02 UTC 排程的紀錄；回寫從來沒成功過（`git log --grep=官方資料快照更新` 是空的）。所以**任何「排程才會跑」的步驟都要在合併當天手動 Run workflow 跑一次**，不要等排程。
 
-**第七十三輪補充**：`build` job 已宣告 `environment: production`、只在 `main` 上跑；請把 `SNAPSHOT_DEPLOY_KEY`（與 `INTL_FEED_TOKEN`）搬進只准 `main` 的 `production` 環境秘密，步驟見 §9.2；繞過名單與金鑰輪替的建議見 §9.3。
+**第七十三輪補充**：`build` job 已宣告 `environment: production`、只在 `main` 上跑；請把 `SNAPSHOT_DEPLOY_KEY`（與 `INTL_FEED_TOKEN`）搬進只准 `main` 的 `production` 環境秘密，步驟見 §9.3；繞過名單與金鑰輪替的建議見 §9.4。
 
 為什麼可以接受：這把金鑰只在 `pages.yml` 的 `build` job 用到，PR 的工作流程（`content-pr.yml`）拿不到 secrets 也不引用它（測試 `round60-ruleset` 擋）；私鑰寫到 `$RUNNER_TEMP`、推完就刪；它推的只有 `data/snapshots/` 與 `content/datasets/` 裡由抓取更新的欄位（機器抓的官方資料與資料目錄的更新日期），不是人寫的內容。換成機關 GitLab 時對應的是 project deploy key 或 project access token（§14.4）。
 

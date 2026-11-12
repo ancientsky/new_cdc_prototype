@@ -2,7 +2,7 @@
 
 > 給誰看：資訊室（主機、反向代理、GitHub／GitLab 設定）、資安窗口、維護本 repo 的工程師、OASIS（AI推動辦公室）。
 > 性質：**白箱稽核**。稽核者讀得到全部原始碼與文件，也在本機實際啟動網站與寫入閘道去打。這和外部滲透測試（黑箱）互補，不取代 [security-testing.md](security-testing.md) §3 的第三方滲透測試。
-> 相關：[attack-surface.md](attack-surface.md)（暴露面）、[abuse-protection.md](abuse-protection.md)（限流）、[security-testing.md](security-testing.md)（滲透測試與 DAST）、[content-html-safety.md](content-html-safety.md)（本輪新增：內容 HTML 淨化）、[deploy.md](deploy.md) §9.2–9.3、§14.10、§35。
+> 相關：[attack-surface.md](attack-surface.md)（暴露面）、[abuse-protection.md](abuse-protection.md)（限流）、[security-testing.md](security-testing.md)（滲透測試與 DAST）、[content-html-safety.md](content-html-safety.md)（本輪新增：內容 HTML 淨化）、[deploy.md](deploy.md) §9.3–9.4、§14.10、§35。
 
 ## 1. 結論先講
 
@@ -54,13 +54,13 @@
 | M5 | **CSV 解析 O(欄×列) 沒有上限。** 131 KB 卡住事件迴圈 5 秒，2 MB 上限內可卡數小時，連帶卡住寫入閘道（需權杖或匯入權限）。 | `src/client/intl-epidemic-rules.js` | 欄數、列數、單欄長度上限；表頭只收已知欄名 | 已修 |
 | M6 | **答案引擎幾個函式對特製長字串呈二次方成長**（32k 字約 6 秒）。正式路徑已先截到 500 字，但函式是匯出的，別的呼叫點沒截就會卡。 | `src/client/answer/text.js` | 函式入口統一加長度上限 | 已修 |
 | M7 | **自動合併車道的作者名單目前只有 repo 擁有者**，`reviewerAccounts` 也全指向同一人。邏輯正確（名單外的人自動降為一般車道），但名單內的人送惡意內容 0 人審即上線，只靠 schema 與個資掃描把關。 | `content/governance/lanes.json` | 原型示範可接受；正式環境改成 `team:<AD 群組>`，並確實執行上線後複核。H2／H3 修掉後，「夾帶 HTML」這條路也關了 | 接受（原型）／設定（正式） |
-| M8 | **同 repo 分支的 PR 跑的是自己分支上的 workflow，而且帶 repo 層級祕密。** 對 fork 沒事；對已有寫入權的帳號，可在分支裡改 workflow 把 `SNAPSHOT_DEPLOY_KEY`、`INTL_FEED_TOKEN` 印出來。`round40-ci-isolation` 的靜態檢查只對 main 上的 YAML 有效。 | `.github/workflows/pages.yml`、`content-pr.yml` | 用這兩個祕密的 job 宣告 `environment: production`，祕密搬到只允許 main 部署的 Environment（要在 GitHub 設定；deploy.md §9.2） | 程式已改，設定待擁有者 |
+| M8 | **同 repo 分支的 PR 跑的是自己分支上的 workflow，而且帶 repo 層級祕密。** 對 fork 沒事；對已有寫入權的帳號，可在分支裡改 workflow 把 `SNAPSHOT_DEPLOY_KEY`、`INTL_FEED_TOKEN` 印出來。`round40-ci-isolation` 的靜態檢查只對 main 上的 YAML 有效。 | `.github/workflows/pages.yml`、`content-pr.yml` | 用這兩個祕密的 job 宣告 `environment: production`，祕密搬到只允許 main 部署的 Environment（要在 GitHub 設定；deploy.md §9.3） | 程式已改，設定待擁有者 |
 
 ### 3.4 低與資訊
 
 | # | 問題 | 位置 | 狀態 |
 | --- | --- | --- | --- |
-| L1 | main 規則集 `required_approving_review_count: 0`、不要求 code owner；唯一必要檢查 `test` 由 PR 分支程式產生、也沒綁 integration id。有寫入權者可自審自併程式變更。「一般車道需 1 位核准」只有 lane bot 在執行，不是原生合併條件。 | 線上規則集、`.github/rulesets/main.json` | 設定（deploy.md §9.3：對程式路徑開 code owner review；`main.json` 的必要檢查已綁 Actions integration id，重新匯入才生效） |
+| L1 | main 規則集 `required_approving_review_count: 0`、不要求 code owner；唯一必要檢查 `test` 由 PR 分支程式產生、也沒綁 integration id。有寫入權者可自審自併程式變更。「一般車道需 1 位核准」只有 lane bot 在執行，不是原生合併條件。 | 線上規則集、`.github/rulesets/main.json` | 設定（deploy.md §9.4：對程式路徑開 code owner review；`main.json` 的必要檢查已綁 Actions integration id，重新匯入才生效） |
 | L2 | 線上規則集的繞過名單有「所有部署金鑰 always」；本地 `main.json` 是空的，兩邊不一致。配合 M8 構成「偷金鑰→繞過規則集寫 main」。 | 線上規則集 | 設定（確認只有一把寫入金鑰、定期輪替、評估改 GitHub App） |
 | L3 | 確認 token 用過不失效、過期也不失效，而且每次都回 `manageToken`。轉寄過的確認信永遠能換到管理權。 | `src/client/subscribe-service.js` | 已修 |
 | L4 | 限流在 IPv6 下幾乎無效（一個 /64 有 2⁶⁴ 個 key）；位址沒正規化；FIFO 淘汰可被灌 key 重設。 | `scripts/lib/rate-limit.mjs` | 部分已修（/64 為 key、正規化）；FIFO 淘汰策略未改，追蹤 |
@@ -106,7 +106,7 @@
 
 | 事項 | 誰 | 依據 |
 | --- | --- | --- |
-| 建 GitHub Environment「production」，部署分支限 `main`，把 `SNAPSHOT_DEPLOY_KEY`、`INTL_FEED_TOKEN` 從 repo secrets 搬進去（程式已宣告 `environment: production`） | 擁有者 | M8，deploy.md §9.2 |
+| 建 GitHub Environment「production」，部署分支限 `main`，把 `SNAPSHOT_DEPLOY_KEY`、`INTL_FEED_TOKEN` 從 repo secrets 搬進去（程式已宣告 `environment: production`） | 擁有者 | M8，deploy.md §9.3 |
 | 規則集：程式路徑（`.github/`、`scripts/`、`src/`、`content/governance/`、`content/master/`）要求 code owner 審核；`required_status_checks` 綁 Actions integration | 擁有者 | L1 |
 | 確認只有一把寫入部署金鑰、排定輪替；評估改 GitHub App 取代「所有部署金鑰 always 繞過」 | 擁有者、資訊室 | L2 |
 | 到 Actions 手動跑一次 DAST，把預期的 WARN 整理成基準線 | 資訊室／OASIS | security-testing.md §4 |
@@ -121,6 +121,6 @@
 
 - 程式：`scripts/serve.mjs`（靜態檔服務抽成 `scripts/lib/static-serve.mjs`）、`scripts/lib/rate-limit.mjs`、`scripts/lib/gateway/{auth,index,workflow}.mjs`、`scripts/lib/markdown.mjs`、`scripts/lib/render.mjs`、`scripts/lib/{intl-epidemic,emit-api,dist-profile,assets,subscribe-mock,ask-log-mock,intl-feed-api}.mjs`、`schemas/*.json`、`src/templates/**`、`src/client/{answer/text,intl-epidemic-rules,subscribe-service,careers-apply,vaxschedule}.js`、`src/client/admin/common.js`、`.github/workflows/pages.yml`。
 - 測試：`tests/round73-server-hardening.test.mjs`、`tests/round73-gateway-owner.test.mjs`、`tests/round73-content-sanitizer.test.mjs`，以及既有測試檔的補充。
-- 文件：本文件、[content-html-safety.md](content-html-safety.md)、deploy.md §9.2、§9.3、§14.10、§35、abuse-protection.md、attack-surface.md §2、assets-policy.md、security-testing.md §2、README 第七十三輪、ARCHITECTURE §72、architecture-decisions §56。
+- 文件：本文件、[content-html-safety.md](content-html-safety.md)、deploy.md §9.3、§9.4、§14.10、§35、abuse-protection.md、attack-surface.md §2、assets-policy.md、security-testing.md §2、README 第七十三輪、ARCHITECTURE §73、architecture-decisions §57。
 - 修補時的取捨：配套內容（例：疫情中心的卷期與各組文章一起送）本來就可以屬於別單位，所以 H1 的規則只對「網站上已有的內容」生效；網站上已有的配套內容必須與 main 完全相同（版本碼含 owner），拿它改不了權責單位。feed 多出未知欄位時整則退回並點名欄位，不是默默丟掉：疫情中心的系統若有送額外欄位會被擋下，要先對齊 schema。
 - 相依：新增一個建置期的 HTML 白名單淨化器（見 content-html-safety.md 的版本與理由）；`npm audit fix` 修 `fast-uri`。
