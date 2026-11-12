@@ -10,6 +10,8 @@ const ROWS = {
   'site.short': ['疾管署', 'Taiwan CDC', '台湾CDC', 'Taiwan CDC', 'CDC Đài Loan', 'CDC Taiwan', 'CDC ไต้หวัน'],
   'site.parent': ['衛生福利部', 'Ministry of Health and Welfare', '衛生福利部', 'Ministry of Health and Welfare', 'Bộ Y tế và Phúc lợi', 'Kementerian Kesehatan dan Kesejahteraan', 'กระทรวงสาธารณสุขและสวัสดิการ'],
   'skip': ['跳到主要內容', 'Skip to main content', 'メインコンテンツへ', 'Lumaktaw sa pangunahing nilalaman', 'Chuyển đến nội dung chính', 'Lewati ke konten utama', 'ข้ามไปยังเนื้อหาหลัก'],
+  // 第七十一輪（U2）：第二個 skip link。鍵盤使用者原本要按 22 次 Tab 才到主選單，這一個停留點直接跳到 #main-nav
+  'skip.nav': ['跳到主選單', 'Skip to main menu', 'メインメニューへ', 'Lumaktaw sa pangunahing menu', 'Chuyển đến menu chính', 'Lewati ke menu utama', 'ข้ามไปยังเมนูหลัก'],
   'hotline': ['防疫專線 1922', 'Hotline 1922', '防疫ホットライン 1922', 'Hotline 1922', 'Đường dây phòng dịch 1922 (có thông dịch)', 'Hotline 1922', 'สายด่วน 1922'],
   'a11y': ['無障礙', 'Accessibility', 'アクセシビリティ', 'Accessibility', 'Hỗ trợ tiếp cận', 'Aksesibilitas', 'การเข้าถึง'],
   'sitemap': ['網站導覽', 'Site map', 'サイトマップ', 'Mapa ng site', 'Sơ đồ trang web', 'Peta situs', 'แผนผังเว็บไซต์'],
@@ -274,6 +276,8 @@ const ROWS = {
   'ask.key.note': ['這是給同事示範生成式答案的功能，正式站不會請民眾貼金鑰。金鑰只存在這個分頁的工作階段（sessionStorage），關閉分頁即清除，由瀏覽器直接呼叫供應商，本站伺服器不會收到。', 'A staff-only demo of generated answers; the public site will never ask visitors for a key. The key lives only in this tab\'s session (sessionStorage), is cleared when the tab closes, and goes straight to the provider; this site never receives it.'],
   'proto.banner.tag': ['非官方原型', 'Unofficial prototype', '非公式の試作', 'Hindi opisyal na prototype', 'Bản thử nghiệm không chính thức', 'Prototipe tidak resmi', 'ต้นแบบ ไม่ใช่เว็บไซต์ทางการ'],
   'proto.banner.text': ['這是新官網的設計原型，疫情數字與內容為示意，不是衛生福利部疾病管制署的正式網站。', 'This is a design prototype for a new website; outbreak figures and content are illustrative. It is not the official Taiwan CDC site.', '新ウェブサイトの設計試作です。数値や内容は例示であり、台湾CDCの公式サイトではありません。', 'Prototype ito ng bagong website; halimbawa lamang ang mga numero at nilalaman. Hindi ito ang opisyal na site ng Taiwan CDC.', 'Đây là bản thử nghiệm thiết kế trang web mới; số liệu và nội dung chỉ mang tính minh họa, không phải trang chính thức của CDC Đài Loan.', 'Ini prototipe desain situs baru; angka dan konten hanya ilustrasi, bukan situs resmi CDC Taiwan.', 'นี่คือต้นแบบการออกแบบเว็บไซต์ใหม่ ตัวเลขและเนื้อหาเป็นเพียงตัวอย่าง ไม่ใช่เว็บไซต์ทางการของ CDC ไต้หวัน'],
+  // 第七十一輪（U9）：示範站刻意凍結在 BUILD_TODAY；頁面要自己說出來，否則「資料日」看起來像幾十天沒更新
+  'proto.banner.frozen': ['示範資料凍結於 {date}。', 'Demo data frozen on {date}.', 'デモデータは {date} 時点で固定。', 'Naka-freeze ang demo data noong {date}.', 'Dữ liệu minh họa cố định ngày {date}.', 'Data demo dibekukan pada {date}.', 'ข้อมูลตัวอย่างหยุดไว้ ณ {date}'],
   'proto.banner.cta': ['前往正式官網 www.cdc.gov.tw', 'Go to the official site www.cdc.gov.tw', '公式サイト www.cdc.gov.tw へ', 'Pumunta sa opisyal na site www.cdc.gov.tw', 'Đến trang chính thức www.cdc.gov.tw', 'Ke situs resmi www.cdc.gov.tw', 'ไปยังเว็บไซต์ทางการ www.cdc.gov.tw'],
   'ask.mode': ['目前模式', 'Current mode'],
   'ask.mode.extractive': ['抽取式整理（每句都是本署內容原文，附來源編號）', 'Extractive (every sentence is original CDC text with a source number)'],
@@ -764,6 +768,9 @@ const ROWS_C2 = {
   'home.more.all': ['全部服務', 'All services', 'すべてのサービス', 'Lahat ng serbisyo', 'Tất cả dịch vụ', 'Semua layanan', 'บริการทั้งหมด'],
   'home.promo.all': ['全部宣導', 'All campaigns', 'すべてのキャンペーン', 'Lahat ng kampanya', 'Tất cả chiến dịch', 'Semua kampanye', 'แคมเปญทั้งหมด'],
   'footer.services': ['服務', 'Services', 'サービス', 'Mga serbisyo', 'Dịch vụ', 'Layanan', 'บริการ'],
+  // 第七十一輪（U8）：「服務」欄 14 項分兩小組（同一欄、兩個小標），欄數與連結不變
+  'footer.sub.citizen': ['民眾申辦', 'For the public', '申請・届出', 'Para sa publiko', 'Dành cho người dân', 'Untuk masyarakat', 'สำหรับประชาชน'],
+  'footer.sub.agency': ['機關資訊', 'About our work', '機関の情報', 'Tungkol sa ahensya', 'Thông tin cơ quan', 'Informasi lembaga', 'ข้อมูลหน่วยงาน'],
   'footer.group.about': ['關於與政策', 'About & policies', '機関・方針', 'Tungkol at mga patakaran', 'Giới thiệu & chính sách', 'Tentang & kebijakan', 'เกี่ยวกับและนโยบาย'],
   'footer.group.dev': ['開放資料與開發者', 'Open data & developers', 'オープンデータ・開発者', 'Open data at developer', 'Dữ liệu mở & nhà phát triển', 'Data terbuka & pengembang', 'ข้อมูลเปิดและนักพัฒนา'],
   'footer.group.contact': ['聯絡', 'Contact', 'お問い合わせ', 'Makipag-ugnayan', 'Liên hệ', 'Kontak', 'ติดต่อ'],
@@ -2257,6 +2264,15 @@ const ROWS_R62 = {
   'egg.more': ['為什麼要洗 20 秒？', 'Why 20 seconds?'],
 };
 for (const [key, vals] of Object.entries(ROWS_R62)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
+
+/* ───── 第七十一輪（docs/architecture-ux-review.md 4.4）：傳染病索引第一個 tab「有完整疾病頁」與「其他法定傳染病」收合區。英文由原型撰寫；其餘五語為機器初稿、待審 ───── */
+const ROWS_R71_DIS = {
+  'diseases.by.page': ['有完整疾病頁', 'With a full page', '詳細ページあり', 'May buong pahina', 'Có trang đầy đủ', 'Memiliki halaman lengkap', 'มีหน้าครบถ้วน'],
+  'diseases.others': ['其他法定傳染病（{n}）', 'Other notifiable diseases ({n})', 'その他の法定感染症（{n}）', 'Iba pang notifiable na sakit ({n})', 'Các bệnh truyền nhiễm pháp định khác ({n})', 'Penyakit wajib lapor lainnya ({n})', 'โรคติดต่อที่ต้องแจ้งอื่น ๆ ({n})'],
+  'diseases.others.note': ['這些疾病還沒有獨立頁面；點一下直接到智慧問答查詢，答案只引用已審閱的內容。', 'These diseases have no page yet. Select one to ask about it; answers quote reviewed content only.', 'これらの感染症には個別ページがまだありません。選ぶと質問ページに移動し、回答は確認済みの内容だけを引用します。', 'Wala pang sariling pahina ang mga sakit na ito. Pumili ng isa para magtanong; sinisipi lamang ng sagot ang nasuring nilalaman.', 'Các bệnh này chưa có trang riêng. Chọn một bệnh để hỏi; câu trả lời chỉ trích dẫn nội dung đã được xem xét.', 'Penyakit ini belum memiliki halaman. Pilih salah satu untuk bertanya; jawaban hanya mengutip konten yang sudah ditinjau.', 'โรคเหล่านี้ยังไม่มีหน้าเฉพาะ เลือกโรคเพื่อถามได้ คำตอบอ้างอิงเฉพาะเนื้อหาที่ทบทวนแล้ว'],
+  'diseases.sit.sr': ['目前疫情：', 'Current status: ', '現在の状況：', 'Kasalukuyang kalagayan: ', 'Tình hình hiện tại: ', 'Status saat ini: ', 'สถานการณ์ปัจจุบัน: '],
+};
+for (const [key, vals] of Object.entries(ROWS_R71_DIS)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
 
 // translation.bar.reviewed 的 {lang} 佔位：zh 版用語言名稱
 STRINGS['zh-TW']['translation.bar.reviewed'] = STRINGS['zh-TW']['translation.bar.reviewed'].replace('{lang}', '翻譯');

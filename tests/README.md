@@ -1,6 +1,6 @@
 # tests/ 測試檔對照
 
-> 第七十一輪（2026-11-12）新增。`tests/` 目前有 106 個 `*.test.mjs`，其中 71 個以 `roundNN-` 開頭——檔名說的是「哪一輪寫的」，不是「測什麼」。這份對照表讓你從主題找到檔名。
+> 第七十一輪（2026-11-12）新增。`tests/` 目前有 108 個 `*.test.mjs`，其中 71 個以 `roundNN-` 開頭——檔名說的是「哪一輪寫的」，不是「測什麼」。這份對照表讓你從主題找到檔名。
 > 每個檔只列一次，放在最主要的主題底下；跨主題的在「另見」註明。`roundNN-` 檔名後面寫的是該輪的主題（取自檔案第一行註解）。
 > 子系統的規則在 ARCHITECTURE 哪一節、程式在哪，看 [ARCHITECTURE.md](../ARCHITECTURE.md) §0.5「現況地圖」。
 > 全部跑：`npm test`；純內容 PR 只跑的子集：`npm run test:content`（清單在 `package.json`，說明見 docs/deploy.md §28）。
@@ -34,6 +34,7 @@
 | 檔名 | 測什麼 |
 | --- | --- |
 | `api.test.mjs` | `v1/*.json` 與 `openapi.json`：外殼、etag、必要檔案、redirects |
+| `css-budget.test.mjs` | 第七十一輪：`components.css` 不超過 120 KB、斷點白名單、`font-size` 下限 13 px（有預算才會拆） |
 | `emit-r2.test.mjs` | 第二輪輸出：新 API 端點、catalog、疾病 related、sitemap、feeds、llms.txt、JSON-LD |
 | `jsonld.test.mjs` | JSON-LD 各型別、`cdc:` 擴充、麵包屑、SearchAction、資料集欄位 |
 | `seo.test.mjs` | robots 三類 AI 爬蟲、sitemap 不含失效版、七語 llms.txt、feeds |
@@ -146,6 +147,7 @@
 | 檔名 | 測什麼 |
 | --- | --- |
 | `round24-a11y.test.mjs` | 第二十四輪：無障礙修正的結構斷言（真正的 axe 掃描在 `npm run a11y`） |
+| `layout-shell.test.mjs` | 第七十一輪：兩個 skip link、原型橫幅凍結日期、預覽列預設隱藏、頁尾服務欄兩小組、無縮圖影音文字卡、儀表板凍結註記 |
 | `round48-ui.test.mjs` | 第四十八輪：倒數由瀏覽器重算、窄螢幕與放大文字不橫向捲動、頁籤標題層級 |
 | `round47-nav-panels.test.mjs` | 第四十七輪：主選單小型面板 |
 | `round61-research-media.test.mjs` | 第六十一輪：「研究與媒體」身分入口 |

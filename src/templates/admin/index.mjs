@@ -3,7 +3,12 @@ import { html } from '../../../scripts/lib/render.mjs';
 import { migrationData } from './_migration.mjs';
 import { loadBatches } from './import.mjs';
 import { pageHead, dataScript, adminMeta, KIND_LABEL, KIND_ORDER, todoList, sitGov, byOwnerRows, kpiProgress, fmtNum, noticeRows, mediaRows, linkRows, linkCounts, jobRows, tenderRows } from './_partials.mjs';
+import { config } from '../../../site.config.mjs';
 export { layout } from './_layout.mjs';
+
+// 第七十一輪（2.7）：示範站凍結在 BUILD_TODAY（Pages 為 2026-10-01），資料集更新率、態勢層延遲等 KPI 會一直是紅的；
+// 那是治理引擎正確運作的證據，但第一次看到的主管會以為系統壞了。KPI 表上方加一行說明，只在原型模式輸出（正式站的日期就是今天）。
+const freezeNote = (site) => (config.isPrototype ? html`<p class="adm-card__sub" data-freeze-note><strong>示範站凍結於 ${site.today}，以下為當日計算。</strong></p>` : '');
 
 export function pages() { return [{ path: '/admin/', props: {}, noindex: true }]; }
 export function meta() { return adminMeta('治理儀表板', 'dashboard', ['/assets/js/admin/dashboard.js']); }
@@ -80,6 +85,7 @@ ${pageHead({ title: '治理儀表板', what: '署內治理的一頁總覽：品�
 
 <section class="adm-card" aria-labelledby="kpi-h"><h2 id="kpi-h">品質指標（規劃 7.5）</h2>
   <p class="adm-card__sub">目前值由引擎計算；條的深色刻度＝第一年目標。第一年／第三年目標為規劃文件設定值。</p>
+  ${freezeNote(site)}
   <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>資料來源：/v1/governance/kpi.json（建置日 ${site.today}）</caption>
     <thead><tr><th scope="col">指標</th><th scope="col" class="num">目前</th><th scope="col" class="num">第一年目標</th><th scope="col" class="num">第三年目標</th><th scope="col">進度</th><th scope="col">說明</th></tr></thead>
     <tbody>${kpi.map((k) => {
