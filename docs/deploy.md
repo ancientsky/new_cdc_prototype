@@ -286,7 +286,7 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 - **已知的行為變化**：`actions/upload-pages-artifact` v4 起不打包點開頭的檔案與目錄（`.nojekyll`、`.well-known/`）。目前沒影響；`/.well-known/security.txt` 因此改為建置時同時輸出到根目錄 `/security.txt`（見 10.4）。
 - **前端 `src/public/vendor/marked.min.js` 不跟著升**：它是後台貼上轉換用的獨立副本，Dependabot 看不到。要升時手動換檔並測後台「貼上 Word／網頁」轉換。
 
-### 9.2 Node.js 大版升級（第七十一輪）
+### 9.2 Node.js 大版升級（第七十四輪）
 
 - **誰升**：人，不是 Dependabot（它只管 action SHA 與 npm 依賴）。每年 10 月底 Node 把新版升為 Active LTS 後一個月內做。
 - **改哪裡**：四個 workflow 的 `node-version`、`tests/lanes.test.mjs` 釘住的那一行、`.nvmrc`／`.node-version`、本文開頭與 §14 圖、`line-chatbot.md`、`README.md` 快速開始；`engines.node` 只在最舊的 LTS 結束支援時才提高。

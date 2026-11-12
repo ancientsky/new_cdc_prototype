@@ -1004,7 +1004,7 @@ AD 群組命名沿用 `CDC-WEB-<單位>-<角色>`（[admin-auth.md](admin-auth.m
 
 **沒選的做法**：直接改 deploy.md §14 為 Gitea（資訊室第 5 題還沒回答，改了只是換一個假設）；現在就寫 `git-gitea.mjs`（平台未定前多一支沒人實跑的轉接器，和 `git-gitlab.mjs` 一樣只能用假 fetch 測）。
 
-## 56. Node.js：CI 與部署跟 Active LTS，`engines` 最低版本跟最舊的維護版（第七十一輪，2026-11-12）
+## 56. Node.js：CI 與部署跟 Active LTS，`engines` 最低版本跟最舊的維護版（第七十四輪，2026-11-12）
 
 **決定**：（1）CI 四個 workflow、`.nvmrc`／`.node-version`、閘道與答案服務的部署說明改用 Node 26（2026-10-28 起的 Active LTS），workflow 只寫大版號讓 `setup-node` 自動拿最新 26.x；（2）`engines.node` 只從 `>=22` 修正為 `>=22.13.0`（pdfjs-dist 的實際下限），不提高到 24 或 26；（3）每年 10 月底 Node 升 LTS 後一個月內由人升版，照 `docs/node-upgrade.md` §3 驗收並補一節紀錄；（4）npm 11.20 的 `install-scripts` 允許清單保持預設，不 approve `esbuild`。
 
