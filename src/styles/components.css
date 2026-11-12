@@ -154,7 +154,7 @@
 .c-promo-demo__tx i.h{height:7px;background:var(--ink-3);width:60%}
 .c-promo-demo__sit{display:flex;gap:4px;left:4%;right:4%}
 .c-promo-demo__sit b{flex:1;height:100%;background:#fff;border:1px solid var(--line);border-top:3px solid var(--status-rising);border-radius:4px}
-.c-promo-demo__lab{font-size:10px;line-height:1;color:var(--ink-3);position:absolute;right:4%;bottom:3%}
+.c-promo-demo__lab{font-size:var(--fs-xs);line-height:1;color:var(--ink-3);position:absolute;right:4%;bottom:3%} /* 第七十一輪（4.6）：10px → token */
 .c-home{padding-top:var(--sp-5);padding-bottom:var(--sp-8)}
 .c-tasks h2{margin:var(--sp-5) 0 var(--sp-4)}
 .c-tasks__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-4)}
@@ -279,9 +279,16 @@
 /* 第二十四輪：群組標題由 h3 升為 h2（h1 後不可直接跳 h3，WCAG 1.3.1）；視覺維持原本 h3 的大小，所以用 class 而非標籤選擇器 */
 .c-dis-group{margin-bottom:var(--sp-5)} .c-dis-group__t{font-size:var(--fs-lg);padding-bottom:6px;border-bottom:2px solid var(--green-100)}
 .c-dis-list{list-style:none;padding:0;margin:0}
-.c-dis{display:flex;justify-content:space-between;gap:var(--sp-3);flex-wrap:wrap;padding:var(--sp-3) 0;border-bottom:1px solid var(--line-2)}
-.c-dis__name{font-weight:700} .c-dis__en{color:var(--ink-3);font-size:var(--fs-sm)}
-.c-dis__meta{display:flex;gap:var(--sp-3);align-items:center;flex-wrap:wrap;font-size:var(--fs-sm)}
+/* 第七十一輪（4.4）：整列一個連結 .c-dis__link，最小高度 44 px；名稱保留連結色與底線，其餘文字用內文色 */
+.c-dis{border-bottom:1px solid var(--line-2)}
+.c-dis__link{display:flex;justify-content:space-between;align-items:center;gap:4px var(--sp-3);flex-wrap:wrap;min-height:44px;padding:10px 6px;color:var(--ink);text-decoration:none}
+.c-dis__link:hover{background:var(--green-50);color:var(--ink)} .c-dis__link:hover .c-dis__name{color:var(--green-900)}
+.c-dis__name{font-weight:700;color:var(--green-700);text-decoration:underline;text-underline-offset:2px} .c-dis__en{color:var(--ink-3);font-size:var(--fs-sm)}
+.c-dis__main{min-width:0;overflow-wrap:anywhere}
+.c-dis__meta{display:flex;gap:4px var(--sp-3);align-items:center;flex-wrap:wrap;font-size:var(--fs-sm)} .c-dis__meta .c-status-tag{cursor:inherit}
+.c-dis__nopage{color:var(--ink-3);font-size:var(--fs-xs)}
+.c-dis-others{margin-bottom:var(--sp-5)} .c-dis-others>summary{min-height:44px;padding:10px 0;cursor:pointer;font-weight:700;color:var(--green-700);border-bottom:2px solid var(--green-100)}
+.c-dis-others__note{font-size:var(--fs-sm);margin:var(--sp-2) 0}
 .c-diseases__tools{display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-4);margin-bottom:var(--sp-4)}
 /* 第三十七輪：底線改用 inset box-shadow、按鈕不再用 margin-bottom:-2px 壓線。
    原寫法讓按鈕超出列表 2px，而 overflow-x:auto 會連帶讓 overflow-y 變 auto，於是頁籤列右端多一條沒有用的直向小捲軸。 */
@@ -560,6 +567,11 @@ html:not(.js) .c-tabs__print{position:static;width:auto;height:auto;margin:0 0 v
 .c-media-card__t a:hover{text-decoration:underline;color:var(--green-900)}
 .c-media-card__basis{margin:0;font-size:var(--fs-xs);color:var(--ink-3)}
 .c-media-card--outdated .c-media-card__poster{filter:saturate(.6)}
+/* 第七十一輪（U3）：首頁沒有縮圖的影音卡改為純文字卡（不畫佔位圖）；左側綠條表示「這是影片」，過時標記改為流內小標 */
+.c-media-card--text{border-left:4px solid var(--green-700)}
+.c-media-card--text .c-media-card__body{padding:var(--sp-4)}
+.c-media-card--text .c-media-card__flag{position:static;align-self:flex-start}
+.c-media-card__meta{margin:0;font-size:var(--fs-sm);color:var(--ink-2);font-variant-numeric:tabular-nums}
 .c-matmedia{margin-bottom:var(--sp-2)}
 .c-matmedia__h{margin:var(--sp-3) 0 var(--sp-1);font-size:var(--fs-sm)}
 
@@ -1243,7 +1255,8 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .vx-hub__card .c-linklist li{margin:0 0 var(--sp-1)}
 
 /* 第四十輪（#73、#74）：多語標示。「僅有中文」標記、語言選單的「此頁僅有…」、從無譯文頁切來的首頁提示 */
-.c-zhonly{display:inline-block;font-size:var(--fs-xs,.75rem);font-weight:600;line-height:1.3;padding:1px 6px;border-radius:var(--radius-sm);background:var(--line-2);color:var(--ink-2);vertical-align:.1em;white-space:nowrap}
+/* 第七十一輪：拿掉 white-space:nowrap。字級下限改 13 px 後，「僅中文」標籤在外語首頁的專區卡（印尼文「Hanya bahasa Mandarin」、越南文「Chỉ có tiếng Trung」）於 390 px＋文字 200% 時撐出視窗（CI 無障礙閘門 /vi/ 396>390；/id/ 在改之前就已 421）。標籤可換行即不再溢出，視覺上只在放大時多一行 */
+.c-zhonly{display:inline-block;font-size:var(--fs-xs,.75rem);font-weight:600;line-height:1.3;padding:1px 6px;border-radius:var(--radius-sm);background:var(--line-2);color:var(--ink-2);vertical-align:.1em;overflow-wrap:anywhere}
 .langs__na{display:block;font-size:var(--fs-xs,.75rem);color:var(--ink-2);font-weight:400;white-space:normal}
 /* 頂端一列空間有限：只留虛線底線提示，完整文字給螢幕閱讀器與 title */
 .langs--inline a[data-same="0"]{text-decoration:underline dotted;text-underline-offset:3px}
@@ -1271,7 +1284,7 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .c-profile-card__name{margin:0;font-size:1.15rem;font-weight:700;line-height:1.3}
 .c-profile-card__en{font-size:.9rem;color:var(--ink-3)}
 .c-profile-card__since{font-size:.85rem}
-.c-profile-card__pill{position:absolute;top:var(--sp-2);right:var(--sp-2);font-size:.75rem}
+.c-profile-card__pill{position:absolute;top:var(--sp-2);right:var(--sp-2);font-size:var(--fs-xs)} /* 第七十一輪（4.6）：.75rem → 字級下限 token */
 .c-profile__head{align-items:flex-start}
 .c-profile__figure{margin:0;flex:none;width:200px}
 .c-profile__photo{width:200px;height:250px;object-fit:cover;border-radius:var(--radius);border:1px solid var(--line);background:var(--line-2)}

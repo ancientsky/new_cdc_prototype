@@ -133,7 +133,17 @@ Yulun 要求（2026-11-12）詳細檢查整個網站有沒有安全、漏洞、�
 - **查過沒問題的要說清楚**：CSRF、Origin、JWT、PKCE、路徑組成（送審者寫不進 CI 設定檔）、Actions 釘 SHA、fork 隔離、artifact 驗證、模板跳脫、BYOK 金鑰、個資掃描。清單在 [docs/security-audit.md](docs/security-audit.md) §3.5。
 - **教訓**：「只接受本機連線」不是認證；請求裡的欄位是資料不是權威；黑名單只擋想得到的寫法；解碼後要再檢查一次仍在根目錄下；設定值也要驗證；DAST 排程寫好不等於跑過（第六十三輪的 ZAP 到本輪沒跑過，而它的目標正是有洞的 `serve.mjs`）；授權測試要有「另一個單位的人」。
 - **要在 GitHub／主機上動手的事**（程式改不了）：建 `production` Environment 並搬兩個祕密、規則集對程式路徑要求 code owner 審核、檢討部署金鑰的規則集繞過、手動跑一次 DAST。見 [docs/security-audit.md](docs/security-audit.md) §5、[docs/deploy.md](docs/deploy.md) §9.3–9.4。
-- 文件：[docs/security-audit.md](docs/security-audit.md)（方法、全部發現、修法、待辦）、[docs/content-html-safety.md](docs/content-html-safety.md)（內容 HTML 白名單）、deploy.md §14.10、§35；測試 `tests/round73-*.test.mjs`；[ARCHITECTURE](ARCHITECTURE.md) §73、[architecture-decisions](docs/architecture-decisions.md) §57。實作由 Opus 工作者分三個 worktree 完成，本串驗收。
+- 文件：[docs/security-audit.md](docs/security-audit.md)（方法、全部發現、修法、待辦）、[docs/content-html-safety.md](docs/content-html-safety.md)（內容 HTML 白名單）、deploy.md §14.10、§35；測試 `tests/round73-*.test.mjs`；[ARCHITECTURE](ARCHITECTURE.md) §74、[architecture-decisions](docs/architecture-decisions.md) §58。實作由 Opus 工作者分三個 worktree 完成，本串驗收。
+
+## 第七十一輪：架構與 UI/UX 全面檢視——哪裡穩、接手會卡在哪、介面改了什麼
+
+Yulun 要求（2026-11-12）：對整個原型的架構設計做完整檢視，包含詳細的 UI/UX 建議。同日另有 Lighthouse 效能（第七十二輪）、資安與弱點（第七十三輪）、Node.js 26 升級（第七十四輪）三個平行檢視。
+
+- **結論**：架構方向正確、落實程度高（內容只存一份、治理由建置計算、答案只轉述不創作都已經做成可以動的東西，axe 21 頁 × 兩種螢幕 0 違規）；主要風險不在設計，而在**可接手性**——文件按輪次而不是按現況組織、CSS 與測試檔沒有預算與命名規則、前端資產沒有檔名雜湊。
+- **介面改了什麼**：手機首屏的原型橫幅壓成兩行並標「示範資料凍結於 2026-10-01」、開發者用的預覽列預設隱藏；第二個 skip link「跳到主選單」，鍵盤到主選單由 22 個 Tab 停留點降為 2 個；首頁影音卡沒有縮圖時改文字卡；傳染病索引民眾版預設先列有完整頁的 16 種疾病，法定類別留給專業版；旅遊頁國家 chip 放大到手機 44 px；最小字級 token 由 12.5 px 改為 13 px；頁尾「服務」欄分「民眾申辦」「機關資訊」兩小組。
+- **架構與文件**：加 CSS 預算測試（不拆現有 `components.css`，與第七十二輪一致）；ARCHITECTURE 頂部加 §0.5「現況地圖」（15 個子系統的規則、程式、測試、文件位置與最後修改輪次），輪次章節保留作為變更脈絡；新增 [docs/README.md](docs/README.md)（39 份文件索引）與 [tests/README.md](tests/README.md)（測試檔主題對照），新測試檔改以主題命名。
+- **沒做、待決定**：資產檔名雜湊與答案句去重留到之後的獨立一輪；桌機語言列折疊、「民眾」鈕改狀態標示、首頁六任務手機兩欄、i18n 原始檔改每語 JSON 四項等 Yulun 決定。
+- 文件：[docs/architecture-ux-review.md](docs/architecture-ux-review.md)（量測方法、發現表 U1–U12、本輪八項實作與理由、教訓）、[docs/a11y.md](docs/a11y.md) §11、[docs/deploy.md](docs/deploy.md) §12.2（自家資產不要設 immutable）、ARCHITECTURE §0.5 與 §73、[architecture-decisions](docs/architecture-decisions.md) §57。
 
 ## 第七十輪：Gitea 是不是比 GitLab 更輕量更好
 
@@ -1042,6 +1052,8 @@ docs/                使用說明與治理文件
 網站內容與 API 資料預設採**政府資料開放授權條款第 1 版（OGDL-1.0）**，個別資料集另有標示（CC0-1.0、CC BY 4.0）。引用請附頁面網址與最後審閱日，格式見[開發者入口](https://ancientsky.github.io/new_cdc_prototype/developers/#license)。
 
 ## 文件
+
+**全部 39 份文件的分組索引在 [docs/README.md](docs/README.md)**（依「給誰看」與主題兩種方式找）；系統現況先看 [ARCHITECTURE.md](ARCHITECTURE.md) §0.5「現況地圖」；測試檔對照在 [tests/README.md](tests/README.md)。下表是最常用的幾份。
 
 | 文件 | 內容 |
 | --- | --- |

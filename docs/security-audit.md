@@ -121,6 +121,6 @@
 
 - 程式：`scripts/serve.mjs`（靜態檔服務抽成 `scripts/lib/static-serve.mjs`）、`scripts/lib/rate-limit.mjs`、`scripts/lib/gateway/{auth,index,workflow}.mjs`、`scripts/lib/markdown.mjs`、`scripts/lib/render.mjs`、`scripts/lib/{intl-epidemic,emit-api,dist-profile,assets,subscribe-mock,ask-log-mock,intl-feed-api}.mjs`、`schemas/*.json`、`src/templates/**`、`src/client/{answer/text,intl-epidemic-rules,subscribe-service,careers-apply,vaxschedule}.js`、`src/client/admin/common.js`、`.github/workflows/pages.yml`。
 - 測試：`tests/round73-server-hardening.test.mjs`、`tests/round73-gateway-owner.test.mjs`、`tests/round73-content-sanitizer.test.mjs`，以及既有測試檔的補充。
-- 文件：本文件、[content-html-safety.md](content-html-safety.md)、deploy.md §9.3、§9.4、§14.10、§35、abuse-protection.md、attack-surface.md §2、assets-policy.md、security-testing.md §2、README 第七十三輪、ARCHITECTURE §73、architecture-decisions §57。
+- 文件：本文件、[content-html-safety.md](content-html-safety.md)、deploy.md §9.3、§9.4、§14.10、§35、abuse-protection.md、attack-surface.md §2、assets-policy.md、security-testing.md §2、README 第七十三輪、ARCHITECTURE §74、architecture-decisions §58。
 - 修補時的取捨：配套內容（例：疫情中心的卷期與各組文章一起送）本來就可以屬於別單位，所以 H1 的規則只對「網站上已有的內容」生效；網站上已有的配套內容必須與 main 完全相同（版本碼含 owner），拿它改不了權責單位。feed 多出未知欄位時整則退回並點名欄位，不是默默丟掉：疫情中心的系統若有送額外欄位會被擋下，要先對齊 schema。
 - 相依：新增一個建置期的 HTML 白名單淨化器（見 content-html-safety.md 的版本與理由）；`npm audit fix` 修 `fast-uri`。

@@ -2,6 +2,9 @@
 // 每季一頁；原型以當次建置的評估結果產生「2026 Q3（原型）」。數字全部來自 site.evalReport 與治理引擎，不手寫。
 import { html } from '../../../scripts/lib/render.mjs';
 import { proStyles } from '../pro/_styles.mjs';
+// 第七十一輪（2.7）：示範站凍結在 BUILD_TODAY，摘要與六指標是那一天的計算；原型模式在摘要上方加一行說明（正式模式不輸出），
+// 避免讀者把凍結日的數字當成「現在」。日期用 ISO，與 /admin/ 儀表板同一句
+import { config } from '../../../site.config.mjs';
 
 // 六指標與預設門檻（evalReport.thresholds 有提供就以它為準）。
 const METRICS = [
@@ -81,6 +84,7 @@ export function render(ctx) {
 
   <section aria-labelledby="tiles-h">
     <h2 id="tiles-h">本季摘要</h2>
+    ${config.isPrototype ? html`<p class="pf-hint" data-freeze-note><strong>示範站凍結於 ${site.today}，以下為當日計算。</strong></p>` : ''}
     <div class="pf-tiles">
       ${tile(total || '—', '問題量', `評估集 ${total} 題（原型）；瀏覽器內的回報另計，見下`)}
       ${tile(pct(refusalRate), '拒答率', `評估集中應拒答題 ${refusalTotal} 題占比；拒答包含個人診斷、用藥劑量、法律責任等`)}
