@@ -35,7 +35,7 @@
 | 國際疫情 | §12（出國與入境）；§47（國際重要疫情資訊） | `scripts/lib/intl-epidemic.mjs`、`intl-feed-api.mjs`、`travel-alerts.mjs`、`src/templates/public/travel.mjs`、`travel-alert.mjs` | `travel.test.mjs`、`travel-data.test.mjs`、`travel-ui.test.mjs`、`travel-alert-ui.test.mjs`、`intl-epidemic.test.mjs`、`intl-epidemic-api.test.mjs` | intl-epidemic.md（§9 為第六十九輪 API／MCP 評估，只有文件） | 第四十三輪（§47） |
 | 疫情報導 | §34；§41、§49（含 §49.4 第四十六輪）、§55 | `src/templates/public/bulletin.mjs`、`_bulletin.mjs`、`src/client/admin/bulletin-edit.js`、`pdf-manuscript.js`、`src/client/bulletin-rules.js` | `round29-bulletin.test.mjs`、`round35-bulletin.test.mjs`、`round45-pdf-gateway.test.mjs`、`round46-pdf-parse.test.mjs`、`round52-bulletin-gateway.test.mjs` | bulletin.md | 第五十二輪（§55） |
 | 互動與主題 | §63（節慶主題）、§66（互動模組，含 §66.1 第六十四輪） | `scripts/lib/theme.mjs`、`scripts/lib/interactives.mjs`、`src/templates/public/play.mjs`、`src/client/play.js` | `round60-theme.test.mjs`、`round62-interactives.test.mjs` | interactives.md | 第六十四輪（§66.1） |
-| 導覽與版面 | §7、§8；§20（頁尾分組）、§27（無障礙）、§50（主選單面板）、§65（研究與媒體入口）、§72 | `src/templates/layout.mjs`、`src/templates/public/_nav-panels.mjs`、`_partials.mjs`、`src/styles/{tokens,base,components}.css`、`src/client/ui.js` | `round24-a11y.test.mjs`、`round47-nav-panels.test.mjs`、`round48-ui.test.mjs`、`round61-research-media.test.mjs` | navigation.md、a11y.md | 第六十一輪（§65）；第七十一輪（§72）再調 skip link、頁尾服務欄與字級 token |
+| 導覽與版面 | §7、§8；§20（頁尾分組）、§27（無障礙）、§50（主選單面板）、§65（研究與媒體入口）、§73 | `src/templates/layout.mjs`、`src/templates/public/_nav-panels.mjs`、`_partials.mjs`、`src/styles/{tokens,base,components}.css`、`src/client/ui.js` | `round24-a11y.test.mjs`、`round47-nav-panels.test.mjs`、`round48-ui.test.mjs`、`round61-research-media.test.mjs` | navigation.md、a11y.md | 第六十一輪（§65）；第七十一輪（§72）再調 skip link、頁尾服務欄與字級 token |
 
 - **§11 起的輪次章節是變更脈絡**：記的是「為什麼當時這樣做」、當時的數字與教訓，不會回頭改寫；同一件事後來又改過，以較晚的章節為準。
 - **要知道「現在怎樣」**：先看這張表找到子系統，再依「現在的規則在哪一節」由大到小跳章節（最大的節號通常就是現況），程式與測試以表中檔案為準。
@@ -2807,7 +2807,22 @@ Yulun 問盲測弱項（錯字、長輩說法、情境題、外語）有沒有�
 
 教訓：並發問題先把每個 group 的取消／排隊語意寫出來再算等待時間；「取消舊的」在低頻時最省，在高頻時會餓死，而靜態站的部署只要「最後一次包含全部」，排隊一個就夠。
 
-## 72. 第七十一輪：架構與 UI/UX 全面檢視（2026-11-12）
+## 72. 第七十四輪：Node.js 跟 Active LTS；最低版本跟最舊的維護版（2026-11-12）
+
+問題：Node 26 在 2026-10-28 進 Active LTS、24 同日進維護，CI 與部署要不要跟？跟的話最低版本要不要一起提高？
+
+| 項目 | 契約 |
+| --- | --- |
+| CI（`pages.yml`、`content-pr.yml`、`lane-sla.yml`、`dast.yml`） | `node-version: 26`，只寫大版號，`setup-node` 每次解析最新 26.x；`lane` job 仍不得有 setup-node（#81） |
+| `tests/lanes.test.mjs` | 釘住 `node-version: 26` 那一行；升版 PR 必須同時改測試 |
+| `.nvmrc`、`.node-version` | `26`，與 CI 同大版 |
+| `package.json` `engines.node` | `>=22.13.0`：最低版本 = 還在 LTS 支援期且依賴允許的最舊版；只在最舊 LTS 結束支援（Node 22：2027-04-30）或程式用到新 API 時提高 |
+| 測試覆蓋全域再還原 | 用 `Object.getOwnPropertyDescriptor` 存、`defineProperty` 還原，不讀值（Node 26 的 `localStorage` getter 會印 ExperimentalWarning） |
+| 升版驗收 | `npm ci`、lint／format／typecheck、先 build 再 `npm test`、`--check`、`audit:dist`、新舊版 `dist/` 的 `diff -rq` 只剩時間戳 |
+
+教訓：「CI 用哪一版」和「同事最低要幾版」是兩個決定，前者跟 Active LTS 走，後者跟支援期走；混在一起會為了 CI 的方便把還能用的機器擋在門外。詳見 `docs/node-upgrade.md`。
+
+## 73. 第七十一輪：架構與 UI/UX 全面檢視（2026-11-12）
 
 Yulun 要求對整個原型的架構設計與 UI/UX 做完整檢視。量測方法、數字與完整發現表在 `docs/architecture-ux-review.md`（§2 架構、§3 UI/UX、§4 本輪實作、§5 沒做與待決定）；取捨在 architecture-decisions §56；無障礙量測在 `docs/a11y.md` §11。同日另有三個平行檢視，各自有文件：Lighthouse 效能（第七十二輪，`docs/performance-lighthouse.md`）、資安與弱點（第七十三輪）、Node.js 26 升級（第七十四輪）。
 
