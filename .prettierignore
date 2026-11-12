@@ -127,3 +127,7 @@ eval/**/*.mjs
 !scripts/reassign-owner.mjs
 !src/client/admin/mine-gateway.js
 !tests/round67-handover.test.mjs
+
+# 第七十三輪：伺服器端安全稽核（docs/deploy.md §35）
+!scripts/lib/static-serve.mjs
+!tests/round73-server-hardening.test.mjs

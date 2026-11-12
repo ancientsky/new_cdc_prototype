@@ -499,7 +499,7 @@ async function serveApi(api) {
   return { srv, base: `http://127.0.0.1:${srv.address().port}` };
 }
 test('HTTP：同源＋CSRF token 才能寫；Content-Type、大小上限、未知路徑；header 模式只信代理', async () => {
-  const { api } = makeApi({ authAdapter: createHeaderAuth({ trustedProxies: ['127.0.0.1'] }) });
+  const { api } = makeApi({ authAdapter: createHeaderAuth({ trustedProxies: ['127.0.0.1'] }), allowHostOrigin: true });
   const { srv, base } = await serveApi(api);
   const host = new URL(base).host;
   const who = { 'X-Remote-User': 'CDC\\demo-001', 'X-Remote-Groups': 'CDC-WEB-acute-infectious-editor', 'X-Remote-Name': encodeURIComponent('王○安') };
@@ -533,7 +533,7 @@ test('HTTP：同源＋CSRF token 才能寫；Content-Type、大小上限、未�
     assert.match(await pv.text(), /預覽（尚未上線）/);
     assert.equal((await fetch(`${base}/api/gateway/items/gw-x/../../etc`, { headers: who })).status, 404);
     // 不從代理來的身分標頭：拒絕並記稽核
-    const { api: api2 } = makeApi({ authAdapter: createHeaderAuth({ trustedProxies: ['10.9.9.9'] }) });
+    const { api: api2 } = makeApi({ authAdapter: createHeaderAuth({ trustedProxies: ['10.9.9.9'] }), allowHostOrigin: true });
     const s2 = await serveApi(api2);
     try {
       const r = await fetch(`${s2.base}/api/gateway/session`, { headers: who });
@@ -559,7 +559,7 @@ test('HTTP：超過大小上限回 413 後，同一條連線還能繼續用（�
   // 第三十輪 CI：原本超過上限就中途 break，請求串流被毀、連線跟著關掉；用 keep-alive 的 fetch 下一個請求
   // 卡在沒人讀的連線上，最後只看到「fetch failed」（本機的 socket 緩衝夠大，600 KB 剛好躲過；GitHub runner 躲不過）。
   // 這裡用一條原始 TCP 連線送兩個請求：第一個 16 MB（緩衝裝不下）、第二個是健康檢查，兩個都要拿到回應。
-  const { api } = makeApi({ authAdapter: createHeaderAuth({ trustedProxies: ['127.0.0.1'] }) });
+  const { api } = makeApi({ authAdapter: createHeaderAuth({ trustedProxies: ['127.0.0.1'] }), allowHostOrigin: true });
   const { srv, base } = await serveApi(api);
   const u = new URL(base);
   const who = { 'X-Remote-User': 'CDC\\demo-001', 'X-Remote-Groups': 'CDC-WEB-acute-infectious-editor' };

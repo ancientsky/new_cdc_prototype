@@ -62,7 +62,7 @@ import { createNotifier } from './notify.mjs';
 import { createWorkflow, GatewayError } from './workflow.mjs';
 import { loadLanes, validateLanes } from '../lanes.mjs';
 import { publishFeed, readImportRecord, canImportIntl, PublishError } from '../intl-epidemic-publish.mjs';
-import { createRateLimiter, clientKey, tooMany, ipMatcher } from '../rate-limit.mjs';
+import { createRateLimiter, clientIp, rateKey, tooMany, ipMatcher, linkOrigin } from '../rate-limit.mjs';
 
 export const SERVICE_NAME = 'cdc-web-gateway';
 export const MAX_BODY = 512 * 1024;
@@ -161,12 +161,18 @@ function lanesFrom(file) {
 }
 
 /**
- * @param {Partial<ReturnType<typeof configFromEnv>> & { now?: () => number, gitProvider?: any, authAdapter?: any, validator?: any, directory?: any, lanesCfg?: any, intl?: { snapshotsDir?: string, today?: string } }} [opts]
+ * @param {Partial<ReturnType<typeof configFromEnv>> & { now?: () => number, gitProvider?: any, authAdapter?: any, allowHostOrigin?: boolean, validator?: any, directory?: any, lanesCfg?: any, intl?: { snapshotsDir?: string, today?: string } }} [opts]
  */
 export function createGatewayApi(opts = {}) {
   const cfg = { ...configFromEnv(), ...opts };
   const now = opts.now ?? (() => Date.now());
   const auth = opts.authAdapter ?? (cfg.auth.mode === 'google' ? googleFromConfig(cfg.auth.google) : createAuth(cfg.auth));
+  // 第七十三輪（稽核第 4 項）：非 dev 模式（header／oidc／google＝真的有人從別台電腦連進來）一定要設 PUBLIC_ORIGIN，沒設就不啟動。
+  // 沒有它，通知信的連結只能退回 http://localhost（不再採信請求的 Host，那會被拿來做 Host 標頭污染），同源檢查也只能比 Host——
+  // 與其上線後才發現信裡的連結是錯的，不如啟動當下就說清楚（docs/deploy.md §14、§35）。allowHostOrigin:true 只給測試（測試伺服器的埠是隨機的）。
+  if (auth.mode !== 'dev' && !cfg.publicOrigin && opts.allowHostOrigin !== true) {
+    throw new Error(`寫入閘道的身分模式是 ${auth.mode}，必須設定 PUBLIC_ORIGIN（同事在瀏覽器網址列看到的後台網址，例：https://cms.cdc.gov.tw）。沒設的話通知信連結與同源檢查都無法正確運作，閘道不啟動。`);
+  }
   const git = opts.gitProvider ?? createGitProvider(cfg.git);
   const audit = createAuditLog(cfg.auditFile, { now });
   const store = createStateStore(cfg.stateFile);
@@ -261,10 +267,9 @@ export function createGatewayApi(opts = {}) {
     // 反向代理改寫 Host 時（例如 IIS ARR 預設不保留 Host），以 PUBLIC_ORIGIN 為準
     try { const u = new URL(String(o)); return cfg.publicOrigin ? u.origin === new URL(cfg.publicOrigin).origin : u.host === req.headers.host; } catch { return false; }
   }
+  /** 通知信裡連結的來源。第七十三輪：沒設 PUBLIC_ORIGIN 時只接受本機 Host（rate-limit.mjs linkOrigin），不讓偽造的 Host 進到寄給同事的信 */
   function originOf(req) {
-    if (cfg.publicOrigin) return cfg.publicOrigin.replace(/\/$/, '');
-    const host = String(req.headers.host ?? '');
-    return `http://${/^[A-Za-z0-9.-]+(:\d{1,5})?$/.test(host) ? host : 'localhost'}`;
+    return linkOrigin(req, cfg.publicOrigin);
   }
 
   /** 預覽頁：用建置同一個 Markdown 淨化器；CSP sandbox，頁內不會執行任何腳本 */
@@ -292,9 +297,11 @@ export function createGatewayApi(opts = {}) {
     const method = req.method ?? 'GET';
     const sub = pathname.slice('/api/gateway'.length) || '/';
     // 第六十三輪：先限流再做任何事（含 /health）。來源 IP 只在連線來自信任的代理時才看 X-Forwarded-For，否則攻擊者能自己挑 key
-    const ip = clientKey(req, { trustedProxies: trustedProxy });
-    if (limited('ip', ip, ip, req, res, sub)) return true;
-    if ((sub === '/login' || sub === '/login/callback' || sub === '/logout') && limited('auth', ip, ip, req, res, sub)) return true;
+    // 第七十三輪：稽核記完整位址（clientIp），限流的 key 用 rateKey（IPv6 以 /64 分組，換位址繞不過）
+    const ip = clientIp(req, { trustedProxies: trustedProxy });
+    const key = rateKey(ip);
+    if (limited('ip', key, ip, req, res, sub)) return true;
+    if ((sub === '/login' || sub === '/login/callback' || sub === '/logout') && limited('auth', key, ip, req, res, sub)) return true;
     if (sub === '/health' && method === 'GET') return send(res, 200, { ok: true, service: SERVICE_NAME, auth: auth.mode });
     // Google（或其他需要閘道自己跑授權碼流程的轉接器）：登入、回呼、登出
     if (auth.loginRedirect && method === 'GET' && sub === '/login') {
@@ -319,7 +326,7 @@ export function createGatewayApi(opts = {}) {
       const a = await auth.authenticate(req, res);
       if (!a.ok) {
         // 認證失敗也算進 auth 範圍：一直拿假 token／假 session 來試的人，十次以後就只拿到 429
-        if (limited('auth', ip, ip, req, res, sub)) return true;
+        if (limited('auth', key, ip, req, res, sub)) return true;
         if (a.code === 'untrusted_proxy') audit.write('auth', { result: 'denied', detail: { reason: a.code, ip: String(req.socket?.remoteAddress ?? '') } });
         return send(res, a.status, { error: a.code, message: a.message, ...(a.loginUrl ? { loginUrl: `${config.basePath}${a.loginUrl}` } : {}) });
       }

@@ -29,7 +29,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { legacyKey } from './lib/emit-api.mjs';
 import { legacyPathOf } from './lib/governance.mjs';
 import { matchSignature, suspiciousUa, SCANNER_UA_IDS } from './lib/probe-signatures.mjs';
-import { clientKey, ipMatcher } from './lib/rate-limit.mjs';
+import { clientIp, ipMatcher } from './lib/rate-limit.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LEGACY_ORIGIN = 'https://www.cdc.gov.tw';
@@ -187,7 +187,7 @@ export function timeOf(t) {
  *   - 特徵路徑回 2xx ⇒ 再 +3，建議「立即通報」（escalate）
  *   - UA：掃描器（sqlmap、nuclei…）⇒ +3；通用程式庫或空白 ⇒ +1（弱訊號：AI 代理常用一般 HTTP 程式庫，UA 也能隨便改；
  *     開放資料的正當使用者也用 curl——所以程式庫 UA 單獨不會被列出）
- * trustedProxies：log 的來源是 CDN／反向代理時，改用 X-Forwarded-For 的最後一個非代理位址（同 rate-limit.mjs clientKey 的規則）。
+ * trustedProxies：log 的來源是 CDN／反向代理時，改用 X-Forwarded-For 的最後一個非代理位址（同 rate-limit.mjs clientIp 的規則；報表要完整位址，所以不用 clientKey 的 IPv6 /64 分組）。
  * @param {Array<{ path: string, status: number, time?: string | null, ua?: string | null, ip?: string | null, xff?: string | null }>} entries
  * @param {{ windowSec?: number, burst?: number, public?: boolean, trustedProxies?: string[], minScore?: number }} [opts]
  */
@@ -195,7 +195,7 @@ export function detectProbes(entries, { windowSec = 60, burst = 30, public: pub 
   const trusted = ipMatcher(trustedProxies);
   const by = new Map();
   for (const e of entries) {
-    const ip = clientKey({ socket: { remoteAddress: e.ip ?? 'unknown' }, headers: e.xff ? { 'x-forwarded-for': e.xff } : {} }, { trustedProxies: trusted });
+    const ip = clientIp({ socket: { remoteAddress: e.ip ?? 'unknown' }, headers: e.xff ? { 'x-forwarded-for': e.xff } : {} }, { trustedProxies: trusted });
     if (!by.has(ip)) by.set(ip, { ip, total: 0, notFound: 0, denied: 0, times404: [], paths404: new Set(), sigs: new Map(), uas: new Set(), firstMs: null, lastMs: null, firstAt: null, lastAt: null });
     const c = by.get(ip);
     c.total++;
