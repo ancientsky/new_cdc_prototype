@@ -176,8 +176,10 @@ export async function copyText(text, btn) {
   if (btn) { const old = btn.dataset.label ?? btn.textContent; btn.dataset.label = old; btn.textContent = ok ? '已複製' : '複製失敗，請手動選取'; setTimeout(() => { btn.textContent = old; }, 1600); }
   return ok;
 }
+/** 第七十三輪：CSV 公式注入防護（OWASP）——文字儲存格以 = + - @ 或 tab、CR 開頭時前面加單引號，Excel 才不會當公式執行（數字不動） */
+export const csvSafe = (v) => (typeof v === 'string' && /^[=+\-@\t\r]/.test(v) ? `'${v}` : v);
 export function toCSV(rows) {
-  const q = (v) => { const s = String(v ?? ''); return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  const q = (v) => { const s = String(csvSafe(v) ?? ''); return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
   return `﻿${rows.map((r) => r.map(q).join(',')).join('\r\n')}\r\n`;
 }
 export const daysBetween = (a, b) => Math.round((new Date(`${b}T00:00:00Z`) - new Date(`${a}T00:00:00Z`)) / 86400000);

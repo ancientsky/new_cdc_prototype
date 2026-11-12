@@ -591,7 +591,9 @@ export function emitApi(fullSite, write) {
   }, { patterns: lm.patterns, gone: lm.gone, ambiguous: lm.ambiguous }, '舊網址精簡對照 { 正規化舊網址: 新路徑 }（404 頁與 /legacy/ 查詢用）；patterns 為 {id} 佔位的 URL 模式（不可自動轉址）、gone 為不移轉（建議 410）');
 
   // 治理
-  const todos = site.gov.todos;
+  // 第七十三輪：治理端點也是公開檔——草稿、審核中、排程中的內容不能把 id／標題／權責單位帶出去（只留 isPublic 的；不指向內容的待辦照留）
+  const pubGov = (i) => isPublic(i, now, { archived: true });
+  const todos = site.gov.todos.filter((t) => { const it = t.itemId ? site.byId.get(t.itemId) : null; return !it || pubGov(it); });
   put('v1/governance/kpi.json', site.gov.kpi, { lastModified: site.today, quarter: quarterOf(site.today) }, {}, '品質指標（7.5 全列）');
   put('v1/governance/todos.json', todos, { lastModified: site.today, overdue: todos.filter((t) => t.overdue).length, kindLabels: TODO_KIND_LABELS }, {}, '治理待辦');
   put('v1/governance/summary.json', site.gov.summary, { lastModified: site.today }, {}, '治理儀表板數字');
@@ -603,7 +605,7 @@ export function emitApi(fullSite, write) {
   put('v1/governance/whitelist.json', {
     policy: site.governance.whitelist, reasonLabels: WHITELIST_REASON_LABELS, lifecycleLabels: LIFECYCLE_LABELS,
     effective: site.gov.whitelistCount, totalPublished: site.gov.totalPublished,
-    items: site.all.map((i) => ({ id: i.id, type: i.type, title: i.title, owner: i.owner, tier: i.gov.whitelist.tier, requested: i.gov.whitelist.requested, effective: i.gov.whitelist.effective, public: i.gov.whitelist.public, reasons: i.gov.whitelist.reasons, reasonLabels: i.gov.whitelist.reasonLabels, lifecycle: i.gov.lifecycle })),
+    items: site.all.filter(pubGov).map((i) => ({ id: i.id, type: i.type, title: i.title, owner: i.owner, tier: i.gov.whitelist.tier, requested: i.gov.whitelist.requested, effective: i.gov.whitelist.effective, public: i.gov.whitelist.public, reasons: i.gov.whitelist.reasons, reasonLabels: i.gov.whitelist.reasonLabels, lifecycle: i.gov.lifecycle })),
   }, { lastModified: site.governance.whitelist?.approvedAt ?? site.today }, {}, 'AI 白名單政策與每筆狀態');
   put('v1/governance/eval-set.json', site.governance.evalSet, { lastModified: site.today }, {}, '評估集');
   put('v1/governance/eval-report.json', site.evalReport ?? null, { lastModified: site.today }, {}, '評估報告');

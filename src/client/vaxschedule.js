@@ -301,7 +301,8 @@ ${body}
 /* ───────── CSV（下載按鈕與建置時 /vaccines/schedule.csv 同一函式） ───────── */
 export const CSV_COLS = ['id', 'vaccine', 'vaccineName', 'label', 'dose', 'ageLabel', 'ageMinMonths', 'ageMaxMonths', 'hardLimitMonths', 'hardLimitNote', 'hardLimitSourceUrl', 'hardLimitVerified', 'stage', 'funded', 'group', 'interval', 'recurring', 'startAt', 'endAt', 'note', 'sourceTitle', 'sourceUrl', 'verified'];
 export function scheduleCsv(items, nameOf = (id) => id, t = null) {
-  const cell = (v) => { const s = v == null ? '' : String(v); return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+  // 第七十三輪：文字以 = + - @ tab CR 開頭 ⇒ 前置單引號（CSV 公式注入，OWASP）
+  const cell = (v) => { const s = v == null ? '' : typeof v === 'string' && /^[=+\-@\t\r]/.test(v) ? `'${v}` : String(v); return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
   const headers = t ? CSV_COLS.map((c) => ({ id: t('vxs.col.id'), vaccine: 'vaccine id', vaccineName: t('vxs.col.vaccine'), label: t('vxs.col.dose'), dose: 'dose', ageLabel: t('vxs.col.age'), ageMinMonths: 'ageMinMonths', ageMaxMonths: 'ageMaxMonths', hardLimitMonths: 'hardLimitMonths', hardLimitNote: t('vxs.hard.label'), hardLimitSourceUrl: 'hardLimitSourceUrl', hardLimitVerified: 'hardLimitVerified', stage: t('vxs.col.stage'), funded: t('vxs.col.funded'), group: t('vxs.col.group'), interval: t('vxs.col.interval'), recurring: t('vxs.col.recurring'), startAt: 'startAt', endAt: 'endAt', note: t('vxs.col.note'), sourceTitle: t('vxs.col.source'), sourceUrl: 'sourceUrl', verified: 'verified' }[c])) : CSV_COLS;
   const lines = [headers.map(cell).join(',')];
   for (const i of items) {

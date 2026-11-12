@@ -131,3 +131,6 @@ eval/**/*.mjs
 # 第七十三輪：伺服器端安全稽核（docs/deploy.md §35）
 !scripts/lib/static-serve.mjs
 !tests/round73-server-hardening.test.mjs
+# 第七十三輪：資安（權責單位不能被送審者改走、CSV 公式注入；docs/deploy.md §14）
+!tests/round73-gateway-owner.test.mjs
+!tests/round73-csv-injection.test.mjs

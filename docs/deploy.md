@@ -286,6 +286,34 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 - **已知的行為變化**：`actions/upload-pages-artifact` v4 起不打包點開頭的檔案與目錄（`.nojekyll`、`.well-known/`）。目前沒影響；`/.well-known/security.txt` 因此改為建置時同時輸出到根目錄 `/security.txt`（見 10.4）。
 - **前端 `src/public/vendor/marked.min.js` 不跟著升**：它是後台貼上轉換用的獨立副本，Dependabot 看不到。要升時手動換檔並測後台「貼上 Word／網頁」轉換。
 
+### 9.2 部署用的秘密放進 `production` 環境（第七十三輪）
+
+**一句話：** `pages.yml` 的 `build` job 現在宣告 `environment: production`，而且只在 `main` 上跑（`if: github.ref == 'refs/heads/main'`）。請 Yulun 在 GitHub 上建立這個環境、限定只有 `main` 能用，再把兩個秘密搬進去。
+
+為什麼：`SNAPSHOT_DEPLOY_KEY` 是**能推 `main` 而且在規則集繞過名單上**的部署金鑰，`INTL_FEED_TOKEN` 是疫情中心資料庫的權杖。放在 repo 層級時，任何有寫入權的人推一個分支、在那個分支改 `pages.yml`、再從那個分支手動執行（workflow_dispatch 可以選分支），就能讓自己的程式讀到這兩個秘密——`if:` 寫在檔案裡，攻擊者的分支可以把它刪掉，所以真正擋得住的是「環境的部署分支限制」：秘密放進只准 `main` 的環境，別的分支的 job 根本拿不到。
+
+步驟（Settings 都在 repo 的 Settings 頁）：
+
+1. Settings → Environments → **New environment**，名稱 `production`（要完全一樣，`pages.yml` 寫的是這個名字）。
+2. 在 `production` 的設定頁：**Deployment branches and tags** → 選 **Selected branches and tags** → Add deployment branch or tag rule → `main`。不用設 Required reviewers（每 2 小時的排程建置不該等人按）。
+3. 同一頁 **Environment secrets** → Add environment secret：`SNAPSHOT_DEPLOY_KEY`（私鑰全文，跟 §29.1 第 3 步同一份；手邊沒有就照 §29.1 重產一把並換掉舊的部署金鑰）、`INTL_FEED_TOKEN`（有設才搬）。`INTL_FEED_URL` 不是秘密，可留在 repo 層級。
+4. 確認環境秘密生效後，到 Settings → Secrets and variables → Actions 把 **repo 層級**的同名秘密刪掉（同名時環境的優先，但留著 repo 層級的就等於沒限制）。
+5. 驗證：Actions → Build and deploy to GitHub Pages → Run workflow（分支選 `main`，`refresh` 保持 true），看「Commit refreshed snapshots」印出「快照已以部署金鑰回寫 main」。再從任一個別的分支 Run workflow 一次：`build` 應該顯示 skipped。
+
+搬之前也不會壞：環境不存在時 GitHub 會在第一次執行時自動建立一個沒有限制的 `production`，repo 層級的秘密照樣讀得到，建置與回寫都照常。測試 `tests/round40-ci-isolation.test.mjs`（第七十三輪那一條）擋「用到 `GITHUB_TOKEN` 以外秘密的 job 沒有宣告 `environment: production`」，也擋手動執行的輸入直接展開進 `run`（`dast.yml` 的爬站分鐘數因此改成下拉選單、經環境變數傳入）。
+
+### 9.3 沙盒驗不到、請在 GitHub 上確認的設定（第七十三輪資安檢查）
+
+這一輪的檢查在沒有 repo 管理權的環境裡做，下面幾項看不到實際設定，只能列出建議。請 Yulun 逐項確認：
+
+| 項目 | 建議 | 為什麼 |
+| --- | --- | --- |
+| 程式路徑的人工審核 | 規則集的 `required_approving_review_count` **維持 0**（快車道與緊急發布的自動合併靠它），改用 `require_code_owner_review: true`＋`CODEOWNERS` 把 `scripts/`、`src/`、`.github/`、`content/governance/` 指到一個 **team**（不是個人帳號）。等 team 建好再開（§29.1「CODEOWNERS 審核」）。替代做法：`lane` job 已經把改到程式、工作流程、治理設定的 PR 覆寫為一般車道、至少 1 位核准（§29.2） | 目前程式 PR 是否真的有人看過，只靠 `lane` job；規則集層再加一道，`lane` job 本身被改壞時仍擋得住 |
+| 必要狀態檢查綁定來源 | `required_status_checks` 的 `test` 綁 GitHub Actions（`integration_id: 15368`，`.github/rulesets/main.json` 已加；介面上是該檢查的「Select source → GitHub Actions」） | 沒綁來源時，任何有 `statuses: write` 的權杖或 App 都能自己發一個叫 `test` 的成功狀態，讓沒跑過檢查的 PR 合併。若重新匯入時被拒，先拿掉這個欄位匯入，再到介面上選來源 |
+| 繞過名單的 Deploy keys | 目前是「Deploy keys：`bypass_mode: always`」，等於**所有**有寫入權的部署金鑰都能直接推 `main`。只留一把有寫入權的部署金鑰（`snapshot-writer`），其他的刪掉或改唯讀；長期改用只授權本 repo、只給 `contents: write` 的 **GitHub App**（app 可以單獨列入繞過名單，不必放行所有部署金鑰） | 繞過名單是以「類別」放行；之後誰加了一把有寫入權的部署金鑰，就自動能繞過規則集 |
+| 部署金鑰輪替 | `SNAPSHOT_DEPLOY_KEY` 每 6–12 個月、或有人離開專案時重產（§29.1 步驟 1–3），舊的公鑰從 Deploy keys 刪掉 | 私鑰曾經存在建立者的電腦上；輪替限制外洩後能用多久 |
+| 環境 `production` | 見 §9.2：部署分支只准 `main`、兩個秘密搬進去、repo 層級的刪掉 | 擋「從別的分支手動執行讀秘密」 |
+
 ## 10. 安全標頭基準（第二十三輪）
 
 靜態站本身回不了標頭，`Content-Security-Policy`、`Strict-Transport-Security` 等要由伺服器或 CDN 加。**建置會把要加的標頭直接輸出成設定檔**，放在 `dist/headers/`：
@@ -787,6 +815,21 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
 ### 14.9 附件上限（第四十五輪）
 
 疫情報導後台的「儲存草稿／送審」會把 PDF 與圖（base64）和文章一起送到 `/api/gateway/drafts`、`/submit`：整包上限 24 MB、附件合計 16 MB、最多 20 個檔；內容本身仍限 512 KB。反向代理的請求大小上限（nginx `client_max_body_size`、IIS `maxAllowedContentLength`）要 ≥ 24 MB，否則同事看到的是代理的 413 而不是閘道的中文訊息。閘道超限時會先把請求讀完再回 413（第三十輪的教訓，ARCHITECTURE §36）。
+
+### 14.10 權責單位不能被送審者改走（第七十三輪）
+
+**規則：** 寫入閘道判斷「你能不能存草稿、送審」時，看的是**網站上（`main`）那一份的 `owner`**；還沒上線、但已有進行中送審件的內容，看那一件**原本的**權責單位。同事送來的內容裡的 `owner` 只是資料，不是授權依據。
+
+**為什麼：** 以前閘道只拿送來的 `owner` 檢查。慢性組的編輯可以打開急性組已上線的 Q&A，把 `owner` 改成慢性組、內容改掉後送審——檢查「慢性組的編輯改慢性組的內容」當然通過，接著慢性組的審核人核准，內容就以慢性組的名義上線，急性組完全不知道（第七十三輪資安檢查實測可行）。權責單位決定的是「誰對這段衛教內容負責」，不能由改內容的人自己宣告。
+
+**現在的做法**（`scripts/lib/gateway/workflow.mjs`，測試 `tests/round73-gateway-owner.test.mjs`）：
+
+- 別單位的人送來改過 `owner` 的內容 ⇒ 403，白話說明「這筆內容的權責單位是『急性傳染病組』，不是你的單位。送審時改寫權責單位，不會讓你取得修改權」。進行中的送審件也一樣（回 403，不再回會透露承辦人姓名的 409）。
+- **合法的移轉**照樣可以：原單位的編輯（或總編輯、治理幕僚、平台管理等跨單位角色）把 `owner` 改成新單位送審。送審件記 `ownerChange { from, to }`，歷程與稽核記 `owner-change`（含 from／to），提交訊息多一行 `Owner-Change: <原單位> -> <新單位>`，複核區的送審件資料多一列「權責單位變更」，合併請求說明也會寫出。
+- 移轉要**原單位或車道指定的審核單位**（一般車道是公關室；第一級內容另含 OASIS）核准；新單位自己的審核人核准不算數——「把內容交給我們」不能由接手的一方自己簽。
+- 「不用修改，再送出」、交接（§33）、重新審閱也都依原本的權責單位判斷；新單位的編輯在核准前不能接手或修改這件送審件。
+- 配套內容：網站上已有的配套內容必須與網站上完全相同（版本碼含 `owner`），改不了權責單位；新的配套內容本來就可以屬於別的單位（疫情中心的卷期跟各組的文章一起送），照舊。
+- 單位改組要整批搬內容，仍用 `scripts/reassign-owner.mjs`（§33），那是走程式 PR、由資訊室與治理幕僚審的另一條路。
 
 ## 15. 智慧問答頁的效能預算（第四十輪，Issue #80）
 
@@ -1959,6 +2002,8 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
    只有手動 Run workflow 或 02 UTC 排程會走到這一步；合併 PR 觸發的建置與 `content-pr.yml` 代發的建置（`refresh=false`）不重抓資料，這一步顯示 skipped、不印任何字，不是沒設好。
 
 **2026-10-25 第一次驗證就紅（run #328）的教訓**：金鑰本身沒問題，倒在前一行 `git pull --rebase`：「cannot pull with rebase: You have unstaged changes」。原因是 `npm run fetch` 除了 `data/snapshots/` 也會改 `content/datasets/`（登革熱地圖摘要與 CKAN 目錄的 `lastUpdated`／`provenance`，第五十七輪加的），而提交那一步只 `git add data/snapshots`，剩下的變更讓 rebase 拒絕執行，整個 build job 紅掉、當次也沒部署。修法：`git add -A data/snapshots content/datasets` 一起提交（本來就是這次抓取的結果）、`git pull --rebase --autostash`（其他未預期變更先暫存）、rebase 失敗只警告不讓建置失敗。為什麼之前沒發現：規則集匯入前這一步也會失敗，但沒人看 02 UTC 排程的紀錄；回寫從來沒成功過（`git log --grep=官方資料快照更新` 是空的）。所以**任何「排程才會跑」的步驟都要在合併當天手動 Run workflow 跑一次**，不要等排程。
+
+**第七十三輪補充**：`build` job 已宣告 `environment: production`、只在 `main` 上跑；請把 `SNAPSHOT_DEPLOY_KEY`（與 `INTL_FEED_TOKEN`）搬進只准 `main` 的 `production` 環境秘密，步驟見 §9.2；繞過名單與金鑰輪替的建議見 §9.3。
 
 為什麼可以接受：這把金鑰只在 `pages.yml` 的 `build` job 用到，PR 的工作流程（`content-pr.yml`）拿不到 secrets 也不引用它（測試 `round60-ruleset` 擋）；私鑰寫到 `$RUNNER_TEMP`、推完就刪；它推的只有 `data/snapshots/` 與 `content/datasets/` 裡由抓取更新的欄位（機器抓的官方資料與資料目錄的更新日期），不是人寫的內容。換成機關 GitLab 時對應的是 project deploy key 或 project access token（§14.4）。
 

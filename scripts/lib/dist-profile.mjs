@@ -59,8 +59,9 @@ export const FORBIDDEN_PUBLIC = [
   { pattern: '**/.git*/**', reason: '版本庫中繼資料目錄' },
   { pattern: '**/.env*', reason: '環境變數檔：可能含金鑰、權杖、連線字串' },
   { pattern: '**/node_modules/**', reason: '相依套件：暴露套件與版本，可直接比對已知漏洞' },
-  { pattern: 'tests/**', reason: '測試程式與測試資料' },
-  { pattern: 'docs/**', reason: '內部文件（部署、網路架構、閘道設計）' },
+  // 第七十三輪：tests／docs 在任何一層都擋（以前只擋根目錄，preview/pr-1/docs/ 會漏）
+  { pattern: '**/tests/**', reason: '測試程式與測試資料' },
+  { pattern: '**/docs/**', reason: '內部文件（部署、網路架構、閘道設計）' },
   { pattern: '**/*.bak', reason: '備份檔：常是舊版設定或原始碼' },
   { pattern: '**/*.orig', reason: '合併衝突留下的原始檔' },
   { pattern: '**/*.swp', reason: '編輯器暫存檔：可還原檔案內容' },
@@ -79,7 +80,12 @@ export const FORBIDDEN_PUBLIC = [
   { pattern: 'assets/js/globals.d.ts', reason: '型別宣告檔：開發用，列出全域物件結構', prototypeOnly: true },
   { pattern: 'robots.production.txt', reason: '原型站對照用的正式版 robots，正式站直接輸出成 robots.txt', prototypeOnly: true },
 ];
-const RULES = FORBIDDEN_PUBLIC.map((r) => ({ ...r, re: globToRegExp(r.pattern) }));
+// 第七十三輪：比對不分大小寫——Windows（IIS）與 macOS 的檔案系統不分大小寫，`Admin/`、`Docs/`、`X.MAP` 在主機上照樣讀得到
+const RULES = FORBIDDEN_PUBLIC.map((r) => ({
+  ...r,
+  re: new RegExp(globToRegExp(r.pattern).source, 'i'),
+  except: (r.except ?? []).map((x) => x.toLowerCase()),
+}));
 
 /** 公開站允許的副檔名（白名單）。不在清單的檔 ⇒ 報 allowlist 規則。新增副檔名要改這裡並說明理由。 */
 export const PUBLIC_EXTENSIONS = [
@@ -125,17 +131,39 @@ const EXT_SET = new Set(PUBLIC_EXTENSIONS);
 
 /** 一個相對路徑命中哪條規則（沒有則 null）。 */
 export function matchRule(rel) {
-  for (const r of RULES) if (r.re.test(rel) && !(r.except ?? []).includes(rel)) return r;
+  const low = rel.toLowerCase();
+  for (const r of RULES) if (r.re.test(rel) && !r.except.includes(low)) return r;
   return null;
 }
 
+/** 第七十三輪：符號連結不跟進（目錄連結可能繞圈或指到 dist 外），當成一個檔回報，由 auditDist 檢查它指到哪裡 */
 function* walk(root, dir = root) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
-    if (e.isDirectory()) yield* walk(root, p);
+    if (e.isDirectory() && !e.isSymbolicLink()) yield* walk(root, p);
     else yield path.relative(root, p).split(path.sep).join('/');
   }
 }
+
+/** 符號連結指到 dist 外（或斷掉）⇒ 回傳原因；不是連結或指在 dist 內 ⇒ null */
+function symlinkProblem(dist, rel) {
+  const p = path.join(dist, rel);
+  if (!fs.lstatSync(p).isSymbolicLink()) return null;
+  let real;
+  try {
+    real = fs.realpathSync(p);
+  } catch {
+    return '符號連結指到不存在的位置';
+  }
+  const root = fs.realpathSync(dist);
+  if (real !== root && !real.startsWith(root + path.sep)) return `符號連結指到建置產物以外（${real}）：伺服器會照連結把主機上的檔案當網頁送出`;
+  if (fs.statSync(real).isDirectory()) return '符號連結指到目錄：稽核不跟進，內容沒有檢查';
+  return null;
+}
+
+/** 內嵌 source map（`sourceMappingURL=data:`）：整份原始碼與註解就在 JS／CSS 檔裡，跟 .map 檔一樣不能上公開站 */
+export const INLINE_SOURCE_MAP = /[#@]\s*sourceMappingURL\s*=\s*data:/i;
+const SCAN_INLINE = new Set(['js', 'mjs', 'css']);
 
 const extOf = (rel) => {
   const base = rel.slice(rel.lastIndexOf('/') + 1);
@@ -156,7 +184,21 @@ export function auditDist(dist, { profile = 'public', cfg = config } = {}) {
   const expected = new Map();
   const files = [];
   for (const rel of walk(dist)) {
+    const link = symlinkProblem(dist, rel);
+    if (link) {
+      forbidden.push({ path: rel, rule: 'symlink:outside', reason: link });
+      continue;
+    }
     files.push(rel);
+    if (SCAN_INLINE.has(extOf(rel)) && INLINE_SOURCE_MAP.test(fs.readFileSync(path.join(dist, rel), 'utf8'))) {
+      const reason = '內嵌 source map（sourceMappingURL=data:）：完整原始碼與註解就在檔案裡';
+      if (profile === 'prototype') {
+        const e = expected.get('inline-source-map') ?? { rule: 'inline-source-map', reason, count: 0, sample: [] };
+        e.count++;
+        if (e.sample.length < 3) e.sample.push(rel);
+        expected.set('inline-source-map', e);
+      } else forbidden.push({ path: rel, rule: 'inline-source-map', reason });
+    }
     const r = matchRule(rel);
     if (r) {
       if (r.prototypeOnly && profile === 'prototype') {

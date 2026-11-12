@@ -8,7 +8,16 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { config } from '../site.config.mjs';
 import { ROOT } from '../scripts/lib/load.mjs';
-import { auditDist, splitForProduction, globToRegExp, matchRule, cspOrigins, adminOriginErrors, FORBIDDEN_PUBLIC } from '../scripts/lib/dist-profile.mjs';
+import {
+  auditDist,
+  splitForProduction,
+  globToRegExp,
+  matchRule,
+  cspOrigins,
+  adminOriginErrors,
+  FORBIDDEN_PUBLIC,
+  INLINE_SOURCE_MAP,
+} from '../scripts/lib/dist-profile.mjs';
 import { securityHeaders, renderNginx, renderWebConfig, renderNetlify, renderReadme, emitHeaders, REMOVE_HEADERS } from '../scripts/lib/emit-headers.mjs';
 import { makeUrl, html } from '../scripts/lib/render.mjs';
 import { govern } from './helpers.mjs';
@@ -72,8 +81,8 @@ test('globToRegExp：**/ 含零層、結尾 /** 含目錄本身底下全部、* 
     'robots.production.txt',
     '**/.env*',
     '**/node_modules/**',
-    'tests/**',
-    'docs/**',
+    '**/tests/**',
+    '**/docs/**',
     '**/*.bak',
     '**/*.orig',
     '**/*.swp',
@@ -134,7 +143,7 @@ test('auditDist prototype：後台等報 expected（不算失敗）；防禦性�
   const by = Object.fromEntries(r.forbidden.map((f) => [f.path, f.rule]));
   assert.equal(by['.env'], '**/.env*');
   assert.equal(by['preview/pr-7/.env.local'], '**/.env*', '防禦性規則先於 preview 規則');
-  assert.equal(by['docs/deploy.md'], 'docs/**');
+  assert.equal(by['docs/deploy.md'], '**/docs/**');
   assert.equal(by['files/a/report.bak'], '**/*.bak');
   assert.ok(by['.local/ask-log/x.jsonl'].includes('.local'));
   assert.equal(by['node_modules/x/index.js'], '**/node_modules/**');
@@ -143,6 +152,42 @@ test('auditDist prototype：後台等報 expected（不算失敗）；防禦性�
   assert.equal(by['debug.log'], '**/*.log');
   assert.ok(by['.git/HEAD'].startsWith('**/.git'));
   fs.rmSync(bad, { recursive: true, force: true });
+});
+
+test('第七十三輪：規則不分大小寫、docs／tests 任何一層都擋、指到 dist 外的符號連結、內嵌 source map', () => {
+  const dir = fixture({
+    'Admin/index.html': '<p>admin</p>',
+    'Docs/deploy.md': '#',
+    'preview/pr-7/docs/gateway.md': '#',
+    'files/tests/fixture.json': '{}',
+    'assets/js/UI.JS.MAP': '{}',
+    'assets/js/inline.js': 'console.log(1);\n//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozfQ==\n',
+    'assets/styles/inline.css': 'body{}\n/*# sourceMappingURL=data:application/json;base64,eyJ9 */\n',
+    'travel/KY/index.html': '<p>國碼大寫是正常頁面</p>',
+  });
+  fs.symlinkSync('/etc/passwd', path.join(dir, 'passwd.txt'));
+  fs.symlinkSync('/etc', path.join(dir, 'etc'));
+  fs.symlinkSync('index.html', path.join(dir, 'home.html')); // 指在 dist 內的檔：照一般檔案檢查
+  const r = auditDist(dir, { profile: 'public' });
+  const by = Object.fromEntries(r.forbidden.map((f) => [f.path, f.rule]));
+  assert.equal(by['Admin/index.html'], 'admin/**', '大小寫不同照擋');
+  assert.equal(by['Docs/deploy.md'], '**/docs/**');
+  assert.ok(by['preview/pr-7/docs/gateway.md'], '預覽底下的 docs 也擋');
+  assert.equal(by['files/tests/fixture.json'], '**/tests/**', '非根目錄的 tests');
+  assert.equal(by['assets/js/UI.JS.MAP'], '**/*.map');
+  assert.equal(by['passwd.txt'], 'symlink:outside');
+  assert.match(r.forbidden.find((f) => f.path === 'passwd.txt').reason, /建置產物以外/);
+  assert.equal(by['etc'], 'symlink:outside', '指到 dist 外的目錄連結不跟進、照報');
+  assert.equal(by['assets/js/inline.js'], 'inline-source-map');
+  assert.equal(by['assets/styles/inline.css'], 'inline-source-map');
+  for (const ok of ['home.html', 'travel/KY/index.html', 'assets/js/ui.js', 'redirects/nginx.map']) assert.ok(!(ok in by), ok);
+  assert.equal(matchRule('REDIRECTS/NGINX.MAP'), null, '例外也不分大小寫');
+  assert.ok(INLINE_SOURCE_MAP.test('//@ sourceMappingURL=data:x') && !INLINE_SOURCE_MAP.test('//# sourceMappingURL=ui.js.map'));
+  // prototype：內嵌 source map 與 .map 一樣是「原型站預期」，符號連結照擋
+  const proto = auditDist(dir, { profile: 'prototype' });
+  assert.equal(proto.expected.find((e) => e.rule === 'inline-source-map')?.count, 2);
+  assert.ok(proto.forbidden.some((f) => f.path === 'passwd.txt' && f.rule === 'symlink:outside'));
+  fs.rmSync(dir, { recursive: true, force: true });
 });
 
 test('inventory：頁數、v1 JSON、後台頁、動態端點（含生效模式）、CSP 的外部來源', () => {
