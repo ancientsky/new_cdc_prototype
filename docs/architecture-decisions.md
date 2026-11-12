@@ -1004,11 +1004,19 @@ AD 群組命名沿用 `CDC-WEB-<單位>-<角色>`（[admin-auth.md](admin-auth.m
 
 **沒選的做法**：直接改 deploy.md §14 為 Gitea（資訊室第 5 題還沒回答，改了只是換一個假設）；現在就寫 `git-gitea.mjs`（平台未定前多一支沒人實跑的轉接器，和 `git-gitlab.mjs` 一樣只能用假 fetch 測）。
 
+## 56. Node.js：CI 與部署跟 Active LTS，`engines` 最低版本跟最舊的維護版（第七十四輪，2026-11-12）
+
+**決定**：（1）CI 四個 workflow、`.nvmrc`／`.node-version`、閘道與答案服務的部署說明改用 Node 26（2026-10-28 起的 Active LTS），workflow 只寫大版號讓 `setup-node` 自動拿最新 26.x；（2）`engines.node` 只從 `>=22` 修正為 `>=22.13.0`（pdfjs-dist 的實際下限），不提高到 24 或 26；（3）每年 10 月底 Node 升 LTS 後一個月內由人升版，照 `docs/node-upgrade.md` §3 驗收並補一節紀錄；（4）npm 11.20 的 `install-scripts` 允許清單保持預設，不 approve `esbuild`。
+
+**為什麼**：Active LTS 的支援期最長、依賴的 `engines` 以它為目標，跟著它升是成本最低的位置；而最低版本是「給同事機器的門檻」，程式沒用到 22 以後的 API、Node 22 又支援到 2027-04-30，提高門檻只會把能用的機器擋在門外。本輪實測 Node 24 與 26 的 1278 項測試結果相同、`dist/` 內容零差異，所以升版沒有功能風險。
+
+**沒選的做法**：`engines.node >=26`（沒有任何依賴或程式需要，只是跟 CI 一樣好看）；把 Node 版本交給 Dependabot（它不管 `node-version`）；為了消警告 approve `esbuild` 的安裝腳本（那個警告正是第二十三輪想要的供應鏈防護）。
+
 ## 57. Lighthouse 分數不進必要 CI；CSS 在建置時壓縮；快取規則由建置輸出、暫不做檔名雜湊；深連結先撐高度（第七十二輪，2026-11-12）
 
 **狀態**：已做。數字與逐項處置見 [performance-lighthouse.md](performance-lighthouse.md)。
 
-**決定**：（1）新增 `npm run perf:lighthouse` 與手動＋每月的 `lighthouse.yml`，只產報告，**不進必要 CI**，也不在 PR 觸發。（2）`dist/assets/styles` 在建置時用 esbuild 壓縮，原始 CSS 與註解留在 `src/styles`，`MINIFY=off` 可關。（3）快取規則寫成 `emit-headers.mjs` 的 `CACHE_RULES`，建置輸出到 `dist/headers/`（`headers.json` 的 `cache`、nginx、`_headers`、IIS 片段）：HTML、`.md`、`/v1`、Pagefind 入口 `no-cache`；`/assets`、`/img`、`/files` 1 小時＋`stale-while-revalidate` 1 天；Pagefind 雜湊檔一年 `immutable`。（4）檔名含內容雜湊（fingerprinting）暫不做。（5）`components.css` 不依頁或依區塊拆分。（6）帶 `?q=` 的答案頁與搜尋頁在結果載入中先把結果區撐到一個視窗高（`html[data-q]`），避免結果出現時把下方內容往下推（CLS）；不帶 `?q=` 的頁面不變。（編號 57：§56 由同日平行的第七十一輪使用。）
+**決定**：（1）新增 `npm run perf:lighthouse` 與手動＋每月的 `lighthouse.yml`，只產報告，**不進必要 CI**，也不在 PR 觸發。（2）`dist/assets/styles` 在建置時用 esbuild 壓縮，原始 CSS 與註解留在 `src/styles`，`MINIFY=off` 可關。（3）快取規則寫成 `emit-headers.mjs` 的 `CACHE_RULES`，建置輸出到 `dist/headers/`（`headers.json` 的 `cache`、nginx、`_headers`、IIS 片段）：HTML、`.md`、`/v1`、Pagefind 入口 `no-cache`；`/assets`、`/img`、`/files` 1 小時＋`stale-while-revalidate` 1 天；Pagefind 雜湊檔一年 `immutable`。（4）檔名含內容雜湊（fingerprinting）暫不做。（5）`components.css` 不依頁或依區塊拆分。（6）帶 `?q=` 的答案頁與搜尋頁在結果載入中先把結果區撐到一個視窗高（`html[data-q]`），避免結果出現時把下方內容往下推（CLS）；不帶 `?q=` 的頁面不變。
 
 **為什麼**：
 - 不進必要 CI：與第四十八輪決策七（#103）同一個理由——GitHub 代管 runner 的 CPU 忙閒差，效能分數與 TBT 會跳 ±30%，擋 PR 會隨機紅燈、讓大家學會「紅燈重跑」。Lighthouse 也有盲點：TBT 只算到 TTI，答案頁延後載入的重活只算到一部分，所以答案頁另以 `perf:ask` 為準。

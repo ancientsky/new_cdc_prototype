@@ -112,6 +112,16 @@
 
 > 限制：(1) 後台的「送出」是**展示**，原型不能代承辦人開 PR，交件仍是下載 ZIP；(2) GitHub 工作流程**無法在本機驗證**，是否如預期運作以開一個真實測試 PR 的結果為準（見 [docs/publishing-lanes.md](docs/publishing-lanes.md) 附錄 B）；(3) 排程發布受每 2 小時重建限制，延遲最多 2 小時；(4) 開發環境連不到舊站，結核病首批用的是**依既有內容反推的模擬匯出**，真實匯出的版型與品質可能不同，規則要用真實樣本校準。
 
+## 第七十四輪：Node.js 升到 26（Active LTS）
+
+問（2026-11-12）：Node.js 能不能升到 26.x 最新版？
+
+- **能，而且已升**：官方 `index.json`／`schedule.json` 查到 26.13.1（2026-11-10）是 Active LTS「Lithium」（2026-10-28 進 LTS，支援到 2029-04-30）。CI 四個 workflow、`.nvmrc`／`.node-version`、閘道與答案服務的部署說明都改為 26。
+- **驗證**：Node 26 上 lint／format／typecheck 全過；`npm test` 1280 項 1278 過、0 失敗、2 略過，與 Node 24 完全相同（含 Playwright 端到端）；`build`、`--check`、`audit:dist` 全過；Node 24 與 26 各建一次 `dist/` 逐檔比對，189 個差異全是時間戳，內容零差異。
+- **最低版本只動一點**：`engines.node` 從 `>=22` 改 `>=22.13.0`（pdfjs-dist 的真正下限）。不提到 24 或 26，因為程式沒用到新 API，而 Node 22 支援到 2027-04-30；門檻是給同事機器的，不是跟 CI 走的。
+- **看到的新事物**：npm 11.20 預設不跑未列允許清單的安裝腳本（`esbuild` 的 postinstall 只是備援，不要 approve）；Node 26 的 `localStorage` 是全域 getter，讀一次印一次 ExperimentalWarning，`round23-security` 測試改用屬性描述子存還原值。
+- **規則**：CI 跟 Active LTS，每年 10 月升；Node 27 起每年一個大版、每版都進 LTS，不再跳奇數版。文件：[docs/node-upgrade.md](docs/node-upgrade.md)、[docs/deploy.md](docs/deploy.md) §9.2、[architecture-decisions](docs/architecture-decisions.md) §56、ARCHITECTURE §72。
+
 ## 第七十二輪：Lighthouse 效能檢測——分數已滿，真正要看的是答案頁的 perf:ask、CSS 與結果出現時的跳動
 
 同事請我們用 Chrome Lighthouse 詳細檢測全站效能（2026-11-12）。
@@ -958,7 +968,7 @@ Yulun 對 #38 的決定：電子報先 RSS＋LINE，也做 Email 訂閱（接模
 
 ## 快速開始
 
-需求：Node.js 22 以上（repo 根目錄有 `.nvmrc`／`.node-version`；第四十八輪 #105：測試用到的 pdfjs-dist 需要 Node 22 的 `Promise.withResolvers`，Node 20 會有一項測試失敗）。
+需求：Node.js 22.13 以上，建議用 26（repo 根目錄的 `.nvmrc`／`.node-version` 是 26，CI 也是；為什麼與怎麼升見 [docs/node-upgrade.md](docs/node-upgrade.md)。第四十八輪 #105：測試用到的 pdfjs-dist 需要 `Promise.withResolvers`，Node 20 會有一項測試失敗）。
 
 ```bash
 npm ci            # 安裝依賴（只有 ajv、ajv-formats、marked）
