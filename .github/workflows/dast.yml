@@ -9,9 +9,11 @@ on:
     - cron: '0 19 * * 0'
   workflow_dispatch:
     inputs:
+      # 第七十三輪：改成下拉選單（choice），不收任意字串；run 裡也改用環境變數並再檢查一次是數字（不把輸入直接展開進 shell）
       spider_minutes:
         description: 'ZAP 爬站分鐘數（-m）'
-        type: string
+        type: choice
+        options: ['1', '3', '5', '10', '20']
         default: '5'
 
 # 只讀：這個工作流程不寫回任何東西，結果走 artifact 與 job summary。
@@ -57,10 +59,13 @@ jobs:
         # 資訊室在正式 CI 請把映像檔釘到 digest（image@sha256:…），不要用 :stable 浮動標籤。
         # 掃的是建置後的靜態站＋模擬後端：關於模擬後端的發現，要對照真實接收系統的契約（docs/deploy.md §11、§13）再判讀。
         continue-on-error: true
+        env:
+          SPIDER_MINUTES: ${{ inputs.spider_minutes || '5' }}
         run: |
+          case "$SPIDER_MINUTES" in ''|*[!0-9]*) SPIDER_MINUTES=5 ;; esac
           mkdir -p dast && chmod 777 dast
           docker run --rm --network host -v "$PWD/dast:/zap/wrk:rw" ghcr.io/zaproxy/zaproxy:stable \
-            zap-baseline.py -t http://localhost:4173/ -m ${{ inputs.spider_minutes || 5 }} -I \
+            zap-baseline.py -t http://localhost:4173/ -m "$SPIDER_MINUTES" -I \
             -r report.html -J report.json -w report.md
       - name: Print report to job summary
         if: always()

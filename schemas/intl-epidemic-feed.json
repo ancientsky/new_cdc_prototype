@@ -2,7 +2,7 @@
   "$id": "https://cdc-prototype/schemas/intl-epidemic-feed.json",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "國際重要疫情資訊交換格式 v1（疫情中心資料庫 → 網站）",
-  "description": "docs/intl-epidemic.md 第 3.1 節。三條路（排程拉取、推送、後台貼上）都用這份格式，進同一個匯入器（scripts/lib/intl-epidemic.mjs）。單則不符本 schema 只退回該則；整批的把關（退回 > 20%、full 模式 0 則或少掉一半以上 ⇒ 整批保留）在匯入器。CSV 與現行官網 ExportJSON 舊格式由 src/client/intl-epidemic-rules.js 轉成本格式後再驗。",
+  "description": "docs/intl-epidemic.md 第 3.1 節。三條路（排程拉取、推送、後台貼上）都用這份格式，進同一個匯入器（scripts/lib/intl-epidemic.mjs）。單則不符本 schema 只退回該則（第七十三輪：item、area、reference 都不收未定義的欄位，因為快照會原樣輸出成公開的 v1/travel-alerts.json）；整批的把關（退回 > 20%、full 模式 0 則或少掉一半以上 ⇒ 整批保留）在匯入器。CSV 與現行官網 ExportJSON 舊格式由 src/client/intl-epidemic-rules.js 轉成本格式後再驗。",
   "type": "object",
   "required": ["version", "items"],
   "properties": {
@@ -23,6 +23,7 @@
     "area": {
       "type": "object",
       "anyOf": [{ "required": ["country"] }, { "required": ["iso2"] }],
+      "additionalProperties": false,
       "properties": {
         "country": { "type": "string", "minLength": 1, "maxLength": 100, "description": "中文國名（網站用國家主檔名稱／別名對應）" },
         "countryEn": { "type": "string", "maxLength": 100 },
@@ -33,6 +34,7 @@
     "item": {
       "type": "object",
       "required": ["id"],
+      "additionalProperties": false,
       "properties": {
         "id": { "type": "string", "pattern": "^[A-Za-z0-9_-][A-Za-z0-9_.-]{0,79}$", "description": "中心資料庫的穩定主鍵；同一則更新時 id 不變。也是站內頁 /travel/alerts/{id}/ 的路徑" },
         "status": { "enum": ["published", "updated", "withdrawn"], "default": "published", "description": "withdrawn＝撤下（只需 id）" },
@@ -50,7 +52,12 @@
         "sourceUrl": { "$ref": "#/$defs/httpUrl", "description": "原始頁（舊站或中心系統）" },
         "references": {
           "type": "array",
-          "items": { "type": "object", "required": ["url"], "properties": { "title": { "type": "string" }, "url": { "$ref": "#/$defs/httpUrl" } } }
+          "items": {
+            "type": "object",
+            "required": ["url"],
+            "additionalProperties": false,
+            "properties": { "title": { "type": "string", "maxLength": 300 }, "url": { "$ref": "#/$defs/httpUrl" } }
+          }
         },
         "lang": { "type": "string", "default": "zh-TW" }
       },

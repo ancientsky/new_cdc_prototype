@@ -104,11 +104,25 @@ function isoDateTime(v) {
 
 /* ───────── CSV ───────── */
 /**
+ * CSV 上限（第七十三輪，稽核第 8 項）：舊版沒有上限，而且每一列都對「整個表頭」建物件，成本是 欄數×列數——
+ * 131 KB 的 CSV（2 萬欄 × 1 千列）就卡住 Node 的事件迴圈 5 秒，2 MB 的推送可以卡住寫入閘道數小時。
+ * 交換格式只有 18 個欄位、一批最多幾百則，下面的數字留了很大的餘裕；超過就丟錯，推送端點與後台匯入回 400 bad_feed。
+ */
+export const CSV_LIMITS = { columns: 64, rows: 5000, field: 10000 };
+/** CSV 認得的欄名（CSV_COLUMNS＋fromCsvRows 另外會讀的 diseaseId、lang）；其他欄位一律略過 */
+const CSV_KNOWN = new Set([...CSV_COLUMNS, 'diseaseId', 'lang']);
+/**
  * RFC 4180 CSV → 物件陣列（第一列為欄名）。UTF-8 BOM、CRLF／LF、雙引號（"" 跳脫）、引號內換行都支援；全空白列略過。
+ * 只保留認得的欄名（CSV_KNOWN）；超過 CSV_LIMITS 丟錯（訊息給承辦人看）。
  * @param {string} text
+ * @param {{ columns?: number, rows?: number, field?: number }} [limits]
  * @returns {Record<string, string>[]}
  */
-export function parseCsv(text) {
+export function parseCsv(text, limits = CSV_LIMITS) {
+  const max = { ...CSV_LIMITS, ...limits };
+  const tooBig = (what) => {
+    throw new Error(`CSV 超過上限（${what}）：每列最多 ${max.columns} 欄、最多 ${max.rows} 列、每格最多 ${max.field} 字`);
+  };
   const s = String(text ?? '').replace(/^﻿/, '');
   const records = [];
   let row = [];
@@ -129,6 +143,7 @@ export function parseCsv(text) {
         continue;
       }
       field += c;
+      if (field.length > max.field) tooBig('單一欄位太長');
       i++;
       continue;
     }
@@ -139,6 +154,7 @@ export function parseCsv(text) {
     }
     if (c === ',') {
       row.push(field);
+      if (row.length >= max.columns) tooBig('欄數太多');
       field = '';
       i++;
       continue;
@@ -146,12 +162,14 @@ export function parseCsv(text) {
     if (c === '\r' || c === '\n') {
       row.push(field);
       records.push(row);
+      if (records.length > max.rows + 1) tooBig('列數太多'); // +1：第一列是欄名
       row = [];
       field = '';
       i += c === '\r' && s[i + 1] === '\n' ? 2 : 1;
       continue;
     }
     field += c;
+    if (field.length > max.field) tooBig('單一欄位太長');
     i++;
   }
   if (field !== '' || row.length) {
@@ -160,8 +178,10 @@ export function parseCsv(text) {
   }
   const nonEmpty = records.filter((r) => r.some((x) => x.trim() !== ''));
   if (!nonEmpty.length) return [];
-  const header = nonEmpty[0].map((h) => h.trim());
-  return nonEmpty.slice(1).map((r) => Object.fromEntries(header.map((h, k) => [h, r[k] ?? '']).filter(([h]) => h)));
+  if (nonEmpty.length > max.rows + 1) tooBig('列數太多');
+  // 只對認得的欄建物件：成本是 已知欄數×列數，不會因為表頭塞了幾萬個欄名而爆量
+  const cols = nonEmpty[0].map((h, k) => [h.trim(), k]).filter(([h]) => CSV_KNOWN.has(h));
+  return nonEmpty.slice(1).map((r) => Object.fromEntries(cols.map(([h, k]) => [h, r[k] ?? ''])));
 }
 
 const splitList = (v) =>

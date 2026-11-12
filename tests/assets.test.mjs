@@ -158,6 +158,20 @@ test('SVG 含 <script> 或 on*= ⇒ 建置失敗；安全 SVG 通過並讀出 vi
   assert.deepEqual(imageSize(Buffer.from(SAFE_SVG), 'svg'), { width: 320, height: 180 });
 });
 
+test('第七十三輪（資安稽核 F6）：SVG 的 foreignObject、外部參照、編碼過的 javascript:、<style> 的 @import／url( 都擋', () => {
+  const has = (svg, msg) => assert.ok(svgProblems(svg).some((p) => p.includes(msg)), `${svg} ⇒ ${svgProblems(svg).join('、')}`);
+  has('<svg><foreignObject><iframe srcdoc="x"></iframe></foreignObject></svg>', '<foreignObject>');
+  has('<svg><use href="https://evil.example/sprite.svg#a"/></svg>', '外部參照');
+  has('<svg xmlns:xlink="http://www.w3.org/1999/xlink"><use xlink:href="//evil.example/s.svg#a"/></svg>', '外部參照');
+  has('<svg><image href="data:image/svg+xml;base64,PHN2Zz4="/></svg>', '外部參照');
+  has('<svg><a href="jav&#x61;script:alert(1)"><text>x</text></a></svg>', 'javascript:');
+  has('<svg><a xlink:href="java&#9;script:alert(1)"><text>x</text></a></svg>', 'javascript:');
+  has('<svg><style>@import "https://evil.example/x.css";</style></svg>', '@import');
+  has('<svg><style>rect{fill:url(https://evil.example/p.svg#g)}</style></svg>', 'url(');
+  // 合法：命名空間宣告、文件內 #片段參照、url(#漸層) 文件內參照
+  assert.deepEqual(svgProblems('<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><g id="a"/></defs><use href="#a"/><use xlink:href="#a"/><style>rect{fill:#0a6}.b{fill:url(#grad)}</style></svg>'), []);
+});
+
 test('圖片無 alt ⇒ 建置失敗（Markdown alt 與 assets.alt 擇一非空即可）；無 license ⇒ 建置失敗；引用未宣告／kind 不是 image ⇒ 失敗', () => {
   const png = tinyPng();
   const dir = fakeAssets({ 'news.a4/a.png': png, 'news.a4/b.png': png, 'news.a4/c.png': png, 'news.a4/d.png': png, 'news.a4/doc.pdf': tinyPdf() });

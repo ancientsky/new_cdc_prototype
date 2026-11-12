@@ -47,7 +47,10 @@ const STATUS = { stable: { 'zh-TW': '平穩', en: 'Stable' }, rising: { 'zh-TW':
 const statusLabel = (s) => STATUS[s]?.[LANG] ?? STATUS[s]?.en ?? s;
 const isExternal = (h) => /^https?:/.test(h ?? '');
 
+// 第七十三輪：協定白名單（同 scripts/lib/render.mjs safeHref）：非 http(s)／mailto／tel 的協定一律改成 #
+const safeHref = (h) => { const p = String(h ?? '').replace(/[\0- \x7f-\x9f\u200b-\u200f\u2028\u2029\ufeff]/g, ''); return /^[a-z][\w+.-]*:/i.test(p) && !/^(https?|mailto|tel):/i.test(p) ? '#' : h; };
 export function link(href, text, cls = '') {
+  href = safeHref(href);
   const ext = isExternal(href);
   return `<a class="${cls}" href="${esc(url(href))}"${ext ? ' rel="noopener" target="_blank"' : ''}>${esc(text)}${ext ? `<span class="sr-only">${esc(L('newWindow'))}</span>` : ''}</a>`;
 }

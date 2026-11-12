@@ -11,7 +11,9 @@
 //   POST /api/subscriptions/update           { token, topics[], frequency, lang } → 200
 //   POST /api/subscriptions/unsubscribe      token 放 JSON、form 或 ?token=（RFC 8058 一鍵退訂：body 為 List-Unsubscribe=One-Click）→ 200
 //   POST /api/subscriptions/manage-link      { email } → 202（不論信箱是否存在都回同樣內容，不洩漏誰訂閱了）
-//   GET  /api/dev/outbox[/檔名]              只給本機（loopback）：列出／讀取模擬寄出的 .eml
+//   GET  /api/dev/outbox[/檔名]              只給本機直連（loopback 而且沒有任何代理標頭）：列出／讀取模擬寄出的 .eml。
+//                                            第七十三輪：serve.mjs 在正式環境的訊號出現時（SITE_MODE／NODE_ENV=production、
+//                                            GATEWAY_TRUSTED_PROXIES、PUBLIC_ORIGIN）把它整個關掉（devOutbox:false ⇒ 404），見 docs/deploy.md §35
 //
 // 安全與濫用防護（模擬版也做，因為正式版需要同樣的行為）
 //   - 伺服器端重新驗證所有欄位（src/client/subscribe-rules.js，與前端同一份規則）；token 必須是 UUID 形狀才查表
@@ -33,7 +35,7 @@ import { ROOT } from './load.mjs';
 import { buildEml, writeEml, parseEml, MOCK_FROM_ADDR } from './mail-outbox.mjs';
 import { composeMail, mailText } from '../../src/client/subscribe-rules.js';
 import { createService, DEFAULT_LIMITS } from '../../src/client/subscribe-service.js';
-import { createRateLimiter, clientKey, tooMany } from './rate-limit.mjs';
+import { createRateLimiter, clientKey, tooMany, isDirectLoopback, linkOrigin } from './rate-limit.mjs';
 
 export const SERVICE_NAME = 'cdc-prototype-subscriptions';
 export const DEFAULT_DATA_FILE = path.join(ROOT, '.local', 'subscriptions.json');
@@ -57,12 +59,12 @@ function writeSubscriptions(dataFile, data) {
   fs.renameSync(tmp, dataFile); // 先寫暫存檔再改名：中途當掉不會留下半個 JSON
 }
 
-/** 連結用的來源（含 basePath）：PUBLIC_ORIGIN 優先；否則取 Host 標頭（只接受主機名稱字元，避免偽造 Host 注入連結） */
-function originOf(req, publicOrigin) {
-  if (publicOrigin) return publicOrigin.replace(/\/$/, '');
-  const host = String(req.headers.host ?? '');
-  return `http://${/^[A-Za-z0-9.-]+(:\d{1,5})?$/.test(host) ? host : 'localhost'}`;
-}
+/**
+ * 連結用的來源（不含 basePath）：PUBLIC_ORIGIN 優先；沒設時只接受本機的 Host（localhost／127.x／[::1]），其他一律 http://localhost。
+ * 第七十三輪（稽核第 4 項）：舊版沒設 PUBLIC_ORIGIN 時採信任何「看起來像主機名稱」的 Host，攻擊者送 `Host: cdc-gov-tw.evil.example`
+ * 就能讓官方確認信／管理信帶著真的 token 指向釣魚網站（Host 標頭污染）。規則與閘道共用（rate-limit.mjs linkOrigin）。
+ */
+const originOf = (req, publicOrigin) => linkOrigin(req, publicOrigin);
 
 const langPrefix = (lang) => (lang === 'en' ? '/en' : '');
 /** 一位訂閱者在信裡會用到的連結（絕對網址）與 RFC 8058 一鍵退訂網址；週摘要產生器也用它，確保與模擬後端寄的信一致 */
@@ -142,12 +144,14 @@ export function createSubscriptionApi({
     const reply = (r) => json(r.status, r.body, r.headers);
     const method = req.method ?? 'GET';
     origin = originOf(req, publicOrigin);
-    const ip = String(req.socket?.remoteAddress ?? 'unknown');
+    // 第七十三輪（稽核第 11 項）：狀態機的每 IP 節流也用 clientKey（放在代理後面時才不會「全站共用代理那一個 IP」，一個人就讓所有人訂不了）
+    const ip = clientKey(req, { trustedProxies });
 
     if (pathname === '/api/health' && method === 'GET') return json(200, { ok: true, service: SERVICE_NAME, mode: 'mock-http' });
 
     if (devOutbox && pathname.startsWith('/api/dev/outbox') && method === 'GET') {
-      if (!/^(::1|127\.\d+\.\d+\.\d+|::ffff:127\.\d+\.\d+\.\d+)$/.test(ip)) return json(403, { error: 'forbidden' });
+      // 第七十三輪：socket 是本機還不夠——同機反向代理轉進來的外部請求 socket 也是 127.0.0.1，所以帶任何代理標頭一律拒絕
+      if (!isDirectLoopback(req)) return json(403, { error: 'forbidden' });
       const rest = pathname.slice('/api/dev/outbox'.length).replace(/^\//, '');
       if (!rest) {
         const files = fs.existsSync(outboxDir) ? fs.readdirSync(outboxDir).filter((f) => f.endsWith('.eml')).sort() : [];
@@ -163,7 +167,7 @@ export function createSubscriptionApi({
 
     // 第六十三輪：讀本體、查表、寄信之前先限流（最便宜的地方先擋）。退訂不限（理由見檔頭）
     if (httpLimiter && pathname !== '/api/subscriptions/unsubscribe') {
-      const r = httpLimiter.hit(clientKey(req, { trustedProxies }));
+      const r = httpLimiter.hit(ip);
       if (!r.ok) return tooMany(res, r.retryAfterSec, { req, error: 'rate', extra: { retryAfter: r.retryAfterSec } });
     }
 

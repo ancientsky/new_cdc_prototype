@@ -20,8 +20,8 @@
     "authors": { "type": "array", "items": { "type": "string" } },
     "abstractMarkdown": { "type": "string" },
     "articles": { "type": "array", "items": { "type": "object", "required": ["title"], "properties": { "title": { "type": "string" }, "authors": { "type": "array", "items": { "type": "string" } }, "pages": { "type": "string" }, "doi": { "type": "string" }, "abstract": { "type": "string" }, "diseases": { "type": "array", "items": { "type": "string" } } } } },
-    "pdfUrl": { "type": "string" },
+    "pdfUrl": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)" },
     "price": { "type": "string" },
-    "cover": { "type": "string" }
+    "cover": { "type": "string", "pattern": "^(https?://|/)" }
   }
 }

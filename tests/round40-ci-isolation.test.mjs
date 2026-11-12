@@ -774,3 +774,31 @@ test('#68 pages.yml：部署 concurrency 排隊不取消（cancel-in-progress: f
   const dep = read('docs/deploy.md');
   assert.ok(dep.includes('cancel-in-progress') && dep.includes('一個排隊'), 'deploy.md 第 34 節要寫排隊行為');
 });
+
+test('第七十三輪：用到非 GITHUB_TOKEN 秘密的 job 都宣告 environment: production；build 只在 main 跑；手動輸入不直接展開進 shell', () => {
+  const found = [];
+  for (const f of workflows) {
+    const jobs = jobsOf(read(`${WF_DIR}/${f}`));
+    for (const [name, body] of Object.entries(jobs)) {
+      const secrets = [...body.matchAll(/secrets\.([A-Z0-9_]+)/g)].map((m) => m[1]).filter((s) => s !== 'GITHUB_TOKEN');
+      if (!secrets.length) continue;
+      found.push(`${f}:${name}`);
+      assert.match(body, /^ {4}environment: production$/m, `${f} 的 ${name} 用到 ${secrets.join('、')}，要宣告 environment: production（docs/deploy.md §9.2）`);
+    }
+  }
+  assert.ok(found.includes('pages.yml:build'), 'pages.yml build 用到 SNAPSHOT_DEPLOY_KEY／INTL_FEED_TOKEN');
+  const build = jobsOf(read(`${WF_DIR}/pages.yml`)).build;
+  assert.match(build, /^ {4}if: github\.ref == 'refs\/heads\/main'$/m, '手動執行選別的分支時不建置、不讀秘密');
+  // workflow_dispatch 的輸入不能用 ${{ inputs.* }} / ${{ github.event.inputs.* }} 直接寫進 run（要經 env）
+  for (const f of workflows) {
+    for (const [name, body] of Object.entries(jobsOf(read(`${WF_DIR}/${f}`)))) {
+      for (const step of stepsOf(body)) {
+        const run = runOf(step);
+        if (run) assert.doesNotMatch(run, /\$\{\{\s*(github\.event\.)?inputs\./, `${f} ${name}：run 裡直接展開手動輸入`);
+      }
+    }
+  }
+  assert.match(read(`${WF_DIR}/dast.yml`), /spider_minutes:\n(?: {8}.*\n)*? {8}type: choice/);
+  const dep = read('docs/deploy.md');
+  assert.ok(dep.includes('environment: production') && dep.includes('部署分支'), 'deploy.md 寫了 production 環境的設定步驟');
+});

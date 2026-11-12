@@ -158,14 +158,26 @@ export function imageSize(buf, ext = extOf('')) {
   return null;
 }
 
-/** SVG 安全掃描：<script>、on*= 事件屬性、javascript: 連結、外部實體 → 問題陣列 */
+/**
+ * SVG 安全掃描：<script>、on*= 事件屬性、javascript: 連結、外部實體 → 問題陣列
+ * 第七十三輪（資安稽核 F6）：另擋 <foreignObject>（可內嵌整段 HTML／iframe）、href／xlink:href 指向外部網址或 data:
+ * （<use>／<image> 載入外部文件）、<style> 內的 @import 與指向外部的 url(…)（url(#id) 放行）；javascript: 比對前先解數字實體並去掉空白控制字元。
+ */
 export function svgProblems(text) {
   const s = String(text ?? '');
   const out = [];
   if (/<script\b/i.test(s)) out.push('含 <script>');
   const ev = s.match(/\son\w+\s*=/i);
   if (ev) out.push(`含事件屬性 ${ev[0].trim()}`);
-  if (/(?:href|xlink:href)\s*=\s*["']\s*javascript:/i.test(s)) out.push('含 javascript: 連結');
+  const refs = [...s.matchAll(/\s(?:xlink:)?href\s*=\s*(?:"([^"]*)"|'([^']*)')/gi)].map((m) => (m[1] ?? m[2])
+    .replace(/&#x([0-9a-f]+);?/gi, (_, h) => String.fromCodePoint(parseInt(h, 16) || 0xfffd))
+    .replace(/&#(\d+);?/g, (_, d) => String.fromCodePoint(Number(d) || 0xfffd))
+    .replace(/&colon;/gi, ':')
+    .replace(/[\u0000-\u0020]/g, ''));
+  if (refs.some((v) => /^javascript:/i.test(v))) out.push('含 javascript: 連結');
+  if (refs.some((v) => /^(?:https?:|\/\/|data:)/i.test(v))) out.push('含外部參照（href／xlink:href 指向外部網址或 data:）');
+  if (/<foreignObject\b/i.test(s)) out.push('含 <foreignObject>');
+  if ([...s.matchAll(/<style\b[^>]*>([\s\S]*?)(?:<\/style>|$)/gi)].some((m) => /@import|url\s*\(\s*(?!['"]?#)/i.test(m[1]))) out.push('<style> 內含 @import 或 url(…)'); // url(#漸層) 是文件內參照，放行
   if (/<!ENTITY/i.test(s)) out.push('含 <!ENTITY> 宣告');
   return out;
 }

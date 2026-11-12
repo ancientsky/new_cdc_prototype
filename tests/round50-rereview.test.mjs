@@ -188,7 +188,7 @@ test('重新審閱：權責單位沒有示範帳號時（慢性傳染病組）�
 });
 
 test('HTTP：POST /api/gateway/rereview 要同源＋CSRF；回應不帶 Git 細節', async () => {
-  const { api } = makeApi({ authAdapter: createHeaderAuth({ trustedProxies: ['127.0.0.1'] }) });
+  const { api } = makeApi({ authAdapter: createHeaderAuth({ trustedProxies: ['127.0.0.1'] }), allowHostOrigin: true });
   const srv = http.createServer(async (rq, rs) => { const u = new URL(rq.url, 'http://x'); if (!(await api.handle(rq, rs, u.pathname, u.searchParams))) { rs.statusCode = 404; rs.end(); } });
   await new Promise((r) => srv.listen(0, '127.0.0.1', r));
   const base = `http://127.0.0.1:${srv.address().port}`;

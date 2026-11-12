@@ -101,7 +101,8 @@ test('clientKey：直連時用 socket 位址（偽造的 X-Forwarded-For 不算�
   assert.equal(clientKey(r('10.0.0.5', '1.2.3.4, 203.0.113.7'), { trustedProxies: ['10.0.0.5'] }), '203.0.113.7', '用戶端偽造的在左邊，代理加的在最右');
   assert.equal(clientKey(r('10.0.0.5', '1.2.3.4, 203.0.113.7, 10.0.0.9'), { trustedProxies: ['10.0.0.0/8'] }), '203.0.113.7', '多層代理（CIDR）：跳過所有代理');
   assert.equal(clientKey(r('::ffff:10.0.0.5', '203.0.113.7:51234'), { trustedProxies: ['10.0.0.5'] }), '203.0.113.7', 'IPv4-mapped 與 :port 都正規化');
-  assert.equal(clientKey(r('10.0.0.5', '[2001:db8::1]:443'), { trustedProxies: ['10.0.0.5'] }), '2001:db8::1');
+  // 第七十三輪：速率限制的 key 把 IPv6 以 /64 分組（一般用戶自己就有一整段 /64）；完整位址見 clientIp（tests/round73-server-hardening.test.mjs）
+  assert.equal(clientKey(r('10.0.0.5', '[2001:db8::1]:443'), { trustedProxies: ['10.0.0.5'] }), '2001:db8::/64');
   assert.equal(clientKey(r('10.0.0.5', 'garbage, <script>'), { trustedProxies: ['10.0.0.5'] }), '10.0.0.5', '看不懂的標頭 ⇒ 代理本身');
   assert.equal(clientKey(r('10.0.0.5'), { trustedProxies: ['10.0.0.5'] }), '10.0.0.5');
   assert.equal(clientKey({ headers: {} }), 'unknown');
@@ -286,7 +287,8 @@ test('國際疫情推送端點：每 IP 每分鐘 30 次，429 在權杖檢查�
   assert.equal(r.statusCode, 429);
   assert.equal(r.json().error, 'rate');
   assert.ok(!/30|每分鐘/.test(r.json().message), '訊息不說門檻');
-  assert.equal(audit.rows.length, 2, '被限流的那次沒有走到權杖比對（沒有多一筆認證失敗）');
+  // 第七十三輪：同一來源一分鐘內只記第一筆認證失敗（docs/deploy.md §35）；被限流的那次也沒有走到權杖比對
+  assert.equal(audit.rows.length, 1, '認證失敗的稽核每個來源每分鐘只記一筆');
   const off = createIntlFeedApi({ token: '', rate: { windowMs: 60_000, max: 1 } });
   const p2 = () => call(off, '/api/intl-epidemic', { method: 'POST', headers: { 'content-type': 'application/json' }, body: '{}' });
   assert.equal((await p2()).statusCode, 503);

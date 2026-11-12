@@ -60,14 +60,23 @@ export function createService({ load, save, mail, now = () => Date.now(), uuid =
       return { status: 202, body: { status: 'pending' } };
     },
 
-    /** 點確認連結。冪等：重複點（含郵件安全掃描器預先打開連結）不會出錯。 */
+    /**
+     * 點確認連結。冪等：重複點（含郵件安全掃描器預先打開連結）不會出錯。
+     * 第七十三輪（稽核第 9 項）：確認 token 「只換一次」管理權、而且會過期——
+     *   第一次確認才回 manageToken；之後再點只回 { status:'confirmed', already:true }（不帶 manageToken，管理連結在歡迎信裡）；
+     *   過了 48 小時確認期限，token 直接作廢（清掉）。舊版確認後 token 永遠有效、每次都回 manageToken：
+     *   確認連結只要被轉寄、留在代理 log、郵件掃描器紀錄或 Referer 裡，任何人隨時都能拿它換到管理權。
+     */
     confirm(token) {
       const { data, t, iso } = open();
       const s = isToken(token) ? data.subscriptions.find((x) => x.confirmToken === token) : undefined;
       if (!s) return { status: 404, body: { error: 'notfound' } };
-      if (s.status === 'confirmed') return { status: 200, body: { ...view(s), manageToken: s.manageToken, already: true } };
       if (s.status === 'unsubscribed') return { status: 410, body: { error: 'unsubscribed' } };
-      if (t > Date.parse(s.confirmExpiresAt)) return { status: 410, body: { error: 'expired' } };
+      if (t > Date.parse(s.confirmExpiresAt)) {
+        if (s.status === 'confirmed') { s.confirmToken = null; save(data); } // 已確認且過期：作廢
+        return { status: 410, body: { error: 'expired' } };
+      }
+      if (s.status === 'confirmed') return { status: 200, body: { ...view(s), already: true } };
       s.status = 'confirmed'; s.confirmedAt = iso; s.updatedAt = iso;
       save(data);
       mail('welcome', s);

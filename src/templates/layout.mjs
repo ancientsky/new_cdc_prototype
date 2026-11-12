@@ -14,6 +14,7 @@ import { PATH as RESEARCH_MEDIA } from './public/research-media.mjs';
 // 介面（UI 字串）本身的翻譯審核狀態；內容頁則看 item.languages[lang]
 const UI_TRANSLATION = { en: { status: 'reviewed', date: '2026-09-10' } };
 
+// 第七十三輪：html`` 會把 href／src 插值的 data: 協定改成 #（safeHref）；站台自己的常數 favicon 是可信來源，用 raw(esc()) 明確標示放行。
 const FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231b5e3f'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='%23fff'/%3E%3C/svg%3E";
 
 export const EARLY_JS = `try{var d=document.documentElement;d.classList.add('js');var v=new URLSearchParams(location.search).get('view')||localStorage.getItem('cdc.view');if(v==='pro')d.dataset.view='pro'}catch(e){document.documentElement.classList.add('js')}`;
@@ -152,7 +153,7 @@ export function layout(ctx, { styles = [], title, description, body, jsonLd = []
 <title>${fullTitle}</title>
 <meta name="description" content="${description ?? ''}">
 <meta name="theme-color" content="#1b5e3f">
-<link rel="icon" href="${FAVICON}">
+<link rel="icon" href="${raw(esc(FAVICON))}">
 <link rel="canonical" href="${canonical}">
 ${alternates}
 <link rel="alternate" hreflang="x-default" href="${origin}${path}">

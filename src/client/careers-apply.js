@@ -1,5 +1,7 @@
 // /careers/{slug}/apply/ 的「模擬線上報名」（ARCHITECTURE 15.2）。三步驟：基本資料 → 學經歷與應備文件（檔案只記檔名）→ 聲明與確認。
-// 全部資料只存在這個瀏覽器的 localStorage（草稿 cdc.apply.draft.{slug}、收執 cdc.apply.receipts），不送出任何請求，也不讀取檔案內容。
+// 全部資料只存在這個瀏覽器（草稿 cdc.apply.draft.{slug} 在 sessionStorage、模擬收執 cdc.apply.receipts 在 localStorage），不送出任何請求，也不讀取檔案內容。
+// 第七十三輪（資安稽核 F-5）：草稿含姓名、身分證、電話等個資，改存 sessionStorage（關閉分頁即消失，公用電腦不殘留）；
+// 舊版留在 localStorage 的草稿於開啟頁面時一併刪除。「清除草稿」按鈕（data-apply-clear）可隨時手動清除。
 // 純函式（makeApplyNo、buildIcs、validateField）與 DOM 無關，可在 Node 測試。
 // 第三十輪（#55）：表單有 data-endpoint（site.config.mjs forms.careersApply 為 post）⇒ 送出改為直接 POST 到人事室的報名系統（form-post.js），
 // 收件編號由該系統回傳；收執只顯示在這一頁、不存進 localStorage（個資不留在瀏覽器）。沒有 endpoint 時維持原本的模擬。
@@ -81,12 +83,14 @@ export function validateField(name, val, o = {}) {
   return null;
 }
 
-/* ───────── localStorage（任何情況都不能丟例外） ───────── */
-const ls = {
-  get(k, fb = null) { try { const v = localStorage.getItem(k); return v == null ? fb : JSON.parse(v); } catch { return fb; } },
-  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { return false; } },
-  del(k) { try { localStorage.removeItem(k); } catch { /* ignore */ } },
-};
+/* ───────── localStorage／sessionStorage（任何情況都不能丟例外：無痕模式、停用網站資料時存取會丟錯） ───────── */
+const storeOf = (get) => ({
+  get(k, fb = null) { try { const v = get().getItem(k); return v == null ? fb : JSON.parse(v); } catch { return fb; } },
+  set(k, v) { try { get().setItem(k, JSON.stringify(v)); return true; } catch { return false; } },
+  del(k) { try { get().removeItem(k); } catch { /* ignore */ } },
+});
+const ls = storeOf(() => localStorage); // 模擬收執
+const ss = storeOf(() => sessionStorage); // 草稿（個資）
 
 /* ───────── DOM ───────── */
 function init(root) {
@@ -102,6 +106,7 @@ function init(root) {
   const msg = root.querySelector('[data-draft-msg]');
   const prev = form.querySelector('[data-apply-prev]'), next = form.querySelector('[data-apply-next]'), submit = form.querySelector('[data-apply-submit]');
   const receipt = root.querySelector('[data-apply-receipt]');
+  ls.del(DRAFT_KEY(slug)); // 舊版存在 localStorage 的草稿（含個資）：不再讀取，直接刪除
   let step = 1;
   let timer = null;
 
@@ -211,10 +216,10 @@ function init(root) {
     const d = collect();
     const hasData = Object.values(d.values).some((v) => String(v).trim()) || Object.keys(d.files).length;
     if (!hasData && step === 1) return;
-    if (ls.set(DRAFT_KEY(slug), d) && announce) msg.textContent = T('japply.js.draftSaved', { time: nowText() });
+    if (ss.set(DRAFT_KEY(slug), d) && announce) msg.textContent = T('japply.js.draftSaved', { time: nowText() });
   }
   function restoreDraft() {
-    const d = ls.get(DRAFT_KEY(slug));
+    const d = ss.get(DRAFT_KEY(slug));
     if (!d?.values) return false;
     Object.entries(d.values).forEach(([k, v]) => { const el = form.elements[k]; if (el && el.type !== 'file') el.value = v; });
     Object.entries(d.files ?? {}).forEach(([k, name]) => { draftFiles[k] = name; fileHint(form.elements[k], name, true); });
@@ -228,7 +233,7 @@ function init(root) {
   }
   function clearDraft() {
     clearTimeout(timer);
-    ls.del(DRAFT_KEY(slug));
+    ss.del(DRAFT_KEY(slug));
     Object.keys(draftFiles).forEach((k) => delete draftFiles[k]);
     form.reset();
     form.querySelectorAll('[data-doc-name]').forEach((h) => { h.textContent = T('japply.docs.none'); });
@@ -276,7 +281,7 @@ function init(root) {
     }
     liveRec = { no: r.receiptNo || r.submissionId, jobId, slug, jobTitle, at: new Date().toISOString(), fields: pairs(), simulated: false };
     clearTimeout(timer);
-    ls.del(DRAFT_KEY(slug));
+    ss.del(DRAFT_KEY(slug));
     showReceipt(liveRec);
   }
 
@@ -290,7 +295,7 @@ function init(root) {
     all.unshift(rec);
     ls.set(RECEIPTS_KEY, all.slice(0, 20));
     clearTimeout(timer);
-    ls.del(DRAFT_KEY(slug));
+    ss.del(DRAFT_KEY(slug));
     showReceipt(rec);
   }
 

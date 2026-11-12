@@ -22,6 +22,9 @@
 | 第三方 action 釘 SHA | 供應鏈：action 被換成惡意版本 | [deploy.md](deploy.md) §9；`tests/round23-security.test.mjs` |
 | 分支規則集 | 誰能直接推 main、合併要幾個核准 | [deploy.md](deploy.md) §9 |
 | security.txt | 研究者知道往哪裡通報 | [deploy.md](deploy.md) §10.4 |
+| 內容 HTML 白名單淨化＋連結協定檢查（第七十三輪） | 內容裡夾帶 `javascript:`、`<meta refresh>`、`<iframe>` 等 | [content-html-safety.md](content-html-safety.md) |
+| 伺服器端回歸測試 `tests/round73-*.test.mjs`（第七十三輪） | 路徑穿越、跨單位接管、代理後面的 dev 端點、不合法的信任代理清單 | [security-audit.md](security-audit.md) |
+| 白箱稽核（第七十三輪，一次性） | 讀全部程式並實際攻擊；與第 3 節的黑箱滲透互補 | [security-audit.md](security-audit.md) |
 
 這些檢查都是「我們知道要防什麼」的防線；它們**不能取代**由外部人員用攻擊者的角度找出我們沒想到的問題，這就是下一節。
 

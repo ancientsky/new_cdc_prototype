@@ -17,8 +17,12 @@ export const PII_RULES = [
 /** 個資遮蔽（送模型或寫入稽核紀錄前一定先過這裡） */
 export function maskPII(text) { return maskPIIDetailed(text).text; }
 
+// 第七十三輪（資安稽核 F-2）：以下三個匯出函式的 regex 對超長輸入是 O(n²)（32k 字約 6 秒）；入口一律截到 MAX_IN 字。
+// 答案主流程本來就先截 500 字，短輸入行為不變；超長輸入只處理前 MAX_IN 字（其餘捨棄）。
+const MAX_IN = 2000;
+
 export function maskPIIDetailed(text) {
-  let out = String(text ?? '');
+  let out = String(text ?? '').slice(0, MAX_IN);
   const hits = [];
   for (const r of PII_RULES) {
     out = out.replace(r.re, (...m) => { hits.push(r.kind); return r.label.includes('$1') ? r.label.replace('$1', m[1]) : r.label; });
@@ -138,7 +142,7 @@ export const RANGE_RES = [
 
 /** 時間範圍解析：近五年、近三週、過去 10 年、這十年來、2019 到 2023 年、112 年（民國） */
 export function parseTimeRange(q) {
-  const s = String(q ?? '');
+  const s = String(q ?? '').slice(0, MAX_IN);
   const out = { n: null, unit: null, years: [], from: null, to: null, text: null };
   for (const re of RANGE_RES) {
     const m = s.match(re);
@@ -184,7 +188,7 @@ export const CONSISTENCY_UNIT_RE = /(\d+(?:\.\d+)?)(?:\s*(?:至|到|～|~|–|�
 export const CONSISTENCY_DATE_RE = /\d{2,4}\s*年\s*\d{1,2}\s*月(?:\s*\d{1,2}\s*日)?|\d{1,2}\s*月\s*\d{1,2}\s*日|\d{4}[-/]\d{1,2}(?:[-/]\d{1,2})?/g;
 export const UNIT_CANON = { 周: '週', 日: '天', '％': '%' };
 export function numbersByUnit(text) {
-  const t = String(text ?? '').normalize('NFKC').replace(CONSISTENCY_DATE_RE, ' ');
+  const t = String(text ?? '').slice(0, MAX_IN).normalize('NFKC').replace(CONSISTENCY_DATE_RE, ' ');
   const m = new Map();
   for (const x of t.matchAll(CONSISTENCY_UNIT_RE)) {
     const u = UNIT_CANON[x[3]] ?? x[3];

@@ -9,14 +9,14 @@
     "type": { "const": "dataset" },
     "category": { "enum": ["open-dataset", "stats-system", "structured-table", "document-library", "content-page", "press", "media"] },
     "ckanName": { "type": "string" },
-    "portalUrl": { "type": "string" },
-    "canonicalUrl": { "type": "string", "description": "正本位置，唯一" },
+    "portalUrl": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)" },
+    "canonicalUrl": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)", "description": "正本位置，唯一" },
     "mirrors": { "type": "array", "items": { "type": "string" } },
     "updateFrequency": { "enum": ["daily", "weekly", "monthly", "quarterly", "yearly", "irregular"] },
     "lastUpdated": { "type": "string", "format": "date" },
     "formats": { "type": "array", "items": { "type": "string" } },
-    "schemaUrl": { "type": "string" },
-    "resources": { "type": "array", "items": { "type": "object", "properties": { "name": { "type": "string" }, "format": { "type": "string" }, "url": { "type": "string" } } } },
+    "schemaUrl": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)" },
+    "resources": { "type": "array", "items": { "type": "object", "properties": { "name": { "type": "string" }, "format": { "type": "string" }, "url": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)" } } } },
     "series": {
       "type": "object",
       "description": "已結構化的統計時序（統計問答用）",
@@ -28,6 +28,6 @@
         "note": { "type": "string" }
       }
     },
-    "provenance": { "type": "object", "properties": { "fetchedAt": { "type": "string" }, "mode": { "enum": ["live", "snapshot"] }, "sourceUrl": { "type": "string" } } }
+    "provenance": { "type": "object", "properties": { "fetchedAt": { "type": "string" }, "mode": { "enum": ["live", "snapshot"] }, "sourceUrl": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)" } } }
   }
 }

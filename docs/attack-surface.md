@@ -37,9 +37,16 @@ ARTEX 一類的 AI 滲透工具，第一步不是攻擊，是**盤點**：列出
 | `assets/js/globals.d.ts` | 開發用型別宣告 | 留在內部站，公開樹刪除 |
 | `robots.production.txt` | 原型站對照用；正式站直接輸出成 `robots.txt` | 刪除 |
 | `preview/**` | 未審核的內容與程式，而且每個預覽都是一整套含後台的站 | 刪除（根本不複製） |
-| `.git*`、`.env*`、`node_modules/**`、`tests/**`、`docs/**`、`.local/**`、`*.bak`、`*.orig`、`*.swp`、`*.log`、`.DS_Store`、`Thumbs.db` | 防禦性：正常建置不會產生，出現就代表建置或部署流程出錯 | 任何建置方式都算錯 |
+| `.git*`、`.env*`、`node_modules/**`、任何一層的 `tests/`、`docs/`、`.local/**`、`*.bak`、`*.orig`、`*.swp`、`*.log`、`.DS_Store`、`Thumbs.db` | 防禦性：正常建置不會產生，出現就代表建置或部署流程出錯 | 任何建置方式都算錯 |
 
 例外：`redirects/nginx.map` 是 nginx `map` 指令用的舊網址對照檔（公開，`openapi.json` 有寫），不是 source map。
+
+第七十三輪補的四個漏洞：
+
+- **不分大小寫**：IIS（Windows）與 macOS 的檔案系統不分大小寫，`Admin/`、`Docs/`、`UI.JS.MAP` 在主機上照樣讀得到，所以規則比對一律不分大小寫（例外清單也是）。
+- **`tests/`、`docs/` 任何一層都擋**：以前只擋根目錄，`preview/pr-1/docs/` 之類會漏。
+- **符號連結**：指到產物以外（例：`passwd.txt -> /etc/passwd`）或斷掉的連結報 `symlink:outside`——伺服器會照連結把主機上的檔案當網頁送出；指到目錄的連結不跟進，也照報。指在產物內的檔案連結照一般檔案檢查。
+- **內嵌 source map**：JS／CSS 裡的 `sourceMappingURL=data:` 整份原始碼就在檔案裡，報 `inline-source-map`（原型站算預期，正式站算錯）。
 
 另外有**副檔名白名單**（`PUBLIC_EXTENSIONS`：html、md、json、xml、txt、csv、ics、js、css、圖檔、內容附件、Pagefind 索引檔……）。不在白名單的副檔名，例如有人在 `src/public/` 放了 `.sql`、`.zip`、`.pem`，也算禁止檔。理由見 §8。
 

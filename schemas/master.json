@@ -72,6 +72,7 @@
             "string",
             "null"
           ],
+          "pattern": "^https?://",
           "description": "cdc.gov.tw 上的單位介紹頁；開發環境無法確認，先留 null"
         },
         "officialUrlVerified": {
@@ -339,7 +340,8 @@
               "type": "string"
             },
             "url": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^(https?://|mailto:|tel:|/)"
             }
           },
           "additionalProperties": false,
@@ -407,7 +409,8 @@
               "type": "string"
             },
             "url": {
-              "type": "string"
+              "type": "string",
+              "pattern": "^(https?://|mailto:|tel:|/)"
             }
           }
         },

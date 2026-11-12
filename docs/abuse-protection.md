@@ -38,7 +38,12 @@ ARTEX 一類的 AI 自動化滲透工具是「多個 LLM 代理分工」：一�
 
 ### 4.1 本原型已在程式裡做到（第六十三輪）
 
-- `scripts/lib/rate-limit.mjs`：共用的限流（滑動記錄、記憶體有上限、不會被灌假 key 重設）與 `clientKey()`（只在連線來自信任的代理時採信 `X-Forwarded-For`）。
+- `scripts/lib/rate-limit.mjs`：共用的限流（滑動記錄、記憶體有上限、不會「整個清空」；key 太多時淘汰最早出現的 key，所以能大量產生 key 的人仍可能讓自己的計數被淘汰——這正是 IPv6 要用 `/64` 分組的原因）與 `clientKey()`（只在連線來自信任的代理時採信 `X-Forwarded-For`）。
+- 第七十三輪補強 `clientKey()`／`clientIp()`（deploy.md §35.5、§35.6）：
+  - `X-Forwarded-For` **從右往左**走，遇到第一個不是信任代理的位址就用它；**整串都是信任位址時用代理本身的位址**（舊版取最左邊那段，那段是用戶端可寫的，內網機器每個請求換一個 `10.x` 就能換 key 或嫁禍同事）；碰到看不懂的一段就停在它右邊，不再跳過它往左找。
+  - **IPv6 以 `/64` 為一個 key**（一般用戶自己就有一整段 `/64`），位址先正規化（小寫、標準寫法、IPv4-mapped 轉回 IPv4）；稽核紀錄仍記完整位址。
+  - 信任代理清單（`GATEWAY_TRUSTED_PROXIES`，也是 header 登入模式的信任名單）寫錯一律啟動失敗：前綴超過 `/32`（IPv6 `/128`）、位元組 > 255、不是 IP、`0.0.0.0/0`、`::/0` 都拒絕；IPv6 網段真的照網段比對。**只列代理本身，不要列同事電腦所在的網段。**
+- 開發用端點（模擬信件匣、查詢紀錄報表）與閘道 `dev` 登入：本機連線但帶 `X-Forwarded-For`／`Forwarded`／`X-Real-IP`／`X-Forwarded-Host` 一律 403；`serve.mjs` 偵測到正式環境（`PUBLIC_ORIGIN`、`GATEWAY_TRUSTED_PROXIES` 等）時整個關閉（deploy.md §35.3）。
 - 寫入閘道三個範圍的限流、`rate_limited` 稽核事件（deploy.md §31）。
 - 電子報、問答紀錄、國際疫情推送三個模擬後端改用同一套，數字如上表。
 - 前端：表單收到 429 顯示「送出太頻繁，請稍候再試」（`form.err.rate`），不當成一般失敗。
@@ -59,7 +64,7 @@ ARTEX 一類的 AI 自動化滲透工具是「多個 LLM 代理分工」：一�
 | 地理封鎖 | **不需要**：疾管署服務的對象包含海外國人、旅客與移工，地理封鎖誤傷大、而攻擊者換個雲端區域就繞過 |
 | 自訂規則 | 探測特徵（§5.1 清單）一律封鎖或 403；可疑 UA 只記錄不封鎖（開放資料使用者也用 curl、python） |
 | 記錄 | WAF 與存取紀錄送 Log Analytics（保存依機關資安規定），接 SOC（Sentinel 或機關既有 SOC），§5 的告警規則在那裡跑 |
-| 應用程式看到的 IP | WAF／代理要**覆寫或附加** `X-Forwarded-For`；應用程式端把 WAF 的位址設進 `GATEWAY_TRUSTED_PROXIES`（deploy.md §31.2） |
+| 應用程式看到的 IP | WAF／代理要**覆寫或附加** `X-Forwarded-For`；應用程式端把 WAF 的位址（只列 WAF／代理本身，不要列整個內網）設進 `GATEWAY_TRUSTED_PROXIES`（deploy.md §31.2、§35.5）。寫錯格式閘道會啟動失敗 |
 
 ### 4.3 收件系統要做到（要求）
 
@@ -83,7 +88,7 @@ node scripts/analyze-404-log.mjs access.log --public --json     # JSON：多一�
 node scripts/analyze-404-log.mjs access.log --burst 20 --window 60 --trusted-proxy 10.0.0.0/8
 ```
 
-支援 nginx combined（行尾可多一個 `"$http_x_forwarded_for"` 欄位）與 IIS W3C（`c-ip`，可加自訂欄位 `X-Forwarded-For`）。log 的來源 IP 若是 CDN／反向代理，用 `--trusted-proxy` 讓工具改看 `X-Forwarded-For` 的最後一個非代理位址（與應用程式同一條規則）。
+支援 nginx combined（行尾可多一個 `"$http_x_forwarded_for"` 欄位）與 IIS W3C（`c-ip`，可加自訂欄位 `X-Forwarded-For`）。log 的來源 IP 若是 CDN／反向代理，用 `--trusted-proxy` 讓工具改看 `X-Forwarded-For` 的最後一個非代理位址（與應用程式同一條規則，`clientIp()`；第七十三輪起整串都是代理時用代理本身、看不懂的一段就停）。
 
 每個來源的分數：60 秒內 404 達 30 次 +3、打到特徵路徑 +3、特徵路徑回 2xx 再 +3（建議**立即通報**）、不重複 404 路徑 ≥ 20 +2、401／403 ≥ 10 +1、掃描器 UA +3、程式庫或空白 UA +1；≥ 3 分列出。報表每列附建議：**封鎖**（WAF 封鎖該來源，先確認不是機關委託的弱點掃描）、**觀察**、或**立即通報資訊室**。夾具 `tests/fixtures/access-probe.log` 是範例（文件用 IP），正常民眾與 python 抓開放資料的都不會被列出。
 
@@ -135,7 +140,7 @@ AGWAccessLogs
 
 ## 6. 教訓
 
-- **速率限制的 key 必須是攻擊者選不了的東西**：信任代理加上的 IP、已登入的帳號。直接信任請求自帶的 `X-Forwarded-For`，等於讓攻擊者自己挑 key；記憶體滿了就「整個清空」，等於讓攻擊者一鍵重設所有人的計數（本輪修掉的就是這兩件事）。
+- **速率限制的 key 必須是攻擊者選不了的東西**：信任代理加上的 IP、已登入的帳號。直接信任請求自帶的 `X-Forwarded-For`，等於讓攻擊者自己挑 key；記憶體滿了就「整個清空」，等於讓攻擊者一鍵重設所有人的計數（本輪修掉的就是這兩件事）。第七十三輪再補兩個同類問題：整串 `X-Forwarded-For` 都是信任位址時不能取最左邊（用戶端可寫）；IPv6 要以 `/64` 為 key，否則換位址就繞過。
 - **第一個 429 應該來自最便宜的那一層**：WAF 先擋，應用程式在讀本體、查表、寄信之前再擋一次；最後才是業務規則（每信箱 3 次）。
 - **偵測規則屬於 repo，而且寫成資料**：SOC 與開發者讀同一份清單，改網址的人會看到它，測試會守住「本站正當路徑不被誤判」。
 - **錯誤訊息是給人看的，不是給代理看的**：白話、通用、不帶版本與路徑；AI 代理最擅長的就是從錯誤訊息推下一步。

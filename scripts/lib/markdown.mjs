@@ -1,15 +1,44 @@
 import { config } from '../../site.config.mjs';
 import { marked } from 'marked';
+import sanitizeHtml from 'sanitize-html';
 import { esc } from './render.mjs';
 
 marked.setOptions({ gfm: true, breaks: false });
 
-// 極簡白名單淨化：內容來自 repo（受審核），但仍移除 script/style/on* 與 javascript: 連結。
-function sanitize(htmlStr) {
-  return htmlStr
-    .replace(/<\s*(script|style|iframe|object|embed)[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi, '')
-    .replace(/\son\w+\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi, '')
-    .replace(/(href|src)\s*=\s*(["']?)\s*javascript:[^"'\s>]*\2/gi, '$1="#"');
+// 第七十三輪（資安稽核 F-1／F5）：淨化改為「白名單」解析器（sanitize-html，建置期 Node 端專用，不進瀏覽器）。
+// 舊版是正則黑名單，已實測被繞過：HTML 實體夾帶的 javascript:（jav&#x61;script:）、未閉合的 <iframe srcdoc>、
+// <base>／<meta http-equiv=refresh>／<form>／<link>／<object>／<embed> 都會原樣留在頁面。黑名單無法窮舉，白名單只放行已知安全的部分。
+// 允許清單依實際內容盤點（content/**、cjkStrong／supSub 與 marked 的 GFM 輸出）；要新增標籤或屬性請看 docs/content-html-safety.md。
+export const SANITIZE_OPTIONS = Object.freeze({
+  allowedTags: [
+    'p', 'h2', 'h3', 'h4', 'h5', 'h6', 'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'blockquote', 'pre', 'code', 'hr', 'br',
+    'a', 'img', 'figure', 'figcaption', 'table', 'caption', 'thead', 'tbody', 'tfoot', 'tr', 'th', 'td',
+    'strong', 'em', 'b', 'i', 'del', 's', 'sup', 'sub', 'abbr', 'mark', 'small', 'details', 'summary', 'span', 'div',
+  ],
+  allowedAttributes: {
+    '*': ['class', 'id', 'lang', 'dir', 'title'],
+    a: ['href', 'hreflang', 'rel'],
+    img: ['src', 'alt', 'width', 'height', 'loading', 'decoding'],
+    th: ['colspan', 'rowspan', 'align', 'scope'],
+    td: ['colspan', 'rowspan', 'align'],
+    ol: ['start', 'reversed', 'type'],
+    details: ['open'],
+  },
+  // 連結與圖片只准 http(s)／mailto／tel 與相對路徑（含 //host 協定相對＝http(s)）；屬性值先解實體再比對，所以 jav&#x61;script: 也擋得住
+  allowedSchemes: ['http', 'https', 'mailto', 'tel'],
+  allowedSchemesAppliedToAttributes: ['href', 'src', 'cite'],
+  allowProtocolRelative: true,
+  allowedEmptyAttributes: ['alt', 'open', 'reversed'],
+  // 不在清單的標籤：拿掉標籤、保留文字；下列標籤連內容一起丟（腳本、樣式、內嵌文件、SVG／MathML 子樹）
+  disallowedTagsMode: 'discard',
+  nonTextTags: ['script', 'style', 'textarea', 'option', 'select', 'noscript', 'iframe', 'frame', 'frameset', 'object', 'embed', 'template', 'svg', 'math', 'title', 'xmp', 'noembed', 'noframes'],
+  // marked 會把文字裡的 " ' 寫成 &quot; &#39;，sanitize-html 不會；補回來讓輸出與改版前逐位元相同
+  textFilter: (t) => t.replace(/"/g, '&quot;').replace(/'/g, '&#39;'),
+});
+
+/** 白名單淨化 marked 的輸出（md／mdInline 共用）。空元素維持 marked 的 <br>／<hr>／<img …> 寫法（不加 " /"）。 */
+export function sanitize(htmlStr) {
+  return sanitizeHtml(String(htmlStr), SANITIZE_OPTIONS).replace(/<(br|hr|img)\b([^>]*?) \/>/g, '<$1$2>');
 }
 
 // CommonMark 的強調規則在中日韓文裡常失效（「常見**咳嗽**、」兩側都是非空白字元，** 既是左側也是右側分隔符，無法開啟），

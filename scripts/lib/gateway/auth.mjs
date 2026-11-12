@@ -2,7 +2,7 @@
 // 寫入閘道的「身分轉接器」（第三十輪）：閘道只需要知道兩件事——這個人是誰、他在哪些 AD 群組。
 // 至於他是怎麼登入的（Keycloak、AD FS、Entra ID、IIS Windows 驗證），交給轉接器，閘道其餘程式完全不知道。
 //
-//   dev     本機開發：讀後台頁送來的模擬 SSO 工作階段（/admin/login/ 選的示範帳號），只接受本機（loopback）連線
+//   dev     本機開發：讀後台頁送來的模擬 SSO 工作階段（/admin/login/ 選的示範帳號），只接受本機（loopback）直連，帶代理標頭一律拒絕
 //   header  信任的反向代理（IIS Windows 驗證＋ARR、Apache mod_auth_gssapi、oauth2-proxy…）在標頭帶使用者與群組；
 //           **只接受設定好的代理 IP**，其他來源帶這些標頭一律拒絕（否則任何人都能自稱局長）
 //   oidc    Bearer token（Keycloak／AD FS／Entra ID 簽的 JWT），以設定的 JWKS 驗章、驗 iss／aud／exp
@@ -12,12 +12,12 @@ import fs from 'node:fs';
 import { parseAdGroup, sessionProblem, adGroupsOf, CROSS_UNIT_ROLES, GATEWAY_ROLE_OF, ROLES } from '../../../src/client/admin/auth-rules.js';
 import { verifyJwt } from './jwt.mjs';
 // 信任代理的位址比對（含 CIDR）與速率限制共用一份（第六十三輪）：認人與限流必須對「誰是我們的代理」有同一個答案
-import { ipMatcher } from '../rate-limit.mjs';
+// 第七十三輪：位址正規化、loopback 判斷與「有沒有代理標頭」也共用 rate-limit.mjs 那一份（三個 dev 端點同一個答案）
+import { ipMatcher, normIp, isLoopbackIp, isDirectLoopback } from '../rate-limit.mjs';
 
 export const DEV_SESSION_HEADER = 'x-cdc-dev-session';
-const LOOPBACK = /^(::1|127\.\d+\.\d+\.\d+)$/;
-export const normIp = (ip) => String(ip ?? '').replace(/^::ffff:/, '');
-export const isLoopback = (ip) => LOOPBACK.test(normIp(ip));
+export { normIp };
+export const isLoopback = isLoopbackIp;
 
 /** 帳號正規化：CDC\wang、wang@cdc.gov.tw → wang（小寫）；只允許常見帳號字元 */
 export function normAccount(raw) {
@@ -57,7 +57,9 @@ export function createDevAuth({ now = () => Date.now() } = {}) {
     mode: 'dev',
     /** @param {import('node:http').IncomingMessage} req */
     async authenticate(req) {
-      if (!isLoopback(req.socket?.remoteAddress)) return fail(403, 'dev_remote', '開發模式只接受本機連線');
+      // 第七十三輪：socket 是 loopback 還不夠——同機反向代理（deploy.md §14.5）轉進來的外部請求，socket 也是 127.0.0.1。
+      // 代理一定會加 X-Forwarded-For／Forwarded／X-Real-IP／X-Forwarded-Host，看到任何一個就拒絕（dev 模式只給開發者自己的瀏覽器直連）。
+      if (!isDirectLoopback(req)) return fail(403, 'dev_remote', '開發模式只接受本機直接連線（經過反向代理的請求一律拒絕）');
       const raw = String(req.headers[DEV_SESSION_HEADER] ?? '');
       if (!raw) return fail(401, 'no_session', '請先登入後台');
       if (raw.length > 4096) return fail(400, 'bad_session', '登入資料格式不對');

@@ -98,6 +98,8 @@ const TYPE = { article: '疫情報導文章', disease: '疾病頁', faq: 'Q&A', 
     row('狀態', current.statusLabel);
     row('送審類型', current.kind === 'rereview' ? '重新審閱（權責單位確認內容仍正確；核准後更新最後審閱日）' : current.master ? '主檔修改（所有使用這份主檔的頁面一起更新）' : current.isNew ? '新內容' : '修改既有內容');
     row('權責單位', current.ownerName);
+    // 第七十三輪：權責單位移轉要原單位或指定審核單位核准（docs/deploy.md §14.10）
+    if (current.ownerChange) row('權責單位變更', `${current.ownerChange.fromName} → ${current.ownerChange.toName}（要原單位「${current.ownerChange.fromName}」或指定的審核單位核准）`);
     row('承辦', current.editors.map((e) => e.name).join('、'));
     row('送審時間', current.submittedAt ? fmtTime(current.submittedAt) : '—');
     row('需要審核', `${current.requiredApprovals} 位（已核准 ${current.approvals.length} 位${current.approvals.length ? `：${current.approvals.map((a) => a.name).join('、')}` : ''}）`);

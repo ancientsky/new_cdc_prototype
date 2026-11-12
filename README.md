@@ -121,6 +121,19 @@
 - **最低版本只動一點**：`engines.node` 從 `>=22` 改 `>=22.13.0`（pdfjs-dist 的真正下限）。不提到 24 或 26，因為程式沒用到新 API，而 Node 22 支援到 2027-04-30；門檻是給同事機器的，不是跟 CI 走的。
 - **看到的新事物**：npm 11.20 預設不跑未列允許清單的安裝腳本（`esbuild` 的 postinstall 只是備援，不要 approve）；Node 26 的 `localStorage` 是全域 getter，讀一次印一次 ExperimentalWarning，`round23-security` 測試改用屬性描述子存還原值。
 - **規則**：CI 跟 Active LTS，每年 10 月升；Node 27 起每年一個大版、每版都進 LTS，不再跳奇數版。文件：[docs/node-upgrade.md](docs/node-upgrade.md)、[docs/deploy.md](docs/deploy.md) §9.2、[architecture-decisions](docs/architecture-decisions.md) §56、ARCHITECTURE §72。
+## 第七十三輪：全站安全稽核——一個路徑穿越、一個跨單位接管，和基礎工程為什麼算紮實
+
+Yulun 要求（2026-11-12）詳細檢查整個網站有沒有安全、漏洞、被攻擊的疑慮。白箱稽核：讀全部程式，並實際啟動網站與寫入閘道去打。找到 1 個嚴重、5 個高、8 個中、約 20 個低與資訊級；嚴重、高、中全部在本輪修掉。
+
+- **嚴重：本機預覽伺服器 `scripts/serve.mjs` 路徑穿越。** `decodeURIComponent` 之後才 `path.join`，`/..%2f..%2fproc%2fself%2fenviron` 回 200，讀得到全部環境變數裡的祕密。它是開發用伺服器，但 deploy.md 把它列為閘道主機候選、DAST 也拿它當目標，所以當真的漏洞修：解碼後 `resolve`＋`realpath` 必須在 `dist/` 底下、只服務一般檔案、讀檔錯誤不再讓整個 process 結束。
+- **高：寫入閘道的跨單位接管。** 授權看的是「送來的 `owner` 是不是你單位」，沒比對網站上現行版的 owner；甲單位承辦人把乙單位的頁面改成甲送審、甲單位科長核准就能覆寫。修法：以 main 上的 owner 為權威，改權責單位只有原單位或跨單位角色可送、原單位或車道審核單位核准，並記 `owner-change`。
+- **高：Markdown 淨化器是正規表示式黑名單**，`jav&#x61;script:`、`<meta refresh>`、`<base>`、未閉合的 `<iframe srcdoc>` 都穿過；連結欄位 schema 沒限協定、模板直接輸出。改用 `sanitize-html` 白名單（建站前後 HTML 零差異）、14 份 schema 加協定 `pattern`、`html\`\`` 模板對 href／src 插值一律過 `safeHref()`。
+- **高：`/api/dev/*` 永遠開著**，「只限本機」在同機反向代理後面失效，訂閱者信箱與 token 全部可讀；閘道的 dev 認人同理。有正式環境跡象就關，loopback 判斷加上「沒有代理標頭」。
+- **中：** `ipMatcher` 接受 `/33`（信任半個 IPv4，而且那是 header 登入的信任清單）、XFF 全信任時取最左邊、Host 標頭污染通知信連結、國際疫情 feed 額外欄位進公開 JSON、CSV 解析 O(n²)、答案引擎長字串二次方、同 repo PR 可讀 repo 層級祕密（改走 `environment: production`，祕密要搬到只綁 main 的 Environment）。
+- **查過沒問題的要說清楚**：CSRF、Origin、JWT、PKCE、路徑組成（送審者寫不進 CI 設定檔）、Actions 釘 SHA、fork 隔離、artifact 驗證、模板跳脫、BYOK 金鑰、個資掃描。清單在 [docs/security-audit.md](docs/security-audit.md) §3.5。
+- **教訓**：「只接受本機連線」不是認證；請求裡的欄位是資料不是權威；黑名單只擋想得到的寫法；解碼後要再檢查一次仍在根目錄下；設定值也要驗證；DAST 排程寫好不等於跑過（第六十三輪的 ZAP 到本輪沒跑過，而它的目標正是有洞的 `serve.mjs`）；授權測試要有「另一個單位的人」。
+- **要在 GitHub／主機上動手的事**（程式改不了）：建 `production` Environment 並搬兩個祕密、規則集對程式路徑要求 code owner 審核、檢討部署金鑰的規則集繞過、手動跑一次 DAST。見 [docs/security-audit.md](docs/security-audit.md) §5、[docs/deploy.md](docs/deploy.md) §9.3–9.4。
+- 文件：[docs/security-audit.md](docs/security-audit.md)（方法、全部發現、修法、待辦）、[docs/content-html-safety.md](docs/content-html-safety.md)（內容 HTML 白名單）、deploy.md §14.10、§35；測試 `tests/round73-*.test.mjs`；[ARCHITECTURE](ARCHITECTURE.md) §74、[architecture-decisions](docs/architecture-decisions.md) §58。實作由 Opus 工作者分三個 worktree 完成，本串驗收。
 
 ## 第七十一輪：架構與 UI/UX 全面檢視——哪裡穩、接手會卡在哪、介面改了什麼
 

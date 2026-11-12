@@ -31,7 +31,7 @@
       "items": {
         "type": "object",
         "required": ["label", "url"],
-        "properties": { "label": { "type": "string" }, "url": { "type": "string" }, "format": { "type": "string" }, "machineReadable": { "type": "boolean" } }
+        "properties": { "label": { "type": "string" }, "url": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)" }, "format": { "type": "string" }, "machineReadable": { "type": "boolean" } }
       }
     },
     "contact": { "type": "string", "minLength": 1, "description": "聯絡窗口（單位與總機轉分機；不放承辦人姓名）" },

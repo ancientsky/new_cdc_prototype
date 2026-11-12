@@ -1460,7 +1460,7 @@ const ROWS_R7 = {
   "job.cancelled.t": ["本公告已取消", "This notice has been cancelled"],
   "job.cancelled": ["本職缺已取消，不再受理報名。", "This position has been cancelled and no longer accepts applications."],
   /* 模擬報名 */
-  "japply.banner.sub": ["請不要輸入真實個資；關閉分頁前，草稿會留在這個瀏覽器，可隨時清除。", "Please do not enter real personal data. Drafts stay in this browser and can be cleared at any time."],
+  "japply.banner.sub": ["請不要輸入真實個資；草稿只暫存在這個分頁，關閉分頁就會消失，也可隨時按「清除草稿」。", "Please do not enter real personal data. Drafts are kept only in this tab, disappear when you close it, and can be cleared at any time with “Clear draft”."],
   "japply.back": ["回職缺頁", "Back to the position"],
   "japply.steps": ["報名步驟", "Application steps"],
   "japply.step1": ["基本資料與聯絡方式", "Basic details and contact"],
@@ -1515,7 +1515,7 @@ const ROWS_R7 = {
   "japply.err.filesize": ["檔案不可超過 10 MB", "File must not exceed 10 MB"],
   "japply.err.check": ["請勾選「{label}」", "Please tick “{label}”"],
   "japply.js.draftRestored": ["已還原你在 {time} 儲存的草稿（檔案需重新選擇）。", "Restored the draft saved at {time} (files must be chosen again)."],
-  "japply.js.draftSaved": ["草稿已自動儲存在這個瀏覽器（{time}）。", "Draft saved automatically in this browser ({time})."],
+  "japply.js.draftSaved": ["草稿已自動暫存在這個分頁（{time}），關閉分頁即清除。", "Draft saved automatically in this tab ({time}); it is cleared when you close the tab."],
   "japply.js.cleared": ["草稿已清除。", "Draft cleared."],
   "japply.js.confirmClear": ["確定要清除草稿並重新填寫嗎？", "Clear the draft and start over?"],
   "japply.js.filechosen": ["已選擇：{name}", "Chosen: {name}"],
