@@ -1003,3 +1003,11 @@ AD 群組命名沿用 `CDC-WEB-<單位>-<角色>`（[admin-auth.md](admin-auth.m
 **為什麼**：同事問「Gitea 是不是更輕量更好」。輕量是事實（單一執行檔對十多個元件），但這個架構把四眼原則、單位權限、稽核都放在閘道與建置，對平台只要求 API、保護分支與 CI，三個平台都夠；所以平台選錯的代價很低，不值得為它換掉機關已有的系統。真正要留紀錄的兩點是：Gitea／Forgejo 社群版沒有平台管理操作的稽核（A 級機關要用管理員人數與日誌補）、廠牌認定要由機關依限制使用原則自行做。Actions 相容性則被高估：相容的是 YAML 語法，原型 CI 最花心思的車道判斷、沿用檢查結果、排隊部署都是平台 API 與 `concurrency` 語意，搬 Gitea 一樣要重寫，而且 Gitea 的 concurrency 等同「取消進行中」，第六十八輪的排隊會倒退。
 
 **沒選的做法**：直接改 deploy.md §14 為 Gitea（資訊室第 5 題還沒回答，改了只是換一個假設）；現在就寫 `git-gitea.mjs`（平台未定前多一支沒人實跑的轉接器，和 `git-gitlab.mjs` 一樣只能用假 fetch 測）。
+
+## 56. Node.js：CI 與部署跟 Active LTS，`engines` 最低版本跟最舊的維護版（第七十四輪，2026-11-12）
+
+**決定**：（1）CI 四個 workflow、`.nvmrc`／`.node-version`、閘道與答案服務的部署說明改用 Node 26（2026-10-28 起的 Active LTS），workflow 只寫大版號讓 `setup-node` 自動拿最新 26.x；（2）`engines.node` 只從 `>=22` 修正為 `>=22.13.0`（pdfjs-dist 的實際下限），不提高到 24 或 26；（3）每年 10 月底 Node 升 LTS 後一個月內由人升版，照 `docs/node-upgrade.md` §3 驗收並補一節紀錄；（4）npm 11.20 的 `install-scripts` 允許清單保持預設，不 approve `esbuild`。
+
+**為什麼**：Active LTS 的支援期最長、依賴的 `engines` 以它為目標，跟著它升是成本最低的位置；而最低版本是「給同事機器的門檻」，程式沒用到 22 以後的 API、Node 22 又支援到 2027-04-30，提高門檻只會把能用的機器擋在門外。本輪實測 Node 24 與 26 的 1278 項測試結果相同、`dist/` 內容零差異，所以升版沒有功能風險。
+
+**沒選的做法**：`engines.node >=26`（沒有任何依賴或程式需要，只是跟 CI 一樣好看）；把 Node 版本交給 Dependabot（它不管 `node-version`）；為了消警告 approve `esbuild` 的安裝腳本（那個警告正是第二十三輪想要的供應鏈防護）。

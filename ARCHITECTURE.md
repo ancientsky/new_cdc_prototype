@@ -2778,3 +2778,18 @@ Yulun 問盲測弱項（錯字、長輩說法、情境題、外語）有沒有�
 | 不變的事 | 審核事件不推預覽；`--match-head-commit`；規則集的必要檢查 `test`（略過的 job 視為通過） |
 
 教訓：並發問題先把每個 group 的取消／排隊語意寫出來再算等待時間；「取消舊的」在低頻時最省，在高頻時會餓死，而靜態站的部署只要「最後一次包含全部」，排隊一個就夠。
+
+## 72. 第七十四輪：Node.js 跟 Active LTS；最低版本跟最舊的維護版（2026-11-12）
+
+問題：Node 26 在 2026-10-28 進 Active LTS、24 同日進維護，CI 與部署要不要跟？跟的話最低版本要不要一起提高？
+
+| 項目 | 契約 |
+| --- | --- |
+| CI（`pages.yml`、`content-pr.yml`、`lane-sla.yml`、`dast.yml`） | `node-version: 26`，只寫大版號，`setup-node` 每次解析最新 26.x；`lane` job 仍不得有 setup-node（#81） |
+| `tests/lanes.test.mjs` | 釘住 `node-version: 26` 那一行；升版 PR 必須同時改測試 |
+| `.nvmrc`、`.node-version` | `26`，與 CI 同大版 |
+| `package.json` `engines.node` | `>=22.13.0`：最低版本 = 還在 LTS 支援期且依賴允許的最舊版；只在最舊 LTS 結束支援（Node 22：2027-04-30）或程式用到新 API 時提高 |
+| 測試覆蓋全域再還原 | 用 `Object.getOwnPropertyDescriptor` 存、`defineProperty` 還原，不讀值（Node 26 的 `localStorage` getter 會印 ExperimentalWarning） |
+| 升版驗收 | `npm ci`、lint／format／typecheck、先 build 再 `npm test`、`--check`、`audit:dist`、新舊版 `dist/` 的 `diff -rq` 只剩時間戳 |
+
+教訓：「CI 用哪一版」和「同事最低要幾版」是兩個決定，前者跟 Active LTS 走，後者跟支援期走；混在一起會為了 CI 的方便把還能用的機器擋在門外。詳見 `docs/node-upgrade.md`。
