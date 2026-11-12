@@ -2778,3 +2778,24 @@ Yulun 問盲測弱項（錯字、長輩說法、情境題、外語）有沒有�
 | 不變的事 | 審核事件不推預覽；`--match-head-commit`；規則集的必要檢查 `test`（略過的 job 視為通過） |
 
 教訓：並發問題先把每個 group 的取消／排隊語意寫出來再算等待時間；「取消舊的」在低頻時最省，在高頻時會餓死，而靜態站的部署只要「最後一次包含全部」，排隊一個就夠。
+
+## 72. 第七十三輪：全站安全稽核後的契約（2026-11-12）
+
+稽核方法與全部發現見 `docs/security-audit.md`；這裡只記程式從此要遵守的契約。
+
+| 項目 | 契約 |
+| --- | --- |
+| 靜態檔服務（`scripts/lib/static-serve.mjs`） | 解碼後 `path.resolve` 再 `realpath`，結果必須等於 `dist/` 或在其底下；含 `\0` 回 400；只服務一般檔案；GET／HEAD 以外 405；讀檔錯誤回 404／500 並記錄，不得讓 process 結束；basePath 前綴要有 `/` 邊界；靜態回應帶 `nosniff` |
+| 「只限本機」的判斷（`isDirectLoopback`） | loopback socket **且**沒有 `x-forwarded-for`／`forwarded`／`x-real-ip`／`x-forwarded-host`；閘道 `dev` 認人、`/api/dev/*` 都用它 |
+| `/api/dev/*` 開關（`devEndpointsFrom`） | `SITE_MODE=production`、`NODE_ENV=production`、`GATEWAY_TRUSTED_PROXIES`、`PUBLIC_ORIGIN` 任一存在 ⇒ 關；`DEV_ENDPOINTS=off|on` 可覆寫，`on` 要警告 |
+| 對外連結的來源（`linkOrigin`） | 有 `PUBLIC_ORIGIN` 用它；沒有時只接受 localhost 類 Host；非 dev 認人模式沒設 `PUBLIC_ORIGIN` 閘道不啟動 |
+| 信任代理清單（`ipMatcher`） | `net.isIP` 驗證；前綴 0–32／0–128、位元組 0–255，`0.0.0.0/0`、`::/0` 一律丟錯（啟動失敗）；支援 IPv6 CIDR；位址正規化 |
+| 來源 IP（`clientIp`／`clientKey`） | XFF 從右往左取第一個不信任的 hop；全部信任 ⇒ socket 位址；解析不出的 hop 就停；限流 key IPv6 以 /64 計，稽核仍記完整位址 |
+| 寫入閘道的授權依據 | main 上已有 ⇒ main 上的 `owner`；未上線但有進行中送審件 ⇒ 該件原單位（`ownerChange.from ?? owner`）；全新內容才看送來的 `owner`。改權責單位只有原單位編輯或跨單位角色可送，記 `ownerChange` 與 `owner-change`，審核人要在原單位或車道審核單位 |
+| 內容 HTML 淨化（`markdown.mjs`） | `sanitize-html` 白名單（標籤、屬性、協定 http／https／mailto／tel／相對路徑），`md()`／`mdInline()` 介面不變；新增允許的標籤要改 `SANITIZE_OPTIONS` 並寫理由（`docs/content-html-safety.md`） |
+| 連結欄位 | schema `pattern` 限協定（建置期）＋ `html\`\`` 模板對 `href=`／`src=`／`action=`／`formaction=`／`poster=`／`cite=` 後的插值一律 `safeHref()`（輸出期）；`raw()` 包住的值視為可信 |
+| 國際疫情 feed | schema `additionalProperties:false`；`toRow` 白名單複製；`parseCsv` 欄 ≤64、列 ≤5000、欄長 ≤10000 |
+| 公開治理 JSON | 一律過 `isPublic`；草稿與審核中內容不出現在 `v1/governance/*` |
+| 產物稽核（`dist-profile.mjs`） | 規則不分大小寫；`**/docs/**`、`**/tests/**`；symlink 一律禁；偵測 inline source map |
+| CI 祕密 | 用到 `GITHUB_TOKEN` 以外祕密的 job 必須宣告 `environment: production`，且只在 `main` 跑；`inputs.*` 不得直接進 `run:` |
+| 答案引擎文字函式 | `parseTimeRange`、`numbersByUnit`、`maskPII*` 入口上限 2000 字；engine JS 預算剩約 0.9 KB |
