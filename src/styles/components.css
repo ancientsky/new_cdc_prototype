@@ -1255,7 +1255,8 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .vx-hub__card .c-linklist li{margin:0 0 var(--sp-1)}
 
 /* 第四十輪（#73、#74）：多語標示。「僅有中文」標記、語言選單的「此頁僅有…」、從無譯文頁切來的首頁提示 */
-.c-zhonly{display:inline-block;font-size:var(--fs-xs,.75rem);font-weight:600;line-height:1.3;padding:1px 6px;border-radius:var(--radius-sm);background:var(--line-2);color:var(--ink-2);vertical-align:.1em;white-space:nowrap}
+/* 第七十一輪：拿掉 white-space:nowrap。字級下限改 13 px 後，「僅中文」標籤在外語首頁的專區卡（印尼文「Hanya bahasa Mandarin」、越南文「Chỉ có tiếng Trung」）於 390 px＋文字 200% 時撐出視窗（CI 無障礙閘門 /vi/ 396>390；/id/ 在改之前就已 421）。標籤可換行即不再溢出，視覺上只在放大時多一行 */
+.c-zhonly{display:inline-block;font-size:var(--fs-xs,.75rem);font-weight:600;line-height:1.3;padding:1px 6px;border-radius:var(--radius-sm);background:var(--line-2);color:var(--ink-2);vertical-align:.1em;overflow-wrap:anywhere}
 .langs__na{display:block;font-size:var(--fs-xs,.75rem);color:var(--ink-2);font-weight:400;white-space:normal}
 /* 頂端一列空間有限：只留虛線底線提示，完整文字給螢幕閱讀器與 title */
 .langs--inline a[data-same="0"]{text-decoration:underline dotted;text-underline-offset:3px}
