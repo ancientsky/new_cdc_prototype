@@ -121,6 +121,19 @@
 - **最低版本只動一點**：`engines.node` 從 `>=22` 改 `>=22.13.0`（pdfjs-dist 的真正下限）。不提到 24 或 26，因為程式沒用到新 API，而 Node 22 支援到 2027-04-30；門檻是給同事機器的，不是跟 CI 走的。
 - **看到的新事物**：npm 11.20 預設不跑未列允許清單的安裝腳本（`esbuild` 的 postinstall 只是備援，不要 approve）；Node 26 的 `localStorage` 是全域 getter，讀一次印一次 ExperimentalWarning，`round23-security` 測試改用屬性描述子存還原值。
 - **規則**：CI 跟 Active LTS，每年 10 月升；Node 27 起每年一個大版、每版都進 LTS，不再跳奇數版。文件：[docs/node-upgrade.md](docs/node-upgrade.md)、[docs/deploy.md](docs/deploy.md) §9.2、[architecture-decisions](docs/architecture-decisions.md) §56、ARCHITECTURE §72。
+## 第七十三輪：全站安全稽核——一個路徑穿越、一個跨單位接管，和基礎工程為什麼算紮實
+
+Yulun 要求（2026-11-12）詳細檢查整個網站有沒有安全、漏洞、被攻擊的疑慮。白箱稽核：讀全部程式，並實際啟動網站與寫入閘道去打。找到 1 個嚴重、5 個高、8 個中、約 20 個低與資訊級；嚴重、高、中全部在本輪修掉。
+
+- **嚴重：本機預覽伺服器 `scripts/serve.mjs` 路徑穿越。** `decodeURIComponent` 之後才 `path.join`，`/..%2f..%2fproc%2fself%2fenviron` 回 200，讀得到全部環境變數裡的祕密。它是開發用伺服器，但 deploy.md 把它列為閘道主機候選、DAST 也拿它當目標，所以當真的漏洞修：解碼後 `resolve`＋`realpath` 必須在 `dist/` 底下、只服務一般檔案、讀檔錯誤不再讓整個 process 結束。
+- **高：寫入閘道的跨單位接管。** 授權看的是「送來的 `owner` 是不是你單位」，沒比對網站上現行版的 owner；甲單位承辦人把乙單位的頁面改成甲送審、甲單位科長核准就能覆寫。修法：以 main 上的 owner 為權威，改權責單位只有原單位或跨單位角色可送、原單位或車道審核單位核准，並記 `owner-change`。
+- **高：Markdown 淨化器是正規表示式黑名單**，`jav&#x61;script:`、`<meta refresh>`、`<base>`、未閉合的 `<iframe srcdoc>` 都穿過；連結欄位 schema 沒限協定、模板直接輸出。改用 `sanitize-html` 白名單（建站前後 HTML 零差異）、14 份 schema 加協定 `pattern`、`html\`\`` 模板對 href／src 插值一律過 `safeHref()`。
+- **高：`/api/dev/*` 永遠開著**，「只限本機」在同機反向代理後面失效，訂閱者信箱與 token 全部可讀；閘道的 dev 認人同理。有正式環境跡象就關，loopback 判斷加上「沒有代理標頭」。
+- **中：** `ipMatcher` 接受 `/33`（信任半個 IPv4，而且那是 header 登入的信任清單）、XFF 全信任時取最左邊、Host 標頭污染通知信連結、國際疫情 feed 額外欄位進公開 JSON、CSV 解析 O(n²)、答案引擎長字串二次方、同 repo PR 可讀 repo 層級祕密（改走 `environment: production`，祕密要搬到只綁 main 的 Environment）。
+- **查過沒問題的要說清楚**：CSRF、Origin、JWT、PKCE、路徑組成（送審者寫不進 CI 設定檔）、Actions 釘 SHA、fork 隔離、artifact 驗證、模板跳脫、BYOK 金鑰、個資掃描。清單在 [docs/security-audit.md](docs/security-audit.md) §3.5。
+- **教訓**：「只接受本機連線」不是認證；請求裡的欄位是資料不是權威；黑名單只擋想得到的寫法；解碼後要再檢查一次仍在根目錄下；設定值也要驗證；DAST 排程寫好不等於跑過（第六十三輪的 ZAP 到本輪沒跑過，而它的目標正是有洞的 `serve.mjs`）；授權測試要有「另一個單位的人」。
+- **要在 GitHub／主機上動手的事**（程式改不了）：建 `production` Environment 並搬兩個祕密、規則集對程式路徑要求 code owner 審核、檢討部署金鑰的規則集繞過、手動跑一次 DAST。見 [docs/security-audit.md](docs/security-audit.md) §5、[docs/deploy.md](docs/deploy.md) §9.3–9.4。
+- 文件：[docs/security-audit.md](docs/security-audit.md)（方法、全部發現、修法、待辦）、[docs/content-html-safety.md](docs/content-html-safety.md)（內容 HTML 白名單）、deploy.md §14.10、§35；測試 `tests/round73-*.test.mjs`；[ARCHITECTURE](ARCHITECTURE.md) §74、[architecture-decisions](docs/architecture-decisions.md) §58。實作由 Opus 工作者分三個 worktree 完成，本串驗收。
 
 ## 第七十二輪：Lighthouse 效能檢測——分數已滿，真正要看的是答案頁的 perf:ask、CSS 與結果出現時的跳動
 
@@ -145,7 +158,17 @@
 - **量測本身出過錯：** 第一次基準量測的臨時腳本把 `/ask/?q=登革熱` 截成 `/ask/?q`，答案頁誤得 100 分；改成正式腳本、報告記實際網址後才量到 92。
 - 觀察項：`/travel/` 6,482 個元素、疫苗時程表有一個 373 ms 的版面計算，分數仍滿，內容再增加時先考慮預設收合。主執行緒的時間主要花在樣式與版面，不是 JS。
 - 開發環境連不到 GitHub Pages，**沒有量線上站**；線上多的是網路往返，資源大小相同。
-- 文件：[docs/performance-lighthouse.md](docs/performance-lighthouse.md)（怎麼量、全部數字、逐項處置與理由、前後對照、怎麼自己再跑、教訓）；[docs/deploy.md](docs/deploy.md) §12.2、§15；ARCHITECTURE §73；[architecture-decisions](docs/architecture-decisions.md) §57。測試 `tests/round72-lighthouse.test.mjs`。
+- 文件：[docs/performance-lighthouse.md](docs/performance-lighthouse.md)（怎麼量、全部數字、逐項處置與理由、前後對照、怎麼自己再跑、教訓）；[docs/deploy.md](docs/deploy.md) §12.2、§15；ARCHITECTURE §75；[architecture-decisions](docs/architecture-decisions.md) §59。測試 `tests/round72-lighthouse.test.mjs`。
+
+## 第七十一輪：架構與 UI/UX 全面檢視——哪裡穩、接手會卡在哪、介面改了什麼
+
+Yulun 要求（2026-11-12）：對整個原型的架構設計做完整檢視，包含詳細的 UI/UX 建議。同日另有 Lighthouse 效能（第七十二輪）、資安與弱點（第七十三輪）、Node.js 26 升級（第七十四輪）三個平行檢視。
+
+- **結論**：架構方向正確、落實程度高（內容只存一份、治理由建置計算、答案只轉述不創作都已經做成可以動的東西，axe 21 頁 × 兩種螢幕 0 違規）；主要風險不在設計，而在**可接手性**——文件按輪次而不是按現況組織、CSS 與測試檔沒有預算與命名規則、前端資產沒有檔名雜湊。
+- **介面改了什麼**：手機首屏的原型橫幅壓成兩行並標「示範資料凍結於 2026-10-01」、開發者用的預覽列預設隱藏；第二個 skip link「跳到主選單」，鍵盤到主選單由 22 個 Tab 停留點降為 2 個；首頁影音卡沒有縮圖時改文字卡；傳染病索引民眾版預設先列有完整頁的 16 種疾病，法定類別留給專業版；旅遊頁國家 chip 放大到手機 44 px；最小字級 token 由 12.5 px 改為 13 px；頁尾「服務」欄分「民眾申辦」「機關資訊」兩小組。
+- **架構與文件**：加 CSS 預算測試（不拆現有 `components.css`，與第七十二輪一致）；ARCHITECTURE 頂部加 §0.5「現況地圖」（15 個子系統的規則、程式、測試、文件位置與最後修改輪次），輪次章節保留作為變更脈絡；新增 [docs/README.md](docs/README.md)（39 份文件索引）與 [tests/README.md](tests/README.md)（測試檔主題對照），新測試檔改以主題命名。
+- **沒做、待決定**：資產檔名雜湊與答案句去重留到之後的獨立一輪；桌機語言列折疊、「民眾」鈕改狀態標示、首頁六任務手機兩欄、i18n 原始檔改每語 JSON 四項等 Yulun 決定。
+- 文件：[docs/architecture-ux-review.md](docs/architecture-ux-review.md)（量測方法、發現表 U1–U12、本輪八項實作與理由、教訓）、[docs/a11y.md](docs/a11y.md) §11、[docs/deploy.md](docs/deploy.md) §12.2（自家資產不要設 immutable）、ARCHITECTURE §0.5 與 §73、[architecture-decisions](docs/architecture-decisions.md) §57。
 
 ## 第七十輪：Gitea 是不是比 GitLab 更輕量更好
 
@@ -1054,6 +1077,8 @@ docs/                使用說明與治理文件
 網站內容與 API 資料預設採**政府資料開放授權條款第 1 版（OGDL-1.0）**，個別資料集另有標示（CC0-1.0、CC BY 4.0）。引用請附頁面網址與最後審閱日，格式見[開發者入口](https://ancientsky.github.io/new_cdc_prototype/developers/#license)。
 
 ## 文件
+
+**全部 39 份文件的分組索引在 [docs/README.md](docs/README.md)**（依「給誰看」與主題兩種方式找）；系統現況先看 [ARCHITECTURE.md](ARCHITECTURE.md) §0.5「現況地圖」；測試檔對照在 [tests/README.md](tests/README.md)。下表是最常用的幾份。
 
 | 文件 | 內容 |
 | --- | --- |

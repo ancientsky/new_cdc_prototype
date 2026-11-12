@@ -29,6 +29,14 @@
 //   - 同單位的編輯（或跨單位角色）可以「接手」進行中的送審件（草稿／退回／審核中）：自己加進承辦人、成為聯絡人；
 //     原承辦人標 handedOver（仍留在 editors：提交訊息照記 Edited-by，四眼原則照樣擋他核准），之後的退回／核准通知只寄給沒交接出去的承辦人。
 //   - 已上線的內容不用交接：owner 是單位，待辦與審閱到期也按單位；單位改組用 scripts/reassign-owner.mjs。
+// 第七十三輪（docs/deploy.md §14.10「權責單位不能被送審者改走」）：
+//   - 送來的 item.owner 只是「資料」，不是授權依據。網站上（main）已有這筆內容 ⇒ 依 main 上的 owner 判斷能不能存／送審；
+//     還沒上線、但已有進行中的送審件 ⇒ 依那一件原本的權責單位（ownerChange.from，沒改過就是 owner）判斷。
+//     以前只看送來的 owner：甲單位的編輯把乙單位已上線的內容 owner 改成甲送審，甲單位的審核人就能核准上線（跨單位接管）。
+//   - 要把權責單位改給別的單位：只有原單位的編輯（或跨單位角色）可以送；送審件記 ownerChange { from, to }，
+//     歷程與稽核記 owner-change。審核時審核人要在「原單位」或車道指定的審核單位（公關室等），新單位自己核准不算數。
+//   - 配套內容：網站上已有的（或別的送審件帶著的）配套內容必須與那一份完全相同（版本碼含 owner），所以改不了權責單位；
+//     新的配套內容本來就可以屬於別的單位（疫情中心的卷期跟各組的文章一起送），照舊。
 // 規則：
 //   - 角色由 AD 群組來（編輯／審核／管理）；只能動自己單位的內容，跨單位角色（總編輯、治理幕僚、平台管理）與車道指定審核單位例外。
 //   - 四眼原則：只要在這個送審件存過任何一版，就不能核准或退回它（即使同時有審核角色）。
@@ -131,6 +139,10 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
   const isEditor = (p) => p.roles.includes('編輯');
   const isReviewer = (p) => p.roles.includes('審核') || p.roles.includes('管理');
   const inUnit = (p, unit) => p.units.includes(unit) || p.crossUnit;
+  /** 第七十三輪：送審件的「權責來源單位」——改了權責單位 ⇒ 原單位（網站上那一份的 owner）；沒改 ⇒ owner。編輯與審核都依這個判斷 */
+  const authorityOf = (sub) => sub.ownerChange?.from ?? sub.owner;
+  /** 檔案文字 → owner（讀不到、不是 JSON ⇒ null） */
+  const ownerOfText = (raw) => { if (raw == null) return null; try { const o = JSON.parse(String(raw)); return typeof o?.owner === 'string' ? o.owner : null; } catch { return null; } };
 
   /**
    * 這筆內容走哪條車道、要幾位核准、誰審（與 CI 的 laneForFiles 同一份設定）。
@@ -162,7 +174,8 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     if (!isReviewer(p)) return '只有具「審核」或「管理」角色的同事可以審核';
     if (sub.editors.some((e) => e.account === p.account)) return '你編輯過這筆內容，依「四眼原則」不能自己審核，請另一位同事審核';
     const laneUnits = sub.lane?.reviewers ?? [];
-    if (!inUnit(p, sub.owner) && !p.units.some((u) => laneUnits.includes(u))) return '這筆內容不屬於你的單位，也不在你負責審核的範圍';
+    // 第七十三輪：改了權責單位的送審件，要原單位（或車道審核單位）核准；新單位自己核准不算數
+    if (!inUnit(p, authorityOf(sub)) && !p.units.some((u) => laneUnits.includes(u))) return sub.ownerChange ? `這筆內容要把權責單位從「${unitName(sub.ownerChange.from)}」改為「${unitName(sub.ownerChange.to)}」，需要原單位「${unitName(sub.ownerChange.from)}」或指定的審核單位核准` : '這筆內容不屬於你的單位，也不在你負責審核的範圍';
     if (sub.approvals.some((a) => a.account === p.account)) return '你已經核准過這一版';
     return null;
   }
@@ -184,7 +197,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
   function view(sub, p) {
     const st = effectiveStatus(sub);
     const rb = p ? reviewBlock(p, sub) : null;
-    const eb = p ? editBlock(p, sub.owner) : null;
+    const eb = p ? editBlock(p, authorityOf(sub)) : null;
     return {
       id: sub.id, contentId: sub.contentId, type: sub.type, title: sub.title, owner: sub.owner, ownerName: unitName(sub.owner), isNew: sub.isNew,
       status: st, statusLabel: STATUS[st], createdAt: sub.createdAt, updatedAt: sub.updatedAt, submittedAt: sub.submittedAt ?? null,
@@ -192,6 +205,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
       requiredApprovals: sub.lane?.requiredApprovals ?? 1, laneLabel: sub.lane?.label ?? null, laneNotes: sub.lane?.reasons ?? [],
       comments: sub.comments, history: sub.history, publishAt: sub.publishAt ?? null, scheduledFor: sub.publishAt ? taipeiTime(publishAtMs(sub.publishAt) ?? 0) : null,
       files: sub.files ?? [], companions: (sub.companions ?? []).map(({ id, title }) => ({ id, title })), categories: !!sub.categories, master: sub.master ?? null,
+      ownerChange: sub.ownerChange ? { from: sub.ownerChange.from, fromName: unitName(sub.ownerChange.from), to: sub.ownerChange.to, toName: unitName(sub.ownerChange.to) } : null,
       kind: sub.kind ?? 'edit', kindLabel: KIND_LABEL[sub.kind ?? 'edit'], reReviewNote: sub.reReviewNote ?? null, reviewedAt: sub.reviewedAt ?? null,
       ...(p ? {
         can: {
@@ -207,7 +221,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
   /* ───────── Git 輔助 ───────── */
   function message(action, sub, p, extra = []) {
     const lines = [`${action}：${sub.title}`, '', `內容：${sub.contentId}（${sub.path}）`, `送審件：${sub.id}`, '',
-      ...sub.editors.map((e) => `Edited-by: ${who(e)}`), ...extra, `Content-Owner: ${sub.owner}`, `Gateway-Submission: ${sub.id}`, `Gateway-Actor: ${who(p)}`, `Gateway-Auth: ${p.authMode}`];
+      ...sub.editors.map((e) => `Edited-by: ${who(e)}`), ...extra, `Content-Owner: ${sub.owner}`, ...(sub.ownerChange ? [`Owner-Change: ${sub.ownerChange.from} -> ${sub.ownerChange.to}`] : []), `Gateway-Submission: ${sub.id}`, `Gateway-Actor: ${who(p)}`, `Gateway-Auth: ${p.authMode}`];
     return `${lines.join('\n')}\n`;
   }
   const branchOf = (contentId, sid) => `cms/${contentId.replace(/[^a-z0-9-]/g, '-')}-${sid.slice(-6)}`;
@@ -359,6 +373,8 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
       const item = { ...c, status: c.status ?? 'published' }, cpath = assertContentPath(v.path);
       const mine = contentVersion(item);
       const onMain = await versionAt(git.targetBranch, cpath);
+      // 第七十三輪：網站上已有的配套內容必須與網站上完全相同（版本碼含 owner），所以拿配套內容改不了別單位內容的權責單位；
+      // 新的配套內容本來就可以是別單位的（例：疫情中心的卷期跟各組的文章一起送），不另外擋
       if (onMain !== NEW_VERSION && onMain !== mine) throw new GatewayError(409, 'stale', `配套內容「${name}」網站上已經有了，內容和你送的不同（可能是同事先送的那一篇已經上線）。為了不蓋掉網站上的版本，這一版還沒有存；請重新整理頁面，改選網站上已有的那一個。`, undefined, { stale: { kind: 'companion', contentId: c.id } });
       const holder = holderOf(c.id, selfSid);
       const theirs = holder ? await versionAt(holder.branch, cpath) : NEW_VERSION;
@@ -386,8 +402,13 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
    * categories（第五十二輪）：{ items, start }＝表單上的疫情報導分類與同事開始改時的分類；以代號為單位合併到網站上的主檔再寫入。
    */
   async function writeVersion(p, item, sid, status, action, { files = null, companions = [], baseHash = undefined, internal = false, categories = null } = {}) {
-    const checkedEdit = editBlock(p, item?.owner);
-    if (checkedEdit) throw new GatewayError(403, 'forbidden', checkedEdit);
+    // 第七十三輪：授權看「現在的權責單位」——main 上已有 ⇒ main 上的 owner；否則進行中送審件原本的權責單位；都沒有（全新內容）才看送來的 owner
+    const where0 = contentPathOf(item && typeof item === 'object' ? item : {});
+    const mainOwner = where0.ok !== false ? ownerOfText(await git.readFile(git.targetBranch, where0.path)) : null;
+    const pre = sid ? store.get(sid) : (item?.id ? openFor(item.id) : null);
+    const authority = mainOwner ?? (pre && pre.contentId === item?.id && OPEN.includes(pre.status) ? authorityOf(pre) : null) ?? item?.owner;
+    const checkedEdit = editBlock(p, authority);
+    if (checkedEdit) throw new GatewayError(403, 'forbidden', authority !== item?.owner ? `${checkedEdit}。送審時改寫權責單位，不會讓你取得修改權；要改權責單位，請「${unitName(authority)}」的同事送審` : checkedEdit);
     if (baseHash === undefined && !internal && requireBaseHash) throw versionRequired();
     const prior = sid ? store.get(sid) : (item?.id ? openFor(item.id) : null);
     let sub = prior;
@@ -395,7 +416,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     if (sub && sub.contentId !== item?.id) throw new GatewayError(409, 'mismatch', '這筆送審件是另一筆內容的，不能拿來存這份內容（內容 ID 不同）');
     if (sub && sub.status === 'in_review') throw new GatewayError(409, 'in_review', '這筆內容正在審核中，審核結束前不能修改；需要修改請請審核人先退回');
     if (sub && !['draft', 'returned'].includes(sub.status)) sub = null; // 已上線的舊送審件不再沿用，開一個新的
-    if (sub && sub.owner !== item.owner) { const e2 = editBlock(p, sub.owner); if (e2) throw new GatewayError(403, 'forbidden', e2); }
+    if (sub && sub.owner !== item.owner) { const e2 = editBlock(p, authorityOf(sub)); if (e2) throw new GatewayError(403, 'forbidden', e2); }
     if (!sub && item?.id) {
       const other = openFor(item.id);
       if (other) throw new GatewayError(409, 'busy', `這筆內容已有一個進行中的送審件（${STATUS[other.status]}，承辦：${namesOf(other.editors)}），請從那一件繼續`, undefined, { open: { submissionId: other.id, status: other.status } });
@@ -456,6 +477,17 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
       if (cats.changed) catFiles.push({ path: assertContentPath(CATEGORIES_PATH), content: cats.text });
       else if (hadCats && !rebase) { const raw = await git.readFile(git.targetBranch, CATEGORIES_PATH); if (raw != null) catFiles.push({ path: assertContentPath(CATEGORIES_PATH), content: raw }); }
       sub.categories = cats.changed ? { path: CATEGORIES_PATH, title: '疫情報導分類主檔' } : null;
+    }
+    // 第七十三輪：權責單位改了 ⇒ 記 ownerChange（原單位＝main 上的 owner；新內容＝送審件原本的權責單位），歷程與稽核記 owner-change
+    const origin = mainOwner ?? authorityOf(sub);
+    let ownerEvent = null;
+    if (origin && origin !== clean.owner) {
+      if (sub.ownerChange?.to !== clean.owner || sub.ownerChange?.from !== origin) ownerEvent = { from: origin, to: clean.owner };
+      sub.ownerChange = { from: origin, to: clean.owner, onMain: !!mainOwner };
+    } else if (sub.ownerChange) { ownerEvent = { from: sub.ownerChange.to, to: clean.owner, revert: true }; delete sub.ownerChange; }
+    if (ownerEvent) {
+      sub.history.push({ at: iso(), action: 'owner-change', label: ownerEvent.revert ? `權責單位改回「${unitName(clean.owner)}」` : `權責單位從「${unitName(ownerEvent.from)}」改為「${unitName(ownerEvent.to)}」（需原單位或指定審核單位核准）`, account: p.account, name: p.name, from: ownerEvent.from, to: ownerEvent.to });
+      audit.write('owner-change', { actor: p, detail: { submission: sub.id, contentId: clean.id, from: ownerEvent.from, to: ownerEvent.to, ...(ownerEvent.revert ? { revert: true } : {}) } });
     }
     Object.assign(sub, { title: clean.title, owner: clean.owner, type: clean.type, publishAt: clean.publishAt ?? null, lane: laneFor(clean, p, { master: !!sub.categories }), updatedAt: iso() });
     // 新分支（rebase）上沒有之前的附件：全部重寫；否則只寫這次送來的
@@ -577,7 +609,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
           // 不改內容直接送審（例：「審閱到期」頁的「不用修改，再送出」）：閘道讀分支上的版本原樣送
           const s0 = store.get(submissionId);
           if (!s0) throw new GatewayError(404, 'notfound', '找不到這筆送審件');
-          const eb = editBlock(p, s0.owner); if (eb) throw new GatewayError(403, 'forbidden', eb);
+          const eb = editBlock(p, authorityOf(s0)); if (eb) throw new GatewayError(403, 'forbidden', eb);
           if (!['draft', 'returned'].includes(s0.status)) throw new GatewayError(409, 'state', `目前狀態是「${STATUS[s0.status]}」，不能送審`);
           const st = await draftState(s0);
           // 第五十二輪：送審件開始後網站版本變了 ⇒ 沒有衝突就由閘道直接併入；有衝突要承辦人開啟修改頁自己決定
@@ -646,7 +678,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
       const pr = sub.lane.postPublishReview;
       if (pr) notifier.send('post-publish', { to: directory.reviewersFor([pr.unit], [p.account]), title: sub.title, unitName: unitName(sub.owner), editorName: p.name, hours: pr.hours, link: link(ctx, 'review', sub.id) });
     } else {
-      notifier.send('submitted', { to: directory.reviewersFor([sub.owner, ...sub.lane.reviewers], sub.editors.map((e) => e.account)), title: sub.title, unitName: unitName(sub.owner), editorName: p.name, reReview: rr, comment: sub.reReviewNote ?? undefined, link: link(ctx, 'review', sub.id) });
+      notifier.send('submitted', { to: directory.reviewersFor([authorityOf(sub), ...sub.lane.reviewers], sub.editors.map((e) => e.account)), title: sub.title, unitName: unitName(sub.owner), editorName: p.name, reReview: rr, comment: sub.reReviewNote ?? undefined, link: link(ctx, 'review', sub.id) });
     }
     store.put(sub);
     return view(sub, p);
@@ -801,7 +833,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     if (e instanceof GatewayError) audit.write(action, { actor: p, result: e.status === 422 ? 'rejected' : 'denied', detail: { ...detail, reason: e.code, fields: e.fields?.map((f) => f.field) } });
     else audit.write(action, { actor: p, result: 'error', detail: { ...detail, reason: String(e?.message ?? e).slice(0, 200) } });
   }
-  const reviewDescription = (sub) => [...(sub.kind === 'rereview' ? ['重新審閱：權責單位確認內容仍正確（審閱期限到了）；核准後只把「最後審閱日」更新為核准當天。', ...(sub.reReviewNote ? [`說明：${sub.reReviewNote}`] : []), ''] : []), `權責單位：${unitName(sub.owner)}`, `承辦：${contactsOf(sub).map((e) => e.name).join('、')}`, `車道：${sub.lane.label}（需 ${sub.lane.requiredApprovals} 位核准）`, ...sub.lane.reasons, '', '本合併請求由網站內容管理系統（寫入閘道）代為建立；請在後台「複核區」審核，不要直接在 GitLab 合併。'].join('\n');
+  const reviewDescription = (sub) => [...(sub.kind === 'rereview' ? ['重新審閱：權責單位確認內容仍正確（審閱期限到了）；核准後只把「最後審閱日」更新為核准當天。', ...(sub.reReviewNote ? [`說明：${sub.reReviewNote}`] : []), ''] : []), `權責單位：${unitName(sub.owner)}`, ...(sub.ownerChange ? [`權責單位變更：${unitName(sub.ownerChange.from)} → ${unitName(sub.ownerChange.to)}（需原單位或指定審核單位核准）`] : []), `承辦：${contactsOf(sub).map((e) => e.name).join('、')}`, `車道：${sub.lane.label}（需 ${sub.lane.requiredApprovals} 位核准）`, ...sub.lane.reasons, '', '本合併請求由網站內容管理系統（寫入閘道）代為建立；請在後台「複核區」審核，不要直接在 GitLab 合併。'].join('\n');
   /** 第五十三輪：「開啟修改」的連結開在那一種內容自己的編輯頁（疫情報導、職缺、採購、接種時程各有編輯頁；其他用上架頁） */
   const EDIT_PAGE = { article: 'bulletin/edit', job: 'jobs/edit', tender: 'tenders/edit', [MASTER_TYPE]: 'vaccines/schedule' };
   const link = (ctx, page, sid, sub = store.get(sid)) => `${ctx.origin ?? ''}${ctx.basePath ?? config.basePath}/admin/${page === 'publish' ? (EDIT_PAGE[sub?.type] ?? 'publish') : page}/${page === 'due' ? '' : `?${page === 'review' ? 'item' : 'gw'}=${encodeURIComponent(sid)}`}`;
@@ -817,7 +849,7 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
       try {
         const sub = typeof submissionId === 'string' ? store.get(submissionId) : null;
         if (!sub) throw new GatewayError(404, 'notfound', '找不到這筆送審件');
-        const eb = editBlock(p, sub.owner);
+        const eb = editBlock(p, authorityOf(sub));
         if (eb) throw new GatewayError(403, 'forbidden', `${eb}；交接只能由同單位的同事接手`);
         if (!OPEN.includes(sub.status)) throw new GatewayError(409, 'state', `這筆送審件目前是「${STATUS[effectiveStatus(sub)]}」，已經結束，不需要接手；已上線的內容屬於單位，直接開啟修改即可`);
         if (isSoleContact(sub, p)) throw new GatewayError(409, 'already', '你已經是這筆送審件的承辦人');
@@ -846,13 +878,13 @@ export function createWorkflow({ git, validator, store, audit, notifier, directo
     let subs = store.all();
     if (contentId) subs = subs.filter((s) => s.contentId === contentId);
     if (editor) subs = subs.filter((s) => s.editors.some((e) => e.account === editor && !e.handedOver));
-    if (v === 'queue') subs = subs.filter((s) => s.status === 'in_review' && isReviewer(p) && (inUnit(p, s.owner) || p.units.some((u) => (s.lane?.reviewers ?? []).includes(u))));
+    if (v === 'queue') subs = subs.filter((s) => s.status === 'in_review' && isReviewer(p) && (inUnit(p, authorityOf(s)) || p.units.some((u) => (s.lane?.reviewers ?? []).includes(u))));
     else if (v === 'mine') subs = subs.filter((s) => s.editors.some((e) => e.account === p.account) || (contentId && inUnit(p, s.owner)));
-    else if (v === 'all') subs = subs.filter((s) => inUnit(p, s.owner) || (isReviewer(p) && p.units.some((u) => (s.lane?.reviewers ?? []).includes(u))));
+    else if (v === 'all') subs = subs.filter((s) => inUnit(p, s.owner) || inUnit(p, authorityOf(s)) || (isReviewer(p) && p.units.some((u) => (s.lane?.reviewers ?? []).includes(u))));
     return subs.sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt))).map((s) => view(s, p));
   }
   /** 看得到：自己單位的、自己負責審核單位的；跨單位角色看全部 */
-  function canSee(p, sub) { return inUnit(p, sub.owner) || p.units.some((u) => (sub.lane?.reviewers ?? []).includes(u)) || p.adminRoles.some((r) => CROSS_UNIT_ROLES.includes(r)); }
+  function canSee(p, sub) { return inUnit(p, sub.owner) || inUnit(p, authorityOf(sub)) || p.units.some((u) => (sub.lane?.reviewers ?? []).includes(u)) || p.adminRoles.some((r) => CROSS_UNIT_ROLES.includes(r)); }
   function getVisible(p, sid) {
     const sub = store.get(sid);
     if (!sub || !canSee(p, sub)) throw new GatewayError(404, 'notfound', '找不到這筆送審件');

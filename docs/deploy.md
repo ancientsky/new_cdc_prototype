@@ -295,6 +295,34 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 - **怎麼驗**：`npm ci`、lint／format／typecheck、`npm test`（先 `npm run build`，否則 49 項「dist 若已建置」會略過，比對不準）、`--check`、`audit:dist`，再用新舊兩版各建一次 `dist/` 做 `diff -rq`，只剩時間戳才算安全。
 - **完整紀錄與每次看到的新警告**：[node-upgrade.md](node-upgrade.md)。2026-11-12 升 22→26：測試 1278 項與 24 相同、dist 零內容差異；新事物是 npm 11.20 的 `install-scripts` 允許清單（不要 approve）與 `localStorage` 全域 getter 的 ExperimentalWarning（測試改存描述子）。
 
+### 9.3 部署用的秘密放進 `production` 環境（第七十三輪）
+
+**一句話：** `pages.yml` 的 `build` job 現在宣告 `environment: production`，而且只在 `main` 上跑（`if: github.ref == 'refs/heads/main'`）。請 Yulun 在 GitHub 上建立這個環境、限定只有 `main` 能用，再把兩個秘密搬進去。
+
+為什麼：`SNAPSHOT_DEPLOY_KEY` 是**能推 `main` 而且在規則集繞過名單上**的部署金鑰，`INTL_FEED_TOKEN` 是疫情中心資料庫的權杖。放在 repo 層級時，任何有寫入權的人推一個分支、在那個分支改 `pages.yml`、再從那個分支手動執行（workflow_dispatch 可以選分支），就能讓自己的程式讀到這兩個秘密——`if:` 寫在檔案裡，攻擊者的分支可以把它刪掉，所以真正擋得住的是「環境的部署分支限制」：秘密放進只准 `main` 的環境，別的分支的 job 根本拿不到。
+
+步驟（Settings 都在 repo 的 Settings 頁）：
+
+1. Settings → Environments → **New environment**，名稱 `production`（要完全一樣，`pages.yml` 寫的是這個名字）。
+2. 在 `production` 的設定頁：**Deployment branches and tags** → 選 **Selected branches and tags** → Add deployment branch or tag rule → `main`。不用設 Required reviewers（每 2 小時的排程建置不該等人按）。
+3. 同一頁 **Environment secrets** → Add environment secret：`SNAPSHOT_DEPLOY_KEY`（私鑰全文，跟 §29.1 第 3 步同一份；手邊沒有就照 §29.1 重產一把並換掉舊的部署金鑰）、`INTL_FEED_TOKEN`（有設才搬）。`INTL_FEED_URL` 不是秘密，可留在 repo 層級。
+4. 確認環境秘密生效後，到 Settings → Secrets and variables → Actions 把 **repo 層級**的同名秘密刪掉（同名時環境的優先，但留著 repo 層級的就等於沒限制）。
+5. 驗證：Actions → Build and deploy to GitHub Pages → Run workflow（分支選 `main`，`refresh` 保持 true），看「Commit refreshed snapshots」印出「快照已以部署金鑰回寫 main」。再從任一個別的分支 Run workflow 一次：`build` 應該顯示 skipped。
+
+搬之前也不會壞：環境不存在時 GitHub 會在第一次執行時自動建立一個沒有限制的 `production`，repo 層級的秘密照樣讀得到，建置與回寫都照常。測試 `tests/round40-ci-isolation.test.mjs`（第七十三輪那一條）擋「用到 `GITHUB_TOKEN` 以外秘密的 job 沒有宣告 `environment: production`」，也擋手動執行的輸入直接展開進 `run`（`dast.yml` 的爬站分鐘數因此改成下拉選單、經環境變數傳入）。
+
+### 9.4 沙盒驗不到、請在 GitHub 上確認的設定（第七十三輪資安檢查）
+
+這一輪的檢查在沒有 repo 管理權的環境裡做，下面幾項看不到實際設定，只能列出建議。請 Yulun 逐項確認：
+
+| 項目 | 建議 | 為什麼 |
+| --- | --- | --- |
+| 程式路徑的人工審核 | 規則集的 `required_approving_review_count` **維持 0**（快車道與緊急發布的自動合併靠它），改用 `require_code_owner_review: true`＋`CODEOWNERS` 把 `scripts/`、`src/`、`.github/`、`content/governance/` 指到一個 **team**（不是個人帳號）。等 team 建好再開（§29.1「CODEOWNERS 審核」）。替代做法：`lane` job 已經把改到程式、工作流程、治理設定的 PR 覆寫為一般車道、至少 1 位核准（§29.2） | 目前程式 PR 是否真的有人看過，只靠 `lane` job；規則集層再加一道，`lane` job 本身被改壞時仍擋得住 |
+| 必要狀態檢查綁定來源 | `required_status_checks` 的 `test` 綁 GitHub Actions（`integration_id: 15368`，`.github/rulesets/main.json` 已加；介面上是該檢查的「Select source → GitHub Actions」） | 沒綁來源時，任何有 `statuses: write` 的權杖或 App 都能自己發一個叫 `test` 的成功狀態，讓沒跑過檢查的 PR 合併。若重新匯入時被拒，先拿掉這個欄位匯入，再到介面上選來源 |
+| 繞過名單的 Deploy keys | 目前是「Deploy keys：`bypass_mode: always`」，等於**所有**有寫入權的部署金鑰都能直接推 `main`。只留一把有寫入權的部署金鑰（`snapshot-writer`），其他的刪掉或改唯讀；長期改用只授權本 repo、只給 `contents: write` 的 **GitHub App**（app 可以單獨列入繞過名單，不必放行所有部署金鑰） | 繞過名單是以「類別」放行；之後誰加了一把有寫入權的部署金鑰，就自動能繞過規則集 |
+| 部署金鑰輪替 | `SNAPSHOT_DEPLOY_KEY` 每 6–12 個月、或有人離開專案時重產（§29.1 步驟 1–3），舊的公鑰從 Deploy keys 刪掉 | 私鑰曾經存在建立者的電腦上；輪替限制外洩後能用多久 |
+| 環境 `production` | 見 §9.3：部署分支只准 `main`、兩個秘密搬進去、repo 層級的刪掉 | 擋「從別的分支手動執行讀秘密」 |
+
 ## 10. 安全標頭基準（第二十三輪）
 
 靜態站本身回不了標頭，`Content-Security-Policy`、`Strict-Transport-Security` 等要由伺服器或 CDN 加。**建置會把要加的標頭直接輸出成設定檔**，放在 `dist/headers/`：
@@ -447,6 +475,8 @@ GitHub Pages 不能自訂回應標頭，所以原型站只有 `<meta name="robot
 
 **第七十二輪起，快取規則由建置輸出到 `dist/headers/`**（與安全標頭同一組檔，[performance-lighthouse.md](performance-lighthouse.md) 4.4）：機讀正本是 `headers.json` 的 `cache` 區塊；`nginx.conf` 已含上表的 `location`（每個都重列安全標頭，因為子 `location` 一有 `add_header` 就不繼承上層，見 10.2；檔案要 include 在 `server {}` 這一層）；`_headers` 給 Netlify／Cloudflare Pages；IIS 的 `<clientCache>` 片段在 `dist/headers/README.md`。規則也涵蓋 Pagefind 以外的路徑：HTML、`.md`、`/v1/` 預設 `no-cache`（每次驗證，緊急發布立刻可見），`/assets/`、`/img/`、`/files/` `public, max-age=3600, stale-while-revalidate=86400`（檔名沒有內容雜湊，不能 immutable）。請直接套用產生的檔，不要依本節手抄。GitHub Pages 無法自訂標頭，預設 10 分鐘快取，直接可用。
 
+**自家資產（`assets/**`）不要照 Pagefind 設 immutable（第七十一輪檢視補充）。** Pagefind 的索引檔能長快取，是因為檔名含內容雜湊；本站自己的 `assets/styles/*.css`、`assets/js/*.js` 目前是**固定檔名、沒有內容雜湊**，一旦套上 `immutable`，部署後瀏覽器與 CDN 會繼續用舊的 CSS／JS 配新的 HTML，版面或功能壞掉直到快取過期。第七十二輪（Lighthouse 效能檢視，見 `docs/performance-lighthouse.md`）的過渡做法是在 `headers/` 對 `assets/**` 用短快取加 1 小時 `stale-while-revalidate`；正式站設 CDN（如 Azure Front Door）時沿用同一組值，不要自行改成長快取。檔名加內容雜湊才是正解，會動到建置、所有模板的資產路徑、CSP 雜湊與 `headers/`，列為之後獨立的一輪（見 [architecture-ux-review.md](architecture-ux-review.md) §5.1）；做完之後 `assets/**` 才能比照上表第一列設 immutable。
+
 ### 12.3 MIME 與壓縮
 
 - 索引檔副檔名是 Pagefind 自訂的（`.pf_index`、`.pf_meta`、`.pf_fragment`、`.pf_filter`、`.pagefind`）。伺服器不認得時會回 `application/octet-stream`，**搜尋照常運作**，不需要特別設定 MIME。
@@ -578,7 +608,8 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
 | `GATEWAY_AUTH` | `header`／`oidc`／`google`／`dev` | `dev`（只接受本機連線，**正式環境不可用**） |
 | `GATEWAY_GIT` | `gitlab`／`local` | `local`（`.local/gateway-repo/`） |
 | `GITLAB_URL`、`GITLAB_PROJECT`、`GITLAB_TOKEN`、`GITLAB_TARGET_BRANCH` | GitLab 位址、專案（數字 id 或 `group/project`）、服務帳號 token、目標分支 | 目標分支 `main` |
-| `PUBLIC_ORIGIN` | 後台對外網址，例如 `https://cms.cdc.gov.tw`。用來判斷同源，也用在通知信的連結。**反向代理會改寫 Host 時一定要設** | 空（改用 Host 標頭） |
+| `PUBLIC_ORIGIN` | 後台對外網址，例如 `https://cms.cdc.gov.tw`。用來判斷同源，也用在通知信與電子報信件的連結。第七十三輪起：`GATEWAY_AUTH` 不是 `dev`（`header`／`oidc`／`google`）時**一定要設，沒設閘道不啟動**；有設時 `serve.mjs` 也會關掉開發用端點（§35.3、§35.4） | 空：只有 `dev` 模式可以；信件連結只接受本機 Host（`localhost`／`127.x`／`[::1]`），其他一律 `http://localhost`，**不再採信請求的 Host** |
+| `DEV_ENDPOINTS` | 開發用端點 `/api/dev/outbox`（模擬信件匣，含所有訂閱者信箱與 token）、`/api/dev/ask-log/report` 要不要開（第七十三輪，§35.3）。`off`＝關；`on`＝強制開（啟動時印警告，只在測試機排錯時用） | 自動：`SITE_MODE=production`、`NODE_ENV=production`、`GATEWAY_TRUSTED_PROXIES`、`PUBLIC_ORIGIN` 任一有設就關，否則開（本機開發）。開著時也只接受本機直連、帶任何代理標頭一律 403 |
 | `GATEWAY_CSRF_SECRET` | CSRF token 的簽章金鑰（≥ 32 位元組亂數） | 每次啟動隨機產生，重啟後同事要重新整理頁面 |
 | `GATEWAY_SESSION_SECRET` | Google 模式工作階段 cookie 的簽章金鑰 | 每次啟動隨機產生，重啟後要重新登入 |
 | `GATEWAY_STATE_FILE`、`GATEWAY_AUDIT_FILE`、`OUTBOX_DIR` | 狀態、稽核、寄件匣位置 | `.local/` 底下 |
@@ -758,6 +789,7 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
 6. 別的單位的審核人：看不到這一筆。
 7. 偽造測試：從非代理主機直接打閘道並帶 `X-Remote-User`，回 401（路徑 B）；從別的網站送 POST，回 403。
 8. 稽核檔：上述每一步都有紀錄，`verifyAudit` 驗證通過。
+9. 第七十三輪的部署檢查（§35.10）：`PUBLIC_ORIGIN` 已設、信任代理清單只列代理本身、啟動訊息顯示開發用端點已關閉、`..%2f` 路徑穿越與 `/api/dev/outbox` 都回 404。
 
 ### 14.8 資訊室要回答的問題
 
@@ -786,6 +818,21 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
 ### 14.9 附件上限（第四十五輪）
 
 疫情報導後台的「儲存草稿／送審」會把 PDF 與圖（base64）和文章一起送到 `/api/gateway/drafts`、`/submit`：整包上限 24 MB、附件合計 16 MB、最多 20 個檔；內容本身仍限 512 KB。反向代理的請求大小上限（nginx `client_max_body_size`、IIS `maxAllowedContentLength`）要 ≥ 24 MB，否則同事看到的是代理的 413 而不是閘道的中文訊息。閘道超限時會先把請求讀完再回 413（第三十輪的教訓，ARCHITECTURE §36）。
+
+### 14.10 權責單位不能被送審者改走（第七十三輪）
+
+**規則：** 寫入閘道判斷「你能不能存草稿、送審」時，看的是**網站上（`main`）那一份的 `owner`**；還沒上線、但已有進行中送審件的內容，看那一件**原本的**權責單位。同事送來的內容裡的 `owner` 只是資料，不是授權依據。
+
+**為什麼：** 以前閘道只拿送來的 `owner` 檢查。慢性組的編輯可以打開急性組已上線的 Q&A，把 `owner` 改成慢性組、內容改掉後送審——檢查「慢性組的編輯改慢性組的內容」當然通過，接著慢性組的審核人核准，內容就以慢性組的名義上線，急性組完全不知道（第七十三輪資安檢查實測可行）。權責單位決定的是「誰對這段衛教內容負責」，不能由改內容的人自己宣告。
+
+**現在的做法**（`scripts/lib/gateway/workflow.mjs`，測試 `tests/round73-gateway-owner.test.mjs`）：
+
+- 別單位的人送來改過 `owner` 的內容 ⇒ 403，白話說明「這筆內容的權責單位是『急性傳染病組』，不是你的單位。送審時改寫權責單位，不會讓你取得修改權」。進行中的送審件也一樣（回 403，不再回會透露承辦人姓名的 409）。
+- **合法的移轉**照樣可以：原單位的編輯（或總編輯、治理幕僚、平台管理等跨單位角色）把 `owner` 改成新單位送審。送審件記 `ownerChange { from, to }`，歷程與稽核記 `owner-change`（含 from／to），提交訊息多一行 `Owner-Change: <原單位> -> <新單位>`，複核區的送審件資料多一列「權責單位變更」，合併請求說明也會寫出。
+- 移轉要**原單位或車道指定的審核單位**（一般車道是公關室；第一級內容另含 OASIS）核准；新單位自己的審核人核准不算數——「把內容交給我們」不能由接手的一方自己簽。
+- 「不用修改，再送出」、交接（§33）、重新審閱也都依原本的權責單位判斷；新單位的編輯在核准前不能接手或修改這件送審件。
+- 配套內容：網站上已有的配套內容必須與網站上完全相同（版本碼含 `owner`），改不了權責單位；新的配套內容本來就可以屬於別的單位（疫情中心的卷期跟各組的文章一起送），照舊。
+- 單位改組要整批搬內容，仍用 `scripts/reassign-owner.mjs`（§33），那是走程式 PR、由資訊室與治理幕僚審的另一條路。
 
 ## 15. 智慧問答頁的效能預算（第四十輪，Issue #80）
 
@@ -1961,6 +2008,8 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 
 **2026-10-25 第一次驗證就紅（run #328）的教訓**：金鑰本身沒問題，倒在前一行 `git pull --rebase`：「cannot pull with rebase: You have unstaged changes」。原因是 `npm run fetch` 除了 `data/snapshots/` 也會改 `content/datasets/`（登革熱地圖摘要與 CKAN 目錄的 `lastUpdated`／`provenance`，第五十七輪加的），而提交那一步只 `git add data/snapshots`，剩下的變更讓 rebase 拒絕執行，整個 build job 紅掉、當次也沒部署。修法：`git add -A data/snapshots content/datasets` 一起提交（本來就是這次抓取的結果）、`git pull --rebase --autostash`（其他未預期變更先暫存）、rebase 失敗只警告不讓建置失敗。為什麼之前沒發現：規則集匯入前這一步也會失敗，但沒人看 02 UTC 排程的紀錄；回寫從來沒成功過（`git log --grep=官方資料快照更新` 是空的）。所以**任何「排程才會跑」的步驟都要在合併當天手動 Run workflow 跑一次**，不要等排程。
 
+**第七十三輪補充**：`build` job 已宣告 `environment: production`、只在 `main` 上跑；請把 `SNAPSHOT_DEPLOY_KEY`（與 `INTL_FEED_TOKEN`）搬進只准 `main` 的 `production` 環境秘密，步驟見 §9.3；繞過名單與金鑰輪替的建議見 §9.4。
+
 為什麼可以接受：這把金鑰只在 `pages.yml` 的 `build` job 用到，PR 的工作流程（`content-pr.yml`）拿不到 secrets 也不引用它（測試 `round60-ruleset` 擋）；私鑰寫到 `$RUNNER_TEMP`、推完就刪；它推的只有 `data/snapshots/` 與 `content/datasets/` 裡由抓取更新的欄位（機器抓的官方資料與資料目錄的更新日期），不是人寫的內容。換成機關 GitLab 時對應的是 project deploy key 或 project access token（§14.4）。
 
 **原型期沒做、留給正式環境的**：
@@ -2103,7 +2152,7 @@ GitHub Pages 原型站照舊用原型模式建置（後台與 source map 是示�
 
 ### 31.2 來源 IP：一定要設 `GATEWAY_TRUSTED_PROXIES`
 
-限流的 key 必須是攻擊者選不了的東西。`X-Forwarded-For` 是請求自己帶的標頭，誰都能寫；所以只有 TCP 連線的對端在 `GATEWAY_TRUSTED_PROXIES`（逗號分隔，可用 CIDR，與 header 登入模式同一個設定）裡時，閘道才看 `X-Forwarded-For`，而且從右往左跳過信任的代理，取第一個不是代理的位址。
+限流的 key 必須是攻擊者選不了的東西。`X-Forwarded-For` 是請求自己帶的標頭，誰都能寫；所以只有 TCP 連線的對端在 `GATEWAY_TRUSTED_PROXIES`（逗號分隔，可用 CIDR，與 header 登入模式同一個設定）裡時，閘道才看 `X-Forwarded-For`，而且從右往左跳過信任的代理，取第一個不是代理的位址。第七十三輪補強（§35.5、§35.6）：清單寫錯（`/33`、`10.300.0.0/8`、主機名稱、`0.0.0.0/0`）一律啟動失敗；整串都是信任位址時用代理本身的位址（不再取最左邊、用戶端可寫的那段）；IPv6 用戶以 `/64` 為一個 key。
 
 **部署陷阱：** 閘道放在反向代理（IIS ARR、nginx、Application Gateway）後面卻沒設 `GATEWAY_TRUSTED_PROXIES` ⇒ 所有人都是代理的那一個 IP，**全機關共用 120 次／分鐘**，上班尖峰就會互相擋。症狀：同事陸續看到「操作太頻繁」，稽核裡 `rate_limited` 的 `ip` 都是代理位址。修法：把代理的位址加進 `GATEWAY_TRUSTED_PROXIES`，並確認代理有**覆寫**（不是附加使用者送來的）或附加 `X-Forwarded-For`。
 
@@ -2223,3 +2272,117 @@ npm run reassign-owner -- --from unit.a --to unit.b [--type disease,faq] [--dry-
 **正式環境**（署內 GitLab＋自架 runner）對應的設定是 pipeline 的 `resource_group`（同一資源一次只跑一條，排隊不取消）或 `interruptible: false`；部署腳本最後一步呼叫反向代理／CDN 的清快取 API，否則民眾還可能看到 10 分鐘舊頁。
 
 測試：`tests/round40-ci-isolation.test.mjs` 的 `#68` 兩題（`reuse` job 的權限與條件、`test`／`lane` 的 `needs` 與下載來源、`pages.yml` 的 concurrency 與本節）。
+
+## 35. 第七十三輪安全稽核的伺服器端修正
+
+> 給誰看：資訊室（部署、反向代理、環境變數）。範圍：`scripts/serve.mjs`、三個模擬後端、寫入閘道的身分與來源判斷、國際疫情 feed。
+> 回歸測試：`tests/round73-server-hardening.test.mjs`（會真的啟動 `serve.mjs` 打下面的攻擊向量）。
+
+這一輪的稽核找到兩個「部署前必修」的問題（35.1、35.2），以及幾個與反向代理有關的問題（35.3–35.6）。共同的教訓是：**「只限本機」「看 Host」「看 X-Forwarded-For」這三種判斷，放到反向代理後面都會變調**，所以這輪把它們都改成「預設不相信，有明確設定才相信」。
+
+### 35.1【嚴重】靜態檔路徑穿越
+
+**原本：** `serve.mjs` 先 `decodeURIComponent` 再 `path.join(dist, 路徑)`。網址解析器只會處理字面上的 `..`，`%2f`（編碼過的 `/`）不算路徑分隔，所以 `/..%2fpackage.json` 會原樣通過，解碼後變成 `/../package.json`，結果走出 `dist/`。實測可以讀到 repo 原始碼、`/etc/passwd`，以及 `/proc/self/environ`——**這支 process 的所有環境變數，包括 `GITLAB_TOKEN`、`GATEWAY_SESSION_SECRET`、`INTL_FEED_TOKEN`**。拿到這些就能直接改 GitLab 上的內容。
+
+**現在：**（`scripts/lib/static-serve.mjs`）
+
+1. 解碼後含 `\0` ⇒ 400。
+2. 用 `path.resolve(dist, '.' + 路徑)` 算出絕對路徑，必須等於 `dist` 或在 `dist/` 底下，否則 404。
+3. 用 `realpath` 解開 symlink 後**再檢查一次**：`dist/` 裡若有 symlink 指向外面，一樣 404。
+4. 只服務一般檔案；目錄改找 `index.html`；FIFO、裝置檔（例如 `/dev/zero`，會無限串流）一律不給。
+5. basePath 前綴比對加上邊界：`/new_cdc_prototypeXYZ` 不再被當成 `/new_cdc_prototype/XYZ`。
+
+**為什麼這樣比較安全：** 不靠「擋掉哪些寫法」（`..%2f`、`%2e%2e`、`..%5c`、雙重編碼……永遠擋不完），而是看「最後算出來的檔案在不在 dist 裡」，不管怎麼編碼都逃不出去。
+
+**驗收：** `curl --path-as-is http://127.0.0.1:4173/new_cdc_prototype/..%2fpackage.json` 應回 404。
+
+### 35.2【高】一個請求就能讓整個服務當掉
+
+**原本：** 讀檔串流沒有錯誤處理。讀到不能讀的檔（`/proc/self/mem` 回 EIO）、權限不足，或「檢查檔案存在」與「打開檔案」之間剛好 `npm run build` 把它刪了，都會變成沒人接的例外，**整個 process 結束**——同一支 process 裡的寫入閘道也一起停擺。
+
+**現在：** 讀檔失敗時，還沒送出標頭就回 404（檔案不見）或 500（其他），已經送出就中斷那條連線；同一種錯誤每分鐘只記一行 log（避免被拿來灌 log）。最外層再包一層 `try/catch`，任何請求出錯都只影響它自己。
+
+**另外：** 靜態檔只接受 `GET`／`HEAD`，其他方法回 405（原本 `DELETE /index.html` 也回 200）；靜態回應帶 `X-Content-Type-Options: nosniff`。
+
+### 35.3【高】開發用端點在正式部署可以從外面打到
+
+`/api/dev/outbox` 會列出**所有模擬寄出的信**（每位訂閱者的信箱，以及確認、管理連結裡的 token）；`/api/dev/ask-log/report` 會把 90 天的查詢紀錄讀進記憶體。原本這兩個端點永遠開著，只檢查「連線是不是來自本機（127.0.0.1）」。
+
+**問題在反向代理：** §14.5 的架構是「反向代理在同一台 → 本服務」。這時**每一個**經過代理的外部請求，連線對端都是 127.0.0.1，「只限本機」對全世界都成立。
+
+**現在有兩道：**
+
+1. **開關（`serve.mjs`）：** 看到任何「正式或對外部署」的訊號就整個關掉（回 404）：`SITE_MODE=production`、`NODE_ENV=production`、有設 `GATEWAY_TRUSTED_PROXIES`（表示前面有代理）、有設 `PUBLIC_ORIGIN`（表示有對外網址）、或 `DEV_ENDPOINTS=off`。只有 `DEV_ENDPOINTS=on` 能強制打開，啟動時會印警告。啟動訊息有一行「開發用端點：已開啟／已關閉（原因）」，部署後請確認是「已關閉」。
+2. **本機直連（模擬信件匣、查詢紀錄報表、閘道 `GATEWAY_AUTH=dev`）：** 連線對端是本機**而且**請求沒有任何代理標頭（`X-Forwarded-For`、`Forwarded`、`X-Real-IP`、`X-Forwarded-Host`）才算。代理一定會加這些標頭，所以「本機＋代理標頭」＝前面有同機代理，一律 403。
+
+**為什麼這樣比較安全：** 第一道讓「忘了關」不會發生（只要照 §14 設了 `PUBLIC_ORIGIN` 或 `GATEWAY_TRUSTED_PROXIES` 就自動關）；第二道讓「真的忘了、又剛好是同機代理」時仍然擋得住。閘道的 `dev` 模式也套用第二道：就算有人誤把 `GATEWAY_AUTH` 留在 `dev` 又放到同機代理後面，外部請求也登入不了。
+
+### 35.4【中】Host 標頭污染：官方信件帶攻擊者的網址
+
+**原本：** 沒設 `PUBLIC_ORIGIN` 時，電子報確認信、管理信與閘道通知信裡的連結，用的是請求帶來的 `Host`。攻擊者送 `Host: cdc-gov-tw.evil.example`，就能讓機關寄出「token 是真的、網址指向攻擊者」的官方信；受害者一點，管理權（manageToken）就到了攻擊者手上。
+
+**現在：**
+
+- 設了 `PUBLIC_ORIGIN` ⇒ 連結只用它（原本就是這樣）。
+- 沒設 ⇒ 只接受 `localhost`、`127.x.x.x`、`[::1]`（任何埠）這幾種 Host；其他一律寫成 `http://localhost`。本機開發照常，偽造的 Host 進不了信件。
+- 寫入閘道在 `GATEWAY_AUTH` 是 `header`／`oidc`／`google`（也就是同事從自己的電腦連進來）時，**沒設 `PUBLIC_ORIGIN` 就不啟動**，錯誤訊息會說要設什麼。
+
+**為什麼這樣比較安全：** Host 是請求自己帶的，誰都能寫；信件連結的網址一定要來自我們自己的設定。與其上線後才發現同事收到的通知信連到 `http://localhost`，不如啟動當下就失敗。
+
+**部署要做的：** 正式環境一定設 `PUBLIC_ORIGIN`（§14.1 環境變數表、§14.3 IIS 那一段的第 5 點「Host 標頭」）。
+
+### 35.5【中】信任代理清單寫錯會默默變成「信任半個網際網路」
+
+`GATEWAY_TRUSTED_PROXIES` 同時決定兩件事：速率限制要不要採信 `X-Forwarded-For`，以及 **header 登入模式要不要相信送來的身分標頭**（§14.3）。所以它寫錯就是認證被繞過。
+
+**原本：** `10.0.0.1/33` 會被接受，JavaScript 的位移運算取 32 的餘數之後變成 `/1`，等於信任 `0.0.0.0`–`127.255.255.255`；`10.300.0.0/8` 也被接受；IPv6 網段（`fd00::/8`）被當成一般字串，永遠比不中，而且沒有任何提示；IPv6 大小寫不同就比不中。
+
+**現在：** 每一筆都用 Node 內建的位址解析驗證：IPv4 前綴只能 0–32、IPv6 只能 0–128，位址必須合法，**寫錯一律啟動失敗**並指出是哪一筆；`0.0.0.0/0`、`::/0`（信任所有位址）直接拒絕；IPv6 網段真的照網段比對（`net.BlockList`）；位址先正規化（小寫、標準寫法、`::ffff:10.1.2.3` 視為 `10.1.2.3`）。
+
+**建議寫法：** 只列反向代理本身（`10.0.0.5`，或代理所在的很小網段），**不要列同事電腦所在的網段**（理由見 35.6）。
+
+### 35.6【中】用戶端 IP 的判斷：從右往左，不取用戶端可寫的那段
+
+速率限制要知道「這是誰」。`X-Forwarded-For` 是一串位址，每一台代理會把「它看到的連線來源」加在最右邊；最左邊的部分是用戶端自己寫的，可以亂填。
+
+**原本：** 從右往左跳過信任的代理，取第一個不是代理的位址（這部分正確）；但**整串都是信任位址時，取最左邊那段**——那段是用戶端可寫的。信任清單若寫成 `10.0.0.0/8`、同事電腦也在 10/8，任何一台內網電腦（中毒的電腦、內部掃描器）每個請求換一個 `10.x.x.x`，就能繞過每 IP 120 次／分與登入失敗每 IP 10 次／分的限制，也能故意填某位同事的 IP 讓他被擋。另外，碰到看不懂的一段（例如 `fe80::1%eth0`）會跳過它繼續往左，又走到用戶端可寫的區域。
+
+**現在：**
+
+- 整串都是信任位址 ⇒ 用直接連進來的那台（代理本身）的位址。
+- 碰到看不懂的一段就停，用它右邊那段（或代理本身）。
+- **IPv6 以 `/64` 為一個 key**：一般家用、行動網路的用戶自己就有一整段 `/64`（2^64 個位址），以完整位址當 key 等於每個請求換一個位址就繞過限流。稽核紀錄仍記完整位址（`rate_limited` 的 `ip`）。
+
+### 35.7【中】國際疫情 feed 的多餘欄位會進公開 JSON
+
+**原本：** 推送或匯入的 feed 裡，`areas[]`、`references[]` 與舊格式列若多帶欄位（例如 `internalContact: "王小明 0912345678"`），會原樣存進 `data/snapshots/travel-epidemic.json`，再原樣輸出成**公開的** `v1/travel-alerts.json`；個資掃描只看標題、內文等固定欄位，看不到這些。
+
+**現在：**
+
+- 交換格式 schema（`schemas/intl-epidemic-feed.json`）的一則、地區、參考資料都加了 `additionalProperties: false`：多帶欄位的那一則**退回**，訊息會說是哪個欄位。疫情中心的系統若要新增欄位，要先改交換格式（docs/intl-epidemic.md）。
+- 寫進快照時一律白名單複製：地區只留 `country`、`countryEn`、`iso2`、`detail`；參考資料只留 `title`、`url`；舊格式（官網 ExportJSON）列只留官網原有的欄位（`LEGACY_FIELDS`）。這是第二道，就算哪天 schema 放寬，公開 JSON 也不會多出欄位。
+- 參考資料的標題也做個資掃描。
+
+### 35.8【中】CSV 解析可以卡住整個服務數小時
+
+**原本：** CSV 沒有欄數、列數上限，而且每一列都對整個表頭建物件。實測 131 KB（2 萬欄 × 1 千列）就卡住 5 秒；推送上限 2 MB 時可以卡住數小時，寫入閘道在這段時間完全沒有回應（需要推送權杖或後台匯入權限）。
+
+**現在：** 每列最多 64 欄、最多 5,000 列、每格最多 10,000 字，超過回 400 `bad_feed` 並說明上限；只對交換格式認得的欄名建物件，其他欄位略過。交換格式只有 18 欄、一批幾百則，這些上限留了很大的餘裕。
+
+### 35.9【低】其他
+
+| 項目 | 原本 | 現在 | 為什麼 |
+| --- | --- | --- | --- |
+| 電子報確認連結 | 確認後永遠有效，每點一次都回傳 manageToken | 第一次確認才回 manageToken；之後再點只顯示「已確認」；48 小時確認期限過後作廢 | 確認連結可能被轉寄、留在代理 log 或郵件掃描器紀錄裡；不能讓它永遠換得到管理權。管理連結在歡迎信裡 |
+| 電子報狀態機的每 IP 節流（10 分鐘 10 次） | 用連線對端的 IP | 用 35.6 的用戶端 IP | 放在代理後面時，原本全站共用代理那一個 IP，一個人送 10 次就讓所有人訂不了 |
+| 國際疫情推送的認證失敗稽核 | 每個 401 都寫一筆 | 同一來源每分鐘只寫第一筆 | 與 §31.3 同一原則：不讓猜權杖的人拿稽核檔塞爆磁碟 |
+| 查詢紀錄的 `page` 欄位 | 只截長度 | 只收網址路徑字元（含控制字元、空白、引號就丟掉），再遮蔽個資 | 「伺服器端保證存下來的一定已遮蔽」這個契約要對每個欄位都成立 |
+
+### 35.10 部署檢查（§14.7 第 9 點）
+
+1. `PUBLIC_ORIGIN` 有設，而且就是同事在網址列看到的後台網址。
+2. 有反向代理時，`GATEWAY_TRUSTED_PROXIES` 只列代理本身；啟動沒有「信任代理清單有誤」的錯誤。
+3. 啟動訊息是「開發用端點……已關閉」。
+4. `curl --path-as-is https://<後台>/..%2fpackage.json` 回 404；`curl https://<後台>/api/dev/outbox` 回 404。
+
+**本輪沒有改的（已知，留待後續）：** `serve.mjs` 仍監聽所有網路介面（稽核 §18-d，建議另加 `HOST` 環境變數、預設 `127.0.0.1`）；速率限制的記憶體淘汰仍是「最早出現的 key 先淘汰」，能大量產生 key 的人仍可能讓自己的計數被淘汰（IPv6 改成 `/64` 後已大幅降低）；`INTL_FEED_TOKEN` 收與拉共用一把（稽核第 13 項）；`audit-dist` 的大小寫與 symlink 漏網（第 15 項）。

@@ -10,13 +10,13 @@
     "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
     "kind": { "enum": ["campaign", "resource-hub", "program", "emergency"] },
     "introMarkdown": { "type": "string" },
-    "image": { "type": "string", "description": "示意圖（SVG），只當氛圍" },
+    "image": { "type": "string", "pattern": "^(https?://|/)", "description": "示意圖（SVG），只當氛圍" },
     "startAt": { "type": "string", "format": "date" },
     "endAt": { "type": "string", "format": "date", "description": "有填則到期自動從首頁列退場，專區頁保留並標「已結束」" },
     "links": {
       "type": "array",
       "minItems": 1,
-      "items": { "type": "object", "required": ["label", "href"], "properties": { "label": { "type": "string" }, "href": { "type": "string" }, "external": { "type": "boolean" }, "note": { "type": "string" }, "lastCheckedAt": { "type": "string", "format": "date" }, "status": { "enum": ["ok", "broken", "unchecked"] } } }
+      "items": { "type": "object", "required": ["label", "href"], "properties": { "label": { "type": "string" }, "href": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)" }, "external": { "type": "boolean" }, "note": { "type": "string" }, "lastCheckedAt": { "type": "string", "format": "date" }, "status": { "enum": ["ok", "broken", "unchecked"] } } }
     },
     "blocks": {
       "type": "array",

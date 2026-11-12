@@ -14,16 +14,24 @@ import { PATH as RESEARCH_MEDIA } from './public/research-media.mjs';
 // 介面（UI 字串）本身的翻譯審核狀態；內容頁則看 item.languages[lang]
 const UI_TRANSLATION = { en: { status: 'reviewed', date: '2026-09-10' } };
 
+// 第七十三輪：html`` 會把 href／src 插值的 data: 協定改成 #（safeHref）；站台自己的常數 favicon 是可信來源，用 raw(esc()) 明確標示放行。
 const FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231b5e3f'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='%23fff'/%3E%3C/svg%3E";
 
 // 第七十二輪（docs/performance-lighthouse.md §4.9）：網址帶 ?q= 時在 <html> 標 data-q，CSS 用它在首次繪製前就把答案區／搜尋結果區撐到一個視窗高
 export const EARLY_JS = `try{var d=document.documentElement;d.classList.add('js');var v=new URLSearchParams(location.search).get('view')||localStorage.getItem('cdc.view');if(v==='pro')d.dataset.view='pro';if(new URLSearchParams(location.search).has('q'))d.dataset.q='1'}catch(e){document.documentElement.classList.add('js')}`;
 
 // 頁尾分組（第十七輪 fat footer）：服務／關於與政策／開發者與開放資料／聯絡。民眾主選單不放機關型入口，全站地圖集中在頁尾；首頁不再另放「更多服務」。
-const FOOT_SERVICES = [
-  ['/publications/', 'more.publications'], ['/apply/', 'more.apply'], ['/lab/', 'more.lab'], ['/report/', 'more.report'], ['/research/', 'more.research'],
-  ['/search/', 'footer.search'],
-  ['/careers/', 'more.careers'], ['/procurement/', 'more.procurement'], ['/notices/', 'more.notices'], ['/media/', 'services.media'], ['/campaigns/', 'campaigns.title'], ['/play/', 'play.title'], ['/services/', 'services.title'],
+// 第七十一輪（U8）：「服務」欄 14 項以前一字排開、無明顯順序，要逐項掃讀。改成同一欄內兩小組：民眾要辦事的（申辦、通報、檢驗、訂閱、搜尋）
+// 與想了解機關的（出版、研究、人才、採購、公告、宣導、互動、應用）。欄數、連結總數都不變；小標用 <p> 而非 h3（欄標題已是 h2，頁尾層級保持簡單），
+// 每組 <ul> 以 aria-labelledby 指向小標，報讀時仍知道是哪一組。第三個元素是連結下方的一行說明（訂閱）。
+export const FOOT_SERVICES = [
+  { id: 'ft-svc-citizen', key: 'footer.sub.citizen', links: [
+    ['/apply/', 'more.apply'], ['/report/', 'more.report'], ['/lab/', 'more.lab'], ['/subscribe/', 'footer.subscribe', 'footer.subscribe.note'], ['/search/', 'footer.search'],
+  ] },
+  { id: 'ft-svc-agency', key: 'footer.sub.agency', links: [
+    ['/publications/', 'more.publications'], ['/research/', 'more.research'], ['/careers/', 'more.careers'], ['/procurement/', 'more.procurement'], ['/notices/', 'more.notices'],
+    ['/media/', 'services.media'], ['/campaigns/', 'campaigns.title'], ['/play/', 'play.title'], ['/services/', 'services.title'],
+  ] },
 ];
 
 function translationBar(ctx, item, hide) {
@@ -59,10 +67,14 @@ function translationBar(ctx, item, hide) {
 }
 
 /** 第二十三輪：原型模式每頁頂端的「非官方原型」橫幅（SITE_MODE=production 不輸出）。role=region＋aria-label 成為具名地標（axe region 規則）；不可關閉，避免截圖被當成官網。 */
+// 第七十一輪（U1、U9）：說明文字後加「示範資料凍結於 {建置日}」（site.today＝BUILD_TODAY；CI 與 Pages 凍結在 2026-10-01），
+// 否則首頁「資料日」與真實日期差幾十天，看起來像沒更新。文字與連結各給 class，手機版（≤640px）由 base.css 排成「標籤＋連結」一行、說明一行，
+// 從三行壓成兩行；DOM 順序不動（讀屏仍是標籤 → 說明 → 連結，且連結是唯一可聚焦元素，視覺換位不影響焦點順序）。
 function protoBanner(ctx) {
   if (!config.isPrototype) return '';
   const { t } = ctx;
-  return html`<div class="c-proto-banner" role="region" aria-label="${t('proto.banner.tag')}" data-proto-banner><div class="wrap c-proto-banner__in"><strong>${t('proto.banner.tag')}</strong> <span>${t('proto.banner.text')}</span> <a href="${config.officialUrl}" rel="external noopener">${t('proto.banner.cta')}</a></div></div>`;
+  const today = ctx.site?.today;
+  return html`<div class="c-proto-banner" role="region" aria-label="${t('proto.banner.tag')}" data-proto-banner><div class="wrap c-proto-banner__in"><strong>${t('proto.banner.tag')}</strong> <span class="c-proto-banner__text">${t('proto.banner.text')}${today ? html` <span data-proto-frozen>${t('proto.banner.frozen', { date: today })}</span>` : ''}</span> <a class="c-proto-banner__cta" href="${config.officialUrl}" rel="external noopener">${t('proto.banner.cta')}</a></div></div>`;
 }
 
 const ICONS = {
@@ -131,6 +143,9 @@ export function layout(ctx, { styles = [], title, description, body, jsonLd = []
     const only = same ? '' : i18nT(L.code, 'lang.pageOnly', { langs: altsKnown.map((c) => i18nT(L.code, `langname.${c}`)).join(i18nT(L.code, 'lang.sep')) });
     return html`<a href="${href}" data-lang-path="${L.path}" data-same="${same ? '1' : '0'}" hreflang="${L.code}" lang="${L.code}" ${L.code === lang ? raw('aria-current="true"') : ''}${only ? raw(` title="${esc(only)}"`) : ''}>${L.label}${only ? html`<span class="langs__na">${only}</span>` : ''}</a>`;
   });
+  // 第七十一輪（U2）：「跳到主要內容」之後加第二個 skip link「跳到主選單」（#main-nav，tabindex=-1 讓它可接焦點）。
+  // 鍵盤使用者原本要經過原型橫幅、七個語言、四個工具連結、站名、三個身分鈕共 22 個停留點才到主選單；WCAG 2.4.1 的標準做法，不改任何視覺。
+  // 手機版（≤959px）主選單收合時，ui.js 的 [data-skip-nav] 處理會先展開再聚焦；沒有 JS 時連結仍指向 #main-nav，桌機照常可用。
   return html`<!doctype html>
 <html lang="${lang}" dir="${langDef?.dir ?? 'ltr'}" data-base="${config.basePath}" data-lang-path="${langDef?.path ?? ''}" data-view="${forcePro ? 'pro' : 'public'}"${forcePro ? raw(' data-force-view="pro"') : ''}${theme ? html` data-theme="${themeSlug(theme)}"` : ''}>
 <head>
@@ -139,7 +154,7 @@ export function layout(ctx, { styles = [], title, description, body, jsonLd = []
 <title>${fullTitle}</title>
 <meta name="description" content="${description ?? ''}">
 <meta name="theme-color" content="#1b5e3f">
-<link rel="icon" href="${FAVICON}">
+<link rel="icon" href="${raw(esc(FAVICON))}">
 <link rel="canonical" href="${canonical}">
 ${alternates}
 <link rel="alternate" hreflang="x-default" href="${origin}${path}">
@@ -155,6 +170,7 @@ ${ld.map((j) => raw(`<script type="application/ld+json">${jsonScript(j)}</script
 </head>
 <body class="${bodyClass}">
 <a class="skip-link" href="#main">${t('skip')}</a>
+<a class="skip-link skip-link--nav" href="#main-nav" data-skip-nav>${t('skip.nav')}</a>
 ${protoBanner(ctx)}
 <div class="topbar"><div class="wrap topbar__in">
   <nav class="langs langs--inline" aria-label="${t('lang.label')}">${langLinks}</nav>
@@ -173,15 +189,15 @@ ${protoBanner(ctx)}
   </div>
   <button type="button" class="c-nav__toggle" aria-expanded="false" aria-controls="main-nav">${t('nav.menu')}</button>
 </div>
-<nav id="main-nav" class="c-nav" aria-label="${t('nav.main')}"><div class="wrap c-nav__in">${navItems.map(([p, k]) => navItem(p, k))}<div class="c-nav__item"><a class="c-nav__pro c-pro-only" href="${url('/pro/')}">${t('nav.pro')}</a></div></div>
+<nav id="main-nav" class="c-nav" tabindex="-1" aria-label="${t('nav.main')}"><div class="wrap c-nav__in">${navItems.map(([p, k]) => navItem(p, k))}<div class="c-nav__item"><a class="c-nav__pro c-pro-only" href="${url('/pro/')}">${t('nav.pro')}</a></div></div>
   <div class="wrap c-nav__langs"><p class="c-nav__langs-t" id="nav-langs-t">${t('lang.menu')}</p><div class="c-nav__langs-l" role="group" aria-labelledby="nav-langs-t">${langLinks}</div></div></nav>
 </header>
 ${pausedBanner(ctx)}
 <main id="main" tabindex="-1"${wide ? '' : raw(' class="wrap"')}${raw(pf.bodyAttr)}>${raw(pf.weigh(body))}${pf.tail}</main>
 ${translationBar(ctx, item, hideTranslationBar)}
 <footer class="site-footer"><div class="wrap site-footer__in">
-  <nav class="site-footer__col" aria-labelledby="ft-svc"><h2 class="site-footer__t" id="ft-svc">${t('footer.services')}</h2><ul>${FOOT_SERVICES.map(([p, k]) => html`<li><a href="${url(p)}">${t(k)}</a></li>`)}
-    <li><a href="${url('/subscribe/')}">${t('footer.subscribe')}</a><br><span class="site-footer__hotnote">${t('footer.subscribe.note')}</span></li></ul></nav>
+  <nav class="site-footer__col" aria-labelledby="ft-svc"><h2 class="site-footer__t" id="ft-svc">${t('footer.services')}</h2>${FOOT_SERVICES.map((g) => html`
+    <p class="site-footer__sub" id="${g.id}">${t(g.key)}</p><ul aria-labelledby="${g.id}">${g.links.map(([p, k, note]) => html`<li><a href="${url(p)}">${t(k)}</a>${note ? html`<br><span class="site-footer__hotnote">${t(note)}</span>` : ''}</li>`)}</ul>`)}</nav>
   <nav class="site-footer__col" aria-labelledby="ft-about"><h2 class="site-footer__t" id="ft-about">${t('footer.group.about')}</h2><ul>
     <li><a href="${url('/about/')}">${t('footer.about')}</a></li>${hasIntl ? html`<li><a href="${url('/international/')}">${t('international.title')}</a></li>` : ''}${leadershipLink(ctx)}
     <li><a href="${url('/policy/privacy/')}">${t('footer.privacy')}</a></li><li><a href="${url('/policy/ai/')}">${t('footer.ai')}</a></li><li><a href="${url('/accessibility/')}">${t('footer.a11y')}</a></li>

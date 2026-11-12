@@ -8,8 +8,9 @@
 //                                     → 204（無內容）。錯誤格式 { error: '代碼' }：
 //                                       400 bad_json／invalid（沒有問句）、403 forbidden（跨站 Origin）、405 method、
 //                                       413 too_large（本體 > 2 KB）、415 unsupported、429 rate（附 Retry-After）、503 full（當日檔過大）
-//   GET  /api/dev/ask-log/report      只給本機（loopback）：回傳彙整報表（與 npm run ask-log:report 同一個函式）；?min=K 調整門檻
-//                                     非本機 → 403；/api/dev/ask-log/ 底下其他路徑 → 404
+//   GET  /api/dev/ask-log/report      只給本機直連（loopback 而且沒有代理標頭）：回傳彙整報表（與 npm run ask-log:report 同一個函式）；?min=K 調整門檻
+//                                     非本機或帶代理標頭 → 403；/api/dev/ask-log/ 底下其他路徑 → 404；
+//                                     devReport:false（serve.mjs 偵測到正式環境時，第七十三輪）→ 404
 //
 // 為什麼伺服器端還要再驗證、再遮蔽一次（前端已遮蔽過）：前端程式在使用者的瀏覽器裡，任何人都能繞過它直接 POST。
 //   收件端必須自己保證「存下來的東西一定已遮蔽、一定只有允許的欄位」，不能信任前端。正式端點也必須照做。
@@ -28,13 +29,24 @@ import { maskPII } from '../../src/client/answer/text.js';
 import { askLogSetting } from './forms.mjs';
 import { MOCK_COOKIE } from '../../src/client/answer/log.js';
 import { DEFAULT_DIR, reportFromDir, taipeiDate } from './ask-log-report.mjs';
-import { createRateLimiter, clientKey, tooMany } from './rate-limit.mjs';
+import { createRateLimiter, clientKey, tooMany, isDirectLoopback } from './rate-limit.mjs';
 
 export const MAX_BODY = 2 * 1024;
 export const MAX_DAY_BYTES = 20 * 1024 * 1024;
 export const RATE = { windowMs: 60_000, max: 30 };
 const OUTCOMES = new Set(['answered', 'low-relevance', 'stats', 'no-match', 'no-source', 'refused', 'paused']);
-const LOOPBACK = /^(::1|127\.\d+\.\d+\.\d+|::ffff:127\.\d+\.\d+\.\d+)$/;
+
+/**
+ * 頁面路徑（第七十三輪，稽核第 14 項）：只留路徑（去掉 ?…#…）、只收網址路徑字元、再跑一次 maskPII。
+ * 舊版只截長度：控制字元、引號、身分證號、電話都能原樣存進「保證已遮蔽」的紀錄，後台報表若當 HTML 顯示也有風險。
+ * 先截 200 字再遮蔽：maskPII 是 O(n²)，長度上限是它唯一的保護（稽核 §18-h）。
+ */
+export function cleanPage(v) {
+  if (typeof v !== 'string' || !v.startsWith('/')) return null;
+  const p = v.split(/[?#]/)[0].slice(0, 200);
+  if (!/^\/[A-Za-z0-9/_.~%:@!$&'()*+,;=-]*$/.test(p)) return null; // 含控制字元、空白、引號、< > 等 ⇒ 不是本站會送的路徑
+  return maskPII(p);
+}
 
 /** 欄位白名單與各自的清洗規則：回傳清洗後的值，不合格回傳 null */
 const str = (re, max) => (v) => (typeof v === 'string' && v.length <= max && re.test(v) ? v : null);
@@ -47,7 +59,7 @@ export const ALLOWED = {
   disease: str(/^disease\.[a-z0-9-]+$/, 60),
   relevance: (v) => (typeof v === 'number' && Number.isFinite(v) && v >= 0 && v <= 1 ? Math.round(v * 100) / 100 : null),
   top: (v) => (Array.isArray(v) ? v.filter((x) => typeof x === 'string' && /^[\w.:#/-]{1,80}$/.test(x)).slice(0, 3) : []),
-  page: (v) => (typeof v === 'string' && v.startsWith('/') ? v.split(/[?#]/)[0].slice(0, 200) : null),
+  page: cleanPage,
   ev: str(/^[\w.+-]*$/, 40),
 };
 
@@ -140,11 +152,11 @@ export function createAskLogApi({
       return true;
     };
     const method = req.method ?? 'GET';
-    const ip = String(req.socket?.remoteAddress ?? 'unknown');
 
     if (isDev) {
       if (!devReport) return json(404, { error: 'notfound' });
-      if (!LOOPBACK.test(ip)) return json(403, { error: 'forbidden' });
+      // 第七十三輪：本機 socket＋代理標頭 ⇒ 前面有同機反向代理，外部請求也會長這樣，一律拒絕
+      if (!isDirectLoopback(req)) return json(403, { error: 'forbidden' });
       if (pathname !== '/api/dev/ask-log/report') return json(404, { error: 'notfound' });
       if (method !== 'GET') return json(405, { error: 'method' }, { Allow: 'GET' });
       const min = Number(searchParams.get('min')) || undefined;

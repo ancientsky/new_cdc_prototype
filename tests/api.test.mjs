@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { emitApi, etagOf } from '../scripts/lib/emit-api.mjs';
 import { ENDPOINTS } from '../scripts/lib/openapi.mjs';
-import { govern, memWriter, config } from './helpers.mjs';
+import { govern, memWriter, config, mk, addItem } from './helpers.mjs';
 
 async function emitted(today = '2026-10-01') {
   const site = govern(today);
@@ -111,4 +111,21 @@ test('openapi.json：3.1、servers＝siteOrigin、$ref 全部可解析、涵蓋�
   for (const s of ['Disease', 'Faq', 'News', 'Document', 'Dataset', 'Situation', 'Unit', 'DiseaseMaster', 'Meta', 'Governance', 'Todo', 'Kpi']) assert.ok(o.components.schemas[s], s);
   const templated = ENDPOINTS.map(([p]) => new RegExp(`^${p.replace(/\{[^}]+\}/g, '[^/]+').replace(/\./g, '\\.')}$`));
   for (const f of files.keys()) if (f.startsWith('v1/')) assert.ok(templated.some((re) => re.test(`/${f}`)), `openapi 未描述 /${f}`);
+});
+
+test('第七十三輪：草稿／審核中的內容不從公開的治理端點（whitelist、todos）帶出 id、標題、權責單位', async () => {
+  const site = govern('2026-10-01', (s) => {
+    addItem(s, mk({ type: 'faq', id: 'faq.r73-draft-leak', title: '草稿標題不可外流', status: 'draft' }));
+    addItem(s, mk({ type: 'faq', id: 'faq.r73-review-leak', title: '審核中標題不可外流', status: 'review', reviewedAt: '2024-01-01' }));
+  });
+  const { files, write } = memWriter();
+  emitApi(site, write);
+  const wl = JSON.parse(files.get('v1/governance/whitelist.json')).data;
+  assert.ok(wl.items.length > 0, '已上線的照列');
+  assert.ok(wl.items.every((i) => ['published', 'archived'].includes(site.byId.get(i.id).status)), '只列已上線（含封存）');
+  for (const [f, body] of files) {
+    if (!f.startsWith('v1/governance/')) continue;
+    assert.ok(!body.includes('faq.r73-draft-leak') && !body.includes('草稿標題不可外流'), `${f} 洩漏草稿`);
+    assert.ok(!body.includes('faq.r73-review-leak') && !body.includes('審核中標題不可外流'), `${f} 洩漏審核中內容`);
+  }
 });

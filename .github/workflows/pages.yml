@@ -7,6 +7,8 @@ on:
     # 每 2 小時重建一次（第九輪 17.2）：讓 publishAt 排程發布到點上線、逾期與白名單狀態跟著時間更新。
     # 重抓官方資料（旅遊疫情、國家等級、CKAN 目錄）並回寫快照只在 02:00 UTC（台灣 10:00）那一次做，其餘只建置。
     - cron: '0 */2 * * *'
+  # 第七十三輪：手動執行只有一個布林輸入（不收任何字串，沒有指令注入的入口）；從 main 以外的分支手動執行時 build 不跑（見 build 的 if），
+  # 而 build 用到的兩個秘密（SNAPSHOT_DEPLOY_KEY、INTL_FEED_TOKEN）放在只准 main 的環境 production（docs/deploy.md §9.2）。
   workflow_dispatch:
     inputs:
       refresh:
@@ -68,6 +70,12 @@ jobs:
 
   build:
     needs: scope
+    # 第七十三輪（docs/deploy.md §9.2）：只在 main 上建置部署。手動執行（workflow_dispatch）可以選任何分支，
+    # 但那個分支的程式不該拿到下面的部署金鑰與資料權杖；部署本身（github-pages 環境）本來就只准 main。
+    if: github.ref == 'refs/heads/main'
+    # 用到 SNAPSHOT_DEPLOY_KEY（可推 main 的部署金鑰）與 INTL_FEED_TOKEN：宣告環境 production，
+    # 讓這兩個秘密可以搬進「部署分支只准 main」的環境秘密；搬之前 repo 層級的秘密照樣讀得到（docs/deploy.md §9.2、§29.1）。
+    environment: production
     runs-on: ubuntu-latest
     permissions:
       contents: write # 排程／手動執行時把官方資料快照 commit 回 main

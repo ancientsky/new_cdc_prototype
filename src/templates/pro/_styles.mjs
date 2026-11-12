@@ -9,6 +9,8 @@ export const proStyles = raw(`<style>
 .pf h3 { font-size: var(--fs-lg); margin: var(--sp-5) 0 var(--sp-2); }
 .pf p, .pf li { line-height: 1.7; }
 .pf .muted, .pf small { color: var(--ink-3); }
+/* 第七十一輪（4.6、U6）：<small> 預設 font-size:smaller，放在 --fs-sm 的表格裡只剩 11.7 px（/pro/ 疫情表 6 處）；一律落在字級下限 token */
+.pf small { font-size: var(--fs-xs); }
 .pf a { color: var(--green-700); }
 .pf code { overflow-wrap: anywhere; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92em; background: var(--green-50); padding: 1px 5px; border-radius: 4px; }
 .pf pre { background: var(--ink); color: #f1f3f5; padding: var(--sp-4); border-radius: var(--radius-sm); overflow-x: auto; font-size: var(--fs-sm); line-height: 1.55; }

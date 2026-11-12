@@ -42,6 +42,9 @@ export function createIntlFeedApi({
 } = {}) {
   const secret = typeof token === 'string' && token.trim() ? digest(token.trim()) : null;
   const limiter = rate ? createRateLimiter({ ...rate, now }) : null; // ip → 時間戳，只在記憶體
+  // 第七十三輪（稽核第 12 項）：認證失敗的稽核也照 deploy.md §31.3 的原則，不是每個 401 都寫——
+  // 同一個來源 key 每分鐘只寫第一筆（之後的失敗只累計在記憶體），否則猜權杖的人（尤其換 IPv6 位址的）能拿稽核檔塞爆磁碟。
+  const authAudit = createRateLimiter({ windowMs: 60_000, max: 1, now });
 
   const send = (res, status, body, headers = {}) => {
     res.statusCode = status;
@@ -100,7 +103,7 @@ export function createIntlFeedApi({
         '推送端點尚未啟用：伺服器沒有設定 INTL_FEED_TOKEN 環境變數。請資訊室設定一組長隨機字串（例：openssl rand -hex 32）後重啟服務，並把同一組交給疫情中心的系統。',
       );
     if (!authorized(req)) {
-      audit?.write?.('intl-push-auth', { result: 'denied', detail: { ip } });
+      if (authAudit.hit(ip).ok) audit?.write?.('intl-push-auth', { result: 'denied', detail: { ip, note: '同一來源一分鐘內的後續失敗不逐筆記錄' } });
       return reject(req, res, 401, 'unauthorized', '權杖不對或沒有帶：請在 Authorization 標頭帶 Bearer <INTL_FEED_TOKEN>', {
         'WWW-Authenticate': 'Bearer realm="intl-epidemic"',
       });

@@ -255,6 +255,7 @@ function makeGateway() {
     outboxDir: path.join(d, 'outbox'),
     gitProvider: createLocalGit({ dir: path.join(d, 'repo'), seedDir: seed }),
     authAdapter: createHeaderAuth({ trustedProxies: ['127.0.0.1'] }),
+    allowHostOrigin: true, // 第七十三輪：非 dev 模式沒有 PUBLIC_ORIGIN 會不啟動；測試伺服器的埠是隨機的
     csrfSecret: 'test-secret',
     intl: { snapshotsDir, today: TODAY },
   });

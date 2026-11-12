@@ -4,7 +4,7 @@ import { config } from '../../../site.config.mjs';
 import { travelStats } from './travel.mjs';
 import { interactivesAt, pickOnThisDay, interactivePath, interactiveSlug, EGG_DEFAULTS } from '../../../scripts/lib/interactives.mjs';
 import { playCard, moduleLangOk } from './play.mjs';
-import { ldFor, pill, askBox, sitCard, statusTag, taskCard, dated, unitName, diseaseName, sitField, publishedOf, byDateDesc, verdictPill, isExternal, link, langOk, imgSrc, mediaCard, topicCard, isMediaOutdated, isTopicEnded, HOME_NEWS_TYPES, titleLink, localText, langSpan, itemPath } from './_partials.mjs';
+import { ldFor, pill, askBox, sitCard, statusTag, taskCard, dated, unitName, diseaseName, sitField, publishedOf, byDateDesc, verdictPill, isExternal, link, langOk, imgSrc, mediaCard, topicCard, isMediaOutdated, isTopicEnded, HOME_NEWS_TYPES, titleLink, localText, langSpan, itemPath, fmtDur } from './_partials.mjs';
 
 export function meta(ctx) {
   // 第六十二輪：首頁只在有「歷史上的今天」小卡或彩蛋時多載一支小腳本（依瀏覽器日期換條目、彩蛋觸發）；都關著時 HTML 與以前相同
@@ -164,14 +164,35 @@ function heroBSubject(pinned) {
 /** 原型預覽列（topbar 下方、右對齊小灰字）：說明目前是哪一做法、可切換；`?hero=A|B` 由 ui.js 套用（不寫 localStorage）。 */
 // 第四十輪（#73）：預覽列以前寫死中文、外語頁也照出（/en/ 首頁頂端一行「切換看做法 A」）。改成 i18n 字串；
 // ui.js 切換後要改的那句（網址參數強制）用 data-forced 帶已翻譯的樣板，前端不必多載字串表。
+// 第七十一輪（U1、U10）：預設 hidden，不再常駐在民眾首頁（手機首屏多吃一行，且「做法 A/B」是開發者語言）；網址帶 ?hero= 時由 ui.js 取消 hidden。
+// 同事要切換仍可直接加參數或從 /guide/ 進來；文案不變。
 function previewBar(ctx, auto) {
   const { t } = ctx;
   const other = auto === 'B' ? 'A' : 'B';
   const label = auto === 'B' ? t('home.preview.B') : t('home.preview.A');
-  return html`<div class="c-promo__preview" data-hero-bar data-auto="${auto}" data-forced="${t('home.preview.forced', { x: '{x}' })}"><div class="wrap"><p>${t('home.preview.label')} <span data-hero-now>${label}</span> · <a data-hero-switch href="${ctx.url('/')}?hero=${other}" rel="nofollow">${t('home.preview.switch')} <span data-hero-other>${other}</span></a><span data-hero-reset hidden> · <a href="${ctx.url('/')}">${t('home.preview.reset')}</a></span></p></div></div>`;
+  return html`<div class="c-promo__preview" data-hero-bar hidden data-auto="${auto}" data-forced="${t('home.preview.forced', { x: '{x}' })}"><div class="wrap"><p>${t('home.preview.label')} <span data-hero-now>${label}</span> · <a data-hero-switch href="${ctx.url('/')}?hero=${other}" rel="nofollow">${t('home.preview.switch')} <span data-hero-other>${other}</span></a><span data-hero-reset hidden> · <a href="${ctx.url('/')}">${t('home.preview.reset')}</a></span></p></div></div>`;
 }
 
 /** 「來臺旅遊或居住」專區（content/topics/visiting-taiwan.json）；未發布就不分卡 */
+/**
+ * 第七十一輪（U3）：首頁影音卡。media 有縮圖（`poster` 欄位，見 schemas/media.json；目前 13 筆都有 src/public/img/media/*.svg）時沿用 mediaCard；
+ * 沒有縮圖時改輸出純文字卡（標題、時長、依據正本、過時標記），不再畫 posterArt() 的灰綠底佔位圖——示範時佔位圖被當成「圖壞了」。
+ * 判斷用 imgSrc(m.poster)：沒有欄位或空字串＝沒有縮圖；有欄位但檔案不存在由建置的內部連結檢查擋下，不在模板裡讀檔。
+ * 只改首頁這一處；/media/ 列表與播放頁維持原樣（列表是瀏覽影片的地方，統一 16:9 格線比較好掃讀）。
+ */
+export function homeMediaCard(ctx, m) {
+  if (imgSrc(ctx, m.poster)) return mediaCard(ctx, m);
+  const { t } = ctx;
+  const outdated = isMediaOutdated(ctx.site, m);
+  return html`<li class="c-media-card c-media-card--text${outdated ? ' c-media-card--outdated' : ''}" data-outdated="${outdated ? '1' : '0'}">
+  <div class="c-media-card__body">
+    ${outdated ? html`<span class="c-media-card__flag">${t('media.outdated.tag')}</span>` : ''}
+    <h3 class="c-media-card__t">${titleLink(ctx, m)}</h3>
+    ${m.durationSeconds ? html`<p class="c-media-card__meta">${t('media.duration')} ${fmtDur(m.durationSeconds)}</p>` : ''}
+    ${m.basedOnVersionLabel ? html`<p class="c-media-card__basis">${t('media.basedOn.short', { v: m.basedOnVersionLabel })}</p>` : ''}
+  </div></li>`;
+}
+
 export const visitingTopic = (site) => (site.collections.topics ?? []).find((x) => x.slug === 'visiting-taiwan' && x.status === 'published') ?? null;
 
 /** 出國與入境：一張卡、兩個入口（出國 → /tasks/travel/；來台 → 來台專區）。來台專區沒有本語言版本時連英文版（它以英文為來源語言） */
@@ -243,7 +264,7 @@ export function render(ctx) {
     .sort((a, b) => (a.priority ?? 9) - (b.priority ?? 9) || String(b.publishedAt).localeCompare(String(a.publishedAt))).slice(0, 6);
   const mediaSec = media.length ? html`<section class="c-home__media" aria-labelledby="media-h">
     <div class="c-sechead"><h2 id="media-h">${t('home.media')}</h2><span class="c-sechead__note">${t('home.media.note')}</span><a class="c-sechead__more" href="${url('/media/')}">${t('home.media.all')} →</a></div>
-    <ul class="c-media-grid">${media.map((m) => mediaCard(ctx, m))}</ul>
+    <ul class="c-media-grid">${media.map((m) => homeMediaCard(ctx, m))}</ul>
   </section>` : '';
   const topicsSec = topics.length ? html`<section class="c-home__topics" aria-labelledby="topics-h">
     <div class="c-sechead"><h2 id="topics-h">${t('home.topics')}</h2><span class="c-sechead__note">${t('home.topics.note')}</span></div>

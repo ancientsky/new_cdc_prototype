@@ -127,6 +127,8 @@ function ajvMessage(e) {
     type: `${label}型別不對（應為 ${e.params.type}）`,
     minItems: `${label}至少要有 ${e.params.limit} 個`,
     anyOf: `${label}要有國家名稱（country）或 ISO 國碼（iso2）至少一個`,
+    // 第七十三輪：不認得的欄位直接退回（快照會原樣輸出成公開 JSON，多出來的欄位也不會經過個資掃描）
+    additionalProperties: `${label}有交換格式沒有定義的欄位「${String(e.params.additionalProperty ?? '').slice(0, 40)}」，請刪除後再送`,
   }[e.keyword];
   return msg ? { field: field || 'item', label, message: msg } : null;
 }
@@ -164,6 +166,8 @@ export function validateFeed(feed, ctx = {}) {
         ['instruction', item.instruction],
         ['disease', item.disease],
         ...(Array.isArray(item.areas) ? item.areas.map((a, k) => [`areas[${k}]`, a?.detail]) : []),
+        // 第七十三輪：參考資料的標題也會公開，一樣掃
+        ...(Array.isArray(item.references) ? item.references.map((x, k) => [`references[${k}]`, x?.title]) : []),
       ];
       for (const [field, text] of texts) {
         if (typeof text !== 'string' || !text) continue;
@@ -217,19 +221,40 @@ function capRawOf(item) {
   };
 }
 
-/** 一則 → 快照列 */
+/**
+ * 舊格式（現行官網 ExportJSON）列允許保留的欄位：官網匯出的 CAP 欄位，以及 normalizeTravelRow 產生的本站欄位（快照再匯入時會帶著）。
+ * 第七十三輪（稽核第 7 項）：舊版 `{ ...raw }` 整列保留，上游多塞的任何欄位（含個資）都原樣進公開的 v1/travel-alerts.json，而且個資掃描看不到。
+ */
+// prettier-ignore
+export const LEGACY_FIELDS = [
+  'sent', 'Source', 'effective', 'expires', 'senderName', 'headline', 'description', 'instruction', 'web', 'alert_title', 'severity_level',
+  'alert_disease', 'alert_disease_EN', 'areaDesc', 'areaDesc_EN', 'circle', 'ISO3166', 'areaDetail', 'ISO3166_2',
+  'Disease', 'DiseaseEn', 'Country', 'CountryEn', 'ISO2', 'Region', 'Level', 'LevelCode', 'LevelRaw', 'Area', 'StartDate', 'Summary', 'Url',
+];
+const pick = (o, keys) => Object.fromEntries(keys.filter((k) => o && Object.hasOwn(o, k) && o[k] !== undefined).map((k) => [k, o[k]]));
+
+/**
+ * 一則 → 快照列（快照會原樣輸出成公開的 v1/travel-alerts.json）。
+ * 第七十三輪：一律白名單複製——areas 只留 country／countryEn／iso2／detail，references 只留 title／url，舊格式列只留 LEGACY_FIELDS。
+ * schema 也加了 additionalProperties:false（多的欄位直接退回），這裡是第二道：就算哪天 schema 放寬，公開 JSON 也不會多出欄位。
+ */
 function toRow(item, check, { raw, provenance }) {
-  const base = normalizeTravelRow(raw ? { ...raw } : capRawOf(item));
+  const base = normalizeTravelRow(raw ? pick(raw, LEGACY_FIELDS) : capRawOf(item));
   for (const k of ['id', 'status', 'areas', 'iso2s', 'body', 'diseaseId', 'provenance', 'references']) delete base[k];
+  const refs = Array.isArray(item.references)
+    ? item.references
+        .filter((x) => x && typeof x === 'object' && typeof x.url === 'string')
+        .map((x) => ({ ...(typeof x.title === 'string' ? { title: x.title } : {}), url: x.url }))
+    : [];
   return {
     ...base,
     id: check.id,
     status: item.status ?? 'published',
-    areas: (item.areas ?? []).map((a) => ({ ...a })),
+    areas: (item.areas ?? []).filter((a) => a && typeof a === 'object').map((a) => pick(a, ['country', 'countryEn', 'iso2', 'detail'])),
     iso2s: check.iso2s,
     body: item.body ?? null,
     diseaseId: check.diseaseId ?? null,
-    ...(Array.isArray(item.references) && item.references.length ? { references: item.references } : {}),
+    ...(refs.length ? { references: refs } : {}),
     provenance: { ...provenance, hash: R.itemFingerprint(item) },
   };
 }

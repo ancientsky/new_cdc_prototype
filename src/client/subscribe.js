@@ -4,7 +4,7 @@
 //   backend = {
 //     kind: 'mock-browser' | 'mock-http',
 //     subscribe({ email, topics, frequency, lang, consent, website }) → Result   // 寄確認信（雙重確認的第一步）
-//     confirm(token)                → Result { status:'confirmed', manageToken, topics, frequency, lang }
+//     confirm(token)                → Result { status:'confirmed', manageToken, topics, frequency, lang }（重複確認：already:true、不帶 manageToken）
 //     status(manageToken)           → Result { status, email(遮罩), topics, frequency, lang }
 //     update(manageToken, prefs)    → Result
 //     unsubscribe(manageToken)      → Result { status:'unsubscribed' }
@@ -310,7 +310,7 @@ function init(root) {
       const r = await backend.confirm(p.get('confirm')); clean();
       if (!r.ok) { showResult(T('subscribe.fail.h'), serverError(r), { links: [[T('subscribe.again'), location.pathname]] }); return; }
       manageToken = r.manageToken;
-      showResult(T(r.already ? 'subscribe.confirm.already' : 'subscribe.confirm.h'), T('subscribe.confirm.text'), { links: [[T('subscribe.manage.go'), `${location.pathname}?manage=${r.manageToken}`]] });
+      showResult(T(r.already ? 'subscribe.confirm.already' : 'subscribe.confirm.h'), T('subscribe.confirm.text'), { links: r.manageToken ? [[T('subscribe.manage.go'), `${location.pathname}?manage=${r.manageToken}`]] : [] }); // 第七十三輪：重複確認不再回 manageToken（管理連結在歡迎信）
       return;
     }
     if (p.has('manage') || p.has('unsubscribe')) {

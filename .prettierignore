@@ -127,6 +127,17 @@ eval/**/*.mjs
 !scripts/reassign-owner.mjs
 !src/client/admin/mine-gateway.js
 !tests/round67-handover.test.mjs
+
+# 第七十一輪：站台外框測試（以主題命名，docs/architecture-ux-review.md 4.1／4.2／4.3／4.7）
+!tests/layout-shell.test.mjs
+
+# 第七十三輪：伺服器端安全稽核（docs/deploy.md §35）
+!scripts/lib/static-serve.mjs
+!tests/round73-server-hardening.test.mjs
+# 第七十三輪：資安（權責單位不能被送審者改走、CSV 公式注入；docs/deploy.md §14）
+!tests/round73-gateway-owner.test.mjs
+!tests/round73-csv-injection.test.mjs
+
 # 第七十二輪
 !scripts/perf-lighthouse.mjs
 !tests/round72-lighthouse.test.mjs
