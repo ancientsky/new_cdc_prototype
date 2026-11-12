@@ -155,7 +155,10 @@ qsa('[data-fill-param]').forEach((i) => { const v = params.get(i.dataset.fillPar
 (() => {
   const bar = document.querySelector('[data-hero-bar]');
   const vers = qsa('[data-hero-ver]');
-  const want = String(new URLSearchParams(location.search).get('hero') || '').toUpperCase();
+  const q0 = new URLSearchParams(location.search);
+  // 第七十一輪（U1、U10）：預覽列是給同事看的開發者語言，伺服器預設輸出 hidden；只有網址帶 ?hero= 才顯示（值不合法也顯示，讓人看得到目前是哪一版、怎麼切）
+  if (bar && q0.has('hero')) bar.hidden = false;
+  const want = String(q0.get('hero') || '').toUpperCase();
   if (!bar || !vers.length || (want !== 'A' && want !== 'B')) return;
   if (!vers.some((el) => el.dataset.heroVer === want)) return;
   vers.forEach((el) => {
@@ -254,7 +257,11 @@ qsa('[data-tabs]').forEach((box) => {
       if (e.key === 'End') { select(tabs.length - 1, true); e.preventDefault(); }
     });
   });
-  select(0);
+  // 第七十一輪（4.4）：容器帶 data-tabs-pro="<tab id>" 時，專業版視角（html[data-view="pro"]）預設選那個 tab（疾病索引：法定類別）；
+  // 依 id 找、不寫死順序，tab 增減不必改這裡。找不到就退回第一個。無 JS 時 CSS 讓全部 panel 展開，不受影響。
+  const proId = root.dataset.view === 'pro' ? box.dataset.tabsPro : '';
+  const initial = proId ? tabs.findIndex((t) => t.id === proId) : -1;
+  select(initial >= 0 ? initial : 0);
 });
 
 /* ───────── 篩選列（新聞、資料目錄）與文字篩選（疾病索引） ───────── */
@@ -298,6 +305,8 @@ qsa('input[data-filter-input]').forEach((inp) => {
     const q = inp.value.trim().toLowerCase();
     qsa('[data-text]', target).forEach((el) => { el.hidden = !!q && !el.dataset.text.includes(q); });
     qsa('[data-filter-group]', target).forEach((g) => { g.hidden = !!q && qsa('[data-text]', g).every((el) => el.hidden); });
+    // 第七十一輪（4.4）：收合區（疾病索引「其他法定傳染病」）裡有符合的才自動展開，否則打了字卻看不到結果
+    qsa('details[data-filter-open]', target).forEach((d) => { if (q && !d.hidden) d.open = true; });
   });
 });
 
@@ -314,6 +323,18 @@ navBtn?.addEventListener('click', () => {
   const nav = document.getElementById(navBtn.getAttribute('aria-controls'));
   const open = nav.classList.toggle('is-open');
   navBtn.setAttribute('aria-expanded', String(open));
+});
+// 第七十一輪（U2）：「跳到主選單」skip link。手機版主選單預設收合（display:none），直接跳 #main-nav 焦點會落空；
+// 收合按鈕看得見（＝手機版）時先展開選單、同步 aria-expanded，再把焦點移到 nav。桌機不攔，交給瀏覽器原生錨點。
+document.querySelector('[data-skip-nav]')?.addEventListener('click', (e) => {
+  const nav = document.getElementById('main-nav');
+  if (!nav) return;
+  if (navBtn && navBtn.offsetParent !== null && !nav.classList.contains('is-open')) {
+    nav.classList.add('is-open');
+    navBtn.setAttribute('aria-expanded', 'true');
+  }
+  e.preventDefault();
+  nav.focus();
 });
 // 第四十七輪：主選單小型面板（<details data-nav-dd>）。開合本身靠原生 details（無 JS 也能用）；這裡只補：同時只開一個、Esc 關閉並把焦點還給 summary、
 // 焦點移出或點面板外面就關。不用 hover 開啟、不加箭頭鍵（APG Disclosure Navigation Menu 不要求）。

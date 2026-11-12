@@ -453,6 +453,8 @@ location ~ ^/pagefind/pagefind\..*\.pf_meta$ { add_header Cache-Control "public,
 
 （注意 10.2 的提醒：子 `location` 若有自己的 `add_header`，上層的安全標頭不會繼承，要在同一層一起放。）GitHub Pages 無法自訂標頭，預設 10 分鐘快取，直接可用。
 
+**自家資產（`assets/**`）不要照 Pagefind 設 immutable（第七十一輪檢視補充）。** Pagefind 的索引檔能長快取，是因為檔名含內容雜湊；本站自己的 `assets/styles/*.css`、`assets/js/*.js` 目前是**固定檔名、沒有內容雜湊**，一旦套上 `immutable`，部署後瀏覽器與 CDN 會繼續用舊的 CSS／JS 配新的 HTML，版面或功能壞掉直到快取過期。第七十二輪（Lighthouse 效能檢視，見 `docs/performance-lighthouse.md`）的過渡做法是在 `headers/` 對 `assets/**` 用短快取加 1 小時 `stale-while-revalidate`；正式站設 CDN（如 Azure Front Door）時沿用同一組值，不要自行改成長快取。檔名加內容雜湊才是正解，會動到建置、所有模板的資產路徑、CSP 雜湊與 `headers/`，列為之後獨立的一輪（見 [architecture-ux-review.md](architecture-ux-review.md) §5.1）；做完之後 `assets/**` 才能比照上表第一列設 immutable。
+
 ### 12.3 MIME 與壓縮
 
 - 索引檔副檔名是 Pagefind 自訂的（`.pf_index`、`.pf_meta`、`.pf_fragment`、`.pf_filter`、`.pagefind`）。伺服器不認得時會回 `application/octet-stream`，**搜尋照常運作**，不需要特別設定 MIME。

@@ -127,3 +127,6 @@ eval/**/*.mjs
 !scripts/reassign-owner.mjs
 !src/client/admin/mine-gateway.js
 !tests/round67-handover.test.mjs
+
+# 第七十一輪：站台外框測試（以主題命名，docs/architecture-ux-review.md 4.1／4.2／4.3／4.7）
+!tests/layout-shell.test.mjs
