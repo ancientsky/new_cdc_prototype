@@ -25,7 +25,8 @@
       "type": "string"
     },
     "image": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^(https?://|/)"
     },
     "cta": {
       "type": "object",
@@ -38,7 +39,8 @@
           "type": "string"
         },
         "url": {
-          "type": "string"
+          "type": "string",
+          "pattern": "^(https?://|mailto:|tel:|/)"
         }
       }
     },

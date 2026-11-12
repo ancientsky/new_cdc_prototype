@@ -2,6 +2,7 @@
 
 > 給誰看：各組 Steward（承辦人）、公關室、資訊室、OASIS、法務與個資窗口、要審上架 PR 的複核者。
 > 依據：[ARCHITECTURE.md](../ARCHITECTURE.md) §16；治理規則見 [governance-model.md](governance-model.md) 規則 22–24，操作步驟見 [guide-staff.md](guide-staff.md) 第 2 節；無障礙部分參照《無障礙網站建置規範》與《身心障礙者權益保障法》對政府網站的要求，授權見 governance-model 第 4 節。
+> 內文 HTML 與連結協定的白名單規則（第七十三輪）：見 [content-html-safety.md](content-html-safety.md)。
 > 性質：**檔案放哪裡、叫什麼、建置時檢查什麼，是原型已經實作的規則；病毒掃描、保存年限、真刪流程等是正式站的政策建議，標「待確認」者須由資訊室、法務與檔案管理單位定案。**
 
 ## 一句話
@@ -33,7 +34,7 @@
 | 種類 | 副檔名 | 上限 | 備註 |
 | --- | --- | --- | --- |
 | PDF 與文件類 | `pdf` `docx` `odt` `md` `ics` | 20 MB | PDF 必須有文字層，見第 4 節；`.md`、`.odt` 是首選的機讀與開放格式 |
-| 圖片 | `png` `jpg` `jpeg` `webp` `svg` | 2 MB | 必須有替代文字（alt），見第 5 節；SVG 不得含 `<script>`、`on*=` 事件屬性、`javascript:` 連結與 `<!ENTITY>` 宣告（建置掃描） |
+| 圖片 | `png` `jpg` `jpeg` `webp` `svg` | 2 MB | 必須有替代文字（alt），見第 5 節；SVG 不得含 `<script>`、`on*=` 事件屬性、`javascript:` 連結、`<foreignObject>`、外部參照（`href`／`xlink:href` 指向外部網址或 `data:`）、`<style>` 內的 `@import` 與外部 `url(…)`、`<!ENTITY>` 宣告（建置掃描） |
 | 資料檔 | `csv` `json` `xlsx` | 50 MB | 資料檔要同時登錄資料目錄，見第 6 節 |
 
 - 一筆內容最多 30 個檔。**限制值定義在 `site.config.mjs` 的 `assets`**，要調整由資訊室與 OASIS 討論後改設定，不是各單位自己放寬。

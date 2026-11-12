@@ -15,12 +15,36 @@ export function esc(v) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
+// 第七十三輪（資安稽核 F-1 第 2、4 點）：連結協定白名單。內容欄位（materials[].url、resources[].url、附件、職缺聯絡…）
+// 會直接變成 href／src；html`` 只做屬性跳脫、不管協定，javascript:／data:／vbscript: 一樣能點。
+// 規則與後台 src/client/admin/md-convert.js 的 safeUrl() 相同：先解 HTML 實體、去掉控制與零寬字元，再看協定；
+// 只放行 http(s)／mailto／tel 與相對路徑（/、./、#、?、//host）。不合格回傳 '#'，合格則原樣回傳（不改動既有輸出）。
+const URL_ENTITIES = { colon: ':', tab: '\t', newline: '\n', amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", sol: '/', nbsp: ' ', period: '.', lpar: '(', rpar: ')' };
+function decodeUrlEntities(s) {
+  return s.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);?/gi, (m, e) => {
+    if (e[0] !== '#') return URL_ENTITIES[e.toLowerCase()] ?? m;
+    const cp = e[1].toLowerCase() === 'x' ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
+    return Number.isFinite(cp) && cp > 0 && cp <= 0x10ffff && (cp < 0xd800 || cp > 0xdfff) ? String.fromCodePoint(cp) : '\ufffd';
+  });
+}
+/** @param {unknown} u @returns {string} 安全的 href／src；不合格回傳 '#' */
+export function safeHref(u) {
+  if (u == null || u === false) return '';
+  const raw = String(u instanceof Raw ? u.s : u);
+  const probe = decodeUrlEntities(raw).replace(/[\u0000-\u0020\u007f-\u009f\u00ad\u200b-\u200f\u2028\u2029\u2060\ufeff]/g, '');
+  const sch = /^([a-z][a-z0-9+.-]*):/i.exec(probe);
+  return sch && !/^(https?|mailto|tel)$/i.test(sch[1]) ? '#' : raw;
+}
+// 緊接在 href="／src="（及 action、formaction、poster、cite）之後的插值自動過 safeHref：模板不必逐一記得呼叫，新模板也自動受保護。
+const URL_ATTR_END = /\s(?:href|src|action|formaction|poster|cite)\s*=\s*["']?$/i;
+
 export function html(strings, ...vals) {
   let out = '';
   strings.forEach((s, i) => {
     out += s;
     if (i < vals.length) {
-      const v = vals[i];
+      let v = vals[i];
+      if (typeof v === 'string' && URL_ATTR_END.test(s)) v = safeHref(v);
       if (Array.isArray(v)) out += v.map((x) => (x instanceof Raw ? x.s : esc(x))).join('');
       else out += v instanceof Raw ? v.s : esc(v);
     }

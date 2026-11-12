@@ -61,6 +61,6 @@
       }
     },
     "relatedDocuments": { "type": "array", "items": { "type": "string" } },
-    "materials": { "type": "array", "items": { "type": "object", "properties": { "label": { "type": "string" }, "url": { "type": "string" }, "langs": { "type": "array", "items": { "type": "string" } } } } }
+    "materials": { "type": "array", "items": { "type": "object", "properties": { "label": { "type": "string" }, "url": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)" }, "langs": { "type": "array", "items": { "type": "string" } } } } }
   }
 }

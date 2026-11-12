@@ -16,6 +16,6 @@
     },
     "bodyMarkdown": { "type": "string" },
     "precautions": { "type": "string" },
-    "whereUrl": { "type": "string", "description": "接種地點查詢（vaxmap）" }
+    "whereUrl": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)", "description": "接種地點查詢（vaxmap）" }
   }
 }

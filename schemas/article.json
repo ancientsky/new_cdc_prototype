@@ -193,6 +193,7 @@
     },
     "pdfUrl": {
       "type": "string",
+      "pattern": "^(https?://|mailto:|tel:|/)",
       "description": "單篇 PDF；沒有時文章頁改提供本期 PDF 與列印版"
     },
     "note": {
@@ -232,6 +233,7 @@
     },
     "legacyDoiUrl": {
       "type": "string",
+      "pattern": "^(https?://|mailto:|tel:|/)",
       "description": "DOI 目前在登錄機構（如華藝）登記的落地網址（通常是舊官網的文章頁）；移轉時用來比對轉址，與 legacyUrls 一起由建置產生 301 對照"
     }
   }

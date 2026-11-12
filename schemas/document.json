@@ -24,8 +24,8 @@
     "supersedes": { "type": ["string", "null"] },
     "supersededBy": { "type": ["string", "null"], "description": "計算欄位，不手填" },
     "isCurrent": { "type": "boolean", "description": "計算欄位，不手填" },
-    "pdfUrl": { "type": "string" },
-    "archiveUrl": { "type": "string" },
+    "pdfUrl": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)" },
+    "archiveUrl": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)" },
     "machineReadableMarkdown": { "type": "string" },
     "sections": { "type": "array", "items": { "type": "object", "required": ["key", "heading", "markdown"], "properties": {
       "key": { "type": "string" }, "heading": { "type": "string" }, "markdown": { "type": "string", "description": "可含獨立一行的頁碼標記 〔p.N〕（PDF 印刷頁碼；docs/pdf-ingest.md）" },
@@ -47,7 +47,7 @@
           "description": "第二十八輪：重建版逐條記錄依據（網址、取得方式、查證狀態）；供權責單位查核",
           "items": { "type": "object", "required": ["label", "kind", "status"], "properties": {
             "label": { "type": "string" },
-            "url": { "type": "string" },
+            "url": { "type": "string", "pattern": "^(https?://|mailto:|tel:|/)" },
             "ref": { "type": "string", "description": "站內內容 id（kind=site-content 時）" },
             "kind": { "enum": ["official-page", "official-file", "search-excerpt", "site-content", "mirror"] },
             "status": { "enum": ["unverified", "verified", "unreachable"], "description": "unreachable＝開發環境連不到，只看過搜尋摘錄" },
