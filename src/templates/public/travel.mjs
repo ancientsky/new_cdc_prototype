@@ -434,16 +434,17 @@ const BASE_CSS = `
 .tv-row{display:grid;grid-template-columns:minmax(9em,14em) minmax(0,1fr);gap:var(--sp-2) var(--sp-4);padding:var(--sp-2) 0;border-top:1px solid var(--line-2)}
 .tv-row__d{font-weight:700}
 .tv-chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
-.tv-chip{display:inline-block;border:1px solid var(--line);border-radius:var(--radius-pill);padding:3px 12px;font-size:var(--fs-sm);background:var(--white);color:var(--ink);text-decoration:none;overflow-wrap:anywhere}
+/* 第七十一輪（docs/architecture-ux-review.md 4.5、U5）：chip 內距 3×12 → 8×14 px、手機版最小高度 44 px（新版無障礙規範 2.5.8 建議值）；旅遊頁是全站可點目標最密的頁，原本 505 個 chip 高度不到 44 px */
+.tv-chip{display:inline-block;border:1px solid var(--line);border-radius:var(--radius-pill);padding:8px 14px;font-size:var(--fs-sm);background:var(--white);color:var(--ink);text-decoration:none;overflow-wrap:anywhere}
 a.tv-chip:hover{border-color:var(--green-700);background:var(--green-50);color:var(--green-900)}
-.tv-chip small{color:var(--ink-3)}
+.tv-chip small{color:var(--ink-3);font-size:var(--fs-xs)} /* 第七十一輪（4.6）：<small> 預設 smaller，在 --fs-sm 裡只剩 11.7 px；改用字級下限 token */
 .tv-others{margin-top:var(--sp-3);font-size:var(--fs-sm)} .tv-others summary{cursor:pointer;color:var(--green-700)}
 .tv-others .tv-chips{margin-top:var(--sp-2)}
 .tv-news{list-style:none;margin:0;padding:0;max-width:860px}
 .tv-news li{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:2px var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--line-2)}
 .tv-news time{color:var(--ink-3);font-size:var(--fs-sm)}
 .tv-news__w{font-weight:700} .tv-news__s{margin:2px 0 0;color:var(--ink-2)}
-.tv-news__areas{margin:4px 0 0} .tv-news__areas .tv-chip{padding:1px 10px;font-size:var(--fs-xs)}
+.tv-news__areas{margin:4px 0 0} .tv-news__areas .tv-chip{padding:8px 14px;font-size:var(--fs-sm)} /* 第七十一輪（4.5）：與一般 chip 同尺寸，不再是 1×10 px 的小膠囊 */
 .tv-news__src{margin:2px 0 0;font-size:var(--fs-xs)} .tv-news__src a{color:var(--ink-3)}
 .tv-newsmore summary{cursor:pointer;color:var(--green-700);margin-top:var(--sp-2)}
 .tv-stages{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sp-3)}
@@ -460,7 +461,8 @@ a.tv-chip:hover{border-color:var(--green-700);background:var(--green-50);color:v
   .tv-news li,.tv-evs li{grid-template-columns:1fr}
   .tv-lookup--hero{padding:var(--sp-4)}
   .tv-lookup--hero h2{font-size:var(--fs-xl)}
-}`;
+}
+@media (max-width:640px){.tv-chip{display:inline-flex;align-items:center;min-height:44px}} /* 第七十一輪（4.5）：手機版 chip 至少 44 px 高 */`;
 /** 輸出本頁樣式；map＝併入 _travel-map.mjs 的 styles（若尚未匯出就略過） */
 const styleTag = ({ map = false } = {}) => raw(`<style>${BASE_CSS}${map && typeof TravelMap.styles === 'string' ? `\n${TravelMap.styles}` : ''}\n</style>`);
 export const travelStyles = styleTag();

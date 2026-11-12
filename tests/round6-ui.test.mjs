@@ -250,6 +250,25 @@ test('疾病索引：無疾病頁的疾病只列名稱與「尚無頁」說明�
   }
 });
 
+// 第七十一輪（docs/architecture-ux-review.md 4.4）：第一個 tab「有完整疾病頁」、其他疾病收進 <details>、專業版預設法定類別、整列一個連結
+test('疾病索引：第一個 tab 是「有完整疾病頁」，無頁疾病收合並整列連到問問看；專業版由 data-tabs-pro 指到法定類別', () => {
+  const site = govern('2026-10-01');
+  const h = str(diseases.render(makeCtx(site, 'zh-TW', { path: '/diseases/' })));
+  const tabIds = [...h.matchAll(/role="tab" id="(tab-[\w-]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(tabIds, ['tab-page', 'tab-law', 'tab-route', 'tab-stroke', 'tab-zhuyin']);
+  assert.match(h, /data-tabs data-tabs-pro="tab-law"/);
+  const panel = h.slice(h.indexOf('id="panel-page"'), h.indexOf('id="panel-law"'));
+  const withPage = site.master.diseases.filter((d) => site.collections.diseases.some((p) => p.id === d.id && p.status === 'published'));
+  const noPage = site.master.diseases.length - withPage.length;
+  assert.match(panel, new RegExp(`<details class="c-dis-others"[^>]*><summary>其他法定傳染病（${noPage}）</summary>`));
+  const [featuredPart, othersPart] = panel.split('<details');
+  assert.equal((featuredPart.match(/class="c-dis__link"/g) ?? []).length, withPage.length, '有頁的疾病都在收合區前面');
+  assert.equal((othersPart.match(/class="c-dis__link" href="[^"]*\/ask\/\?q=/g) ?? []).length, noPage, '無頁疾病整列連到問問看');
+  assert.ok(!h.includes('c-pill c-pill--neutral">尚無獨立頁面'), '「尚無獨立頁面」不再是膠囊');
+  // 有疫情狀態的疾病，在第一個 tab 顯示狀態標籤
+  for (const it of site.situation.items.filter((i) => withPage.some((d) => d.id === i.disease))) assert.match(featuredPart, new RegExp(`c-status-tag--${it.status}`));
+});
+
 /* ───────── 後台 ───────── */
 test('後台 /admin/migration/：摘要表列數＝清單數；每列疾病、類別、頁面有無、進度條、人工／推導、下載 JSON；預設待移轉最多在前', () => {
   const site = mkScaleSite();
