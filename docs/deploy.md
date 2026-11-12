@@ -1,7 +1,7 @@
 # 部署與維運
 
 > 給誰看：資訊室、OASIS，以及要擴充內容型別或修改 schema 的工程同事。
-> 需求：Node.js 22 以上（CI 使用 22；`.nvmrc`、`.node-version` 也是 22。pdfjs-dist 需要 `Promise.withResolvers`，Node 20 跑不了 PDF 閘道測試，見 Issue #105）。依賴只有 `ajv`、`ajv-formats`、`marked`。
+> 需求：Node.js 22.13 以上（CI 使用 26；`.nvmrc`、`.node-version` 也是 26，見 [node-upgrade.md](node-upgrade.md)。pdfjs-dist 需要 `Promise.withResolvers`，Node 20 跑不了 PDF 閘道測試，見 Issue #105）。依賴只有 `ajv`、`ajv-formats`、`marked`。
 
 ## 1. 本機預覽
 
@@ -50,7 +50,7 @@ BASE_PATH='' npm run build && node scripts/serve.mjs
 檔案：`.github/workflows/pages.yml`。
 
 - **觸發：** push 到 `main`、**每 2 小時排程**（偶數整點 UTC；第九輪起，讓 `publishAt` 排程發布到點上線）、手動 `workflow_dispatch`（輸入 `refresh`，預設 true）。
-- **build 工作：** checkout → Node 22 → `npm ci` → 還原 Chromium 快取（沒命中才下載一次；給 `content-pr.yml` 的程式 PR 用，§28.5）→ lint、format、typecheck → `npm test`（只驗 repo 內的內容與快照）→ **只在 02:00 UTC（台灣 10:00）那一次排程與手動執行（`refresh` 不是 false）時**跑 `npm run fetch`（失敗不中斷）並把快照 commit 回 `main` → 取出 `previews` 分支（PR 預覽，不存在就略過）→ `npm run build`（`BASE_PATH` 取自儲存庫名稱、`SITE_URL` 取自擁有者；建置把預覽複製到 `dist/preview/`）→ 上傳 `dist/`。
+- **build 工作：** checkout → Node 26 → `npm ci` → 還原 Chromium 快取（沒命中才下載一次；給 `content-pr.yml` 的程式 PR 用，§28.5）→ lint、format、typecheck → `npm test`（只驗 repo 內的內容與快照）→ **只在 02:00 UTC（台灣 10:00）那一次排程與手動執行（`refresh` 不是 false）時**跑 `npm run fetch`（失敗不中斷）並把快照 commit 回 `main` → 取出 `previews` 分支（PR 預覽，不存在就略過）→ `npm run build`（`BASE_PATH` 取自儲存庫名稱、`SITE_URL` 取自擁有者；建置把預覽複製到 `dist/preview/`）→ 上傳 `dist/`。
 - **deploy 工作：** `actions/deploy-pages` 發布，網址 `https://ancientsky.github.io/new_cdc_prototype/`。
 - **併發：** 同一時間只保留最新一次部署，舊的會被取消。
 
@@ -285,6 +285,13 @@ CI 任一項失敗即不部署：JSON Schema 與跨檔參照（`owner`、`basedO
 - **2026-10-12 `upload-artifact` v4.6.2→v7.0.2、`download-artifact` v4.3.0→v8.0.2（PR #86）**：紅燈正是上面那條釘死清單，PR 的 lint／格式／型別／治理閘門／無障礙／預覽建置全綠，只有 `npm test` 的 `content-pr.yml` 測試不過。release notes 裡會影響我們的只有三點，都不用改 workflow：(1) 兩個 action 改用 Node 24 執行，GitHub 代管 runner 已支援，自架 runner 要 2.327.1 以上；(2) `download-artifact` v8 起 SHA256 比對不符預設直接失敗（之前只警告），對 lane job 反而更安全，因為它下載的 `lane.json` 就是合併決策的依據；(3) v7／v8 新增「不壓縮直接上傳單檔」選項（`archive: false`），我們沒用，維持預設打包。驗證方式：`git ls-remote https://github.com/actions/upload-artifact refs/tags/v7.0.2` 確認 SHA 與 PR 一致，再把 `tests/lanes.test.mjs` 的兩行換新。
 - **已知的行為變化**：`actions/upload-pages-artifact` v4 起不打包點開頭的檔案與目錄（`.nojekyll`、`.well-known/`）。目前沒影響；`/.well-known/security.txt` 因此改為建置時同時輸出到根目錄 `/security.txt`（見 10.4）。
 - **前端 `src/public/vendor/marked.min.js` 不跟著升**：它是後台貼上轉換用的獨立副本，Dependabot 看不到。要升時手動換檔並測後台「貼上 Word／網頁」轉換。
+
+### 9.2 Node.js 大版升級（第七十一輪）
+
+- **誰升**：人，不是 Dependabot（它只管 action SHA 與 npm 依賴）。每年 10 月底 Node 把新版升為 Active LTS 後一個月內做。
+- **改哪裡**：四個 workflow 的 `node-version`、`tests/lanes.test.mjs` 釘住的那一行、`.nvmrc`／`.node-version`、本文開頭與 §14 圖、`line-chatbot.md`、`README.md` 快速開始；`engines.node` 只在最舊的 LTS 結束支援時才提高。
+- **怎麼驗**：`npm ci`、lint／format／typecheck、`npm test`（先 `npm run build`，否則 49 項「dist 若已建置」會略過，比對不準）、`--check`、`audit:dist`，再用新舊兩版各建一次 `dist/` 做 `diff -rq`，只剩時間戳才算安全。
+- **完整紀錄與每次看到的新警告**：[node-upgrade.md](node-upgrade.md)。2026-11-12 升 22→26：測試 1278 項與 24 相同、dist 零內容差異；新事物是 npm 11.20 的 `install-scripts` 允許清單（不要 approve）與 `localStorage` 全域 getter 的 ExperimentalWarning（測試改存描述子）。
 
 ## 10. 安全標頭基準（第二十三輪）
 
@@ -551,7 +558,7 @@ location ~ ^/pagefind/pagefind\..*\.pf_meta$ { add_header Cache-Control "public,
 - 同事怎麼操作：見 guide-staff §34。
 
 ```
-同事瀏覽器 ──443──▶ 反向代理（IIS／nginx／Keycloak 前的 oauth2-proxy）──▶ 閘道（Node 22，只聽內網或本機）
+同事瀏覽器 ──443──▶ 反向代理（IIS／nginx／Keycloak 前的 oauth2-proxy）──▶ 閘道（Node 26，只聽內網或本機）
                      │ 負責登入（三選一，見 14.3）                         │
                      └ /admin/* 靜態頁                                      ├──443──▶ 自架 GitLab（REST v4，服務帳號 token）
                                                                             ├─ .local/gateway-state.json、gateway-audit.jsonl
