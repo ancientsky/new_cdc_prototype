@@ -135,6 +135,31 @@ Yulun 要求（2026-11-12）詳細檢查整個網站有沒有安全、漏洞、�
 - **要在 GitHub／主機上動手的事**（程式改不了）：建 `production` Environment 並搬兩個祕密、規則集對程式路徑要求 code owner 審核、檢討部署金鑰的規則集繞過、手動跑一次 DAST。見 [docs/security-audit.md](docs/security-audit.md) §5、[docs/deploy.md](docs/deploy.md) §9.3–9.4。
 - 文件：[docs/security-audit.md](docs/security-audit.md)（方法、全部發現、修法、待辦）、[docs/content-html-safety.md](docs/content-html-safety.md)（內容 HTML 白名單）、deploy.md §14.10、§35；測試 `tests/round73-*.test.mjs`；[ARCHITECTURE](ARCHITECTURE.md) §74、[architecture-decisions](docs/architecture-decisions.md) §58。實作由 Opus 工作者分三個 worktree 完成，本串驗收。
 
+## 第七十二輪：Lighthouse 效能檢測——分數已滿，真正要看的是答案頁的 perf:ask、CSS 與結果出現時的跳動
+
+同事請我們用 Chrome Lighthouse 詳細檢測全站效能（2026-11-12）。
+
+### 做了什麼
+
+- **量：** Lighthouse 13.6.0 對本機建置（模仿 GitHub Pages 的 gzip 與 10 分鐘快取）量 15 個代表頁 × 手機／桌機 × 3 次取中位數。一般頁面效能 99–100、帶問題的答案頁手機 92／桌機 93、無障礙 100、最佳實務 100；SEO 在原型模式 61–66（本輪修正後首頁 69），是刻意的 `noindex`，正式模式建置後疾病頁與新聞頁 100。
+- **改四件小事：** (1) 建置時壓縮 CSS（擋住首次繪製的三支 CSS gzip 後 30.4 → 23.1 KB，每頁少下載 7–8 KB；分數本來就滿，FCP 不變，`MINIFY=off` 可關）；(2) 首頁隱藏的「從其他語言來的提示」連結補上 `href`（正式模式首頁 SEO 唯一的扣分；原型模式首頁 61 → 69）；(3) `dist/headers/` 多輸出快取規則：`headers.json` 的 `cache` 區塊與對應的 nginx `location`、`_headers`、IIS 片段——HTML 與資料每次驗證、`/assets` 1 小時、Pagefind 雜湊檔一年；(4) 帶 `?q=` 的答案頁與搜尋頁在結果載入中先撐一個視窗高，結果出現時下方內容不再被推走（`/ask/?q=` 桌機 93 → 99、`/search/?q=` 桌機 95 → 100）。
+- **工具：** `npm run perf:lighthouse`（`scripts/perf-lighthouse.mjs`）與手動＋每月的 `.github/workflows/lighthouse.yml`，**只回報、不擋合併**。
+
+### 為什麼這樣做
+
+- 分數已經滿了，所以只改「Lighthouse 每頁都指出、改了沒有副作用」的項目；`components.css` 每頁有 85–90% 用不到但**刻意不拆**——一支共用檔快取後 3,300 多頁都不用再抓，比每區一支划算。
+- `/assets` 不設一年快取：檔名沒有內容雜湊、JS 的 `import` 路徑也沒有版本，快取一年會讓改版後的讀者拿新 HTML 配舊 JS；檔名雜湊等正式主機定案再做。
+- 效能分數在共用 runner 上會跳 ±30%，放進必要 CI 只會讓無關的 PR 隨機紅燈，所以只做手動與每月排程。
+
+### 結果與還沒解的
+
+- **答案頁是全站最重的頁：** `/ask/?q=登革熱` 在 Lighthouse 手機 92 分（TBT 約 340 ms、516 KB），本專案自己的 `perf:ask` 量到答案畫出來為止是 TBT 690 ms、答案 1.4 秒——Lighthouse 的 TBT 只算到 TTI，延後載入的工作只算到一部分。答案頁請看 `npm run perf:ask`（第四十輪寫的就是這個）。
+- **新發現並已修：** 答案與搜尋結果插入時把下方區塊往下推，`/ask/?q=登革熱` 桌機 CLS 0.152（超過建議的 0.1），是答案頁桌機 93 分的主因。修法：網址帶 `?q=` 時首次繪製前就在 `<html>` 標 `data-q`，CSS 讓載入中的答案區／結果區先撐一個視窗高，結果畫完放開。重量：`/ask/?q=登革熱` 桌機 93 → 99（CLS 0.152 → 0.000）、手機 CLS 0.033 → 0.000；`/search/?q=登革熱` 桌機 95 → 100（CLS 0.135 → 0.037）。代價：查無結果時放開預留高度，桌機 CLS 約 0.10（97 分），比結果頁常見得少。
+- **量測本身出過錯：** 第一次基準量測的臨時腳本把 `/ask/?q=登革熱` 截成 `/ask/?q`，答案頁誤得 100 分；改成正式腳本、報告記實際網址後才量到 92。
+- 觀察項：`/travel/` 6,482 個元素、疫苗時程表有一個 373 ms 的版面計算，分數仍滿，內容再增加時先考慮預設收合。主執行緒的時間主要花在樣式與版面，不是 JS。
+- 開發環境連不到 GitHub Pages，**沒有量線上站**；線上多的是網路往返，資源大小相同。
+- 文件：[docs/performance-lighthouse.md](docs/performance-lighthouse.md)（怎麼量、全部數字、逐項處置與理由、前後對照、怎麼自己再跑、教訓）；[docs/deploy.md](docs/deploy.md) §12.2、§15；ARCHITECTURE §75；[architecture-decisions](docs/architecture-decisions.md) §59。測試 `tests/round72-lighthouse.test.mjs`。
+
 ## 第七十一輪：架構與 UI/UX 全面檢視——哪裡穩、接手會卡在哪、介面改了什麼
 
 Yulun 要求（2026-11-12）：對整個原型的架構設計做完整檢視，包含詳細的 UI/UX 建議。同日另有 Lighthouse 效能（第七十二輪）、資安與弱點（第七十三輪）、Node.js 26 升級（第七十四輪）三個平行檢視。
@@ -693,7 +718,7 @@ grokbot 用七種語言、新手爸媽與外籍人士的角色實測線上站後
 ### 全文搜尋與答案頁效能（#79、#80）
 
 - **「兒童健康手冊」搜不到（#79）**：不是斷詞問題。Pagefind 建索引時整段丟掉 `<label>`、`<form>`、`<nav>` 等元素，申請頁「應備文件」勾選清單用 `<label>` 包文字，整份清單都沒進索引，「病歷摘要」「停留天數」也一樣。修法是在餵給 Pagefind 的索引副本裡把 `<form>` 外的 `<label>` 改成 `<span>`，使用者看到的 HTML 不動（`<label>` 是正確的無障礙寫法）。建置後新增**召回自我檢查**：抽 80 頁、160 個 4–8 字中文片段直接查剛建好的索引，低於 98% 建置失敗（整站抽樣 2,012 段：99.8% → 100%）。查無時多一層「逐步去掉前後字」退路並提示改搜了什麼。附帶發現 `pagefind.close()` 不會等檔案寫完，平行測試曾抓到被截斷的 wasm，現在等輸出穩定才關。
-- **答案頁手機 Lighthouse 61 分、TBT 2.4 秒（#80）**：直覺是 JSON 太大，CPU profile 卻顯示回答一題 1.1 秒裡約 1.0 秒是**正規式編譯**：1,260 個名稱逐一執行 RegExp，V8 第一次執行才編譯。改成每個名稱先算一段一定會出現的字面子字串預篩，問句裡沒有就不建 RegExp（有測試證明判定與原本完全相同）：Node 上 `answer()` 1,142 → 107 ms。再加索引依語言分片、引擎與索引改成聚焦輸入框才載入、次要 JSON 閒時預取。4 倍 CPU 降速手機實測 `/ask/?q=登革熱`：TBT 4,602 → 約 650 ms，答案出現 5.3 → 1.5 秒，無 q 的初始畫面 121.6 → 86.7 KB 且 0 個 JSON。CI 新增答案頁資料傳輸量門檻（gzip 後估算，445 KB），JS 預算改看「提問後合計」，延後載入不能變成繞過預算的漏洞。**教訓：先量再改，而且要量到能拆開看**；Web Worker 先不做，做法寫在 docs/ask-search-llm.md §11。
+- **答案頁手機 Lighthouse 61 分、TBT 2.4 秒（#80）**：直覺是 JSON 太大，CPU profile 卻顯示回答一題 1.1 秒裡約 1.0 秒是**正規式編譯**：1,260 個名稱逐一執行 RegExp，V8 第一次執行才編譯。改成每個名稱先算一段一定會出現的字面子字串預篩，問句裡沒有就不建 RegExp（有測試證明判定與原本完全相同）：Node 上 `answer()` 1,142 → 107 ms。再加索引依語言分片、引擎與索引改成聚焦輸入框才載入、次要 JSON 閒時預取。4 倍 CPU 降速手機實測 `/ask/?q=登革熱`：TBT 4,602 → 約 650 ms，答案出現 5.3 → 1.5 秒，無 q 的初始畫面 121.6 → 86.7 KB 且 0 個 JSON。CI 新增答案頁資料傳輸量門檻（gzip 後估算，445 KB），JS 預算改看「提問後合計」，延後載入不能變成繞過預算的漏洞。**教訓：先量再改，而且要量到能拆開看**；Web Worker 先不做，做法寫在 docs/ask-search-llm.md §11。（第七十二輪全站重量見 [docs/performance-lighthouse.md](docs/performance-lighthouse.md)。）
 
 ### CI 與工程（#81、#82、#83）
 
@@ -1082,6 +1107,7 @@ docs/                使用說明與治理文件
 | [docs/ci-scaling.md](docs/ci-scaling.md) | **內容越來越多，Git＋CI 會不會慢到爆炸**：Actions 334 次執行的逐步實測（變慢的是測試與無障礙掃描，checkout 一直 2–3 秒）、本機把內容加到 4 倍與 10 倍的建置時間、舊站規模的推估、Anthropic Scion 文章哪些能借用、分三層的對策（內容 PR 與程式 PR 分開、一個 PR 建一次站、增量索引、自架 runner、分倉） |
 | [docs/interactives.md](docs/interactives.md) | **彩蛋與互動模組**（第六十二輪）：歷史上的今天、兒童衛教小測驗、防疫決策模擬、首頁彩蛋做成有開關、有檔期、有權責的內容型別；放在版面的哪些空位、為什麼；疫情緊急全部隱藏；後台開關頁；無障礙與效能；教訓 |
 | [docs/transition-faq.md](docs/transition-faq.md) | **同事常問的五個問題**：小改現行官網能不能導入 AI 與治理（能外掛問答、不能做治理）、新站另做舊站留著會怎樣（只能唯讀並行）、怎麼驗廠商能力（三道實作題）、200 字差別說明、時程估算與切換做法（經費另案評估，不寫在公開儲存庫，見 §8）、LINE 疾管家會不會跟著換（連到 line-chatbot.md） |
+| [docs/performance-lighthouse.md](docs/performance-lighthouse.md) | **Lighthouse 效能檢測**（第七十二輪）：怎麼量（本機建置、手機／桌機、3 次中位數）、15 頁結果表、逐項發現與處置（改／不改的理由）、CSS 壓縮與快取規則的前後數字、答案頁為什麼要看 `perf:ask`、`npm run perf:lighthouse` 怎麼跑 |
 | [docs/careers-privacy.md](docs/careers-privacy.md) | 人才招募個資處理原則：報名資料不進 repo、模擬報名只存瀏覽器、正式報名在站外或後端、只公布報名編號與遮罩姓名、保存與下架、查詢與刪除、個資法對應與告知事項範本 |
 
 ## 貢獻方式

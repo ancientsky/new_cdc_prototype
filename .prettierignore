@@ -137,3 +137,7 @@ eval/**/*.mjs
 # 第七十三輪：資安（權責單位不能被送審者改走、CSV 公式注入；docs/deploy.md §14）
 !tests/round73-gateway-owner.test.mjs
 !tests/round73-csv-injection.test.mjs
+
+# 第七十二輪
+!scripts/perf-lighthouse.mjs
+!tests/round72-lighthouse.test.mjs

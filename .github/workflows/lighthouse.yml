@@ -1,0 +1,77 @@
+name: Lighthouse (manual + monthly, report only)
+
+# 第七十二輪（docs/performance-lighthouse.md）：用 Lighthouse 量建置出來的靜態站（手機＋桌機，每頁多次取中位數）。
+# 為什麼不是 PR 的必要檢查：GitHub 代管 runner 的 CPU 忙閒差很多，效能分數與 TBT 會跳 ±30%（docs/architecture-decisions.md、docs/deploy.md §15），
+# 擋 PR 會讓無關的改動隨機紅燈。這裡只產報告、不擋任何東西：手動觸發（改版前後各跑一次比較）＋每月一次看趨勢。
+# 答案頁的真實成本（提問後下載索引、建引擎）Lighthouse 量不到，請看 npm run perf:ask。
+on:
+  schedule:
+    # 每月 1 日 20:00 UTC ＝ 台灣時間每月 2 日 04:00（避開白天與每週一的 DAST）
+    - cron: '0 20 1 * *'
+  workflow_dispatch:
+    inputs:
+      runs:
+        description: '每頁每種裝置跑幾次（取中位數）'
+        type: string
+        default: '3'
+      pages:
+        description: '要量的路徑，逗號分隔（留空＝腳本預設的 11 頁）'
+        type: string
+        default: ''
+
+# 只讀：這個工作流程不寫回任何東西，結果走 artifact 與 job summary。
+permissions:
+  contents: read
+
+concurrency:
+  group: lighthouse
+  cancel-in-progress: false
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 26
+          check-latest: true
+          cache: npm
+      - run: npm ci
+      - name: Install Chromium (Playwright build, same as the other browser checks)
+        run: npx playwright install --with-deps chromium
+      - name: Build the site for root path
+        # BASE_PATH=''：腳本在根路徑 / 提供 dist。LINK_CHECK、PAGEFIND_VERIFY 關掉（pages.yml 已做過，這裡只要有站可量）；
+        # Pagefind 索引要建，/search/?q= 才量得到真實頁面。
+        run: BASE_PATH='' LINK_CHECK=off PAGEFIND_VERIFY=off npm run build
+      - name: Run Lighthouse
+        # 輸入值經環境變數傳入，不直接展開進 shell（避免指令注入）
+        env:
+          LH_RUNS: ${{ inputs.runs || '3' }}
+          LH_PAGES: ${{ inputs.pages }}
+          LH_OUT: lighthouse-report
+        run: |
+          CHROME_BIN="$(node --input-type=module -e "import { chromium } from 'playwright'; console.log(chromium.executablePath())")"
+          export CHROME_BIN
+          node scripts/perf-lighthouse.mjs | tee lighthouse.log
+      - name: Print table to job summary
+        if: always()
+        run: |
+          {
+            echo "## Lighthouse（中位數；本機建置、GitHub runner，數字只供趨勢比較）"
+            echo
+            if [ -f lighthouse.log ]; then grep '^|' lighthouse.log || echo "沒有產出表格（看上一步的日誌）"; else echo "沒有產出結果（看上一步的日誌）"; fi
+            echo
+            echo "答案頁 /ask/?q= 的真實成本請看 npm run perf:ask（Lighthouse 只量到 TTI）。"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: lighthouse-report
+          path: lighthouse-report/
+          retention-days: 30
+          if-no-files-found: warn

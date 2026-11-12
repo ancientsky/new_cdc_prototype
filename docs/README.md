@@ -40,6 +40,7 @@
 | [git-platform-choice.md](git-platform-choice.md) | Git 平台怎麼選（Gitea／Forgejo、GitLab、GitHub Enterprise）與要回答的四題 |
 | [ci-cd-overview.md](ci-cd-overview.md) | 從按下送出到上線的每一道關卡、基準數字與常見質疑（拿去談的版本） |
 | [ci-scaling.md](ci-scaling.md) | 內容越來越多 CI 會不會變慢：實測、推估與分層對策 |
+| [performance-lighthouse.md](performance-lighthouse.md) | Lighthouse 效能檢測（第七十二輪）：量法、15 頁結果、逐項處置與不改的理由、CSS 壓縮與快取規則、答案頁為什麼要看 `perf:ask`、`npm run perf:lighthouse` |
 | [admin-auth.md](admin-auth.md) | 後台登入設計：機關 SSO＋MFA、角色×單位對照、離職調動清單 |
 | [attack-surface.md](attack-surface.md) | 攻擊面縮小：正式部署產物白名單、內部站拆分、對外資產清冊 |
 | [abuse-protection.md](abuse-protection.md) | 防自動化濫用：速率限制、Bot 防護、探測偵測與告警 |
@@ -84,7 +85,7 @@
 | 智慧問答與全文搜尋 | ask-engine-explainer.md、ask-search-llm.md、eval-challenge.md、ask-log.md、pageindex-evaluation.md、line-chatbot.md |
 | 多語 | i18n.md、guide-public.md |
 | 介面、導覽與無障礙 | architecture-ux-review.md、navigation.md、a11y.md、interactives.md |
-| 部署與 CI | deploy.md、ci-cd-overview.md、ci-scaling.md、git-platform-choice.md |
+| 部署與 CI | deploy.md、ci-cd-overview.md、ci-scaling.md、performance-lighthouse.md、git-platform-choice.md |
 | 資安與個資 | attack-surface.md、abuse-protection.md、security-testing.md、careers-privacy.md、deploy.md（§9、§10、§30–§32） |
 | 舊站移轉 | migration-playbook.md、legacy-import.md、transition-faq.md |
 | 各專區與外部系統 | bulletin.md（疫情報導）、immunization-ia.md（預防接種）、intl-epidemic.md（國際疫情）、denguemap-integration.md、vaxmap-integration.md |

@@ -369,6 +369,9 @@ html:not(.js) .c-tabs__print{position:static;width:auto;height:auto;margin:0 0 v
 .c-advanced__body{position:absolute;right:0;margin-top:6px;width:min(420px,100%);background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-4);box-shadow:var(--shadow-lg);z-index:30}
 .c-askpage__grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:var(--sp-6);align-items:start}
 .c-answer{min-height:260px}
+/* 第七十二輪（docs/performance-lighthouse.md §4.9）：深連結 /ask/?q=… 與 /search/?q=… 的結果常比預留高度高很多，結果一出現就把下面的區塊（三個管道、頁尾）往下推（桌機 CLS 0.15／0.13）。
+   layout 的 EARLY_JS 在首次繪製前就依網址標 html[data-q]，載入中先撐到一個視窗高，下面的區塊從一開始就在視窗外，畫完再放開。沒有 ?q= 的頁面不受影響。 */
+html[data-q] .c-answer[aria-busy="true"],html[data-q] #search-results:empty{min-height:100vh}
 .c-skeleton span{display:block;height:16px;border-radius:6px;margin:14px 0;background:linear-gradient(90deg,var(--line-2) 25%,#f6f7f9 50%,var(--line-2) 75%);background-size:200% 100%;animation:c-shimmer 1.4s infinite}
 .c-skeleton span.short{width:55%}
 @keyframes c-shimmer{from{background-position:200% 0}to{background-position:-200% 0}}

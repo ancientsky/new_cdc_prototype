@@ -23,7 +23,7 @@ import { emitHeaders } from './lib/emit-headers.mjs';
 import { renderAllPages } from './lib/pages.mjs';
 import { emitI18nBundles, emitRefusalBundles } from './lib/i18n-split.mjs';
 import { checkJsBudget, checkAskDataBudget } from './lib/js-budget.mjs';
-import { minifyDir } from './lib/minify.mjs';
+import { minifyDir, minifyCssDir } from './lib/minify.mjs';
 import { buildPagefindIndex, verifyPagefindRecall } from './lib/pagefind.mjs';
 import { runEval } from '../eval/run-eval.mjs';
 import { todayISO } from './lib/render.mjs';
@@ -142,6 +142,10 @@ async function main() {
   // 第三十四輪（ARCHITECTURE 40）：瀏覽器端 JS 逐檔壓縮＋source map；原始碼與註解留在 src/client。MINIFY=off 可關
   const mz = await minifyDir(path.join(DIST, 'assets/js'));
   log(mz.skipped ? `JS 壓縮：略過（MINIFY=off），${mz.files} 檔` : `JS 壓縮 → assets/js：${mz.files} 檔，${(mz.before / 1024).toFixed(0)} KB → ${(mz.after / 1024).toFixed(0)} KB（另有 .js.map 供除錯）`);
+  // 第七十二輪（docs/performance-lighthouse.md）：CSS 也壓縮。放在這裡＝主題 CSS（上面 writeOut）已寫進 assets/styles 之後；
+  // 正式建置時 dist-profile.mjs 把整包 assets/（含 admin.css）複製到 dist-internal/，那一步在最後，所以內部站拿到的也是壓縮後的檔。MINIFY=off 一起關
+  const mc = await minifyCssDir(path.join(DIST, 'assets/styles'));
+  log(mc.skipped ? `CSS 壓縮：略過（MINIFY=off），${mc.files} 檔` : `CSS 壓縮 → assets/styles：${mc.files} 檔，${(mc.before / 1024).toFixed(1)} KB → ${(mc.after / 1024).toFixed(1)} KB`);
   if (fs.existsSync(path.join(ROOT, 'src/public'))) copyDir(path.join(ROOT, 'src/public'), DIST);
   // 檔案資產：只複製 published／archived 內容有宣告的檔 → dist/files/{id}/{file}
   const copied = copyAssets(publicView(site), DIST);

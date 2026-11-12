@@ -21,6 +21,8 @@ npm run dev            # 建置後啟動預覽伺服器（預設 http://localhos
 | `npm run check` | 同上但**不輸出檔案**；用來在 PR 前快速驗證 |
 | `npm test` | 跑 `tests/*.test.mjs`（治理規則測試） |
 | `npm run eval` | 在 Node 跑評估集，印出各類別通過率 |
+| `npm run perf:ask` | 答案頁手機效能（TBT、傳輸量、答案出現時間），需 `BASE_PATH=''` 建置；見 §15 |
+| `npm run perf:lighthouse` | 全站 Lighthouse（預設 11 頁 × 手機／桌機 × 3 次中位數），需 `BASE_PATH=''` 建置；只回報不擋。見 [performance-lighthouse.md](performance-lighthouse.md) |
 | `node scripts/serve.mjs 4144` | 指定連接埠預覽 `dist/` |
 
 預覽網址含 basePath。想用根路徑預覽（`http://localhost:4173/`），建置時設空字串：
@@ -471,15 +473,7 @@ GitHub Pages 不能自訂回應標頭，所以原型站只有 `<meta name="robot
 | `index/*.pf_index`、`fragment/*.pf_fragment`、`filter/*.pf_filter`、`pagefind.<語言>_<雜湊>.pf_meta` | 含內容雜湊，內容變檔名就變 | `public, max-age=31536000, immutable` |
 | `pagefind.js`、`pagefind-worker.js`、`pagefind-entry.json`、`wasm.*.pagefind` | 固定檔名 | 短快取或每次驗證（如 `max-age=300` 或 `no-cache`）；`pagefind-entry.json` 是入口，指向最新的雜湊檔，**不能被長快取**，否則使用者會一直拿到舊索引 |
 
-這些快取標頭**不在** `dist/headers/` 輸出內（目前只輸出安全標頭）；要靠伺服器／CDN 設定，例如 nginx：
-
-```
-location ^~ /pagefind/ { add_header Cache-Control "no-cache"; }
-location ~ ^/pagefind/(index|fragment|filter)/ { add_header Cache-Control "public, max-age=31536000, immutable"; }
-location ~ ^/pagefind/pagefind\..*\.pf_meta$ { add_header Cache-Control "public, max-age=31536000, immutable"; }
-```
-
-（注意 10.2 的提醒：子 `location` 若有自己的 `add_header`，上層的安全標頭不會繼承，要在同一層一起放。）GitHub Pages 無法自訂標頭，預設 10 分鐘快取，直接可用。
+**第七十二輪起，快取規則由建置輸出到 `dist/headers/`**（與安全標頭同一組檔，[performance-lighthouse.md](performance-lighthouse.md) 4.4）：機讀正本是 `headers.json` 的 `cache` 區塊；`nginx.conf` 已含上表的 `location`（每個都重列安全標頭，因為子 `location` 一有 `add_header` 就不繼承上層，見 10.2；檔案要 include 在 `server {}` 這一層）；`_headers` 給 Netlify／Cloudflare Pages；IIS 的 `<clientCache>` 片段在 `dist/headers/README.md`。規則也涵蓋 Pagefind 以外的路徑：HTML、`.md`、`/v1/` 預設 `no-cache`（每次驗證，緊急發布立刻可見），`/assets/`、`/img/`、`/files/` `public, max-age=3600, stale-while-revalidate=86400`（檔名沒有內容雜湊，不能 immutable）。請直接套用產生的檔，不要依本節手抄。GitHub Pages 無法自訂標頭，預設 10 分鐘快取，直接可用。
 
 **自家資產（`assets/**`）不要照 Pagefind 設 immutable（第七十一輪檢視補充）。** Pagefind 的索引檔能長快取，是因為檔名含內容雜湊；本站自己的 `assets/styles/*.css`、`assets/js/*.js` 目前是**固定檔名、沒有內容雜湊**，一旦套上 `immutable`，部署後瀏覽器與 CDN 會繼續用舊的 CSS／JS 配新的 HTML，版面或功能壞掉直到快取過期。第七十二輪（Lighthouse 效能檢視，見 `docs/performance-lighthouse.md`）的過渡做法是在 `headers/` 對 `assets/**` 用短快取加 1 小時 `stale-while-revalidate`；正式站設 CDN（如 Azure Front Door）時沿用同一組值，不要自行改成長快取。檔名加內容雜湊才是正解，會動到建置、所有模板的資產路徑、CSP 雜湊與 `headers/`，列為之後獨立的一輪（見 [architecture-ux-review.md](architecture-ux-review.md) §5.1）；做完之後 `assets/**` 才能比照上表第一列設 immutable。
 
@@ -843,6 +837,8 @@ GitLab main 更新 ──▶ GitLab CI 建置 dist/ ──▶ 對外網站（本
 ## 15. 智慧問答頁的效能預算（第四十輪，Issue #80）
 
 `/ask/` 在手機 Lighthouse 只有 61 分（TBT 2.4 s、傳輸 553 KB）。根因、改法與前後數字見 docs/ask-search-llm.md 第四十輪；這裡只講建置閘門與怎麼量。
+
+> **第七十二輪：** 全站 Lighthouse 檢測（15 頁 × 手機／桌機）與 `npm run perf:lighthouse`、手動＋每月的 `lighthouse.yml` 見 [performance-lighthouse.md](performance-lighthouse.md)。要記得的盲點：**Lighthouse 的 TBT 只算到 TTI**，答案頁提問後才 `import()` 的引擎與索引只被算到一部分（`/ask/?q=登革熱` Lighthouse TBT 約 340 ms，`perf:ask` 量到答案出現為 690 ms），所以答案頁一律以本節的 `perf:ask` 為準。`perf:lighthouse` 同樣只回報、不進必要 CI（理由同 15.3）。
 
 ### 15.1 建置時擋什麼
 
