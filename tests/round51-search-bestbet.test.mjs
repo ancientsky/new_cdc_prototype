@@ -183,9 +183,7 @@ async function open(browser, url, viewport = { width: 1280, height: 900 }) {
   await page.waitForFunction(
     () => {
       const s = document.querySelector('#search-status')?.textContent ?? '';
-      return (
-        s && !/搜尋中|Searching|Mencari|กำลังค้นหา|Đang tìm/.test(s) && (document.querySelector('#search-results li') || /沒有|No |Tidak|ไม่|Không/.test(s))
-      );
+      return s && !/搜尋中|Searching|Mencari|กำลังค้นหา|Đang tìm/.test(s) && (document.querySelector('#search-results li') || /沒有|No |Tidak|ไม่|Không/.test(s));
     },
     null,
     { timeout: 20000 },
