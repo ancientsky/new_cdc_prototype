@@ -1,22 +1,22 @@
 {
   "meta": {
     "mode": "live",
-    "fetchedAt": "2026-11-06T02:11:58.331Z",
-    "dataDate": "2026-11-06",
+    "fetchedAt": "2026-11-25T02:11:13.349Z",
+    "dataDate": "2026-11-25",
     "sourceUrl": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON",
     "sourcePage": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
     "label": "國際旅遊疫情建議等級表",
     "count": 246,
     "stats": {
       "level3": 1,
-      "level2": 29,
-      "level1": 215,
+      "level2": 30,
+      "level1": 214,
       "none": 1,
       "entries": 509,
       "targeted": {
         "level3": 1,
-        "level2": 29,
-        "level1": 104,
+        "level2": 30,
+        "level1": 103,
         "none": 112
       }
     },
@@ -52,7 +52,7 @@
         "color": "warning"
       }
     ],
-    "rawCount": 2505,
+    "rawCount": 2506,
     "rawFields": [
       "source",
       "effective",
@@ -70,6 +70,22 @@
       "ISO3166_2"
     ],
     "rawSample": [
+      {
+        "source": "CDC",
+        "effective": "2026-11-17T00:00:00+08:00",
+        "senderName": "疾病管制署",
+        "instruction": "對當地採取加強防護",
+        "web": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
+        "alert_title": "國際間旅遊疫情建議",
+        "severity_level": "第二級:警示(Alert)",
+        "alert_disease": "麻疹",
+        "areaDesc": "美國",
+        "areaDesc_EN": "USA",
+        "circle": "-100.54,38.82",
+        "ISO3166": "US",
+        "areaDetail": "",
+        "ISO3166_2": ""
+      },
       {
         "source": "CDC",
         "effective": "2026-10-27T00:00:00+08:00",
@@ -101,22 +117,6 @@
         "ISO3166": "MM",
         "areaDetail": "",
         "ISO3166_2": ""
-      },
-      {
-        "source": "CDC",
-        "effective": "2026-09-08T00:00:00+08:00",
-        "senderName": "疾病管制署",
-        "instruction": "提醒遵守當地的一般預防措施",
-        "web": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-        "alert_title": "國際間旅遊疫情建議",
-        "severity_level": "第一級:注意(Watch)",
-        "alert_disease": "瘧疾",
-        "areaDesc": "馬來西亞",
-        "areaDesc_EN": "Malaysia",
-        "circle": "102.06,3.71",
-        "ISO3166": "MY",
-        "areaDetail": "",
-        "ISO3166_2": ""
       }
     ],
     "filterNote": "已排除歷史紀錄：有結束日／已解除者、2023-05-01 前的 COVID-19 建議、第三級逾 365 天未更新者",
@@ -139,12 +139,12 @@
     },
     "changeSummary30": {
       "new": 0,
-      "raised": 1,
+      "raised": 2,
       "lowered": 0,
       "lifted": 0,
       "renewed": 0
     },
-    "changeSummaryAsOf": "2026-11-06",
+    "changeSummaryAsOf": "2026-11-25",
     "changeSummaryMode": "live"
   },
   "data": [
@@ -285,14 +285,6 @@
           "kind": "raised",
           "from": 1,
           "to": 2
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "新型A型流感",
-          "Area": "福建省",
-          "kind": "lowered",
-          "from": 2,
-          "to": 1
         }
       ]
     },
@@ -525,16 +517,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "屈公病",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "ID",
@@ -735,13 +718,6 @@
           "kind": "new",
           "from": null,
           "to": 1
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "麻疹",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
         }
       ]
     },
@@ -786,16 +762,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "登革熱",
-          "kind": "new",
-          "from": 0,
-          "to": 1
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "KH",
@@ -870,13 +837,6 @@
           "kind": "new",
           "from": null,
           "to": 1
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "新型A型流感",
-          "kind": "lowered",
-          "from": 2,
-          "to": 1
         }
       ]
     },
@@ -929,16 +889,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "小兒麻痺症/急性無力肢體麻痺",
-          "kind": "raised",
-          "from": 1,
-          "to": 2
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "MM",
@@ -1100,23 +1051,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "M痘",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "屈公病",
-          "kind": "raised",
-          "from": 1,
-          "to": 2
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "NP",
@@ -1202,23 +1137,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "屈公病",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "立百病毒感染症",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "PK",
@@ -1293,23 +1212,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "茲卡病毒感染症",
-          "kind": "new",
-          "from": null,
-          "to": 1
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "登革熱",
-          "kind": "new",
-          "from": 0,
-          "to": 2
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "LK",
@@ -1352,23 +1255,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "屈公病",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "登革熱",
-          "kind": "raised",
-          "from": 1,
-          "to": 2
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "MV",
@@ -1411,23 +1298,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-18",
-          "Disease": "登革熱",
-          "kind": "new",
-          "from": 0,
-          "to": 1
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "登革熱",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "AF",
@@ -1652,16 +1523,24 @@
       "Country": "美國",
       "CountryEn": "USA",
       "Region": "北美",
-      "Level": "第一級：注意(Watch)",
-      "LevelCode": 1,
-      "Disease": "新型A型流感、M痘、麻疹、新冠併發重症、茲卡病毒感染症",
-      "StartDate": "2026-05-19",
-      "TargetedLevelCode": 1,
-      "TargetedLevel": "第一級：注意(Watch)",
-      "TargetedDisease": "新型A型流感、M痘、麻疹、茲卡病毒感染症",
-      "TargetedStartDate": "2026-05-19",
-      "Summary": "新型A型流感、M痘、麻疹、新冠併發重症、茲卡病毒感染症為第一級：注意。提醒遵守當地的一般預防措施",
+      "Level": "第二級：警示(Alert)",
+      "LevelCode": 2,
+      "Disease": "麻疹、新型A型流感、M痘、新冠併發重症、茲卡病毒感染症",
+      "StartDate": "2026-11-17",
+      "TargetedLevelCode": 2,
+      "TargetedLevel": "第二級：警示(Alert)",
+      "TargetedDisease": "麻疹、新型A型流感、M痘、茲卡病毒感染症",
+      "TargetedStartDate": "2026-11-17",
+      "Summary": "麻疹為第二級：警示；新型A型流感、M痘、新冠併發重症、茲卡病毒感染症為第一級：注意。對當地採取加強防護",
       "Diseases": [
+        {
+          "Disease": "麻疹",
+          "Level": "第二級：警示(Alert)",
+          "LevelCode": 2,
+          "StartDate": "2026-11-17",
+          "Summary": "對當地採取加強防護",
+          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+        },
         {
           "Disease": "新型A型流感",
           "Level": "第一級：注意(Watch)",
@@ -1676,14 +1555,6 @@
           "Level": "第一級：注意(Watch)",
           "LevelCode": 1,
           "StartDate": "2026-04-28",
-          "Summary": "提醒遵守當地的一般預防措施",
-          "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
-        },
-        {
-          "Disease": "麻疹",
-          "Level": "第一級：注意(Watch)",
-          "LevelCode": 1,
-          "StartDate": "2025-03-18",
           "Summary": "提醒遵守當地的一般預防措施",
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         },
@@ -1705,7 +1576,16 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
+      "RecentChanges": [
+        {
+          "date": "2026-11-17",
+          "Disease": "麻疹",
+          "kind": "raised",
+          "from": 1,
+          "to": 2
+        }
+      ]
     },
     {
       "ISO2": "CA",
@@ -1807,16 +1687,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "M痘",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "BR",
@@ -1875,23 +1746,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-14",
-          "Disease": "屈公病",
-          "kind": "raised",
-          "from": 1,
-          "to": 2
-        },
-        {
-          "date": "2026-08-13",
-          "Disease": "屈公病",
-          "kind": "renewed",
-          "from": 1,
-          "to": 1
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "PE",
@@ -1942,16 +1797,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "麻疹",
-          "kind": "new",
-          "from": null,
-          "to": 1
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "CO",
@@ -2002,16 +1848,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "登革熱",
-          "kind": "raised",
-          "from": 1,
-          "to": 2
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "AR",
@@ -2054,16 +1891,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "屈公病",
-          "kind": "raised",
-          "from": 1,
-          "to": 2
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "GB",
@@ -2157,16 +1985,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "M痘",
-          "kind": "new",
-          "from": 0,
-          "to": 1
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "DE",
@@ -2584,16 +2403,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "麻疹",
-          "kind": "new",
-          "from": 0,
-          "to": 1
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "QA",
@@ -2722,16 +2532,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "拉薩熱",
-          "kind": "lowered",
-          "from": 2,
-          "to": 1
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "KE",
@@ -2985,13 +2786,6 @@
           "Disease": "伊波拉病毒感染",
           "kind": "lifted",
           "from": 3,
-          "to": 0
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "麻疹",
-          "kind": "lifted",
-          "from": 1,
           "to": 0
         }
       ]
@@ -3271,23 +3065,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "小兒麻痺症/急性無力肢體麻痺",
-          "kind": "lowered",
-          "from": 2,
-          "to": 1
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "麻疹",
-          "kind": "lowered",
-          "from": 2,
-          "to": 1
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "AS",
@@ -3637,16 +3415,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "黃熱病",
-          "kind": "lifted",
-          "from": 0,
-          "to": 0
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "BJ",
@@ -3759,16 +3528,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "登革熱",
-          "kind": "raised",
-          "from": 1,
-          "to": 2
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "BS",
@@ -4022,23 +3782,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "小兒麻痺症/急性無力肢體麻痺",
-          "kind": "new",
-          "from": 0,
-          "to": 1
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "霍亂",
-          "kind": "new",
-          "from": null,
-          "to": 1
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "CG",
@@ -4299,23 +4043,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "屈公病",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "登革熱",
-          "kind": "new",
-          "from": null,
-          "to": 2
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "CV",
@@ -4908,16 +4636,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "屈公病",
-          "kind": "new",
-          "from": null,
-          "to": 1
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "GH",
@@ -5426,16 +5145,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "霍亂",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "HU",
@@ -5764,16 +5474,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "茲卡病毒感染症",
-          "kind": "new",
-          "from": null,
-          "to": 1
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "KM",
@@ -6056,16 +5757,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "麻疹",
-          "kind": "new",
-          "from": 0,
-          "to": 1
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "LS",
@@ -6367,30 +6059,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "茲卡病毒感染症",
-          "kind": "new",
-          "from": null,
-          "to": 1
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "麻疹",
-          "kind": "raised",
-          "from": 1,
-          "to": 2
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "M痘",
-          "kind": "raised",
-          "from": 1,
-          "to": 2
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "MH",
@@ -6576,16 +6245,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "黃熱病",
-          "kind": "lifted",
-          "from": 0,
-          "to": 0
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "MS",
@@ -7291,16 +6951,7 @@
           "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "登革熱",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "RE",
@@ -7518,16 +7169,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "茲卡病毒感染症",
-          "kind": "new",
-          "from": null,
-          "to": 1
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "SD",
@@ -7578,23 +7220,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "霍亂",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "登革熱",
-          "kind": "new",
-          "from": null,
-          "to": 2
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "SI",
@@ -7890,23 +7516,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "麻疹",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "小兒麻痺症/急性無力肢體麻痺",
-          "kind": "new",
-          "from": 0,
-          "to": 2
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "ST",
@@ -8822,23 +8432,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "茲卡病毒感染症",
-          "kind": "new",
-          "from": null,
-          "to": 1
-        },
-        {
-          "date": "2026-08-11",
-          "Disease": "瘧疾",
-          "kind": "new",
-          "from": null,
-          "to": 2
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "YT",
@@ -8892,16 +8486,7 @@
           "Background": true
         }
       ],
-      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
-      "RecentChanges": [
-        {
-          "date": "2026-08-11",
-          "Disease": "霍亂",
-          "kind": "lifted",
-          "from": 1,
-          "to": 0
-        }
-      ]
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09"
     },
     {
       "ISO2": "ZW",

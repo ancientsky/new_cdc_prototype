@@ -1,17 +1,17 @@
 {
   "version": 1,
   "lastRun": {
-    "at": "2026-11-06T02:11:49.178Z",
+    "at": "2026-11-25T02:11:08.757Z",
     "source": "official-export",
     "by": "ci",
     "shape": "legacy",
     "mode": "full",
     "producer": "現行官網 TravelEpidemic/ExportJSON",
     "generatedAt": null,
-    "received": 66,
-    "accepted": 66,
+    "received": 69,
+    "accepted": 69,
     "counts": {
-      "new": 66,
+      "new": 69,
       "updated": 0,
       "withdrawn": 76,
       "unchanged": 0,
@@ -21,7 +21,7 @@
     "total": 76,
     "held": {
       "reasons": [
-        "這批會讓現行清單從 76 則變成 66 則（少掉 76 則，一半以上）：請確認是否真的要撤下這麼多"
+        "這批會讓現行清單從 76 則變成 69 則（少掉 76 則，一半以上）：請確認是否真的要撤下這麼多"
       ]
     },
     "rejected": [],
@@ -32,13 +32,6 @@
         "ids": [
           "j7o9oWxJEmdnv31844blrQ",
           "L7_pDO4KPHNK98c3mZ5Dhg"
-        ]
-      },
-      {
-        "kind": "disease",
-        "value": "病毒性腸胃炎",
-        "ids": [
-          "sQlZM5yGhWGA3ZLhD9FrCA"
         ]
       }
     ],
@@ -352,6 +345,29 @@
     "wroteSnapshot": false
   },
   "history": [
+    {
+      "at": "2026-11-25T02:11:08.757Z",
+      "source": "official-export",
+      "producer": "現行官網 TravelEpidemic/ExportJSON",
+      "by": "ci",
+      "mode": "full",
+      "received": 69,
+      "accepted": 69,
+      "total": 76,
+      "counts": {
+        "new": 69,
+        "updated": 0,
+        "withdrawn": 76,
+        "unchanged": 0,
+        "rejected": 0,
+        "upgraded": 0
+      },
+      "unmapped": 1,
+      "held": [
+        "這批會讓現行清單從 76 則變成 69 則（少掉 76 則，一半以上）：請確認是否真的要撤下這麼多"
+      ],
+      "wroteSnapshot": false
+    },
     {
       "at": "2026-11-06T02:11:49.178Z",
       "source": "official-export",

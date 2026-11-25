@@ -1,13 +1,28 @@
 {
   "meta": {
     "mode": "live",
-    "fetchedAt": "2026-11-06T02:11:58.334Z",
+    "fetchedAt": "2026-11-25T02:11:13.351Z",
     "sourceUrl": "https://www.cdc.gov.tw/CountryEpidLevel/ExportJSON",
     "windowDays": 400,
     "note": "官方 CountryEpidLevel/ExportJSON 每列為一則警示事件（第一／二／三級或「解除」）；kind 由同（ISO2, Disease, Area）前一則等級推得（new／raised／lowered／lifted／renewed），只留近 windowDays 天。",
-    "count": 343
+    "count": 344
   },
   "data": [
+    {
+      "date": "2026-11-17",
+      "ISO2": "US",
+      "Country": "美國",
+      "CountryEn": "USA",
+      "Disease": "麻疹",
+      "Area": null,
+      "LevelCode": 2,
+      "Level": "第二級：警示(Alert)",
+      "Summary": "對當地採取加強防護",
+      "Url": "https://www.cdc.gov.tw/InternationalEpidemicLevel/Index/NlUwZUNvckRWQ09CbDJkRVFjaExjUT09",
+      "kind": "raised",
+      "from": 1,
+      "to": 2
+    },
     {
       "date": "2026-10-27",
       "ISO2": "CN",

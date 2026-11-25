@@ -2,74 +2,74 @@
   "schema": 1,
   "label": "登革熱地圖疫情摘要（summary.json＋manifest.json）",
   "mode": "live",
-  "fetchedAt": "2026-11-06T02:11:49.175Z",
+  "fetchedAt": "2026-11-25T02:11:08.755Z",
   "sourceUrl": "https://ancientsky.github.io/denguemap/data/summary.json",
   "manifest": {
     "schema": 1,
-    "generatedAt": "2026-11-05T17:27:48Z",
-    "latestOnset": "2026-11-03",
+    "generatedAt": "2026-11-24T23:56:18Z",
+    "latestOnset": "2026-11-22",
     "sources": {
       "cases": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-05T17:27:48Z"
+        "fetchedAt": "2026-11-24T23:56:18Z"
       },
       "imported": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-05T17:27:48Z"
+        "fetchedAt": "2026-11-24T23:56:18Z"
       },
       "notices": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-05T17:27:48Z"
+        "fetchedAt": "2026-11-24T23:56:18Z"
       },
       "clusters": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-05T17:27:48Z"
+        "fetchedAt": "2026-11-24T23:56:18Z"
       },
       "vector": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-05T17:27:48Z"
+        "fetchedAt": "2026-11-24T23:56:18Z"
       },
       "ns1": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-05T17:27:48Z"
+        "fetchedAt": "2026-11-24T23:56:18Z"
       },
       "travel": {
         "ok": true,
         "stale": false,
-        "fetchedAt": "2026-11-05T17:27:48Z"
+        "fetchedAt": "2026-11-24T23:56:18Z"
       }
     },
     "warnings": []
   },
   "summary": {
-    "asOf": "2026-11-06",
-    "latestOnset": "2026-11-03",
+    "asOf": "2026-11-25",
+    "latestOnset": "2026-11-22",
     "year": 2026,
     "ytd": {
-      "local": 16,
-      "imported": 215
+      "local": 23,
+      "imported": 233
     },
     "last7": {
-      "local": 1,
-      "imported": 2
+      "local": 3,
+      "imported": 4
     },
     "last14": {
-      "local": 2,
-      "imported": 14
+      "local": 5,
+      "imported": 8
     },
     "last30": {
-      "local": 3,
-      "imported": 41
+      "local": 8,
+      "imported": 21
     },
     "prevYtd": {
-      "local": 28,
-      "imported": 188
+      "local": 29,
+      "imported": 201
     },
     "byCounty": {
       "10002": {
@@ -114,7 +114,7 @@
       },
       "10018": {
         "local": 0,
-        "imported": 3
+        "imported": 5
       },
       "10020": {
         "local": 0,
@@ -122,47 +122,47 @@
       },
       "63000": {
         "local": 0,
-        "imported": 33
+        "imported": 35
       },
       "64000": {
-        "local": 12,
-        "imported": 39
+        "local": 18,
+        "imported": 41
       },
       "65000": {
-        "local": 0,
-        "imported": 37
+        "local": 1,
+        "imported": 38
       },
       "66000": {
         "local": 0,
-        "imported": 19
+        "imported": 25
       },
       "67000": {
         "local": 0,
-        "imported": 16
+        "imported": 19
       },
       "68000": {
         "local": 0,
-        "imported": 26
+        "imported": 28
       }
     },
     "topTowns14": [
       [
-        "64000110",
-        2,
+        "64000020",
+        3,
         0
       ],
       [
-        "63000030",
-        0,
-        2
-      ],
-      [
-        "10013190",
-        0,
+        "64000090",
+        1,
         1
       ],
       [
-        "10013200",
+        "64000110",
+        1,
+        0
+      ],
+      [
+        "10018010",
         0,
         1
       ],
@@ -172,72 +172,38 @@
         1
       ],
       [
-        "63000100",
+        "63000110",
         0,
         1
       ],
       [
-        "64000030",
+        "64000060",
         0,
         1
       ],
       [
-        "64000040",
+        "66000070",
         0,
         1
       ],
       [
-        "64000140",
+        "66000080",
         0,
         1
       ],
       [
-        "64000240",
-        0,
-        1
-      ],
-      [
-        "65000050",
-        0,
-        1
-      ],
-      [
-        "65000110",
-        0,
-        1
-      ],
-      [
-        "67000290",
-        0,
-        1
-      ],
-      [
-        "68000020",
+        "67000310",
         0,
         1
       ]
     ],
     "townNames": {
-      "10013190": {
-        "county": "10013",
-        "countyZh": "屏東縣",
-        "countyEn": "Pingtung County",
-        "zh": "林邊鄉",
-        "en": "Linbian Township"
-      },
-      "10013200": {
-        "county": "10013",
-        "countyZh": "屏東縣",
-        "countyEn": "Pingtung County",
-        "zh": "南州鄉",
-        "en": "Nanzhou Township"
-      },
-      "63000030": {
-        "county": "63000",
-        "countyZh": "臺北市",
-        "countyEn": "Taipei City",
-        "zh": "大安區",
-        "en": "Da'an District"
+      "10018010": {
+        "county": "10018",
+        "countyZh": "新竹市",
+        "countyEn": "Hsinchu City",
+        "zh": "東區",
+        "en": "East District"
       },
       "63000040": {
         "county": "63000",
@@ -246,26 +212,33 @@
         "zh": "中山區",
         "en": "Zhongshan District"
       },
-      "63000100": {
+      "63000110": {
         "county": "63000",
         "countyZh": "臺北市",
         "countyEn": "Taipei City",
-        "zh": "內湖區",
-        "en": "Neihu District"
+        "zh": "士林區",
+        "en": "Shilin District"
       },
-      "64000030": {
+      "64000020": {
         "county": "64000",
         "countyZh": "高雄市",
         "countyEn": "Kaohsiung City",
-        "zh": "左營區",
-        "en": "Zuoying District"
+        "zh": "鼓山區",
+        "en": "Gushan District"
       },
-      "64000040": {
+      "64000060": {
         "county": "64000",
         "countyZh": "高雄市",
         "countyEn": "Kaohsiung City",
-        "zh": "楠梓區",
-        "en": "Nanzi District"
+        "zh": "新興區",
+        "en": "Xinxing District"
+      },
+      "64000090": {
+        "county": "64000",
+        "countyZh": "高雄市",
+        "countyEn": "Kaohsiung City",
+        "zh": "前鎮區",
+        "en": "Qianzhen District"
       },
       "64000110": {
         "county": "64000",
@@ -274,47 +247,26 @@
         "zh": "小港區",
         "en": "Xiaogang District"
       },
-      "64000140": {
-        "county": "64000",
-        "countyZh": "高雄市",
-        "countyEn": "Kaohsiung City",
-        "zh": "大寮區",
-        "en": "Daliao District"
+      "66000070": {
+        "county": "66000",
+        "countyZh": "臺中市",
+        "countyEn": "Taichung City",
+        "zh": "南屯區",
+        "en": "Nantun District"
       },
-      "64000240": {
-        "county": "64000",
-        "countyZh": "高雄市",
-        "countyEn": "Kaohsiung City",
-        "zh": "路竹區",
-        "en": "Luzhu District"
+      "66000080": {
+        "county": "66000",
+        "countyZh": "臺中市",
+        "countyEn": "Taichung City",
+        "zh": "北屯區",
+        "en": "Beitun District"
       },
-      "65000050": {
-        "county": "65000",
-        "countyZh": "新北市",
-        "countyEn": "New Taipei City",
-        "zh": "新莊區",
-        "en": "Xinzhuang District"
-      },
-      "65000110": {
-        "county": "65000",
-        "countyZh": "新北市",
-        "countyEn": "New Taipei City",
-        "zh": "汐止區",
-        "en": "Xizhi District"
-      },
-      "67000290": {
+      "67000310": {
         "county": "67000",
         "countyZh": "臺南市",
         "countyEn": "Tainan City",
-        "zh": "關廟區",
-        "en": "Guanmiao District"
-      },
-      "68000020": {
-        "county": "68000",
-        "countyZh": "桃園市",
-        "countyEn": "Taoyuan City",
-        "zh": "中壢區",
-        "en": "Zhongli District"
+        "zh": "永康區",
+        "en": "Yongkang District"
       }
     }
   }
