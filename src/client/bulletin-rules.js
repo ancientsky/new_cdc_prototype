@@ -298,7 +298,9 @@ export function splitManuscript(text, { categories = DEFAULT_CATEGORIES } = {}) 
   // NFC：PDF 文字層常用相容漢字（「劉」U+F9C7），不正規化就不在 [一-鿿] 範圍、作者列會認不出來
   // 行內連續空白收斂到 40 個、行尾空白交給 trim()（2026-10-21 資安檢查）：原本的 /[ \t]+$/ 與 DOI 的 \s{2,} 遇到行內幾萬個空白是 O(n²)，
   // 5 萬個空白要好幾秒；欄位之間的空白只看「兩個以上」，真實稿件不會連續超過 40 個，收斂不影響切段
-  const raw = String(text ?? '').normalize('NFC').replace(/\r\n?/g, '\n').split('\n').map((l) => l.replace(/　/g, ' ').replace(/\s{41,}/g, ' '.repeat(40)).trim());
+  const srcLines = String(text ?? '').normalize('NFC').replace(/\r\n?/g, '\n').split('\n');
+  const indentOf = srcLines.map((l) => /^[ 　]*/.exec(l)[0].length); // 原始縮排（trim 之前）；關鍵字續行判斷用
+  const raw = srcLines.map((l) => l.replace(/　/g, ' ').replace(/\s{41,}/g, ' '.repeat(40)).trim());
   // 1. 頁首頁尾與標籤型資訊
   const lines = [];
   for (let li = 0; li < raw.length; li++) {
@@ -317,7 +319,25 @@ export function splitManuscript(text, { categories = DEFAULT_CATEGORIES } = {}) 
       if (!m) continue;
       if (r.date) meta[r.key] ??= dateOf(m[2], m[3], m[4]);
       else if (r.enDate) { const mo = MONTHS.indexOf(m[1].slice(0, 3).toLowerCase()); if (mo >= 0) meta[r.key] ??= dateOf(m[3], mo + 1, m[2]); }
-      else if (r.list) { let v = m[1]; const nx = raw[li + 1] ?? ''; if (nx && nx.length <= 40 && !/[：:。]/.test(nx) && !SENT_END.test(v) && !headingKeyOf(nx)) { v += (/[A-Za-z]$/.test(v) && /^[A-Za-z]/.test(nx) ? ' ' : '') + nx; raw[li + 1] = ''; } meta[r.key] ??= v.split(r.list).map((x) => x.trim()).filter(Boolean); }
+      else if (r.list) {
+        let v = m[1];
+        // 關鍵字折行接回。原規則：下一行 ≤ 40 字才接、只接一行。
+        // 英文關鍵字常折成很長的續行（42(24)「per million / population weekly incidence rate, vaccination coverage」53 字），
+        // 而 PDF 的續行會縮排對齊在「Keywords:」後面（6 格以上），單位、通訊作者那幾行不縮排：英文就改看縮排，最多接 3 行；
+        // 同一行右欄若有「Received:」之類，只取左欄（以 3 個以上空白分欄），右欄留在原行給後面的規則處理。中文維持原規則（中文正文段首也縮排，容易誤接）。
+        for (let k = li + 1; k <= li + 3 && k < raw.length; k++) {
+          const full = raw[k] ?? '';
+          if (!full) break;
+          const latinCont = isLatin(v) && (indentOf[k] ?? 0) >= 6;
+          const [col, ...rest] = latinCont ? full.split(/\s{3,}/) : [full];
+          const ok = col && !/[：:。]/.test(col) && !SENT_END.test(v) && !headingKeyOf(col) && (latinCont ? isLatin(col) && col.length <= 120 : k === li + 1 && col.length <= 40);
+          if (!ok) break;
+          v += (/[A-Za-z]$/.test(v) && /^[A-Za-z]/.test(col) ? ' ' : '') + col;
+          raw[k] = rest.join('   ');
+          if (rest.length || !latinCont) break;
+        }
+        meta[r.key] ??= v.split(r.list).map((x) => x.trim()).filter(Boolean);
+      }
       else if (r.key === 'doi') { if (meta.doi && meta.doi !== m[1]) (meta.doiConflicts ??= []).push(m[1]); meta.doi ??= m[1]; }
       else meta[r.key] ??= m[1];
       if (m.index === 0 && m[0].length >= line.length - 1) consumedAll = true; else line = line.replace(m[0], '').trim();
