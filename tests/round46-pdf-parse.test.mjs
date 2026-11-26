@@ -384,3 +384,24 @@ test('applyManuscript：表格圖表保留稿件的 markdown，report 寫「N �
   ]);
   assert.ok(r.report.includes('2 個圖表說明（1 個表格含內容）'));
 });
+
+// 2026-11-26：42(24) 英文 Keywords 第 2 行（53 字）超過原本「續行 ≤ 40 字」而被丟掉。續行縮排對齊在「Keywords:」後面，改看縮排、只取左欄
+const KW_EN_42_24 = [
+  'Keywords: COVID-19 with complications, descriptive epidemiology, per million',
+  '           population weekly incidence rate, vaccination coverage',
+  'Epidemic Intelligence Center, Centers for Disease Control,    Received: Dec. 30, 2024',
+].join('\n');
+test('splitManuscript：英文關鍵字折成縮排的長續行（42(24)）→ 接回完整的 4 個關鍵字，下一行的 Received 仍解析', () => {
+  const r = S(KW_EN_42_24);
+  assert.deepEqual(r.meta.keywordsEn, ['COVID-19 with complications', 'descriptive epidemiology', 'per million population weekly incidence rate', 'vaccination coverage']);
+  assert.equal(r.meta.receivedAt, '2024-12-30');
+});
+test('splitManuscript：英文關鍵字下一行不縮排（單位行）→ 不接成關鍵字', () => {
+  const r = S(['Keywords: dengue, cluster, outbreak investigation', 'Epidemic Intelligence Center, Centers for Disease Control'].join('\n'));
+  assert.deepEqual(r.meta.keywordsEn, ['dengue', 'cluster', 'outbreak investigation']);
+});
+test('splitManuscript：縮排續行同一行右欄有「Received:」→ 只接左欄，右欄的日期仍解析', () => {
+  const r = S(['Keywords: COVID-19, descriptive epidemiology, per million', '           population weekly incidence rate    Received: Dec. 30, 2024'].join('\n'));
+  assert.deepEqual(r.meta.keywordsEn, ['COVID-19', 'descriptive epidemiology', 'per million population weekly incidence rate']);
+  assert.equal(r.meta.receivedAt, '2024-12-30');
+});
