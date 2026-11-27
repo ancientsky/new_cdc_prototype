@@ -10,8 +10,10 @@
 // - 瀏覽器：CHROME_BIN 優先；其次本機 /opt/pw-browsers 內的 chromium；最後用 Playwright 內建（npx playwright install chromium）。
 // - 結果同時輸出 Markdown 摘要：A11Y_REPORT=路徑 可另存檔；在 GitHub Actions 會自動附加到 job summary。
 // - 第七十五輪：焦點遮蔽走查（WCAG 2.4.11，AA，WCAG 2.2 新增）。axe 之後每頁每視窗按 Tab 最多 80 下，取焦點元件在視窗內部分的 5×5 個點
-//   用 elementFromPoint 打點：每一點都打到別的、而且位在 position:fixed／sticky 祖先底下的元素 ⇒「完全遮蔽」列為阻擋；部分點被蓋 ⇒ 警告。
+//   用 elementFromPoint 打點：每一點都打到別的、而且位在 position:fixed／sticky 祖先底下的元素 ⇒「完全遮蔽」列為阻擋。
 //   axe 不檢查這條；第七十五輪實測手機 tabbar 在 5 頁完全蓋住焦點，修法是 scroll-padding-bottom（docs/a11y.md 第 12 節）。
+// - 第七十六輪：本站選做 AAA 的 2.4.12 焦點完全不遮蔽——「部分遮蔽」也改列阻擋（docs/a11y.md 第 13 節）；
+//   另外從頁尾往回按 Shift+Tab 最多 40 下（往回走時被頂端黏性元件蓋住，是第七十五輪人工量到、往下走量不到的情況）。
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -71,22 +73,28 @@ function chromePath() {
 }
 
 export const FOCUS_TABS = 80;
+export const FOCUS_BACK_TABS = 40;
 /**
  * 焦點遮蔽走查（WCAG 2.4.11）：從頁首按 Tab，每一步量焦點元件被固定／黏性元件蓋住多少。
  * 邏輯取自第七十五輪評估腳本（/mnt/project-files/a11y/twcheck-2026-11-27.mjs 的 focusWalk），改成只在視窗內的部分取樣。
  * @returns {Promise<{ tabs: number, fully: string[], partly: string[] }>}
  */
-export async function focusWalk(page, maxTabs = FOCUS_TABS) {
+export async function focusWalk(page, maxTabs = FOCUS_TABS, { back = false } = {}) {
   // 平滑捲動會讓「按下 Tab 當下」量到捲動途中的位置；走查時關掉（不影響前面 axe 的結果）
-  await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; /** @type {HTMLElement} */ (document.activeElement)?.blur?.(); window.scrollTo(0, 0); });
+  // back：從頁尾往回（Shift+Tab）。先捲到底、把焦點放在 body 最後，第一次 Shift+Tab 就落在最後一個可聚焦元件
+  await page.evaluate((b) => {
+    document.documentElement.style.scrollBehavior = 'auto';
+    /** @type {HTMLElement} */ (document.activeElement)?.blur?.();
+    if (b) { const end = document.createElement('span'); end.tabIndex = -1; end.id = 'a11y-walk-end'; document.body.append(end); end.focus(); window.scrollTo(0, document.documentElement.scrollHeight); } else window.scrollTo(0, 0);
+  }, back);
   const fully = [], partly = [];
   let tabs = 0;
   const seen = new Set();
   for (let i = 0; i < maxTabs; i++) {
-    await page.keyboard.press('Tab');
+    await page.keyboard.press(back ? 'Shift+Tab' : 'Tab');
     const r = await page.evaluate(() => {
       const el = document.activeElement;
-      if (!el || el === document.body || el === document.documentElement) return { end: true };
+      if (!el || el === document.body || el === document.documentElement || el.id === 'a11y-walk-end') return { end: true };
       const rect = el.getBoundingClientRect();
       const vw = window.innerWidth, vh = window.innerHeight;
       const l = Math.max(0, rect.left), t = Math.max(0, rect.top), rr = Math.min(vw, rect.right), b = Math.min(vh, rect.bottom);
@@ -135,7 +143,7 @@ async function main() {
   // 第五十六輪：同站資源回 404（CSS、JS、索引、答案資料）＝掃到的畫面和民眾看到的不同（最常見是 BASE_PATH 與建置不一致）→ 列為阻擋。
   // /api/ 是動態端點（例如電子報頁探測 /api/health，靜態主機本來就沒有，頁面會退回模擬模式），不算靜態資源
   const missing = []; // { page, vp, url }
-  // 第七十五輪：焦點遮蔽（2.4.11）——完全遮蔽是阻擋，部分遮蔽是警告
+  // 第七十五輪：焦點遮蔽（2.4.11）——完全遮蔽是阻擋；第七十六輪（2.4.12，AAA 選做）部分遮蔽也是阻擋
   const focusFull = []; // { page, vp, el }
   const focusPart = []; // { page, vp, el }
   let runs = 0;
@@ -166,8 +174,9 @@ async function main() {
             findings.push({ page: p, vp: vp.name, rule: v.id, impact: v.impact, help: v.help, helpUrl: v.helpUrl, nodes: v.nodes.map((n) => ({ target: n.target.join(' '), html: short(n.html) })) });
           }
           const fw = await focusWalk(page);
-          for (const el of fw.fully) focusFull.push({ page: p, vp: vp.name, el });
-          for (const el of fw.partly) focusPart.push({ page: p, vp: vp.name, el });
+          const bw = await focusWalk(page, FOCUS_BACK_TABS, { back: true });
+          for (const el of new Set([...fw.fully, ...bw.fully])) focusFull.push({ page: p, vp: vp.name, el });
+          for (const el of new Set([...fw.partly, ...bw.partly])) focusPart.push({ page: p, vp: vp.name, el });
           if (vp.width <= 390) {
             const w = await page.evaluate(/* eslint-disable-line no-undef -- 在瀏覽器裡執行 */() => ({ s: document.documentElement.scrollWidth, c: document.documentElement.clientWidth }));
             if (w.s > w.c) overflow.push({ page: p, vp: vp.name, scrollWidth: w.s, clientWidth: w.c });
@@ -179,19 +188,18 @@ async function main() {
   } finally { await browser.close(); server.close(); }
 
   const blocking = findings.filter((f) => BLOCKING.has(f.impact));
-  const nBlock = blocking.length + overflow.length + missing.length + focusFull.length;
+  const nBlock = blocking.length + overflow.length + missing.length + focusFull.length + focusPart.length;
   const warn = findings.filter((f) => !BLOCKING.has(f.impact));
-  const nWarn = warn.length + focusPart.length;
+  const nWarn = warn.length;
   const md = [];
   md.push('## 無障礙檢測（axe-core）', '');
   md.push(`- 掃描：${runs} 次（${PAGES.length - skipped.length} 頁 × ${VIEWPORTS.map((v) => v.name).join('、')}）；規則集：${TAGS.join(', ')}`);
   if (skipped.length) md.push(`- 略過（dist 內沒有）：${skipped.join('、')}`);
-  md.push(`- 焦點遮蔽走查（WCAG 2.4.11）：每頁每視窗 Tab 最多 ${FOCUS_TABS} 下；完全遮蔽 ${focusFull.length}、部分遮蔽 ${focusPart.length}`);
-  md.push(`- 結果：**${nBlock} 項阻擋**（serious／critical${overflow.length ? '＋橫向捲動' : ''}${missing.length ? '＋同站資源 404' : ''}${focusFull.length ? '＋焦點被完全遮蔽' : ''}）、${nWarn} 項警告（moderate／minor${focusPart.length ? '＋焦點部分遮蔽' : ''}）`);
+  md.push(`- 焦點遮蔽走查（WCAG 2.4.11 AA＋2.4.12 AAA 選做）：每頁每視窗 Tab 最多 ${FOCUS_TABS} 下、從頁尾 Shift+Tab 最多 ${FOCUS_BACK_TABS} 下；完全遮蔽 ${focusFull.length}、部分遮蔽 ${focusPart.length}（兩者都擋）`);
+  md.push(`- 結果：**${nBlock} 項阻擋**（serious／critical${overflow.length ? '＋橫向捲動' : ''}${missing.length ? '＋同站資源 404' : ''}${focusFull.length ? '＋焦點被完全遮蔽' : ''}${focusPart.length ? '＋焦點部分遮蔽' : ''}）、${nWarn} 項警告（moderate／minor）`);
   // 警告依規則別統計（同一規則在不同頁、不同視窗各算一筆，與下方表格列數一致）
   const warningRules = {};
   for (const f of warn) warningRules[f.rule] = (warningRules[f.rule] ?? 0) + 1;
-  if (focusPart.length) warningRules['focus-obscured-partial'] = focusPart.length;
   if (nWarn) md.push(`- 警告不擋合併，但請排進待辦：${Object.entries(warningRules).map(([r, n]) => `${r}×${n}`).join('、')}`);
   md.push('');
   const table = (rows, title) => {
@@ -217,18 +225,19 @@ async function main() {
     for (const f of focusFull) md.push(`| \`${f.page}\` | ${f.vp} | ${f.el.replace(/\|/g, '\\|')} |`);
     md.push('');
   }
-  table(warn, '警告（moderate／minor，不擋合併）');
   if (focusPart.length) {
-    md.push('### 警告：2.4.11 焦點部分被固定元件遮蔽（不擋合併）', '', '| 頁面 | 視窗 | 取得焦點的元件 |', '|---|---|---|');
+    md.push('### 阻擋：2.4.12 焦點部分被固定元件遮蔽（AAA 選做；同樣先看 scroll-padding）', '', '| 頁面 | 視窗 | 取得焦點的元件 |', '|---|---|---|');
     for (const f of focusPart.slice(0, 50)) md.push(`| \`${f.page}\` | ${f.vp} | ${f.el.replace(/\|/g, '\\|')} |`);
     if (focusPart.length > 50) md.push(`| … | | 另有 ${focusPart.length - 50} 筆 |`);
     md.push('');
   }
+  table(warn, '警告（moderate／minor，不擋合併）');
   if (!findings.length && !overflow.length && !missing.length && !focusFull.length && !focusPart.length) md.push('沒有任何違規。', '');
   const report = md.join('\n');
   console.log(report);
   for (const f of blocking) console.log(`\n[${f.impact}] ${f.rule} @ ${f.page} (${f.vp})\n` + f.nodes.slice(0, 4).map((n) => `  - ${n.target}\n    ${n.html}`).join('\n'));
   for (const f of focusFull) console.log(`\n[2.4.11 焦點被固定元件完全遮蔽] ${f.page} (${f.vp})\n  - ${f.el}`);
+  for (const f of focusPart) console.log(`\n[2.4.12 焦點被固定元件部分遮蔽] ${f.page} (${f.vp})\n  - ${f.el}`);
   console.log(`\n[a11y] 阻擋 ${nBlock}、警告 ${nWarn}（moderate／minor，不擋合併）${nWarn ? `：${Object.entries(warningRules).map(([r, n]) => `${r}×${n}`).join('、')}` : ''}`);
   if (process.env.A11Y_JSON) {
     const summary = { runs, blocking: nBlock, warnings: nWarn, warningRules, focusObscured: { fully: focusFull.length, partly: focusPart.length } };

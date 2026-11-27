@@ -2,6 +2,8 @@
 // 純函式（刻度、年齡解析、狀態判斷、年齡文字）自成一體、可在 Node 測試，也供建置端模板畫 SVG 時共用同一份刻度。
 // 沒有 JS 時：SVG 與表格仍完整可看，標記連到表格列錨點（#sched.xxx）。
 import './i18n.runtime.js';
+/** WCAG 2.3.3（第七十六輪）：使用者要求減少動態時不平滑捲動（CSS 的 scroll-behavior 管不到 JS 的 scrollIntoView） */
+const scrollBehavior = () => (typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
 
 /* ───────── 刻度：分段非線性（月） ───────── */
 /** [起月, 迄月, 寬度 px]：0–24 月逐月、2–6 歲、6–18 歲、18–50 歲、50–65 歲、65 歲以上 */
@@ -524,7 +526,7 @@ function init() {
   function select(id, { scroll = false } = {}) {
     state.sched = id; if (id && byId.has(id)) ensureTab(byId.get(id));
     paintDetail(); writeHash();
-    if (id && scroll) $('#vxs-detail')?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    if (id && scroll) $('#vxs-detail')?.scrollIntoView({ block: 'nearest', behavior: scrollBehavior() });
   }
   /* 選到的標記若不在目前頁籤，切到所屬頁籤 */
   function ensureTab(i) {

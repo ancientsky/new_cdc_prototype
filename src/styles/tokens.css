@@ -27,9 +27,16 @@
   --shadow-lg: 0 8px 24px rgba(0,0,0,.14);
   --wrap: 1200px;
   --tabbar-h: 58px;
-  --focus: 3px solid #e8a400;
+  /* 焦點框（WCAG 2.4.7／1.4.11，第七十六輪選做 2.4.13 焦點外觀）：外圈琥珀色 3px＋內圈黑色 2px 的雙色框（技法 C40）。
+     琥珀色單獨對白底只有 2.16:1、對暖白 1.99:1，不到 1.4.11 的 3:1；黑色內圈補上淺色底（白底 21:1），琥珀色負責深色底
+     （綠 700 3.58:1、深藍 7.00:1）；兩色之間 9.74:1（C40 要求 ≥ 9:1）。tests/a11y-aaa.test.mjs 對每個背景 token 驗證。 */
+  --focus-color: #e8a400; --focus-inner: #000;
+  --focus: 3px solid var(--focus-color);
+  --focus-ring: 0 0 0 2px var(--focus-inner);
   /* 第六十輪（Issue #127）節慶主題可覆寫的裝飾層（白名單：scripts/lib/theme.mjs THEME_TOKENS）。這裡的預設值＝沒有主題時的外觀。
      只用在頁首底色、頁首上緣飾條與站名旁的裝飾圖；狀態色、文字色、焦點框不在此列，主題改不到。 */
   --theme-header-bg: #fff; --theme-accent: transparent; --theme-accent-2: transparent; --theme-decoration: none;
 }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+/* WCAG 2.3.3 來自互動的動畫（AAA，第七十六輪選做）：使用者要求減少動態 ⇒ 全站關掉動畫、轉場與平滑捲動（含 ::before／::after）。
+   JS 的 scrollIntoView({ behavior }) 不受 CSS 影響，由 src/client/ui.js 的 scrollBehavior() 另外判斷；tests/a11y-aaa.test.mjs 檢查這條規則在。 */
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
