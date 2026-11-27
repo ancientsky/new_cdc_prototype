@@ -111,13 +111,14 @@ function filters(ctx, jobs) {
   const units = [...new Set(jobs.map((j) => j.hiringUnit).filter(Boolean))];
   const sel = (id, key, label, opts) => html`<div class="c-field c-jobfilters__f"><label for="${id}">${label}</label>
     <select id="${id}" class="c-input c-select" data-job-filter="${key}"><option value="">${t('all')}</option>${opts.map(([v, l]) => html`<option value="${v}">${l}</option>`)}</select></div>`;
-  return html`<form class="c-jobfilters" role="search" aria-label="${t('careers.filter')}" data-job-filters>
+  // 第七十五輪（檢測碼 HM1130105C）：多個表單控制元件以 <fieldset>＋<legend> 分群；legend 只給輔助科技（版面已有 aria-label 與欄位標籤）
+  return html`<form class="c-jobfilters" role="search" aria-label="${t('careers.filter')}" data-job-filters><fieldset class="c-fieldset c-fieldset--row"><legend class="sr-only">${t('careers.filter')}</legend>
   ${sel('jf-type', 'jobtype', t('job.type'), types.map((x) => [x, x]))}
   ${sel('jf-place', 'place', t('job.workplace'), places.map((x) => [x, x]))}
   ${sel('jf-unit', 'unit', t('job.unit'), units.map((u) => [u, unitName(ctx, u)]))}
   <button type="button" class="c-btn c-btn--sm c-btn--ghost c-jobfilters__reset" data-job-reset hidden>${t('careers.filter.reset')}</button>
   <p class="c-jobfilters__note muted" role="status" aria-live="polite" data-job-filter-note></p>
-</form>`;
+</fieldset></form>`;
 }
 
 function listPage(ctx) {

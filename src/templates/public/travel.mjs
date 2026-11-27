@@ -509,7 +509,8 @@ const lookupPayload = (ctx, countries, extra = () => ({})) => ({
   nf: ctx.t('travel.lookup.notfound', { q: '{q}' }),
   c: countries.map((c) => ({ i: c.iso2, n: cname(ctx, c), h: ctx.url(`/travel/${c.iso2}/`), k: countryKeys(c), ...extra(c) })),
 });
-const datalist = (ctx, id, countries) => html`<datalist id="${id}">${countries.map((c) => html`<option value="${cname(ctx, c)}">${ctx.lang === 'zh-TW' ? c.nameEn ?? '' : c.name ?? ''}</option>`)}</datalist>`;
+// 第七十五輪（檢測碼 HM2310200C）：建議清單的說明文字是「另一種語言」的國名（中文頁顯示英文、外語頁顯示中文），標上該語言的 lang
+const datalist = (ctx, id, countries) => html`<datalist id="${id}">${countries.map((c) => html`<option value="${cname(ctx, c)}" lang="${ctx.lang === 'zh-TW' ? 'en' : 'zh-TW'}">${ctx.lang === 'zh-TW' ? c.nameEn ?? '' : c.name ?? ''}</option>`)}</datalist>`;
 
 /** 任務頁用：小型「查目的地」表單（直接進目的地頁） */
 export function quickLookup(ctx, { id = 'tq' } = {}) {

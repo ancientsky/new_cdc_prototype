@@ -55,12 +55,12 @@ function listPage(ctx) {
   const sel = (key, label, opts) => html`<label class="c-labfilter"><span>${label}</span><select class="c-input c-select" data-filter-select="lab-table" data-key="${key}"><option value="">${t('all')}</option>${opts.map(([v, text]) => html`<option value="${v}">${text}</option>`)}</select></label>`;
   return html`${pageHead(ctx, { trail: [{ label: t('lab.title') }], h1: t('lab.title'), lead: t('lab.lead'), tags: proScope(ctx), actions: html`<a class="c-btn c-btn--ghost c-btn--sm" href="${ctx.url('/apply/')}">${t('lab.request')}</a>` })}
 ${inlineAsk(ctx, { mode: 'pro', placeholder: t('lab.ask.ph'), label: t('lab.ask.t') })}
-${rows.length ? html`<form class="c-labfilters" onsubmit="return false" role="search" aria-label="${t('lab.filter')}">
+${rows.length ? html`<form class="c-labfilters" onsubmit="return false" role="search" aria-label="${t('lab.filter')}"><fieldset class="c-fieldset c-fieldset--row"><legend class="sr-only">${t('lab.filter')}</legend>
   ${sel('disease', t('lab.col.disease'), diseases.map((d) => [d, dName(ctx, d)]))}
   ${sel('specimen', t('lab.col.specimen'), specimens.map((s) => [s, termTxt(ctx, s)]))}
   ${sel('lab', t('lab.col.lab'), labs.map((k) => [k, t(`lab.unit.${k}`)]))}
   <span class="c-labfilters__n muted" role="status" data-filter-count="lab-table"></span>
-</form>
+</fieldset></form>
 ${termNote(ctx)}
 <div class="c-labtable-wrap"><table class="c-labtable" id="lab-table">
   <thead><tr><th scope="col">${t('lab.col.disease')}</th><th scope="col">${t('lab.col.specimen')}</th><th scope="col">${t('lab.col.container')}</th><th scope="col">${t('lab.col.storage')}</th><th scope="col">${t('lab.col.within')}</th><th scope="col">${t('lab.col.lab')}</th><th scope="col">${t('lab.col.tat')}</th></tr></thead>

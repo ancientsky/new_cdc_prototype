@@ -6,7 +6,7 @@ export { layout } from './_layout.mjs';
 export function pages() { return [{ path: '/admin/catalog/', props: {}, noindex: true }]; }
 export function meta() { return adminMeta('資料目錄', 'catalog', ['/assets/js/admin/catalog.js']); }
 
-const tick = (ok, yes, no) => html`<span class="adm-tick ${ok ? 'adm-tick--ok' : 'adm-tick--no'}" role="img" aria-label="${ok ? yes : no}">${ok ? '✓' : '✗'}</span> ${ok ? yes : no}`;
+const tick = (ok, yes, no) => html`<span class="adm-tick ${ok ? 'adm-tick--ok' : 'adm-tick--no'}" role="img" aria-label="${ok ? yes : no}" title="${ok ? yes : no}">${ok ? '✓' : '✗'}</span> ${ok ? yes : no}`;
 /** 類型專屬欄：影音＝逐字稿／依據現行版；專區＝外部連結健康；公告＝截止日。 */
 function specific(r) {
   if (r.media) return html`<div>${tick(r.media.hasTranscript, `有逐字稿（${r.media.transcriptChars} 字）`, '無逐字稿')}</div><div>${tick(r.media.basisCurrent, '依據現行版', r.media.outdated ? '依據版本過時' : '未填依據正本')}</div>`;

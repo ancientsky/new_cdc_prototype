@@ -38,7 +38,8 @@ function initQuiz(root, { kids = true } = {}) {
       return;
     }
     const q = data[idx];
-    const h = el('h2', { class: 'c-quiz__h', tabindex: '-1' }, el('span', { class: 'c-quiz__n', text: T('quiz.q', { i: idx + 1 }) }), ' ', q.emoji ? `${q.emoji} ` : '', q.q);
+    // 第七十五輪（檢測碼 HM1110103C）：題目的表情符號要有 title 與替代文字
+    const h = el('h2', { class: 'c-quiz__h', tabindex: '-1' }, el('span', { class: 'c-quiz__n', text: T('quiz.q', { i: idx + 1 }) }), ' ', q.emoji ? [el('span', { role: 'img', 'aria-label': T('a11y.emoji'), title: T('a11y.emoji'), text: q.emoji }), ' '] : '', q.q);
     const list = el('div', { class: 'c-quiz__btns', role: 'group', 'aria-label': q.q });
     const result = el('div', { class: 'c-quiz__result', hidden: true });
     const btns = shuffle(q.choices).map(({ v, i }) => {

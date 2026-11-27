@@ -17,6 +17,10 @@ const UI_TRANSLATION = { en: { status: 'reviewed', date: '2026-09-10' } };
 // 第七十三輪：html`` 會把 href／src 插值的 data: 協定改成 #（safeHref）；站台自己的常數 favicon 是可信來源，用 raw(esc()) 明確標示放行。
 const FAVICON = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231b5e3f'/%3E%3Cpath d='M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z' fill='%23fff'/%3E%3C/svg%3E";
 
+// 第七十五輪（檢測碼 HM1110103C）：語言選單的地球圖示。以前是字串裡的 🌐 表情符號，新版規範要求表情符號提供 title；
+// 改成 aria-hidden 的 SVG（裝飾，旁邊已有可見文字「語言／Language」），報讀與檢測工具都不會把它當成需要替代文字的字符。
+const GLOBE = raw('<svg class="i-globe" aria-hidden="true" focusable="false" viewBox="0 0 24 24" width="16" height="16"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" fill="none" stroke="currentColor" stroke-width="2"/></svg>');
+
 // 第七十二輪（docs/performance-lighthouse.md §4.9）：網址帶 ?q= 時在 <html> 標 data-q，CSS 用它在首次繪製前就把答案區／搜尋結果區撐到一個視窗高
 export const EARLY_JS = `try{var d=document.documentElement;d.classList.add('js');var v=new URLSearchParams(location.search).get('view')||localStorage.getItem('cdc.view');if(v==='pro')d.dataset.view='pro';if(new URLSearchParams(location.search).has('q'))d.dataset.q='1'}catch(e){document.documentElement.classList.add('js')}`;
 
@@ -175,13 +179,13 @@ ${protoBanner(ctx)}
 <div class="topbar"><div class="wrap topbar__in">
   <nav class="langs langs--inline" aria-label="${t('lang.label')}">${langLinks}</nav>
   <details class="langmenu">
-    <summary class="langmenu__btn">${t('lang.menu')}</summary>
+    <summary class="langmenu__btn">${GLOBE}${t('lang.menu')}</summary>
     <nav class="langmenu__list" aria-label="${t('lang.label')}">${langLinks}</nav>
   </details>
   <nav class="topbar__links" aria-label="${t('nav.tools')}"><a href="${url('/accessibility/')}">${t('a11y')}</a><a href="${url('/sitemap-page/')}">${t('sitemap')}</a><a href="${url('/search/')}">${t('search.title')}</a><a class="hotline" href="tel:1922">${t('hotline')}</a></nav>
 </div></div>
 <header class="site-header"><div class="wrap site-header__in">
-  <a class="brand" href="${url('/')}"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="40" height="40"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z" fill="#fff"/></svg></span><span class="brand__text"><span class="brand__name">${t('site.name')}</span><span class="brand__sub">${lang === 'zh-TW' ? config.nameEn : t('site.parent')}</span></span></a>
+  <a class="brand" href="${url('/')}"><span class="brand__mark" aria-hidden="true"><svg viewBox="0 0 32 32" width="40" height="40"><rect width="32" height="32" rx="8" fill="currentColor"/><path d="M14 7h4v7h7v4h-7v7h-4v-7H7v-4h7z" fill="#fff"/></svg></span><span class="brand__text"><span class="brand__name">${t('site.name')}</span>${lang === 'zh-TW' ? raw(`<span class="brand__sub" lang="en">${esc(config.nameEn)}</span>`) : html`<span class="brand__sub">${t('site.parent')}</span>`}</span></a>
   <div class="audience" role="group" aria-label="${t('nav.audience')}">
     <a class="audience__btn" href="${url('/')}?view=public" data-view-set="public" ${forcePro || onResearch ? '' : raw('aria-current="page"')}>${t('nav.public')}</a>
     <a class="audience__btn" href="${url('/pro/')}?view=pro" data-view-set="pro" ${forcePro ? raw('aria-current="page"') : ''}>${t('nav.pro')}</a>
@@ -190,7 +194,7 @@ ${protoBanner(ctx)}
   <button type="button" class="c-nav__toggle" aria-expanded="false" aria-controls="main-nav">${t('nav.menu')}</button>
 </div>
 <nav id="main-nav" class="c-nav" tabindex="-1" aria-label="${t('nav.main')}"><div class="wrap c-nav__in">${navItems.map(([p, k]) => navItem(p, k))}<div class="c-nav__item"><a class="c-nav__pro c-pro-only" href="${url('/pro/')}">${t('nav.pro')}</a></div></div>
-  <div class="wrap c-nav__langs"><p class="c-nav__langs-t" id="nav-langs-t">${t('lang.menu')}</p><div class="c-nav__langs-l" role="group" aria-labelledby="nav-langs-t">${langLinks}</div></div></nav>
+  <div class="wrap c-nav__langs"><p class="c-nav__langs-t" id="nav-langs-t">${GLOBE}${t('lang.menu')}</p><div class="c-nav__langs-l" role="group" aria-labelledby="nav-langs-t">${langLinks}</div></div></nav>
 </header>
 ${pausedBanner(ctx)}
 <main id="main" tabindex="-1"${wide ? '' : raw(' class="wrap"')}${raw(pf.bodyAttr)}>${raw(pf.weigh(body))}${pf.tail}</main>

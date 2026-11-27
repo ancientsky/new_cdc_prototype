@@ -15,7 +15,8 @@ const ROWS = {
   'hotline': ['防疫專線 1922', 'Hotline 1922', '防疫ホットライン 1922', 'Hotline 1922', 'Đường dây phòng dịch 1922 (có thông dịch)', 'Hotline 1922', 'สายด่วน 1922'],
   'a11y': ['無障礙', 'Accessibility', 'アクセシビリティ', 'Accessibility', 'Hỗ trợ tiếp cận', 'Aksesibilitas', 'การเข้าถึง'],
   'sitemap': ['網站導覽', 'Site map', 'サイトマップ', 'Mapa ng site', 'Sơ đồ trang web', 'Peta situs', 'แผนผังเว็บไซต์'],
-  'lang.menu': ['🌐 語言／Language', '🌐 Language', '🌐 言語／Language', '🌐 Wika／Language', '🌐 Ngôn ngữ／Language', '🌐 Bahasa／Language', '🌐 ภาษา／Language'],
+  // 第七十五輪（檢測碼 HM1110103C）：拿掉字串裡的 🌐 表情符號（表情符號要有 title），地球圖示改由 layout 輸出 aria-hidden 的 SVG
+  'lang.menu': ['語言／Language', 'Language', '言語／Language', 'Wika／Language', 'Ngôn ngữ／Language', 'Bahasa／Language', 'ภาษา／Language'],
   'nav.tools': ['工具列', 'Utility links', 'ツールバー', 'Mga link ng tool', 'Liên kết tiện ích', 'Tautan utilitas', 'ลิงก์เครื่องมือ'],
   'a11y.scrollTable': ['表格，可捲動', 'Table, scrollable', '表（スクロール可）', 'Talahanayan, maaaring i-scroll', 'Bảng, có thể cuộn', 'Tabel, dapat digulir', 'ตาราง เลื่อนได้'],
   'a11y.scrollCode': ['程式碼範例，可捲動', 'Code sample, scrollable', 'コード例（スクロール可）', 'Halimbawang code, maaaring i-scroll', 'Mã mẫu, có thể cuộn', 'Contoh kode, dapat digulir', 'ตัวอย่างโค้ด เลื่อนได้'],
@@ -2273,6 +2274,21 @@ const ROWS_R71_DIS = {
   'diseases.sit.sr': ['目前疫情：', 'Current status: ', '現在の状況：', 'Kasalukuyang kalagayan: ', 'Tình hình hiện tại: ', 'Status saat ini: ', 'สถานการณ์ปัจจุบัน: '],
 };
 for (const [key, vals] of Object.entries(ROWS_R71_DIS)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
+
+/* ───── 第七十五輪（docs/a11y.md 第 12 節）：新版網站無障礙規範檢測碼——表情符號替代文字（HM1110103C）、行內連結描述性 title（HM1240401C）。
+   只在建置期（Node 模板與 scripts/lib/a11y-text.mjs）使用，不進瀏覽器語言檔（play.js 用到的 a11y.emoji／a11y.answerMark 例外）。英文由原型撰寫；其餘五語為機器初稿、待審 ───── */
+const ROWS_R75 = {
+  'a11y.emoji': ['圖示', 'Icon', 'アイコン', 'Icon', 'Biểu tượng', 'Ikon', 'ไอคอน'],
+  'a11y.answerMark': ['正確答案', 'Correct answer', '正解', 'Tamang sagot', 'Đáp án đúng', 'Jawaban benar', 'คำตอบที่ถูกต้อง'],
+  // {text} 一定是可見的連結文字（WCAG 2.5.3 名稱含標籤）；{context} 是連結之前最近的標題或頁面標題
+  'a11y.link.title': ['{text}：{context}', '{text} – {context}', '{text}：{context}', '{text} – {context}', '{text} – {context}', '{text} – {context}', '{text} – {context}'],
+  'a11y.link.generic': ['連結', 'link', 'リンク', 'link', 'liên kết', 'tautan', 'ลิงก์'],
+  'a11y.link.download': ['下載 {fmt}：{title}', 'Download {fmt}: {title}', '{fmt} をダウンロード：{title}', 'I-download ang {fmt}: {title}', 'Tải xuống {fmt}: {title}', 'Unduh {fmt}: {title}', 'ดาวน์โหลด {fmt}: {title}'],
+  'a11y.link.external': ['{title}（外部網站：{host}）', '{title} (external site: {host})', '{title}（外部サイト：{host}）', '{title} (panlabas na site: {host})', '{title} (trang bên ngoài: {host})', '{title} (situs eksternal: {host})', '{title} (เว็บไซต์ภายนอก: {host})'],
+  'a11y.link.dsFmt': ['下載「{dataset}」{fmt}', 'Download “{dataset}” as {fmt}', '「{dataset}」の{fmt}をダウンロード', 'I-download ang “{dataset}” bilang {fmt}', 'Tải “{dataset}” dạng {fmt}', 'Unduh “{dataset}” format {fmt}', 'ดาวน์โหลด “{dataset}” เป็น {fmt}'],
+  'a11y.link.dsApi': ['「{dataset}」的資料集 API（JSON）', 'API for “{dataset}” (JSON)', '「{dataset}」のデータセット API（JSON）', 'API para sa “{dataset}” (JSON)', 'API của “{dataset}” (JSON)', 'API untuk “{dataset}” (JSON)', 'API ของ “{dataset}” (JSON)'],
+};
+for (const [key, vals] of Object.entries(ROWS_R75)) vals.forEach((v, i) => { if (v != null && v !== '') STRINGS[ORDER[i]][key] = v; });
 
 // translation.bar.reviewed 的 {lang} 佔位：zh 版用語言名稱
 STRINGS['zh-TW']['translation.bar.reviewed'] = STRINGS['zh-TW']['translation.bar.reviewed'].replace('{lang}', '翻譯');

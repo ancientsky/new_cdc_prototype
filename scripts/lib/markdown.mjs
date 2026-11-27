@@ -2,6 +2,7 @@ import { config } from '../../site.config.mjs';
 import { marked } from 'marked';
 import sanitizeHtml from 'sanitize-html';
 import { esc } from './render.mjs';
+import { wrapEmoji, inlineLinkTitles } from './a11y-text.mjs';
 
 marked.setOptions({ gfm: true, breaks: false });
 
@@ -99,8 +100,30 @@ export function enhanceImages(htmlStr, opts = {}) {
 export function md(markdown, opts = {}) {
   if (!markdown) return '';
   // 無障礙：程式碼區塊可能橫向溢出，鍵盤使用者要能 Tab 進去捲動（WCAG 2.1.1；axe scrollable-region-focusable）
-  const html = enhanceImages(sanitize(marked.parse(cjkStrong(markdown))), opts).replace(/<pre>/g, '<pre tabindex="0">');
-  return config.basePath ? html.replace(/(\s(?:href|src)=")\/(?!\/)/g, `$1${config.basePath}/`) : html;
+  let html = tableScope(enhanceImages(sanitize(marked.parse(cjkStrong(markdown))), opts).replace(/<pre>/g, '<pre tabindex="0">'));
+  html = config.basePath ? html.replace(/(\s(?:href|src)=")\/(?!\/)/g, `$1${config.basePath}/`) : html;
+  // 第七十五輪（檢測碼 HM1110103C、HM1240401C）：表情符號包 title；段落、清單、表格裡的行內連結補描述性 title（上下文＝本文件裡連結之前最近的標題）。
+  // 本文件裡沒有標題可用的連結先不補，由 pages.mjs 對整頁再套一次（那時才知道頁面標題）。basePath 先補好，外站判斷才準。
+  const pc = opts.page ?? MD_PAGE;
+  if (!pc) return html;
+  return inlineLinkTitles(wrapEmoji(html, pc.t('a11y.emoji')), { t: pc.t, siteHost: pc.siteHost, pageTitle: opts.pageTitle ?? '', requireContext: true });
+}
+
+// 第七十五輪：md() 呼叫端（二十幾個模板）不傳語言；pages.mjs 渲染每一頁前設定當頁的 t()（介面語言）與站台主機，產生的 title 字詞用當頁語言。
+// 沒設定（單元測試、閘道預覽）就不補 title、不包表情符號，輸出與改版前相同；整頁的安全網仍會補。
+let MD_PAGE = null;
+/** @param {{ t: (k: string, v?: object) => string, siteHost?: string } | null} pc */
+export function setMarkdownPage(pc) { MD_PAGE = pc; }
+
+/**
+ * 第七十五輪（檢測碼 HM1130101C）：表格標題格要有 scope。marked 的 GFM 表格只在 <thead> 產生 <th> ⇒ scope="col"；
+ * 內容若手寫 <tbody> 內的 <th>（列標題）⇒ scope="row"。已寫 scope 的不動。
+ */
+export function tableScope(htmlStr) {
+  if (!htmlStr.includes('<th')) return htmlStr;
+  return htmlStr
+    .replace(/<thead>[\s\S]*?<\/thead>/g, (seg) => seg.replace(/<th(?![^>]*\bscope=)(?=[\s>])/g, '<th scope="col"'))
+    .replace(/<tbody>[\s\S]*?<\/tbody>/g, (seg) => seg.replace(/<th(?![^>]*\bscope=)(?=[\s>])/g, '<th scope="row"'));
 }
 
 /** Markdown → 純文字（索引、摘要用） */

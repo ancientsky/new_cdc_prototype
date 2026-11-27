@@ -4,7 +4,8 @@
 //   - 沒有 JS 也能讀：測驗題與模擬回合先輸出成 <details> 純文字版，play.js 載入後才換成一題一題的互動；歷史上的今天本來就是清單。
 //   - 每題、每個選項都標「依據」連回疾病頁／Q&A；歷史條目有出處、未核對者標「待確認」。
 //   - 模組頁目前只有中文（pages() 不給 lang），外語頁尾的連結由 makeUrl 退回中文正本。
-import { html, raw, jsonScript } from '../../../scripts/lib/render.mjs';
+import { html, raw, esc, jsonScript } from '../../../scripts/lib/render.mjs';
+import { wrapEmoji } from '../../../scripts/lib/a11y-text.mjs';
 import { ldFor, pageHead, unitName, pill, hrefFor } from './_partials.mjs';
 import { KINDS, isQuizKind, hasPage, interactiveSlug, interactivePath, interactivesAt, liveQuestions, pickOnThisDay } from '../../../scripts/lib/interactives.mjs';
 
@@ -36,6 +37,11 @@ export function playCard(ctx, item) {
   </a>
 </li>`;
 }
+
+// 第七十五輪（檢測碼 HM1110103C）：題目、選項、模擬回合文字裡的表情符號包成 <span role="img" aria-label title>（替代文字取 i18n a11y.emoji）
+const E = (ctx, s) => raw(wrapEmoji(esc(s), ctx.t('a11y.emoji')));
+// 純文字版的「正確答案」記號：✓ 本身是字符圖案，給 title 與報讀名稱，不靠顏色或位置表示答案
+const answerMark = (ctx) => raw(` <span class="c-quiz__mark" role="img" aria-label="${esc(ctx.t('a11y.answerMark'))}" title="${esc(ctx.t('a11y.answerMark'))}">✓</span>`);
 
 const demoNote = (ctx, item) => (item.note && /示範/.test(item.note) ? html`<p class="c-play__demo">${pill(ctx.t('play.demo'), 'warn')} <span class="c-play__demo-note">${item.note}</span></p>` : '');
 const basedOnLink = (ctx, id) => { const it = ctx.site.byId.get(id); return it ? html`<a class="c-play__based" href="${hrefFor(ctx, it)}">${ctx.t('play.basedOn')}：${it.title}</a>` : ''; };
@@ -82,9 +88,9 @@ function quizPage(ctx, item) {
   <div class="c-quiz__stage" data-quiz-stage hidden></div>
   <div class="c-quiz__fallback" data-quiz-fallback>
     <p class="c-play__nojs">${t('play.nojs')}</p>
-    <ol class="c-quiz__list">${qs.map((q, i) => html`<li><details class="c-quiz__q"><summary>${q.emoji ? `${q.emoji} ` : ''}${q.q}</summary>
-      <ol class="c-quiz__choices" type="A">${q.choices.map((c, j) => html`<li${j === q.answer ? raw(' class="is-answer"') : ''}>${c}${j === q.answer ? ' ✓' : ''}</li>`)}</ol>
-      <p class="c-quiz__explain">${q.explain}</p>${basedOnLink(ctx, q.basedOn)}</details></li>`)}</ol>
+    <ol class="c-quiz__list">${qs.map((q, i) => html`<li><details class="c-quiz__q"><summary>${E(ctx, `${q.emoji ? `${q.emoji} ` : ''}${q.q}`)}</summary>
+      <ol class="c-quiz__choices" type="A">${q.choices.map((c, j) => html`<li${j === q.answer ? raw(' class="is-answer"') : ''}>${E(ctx, c)}${j === q.answer ? answerMark(ctx) : ''}</li>`)}</ol>
+      <p class="c-quiz__explain">${E(ctx, q.explain)}</p>${basedOnLink(ctx, q.basedOn)}</details></li>`)}</ol>
   </div>
 </div>
 ${item.disclaimer ? html`<p class="c-play__disclaimer">${item.disclaimer}</p>` : ''}`;
@@ -104,8 +110,8 @@ function simPage(ctx, item) {
   <div class="c-sim__fallback" data-sim-fallback>
     <p class="c-play__nojs">${t('play.nojs')}</p>
     <p class="c-sim__meters-static">${t('sim.meters')}：${sc.meters.map((m) => `${m.label} ${m.start}`).join('、')}</p>
-    ${sc.rounds.map((r) => html`<details class="c-sim__round"><summary>${r.title}</summary><p>${r.prompt}</p>
-      <ul class="c-sim__opts">${r.options.map((o) => html`<li><b>${o.label}</b><br>${o.feedback}<br><small>${fmtEff(o.effects)}</small>${o.basedOn ? html`<br>${basedOnLink(ctx, o.basedOn)}` : ''}</li>`)}</ul></details>`)}
+    ${sc.rounds.map((r) => html`<details class="c-sim__round"><summary>${E(ctx, r.title)}</summary><p>${E(ctx, r.prompt)}</p>
+      <ul class="c-sim__opts">${r.options.map((o) => html`<li><b>${E(ctx, o.label)}</b><br>${E(ctx, o.feedback)}<br><small>${fmtEff(o.effects)}</small>${o.basedOn ? html`<br>${basedOnLink(ctx, o.basedOn)}` : ''}</li>`)}</ul></details>`)}
   </div>
 </div>
 ${item.disclaimer ? html`<p class="c-play__disclaimer">${item.disclaimer}</p>` : ''}`;

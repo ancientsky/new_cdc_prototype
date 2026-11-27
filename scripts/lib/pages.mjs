@@ -18,6 +18,10 @@ import { t as i18nT } from '../../src/client/i18n.js';
 import { layout as defaultLayout } from '../../src/templates/layout.mjs';
 import { ROOT } from './load.mjs';
 import { publicView } from './lanes.mjs';
+import { setMarkdownPage } from './markdown.mjs';
+import { inlineLinkTitles } from './a11y-text.mjs';
+
+const SITE_HOST = (() => { try { return new URL(config.siteUrl).hostname.toLowerCase(); } catch { return ''; } })();
 
 const TEMPLATE_DIRS = ['public', 'pro', 'admin'].map((d) => path.join(ROOT, 'src/templates', d));
 
@@ -76,10 +80,14 @@ export async function renderAllPages(site, write) {
     if (seen.has(outKey)) { console.warn(`[pages] 重複路徑略過：${outKey}（${p.name}）`); continue; }
     seen.add(outKey);
     const ctx = makeCtx(p.tSite, p.lang, { path: p.path, alternates: [...byPath.get(p.path)], view: p.view ?? 'public' });
+    setMarkdownPage({ t: ctx.t, siteHost: SITE_HOST });
     const body = p.mod.render(ctx, p.props ?? {});
     const meta = p.mod.meta?.(ctx, p.props ?? {}) ?? {};
     const lay = p.mod.layout ?? defaultLayout;
-    const htmlOut = lay(ctx, { ...meta, noindex: p.noindex ?? meta.noindex, body });
+    // 第七十五輪（檢測碼 HM1240401C，業主決定 A 案）：整頁安全網——模板與 Markdown 沒給 title 的行內連結，在這裡補描述性 title
+    // （規則見 scripts/lib/a11y-text.mjs；docs/a11y.md 第 12 節）。逐一改五十幾個模板不切實際，新模板也自動適用。
+    const htmlOut = inlineLinkTitles(String(lay(ctx, { ...meta, noindex: p.noindex ?? meta.noindex, body })), { t: ctx.t, pageTitle: typeof meta.title === 'string' ? meta.title : '', siteHost: SITE_HOST, siteName: ctx.t('site.name') });
+    setMarkdownPage(null);
     const out = p.file ? p.path.replace(/^\//, '') : `${langDef.path}${p.path}index.html`.replace(/^\//, '');
     write(out, String(htmlOut));
     n++;
