@@ -45,7 +45,7 @@
 | [attack-surface.md](attack-surface.md) | 攻擊面縮小：正式部署產物白名單、內部站拆分、對外資產清冊 |
 | [abuse-protection.md](abuse-protection.md) | 防自動化濫用：速率限制、Bot 防護、探測偵測與告警 |
 | [security-testing.md](security-testing.md) | 滲透測試、動態弱點掃描、AI 輔助自我檢測與修補時限（示意稿） |
-| [a11y.md](a11y.md) | 無障礙基準與自我評量：WCAG 2.2 AA、axe 結果、CI 閘門、人工走查腳本 |
+| [a11y.md](a11y.md) | 無障礙基準與自我評量：WCAG 2.2 AA、axe 結果、CI 閘門、人工走查腳本；新版網站無障礙規範 28 個檢測碼對照與 `a11y:tw` 預檢（第 12 節） |
 | [i18n.md](i18n.md) | 多語工程筆記：詞彙退回、外語頁中文比例檢查、機器翻譯初稿怎麼審 |
 | [ask-log.md](ask-log.md) | 智慧問答查詢紀錄：記什麼不記什麼、k-匿名報表、正式收件端契約 |
 | [denguemap-integration.md](denguemap-integration.md) | 與登革熱地圖整合：深連結、疫情小卡、專區嵌入、CSP 與排程 |
