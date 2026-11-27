@@ -7,12 +7,14 @@
 //     本腳本是「每個 PR 的預檢」，Freego 是「申請前的對照」，兩邊用同一組檢測碼編號，報告可以逐條對照。
 //   - 不開瀏覽器、只讀 dist 的 HTML／CSS（純 Node，htmlparser2），幾秒跑完，所以能放進純內容 PR 也會跑的 test:content。
 //     代價：看不到 JS 產生的畫面與 CSS 計算後的樣式（例如是否隱藏）；那部分仍由 npm run a11y（Playwright＋axe＋焦點走查）負責。
-// 判定：A、AA 級的不合格 → exit 1；HM1130103C（select 未用 optgroup，Freego 判法未確認）、HM2310200C（外語片段，專有名詞屬例外）
-//       與「多欄位表單沒有 fieldset」只列警告。AAA 級（HM3240900C 等）不是目標，不檢查。
+// 判定：A、AA 級的不合格 → exit 1；HM1130103C（select 未用 optgroup，Freego 判法未確認）與「多欄位表單沒有 fieldset」只列警告。
+//       HM2310200C（外語片段要標 lang）第七十六輪起擋合併：模板與 pages.mjs 的安全網已把不同語言的片段標好，剩下的是真的漏標。
+//       規範的專有名詞例外：中文頁上 3 個字以下的英文（WHO、Taiwan CDC）本來就不判；其他專有名詞若確定不該標，
+//       在承載元素加 data-a11y-propernoun（docs/a11y.md §12.2），本腳本略過。AAA 級（HM3240900C 等）不是目標，不檢查。
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { parseTree, walk, textOf, linkText, isInlineLink, PICTO_RE } from './lib/a11y-text.mjs';
+import { parseTree, walk, textOf, linkText, isInlineLink, PICTO_RE, EN_WORDS_RE } from './lib/a11y-text.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -39,7 +41,7 @@ export const CODES = {
   ME1320200C: { level: 'A', title: '下載檔要是開放格式（ODF、PDF、HTML、CSV、JSON…）' },
   HM1410201C: { level: 'A', title: '<iframe>／<frame> 要有 title' },
   CS2140401C: { level: 'AA', title: 'CSS 字級不得用 px' },
-  HM2310200C: { level: 'AA', title: '外語片段要標 lang', warn: true },
+  HM2310200C: { level: 'AA', title: '外語片段要標 lang' },
   FORM_FIELDSET: { level: 'A', title: '（HM1130105C 延伸）多欄位表單沒有任何 <fieldset>', warn: true },
 };
 
@@ -209,8 +211,9 @@ export function checkHtml(html) {
       ['code', 'pre', 'kbd', 'samp'].includes(tn.parent?.name)
     )
       continue;
+    if ([tn.parent, ...ancestors(tn.parent)].some((p) => p?.attribs?.['data-a11y-propernoun'] != null)) continue;
     if (pageLang.startsWith('zh') && l.startsWith('zh') && !/[㐀-鿿]/.test(v)) {
-      const m = v.match(/[A-Za-z][A-Za-z'’-]*(?:\s+[A-Za-z][A-Za-z'’-]*){3,}/);
+      const m = v.match(EN_WORDS_RE);
       if (m) add('HM2310200C', `「${m[0].slice(0, 50)}」`);
     }
     if (pageLang && !/^(zh|ja)/.test(pageLang) && l === pageLang && (v.match(/[㐀-鿿]/g) ?? []).length >= 2)

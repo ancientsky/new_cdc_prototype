@@ -19,7 +19,7 @@ import { layout as defaultLayout } from '../../src/templates/layout.mjs';
 import { ROOT } from './load.mjs';
 import { publicView } from './lanes.mjs';
 import { setMarkdownPage } from './markdown.mjs';
-import { inlineLinkTitles } from './a11y-text.mjs';
+import { inlineLinkTitles, markFallbackLang } from './a11y-text.mjs';
 
 const SITE_HOST = (() => { try { return new URL(config.siteUrl).hostname.toLowerCase(); } catch { return ''; } })();
 
@@ -73,6 +73,7 @@ export async function renderAllPages(site, write) {
   for (const p of pages) { if (!byPath.has(p.path)) byPath.set(p.path, new Set()); byPath.get(p.path).add(p.lang); }
   setPageRegistry(byPath);
   let n = 0;
+  let langMarked = 0;
   const seen = new Set();
   for (const p of pages) {
     const langDef = config.langs.find((l) => l.code === p.lang);
@@ -86,12 +87,16 @@ export async function renderAllPages(site, write) {
     const lay = p.mod.layout ?? defaultLayout;
     // 第七十五輪（檢測碼 HM1240401C，業主決定 A 案）：整頁安全網——模板與 Markdown 沒給 title 的行內連結，在這裡補描述性 title
     // （規則見 scripts/lib/a11y-text.mjs；docs/a11y.md 第 12 節）。逐一改五十幾個模板不切實際，新模板也自動適用。
-    const htmlOut = inlineLinkTitles(String(lay(ctx, { ...meta, noindex: p.noindex ?? meta.noindex, body })), { t: ctx.t, pageTitle: typeof meta.title === 'string' ? meta.title : '', siteHost: SITE_HOST, siteName: ctx.t('site.name') });
+    // 第七十六輪（檢測碼 HM2310200C）：模板沒標到的不同語言片段補 lang（外語頁的中文正本 zh-TW、中文頁的英文 en；第二層安全網，第一層在模板，見 a11y-text.mjs）
+    const withTitles = inlineLinkTitles(String(lay(ctx, { ...meta, noindex: p.noindex ?? meta.noindex, body })), { t: ctx.t, pageTitle: typeof meta.title === 'string' ? meta.title : '', siteHost: SITE_HOST, siteName: ctx.t('site.name') });
+    const { html: htmlOut, marked } = markFallbackLang(withTitles, { pageLang: ctx.lang });
+    langMarked += marked;
     setMarkdownPage(null);
     const out = p.file ? p.path.replace(/^\//, '') : `${langDef.path}${p.path}index.html`.replace(/^\//, '');
     write(out, String(htmlOut));
     n++;
     if (p.md && p.mod.markdown) write(`${langDef.path}${p.path.replace(/\/$/, '')}.md`.replace(/^\//, ''), p.mod.markdown(ctx, p.props ?? {}));
   }
+  if (langMarked) console.log(`[pages] 不同語言片段補 lang（外語頁 zh-TW、中文頁 en）：${langMarked} 處（模板沒標到、由安全網補；docs/a11y.md §12.2）`);
   return n;
 }

@@ -7,6 +7,9 @@ import {
   ldFor, breadcrumb, pageHead, provenance, alerts, pageData, feedback, translationBadge, L, unitName, extLink, isExternal, pill, mdHeader, titleLink,
 } from './_partials.mjs';
 import { tendersOf, allTenders, tenderPath, tenderStage, tenderTab, TENDER_TABS, stagePill, tenderCountdown, money } from './_careers.mjs';
+import { leadOf } from './_partials.mjs';
+// 第七十六輪（HM2310200C）：招標方式、採購類別只有中文（政府採購法用語），外語頁標 lang="zh-TW"
+const zhPill = (ctx, text, kind) => pill(text, kind, ctx.lang === 'zh-TW' ? null : 'zh-TW');
 
 const STYLES = ['/assets/styles/careers.css'];
 const trailOf = (ctx, x) => [{ label: ctx.t('proc.title'), href: '/procurement/' }, { label: L(ctx, x, 'title') }];
@@ -47,7 +50,7 @@ function tenderCard(ctx, x) {
   const stage = tenderStage(site, x);
   return html`<li class="c-job c-tender" data-stage="${stage}">
   <div class="c-job__main">
-    <p class="c-job__meta">${x.method ? pill(x.method, 'info') : ''} ${x.category ? pill(x.category, 'neutral') : ''}${stage === 'cancelled' ? html` ${stagePill(ctx, stage, 'tender')}` : ''}${x.amendments?.length && AMEND_PILL_STAGES.includes(stage) ? html` ${pill(t('proc.amend.badge'), 'warn')}` : ''}</p>
+    <p class="c-job__meta">${x.method ? zhPill(ctx, x.method, 'info') : ''} ${x.category ? zhPill(ctx, x.category, 'neutral') : ''}${stage === 'cancelled' ? html` ${stagePill(ctx, stage, 'tender')}` : ''}${x.amendments?.length && AMEND_PILL_STAGES.includes(stage) ? html` ${pill(t('proc.amend.badge'), 'warn')}` : ''}</p>
     <h3 class="c-job__t">${titleLink(ctx, { ...x, type: 'tender' })}</h3>
     <dl class="c-job__facts">
       <div><dt>${t('proc.tenderNo')}</dt><dd>${x.tenderNo ?? '—'}</dd></div>
@@ -125,7 +128,7 @@ function detail(ctx, x) {
   <header class="c-pagehead"><div class="c-pagehead__main">
     <p class="c-article__meta">${stagePill(ctx, stage, 'tender')} ${x.method ? pill(x.method, 'info') : ''} <span>${t('proc.unit')}：${x.requestingUnit ? unitName(ctx, x.requestingUnit) : unitName(ctx, x.owner)}</span></p>
     <h1>${L(ctx, x, 'title')}</h1>
-    ${L(ctx, x, 'summary') ? html`<p class="lead">${L(ctx, x, 'summary')}</p>` : ''}
+    ${leadOf(ctx, x)}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
     ${alerts(ctx, x)}${amendRecent(ctx, x)}${provenance(ctx, x)}
   </div>${x.pccUrl ? html`<div class="c-pagehead__actions">${extLink(ctx, x.pccUrl, t('proc.pcc'), { cls: 'c-btn c-btn--ghost' })}</div>` : ''}</header>

@@ -15,6 +15,7 @@ import {
 } from './_careers.mjs';
 import { resultTakenDown } from '../../client/careers-rules.js';
 import { formOf, formNotice } from './_forms.mjs';
+import { leadOf, Lx } from './_partials.mjs';
 
 const STYLES = ['/assets/styles/careers.css'];
 const LIST_JS = ['/assets/js/careers-list.js'];
@@ -76,7 +77,7 @@ function jobCard(ctx, j, tab) {
   const amended = (j.amendments ?? []).length > 0 && !jobIsHistory(site, j, stage);
   return html`<li class="c-job" data-jobtype="${j.jobType ?? ''}" data-place="${place}" data-unit="${j.hiringUnit ?? ''}" data-stage="${stage}">
   <div class="c-job__main">
-    <p class="c-job__meta">${j.jobType ? pill(L(ctx, j, 'jobType') ?? j.jobType, 'info') : ''}${showStage ? html` ${stagePill(ctx, stage)}` : ''}${j.applyUrl && stage === 'open' ? html` ${pill(t('job.method.external'), 'neutral')}` : ''}${amended ? html` <span class="c-amend-flag" data-amended>${pill(t('job.amend.pill'), 'warn')}</span>` : ''}</p>
+    <p class="c-job__meta">${j.jobType ? pill(L(ctx, j, 'jobType') ?? j.jobType, 'info', Lx(ctx, j, 'jobType').lang === ctx.lang ? null : Lx(ctx, j, 'jobType').lang) : ''}${showStage ? html` ${stagePill(ctx, stage)}` : ''}${j.applyUrl && stage === 'open' ? html` ${pill(t('job.method.external'), 'neutral')}` : ''}${amended ? html` <span class="c-amend-flag" data-amended>${pill(t('job.amend.pill'), 'warn')}</span>` : ''}</p>
     <h3 class="c-job__t">${titleLink(ctx, { ...j, type: 'job' })}</h3>
     <dl class="c-job__facts">
       ${j.hiringUnit ? html`<div><dt>${t('job.unit')}</dt><dd>${unitLink(ctx, j.hiringUnit)}</dd></div>` : ''}
@@ -255,9 +256,9 @@ function detail(ctx, j) {
   return html`${breadcrumb(ctx, trailOf(ctx, j))}
 <article class="c-article c-job-detail" data-job="${j.id}" data-stage="${stage}">
   <header class="c-pagehead"><div class="c-pagehead__main">
-    <p class="c-article__meta">${stagePill(ctx, stage)} ${j.jobType ? pill(L(ctx, j, 'jobType') ?? j.jobType, 'info') : ''} <span>${t('job.unit')}：${unitLink(ctx, j.hiringUnit || j.owner)}</span></p>
+    <p class="c-article__meta">${stagePill(ctx, stage)} ${j.jobType ? pill(L(ctx, j, 'jobType') ?? j.jobType, 'info', Lx(ctx, j, 'jobType').lang === ctx.lang ? null : Lx(ctx, j, 'jobType').lang) : ''} <span>${t('job.unit')}：${unitLink(ctx, j.hiringUnit || j.owner)}</span></p>
     <h1>${L(ctx, j, 'title')}</h1>
-    ${L(ctx, j, 'summary') ? html`<p class="lead">${L(ctx, j, 'summary')}</p>` : ''}
+    ${leadOf(ctx, j)}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
     ${alerts(ctx, j, { skip: ['closed'] })}${(() => { const a = recentAmend(ctx, j); return a ? html`<div class="c-alert c-alert--info c-amend-recent" role="status" data-amend-recent>${t('job.amend.recent', { date: fmtDate(a.date), text: a.text })} <a href="#amendments">${t('job.amend.title')} →</a></div>` : ''; })()}${provenance(ctx, j)}
   </div></header>

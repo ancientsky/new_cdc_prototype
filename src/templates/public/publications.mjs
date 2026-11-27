@@ -10,6 +10,7 @@ import {
 // 第二十九輪：疫情報導卷期頁改成「本期目錄」（每篇全文、PDF、作者、摘要一句），文章全文在 articles.mjs；理由見 _bulletin.mjs 與 docs/bulletin.md
 import { issueTocHtml, otherIssuesHtml, volIssueLabel, articlesOfIssue, citationOf } from './_bulletin.mjs';
 import { BULLETIN_HOME } from '../../client/bulletin-rules.js';
+import { leadOf } from './_partials.mjs';
 
 const trailOf = (ctx, p) => [{ label: ctx.t('publications.title'), href: '/publications/' }, { label: L(ctx, p, 'title') }];
 const volIssue = (p) => [p.volume != null ? `${p.volume}` : '', p.issue != null ? `(${p.issue})` : ''].join('');
@@ -117,7 +118,7 @@ function detail(ctx, p) {
   <header class="c-pagehead"><div class="c-pagehead__main">
     <p class="c-article__meta">${pill(t(`publications.type.${p.pubType}`), 'info')} <span>${p.series}${volIssue(p) ? ` ${volIssue(p)}` : ''}</span></p>
     <h1>${L(ctx, p, 'title')}</h1>
-    <p class="lead">${L(ctx, p, 'summary')}</p>
+    ${leadOf(ctx, p)}
     ${scopeTags(ctx, p, { region: false })}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
     ${alerts(ctx, p)}${provenance(ctx, p)}

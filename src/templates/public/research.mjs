@@ -7,6 +7,7 @@ import {
   itemPath, extLink, mdHeader, proScope, pill, diseaseName, diseaseHref,
 } from './_partials.mjs';
 import { resolveDoc } from './lab.mjs';
+import { leadOf } from './_partials.mjs';
 
 const STATUSES = ['planned', 'ongoing', 'completed', 'published'];
 const trailOf = (ctx, r) => [{ label: ctx.t('research.title'), href: '/research/' }, { label: L(ctx, r, 'title') }];
@@ -43,7 +44,7 @@ function detail(ctx, r) {
   <header class="c-pagehead"><div class="c-pagehead__main">
     <p class="c-article__meta">${proScope(ctx)} ${pill(t(`research.status.${r.projectStatus}`), stKind[r.projectStatus])} <span>${r.year}</span>${r.projectNo ? html` · <span>${r.projectNo}</span>` : ''}</p>
     <h1>${L(ctx, r, 'title')}</h1>
-    <p class="lead">${L(ctx, r, 'summary')}</p>
+    ${leadOf(ctx, r)}
     ${scopeTags(ctx, r, { region: false })}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
     ${alerts(ctx, r)}${provenance(ctx, r)}

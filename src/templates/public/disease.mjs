@@ -11,6 +11,7 @@ import {
 import { curricula, curriculumList } from './_curriculum.mjs';
 import { denguemapCard, denguemapCardData, DENGUEMAP_OF_DISEASE } from './_denguemap.mjs';
 import { taipeiMinute } from '../../../scripts/lib/denguemap.mjs';
+import { leadOf } from './_partials.mjs';
 
 const trailOf = (ctx, item) => [{ label: ctx.t('nav.diseases'), href: '/diseases/' }, { label: L(ctx, item, 'title') }];
 
@@ -74,7 +75,8 @@ function renderBlock(ctx, item, b, ctxData) {
     if (wk?.length) {
       body.push(html`<figure class="c-chartbox"><figcaption>${t('disease.chart.title', { n: wk.length, label: sitField(ctx, sit, 'metricLabel') })}${sit.illustrative ? html` <span class="c-pill c-pill--neutral">${t('illustrative')}</span>` : ''}</figcaption>${raw(barChartSvg(wk, { labels, color: `var(--status-${sit.status})`, title: sitField(ctx, sit, 'metricLabel'), unit: '' }))}<p class="c-chartbox__src">${numberSource(ctx, { source: site.situation.source, dataDate: site.situation.dataDate, illustrative: sit.illustrative })} · ${t('disease.chart.daily')}</p></figure>`);
     } else if (yr) {
-      body.push(html`<figure class="c-chartbox"><figcaption>${yr.label} (${yr.unit})</figcaption>${raw(barChartSvg(yr.points.map((p) => p.v), { labels: yr.points.map((p) => p.t), title: yr.label, unit: yr.unit }))}<p class="c-chartbox__src">${yr.note ?? ''}</p></figure>`);
+      // 第七十六輪（HM2310200C）：年度序列的名稱、單位與註記來自資料集（只有中文），外語頁整個 figure 標 lang="zh-TW"（SVG 的 <title> 不能包 span）
+      body.push(html`<figure class="c-chartbox"${ctx.lang === 'zh-TW' ? '' : raw(' lang="zh-TW"')}><figcaption>${yr.label} (${yr.unit})</figcaption>${raw(barChartSvg(yr.points.map((p) => p.v), { labels: yr.points.map((p) => p.t), title: yr.label, unit: yr.unit }))}<p class="c-chartbox__src">${yr.note ?? ''}</p></figure>`);
     }
     body.push(html`<p class="c-linkrow"><a href="${url('/situation/')}" title="${t('a11y.link.title', { text: t('disease.trend'), context: L(ctx, item, 'title') })}">${t('disease.trend')} →</a>${ds[0] ? html` · <a href="${url('/data/')}#${ds[0].id}" title="${t('a11y.link.title', { text: `${t('disease.dataset')}：${L(ctx, ds[0], 'title')}`, context: t('nav.data') })}">${t('disease.dataset')}：${L(ctx, ds[0], 'title')}</a>` : ''}</p>`);
     for (const d of ds) body.push(datasetSourceCard(ctx, d));
@@ -214,7 +216,7 @@ ${breadcrumb(ctx, trailOf(ctx, item))}
         ${viewToggle(ctx)}
       </div>
       <h1>${title}${lang !== 'en' ? html` <small class="c-disease__en" lang="en">${item.nameEn}</small>` : ''} <span class="c-scope-tag c-scope-tag--cat">${catLabel}</span></h1>
-      <p class="lead">${L(ctx, item, 'summary')}</p>
+      ${leadOf(ctx, item)}
       ${scopeTags(ctx, item)}
       ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
       ${provenance(ctx, item)}

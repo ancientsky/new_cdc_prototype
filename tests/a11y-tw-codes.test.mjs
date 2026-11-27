@@ -1,6 +1,6 @@
 // 第七十五輪：新版「網站無障礙規範」附件一檢測碼預檢（scripts/a11y-tw.mjs；docs/a11y.md 第 12 節）。
 // (a) 每個檢測碼各一個「不合格」與「合格」的小 HTML，確認判定規則本身；
-// (b) 建置期處理（scripts/lib/a11y-text.mjs、Markdown 渲染器）產生的 title、scope、表情符號包裝；
+// (b) 建置期處理（scripts/lib/a11y-text.mjs、Markdown 渲染器）產生的 title、scope、表情符號包裝、不同語言片段的 lang（第七十六輪）；
 // (c) 真實網站：有 dist 就掃 dist（本機建置後）；沒有 dist（CI 的純內容 PR 在建置前跑 test:content）就在記憶體裡渲染全站再掃。
 //     為什麼放進 test:content：表格缺 scope、表情符號缺 title 這類問題是從內容（Markdown／JSON）進來的，純內容 PR 不跑瀏覽器檢測，
 //     這裡是它們唯一會被擋下的地方（docs/deploy.md §28.4）。
@@ -9,7 +9,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { checkHtml, checkCss, scanDist, summarize, CODES } from '../scripts/a11y-tw.mjs';
-import { wrapEmoji, inlineLinkTitles, describeLink, isInlineLink, parseTree, walk } from '../scripts/lib/a11y-text.mjs';
+import { wrapEmoji, inlineLinkTitles, describeLink, isInlineLink, parseTree, walk, markFallbackLang } from '../scripts/lib/a11y-text.mjs';
 import { md, tableScope, setMarkdownPage } from '../scripts/lib/markdown.mjs';
 import { t as i18nT } from '../src/client/i18n.js';
 import { govern, memWriter } from './helpers.mjs';
@@ -83,7 +83,10 @@ const CASES = {
   ],
   HM1410201C: [doc('<iframe src="/map/"></iframe>'), doc('<iframe src="/map/" title="地圖"></iframe>')],
   CS2140401C: [doc('<p style="font-size:12px">小字</p>'), doc('<p style="font-size:.8125rem">小字</p>')],
-  HM2310200C: [doc('<p>Taiwan Centers for Disease Control</p>'), doc('<p lang="en">Taiwan Centers for Disease Control</p><p>疾管署 CDC</p>')],
+  HM2310200C: [
+    doc('<p>Taiwan Centers for Disease Control</p><p>WHO 與 Taiwan CDC</p>'),
+    doc('<p lang="en">Taiwan Centers for Disease Control</p><p>疾管署 CDC</p><p data-a11y-propernoun>Saint Kitts and Nevis</p>'),
+  ],
   FORM_FIELDSET: [
     doc('<form><label for="a">一</label><input id="a"><label for="b">二</label><input id="b"></form>'),
     doc('<form><fieldset><legend>篩選</legend><label for="a">一</label><input id="a"><label for="b">二</label><input id="b"></fieldset></form>'),
@@ -98,13 +101,13 @@ test('(a) 每個檢測碼都有「不合格」與「合格」兩個樣本，判�
   }
 });
 
-test('(a) 等級：AA 是 CS2140401C 與 HM2310200C；只有 HM1130103C、HM2310200C 與 FORM_FIELDSET 只列警告', () => {
+test('(a) 等級：AA 是 CS2140401C 與 HM2310200C；只有 HM1130103C 與 FORM_FIELDSET 只列警告（HM2310200C 第七十六輪起擋合併）', () => {
   assert.deepEqual(
     Object.entries(CODES)
       .filter(([, c]) => c.warn)
       .map(([k]) => k)
       .sort(),
-    ['FORM_FIELDSET', 'HM1130103C', 'HM2310200C'],
+    ['FORM_FIELDSET', 'HM1130103C'],
   );
   assert.deepEqual(
     Object.entries(CODES)
@@ -113,8 +116,8 @@ test('(a) 等級：AA 是 CS2140401C 與 HM2310200C；只有 HM1130103C、HM2310
       .sort(),
     ['CS2140401C', 'HM2310200C'],
   );
-  const s = summarize([{ code: 'HM1110100C' }, { code: 'HM1130103C' }]);
-  assert.deepEqual([s.fails, s.warnings], [1, 1]);
+  const s = summarize([{ code: 'HM1110100C' }, { code: 'HM1130103C' }, { code: 'HM2310200C' }]);
+  assert.deepEqual([s.fails, s.warnings], [2, 1]);
 });
 
 test('(a) CS2140401C：CSS 檔的 px 字級（含 var() 備援值）被判出，rem／em 不會', () => {
@@ -162,6 +165,47 @@ test('(b) 行內連結 title：包含連結文字、上下文是前面最近的�
     [false, false, true, true, true],
     '<div> 裡一排並列的連結是選單、不算；<p> 裡並排的連結算行內',
   );
+});
+
+test('(b) markFallbackLang：外語頁的中文正本片段標 zh-TW、中文頁的英文段落標 en；整段就加在元素上，屬性、<title>、script 不動', () => {
+  const en = (body) => doc(body, { lang: 'en', head: '<title>疾管署 Taiwan CDC</title><script>var a="中文";</script>' });
+  const page = en(
+    '<h1>Malaria</h1><p class="lead">非洲 · Check the alert level &amp; 國內現行 MMR 預防接種建議（114.04.16 版）</p><ul><li><a href="/x/" title="說明：瘧疾">瘧疾</a></li></ul>' +
+      '<p>Basis: 新通報（年） (人)</p><select><option>約僱人員</option><option>Contract 人員 staff</option></select><svg><title>流感 · 6 months</title></svg><p lang="zh-TW">已標示</p><textarea>中文</textarea>',
+  );
+  const { html: out, marked } = markFallbackLang(page, { pageLang: 'en' });
+  assert.match(
+    out,
+    /<p class="lead"><span lang="zh-TW">非洲<\/span> · Check the alert level &amp; <span lang="zh-TW">國內現行 MMR 預防接種建議（114\.04\.16 版）<\/span><\/p>/,
+  );
+  assert.match(out, /<a href="\/x\/" title="說明：瘧疾" lang="zh-TW">瘧疾<\/a>/, '整段都是中文：加在承載元素上（不改 DOM 結構），屬性值不動');
+  assert.match(out, /Basis: <span lang="zh-TW">新通報（年） \(人\)<\/span>/, '沒配對的括號收進片段');
+  assert.match(out, /<option lang="zh-TW">約僱人員<\/option><option>Contract 人員 staff<\/option>/, '<option> 裡不放 span');
+  assert.match(out, /<svg><title>流感 · 6 months<\/title><\/svg>/, 'SVG 的 <title> 不放 span');
+  assert.match(out, /<title>疾管署 Taiwan CDC<\/title><script>var a="中文";<\/script>/);
+  assert.match(out, /<textarea lang="zh-TW">中文<\/textarea>/);
+  assert.equal(marked, 6);
+  assert.deepEqual(
+    checkHtml(out)
+      .filter((f) => f.code === 'HM2310200C')
+      .map((f) => f.snippet.slice(1, 3)),
+    ['Co', '流感'],
+    '補完後只剩 <option> 與 SVG 裡中英混排的兩處（不能放 span，要由模板處理）',
+  );
+  assert.equal(markFallbackLang(page, { pageLang: 'ja' }).marked, 0, '日文頁本來就用漢字，不動');
+  const zh = markFallbackLang(
+    doc(
+      '<p>Saint Kitts and Nevis</p><p>參考 <cite>Guidelines for Dengue Surveillance and Control</cite>，WHO 與 Taiwan CDC</p><li>see a doctor if you cough <a href="/x/">連結</a></li>',
+    ),
+    {
+      pageLang: 'zh-TW',
+    },
+  );
+  assert.match(zh.html, /<p lang="en">Saint Kitts and Nevis<\/p>/);
+  assert.match(zh.html, /<cite lang="en">Guidelines/);
+  assert.match(zh.html, /<li><span lang="en">see a doctor if you cough<\/span> <a href/);
+  assert.ok(!/WHO 與 Taiwan CDC<\/span>/.test(zh.html), '3 個字以下的專有名詞不動');
+  assert.ok(!checkHtml(zh.html).some((f) => f.code === 'HM2310200C'));
 });
 
 test('(b) Markdown：表格 th 有 scope；設定當頁語言後，行內連結補 title、表情符號包 title', () => {

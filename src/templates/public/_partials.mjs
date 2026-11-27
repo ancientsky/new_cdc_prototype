@@ -66,6 +66,26 @@ export function L(ctx, item, field) {
   return item.i18n?.[ctx.lang]?.[field] ?? item[field];
 }
 /**
+ * 第七十六輪（檢測碼 HM2310200C）：與 L() 取同一個值，另外告訴呼叫端「這個值是什麼語言」——
+ * i18n[ctx.lang] 沒有這一欄、退回來源語言（多半是中文正本）時 lang＝來源語言。模板用 langOf() 把 lang 標在承載元素上，
+ * 螢幕閱讀器才會切到中文語音。L() 本身不改：它的值也用在屬性（title、aria-label）裡，屬性不能帶 lang。
+ */
+export function Lx(ctx, item, field) {
+  if (!item) return { text: undefined, lang: ctx.lang };
+  const src = item.sourceLang ?? 'zh-TW';
+  if (ctx.lang === src) return { text: item[field], lang: src };
+  const own = item.i18n?.[ctx.lang]?.[field];
+  return own != null ? { text: own, lang: ctx.lang } : { text: item[field], lang: src };
+}
+/** 與頁面語言不同時回傳 ` lang="xx"`（給 html 模板用；_listing.mjs 的 langAttr 同義，放這裡免得循環匯入） */
+export const langOf = (ctx, r) => (r?.lang && r.lang !== ctx.lang ? raw(` lang="${r.lang}"`) : '');
+/** 頁首說明段落：L(item, field) 的值＋語言標記；沒有值回傳空字串 */
+export function leadOf(ctx, item, field = 'summary', fallback = null) {
+  const r = Lx(ctx, item, field);
+  if (r.text) return html`<p class="lead"${langOf(ctx, r)}>${r.text}</p>`;
+  return fallback ? html`<p class="lead">${fallback}</p>` : '';
+}
+/**
  * 第四十輪（#73）：清單／卡片上的標題該用哪個語言——全站列表一致的規則（新聞、影音、專區、澄清、公告都走這裡）。
  *   1. 頁面語言就是來源語言，或 i18n[lang][field] 有譯文 → 用它（lang＝頁面語言）
  *   2. 頁面不是英文、但有英文譯文 → 用英文（lang='en'；外語讀者多半讀得懂英文，勝過整串中文）
@@ -451,7 +471,8 @@ export function verdictPill(ctx, verdict, { outdated = false } = {}) {
   const v = outdated ? 'outdated' : verdict;
   return html`<span class="c-verdict c-verdict--${v}">${ctx.t(`verdict.${v}`)}</span>`;
 }
-export function pill(text, kind = 'neutral') { return html`<span class="c-pill c-pill--${kind}">${text}</span>`; }
+/** lang：與頁面語言不同的文字（外語頁上只有中文的類別名稱）由呼叫端傳入，標在 pill 本身 */
+export function pill(text, kind = 'neutral', lang = null) { return html`<span class="c-pill c-pill--${kind}"${lang ? raw(` lang="${lang}"`) : ''}>${text}</span>`; }
 
 export function taskCard(ctx, task, { foreign = false } = {}) {
   const { t, url } = ctx;

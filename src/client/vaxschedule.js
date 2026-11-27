@@ -251,7 +251,8 @@ export function renderMapSvg(rows, { t, lang = 'zh-TW' }) {
     const marks = r.items.map((i) => {
       const s = spanOf(i); const cy = ROW_PAD / 2 + lane.get(i.id) * LANE_H + LANE_H / 2;
       const verified = i.verified !== false;
-      const ttl = [itemLabel(i, lang), ageRangeLabel(i, t), t(`vxs.funded.${i.funded}`), verified ? '' : t('vxs.unverified.badge')].filter(Boolean).join(' · ');
+      // 第七十六輪（HM2310200C）：外語頁沒有 labelEn 時用列名（頁面語言），SVG 的 <title> 不能包 lang 片段，不放中文正本
+      const ttl = [lang === 'zh-TW' || i.labelEn ? itemLabel(i, lang) : String(r.name), ageRangeLabel(i, t), t(`vxs.funded.${i.funded}`), verified ? '' : t('vxs.unverified.badge')].filter(Boolean).join(' · ');
       const shape = s.point ? `<circle class="vxs-shape" cx="${s.c}" cy="${cy}" r="7"/>` : `<rect class="vxs-shape" x="${s.x1}" y="${cy - 7}" width="${s.x2 - s.x1}" height="14" rx="7"/>${s.open ? `<path class="vxs-arrow" d="M${s.x2 - 9} ${cy - 4}l5 4l-5 4"/>` : ''}`;
       return `<a class="vxs-mk vxs-mk--${esc(i.funded)}${verified ? '' : ' is-unverified'}" href="#${esc(i.id)}" data-id="${esc(i.id)}" data-stage="${esc(i.stage)}"><title>${esc(ttl)}</title>${shape}</a>`;
     }).join('');
