@@ -2,12 +2,15 @@
 // 沒有 JS 時三段全部顯示；pro.js 會把它們變成分頁（網址 #public / #pro / #staff）。
 import { html } from '../../../scripts/lib/render.mjs';
 import { proStyles } from '../pro/_styles.mjs';
-import { vaxmapLink, vaxmapButton, denguemapButton } from './_partials.mjs';
+import { vaxmapLink, vaxmapButton, denguemapButton, breadcrumb, breadcrumbLd } from './_partials.mjs';
 
 export function pages() { return [{ path: '/guide/', lang: 'zh-TW' }]; }
 
-export function meta() {
+// 第七十六輪（2.4.8 目前位置）：補全站共用的麵包屑
+const TRAIL = [{ label: '使用指南' }];
+export function meta(ctx) {
   return {
+    jsonLd: [breadcrumbLd(ctx, TRAIL)],
     title: '使用指南',
     description: '民眾、公衛醫療專業人員與同事各自怎麼使用這個網站：一句話提問、三層露出、版本異動、訂閱、Steward 日常工作與系統自動做的事。',
     scripts: ['/assets/js/pro.js'],
@@ -43,6 +46,7 @@ export function render(ctx) {
   ];
   return html`${proStyles}
 <div class="pf">
+  ${breadcrumb(ctx, TRAIL)}
   <h1>使用指南</h1>
   <p class="lead">同一個網站，三種人用法不同。選你的身分，看對應的步驟；每段都附可直接點開的頁面。文字版完整說明在 <code>docs/</code> 資料夾。</p>
   <ul class="pf-tabs" role="list" aria-label="選擇身分">

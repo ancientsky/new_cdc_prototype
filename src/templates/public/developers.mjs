@@ -3,7 +3,7 @@
 import { html } from '../../../scripts/lib/render.mjs';
 import { siteOrigin } from '../../../site.config.mjs';
 import { proStyles } from '../pro/_styles.mjs';
-import { vaxmapLink, denguemapLink } from './_partials.mjs';
+import { vaxmapLink, denguemapLink, breadcrumb, breadcrumbLd } from './_partials.mjs';
 import { buildRedirects, buildLegacyMap } from '../../../scripts/lib/emit-api.mjs';
 import { PATH as RESEARCH_MEDIA } from './research-media.mjs';
 
@@ -81,8 +81,11 @@ function sampleJson(site, ep) {
 
 export function pages() { return [{ path: '/developers/', lang: 'zh-TW' }]; }
 
+// 第七十六輪（2.4.8 目前位置）：補全站共用的麵包屑
+const TRAIL = [{ label: '開發者入口' }];
 export function meta(ctx) {
   return {
+    jsonLd: [breadcrumbLd(ctx, TRAIL)],
     title: '開發者入口 · API 與機讀版', description: '疾管署 AI-ready 新官網的 JSON API、OpenAPI、llms.txt、每頁 .md 機讀版、JSON-LD 與 cdc: 治理詞彙表；授權為政府資料開放授權條款第 1 版。',
     scripts: ['/assets/js/pro.js'],
   };
@@ -118,6 +121,7 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
 
   return html`${proStyles}
 <div class="pf" id="top">
+  ${breadcrumb(ctx, TRAIL)}
   <h1>開發者入口</h1>
   <p class="lead">內容只存一份；網頁、API、機讀版、AI 索引都是它的消費者。這裡說明怎麼取用、怎麼引用，以及每個欄位的意思。</p>
   <p class="muted" data-dev-backlink>${ctx.t('dev.backlink')} <a href="${url(RESEARCH_MEDIA)}">${ctx.t('nav.research')} →</a></p>

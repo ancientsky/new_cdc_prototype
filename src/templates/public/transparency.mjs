@@ -2,6 +2,7 @@
 // 每季一頁；原型以當次建置的評估結果產生「2026 Q3（原型）」。數字全部來自 site.evalReport 與治理引擎，不手寫。
 import { html } from '../../../scripts/lib/render.mjs';
 import { proStyles } from '../pro/_styles.mjs';
+import { breadcrumb, breadcrumbLd } from './_partials.mjs';
 // 第七十一輪（2.7）：示範站凍結在 BUILD_TODAY，摘要與六指標是那一天的計算；原型模式在摘要上方加一行說明（正式模式不輸出），
 // 避免讀者把凍結日的數字當成「現在」。日期用 ISO，與 /admin/ 儀表板同一句
 import { config } from '../../../site.config.mjs';
@@ -39,8 +40,11 @@ function readMetric(report, m) {
 
 export function pages() { return [{ path: '/transparency/', lang: 'zh-TW' }]; }
 
-export function meta() {
+// 第七十六輪（2.4.8 目前位置）：原本是一行「AI 與資料使用聲明 › AI 透明報告」的文字，改用全站共用的麵包屑（nav＋aria-current＋BreadcrumbList）
+const TRAIL = [{ label: 'AI 與資料使用聲明', href: '/policy/ai/' }, { label: 'AI 透明報告' }];
+export function meta(ctx) {
   return {
+    jsonLd: [breadcrumbLd(ctx, TRAIL)],
     title: 'AI 透明報告 · 2026 Q3（原型）',
     description: '疾管署 AI 問答的季度公開報告：問題量、拒答率、抽樣正確率、六項評估指標、版本題結果、白名單規模、暫停紀錄與評估方法。',
     scripts: ['/assets/js/pro.js'],
@@ -77,7 +81,7 @@ export function render(ctx) {
 
   return html`${proStyles}
 <div class="pf">
-  <p class="muted"><a href="${url('/policy/ai/')}">AI 與資料使用聲明</a> › AI 透明報告</p>
+  ${breadcrumb(ctx, TRAIL)}
   <h1>AI 透明報告 <small>2026 Q3（原型）</small></h1>
   <p class="lead">疾管署 AI 問答能回答什麼、答得多準、什麼時候拒答、什麼時候暫停，每季公開一次。本頁由這次建置（${fmtDate(site.today)}）的評估結果與治理引擎自動產生，不是人工撰寫。</p>
   <p class="pf-hint"><span class="pf-badge pf-badge--warn">原型</span> 正式上線後每季發布一頁，數字改為真實流量與人工抽樣；目前「問題量」以評估集題數代表。</p>

@@ -20,6 +20,7 @@ import { ROOT } from './load.mjs';
 import { publicView } from './lanes.mjs';
 import { setMarkdownPage } from './markdown.mjs';
 import { inlineLinkTitles, markFallbackLang } from './a11y-text.mjs';
+import { abbrTable, markAbbreviations } from './abbr.mjs';
 
 const SITE_HOST = (() => { try { return new URL(config.siteUrl).hostname.toLowerCase(); } catch { return ''; } })();
 
@@ -74,6 +75,7 @@ export async function renderAllPages(site, write) {
   setPageRegistry(byPath);
   let n = 0;
   let langMarked = 0;
+  let abbrMarked = 0;
   const seen = new Set();
   for (const p of pages) {
     const langDef = config.langs.find((l) => l.code === p.lang);
@@ -89,8 +91,12 @@ export async function renderAllPages(site, write) {
     // （規則見 scripts/lib/a11y-text.mjs；docs/a11y.md 第 12 節）。逐一改五十幾個模板不切實際，新模板也自動適用。
     // 第七十六輪（檢測碼 HM2310200C）：模板沒標到的不同語言片段補 lang（外語頁的中文正本 zh-TW、中文頁的英文 en；第二層安全網，第一層在模板，見 a11y-text.mjs）
     const withTitles = inlineLinkTitles(String(lay(ctx, { ...meta, noindex: p.noindex ?? meta.noindex, body })), { t: ctx.t, pageTitle: typeof meta.title === 'string' ? meta.title : '', siteHost: SITE_HOST, siteName: ctx.t('site.name') });
-    const { html: htmlOut, marked } = markFallbackLang(withTitles, { pageLang: ctx.lang });
+    const { html: withLang, marked } = markFallbackLang(withTitles, { pageLang: ctx.lang });
     langMarked += marked;
+    // 第七十六輪（WCAG 3.1.4 縮寫，AAA 選做）：主要內容段落裡，詞彙主檔認得的縮寫第一次出現處包 <abbr title="全稱">（scripts/lib/abbr.mjs）。後台不做
+    const ab = p.name.startsWith('admin/') ? { html: withLang, marked: 0 } : markAbbreviations(withLang, abbrTable(p.tSite.master?.glossary, ctx.lang));
+    const htmlOut = ab.html;
+    abbrMarked += ab.marked;
     setMarkdownPage(null);
     const out = p.file ? p.path.replace(/^\//, '') : `${langDef.path}${p.path}index.html`.replace(/^\//, '');
     write(out, String(htmlOut));
@@ -98,5 +104,6 @@ export async function renderAllPages(site, write) {
     if (p.md && p.mod.markdown) write(`${langDef.path}${p.path.replace(/\/$/, '')}.md`.replace(/^\//, ''), p.mod.markdown(ctx, p.props ?? {}));
   }
   if (langMarked) console.log(`[pages] 不同語言片段補 lang（外語頁 zh-TW、中文頁 en）：${langMarked} 處（模板沒標到、由安全網補；docs/a11y.md §12.2）`);
+  if (abbrMarked) console.log(`[pages] 縮寫標 <abbr title>：${abbrMarked} 處（每頁每個縮寫第一次出現；docs/a11y.md §13）`);
   return n;
 }
