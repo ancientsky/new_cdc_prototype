@@ -10,6 +10,7 @@ import { langAvailable } from '../../../scripts/lib/pages.mjs';
 import * as TravelMap from './_travel-map.mjs';
 import { ldFor, breadcrumb, provenance, alerts, pageData, scopeTags, feedback, hrefFor, isFallbackLink, L, unitName, publishedOf, byDateDesc, dated, langOk } from './_partials.mjs';
 import { INTL_TOPIC_ID, intlTopic, intlSubPages, intlKeyOf, intlSubPath, authorityNote } from './_international.mjs';
+import { leadOf } from './_partials.mjs';
 
 void INTL_TOPIC_ID;
 
@@ -223,7 +224,7 @@ ${bilateral && mapOpts?.isoCount ? raw(`<style>${TravelMap.styles}</style>`) : '
 <article class="c-article c-intl" data-item="${tp.id}">
   <header class="c-pagehead"><div class="c-pagehead__main">
     <h1>${title}</h1>
-    <p class="lead">${L(ctx, tp, 'summary') ?? t('international.lead')}</p>
+    ${leadOf(ctx, tp, 'summary', t('international.lead'))}
     ${authorityNote(ctx, tp)}
     ${scopeTags(ctx, tp, { region: false })}
     ${alerts(ctx, tp)}

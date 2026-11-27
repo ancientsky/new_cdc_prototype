@@ -6,6 +6,7 @@ import {
   ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, hrefFor, L, unitName, publishedOf, slugOf, itemPath,
   diseaseName, diseaseHref, isExternal, extLink, mdHeader, proScope, inlineAsk,
 } from './_partials.mjs';
+import { leadOf } from './_partials.mjs';
 
 const INLINE = ['/assets/js/answer/inline.js'];
 export const LAB_KEYS = ['cdc-lab', 'certified-lab', 'hospital-lab', 'regional-lab'];
@@ -96,7 +97,7 @@ function detail(ctx, lt) {
   <header class="c-pagehead"><div class="c-pagehead__main">
     <p class="c-article__meta">${proScope(ctx)} <span>${labUnits(ctx, lt.labs)}</span></p>
     <h1>${L(ctx, lt, 'title')}</h1>
-    <p class="lead">${L(ctx, lt, 'summary')}</p>
+    ${leadOf(ctx, lt)}
     ${scopeTags(ctx, lt, { region: false })}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
     ${alerts(ctx, lt)}${provenance(ctx, lt)}

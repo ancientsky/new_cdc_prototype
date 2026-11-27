@@ -1,7 +1,7 @@
 // /about/units/{slug}/：單位介紹頁（第十八輪）。由 content/master/units.json 自動產生：簡介、主要業務、該單位在本站維護的內容、聯絡。
 // 全站每個「權責單位」欄位（_partials.unitLink）都連到這裡，讀者點一下就知道這一頁是誰在維護、該單位還管哪些事。
 // 只出 zh-TW 與 en（主檔只有中英文簡介）；其他語言的頁面以 hreflang 連到英文版。
-import { html } from '../../../scripts/lib/render.mjs';
+import { html, raw } from '../../../scripts/lib/render.mjs';
 /** 現行官網的組織介紹頁（Yulun 提供，2026-10-05）。官網沒有各單位獨立網址，全署單位同一頁 */
 export const OFFICIAL_ORG_PAGES = [
   { key: 'org', url: 'https://www.cdc.gov.tw/CdcOrganization/Index/cBX61rWwT5TKpS7BbMzKag' },
@@ -49,7 +49,7 @@ export function render(ctx, { unit: u }) {
     <p>${uIntro(ctx, u) ?? ''}</p>
     ${u.introVerified === false ? html`<p class="c-unitpage__unverified muted">${t('unit.page.unverified')}</p>` : ''}
   </section>
-  ${u.duties?.length ? html`<section class="c-block" id="duties" aria-labelledby="h-duties"><h2 id="h-duties">${t('unit.page.duties')}</h2><ul class="c-unitpage__duties">${u.duties.map((d) => html`<li>${d}</li>`)}</ul>${u.dutiesSource ? html`<p class="muted c-unitpage__src">${t('unit.page.duties.src', { src: u.dutiesSource })}</p>` : ''}</section>` : ''}
+  ${u.duties?.length ? html`<section class="c-block" id="duties" aria-labelledby="h-duties"><h2 id="h-duties">${t('unit.page.duties')}</h2><ul class="c-unitpage__duties"${ctx.lang === 'zh-TW' ? '' : raw(' lang="zh-TW"')}>${u.duties.map((d) => html`<li>${d}</li>`)}</ul>${u.dutiesSource ? html`<p class="muted c-unitpage__src">${t('unit.page.duties.src', { src: u.dutiesSource })}</p>` : ''}</section>` : ''}
   <section class="c-block" id="content" aria-labelledby="h-content"><h2 id="h-content">${t('unit.page.content')}</h2>
     ${groups.length ? html`<p class="muted">${t('unit.page.stats', { content: st.content, wl: st.whitelist, latest: st.latest ? fmtDate(st.latest) : '—' })}</p>
     ${groups.map((g) => html`<h3>${t(`type.${g.type}`)} <span class="c-pill c-pill--neutral">${g.items.length}</span></h3>

@@ -6,6 +6,7 @@ import {
   ldFor, breadcrumb, pageHead, provenance, alerts, pageData, scopeTags, feedback, translationBadge, L, unitLink, publishedOf,
   itemPath, isExternal, extLink, mdHeader, pill, inlineAsk, localized, localText, langSpan } from './_partials.mjs';
 import { listEntry, zhOnlyBadge } from './_listing.mjs';
+import { leadOf } from './_partials.mjs';
 
 const INLINE = ['/assets/js/answer/inline.js'];
 export const AUDIENCES = [
@@ -73,7 +74,7 @@ function detail(ctx, sv) {
   <header class="c-pagehead"><div class="c-pagehead__main">
     <p class="c-article__meta">${pill(t(`apply.type.${sv.serviceType}`), 'info')} <span>${t('apply.who')}：${(sv.whoCanApply ?? []).join('、')}</span></p>
     <h1>${L(ctx, sv, 'title')}</h1>
-    <p class="lead">${L(ctx, sv, 'summary')}</p>
+    ${leadOf(ctx, sv)}
     ${scopeTags(ctx, sv, { region: false })}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
     ${alerts(ctx, sv)}${provenance(ctx, sv)}

@@ -6,6 +6,7 @@ import { isLongDoc, longDocMain, longDocToc } from './_longdoc.mjs';
 import { curriculumHead, CS } from './_curriculum.mjs';
 import { ldFor, breadcrumb, pageHead, sectionHead, provenance, alerts, alertBox, pageData, scopeTags, feedback, translationBadge, hrefFor, L, unitName, unitLink, slugOf, itemPath, pill, diseasePage, askBox, zhOnlyTag } from './_partials.mjs';
 import { zhText } from './_listing.mjs';
+import { leadOf, Lx, langOf } from './_partials.mjs';
 
 export function familyOf(site, d) {
   const m = site.gov?.docsByFamily?.get(d.family);
@@ -45,7 +46,7 @@ function listPage(ctx) {
     const vers = docs.filter((d) => d.family === fam).sort((a, b) => String(b.effectiveAt).localeCompare(String(a.effectiveAt)));
     const cur = vers.find((v) => v.isCurrent) ?? vers[0];
     return html`<section class="c-docfamily" aria-labelledby="f-${fam}">
-      <h2 id="f-${fam}">${L(ctx, cur, 'title')}</h2>
+      <h2 id="f-${fam}"${langOf(ctx, Lx(ctx, cur, 'title'))}>${L(ctx, cur, 'title')}</h2>
       <p class="muted">${t(`documents.type.${cur.docType}`)} · ${unitLink(ctx, cur.owner)}</p>
       <ul class="c-versions">${vers.map((v) => html`<li class="${v.isCurrent ? 'is-current' : 'is-old'}">
         <a href="${hrefFor(ctx, v)}">${v.version}</a>
@@ -83,7 +84,7 @@ function detail(ctx, d) {
   <header class="c-pagehead"><div class="c-pagehead__main">
     <p class="c-article__meta">${pill(t(`documents.type.${d.docType}`), 'info')} ${old ? pill(t('documents.expired'), 'neutral') : pill(t('prov.current'), 'ok')}</p>
     <h1>${L(ctx, d, 'title')}</h1>
-    <p class="lead">${L(ctx, d, 'summary')}</p>
+    ${leadOf(ctx, d)}
     <dl class="c-provfull">
       <div><dt>${t('prov.version')}</dt><dd>${d.version}</dd></div>
       <div><dt>${t('prov.effective')}</dt><dd>${fmtDate(d.effectiveAt)}</dd></div>

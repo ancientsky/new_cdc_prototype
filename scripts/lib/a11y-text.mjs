@@ -108,8 +108,11 @@ export function parseTree(src) {
       },
       ontext(text) {
         const last = cur.children[cur.children.length - 1];
-        if (last && last.type === 'text') last.data += text;
-        else cur.children.push({ type: 'text', data: text, parent: cur });
+        // start／end（含）是這段文字在原字串的位置（實體未解碼前），給 markFallbackLang 就地包 span 用
+        if (last && last.type === 'text') {
+          last.data += text;
+          last.end = parser.endIndex;
+        } else cur.children.push({ type: 'text', data: text, parent: cur, start: parser.startIndex, end: parser.endIndex });
       },
     },
     { decodeEntities: true, lowerCaseTags: true, lowerCaseAttributeNames: true },
@@ -249,4 +252,94 @@ export function inlineLinkTitles(htmlStr, { t, pageTitle = '', siteHost = '', si
     last = at;
   }
   return out + src.slice(last);
+}
+
+// ── 不同語言的片段（HM2310200C，AA）──
+// 第七十六輪：外語頁退回中文正本的片段要標 lang="zh-TW"（螢幕閱讀器才會切換中文語音；docs/a11y.md 第 12、13 節）。
+// 第一層在模板：L()／localText() 知道「這一欄退回了來源語言」，模板把 lang 標在承載元素上（_partials.mjs 的 Lx／langOf／leadOf）。
+// 這裡是第二層、整頁安全網：模板沒標到的中文片段（散在幾十個模板的單位名稱、表格儲存格、i18n 變數裡的中文值…）在輸出前補上。
+// 規則：
+//   - 外語頁（不含日文：日文本來就用漢字，分不出是不是中文正本）：「中文片段」＝從第一個漢字到最後一個漢字或全形標點，
+//     中間只容許空白、數字、半形標點與全大寫縮寫（MMR、COVID-19、PDF）；遇到小寫英文字（頁面語言的句子）就斷開。標 lang="zh-TW"。
+//   - 中文頁（反向，便宜的一半）：整段沒有漢字、且是連續 4 個以上英文字的文字（sourceLang:'en' 內容的標題、英文國名、外文文獻）標 lang="en"。
+//     判準與 scripts/a11y-tw.mjs 的檢查相同；3 個字以下的專有名詞（WHO、Taiwan CDC）屬規範例外，不動。
+//   - 只動標籤之外的文字；<head>（含 <title>）、script、style、template、code／pre 與已有 lang 的祖先都不動，屬性值不動。
+//   - 片段就是承載元素的全部文字 ⇒ 把 lang 加在那個元素上（不改 DOM 結構，行內連結判斷與 CSS 選擇器都不受影響）；
+//     否則就地包 <span lang>（<option>、<textarea> 與 SVG 裡不能放 span，那裡只在整段都是同一語言時加在元素上）。
+const HAN = '[\\u3400-\\u9FFF\\uF900-\\uFAFF]';
+const CJK_CORE = `(?:${HAN}|[\\u3000-\\u303F\\uFF00-\\uFFEF])`;
+const CJK_GAP = '(?:[\\s\\d.,:;/+%()\\u2013\\u2014-]|[A-Z]{1,8}(?:-\\d+)?|&(?:amp|nbsp|#\\d+);)+';
+const CJK_RUN = new RegExp(`${CJK_CORE}+(?:${CJK_GAP}${CJK_CORE}+)*\\)?`, 'gu');
+const HAN_RE = new RegExp(HAN, 'u');
+/** 與 scripts/a11y-tw.mjs 共用：中文頁上「一段英文」的判準（連續 4 個以上英文字） */
+export const EN_WORDS_RE = /[A-Za-z][A-Za-z'’-]*(?:\s+[A-Za-z][A-Za-z'’-]*){3,}/;
+const LANG_SKIP = new Set(['head', 'title', 'script', 'style', 'template', 'noscript', 'code', 'pre', 'kbd', 'samp', 'xmp']);
+const NO_SPAN = new Set(['option', 'optgroup', 'select', 'textarea', 'svg', 'title', 'text', 'tspan', 'desc']);
+const NO_ATTR = new Set(['#root', 'html', 'body', 'main', 'head']);
+const balanced = (s) => (s.match(/\(/g) ?? []).length === (s.match(/\)/g) ?? []).length;
+
+/**
+ * 不同語言的片段補 lang（建置期安全網，pages.mjs 每頁輸出前套一次）。
+ * @param {string} htmlStr 整頁 HTML
+ * @param {{ pageLang: string }} o pageLang＝頁面語言
+ * @returns {{ html: string, marked: number }} marked＝補了幾處（建置記錄用）
+ */
+export function markFallbackLang(htmlStr, { pageLang }) {
+  const src = String(htmlStr);
+  const zhPage = /^zh/i.test(pageLang ?? '');
+  if (!pageLang || /^ja/i.test(pageLang) || (!zhPage && !HAN_RE.test(src))) return { html: src, marked: 0 };
+  const lang = zhPage ? 'en' : 'zh-TW';
+  /** 文字（原字串）裡要標的片段：[起點, 長度] */
+  const runsOf = (raw, data) => {
+    if (zhPage) {
+      if (HAN_RE.test(data) || !EN_WORDS_RE.test(data)) return [];
+      const lead = raw.length - raw.trimStart().length;
+      return [[lead, raw.trim().length]];
+    }
+    if (!HAN_RE.test(data)) return [];
+    return (
+      [...raw.matchAll(CJK_RUN)]
+        .filter((m) => HAN_RE.test(m[0]))
+        // 片段裡有沒配對的「(」（「新通報（年） (人)」）才把後面緊接的「)」收進來
+        .map((m) => [m.index, m[0].endsWith(')') && balanced(m[0].slice(0, -1)) ? m[0].length - 1 : m[0].length])
+    );
+  };
+  const tree = parseTree(src);
+  const inserts = [];
+  const visit = (n, effLang, inSvgTree) => {
+    for (const c of n.children) {
+      if (c.type !== 'text') {
+        if (LANG_SKIP.has(c.name) && !(inSvgTree && c.name === 'title')) continue;
+        if (c.attribs['data-a11y-propernoun'] != null) continue; // 規範的專有名詞例外（scripts/a11y-tw.mjs 同樣略過）
+        visit(c, c.attribs.lang ?? effLang, inSvgTree || c.name === 'svg');
+        continue;
+      }
+      if (effLang !== pageLang || c.start == null) continue;
+      const raw = src.slice(c.start, c.end + 1);
+      const runs = runsOf(raw, c.data);
+      if (!runs.length) continue;
+      const whole = runs.length === 1 && raw.substr(runs[0][0], runs[0][1]) === raw.trim();
+      const alone = n.children.every((x) => x === c || (x.type === 'text' && !x.data.trim()));
+      if (whole && alone && !NO_ATTR.has(n.name) && n.attribs.lang == null) {
+        const at = src[n.openEnd - 1] === '/' ? n.openEnd - 1 : n.openEnd;
+        inserts.push([at, ` lang="${lang}"`]);
+        continue;
+      }
+      if (inSvgTree || NO_SPAN.has(n.name)) continue;
+      for (const [i, len] of runs) {
+        inserts.push([c.start + i, `<span lang="${lang}">`]);
+        inserts.push([c.start + i + len, '</span>']);
+      }
+    }
+  };
+  visit(tree, pageLang, false);
+  if (!inserts.length) return { html: src, marked: 0 };
+  let out = '';
+  let last = 0;
+  // sort 是穩定的：同一位置（前一段的 </span> 與下一段的 <span>）保留插入順序，不會巢狀
+  for (const [at, s] of inserts.sort((a, b) => a[0] - b[0])) {
+    out += src.slice(last, at) + s;
+    last = at;
+  }
+  return { html: out + src.slice(last), marked: inserts.filter(([, s]) => s !== '</span>').length };
 }

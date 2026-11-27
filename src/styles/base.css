@@ -6,7 +6,11 @@ main{flex:1 0 auto;width:100%}
 img,svg{max-width:100%;height:auto}
 a{color:var(--green-700);text-underline-offset:2px}
 a:hover{color:var(--green-900)}
-a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:var(--focus);outline-offset:2px;border-radius:2px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:var(--focus);outline-offset:2px;border-radius:2px;box-shadow:var(--focus-ring)}
+/* 第七十六輪（2.4.13 焦點外觀，C40）：黑色內圈剛好填滿 outline-offset 的 2px 空隙。自己在 :focus-visible 設 box-shadow 的元件要把內圈接回去 */
+html .c-services__item:focus-visible,html .c-entrycard__a:focus-visible{box-shadow:var(--focus-ring),var(--shadow)}
+.c-askbox input:focus-visible{box-shadow:none}
+.c-askbox:focus-within,.c-checklist__row input:focus-visible+.c-checklist__box,.c-apply__errors:focus,.c-receipt:focus{box-shadow:var(--focus-ring)}
 h1,h2,h3,h4{line-height:1.3;margin:0 0 var(--sp-3);color:var(--ink)}
 h1{font-size:var(--fs-2xl)} h2{font-size:var(--fs-xl)} h3{font-size:var(--fs-lg)} h4{font-size:var(--fs-md)}
 p{margin:0 0 var(--sp-3)}
@@ -200,6 +204,26 @@ html[data-theme] .brand::after{content:"";flex:none;width:36px;height:36px;backg
 @media (max-width:380px){ html[data-theme] .brand::after{display:none} }
 
 /* 第四十八輪（#104 走查）：<main tabindex="-1"> 讓「跳到主要內容」把焦點真正移進 main（iOS VoiceOver 需要），程式聚焦不畫外框 */
-#main:focus{outline:none}
+#main:focus{outline:none;box-shadow:none}
 /* 第七十一輪（U2）：「跳到主選單」把焦點移到 <nav id="main-nav" tabindex="-1">；程式聚焦同樣不畫外框，下一個 Tab 就是第一個選單項 */
-#main-nav:focus{outline:none}
+#main-nav:focus{outline:none;box-shadow:none}
+/* 第七十六輪：WCAG 2.5.5 目標尺寸（AAA，本站選做；docs/a11y.md §13）——手機版（≤720 px）可點目標至少 44×44 CSS px。
+   規範例外不動：段落、清單、表格裡句子中的行內連結（建置時已補 title 的那些，所以用 :not([title]) 排除；docs/a11y.md §12.5），
+   以及 /travel/ SVG 世界地圖的國家連結（同一頁有等價的國家清單連結）。
+   用 :where() 讓這些規則的權重是 0：元件自己設的 display 一律優先，inline 的連結本來就不吃 min-height，所以只有單獨成塊的目標會被撐開。 */
+@media (max-width:720px){
+  :where(button,summary,select,textarea,input:not([type=checkbox],[type=radio],[type=hidden],[type=range],[type=file]),[role=button],[tabindex="0"],a[href]:not([title])){min-height:2.75rem;min-width:2.75rem}
+  :where(a[href]:only-child:not([title]):not(:has(:not(span,abbr,time,strong,em,b,i,small,bdi,code))),summary,[role=button]){display:inline-flex;align-items:center}
+  html :is(.c-btn,.c-chip,.pf-btn,.pf-pill,.pf-chip,.langmenu__btn,.c-carousel__btn,.c-carousel__play){min-height:2.75rem}
+  .c-sechead__more,.c-proto-banner__cta,.site-footer__hot a,.c-ldch__top,.c-translation-bar__orig,.c-media-card__t a,.c-toplink__t a,.c-statusline a{display:inline-flex;align-items:center;min-height:2.75rem;min-width:2.75rem}
+  :where(summary){display:flex}
+  html :is(.c-unitlink,.topbar__links a,.c-sit-card__dmlink,.c-v1list a,.c-currcard__obj summary,.c-source-card__body .c-deflist dd a,.c-linkrow a,.c-verdict+a,.is-current>a){min-height:2.75rem}
+  html :is(.c-verdict+a,.is-current>a,dd>.c-unitlink:only-child){display:inline-flex;align-items:center}
+  .c-v1list a,.c-source-card__body .c-deflist dd a{display:inline-flex;align-items:center;line-height:1.5}
+  :where(.c-checkrow,.c-checklist__row,label:has(>input:is([type=checkbox],[type=radio]))){min-height:2.75rem;display:flex;align-items:center}
+  html .c-carousel__dot{min-width:2.75rem;min-height:2.75rem}
+  .c-breadcrumb ol{align-items:center}
+  /* 疫情狀態標籤（role=button，點開說明）：點擊區撐到 44 px 高，看得到的膠囊維持原大小（上下透明邊框不畫底色） */
+  .c-status-tag[role=button]{box-sizing:border-box;border-block:.5625rem solid transparent;background-clip:padding-box}
+  .c-carousel__dots{gap:0}
+}

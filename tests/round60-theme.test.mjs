@@ -155,7 +155,7 @@ test('主題 CSS：只有一條 :root[data-theme] 規則、只有白名單 token
   // base.css 的裝飾圖是 ::after 背景圖，不是 <img>；tokens.css 的全站關動畫規則還在
   const base = fs.readFileSync(path.join(ROOT, 'src/styles/base.css'), 'utf8');
   assert.match(base, /html\[data-theme\] \.brand::after\{content:""[^}]*background:var\(--theme-decoration\)/);
-  assert.match(fs.readFileSync(path.join(ROOT, 'src/styles/tokens.css'), 'utf8'), /prefers-reduced-motion: reduce\) \{ \* \{ animation: none !important/);
+  assert.match(fs.readFileSync(path.join(ROOT, 'src/styles/tokens.css'), 'utf8'), /prefers-reduced-motion: reduce\) \{ \*, \*::before, \*::after \{ animation: none !important/);
 });
 
 test('車道：content/themes/*.json 是快車道（公關室，與 Banner 相同）', () => {

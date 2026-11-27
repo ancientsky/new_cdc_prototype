@@ -7,6 +7,7 @@ import {
   isExternal, imgSrc, isTopicEnded, mediaCard, mdHeader, denguemapLink,
 } from './_partials.mjs';
 import { denguemapEmbed, denguemapCard } from './_denguemap.mjs';
+import { leadOf } from './_partials.mjs';
 
 const trailOf = (ctx, tp) => [{ label: ctx.t('topic.title'), href: '/services/' }, { label: L(ctx, tp, 'title') }];
 
@@ -58,7 +59,7 @@ export function render(ctx, { item: tp }) {
   <header class="c-pagehead"><div class="c-pagehead__main">
     <p class="c-article__meta"><span class="c-pill c-pill--info">${t(`topic.kind.${tp.kind ?? 'resource-hub'}`)}</span>${tp.startAt ? html` <span>${fmtDate(tp.startAt)}${tp.endAt ? ` – ${fmtDate(tp.endAt)}` : ` ${t('topic.ongoing')}`}</span>` : ''}</p>
     <h1>${L(ctx, tp, 'title')}</h1>
-    <p class="lead">${L(ctx, tp, 'summary')}</p>
+    ${leadOf(ctx, tp)}
     ${ended && !tp.gov?.annotations?.some((a) => a.kind === 'ended') ? alertBox('ended', html`<strong class="c-alert__t">${t('topic.ended.t')}</strong> ${t('topic.ended', { date: fmtDate(tp.endAt) })}`, { role: 'status' }) : ''}
     ${scopeTags(ctx, tp, { region: false })}
     ${langStatus && lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}

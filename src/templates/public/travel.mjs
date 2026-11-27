@@ -512,6 +512,12 @@ const lookupPayload = (ctx, countries, extra = () => ({})) => ({
 // 第七十五輪（檢測碼 HM2310200C）：建議清單的說明文字是「另一種語言」的國名（中文頁顯示英文、外語頁顯示中文），標上該語言的 lang
 const datalist = (ctx, id, countries) => html`<datalist id="${id}">${countries.map((c) => html`<option value="${cname(ctx, c)}" lang="${ctx.lang === 'zh-TW' ? 'en' : 'zh-TW'}">${ctx.lang === 'zh-TW' ? c.nameEn ?? '' : c.name ?? ''}</option>`)}</datalist>`;
 
+// 第七十六輪（HM2310200C）：國家頁說明的區域名稱（非洲、歐洲…）只有中文，外語頁標 lang="zh-TW"
+function regionLead(ctx, region) {
+  const [pre, post = ''] = ctx.t('travel.country.lead', { region: '\u0001' }).split('\u0001');
+  return html`${pre}${ctx.lang === 'zh-TW' ? region : html`<span lang="zh-TW">${region}</span>`}${post}`;
+}
+
 /** 任務頁用：小型「查目的地」表單（直接進目的地頁） */
 export function quickLookup(ctx, { id = 'tq' } = {}) {
   const { site, t, url } = ctx;
@@ -730,7 +736,7 @@ function renderCountry(ctx, c, model) {
   const lv = maxLevel(tg);
   const news = recentNews(site).filter((r) => newsMatches(c, r));
   const name = cname(ctx, c);
-  const head = pageHead(ctx, { trail: [{ label: t('nav.travel'), href: '/travel/' }, { label: name }], h1: t('travel.country.h1', { name }), lead: c.region ? t('travel.country.lead', { region: c.region }) : '', tags: html`<p>${lv ? levelPill(ctx, lv) : html`<span class="muted">${t('travel.level.0')}</span>`} <span class="muted">${c.nameEn ? `${c.nameEn} · ` : ''}${c.iso2}</span></p>` });
+  const head = pageHead(ctx, { trail: [{ label: t('nav.travel'), href: '/travel/' }, { label: name }], h1: t('travel.country.h1', { name }), lead: c.region ? regionLead(ctx, c.region) : '', tags: html`<p>${lv ? levelPill(ctx, lv) : html`<span class="muted">${t('travel.level.0')}</span>`} <span class="muted">${c.nameEn ? `${c.nameEn} · ` : ''}${c.iso2}</span></p>` });
   const newsBlock = news.length ? html`<section aria-labelledby="cn-h">${sectionHead(ctx, { id: 'cn-h', title: t('travel.country.news', { name }), note: t('travel.news.note') })}${newsList(ctx, news, { withCountry: false })}</section>` : '';
   const related = new Map();
   for (const e of tg) { const m = diseaseMasterOf(site, e); if (m) related.set(m.id, m); }

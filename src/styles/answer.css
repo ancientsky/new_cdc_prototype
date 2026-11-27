@@ -35,7 +35,7 @@
 .c-answer__sent>p{margin:0}
 .ask-page .c-cite{font:inherit;font-size:.72em;font-weight:700;line-height:1;vertical-align:super;min-width:1.6em;min-height:1.6em;padding:2px 5px;margin:0 2px;border:1px solid var(--info);border-radius:var(--radius-pill);background:var(--info-bg);color:var(--info);cursor:pointer}
 .ask-page .c-cite:hover,.ask-page .c-cite[aria-expanded="true"]{background:var(--info);color:var(--white)}
-.ask-page .c-cite:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.ask-page .c-cite:focus-visible{outline:var(--focus);outline-offset:2px}
 .c-answer__citelabel{font-size:var(--fs-sm);color:var(--navy-700);margin:var(--sp-1) 0 0;font-family:var(--font)}
 .c-answer__original{font-size:var(--fs-xs);color:var(--ink-3);margin:var(--sp-1) 0 0}
 .ask-page .c-cite-pop{margin:var(--sp-2) 0 var(--sp-3);box-shadow:var(--shadow);padding:var(--sp-3) var(--sp-4)}

@@ -1,6 +1,8 @@
 // 共用互動：身分切換、details 單開、回報表單（元件 6）、訂閱、語言切換保留路徑、Banner 輪播、
 // 態勢標籤浮層（元件 8）、tab、篩選、導覽收合、目錄捲動標示。全部用事件委派，動態插入的內容（答案頁）也適用。
 import './i18n.runtime.js';
+/** WCAG 2.3.3（第七十六輪）：使用者要求減少動態時不平滑捲動（CSS 的 scroll-behavior 管不到 JS 的 scrollIntoView） */
+const scrollBehavior = () => (typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
 
 const root = document.documentElement;
 const CDC = (window.CDC = window.CDC || {});
@@ -442,10 +444,10 @@ document.addEventListener('click', (e) => {
   if (!seek) return;
   const box = document.querySelector('[data-player]');
   const t0 = Number(seek.dataset.seek) || 0;
-  if (box && loadPlayer(box, t0)) { box.scrollIntoView({ block: 'center', behavior: 'smooth' }); return; }
+  if (box && loadPlayer(box, t0)) { box.scrollIntoView({ block: 'center', behavior: scrollBehavior() }); return; }
   // 示意影片：展開逐字稿
   const tr = document.getElementById('transcript');
-  if (tr) { tr.open = true; tr.scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+  if (tr) { tr.open = true; tr.scrollIntoView({ block: 'start', behavior: scrollBehavior() }); }
 });
 /* #t=秒（答案頁引用連結）：捲到對應章節、標示，並讓播放器之後從該秒開始 */
 function applyHashTime() {
@@ -457,7 +459,7 @@ function applyHashTime() {
   const chapters = qsa('.c-chapters li[id^="ch-"]');
   let hit = null;
   chapters.forEach((li) => { if (Number(li.id.slice(3)) <= sec) hit = li; li.classList.remove('is-current'); });
-  if (hit) { hit.classList.add('is-current'); hit.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+  if (hit) { hit.classList.add('is-current'); hit.scrollIntoView({ block: 'center', behavior: scrollBehavior() }); }
   else document.getElementById('transcript')?.setAttribute('open', '');
 }
 applyHashTime();
@@ -487,7 +489,7 @@ qsa('[data-transcript]').forEach((wrap) => {
       frag.append(text.slice(last)); node.replaceWith(frag);
     });
     count.textContent = n ? T('media.transcript.hits', { n }) : T('media.transcript.nohit');
-    const first = body.querySelector('mark.c-hit'); if (first) first.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    const first = body.querySelector('mark.c-hit'); if (first) first.scrollIntoView({ block: 'center', behavior: scrollBehavior() });
   };
   let tm = null;
   input.addEventListener('input', () => { clearTimeout(tm); tm = setTimeout(run, 150); });
@@ -557,7 +559,7 @@ qsa('[data-mailbox]').forEach((root) => {
     const saved = store.set('cdc.mailbox', rows.slice(-20));
     root.querySelector('[data-mb-saved]').hidden = !saved;
     renderLog();
-    form.hidden = true; pv.hidden = false; pv.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    form.hidden = true; pv.hidden = false; pv.scrollIntoView({ block: 'nearest', behavior: scrollBehavior() });
     root.querySelector('[data-mb-mailto]').focus();
   });
 });

@@ -6,6 +6,7 @@ import { ldFor, pageHead, breadcrumb, provenance, alerts, pageData, scopeTags, f
 import { currentDoc } from './disease.mjs';
 import { reviewedText, zhText } from './_listing.mjs';
 import { langSpan } from './_partials.mjs';
+import { leadOf } from './_partials.mjs';
 
 const trailOf = (ctx, item) => [{ label: ctx.t('nav.vaccines'), href: '/vaccines/' }, { label: L(ctx, item, 'title') }];
 
@@ -119,7 +120,7 @@ function detail(ctx, v) {
 <article class="c-vaccine">
   <header class="c-pagehead"><div class="c-pagehead__main">
     <h1>${title} <small class="c-disease__en" lang="en">${v.nameEn}</small></h1>
-    <p class="lead">${L(ctx, v, 'summary')}</p>
+    ${leadOf(ctx, v)}
     ${scopeTags(ctx, v)}
     ${langStatus && ctx.lang !== 'zh-TW' ? html`<p>${translationBadge(ctx, langStatus === 'reviewed' ? 'reviewed' : 'machine')}</p>` : ''}
     ${provenance(ctx, v)}${alerts(ctx, v)}
