@@ -167,7 +167,7 @@ if (oa) {
         const op = ops.get || Object.values(ops)[0] || {};
         return `<tr><td><code>${p.replace(/</g, '&lt;')}</code></td><td>${String(op.summary || op.description || '').replace(/</g, '&lt;')}</td></tr>`;
       }).join('');
-      oa.innerHTML = `<p><strong>openapi.json 目前宣告 ${paths.length} 個端點</strong>（OpenAPI ${spec.openapi || '3.x'}，版本 ${spec.info?.version || '—'}）：</p><div class="pf-table-wrap"><table class="pf-table"><thead><tr><th>路徑</th><th>摘要</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+      oa.innerHTML = `<p><strong>openapi.json 目前宣告 ${paths.length} 個端點</strong>（OpenAPI ${spec.openapi || '3.x'}，版本 ${spec.info?.version || '—'}）：</p><div class="pf-table-wrap"><table class="pf-table"><thead><tr><th scope="col">路徑</th><th scope="col">摘要</th></tr></thead><tbody>${rows}</tbody></table></div>`;
     } catch (err) {
       oa.innerHTML = '<p class="muted">無法讀取 openapi.json（本機預覽或尚未建置時可能發生）。上方端點清單仍可使用。</p>';
     }

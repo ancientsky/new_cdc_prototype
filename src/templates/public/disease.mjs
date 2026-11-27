@@ -76,7 +76,7 @@ function renderBlock(ctx, item, b, ctxData) {
     } else if (yr) {
       body.push(html`<figure class="c-chartbox"><figcaption>${yr.label} (${yr.unit})</figcaption>${raw(barChartSvg(yr.points.map((p) => p.v), { labels: yr.points.map((p) => p.t), title: yr.label, unit: yr.unit }))}<p class="c-chartbox__src">${yr.note ?? ''}</p></figure>`);
     }
-    body.push(html`<p class="c-linkrow"><a href="${url('/situation/')}">${t('disease.trend')} →</a>${ds[0] ? html` · <a href="${url('/data/')}#${ds[0].id}">${t('disease.dataset')}：${L(ctx, ds[0], 'title')}</a>` : ''}</p>`);
+    body.push(html`<p class="c-linkrow"><a href="${url('/situation/')}" title="${t('a11y.link.title', { text: t('disease.trend'), context: L(ctx, item, 'title') })}">${t('disease.trend')} →</a>${ds[0] ? html` · <a href="${url('/data/')}#${ds[0].id}" title="${t('a11y.link.title', { text: `${t('disease.dataset')}：${L(ctx, ds[0], 'title')}`, context: t('nav.data') })}">${t('disease.dataset')}：${L(ctx, ds[0], 'title')}</a>` : ''}</p>`);
     for (const d of ds) body.push(datasetSourceCard(ctx, d));
     void series;
   }

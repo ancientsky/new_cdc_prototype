@@ -145,7 +145,7 @@ ${pageHead({
     <fieldset class="adm-fieldset adm-te-sec" id="te-hcats"><legend>H 文章分類管理</legend>
       <p class="adm-hint">分類清單存在 <code>content/master/bulletin-categories.json</code>，前台的《疫情報導》總覽與分類列表頁、目錄的分類膠囊、API 都讀這個檔。在這裡加一個分類，上架包就會多一份改好的主檔，合併後前台自動多一個分類頁；代號（網址用）由英文名產生，建立後不要改。已上架的分類不能刪，只能「停用」（舊文章照常顯示，新文章不可選）。</p>
       <div class="adm-tablewrap" role="region" tabindex="0" aria-label="分類表格，可捲動"><table class="adm-table adm-te-cats"><thead><tr><th scope="col">中文名稱</th><th scope="col">英文名稱</th><th scope="col">代號</th><th scope="col">順序</th><th scope="col">篇數</th><th scope="col"><span class="adm-sr-only">動作</span></th></tr></thead><tbody id="te-cats"></tbody></table></div>
-      <div class="adm-inline"><input type="text" id="te-cat-new" class="adm-input" placeholder="新分類中文名稱，例：檢驗專欄" aria-label="新分類中文名稱"><input type="text" id="te-cat-new-en" class="adm-input" placeholder="英文名稱，例：Laboratory Column" aria-label="新分類英文名稱"><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="te-cat-add">＋ 新增分類</button></div>
+      <div class="adm-inline"><input type="text" id="te-cat-new" class="adm-input" placeholder="新分類中文名稱，例：檢驗專欄" aria-label="新分類中文名稱" title="新分類中文名稱"><input type="text" id="te-cat-new-en" class="adm-input" placeholder="英文名稱，例：Laboratory Column" aria-label="新分類英文名稱" title="新分類英文名稱"><button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="te-cat-add">＋ 新增分類</button></div>
       <p class="adm-muted" id="te-cat-msg" role="status" aria-live="polite"></p>
       <div class="adm-box adm-box--info" id="te-cats-changed" role="note" hidden>分類主檔有改動：上架包會多一個 <code>content/master/bulletin-categories.json</code>。</div>
     </fieldset>

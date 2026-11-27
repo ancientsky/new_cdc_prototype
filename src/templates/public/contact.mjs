@@ -63,7 +63,8 @@ function unitsColumn(ctx) {
 /** 分類＋主旨＋內容＋email＋同意：mock 與 post 共用的欄位 */
 function mailFields(ctx) {
   const { t } = ctx;
-  return html`<div class="c-field"><label for="mb-cat">${t('contact.f.cat')}</label>
+  // 第七十五輪（檢測碼 HM1130105C）：信件欄位以 <fieldset>＋<legend> 分群；legend 與區塊標題「署長信箱」相同，只給輔助科技
+  return html`<fieldset class="c-fieldset"><legend class="sr-only">${t('contact.mailbox')}</legend><div class="c-field"><label for="mb-cat">${t('contact.f.cat')}</label>
       <select id="mb-cat" class="c-input c-select" name="category" required data-mb-cat><option value="">${t('contact.f.cat.ph')}</option>${MAIL_CATEGORIES.map((c) => html`<option value="${c.key}" data-unit="${unitName(ctx, c.unit)}" data-label="${t(`contact.cat.${c.key}`)}">${t(`contact.cat.${c.key}`)}</option>`)}</select>
       <p class="c-field__hint" role="status" aria-live="polite" data-mb-route data-empty="${t('contact.route.empty')}" data-tpl="${t('contact.route', { unit: '{unit}' })}">${t('contact.route.empty')}</p></div>
     <div class="c-field"><label for="mb-sub">${t('contact.f.subject')}</label><input id="mb-sub" class="c-input" name="subject" type="text" maxlength="80" required autocomplete="off"></div>
@@ -71,7 +72,7 @@ function mailFields(ctx) {
       <p class="c-field__hint">${t('contact.f.body.hint')}</p></div>
     <div class="c-field"><label for="mb-mail">${t('contact.f.email')}</label><input id="mb-mail" class="c-input" name="email" type="email" autocomplete="email" aria-describedby="mb-mail-h">
       <p class="c-field__hint" id="mb-mail-h">${t('contact.f.email.hint')}</p></div>
-    <div class="c-field c-field--check"><label class="c-checkrow"><input type="checkbox" name="consent" required><span>${t('contact.f.consent')}</span></label></div>`;
+    <div class="c-field c-field--check"><label class="c-checkrow"><input type="checkbox" name="consent" required><span>${t('contact.f.consent')}</span></label></div></fieldset>`;
 }
 
 /** link／post：不在本站留任何資料（不輸出 data-mailbox，ui.js 的示範不會接手） */

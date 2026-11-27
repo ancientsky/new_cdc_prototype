@@ -64,14 +64,14 @@ ${unverified ? html`<div class="c-warning vxs-notice" role="note"><strong>${t('v
 ${ctx.lang === 'zh-TW' ? '' : html`<p class="muted vxs-zhonly">${t('vxs.zhonly')}</p>`}
 ${multilingualScheduleCard(ctx)}
 <section aria-labelledby="vxs-age-h" class="vxs-age">${sectionHead(ctx, { id: 'vxs-age-h', title: t('vxs.age.t') })}
-  <form class="vxs-form" data-vxs-form novalidate>
+  <form class="vxs-form" data-vxs-form novalidate><fieldset class="c-fieldset c-fieldset--row"><legend class="sr-only">${t('vxs.age.t')}</legend>
     <label>${t('vxs.age.years')}<input type="number" name="years" min="0" max="120" inputmode="numeric" autocomplete="off"></label>
     <label>${t('vxs.age.months')}<input type="number" name="months" min="0" max="11" inputmode="numeric" autocomplete="off"></label>
     <span class="vxs-or">${t('vxs.age.or')}</span>
     <label>${t('vxs.age.birthday')}<input type="date" name="birth" autocomplete="bday"></label>
     <button type="submit" class="c-btn">${t('vxs.age.go')}</button>
     <button type="button" class="c-btn c-btn--ghost" data-vxs-clear>${t('vxs.age.clear')}</button>
-  </form>
+  </fieldset></form>
   <p class="vxs-msg" data-vxs-msg role="alert"></p>
   <div class="vxs-result" data-vxs-result aria-live="polite" hidden></div>
 </section>

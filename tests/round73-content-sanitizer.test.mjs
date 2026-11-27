@@ -65,7 +65,7 @@ test('md()：協定相對 //host 視同 http(s)，保留', () => {
 test('md()：合法內容不受影響（表格、上下標、中日韓粗體、mailto／tel、站內與外部連結、頁碼標記）', () => {
   const out = md('常見**咳嗽**、發燒^1^，CO~2~。\n\n| 欄 | 值 |\n|:-|-:|\n| a | 1 |\n\n[信箱](mailto:a@cdc.gov.tw) [電話](tel:1922) [站內](/faq/) [外部](https://www.cdc.gov.tw/)\n\n<p class="c-pagemark" id="page-9"><span>第 9 頁</span></p>');
   assert.match(out, /常見<strong>咳嗽<\/strong>、發燒<sup>1<\/sup>，CO<sub>2<\/sub>/);
-  assert.match(out, /<table>[\s\S]*<th align="left">欄<\/th>[\s\S]*<td align="right">1<\/td>/);
+  assert.match(out, /<table>[\s\S]*<th scope="col" align="left">欄<\/th>[\s\S]*<td align="right">1<\/td>/);
   assert.match(out, /href="mailto:a@cdc\.gov\.tw"/);
   assert.match(out, /href="tel:1922"/);
   assert.match(out, new RegExp(`href="${config.basePath}/faq/"`));

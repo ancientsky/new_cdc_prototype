@@ -55,6 +55,7 @@ ${pageHead({ title: '治理儀表板', what: '署內治理的一頁總覽：品�
   ${tile('態勢層資料日', sg.dataDate ?? '—', sg.lagDays != null ? `延遲 ${sg.lagDays} 日${sg.overdue ? `；已過下次審閱日 ${sg.nextReviewAt}` : `；下次審閱 ${sg.nextReviewAt ?? '—'}`}` : '尚無資料', sg.overdue || (sg.lagDays ?? 0) > 7 ? 'bad' : (sg.lagDays ?? 0) > 1 ? 'warn' : 'ok')}
 </div>
 
+<h2 class="sr-only">各區概況</h2>${'' /* 第七十五輪（檢測碼 HM1130100C）：下方小卡是 h3，前面要有 h2，標題層級才不跳級 */}
 <div class="adm-grid adm-grid--4" style="margin-bottom:var(--sp-5)" aria-label="公告、影音、外部連結與移轉進度">
   <section class="adm-minicard ${nClosed ? 'adm-minicard--warn' : 'adm-minicard--ok'}" aria-labelledby="mc-n"><h3 id="mc-n">公告 <a href="${url('/admin/notices/', { noLang: true })}">公告管理 →</a></h3>
     <dl><dt>進行中</dt><dd>${nOpen}</dd><dt>7 日內截止</dt><dd class="${nSoon ? 'adm-yellow' : ''}">${nSoon}</dd><dt>已截止未封存</dt><dd class="${nClosed ? 'adm-red' : ''}">${nClosed}</dd></dl>

@@ -34,7 +34,7 @@ export function render(ctx) {
     <h1>${t('404.title')}</h1>
     <p class="lead">${t('404.lead')}</p>
     ${askBox(ctx, { id: 'nq', size: 'md' })}
-    <p class="c-notfound__search" data-nf-search hidden><a href="${url('/ask/')}" data-nf-search-link></a></p>
+    <p class="c-notfound__search" data-nf-search hidden><a href="${url('/ask/')}" data-nf-search-link>${t('ask.title')}</a></p>
     <section class="c-notfound__legacy" aria-labelledby="nf-legacy-h">
       <h2 id="nf-legacy-h">${t('404.legacy.t')}</h2>
       <p>${t('404.legacy.d')}</p>

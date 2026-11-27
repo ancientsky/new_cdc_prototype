@@ -43,7 +43,7 @@ function listPage(ctx) {
   ${bar('cap', t('media.filter.caption'), caps.map((c) => [c, langLabel(c)]))}
   ${outdatedN ? bar('outdated', t('media.filter.outdated'), [['0', t('media.filter.current')], ['1', t('media.outdated.tag')]]) : ''}
 </div>
-${items.length ? html`<ul class="c-media-grid" id="media-list" aria-live="polite">${items.map((m) => mediaCard(ctx, m))}</ul>` : html`<p class="c-empty">${t('none')}</p>`}
+${items.length ? html`<ul class="c-media-grid" id="media-list" aria-live="polite">${items.map((m) => mediaCard(ctx, m, { level: 2 }))}</ul>` : html`<p class="c-empty">${t('none')}</p>`}
 <p class="muted">${t('media.rule')}</p>
 <p class="c-linkrow">${extLink(ctx, channelUrl(site), t('media.channel'))}</p>`;
 }

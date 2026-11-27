@@ -24,7 +24,7 @@ function mmrCard(site, url) {
   const newVid = vids.filter((m) => !m.outdated && m.producedAt >= curDoc.effectiveAt).sort((a, b) => String(b.producedAt).localeCompare(String(a.producedAt)))[0];
   const ym = (d) => String(d ?? '').slice(0, 7);
   const vr = site.evalReport?.byCategory?.version;
-  const mark = (ok) => html`<span class="${ok ? 'adm-green' : 'adm-red'}" aria-label="${ok ? '已自動完成' : '本次建置未見'}">${ok ? '✓' : '✗'}</span>`;
+  const mark = (ok) => html`<span class="${ok ? 'adm-green' : 'adm-red'}" aria-label="${ok ? '已自動完成' : '本次建置未見'}" title="${ok ? '已自動完成' : '本次建置未見'}">${ok ? '✓' : '✗'}</span>`;
   const step = (ok, text, link) => html`<li>${mark(ok)} ${text}${link ? html` <a href="${link[1]}">${link[0]}</a>` : ''}</li>`;
   const oldWl = oldDoc.gov.whitelist.effective, newsWl = news.gov.whitelist.effective;
   return html`<section class="adm-card" aria-labelledby="mmr-h" style="border-left:6px solid var(--status-rising)"><h2 id="mmr-h">MMR 事件示範：正本修訂後，系統自動做了什麼</h2>

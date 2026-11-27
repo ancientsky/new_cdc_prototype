@@ -375,7 +375,7 @@ export function sourceCard(ctx, o) {
     ${dataDate ? html`<div><dt>${t('dataDate')}</dt><dd>${fmtDate(dataDate)}</dd></div>` : ''}
     ${owner ? html`<div><dt>Owner</dt><dd>${owner}</dd></div>` : ''}
     ${license ? html`<div><dt>${t('prov.license')}</dt><dd>${licenseLabel(ctx, license)}</dd></div>` : ''}
-    ${links.length ? html`<div><dt>${t('source.formats')}</dt><dd>${links.map((l) => html`<a class="c-source-card__fmt" href="${l.href}">${l.label}</a> `)}</dd></div>` : ''}
+    ${links.length ? html`<div><dt>${t('source.formats')}</dt><dd>${links.map((l) => html`<a class="c-source-card__fmt" href="${l.href}"${l.title ? html` title="${l.title}"` : ''}>${l.label}</a> `)}</dd></div>` : ''}
   </dl>
   ${note ? html`<p class="muted">${note}</p>` : ''}
 </details>`;
@@ -384,8 +384,10 @@ export function sourceCard(ctx, o) {
 export function datasetSourceCard(ctx, ds, o = {}) {
   if (!ds) return '';
   const links = [];
-  for (const f of ds.formats ?? []) links.push({ label: f, href: ds.canonicalUrl });
-  links.push({ label: 'API', href: ctx.url('/v1/datasets.json', { noLang: true }) });
+  // 第七十五輪（檢測碼 HM1240401C）：「CSV／JSON／API」這類短連結並列在同一格，各自給說明資料集名稱的 title（含可見文字）
+  const dsTitle = L(ctx, ds, 'title');
+  for (const f of ds.formats ?? []) links.push({ label: f, href: ds.canonicalUrl, title: ctx.t('a11y.link.dsFmt', { dataset: dsTitle, fmt: f }) });
+  links.push({ label: 'API', href: ctx.url('/v1/datasets.json', { noLang: true }), title: ctx.t('a11y.link.dsApi', { dataset: dsTitle }) });
   return sourceCard(ctx, { title: `${ctx.t('source.card')} · ${L(ctx, ds, 'title')}`, canonicalUrl: ds.canonicalUrl, dataDate: ds.lastUpdated, owner: unitName(ctx, ds.owner), license: ds.license, links, note: ds.provenance ? `${ctx.t('source.mode')}：${ds.provenance.mode}${ds.provenance.fetchedAt ? ` · ${ds.provenance.fetchedAt}` : ''}` : '', ...o });
 }
 
@@ -582,7 +584,7 @@ export function posterImg(ctx, m, { loading = 'lazy' } = {}) {
 }
 
 /** 影音卡：海報 16:9、時長角標、過時標記、「依 … 製作」小字；整張卡可點（標題連結拉伸） */
-export function mediaCard(ctx, m, { tag = 'li' } = {}) {
+export function mediaCard(ctx, m, { tag = 'li', level = 3 } = {}) {
   const { t } = ctx;
   const outdated = isMediaOutdated(ctx.site, m);
   const open = tag === 'li' ? '<li' : '<div';
@@ -591,7 +593,7 @@ export function mediaCard(ctx, m, { tag = 'li' } = {}) {
   return raw(`${open} class="c-media-card${outdated ? ' c-media-card--outdated' : ''}" data-disease="${esc(diseases)}" data-task="${esc((m.tasks ?? []).join(' '))}" data-cap="${esc((m.captions ?? []).join(' '))}" data-outdated="${outdated ? '1' : '0'}">${html`
   <div class="c-media-card__poster">${posterImg(ctx, m)}${m.durationSeconds ? html`<span class="c-media-card__dur"><span class="sr-only">${t('media.duration')} </span>${fmtDur(m.durationSeconds)}</span>` : ''}${outdated ? html`<span class="c-media-card__flag">${t('media.outdated.tag')}</span>` : ''}</div>
   <div class="c-media-card__body">
-    <h3 class="c-media-card__t">${titleLink(ctx, m)}</h3>
+    ${raw(`<h${level} class="c-media-card__t">`)}${titleLink(ctx, m)}${raw(`</h${level}>`)}
     ${m.basedOnVersionLabel ? html`<p class="c-media-card__basis">${t('media.basedOn.short', { v: m.basedOnVersionLabel })}</p>` : ''}
   </div>`}${close}`);
 }

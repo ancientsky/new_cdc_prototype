@@ -34,7 +34,8 @@
 | 檔名 | 測什麼 |
 | --- | --- |
 | `api.test.mjs` | `v1/*.json` 與 `openapi.json`：外殼、etag、必要檔案、redirects |
-| `css-budget.test.mjs` | 第七十一輪：`components.css` 不超過 120 KB、斷點白名單、`font-size` 下限 13 px（有預算才會拆） |
+| `a11y-tw-codes.test.mjs` | 第七十五輪：新版網站無障礙規範檢測碼預檢（`scripts/a11y-tw.mjs`）——每個檢測碼一組合格／不合格樣本、表情符號與行內連結 title、Markdown 表格 scope、全站（dist 或記憶體渲染）A／AA 不合格為 0；在 `test:content` 裡 |
+| `css-budget.test.mjs` | 第七十一輪：`components.css` 不超過 120 KB、斷點白名單、`font-size` 下限 13 px（有預算才會拆）；第七十五輪：`font-size` 不得用 px（CS2140401C） |
 | `emit-r2.test.mjs` | 第二輪輸出：新 API 端點、catalog、疾病 related、sitemap、feeds、llms.txt、JSON-LD |
 | `jsonld.test.mjs` | JSON-LD 各型別、`cdc:` 擴充、麵包屑、SearchAction、資料集欄位 |
 | `seo.test.mjs` | robots 三類 AI 爬蟲、sitemap 不含失效版、七語 llms.txt、feeds |

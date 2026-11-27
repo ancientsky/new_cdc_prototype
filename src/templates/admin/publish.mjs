@@ -98,7 +98,7 @@ ${pageHead({
           <div id="f-wys" class="adm-wys c-prose" contenteditable="true" role="textbox" aria-multiline="true" aria-label="內文（所見即所得編輯區）" spellcheck="false" tabindex="0"></div>
         </div>
         <div role="tabpanel" id="ep-md" aria-labelledby="et-md" hidden>
-          <textarea id="f-body" name="body" aria-labelledby="f-body-label" placeholder="貼上 Markdown 或純文字（Ctrl+B 粗體、Ctrl+I 斜體、Ctrl+K 連結）"></textarea>
+          <textarea id="f-body" name="body" aria-labelledby="f-body-label" title="內文（中文正本）" placeholder="貼上 Markdown 或純文字（Ctrl+B 粗體、Ctrl+I 斜體、Ctrl+K 連結）"></textarea>
         </div>
         <div role="tabpanel" id="ep-prev" aria-labelledby="et-prev" hidden>
           <div id="f-preview" class="adm-previewpane c-prose" tabindex="0" aria-label="內文預覽（站上樣式）"></div>
@@ -109,7 +109,7 @@ ${pageHead({
         <h3 id="as-h" class="adm-assets__h">附件與圖片</h3>
         <p class="adm-hint">PDF、表單、圖檔、資料檔都放這裡。檔案只在你的瀏覽器記憶體裡，不會上傳；按「產生上架包」才會連同 JSON 一起打包。內文圖片請按該檔的「插入圖片到內文」。</p>
         <div class="adm-drop" id="as-drop"><span>把檔案拖到這裡，或</span> <button type="button" class="adm-btn adm-btn--ghost adm-btn--sm" id="as-pick">選擇檔案（可多選）</button>
-          <input type="file" id="as-input" multiple hidden accept="${ASSET_ACCEPT}" aria-label="選擇附件與圖片檔案">
+          <input type="file" id="as-input" multiple hidden accept="${ASSET_ACCEPT}" aria-label="選擇附件與圖片檔案" title="選擇附件與圖片檔案">
           <span class="adm-hint">PDF ≤ ${MBS.pdf} MB、圖片 ≤ ${MBS.image} MB、資料檔 ≤ ${MBS.data} MB；每筆內容最多 ${LIM.maxFiles} 個；允許 ${LIM.extensions.join('、')}。</span></div>
         <p class="adm-muted" id="as-summary" aria-live="polite"></p>
         <ul class="adm-asset-global" id="as-global" role="list"></ul>
@@ -208,7 +208,7 @@ ${pageHead({
         </div></fieldset>
       <details class="adm-group" id="g-langs"><summary><span class="adm-group__t">提供語言</span><span class="adm-group__sum" id="g-langs-sum" aria-live="polite"></span></summary>
       <fieldset class="adm-fieldset adm-fieldset--ingroup"><legend class="adm-sr-only">提供語言</legend>
-        <div class="adm-langs" id="f-langs">${LANGS.map((l) => html`<div class="adm-lang"><label><input type="checkbox" name="lang" value="${l.code}" ${l.code === 'zh-TW' ? raw('checked disabled') : ''}> ${l.label}${l.code === 'zh-TW' ? '（正本）' : ''}</label>${l.code === 'zh-TW' ? '' : html`<input type="text" data-reason="${l.code}" hidden placeholder="取消理由（必填）" aria-label="${l.label} 取消提供的理由">`}</div>`)}</div>
+        <div class="adm-langs" id="f-langs">${LANGS.map((l) => html`<div class="adm-lang"><label><input type="checkbox" name="lang" value="${l.code}" ${l.code === 'zh-TW' ? raw('checked disabled') : ''}> ${l.label}${l.code === 'zh-TW' ? '（正本）' : ''}</label>${l.code === 'zh-TW' ? '' : html`<input type="text" data-reason="${l.code}" hidden placeholder="取消理由（必填）" aria-label="${l.label} 取消提供的理由" title="${l.label} 取消提供的理由">`}</div>`)}</div>
         <span class="adm-hint" id="f-langs-hint">依型別預設勾選；取消勾選須填理由。</span></fieldset></details>
       <details class="adm-group" id="g-timing"><summary><span class="adm-group__t">發布時間</span><span class="adm-group__sum" id="g-timing-sum" aria-live="polite"></span></summary>
       <fieldset class="adm-fieldset adm-fieldset--ingroup" id="f-timing"><legend class="adm-sr-only">發布時間</legend>

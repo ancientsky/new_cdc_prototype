@@ -135,7 +135,7 @@ for (const it of data.items) console.log(it.diseaseName, it.status, it.metricVal
   <section id="meta" aria-labelledby="meta-h">
     <h2 id="meta-h">meta 外殼</h2>
     <p>每個 <code>v1/*.json</code> 都長一樣：<code>{ "meta": {…}, "data": … }</code>。</p>
-    <div class="pf-table-wrap"><table class="pf-table"><thead><tr><th>欄位</th><th>意思</th></tr></thead><tbody>
+    <div class="pf-table-wrap"><table class="pf-table"><thead><tr><th scope="col">欄位</th><th scope="col">意思</th></tr></thead><tbody>
       <tr><th scope="row"><code>meta.api</code></th><td>API 版本，目前 <code>v1</code>。破壞性變更會開 <code>v2</code>，v1 至少並行一年。</td></tr>
       <tr><th scope="row"><code>meta.generatedAt</code></th><td>這份檔案的產生時間（UTC）。每日排程重建，所以最久不超過一天。</td></tr>
       <tr><th scope="row"><code>meta.license</code></th><td>授權代碼，預設 <code>OGDL-1.0</code>；個別資料集例外時在 data 內另有 <code>license</code>。</td></tr>

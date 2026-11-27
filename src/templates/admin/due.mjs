@@ -28,6 +28,7 @@ ${pageHead({ title: '審閱到期', what: '依「最後審閱日 + 審閱週期�
   <div class="adm-field"><label for="d-unit">單位</label><select id="d-unit">${unitOptions(site, { all: true, selected: 'all' })}</select></div>
   <div class="adm-field adm-field--grow"><label for="d-q">搜尋</label><input type="search" id="d-q" placeholder="標題或識別碼"></div>
   <span class="adm-count-note" id="d-note" aria-live="polite"></span></div>
+  <h2 class="sr-only">依到期狀態分組</h2>${'' /* 第七十五輪（HM1130100C）：分組標題是 h3，前面補 h2 */}
   ${GROUPS.map((g) => {
     const list = rows.filter((r) => g.test(r.daysToReview));
     return html`<div data-group="${g.key}"><h3 class="adm-group-title"><span class="adm-badge adm-badge--${g.tone}">${g.title}</span><span class="adm-count" data-gcount>${list.length}</span><span class="adm-muted">${g.hint}</span></h3>

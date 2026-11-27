@@ -82,7 +82,9 @@ test('#33 手機語言選單：<details> 內含七語，各用自己的語言標
   const h = page('/');
   const menu = h.match(/<details class="langmenu">[\s\S]*?<\/details>/)?.[0];
   assert.ok(menu, '應有 details.langmenu');
-  assert.match(menu, /<summary class="langmenu__btn">🌐 語言／Language<\/summary>/);
+  // 第七十五輪（HM1110103C）：地球圖示是 aria-hidden 的 SVG，不再是 🌐 表情符號
+  assert.match(menu, /<summary class="langmenu__btn"><svg class="i-globe" aria-hidden="true"[^>]*>[\s\S]*?<\/svg>語言／Language<\/summary>/);
+  assert.ok(!h.includes('🌐'), '版型不再輸出 🌐');
   for (const L of config.langs) {
     assert.ok(menu.includes(`hreflang="${L.code}"`), L.code);
     assert.ok(menu.includes(`>${L.label}</a>`), L.label);

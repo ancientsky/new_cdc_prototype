@@ -94,7 +94,7 @@ export function render(ctx) {
 <section class="c-callout c-pending" aria-labelledby="pd-h">
   <h2 id="pd-h" class="sr-only">${x.title}</h2>
   <p class="c-pending__msg">${pre}<strong data-pd-doc>${x.docFallback}</strong>${mid}<span data-pd-owner></span>${tail}</p>
-  <p class="c-pending__back" data-pd-back hidden>${x.back}<a href="${url('/')}" data-pd-back-link></a></p>
+  <p class="c-pending__back" data-pd-back hidden>${x.back}<a href="${url('/')}" data-pd-back-link>${ctx.t('nav.home')}</a></p>
 </section>
 <ul class="c-linklist c-pending__links">
   <li><a href="tel:1922">${x.call}</a></li>

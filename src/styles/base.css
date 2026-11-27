@@ -17,6 +17,9 @@ table{border-collapse:collapse}
 .wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--sp-5)}
 main.wrap{padding-top:var(--sp-5);padding-bottom:var(--sp-8)}
 .sr-only{position:absolute!important;left:0;top:0;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* 第七十五輪（檢測碼 HM1130105C）：表單控制元件分群用的 fieldset，外觀不變（legend 多半是 .sr-only）；--row 給原本是 flex 排列的篩選列 */
+.c-fieldset{border:0;margin:0;padding:0;min-width:0}
+.c-fieldset--row{display:flex;flex-wrap:wrap;align-items:flex-end;gap:inherit;width:100%}
 .skip-link{position:absolute;left:-999px;top:var(--sp-2);background:var(--green-900);color:#fff;padding:var(--sp-2) var(--sp-4);border-radius:var(--radius-sm);z-index:200}
 .skip-link:focus{left:var(--sp-2);color:#fff}
 /* 第七十一輪（U2）：第二個 skip link「跳到主選單」聚焦時往下錯開一列，與第一個的位置不重疊（連按 Tab 時看得出焦點換了） */
@@ -33,7 +36,7 @@ html[data-view="pro"] .c-public-only{display:none!important}
 /* 原型橫幅（第二十三輪）：SITE_MODE=production 不輸出；列印也保留，避免截圖被當官網 */
 .c-proto-banner{background:#fff4d6;border-bottom:2px solid #7a4100;color:#4a2d00;font-size:var(--fs-sm)}
 .c-proto-banner__in{padding:6px 0;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
-.c-proto-banner strong{background:#7a4100;color:#fff;padding:1px 8px;border-radius:999px;font-size:var(--fs-xs,12px)}
+.c-proto-banner strong{background:#7a4100;color:#fff;padding:1px 8px;border-radius:999px;font-size:var(--fs-xs,.8125rem)}
 .c-proto-banner a{color:inherit;font-weight:700}
 /* 第七十一輪（U1）：手機版原型橫幅從三行壓成兩行：第一行「非官方原型」標籤＋「前往正式官網」連結，第二行說明（含凍結日）。只改視覺順序，DOM 不動 */
 @media (max-width:640px){
@@ -53,6 +56,7 @@ html[data-view="pro"] .c-public-only{display:none!important}
 .langmenu{display:none;position:relative}
 .langmenu__btn{list-style:none;cursor:pointer;padding:6px 10px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff;color:var(--ink);min-height:36px;display:inline-flex;align-items:center}
 .langmenu__btn::-webkit-details-marker{display:none}
+.i-globe{flex:none;margin-right:.35em;vertical-align:-.15em}
 .langmenu[open] .langmenu__btn{background:var(--green-50);border-color:var(--green-700)}
 .langmenu__list{position:absolute;left:0;top:calc(100% + 4px);z-index:120;min-width:12rem;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 6px 20px rgba(0,0,0,.12);padding:var(--sp-1);display:flex;flex-direction:column}
 .langmenu__list a,.c-nav__langs-l a{color:var(--ink-2);text-decoration:none;padding:10px 12px;min-height:44px;box-sizing:border-box;display:flex;align-items:center;border-radius:var(--radius-sm)}
@@ -60,7 +64,8 @@ html[data-view="pro"] .c-public-only{display:none!important}
 .langmenu__list a[aria-current="true"],.c-nav__langs-l a[aria-current="true"]{color:var(--green-900);font-weight:700;background:var(--green-100)}
 .c-nav__langs{display:none}
 .topbar__links{display:flex;gap:var(--sp-4);white-space:nowrap}
-.topbar__links a{color:var(--ink-2);text-decoration:none}
+/* 第七十五輪（WCAG 2.5.8）：原本 23 px 高、靠「間距例外」過關；補到 24 px，不靠例外 */
+.topbar__links a{color:var(--ink-2);text-decoration:none;display:inline-flex;align-items:center;min-height:24px}
 .topbar__links a:hover{text-decoration:underline}
 .hotline{font-weight:700;color:var(--ink)!important}
 
@@ -165,6 +170,8 @@ html[data-theme] .brand::after{content:"";flex:none;width:36px;height:36px;backg
   .brand__name{font-size:var(--fs-md)}
   .site-footer__in{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-4)}
   body{padding-bottom:var(--tabbar-h)}
+  /* 第七十五輪（WCAG 2.4.11 焦點不遮蔽）：body 的 padding 只讓內容不被 tabbar 蓋住；焦點元件被捲進視窗時仍對齊視窗底邊，要靠 scroll-padding 才不會落在 tabbar 後面 */
+  html{scroll-padding-bottom:calc(var(--tabbar-h) + 8px)}
   .c-tabbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;height:var(--tabbar-h);background:#fff;border-top:1px solid var(--line);z-index:90;box-shadow:0 -2px 10px rgba(0,0,0,.06)}
   .c-tabbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:var(--ink-2);font-size:var(--fs-xs)}
   .c-tabbar a[aria-current="page"]{color:var(--green-700);font-weight:700}

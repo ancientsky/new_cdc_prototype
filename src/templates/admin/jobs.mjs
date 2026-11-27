@@ -20,7 +20,7 @@ export function render(ctx) {
   const withResult = rows.filter((r) => r.checks);
   const n = (st) => rows.filter((r) => r.stage === st).length;
   const bad = withResult.filter((r) => r.checksBad).length;
-  const mark = (c) => html`<span class="${c.ok ? 'adm-green' : 'adm-red'}" aria-label="${c.ok ? '通過' : '未通過'}">${c.ok ? '✓' : '✗'}</span> ${c.text}`;
+  const mark = (c) => html`<span class="${c.ok ? 'adm-green' : 'adm-red'}" aria-label="${c.ok ? '通過' : '未通過'}" title="${c.ok ? '通過' : '未通過'}">${c.ok ? '✓' : '✗'}</span> ${c.text}`;
   return html`
 ${pageHead({
     title: '人才招募管理',

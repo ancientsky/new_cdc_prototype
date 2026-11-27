@@ -1923,10 +1923,11 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 
 ### 28.4 內容測試子集 `npm run test:content`
 
-`package.json` 的 `test:content`：只跑「驗證已提交內容」的測試檔（治理規則套在真實內容上、連結、資產、來源語言、SEO／JSON-LD／API 輸出、日期、個資、移轉清單、跨內容一致性、評估挑戰集格式、官方資料快照、車道設定）。本機 4 核約 22 秒（完整 `npm test` 本機約 104 秒）。
+`package.json` 的 `test:content`：只跑「驗證已提交內容」的測試檔（治理規則套在真實內容上、連結、資產、來源語言、SEO／JSON-LD／API 輸出、日期、個資、移轉清單、跨內容一致性、評估挑戰集格式、官方資料快照、車道設定）。本機 4 核約 22 秒（完整 `npm test` 本機約 104 秒）；第七十五輪加入 `a11y-tw-codes.test.mjs` 後，沒有 dist 時（CI 的情況）本機約 27 秒。
 
 | 檔案 | 為什麼在內容子集 |
 | --- | --- |
+| `a11y-tw-codes.test.mjs` | 第七十五輪：新版網站無障礙規範檢測碼預檢（`scripts/a11y-tw.mjs`）。表格缺 `scope`、表情符號缺 `title`、行內連結缺 `title` 都是從內容（Markdown／JSON）進來的，而純內容 PR 不跑 axe，這裡是唯一會擋下它們的地方。CI 跑 `test:content` 時還沒有 dist，所以本檔在記憶體裡渲染全站再掃（約 20 秒，是本子集最慢的一檔；有 dist 時改掃 dist，約 6 秒）。見 [a11y.md](a11y.md) 第 12 節 |
 | `api.test.mjs` | v1 API 用真實內容輸出：外殼、etag、必要檔案 |
 | `assets.test.mjs` | 檔案資產宣告核對、替代文字、複製到 dist |
 | `governance.test.mjs`、`governance-r2.test.mjs` | 治理規則（白名單、逾期、版本鏈、公告截止…）套在 repo 內容上 |
@@ -1950,7 +1951,7 @@ PR 留言的表格多兩列：「變更範圍」（純內容／含程式或文�
 
 - 會因為「改了 `content/` 或 `data/snapshots/` 的某個檔」而失敗的測試才放進來；只測程式邏輯（合成資料、純函式）的不放。
 - 不放啟動瀏覽器、HTTP 伺服器或寫入閘道的測試（`tests/round40-ci-isolation.test.mjs` 會檢查清單裡沒有 `playwright`、`chromium`、`createServer`、`serve.mjs`、`gateway`）。
-- 整包要維持在 30 秒內（CI runner 4 核）。`round53-holdout2.test.mjs`（封存盲測題組的引用檢查，單檔約 18 秒，大半是跑執行器）因此沒有放進來，它由合併後 `main` 的完整測試把關。
+- 整包要維持在 30 秒內（CI runner 4 核）。`round53-holdout2.test.mjs`（封存盲測題組的引用檢查，單檔約 18 秒，大半是跑執行器）因此沒有放進來，它由合併後 `main` 的完整測試把關。第七十五輪的 `a11y-tw-codes.test.mjs` 單檔也約 20 秒，仍然放進來：盲測題組在 `main` 補跑就夠（失敗不會讓網站上錯內容），但無障礙檢測碼不合格的內容一合併就上線、而且純內容 PR 沒有別的無障礙檢查。若整包在 CI 超過 30 秒，先把這一檔改成只渲染中文頁，不要拿掉。
 - 新增時三個地方一起改：`package.json` 的 `test:content`、這張表、檔案本身（不用改工作流程）。測試會檢查清單裡的每個檔都出現在本節。
 
 ### 28.5 一個 PR 只建一次站、Chromium 快取

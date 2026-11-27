@@ -13,7 +13,9 @@ export function meta() { return adminMeta('疫苗接種時程表', 'vaxschedule'
 
 const field = (f, label, input, hint = '') => html`<div class="adm-field"><label for="vx-${f}">${label}</label>${input}${hint ? html`<span class="adm-hint">${hint}</span>` : ''}</div>`;
 const text = (f, ph = '', extra = '') => html`<input type="text" id="vx-${f}" data-f="${f}" placeholder="${ph}" ${extra}>`;
-const num = (f, max) => html`<input type="number" id="vx-${f}" data-f="${f}" min="0" max="${max}" inputmode="numeric" class="adm-vx-num">`;
+// 第七十五輪（檢測碼 HM1130104C）：歲／個月的數字欄沒有各自的 <label>（旁邊的「下限…歲…個月」是一串文字），給 title 當欄位名稱
+const NUM_TITLE = { ageY: '建議年齡下限（歲）', ageM: '建議年齡下限（個月）', maxY: '建議上限（歲）', maxM: '建議上限（個月）', hardY: '起不可接種的年齡（歲）', hardM: '起不可接種的年齡（個月）' };
+const num = (f, max) => html`<input type="number" id="vx-${f}" data-f="${f}" min="0" max="${max}" inputmode="numeric" class="adm-vx-num" title="${NUM_TITLE[f] ?? f}">`;
 
 export function render(ctx) {
   const { site, url } = ctx;

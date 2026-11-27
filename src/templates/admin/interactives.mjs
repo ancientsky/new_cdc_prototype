@@ -35,7 +35,7 @@ ${dataScript('adm-ix-data', data)}
 <div class="adm-box ${st.reason === 'emergency' ? 'adm-box--err' : st.reason === 'active' ? 'adm-box--ok' : 'adm-box--note'}"><strong>${st.reason === 'emergency' ? '全站緊急警戒：互動模組全部隱藏' : st.reason === 'active' ? `目前顯示 ${shown.size} 個模組` : '目前沒有顯示中的模組'}</strong>${st.message}。全站警戒等級 <code>${st.alertLevel}</code>（<a href="${url('/admin/situation/', { noLang: true })}">疫情發布</a>）。</div>
 <section class="adm-card" aria-labelledby="ix-list-h"><h2 id="ix-list-h">模組清單</h2>
 <div class="adm-tablewrap" role="region" tabindex="0" aria-label="表格，可捲動"><table class="adm-table"><caption>content/interactives/：${all.length} 筆。狀態＝開關與檔期；「顯示中」另看全站警戒。</caption>
-<thead><tr><th>模組</th><th>種類</th><th>權責單位</th><th>狀態</th><th>放置位置</th><th>檔期</th><th>內容</th><th>前台</th></tr></thead>
+<thead><tr><th scope="col">模組</th><th scope="col">種類</th><th scope="col">權責單位</th><th scope="col">狀態</th><th scope="col">放置位置</th><th scope="col">檔期</th><th scope="col">內容</th><th scope="col">前台</th></tr></thead>
 <tbody>${all.map((it) => html`<tr data-ix-row="${it.id}">
   <td><strong>${it.title}</strong><br><code>${it.id}</code></td>
   <td>${KINDS[it.kind]?.label ?? it.kind}</td>

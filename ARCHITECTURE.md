@@ -2891,3 +2891,22 @@ Yulun 要求對整個原型的架構設計與 UI/UX 做完整檢視。量測方�
 
 教訓：Lighthouse 只算到 TTI，延後到 `import()` 的工作（答案頁）只會被算到一部分；答案頁以 `perf:ask` 為準。量測腳本要能重跑、參數要能讀：基準量測時臨時腳本把 `名稱=路徑` 依每個 `=` 切開，`/ask/?q=登革熱` 變成 `/ask/?q`，答案頁因而「100 分」——寫成正式腳本、輸出實際量的網址，才抓得到這種錯。
 
+
+## 76. 第七十五輪：台灣檢測碼預檢與焦點遮蔽走查（2026-11-27）
+
+新版「網站無障礙規範」（115.11.30 施行）附件一有 28 個軟體檢測碼，其中幾條 axe 不檢查。完整對照表、本輪修正、與 Freego 的分工在 `docs/a11y.md` 第 12 節；取捨在 architecture-decisions §60。
+
+| 項目 | 契約 |
+| --- | --- |
+| 檢測碼預檢 | `scripts/a11y-tw.mjs`（`npm run a11y:tw`）：純 Node、htmlparser2（列為 dependency，因為建置期的 `a11y-text.mjs` 也用它），掃 `DIST_DIR` 全部 HTML（略過 `preview/`、`pagefind`、vendor）與 `dist/assets/**/*.css`。匯出 `CODES`、`checkHtml(html)`、`checkCss(css)`、`scanDist(dist)`、`summarize()`。A／AA 不合格 ⇒ exit 1；HM1130103C、HM2310200C、`FORM_FIELDSET` 只警告。`A11Y_TW_JSON` 另存 JSON；`GITHUB_STEP_SUMMARY` 有就附加。最後一行 `[a11y:tw] 不合格 N、警告 M` |
+| 進 `test:content` | `tests/a11y-tw-codes.test.mjs`：每個檢測碼一組合格／不合格樣本；有 dist 掃 dist，沒有就 `renderAllPages` 到記憶體再掃（CI 的純內容 PR 在建置前跑 `test:content`）。全站 A／AA 不合格必須是 0 |
+| 焦點遮蔽走查 | `scripts/a11y.mjs` 匯出 `focusWalk(page, maxTabs = 80)`：axe 之後每頁每視窗按 Tab，取焦點元件在視窗內部分的 5×5 點 `elementFromPoint`；全被 fixed／sticky 祖先下的別的元素蓋住 ⇒ 阻擋（併入 `[a11y] 阻擋 N`）；部分 ⇒ 警告 `focus-obscured-partial`（併入 `warningRules`）。`A11Y_JSON` 多 `focusObscured: { fully, partly }`。腳本改為直接執行才跑 `main()` |
+| 捲動預留空間 | `base.css` 手機（≤720 px）`html{scroll-padding-bottom:calc(var(--tabbar-h) + 8px)}`；`components.css` `html:has(.c-hubnav)`、`html:has(.c-askpage__bar)`（≥960 px）加大 `scroll-padding-top`。新增固定或黏性元件時要一起加 |
+| 字級單位 | `src/styles/*.css` 與 dist 自有 CSS 的 `font-size` 不得用 px（含 `var()` 備援值）；`tests/css-budget.test.mjs` 擋 |
+| Markdown 表格 | `markdown.mjs` `tableScope()`：`<thead>` 的 th ⇒ `scope="col"`、`<tbody>` 的 th ⇒ `scope="row"`，已寫 scope 的不動 |
+| 表情符號 | `scripts/lib/a11y-text.mjs` `wrapEmoji(html, label)`：標籤外文字裡的 U+2600–27BF、U+1F000–1FAFF（含變體選擇符、膚色、ZWJ）包成 `<span role="img" aria-label title>`；`md()`（設定當頁語言時）與 `/play/` 模板套用；版型不得再輸出表情符號（地球圖示是 SVG） |
+| 行內連結 title | `a11y-text.mjs` `inlineLinkTitles(html, { t, pageTitle, siteHost, siteName, requireContext })`：父元素還有非空白文字或有字的行內元素（父元素是 `p`／`li`／`td` 等文字段落類時，並排的其他連結也算；`div`／`nav` 裡一排連結不算）的 `<a href>`，沒有 title 就補 `t('a11y.link.title', { text, context })`；下載檔 `a11y.link.download`、外站 `a11y.link.external`。title 必含連結文字、不等於連結文字；SVG 內的連結不處理。`md()` 用 `requireContext: true` 先補有標題可依的；`pages.mjs` 每頁輸出前對整頁再套一次（安全網）。`setMarkdownPage({ t, siteHost })` 在每頁渲染前設定、渲染後清掉 |
+| 表單分群 | 多個控制元件的公開表單包 `<fieldset class="c-fieldset">`＋`.sr-only` legend；`.c-fieldset--row` 給 flex 排列的篩選列 |
+| i18n | `src/client/i18n.js` `ROWS_R75`：`a11y.emoji`、`a11y.answerMark`、`a11y.link.title`／`generic`／`download`／`external`／`dsFmt`／`dsApi`（七語；英文以外為機器初稿）。`lang.menu` 拿掉 🌐 |
+
+教訓：「符合 WCAG」不等於「通得過本國規範的檢測碼」——axe 0 違規、Lighthouse 100 分的站，照附件一字面一掃有 4 萬 6 千多項不合格，幾乎全來自兩條（表情符號 title、行內連結 title）；而這兩條都是一處改、全站生效的建置期處理。另一個教訓：走查焦點遮蔽要先關平滑捲動，否則量到的是捲動途中的位置。
