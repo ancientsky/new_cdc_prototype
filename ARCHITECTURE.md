@@ -2905,8 +2905,8 @@ Yulun 要求對整個原型的架構設計與 UI/UX 做完整檢視。量測方�
 | 字級單位 | `src/styles/*.css` 與 dist 自有 CSS 的 `font-size` 不得用 px（含 `var()` 備援值）；`tests/css-budget.test.mjs` 擋 |
 | Markdown 表格 | `markdown.mjs` `tableScope()`：`<thead>` 的 th ⇒ `scope="col"`、`<tbody>` 的 th ⇒ `scope="row"`，已寫 scope 的不動 |
 | 表情符號 | `scripts/lib/a11y-text.mjs` `wrapEmoji(html, label)`：標籤外文字裡的 U+2600–27BF、U+1F000–1FAFF（含變體選擇符、膚色、ZWJ）包成 `<span role="img" aria-label title>`；`md()`（設定當頁語言時）與 `/play/` 模板套用；版型不得再輸出表情符號（地球圖示是 SVG） |
-| 行內連結 title | `a11y-text.mjs` `inlineLinkTitles(html, { t, pageTitle, siteHost, siteName, requireContext })`：父元素還有非空白文字或有字的行內元素（不含其他連結）的 `<a href>`，沒有 title 就補 `t('a11y.link.title', { text, context })`；下載檔 `a11y.link.download`、外站 `a11y.link.external`。title 必含連結文字、不等於連結文字；SVG 內的連結不處理。`md()` 用 `requireContext: true` 先補有標題可依的；`pages.mjs` 每頁輸出前對整頁再套一次（安全網）。`setMarkdownPage({ t, siteHost })` 在每頁渲染前設定、渲染後清掉 |
+| 行內連結 title | `a11y-text.mjs` `inlineLinkTitles(html, { t, pageTitle, siteHost, siteName, requireContext })`：父元素還有非空白文字或有字的行內元素（父元素是 `p`／`li`／`td` 等文字段落類時，並排的其他連結也算；`div`／`nav` 裡一排連結不算）的 `<a href>`，沒有 title 就補 `t('a11y.link.title', { text, context })`；下載檔 `a11y.link.download`、外站 `a11y.link.external`。title 必含連結文字、不等於連結文字；SVG 內的連結不處理。`md()` 用 `requireContext: true` 先補有標題可依的；`pages.mjs` 每頁輸出前對整頁再套一次（安全網）。`setMarkdownPage({ t, siteHost })` 在每頁渲染前設定、渲染後清掉 |
 | 表單分群 | 多個控制元件的公開表單包 `<fieldset class="c-fieldset">`＋`.sr-only` legend；`.c-fieldset--row` 給 flex 排列的篩選列 |
 | i18n | `src/client/i18n.js` `ROWS_R75`：`a11y.emoji`、`a11y.answerMark`、`a11y.link.title`／`generic`／`download`／`external`／`dsFmt`／`dsApi`（七語；英文以外為機器初稿）。`lang.menu` 拿掉 🌐 |
 
-教訓：「符合 WCAG」不等於「通得過本國規範的檢測碼」——axe 0 違規、Lighthouse 100 分的站，照附件一字面一掃有 3 萬多項不合格，幾乎全來自兩條（表情符號 title、行內連結 title）；而這兩條都是一處改、全站生效的建置期處理。另一個教訓：走查焦點遮蔽要先關平滑捲動，否則量到的是捲動途中的位置。
+教訓：「符合 WCAG」不等於「通得過本國規範的檢測碼」——axe 0 違規、Lighthouse 100 分的站，照附件一字面一掃有 4 萬 6 千多項不合格，幾乎全來自兩條（表情符號 title、行內連結 title）；而這兩條都是一處改、全站生效的建置期處理。另一個教訓：走查焦點遮蔽要先關平滑捲動，否則量到的是捲動途中的位置。

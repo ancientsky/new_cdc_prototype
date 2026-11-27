@@ -154,8 +154,14 @@ test('(b) 行內連結 title：包含連結文字、上下文是前面最近的�
     'Influenza – Current outbreaks',
     '字詞用當頁語言',
   );
-  const tree = parseTree('<p><a href="/a/">一</a> <a href="/b/">二</a></p><p>文字<a href="/c/">三</a></p>');
-  assert.deepEqual([...walk(tree)].filter((e) => e.name === 'a').map(isInlineLink), [false, false, true], '只和其他連結並列不算行內');
+  const tree = parseTree(
+    '<div><a href="/a/">一</a> <a href="/b/">二</a></div><p>文字<a href="/c/">三</a></p><p><a href="tel:1922">1922</a><a href="tel:0800001922">0800-001922</a></p>',
+  );
+  assert.deepEqual(
+    [...walk(tree)].filter((e) => e.name === 'a').map(isInlineLink),
+    [false, false, true, true, true],
+    '<div> 裡一排並列的連結是選單、不算；<p> 裡並排的連結算行內',
+  );
 });
 
 test('(b) Markdown：表格 th 有 scope；設定當頁語言後，行內連結補 title、表情符號包 title', () => {

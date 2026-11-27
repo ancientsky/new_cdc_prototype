@@ -42,7 +42,8 @@ export function wrapEmoji(htmlStr, label) {
 
 // ── 行內連結 ──
 /** 算「行內內容」的元素：連結旁邊有這些元素且裡面有字，就算「連結前後尚有其他內容」。
- * 旁邊只有其他連結（沒有文字）不算：一排並列的連結是選單，不是段落裡的連結。 */
+ * 旁邊的其他連結只在「文字段落類」父元素（TEXT_PARENT）裡才算：<p>、<li>、<td> 裡兩個並排的連結是一段文字；
+ * <div>、<nav> 裡一排並列的連結是選單或按鈕列，不算。 */
 const INLINE = new Set([
   'abbr',
   'b',
@@ -138,13 +139,43 @@ export const linkText = (a) => norm(textOf(a)) || norm(a.attribs['aria-label']);
 
 /**
  * 「連結前後尚有其他內容」（HM1240401C 後半句）：同一個父元素裡，連結以外還有非空白文字，或有字的行內元素。
- * 單獨佔一個區塊的連結（選單、卡片、按鈕列；只和其他連結並列也算）不算；那是 AAA 的 HM3240900C，不在目標內。
+ * 單獨佔一個區塊的連結（選單、卡片、按鈕列；<div>／<nav> 裡只和其他連結並列也算）不算；那是 AAA 的 HM3240900C，不在目標內。
  */
+const TEXT_PARENT = new Set([
+  'p',
+  'li',
+  'dd',
+  'dt',
+  'td',
+  'th',
+  'caption',
+  'figcaption',
+  'label',
+  'small',
+  'span',
+  'strong',
+  'em',
+  'b',
+  'i',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'blockquote',
+  'address',
+]);
 export function isInlineLink(a) {
   const p = a.parent;
   if (!p || p.name === '#root') return false;
+  const linkCounts = TEXT_PARENT.has(p.name);
   return p.children.some(
-    (c) => c !== a && (c.type === 'text' ? c.data.trim() !== '' : INLINE.has(c.name) && c.attribs['aria-hidden'] !== 'true' && norm(textOf(c)) !== ''),
+    (c) =>
+      c !== a &&
+      (c.type === 'text'
+        ? c.data.trim() !== ''
+        : (INLINE.has(c.name) || (linkCounts && c.name === 'a')) && c.attribs['aria-hidden'] !== 'true' && norm(textOf(c)) !== ''),
   );
 }
 const inSvg = (n) => {
