@@ -4,6 +4,7 @@
 //   1. components.css 不超過 120 KB；
 //   2. @media (max-width: N) 的 N 只能用下面白名單裡的值（現況），收斂時從表上刪；
 //   3. font-size 不得出現小於字級下限 --fs-xs（0.8125rem = 13 px）的硬編碼 rem／px 值；例外寫在白名單並說明理由。
+//   4. 第七十五輪（網站無障礙規範檢測碼 CS2140401C，AA）：font-size 一律不得用 px（含 var() 的備援值），只能用 rem／em／%／具名字級。
 // 本測試只看 src/styles/*.css；模板內嵌的 <style>（例如 travel.mjs、pro/_styles.mjs）由各自的模板測試管。
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -24,8 +25,8 @@ const BREAKPOINTS = new Set([380, 480, 520, 600, 640, 720, 760, 860, 900, 959, 1
 // 字級下限例外：純裝飾或 SVG 座標單位，不是一般閱讀文字。格式：'檔名|選擇器開頭|值'
 const FONT_SIZE_ALLOW = new Map([
   // 疫苗接種時程地圖的 SVG 刻度與游標文字：SVG 使用者座標單位，刻度間距與標籤寬度依這個字級計算，改字級要連帶改版面（src/client/vaxschedule.js）
-  ['components.css|.vxs-axislabel|12px', 'SVG 座標單位，版面依此計算'],
-  ['components.css|.vxs-cursor|11px', 'SVG 游標月齡標記，隨滑鼠移動的暫時提示'],
+  ['components.css|.vxs-axislabel|.75rem', 'SVG 座標單位，版面依此計算（第七十五輪由 12px 改 rem，數值等價）'],
+  ['components.css|.vxs-cursor|.6875rem', 'SVG 游標月齡標記，隨滑鼠移動的暫時提示（第七十五輪由 11px 改 rem）'],
 ]);
 // 註：em 為相對單位（例如上標引用編號 .c-cite 的 .75em、.c-teb__sup 的 .7em、列印網址的 .8em），本測試不檢查；
 // 上標引用編號是裝飾性的上標，可點區域另有 padding 補足。
@@ -74,6 +75,25 @@ test('font-size 不得硬編碼小於 --fs-xs（0.8125rem／13px）的值', () =
   assert.deepEqual(bad, [], `請改用 var(--fs-xs) 或更大的 token；確為裝飾用途才加進本檔的 FONT_SIZE_ALLOW 並寫理由：\n${bad.join('\n')}`);
   // 白名單不可留過期項目：規則改掉了就要從表上刪
   assert.deepEqual([...FONT_SIZE_ALLOW.keys()].filter((k) => !used.has(k)), [], '白名單有已不存在的項目，請刪除');
+});
+
+// 第七十五輪：CS2140401C（AA）「CSS 不得以 px 設定字級」。Freego 會掃樣式表，axe／Lighthouse 不檢查這條；
+// 使用者把瀏覽器預設字級調大時，px 字級不會跟著放大（WCAG 1.4.4）。src/styles 與建置後 dist 的自有 CSS 都掃（vendor 與 Pagefind 的第三方 CSS 不在這裡管）。
+const PX_FONT = /font-size\s*:\s*[^;{}]*?\b[\d.]+px/g;
+const pxFontHits = (label, css) => [...css.replace(/\/\*[\s\S]*?\*\//g, (c) => c.replace(/[^\n]/g, ' ')).matchAll(PX_FONT)].map((m) => `${label}：${m[0]}（第 ${css.slice(0, m.index).split('\n').length} 行）`);
+
+test('CS2140401C：src/styles/*.css 的 font-size 不得用 px（含 var() 備援值）', () => {
+  const bad = files.flatMap((f) => pxFontHits(f, read(f)));
+  assert.deepEqual(bad, [], `請改用 rem（16 px＝1rem）或字級 token：\n${bad.join('\n')}`);
+});
+
+test('CS2140401C：建置後 dist/assets/styles 的自有 CSS 也沒有 px 字級（沒有 dist 就略過）', (t) => {
+  const dir = path.join(process.env.DIST_DIR ? path.resolve(process.env.DIST_DIR) : path.join(ROOT, 'dist'), 'assets/styles');
+  if (!fs.existsSync(dir)) return t.skip('沒有 dist/assets/styles（先建置）');
+  const bad = [];
+  const walk = (d) => { for (const e of fs.readdirSync(d, { withFileTypes: true })) { const p = path.join(d, e.name); if (e.isDirectory()) walk(p); else if (e.name.endsWith('.css')) bad.push(...pxFontHits(path.relative(dir, p), fs.readFileSync(p, 'utf8'))); } };
+  walk(dir);
+  assert.deepEqual(bad, [], bad.join('\n'));
 });
 
 test('--fs-xs 是 0.8125rem（13 px）', () => {

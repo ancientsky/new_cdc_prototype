@@ -121,7 +121,7 @@
 .c-promo__foot{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);flex-wrap:wrap;padding:var(--sp-3) var(--sp-5) var(--sp-4)}
 .c-promo__all{font-size:var(--fs-sm);margin:0}
 .c-carousel__ctl{display:flex;align-items:center;gap:var(--sp-2);flex-wrap:wrap;margin-left:auto}
-.c-carousel__btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:20px;line-height:1;cursor:pointer;color:var(--ink)}
+.c-carousel__btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:1.25rem;line-height:1;cursor:pointer;color:var(--ink)}
 .c-carousel__btn:hover{background:var(--green-50);border-color:var(--green-700)}
 /* 無障礙（WCAG 2.2 SC 2.5.8 目標尺寸）：點擊區 24×24 px、相鄰間距 8px；視覺上仍是 12px 圓點，由 ::before 畫 */
 .c-carousel__dots{display:flex;gap:8px;align-items:center}
@@ -364,6 +364,8 @@ html:not(.js) .c-tabs__print{position:static;width:auto;height:auto;margin:0 0 v
 
 /* ───────── 答案頁殼（D 的內容由 answer.css 擴充） ───────── */
 .c-askpage__bar{display:flex;gap:var(--sp-4);align-items:flex-start;flex-wrap:wrap;position:sticky;top:0;z-index:20;background:#fff;padding:var(--sp-3) 0;border-bottom:1px solid var(--line);margin-bottom:var(--sp-5)}
+/* R75 2.4.11：桌機提問列黏在頂端（約 5.5rem）；959px 以下 static，改回 16px */
+html:has(.c-askpage__bar){scroll-padding-top:calc(5.5rem + 16px)}
 .c-askpage__bar .c-askbox{flex:1 1 min(420px,100%)}
 .c-advanced{flex:0 0 auto;font-size:var(--fs-sm)} .c-advanced summary{cursor:pointer;padding:10px 14px;border:1px solid var(--line);border-radius:var(--radius-sm);background:#fff}
 .c-advanced__body{position:absolute;right:0;margin-top:6px;width:min(420px,100%);background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp-4);box-shadow:var(--shadow-lg);z-index:30}
@@ -492,6 +494,7 @@ html[data-q] .c-answer[aria-busy="true"],html[data-q] #search-results:empty{min-
   .c-cols__side>.c-page-data{grid-column:1/-1}
   .c-cards3,.c-cols2,.c-channels__grid,.c-taskgrid,.c-diseases__tools{grid-template-columns:1fr 1fr}
   .c-askpage__bar{position:static}
+  html:has(.c-askpage__bar){scroll-padding-top:16px}
   .c-deflist--row,.c-provfull{grid-template-columns:1fr 1fr}
 }
 @media (max-width:720px){
@@ -829,6 +832,8 @@ html.js .c-asof{display:none}
 /* ═════════ 第五輪（V2）：疾病專區導覽、舊網址對應（三層露出）、/legacy/ 查詢頁、404 轉址 ═════════ */
 /* 專區導覽：sticky 子導覽（民眾／專業兩套由 c-public-only／c-pro-only 切換） */
 .c-hubnav{position:sticky;top:0;z-index:15;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:0 0 var(--sp-3);box-shadow:0 2px 6px rgba(0,0,0,.04)}
+/* R75 2.4.11：頂端黏性頁籤列（約 3.3rem）會蓋住 Shift+Tab 捲上來的焦點，見 docs/a11y.md §12 */
+html:has(.c-hubnav){scroll-padding-top:calc(3.5rem + 16px)}
 .c-hubnav__in{display:flex;align-items:center;gap:var(--sp-3)}
 .c-hubnav__list{display:flex;gap:var(--sp-1);list-style:none;margin:0;padding:6px 0;overflow-x:auto;scrollbar-width:none;flex:1 1 auto;min-width:0}
 .c-hubnav__list::-webkit-scrollbar{display:none}
@@ -1018,13 +1023,13 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .vxs-rl .vxs-rowbg{fill:var(--white)}
 .vxs-rl.is-focus .vxs-rowbg,.vxs-rp.is-focus .vxs-rowbg{fill:var(--green-50);stroke:var(--green-700)}
 .vxs-axisbg{fill:var(--white)}
-.vxs-axislabel,.vxs-tick{font-size:12px;fill:var(--ink-3)}
-.vxs-rtext{font-size:14px;fill:var(--ink)}
+.vxs-axislabel,.vxs-tick{font-size:.75rem;fill:var(--ink-3)}
+.vxs-rtext{font-size:.875rem;fill:var(--ink)}
 .vxs-rl a{cursor:pointer}
 .vxs-rl a:hover .vxs-rtext{text-decoration:underline;fill:var(--green-800)}
 .vxs-grid{stroke:var(--line-2);stroke-width:1}
 .vxs-cursor line{stroke:var(--status-peak);stroke-width:2;stroke-dasharray:4 3}
-.vxs-cursor text{font-size:11px;font-weight:700;fill:var(--status-peak)}
+.vxs-cursor text{font-size:.6875rem;font-weight:700;fill:var(--status-peak)}
 .vxs-cursor[hidden]{display:none}
 .is-off{display:none}
 .vxs-hatch-bg{fill:var(--white)}
@@ -1334,7 +1339,7 @@ html:not(.js) .vxs-form,html:not(.js) .vxs-msg,html:not(.js) .vxs-tabs,html:not(
 .c-dmcard__towns>b{margin-right:var(--sp-2)}
 .c-dmcard__town{font-weight:700;white-space:nowrap}
 .c-sit-card__dm{margin:var(--sp-2) 0 0;font-size:var(--fs-sm)}
-.c-sit-card__dmlink{font-weight:700}
+.c-sit-card__dmlink{font-weight:700;display:inline-flex;align-items:center;min-height:24px}
 .c-dmcard__kept{margin:0 0 var(--sp-2);padding:var(--sp-1) var(--sp-3);background:var(--warn-bg);color:var(--warn);border-radius:var(--radius-sm);font-size:var(--fs-sm)}
 
 /* ───── 第六十二輪：互動與彩蛋（/play/、首頁「歷史上的今天」小卡、「互動與遊戲」、站名圖示彩蛋）。只加新類別，不改既有元件 ───── */

@@ -33,7 +33,7 @@ html[data-view="pro"] .c-public-only{display:none!important}
 /* 原型橫幅（第二十三輪）：SITE_MODE=production 不輸出；列印也保留，避免截圖被當官網 */
 .c-proto-banner{background:#fff4d6;border-bottom:2px solid #7a4100;color:#4a2d00;font-size:var(--fs-sm)}
 .c-proto-banner__in{padding:6px 0;display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline}
-.c-proto-banner strong{background:#7a4100;color:#fff;padding:1px 8px;border-radius:999px;font-size:var(--fs-xs,12px)}
+.c-proto-banner strong{background:#7a4100;color:#fff;padding:1px 8px;border-radius:999px;font-size:var(--fs-xs,.8125rem)}
 .c-proto-banner a{color:inherit;font-weight:700}
 /* 第七十一輪（U1）：手機版原型橫幅從三行壓成兩行：第一行「非官方原型」標籤＋「前往正式官網」連結，第二行說明（含凍結日）。只改視覺順序，DOM 不動 */
 @media (max-width:640px){
@@ -60,7 +60,8 @@ html[data-view="pro"] .c-public-only{display:none!important}
 .langmenu__list a[aria-current="true"],.c-nav__langs-l a[aria-current="true"]{color:var(--green-900);font-weight:700;background:var(--green-100)}
 .c-nav__langs{display:none}
 .topbar__links{display:flex;gap:var(--sp-4);white-space:nowrap}
-.topbar__links a{color:var(--ink-2);text-decoration:none}
+/* 第七十五輪（WCAG 2.5.8）：原本 23 px 高、靠「間距例外」過關；補到 24 px，不靠例外 */
+.topbar__links a{color:var(--ink-2);text-decoration:none;display:inline-flex;align-items:center;min-height:24px}
 .topbar__links a:hover{text-decoration:underline}
 .hotline{font-weight:700;color:var(--ink)!important}
 
@@ -165,6 +166,8 @@ html[data-theme] .brand::after{content:"";flex:none;width:36px;height:36px;backg
   .brand__name{font-size:var(--fs-md)}
   .site-footer__in{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-4)}
   body{padding-bottom:var(--tabbar-h)}
+  /* 第七十五輪（WCAG 2.4.11 焦點不遮蔽）：body 的 padding 只讓內容不被 tabbar 蓋住；焦點元件被捲進視窗時仍對齊視窗底邊，要靠 scroll-padding 才不會落在 tabbar 後面 */
+  html{scroll-padding-bottom:calc(var(--tabbar-h) + 8px)}
   .c-tabbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;height:var(--tabbar-h);background:#fff;border-top:1px solid var(--line);z-index:90;box-shadow:0 -2px 10px rgba(0,0,0,.06)}
   .c-tabbar a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:var(--ink-2);font-size:var(--fs-xs)}
   .c-tabbar a[aria-current="page"]{color:var(--green-700);font-weight:700}
