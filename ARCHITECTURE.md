@@ -2910,3 +2910,23 @@ Yulun 要求對整個原型的架構設計與 UI/UX 做完整檢視。量測方�
 | i18n | `src/client/i18n.js` `ROWS_R75`：`a11y.emoji`、`a11y.answerMark`、`a11y.link.title`／`generic`／`download`／`external`／`dsFmt`／`dsApi`（七語；英文以外為機器初稿）。`lang.menu` 拿掉 🌐 |
 
 教訓：「符合 WCAG」不等於「通得過本國規範的檢測碼」——axe 0 違規、Lighthouse 100 分的站，照附件一字面一掃有 4 萬 6 千多項不合格，幾乎全來自兩條（表情符號 title、行內連結 title）；而這兩條都是一處改、全站生效的建置期處理。另一個教訓：走查焦點遮蔽要先關平滑捲動，否則量到的是捲動途中的位置。
+
+## 77. 第七十六輪：外語片段 lang 補完與選做的 AAA 項目（2026-11-27）
+
+HM2310200C（外語片段要標 lang）補完後由警告改為擋合併；另選做六項 AAA（AA 仍是標章目標）。說明與量測在 `docs/a11y.md` 第 12.2 節與第 13 節；取捨在 architecture-decisions §61。
+
+| 項目 | 契約 |
+| --- | --- |
+| 模板層 lang | `_partials.mjs`：`Lx(ctx, item, field)` 回傳 `{ text, lang }`（值與 `L()` 相同；`i18n[ctx.lang][field]` 缺、退回來源語言時 `lang`＝`item.sourceLang ?? 'zh-TW'`）；`langOf(ctx, r)` 與頁面語言不同時回傳 `raw(' lang="…"')`；`leadOf(ctx, item, field = 'summary', fallback)` 輸出頁首 `<p class="lead">`（沒有值回傳空字串）；`pill(text, kind, lang)` 第三個參數標在膠囊本身。`L()` 不改：它的值也用在屬性裡 |
+| 整頁安全網 | `a11y-text.mjs` `markFallbackLang(html, { pageLang })` → `{ html, marked }`：外語頁（`ja` 除外）中文片段標 `zh-TW`、中文頁連續 4 字以上英文（`EN_WORDS_RE`，與 `a11y-tw.mjs` 共用）標 `en`。片段＝承載元素全部文字 ⇒ 加屬性；否則包 `<span lang>`；`<option>`／`<textarea>`／SVG 只加屬性。`parseTree()` 的文字節點多了 `start`／`end`（原字串位置，含）。`pages.mjs` 在 `inlineLinkTitles()` 之後套用，建置記錄 `[pages] 不同語言片段補 lang…` |
+| 專有名詞例外 | `data-a11y-propernoun` 屬性：`a11y-tw.mjs` 與安全網都略過該元素內的文字 |
+| HM2310200C | `CODES.HM2310200C` 不再有 `warn`；A／AA 不合格 ⇒ exit 1。只列警告的剩 HM1130103C 與 FORM_FIELDSET |
+| 縮寫 | `scripts/lib/abbr.mjs`：`abbrTable(glossary, lang)` → `Map<縮寫, 全稱>`（主檔 `en`／`aliases` 裡符合縮寫樣式者，全稱＝主檔當頁語言譯名，去掉結尾「（縮寫）」、含縮寫本身者不收；`ABBR_EXTRA` 補中英文；`NOT_ABBR` 排除 CDC 等）；`markAbbreviations(html, table)` → `{ html, marked }`：`<main>` 內 p／li／td／dd／dt／blockquote／figcaption／caption 的文字，每頁每個縮寫第一次包 `<abbr title>`；跳過標題、a、button、label、summary、code／pre、svg、nav、`aria-hidden`、`hidden`。`pages.mjs` 在 lang 安全網之後套用（後台頁不做） |
+| 焦點框 | `tokens.css`：`--focus-color: #e8a400`、`--focus-inner: #000`、`--focus: 3px solid var(--focus-color)`、`--focus-ring: 0 0 0 2px var(--focus-inner)`。`base.css` 全站 `:focus-visible` 同時用 `outline: var(--focus)` 與 `box-shadow: var(--focus-ring)`；自己設 box-shadow 的元件要把 `var(--focus-ring)` 接回去 |
+| 減少動態 | `tokens.css` `@media (prefers-reduced-motion: reduce)` 涵蓋 `*, *::before, *::after`；`ui.js`、`vaxschedule.js` 的 `scrollBehavior()` 回傳 `'auto'`／`'smooth'`，`scrollIntoView` 不得寫死 `'smooth'` |
+| 手機目標尺寸 | `base.css` 最後一段 `@media (max-width:720px)`：控制元件與單獨成塊的連結 `min-height／min-width: 2.75rem`；「單獨成塊」＝`a[href]:only-child:not([title])`（行內連結都有建置期 title）。新元件若在手機版小於 44 px，在這段加權重覆寫 |
+| 焦點走查 | `scripts/a11y.mjs`：`focusWalk(page, maxTabs, { back })`；`FOCUS_BACK_TABS = 40`（從頁尾 Shift+Tab）。完全與部分遮蔽都算阻擋（併入 `[a11y] 阻擋 N`）；`warningRules` 不再有 `focus-obscured-partial`；`A11Y_JSON` 的 `focusObscured` 照舊 |
+| 麵包屑 | 使用指南、開發者入口、AI 透明報告改用共用 `breadcrumb()`＋`breadcrumbLd()` |
+| 測試 | `tests/a11y-aaa.test.mjs`（焦點框兩色對背景 token、減少動態規則、手機 44 px 規則、縮寫、麵包屑）；`tests/a11y-tw-codes.test.mjs` 加 `markFallbackLang` 與 HM2310200C 等級 |
+
+教訓：單色焦點框「看起來很醒目」不等於對比夠——琥珀色在白底只有 2.16:1，量了才知道連 AA 都不夠。另一個：「退回中文」散在幾十個模板，靠逐一改模板永遠追不完；模板層處理知道語意的大宗、整頁安全網兜住其餘，再把檢查升為擋合併，新模板漏標也上不了線。
