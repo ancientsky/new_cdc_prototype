@@ -143,3 +143,5 @@ eval/**/*.mjs
 !tests/round72-lighthouse.test.mjs
 # 第七十五輪
 !scripts/lib/a11y-text.mjs
+!scripts/a11y-tw.mjs
+!tests/a11y-tw-codes.test.mjs
